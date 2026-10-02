@@ -58,6 +58,8 @@ class SettingsViewModel(
     fun resetProgress(onDone: () -> Unit) {
         viewModelScope.launch {
             container.progressRepository.reset()
+            // Knowledge state is learner data and must go with the rest of it.
+            container.knowledgeRepository.reset()
             onDone()
         }
     }

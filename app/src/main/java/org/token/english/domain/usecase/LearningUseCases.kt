@@ -16,6 +16,7 @@ import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.TodayPlan
+import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
@@ -33,14 +34,21 @@ data class ExerciseOutcome(
  */
 class SubmitExerciseUseCase(
     private val progress: ProgressRepository,
+    private val knowledge: KnowledgeRepository,
 ) {
     suspend operator fun invoke(
         exercise: Exercise,
         answer: String,
+        now: Long,
     ): ExerciseOutcome {
         val correct = AnswerChecker.isCorrect(exercise, answer)
         val skill = AnswerChecker.skillOf(exercise)
         progress.applyAttempt(skill, correct, source = "lesson")
+        // The same answer is also evidence about the curriculum nodes the lesson
+        // teaches (audit §4/§19) — this is what turns exercise results into a
+        // learner model instead of a score. A lesson the graph does not know (the
+        // placement test) simply yields no nodes.
+        knowledge.recordAttempt(exercise.lessonId, skill, correct, now)
         return ExerciseOutcome(
             correct = correct,
             correctAnswer = AnswerChecker.correctAnswerText(exercise),

@@ -42,6 +42,42 @@ data class ExerciseEntity(
     val payloadJson: String,
 )
 
+/**
+ * Curriculum knowledge graph node (seeded from assets/content/knowledge.json).
+ * String lists are kept as JSON text — authored content with no query needs,
+ * exactly like vocabulary examples and collocations.
+ */
+@Entity(tableName = "knowledge_item")
+data class KnowledgeItemEntity(
+    @PrimaryKey val id: String,
+    val type: String,
+    val title: String,
+    val titleFa: String,
+    val level: String,
+    val prerequisitesJson: String,
+    val lessonIdsJson: String,
+    val skillsJson: String,
+)
+
+/**
+ * Learner state per knowledge item (audit §20). Unlike the content tables this is
+ * progress, so it survives re-seeding and is cleared only by an explicit reset.
+ */
+@Entity(tableName = "knowledge_state")
+data class KnowledgeStateEntity(
+    @PrimaryKey val itemId: String,
+    val mastery: Float,
+    val exposureCount: Int,
+    val consecutiveCorrect: Int,
+    val consecutiveIncorrect: Int,
+    val intervalDays: Int,
+    val easeFactor: Float,
+    val repetitions: Int,
+    val lapses: Int,
+    val lastReviewedAt: Long?,
+    val nextReviewAt: Long,
+)
+
 /** Learner progress: cursor + completion per lesson. */
 @Entity(tableName = "lesson_state")
 data class LessonStateEntity(

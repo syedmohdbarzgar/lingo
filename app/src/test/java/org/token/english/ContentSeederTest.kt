@@ -6,9 +6,11 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.token.english.data.content.ContentParser
 import org.token.english.data.content.ContentSeeder
 import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.entity.ExerciseEntity
+import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.VocabularyEntity
@@ -37,6 +39,7 @@ class ContentSeederTest {
         val lessons = linkedMapOf<String, LessonEntity>()
         val vocabulary = linkedMapOf<String, VocabularyEntity>()
         val exercises = linkedMapOf<String, ExerciseEntity>()
+        val knowledge = linkedMapOf<String, KnowledgeItemEntity>()
         var insertCalls = 0
 
         override fun observeLessons(): Flow<List<LessonEntity>> = flowOf(lessons.values.sortedBy { it.orderIndex })
@@ -76,9 +79,20 @@ class ContentSeederTest {
             items.forEach { exercises[it.id] = it }
         }
 
+        override suspend fun getKnowledgeItems(): List<KnowledgeItemEntity> =
+            knowledge.values.sortedBy { it.id }
+
+        override suspend fun countKnowledgeItems(): Int = knowledge.size
+
+        override suspend fun insertKnowledgeItems(items: List<KnowledgeItemEntity>) {
+            insertCalls++
+            items.forEach { knowledge[it.id] = it }
+        }
+
         override suspend fun clearLessons() = lessons.clear()
         override suspend fun clearVocabulary() = vocabulary.clear()
         override suspend fun clearExercises() = exercises.clear()
+        override suspend fun clearKnowledgeItems() = knowledge.clear()
         override suspend fun clearLessonStates() = Unit
     }
 
@@ -129,10 +143,17 @@ class ContentSeederTest {
         val settings = FakeSettings()
         ContentSeeder(dao, ::assetReader, settings).ensureSeeded()
 
-        assertTrue("lessons seeded", dao.lessons.size >= 24)
-        assertTrue("vocabulary seeded", dao.vocabulary.size >= 144)
-        assertTrue("exercises + placement seeded", dao.exercises.size >= 174)
-        assertEquals("stored version comes from the JSON", 4, settings.storedVersion)
+        assertTrue("lessons seeded", dao.lessons.size >= 38)
+        assertTrue("vocabulary seeded", dao.vocabulary.size >= 228)
+        assertTrue("exercises + placement seeded", dao.exercises.size >= 258)
+        assertTrue("knowledge graph seeded", dao.knowledge.size >= 72)
+        // Read the expected version from the bundle itself so a content bump
+        // never needs a test edit (the seeder stores exactly what the JSON says).
+        assertEquals(
+            "stored version comes from the JSON",
+            ContentParser.bundleVersion(assetReader("content/lessons.json")),
+            settings.storedVersion,
+        )
         // Grammar tips survive the seed (intro stage needs them).
         assertTrue(dao.lessons.values.all { it.grammarTipFa != null })
     }

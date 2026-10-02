@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.token.english.di.AppContainer
+import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
@@ -17,6 +18,11 @@ data class ProgressUiState(
     val stats: StudyStats? = null,
     val mastery: Map<Skill, Float> = emptyMap(),
     val totalLessons: Int = 0,
+    /** Curriculum nodes touched at least once, and how many the bundle ships. */
+    val knowledgePractised: Int = 0,
+    val knowledgeTotal: Int = 0,
+    /** Persian title of the weakest practised node, shown as a study hint. */
+    val weakestKnowledge: String? = null,
 )
 
 class ProgressViewModel(
@@ -28,6 +34,9 @@ class ProgressViewModel(
 
     private var totalLessons: Int = 0
     private var level: LearningLevel = LearningLevel.A1
+    private var knowledgeStates: List<KnowledgeState> = emptyList()
+    private var knowledgeTitles: Map<String, String> = emptyMap()
+    private var knowledgeTotal: Int = 0
 
     init {
         viewModelScope.launch {
@@ -55,16 +64,36 @@ class ProgressViewModel(
                 rebuild()
             }
         }
+        // Curriculum labels are authored content, read once — the graph is 70-odd
+        // rows and never changes during a session.
+        viewModelScope.launch {
+            val items = container.knowledgeRepository.allItems()
+            knowledgeTitles = items.associate { it.id to it.titleFa }
+            knowledgeTotal = items.size
+            rebuild()
+        }
+        viewModelScope.launch {
+            container.knowledgeRepository.observeStates().collect {
+                knowledgeStates = it
+                rebuild()
+            }
+        }
     }
 
     private fun rebuild() {
         val stats = _state.value.stats
+        val weakest = knowledgeStates
+            .minByOrNull { it.mastery }
+            ?.let { knowledgeTitles[it.itemId] }
         _state.value = ProgressUiState(
             isLoading = false,
             level = level,
             stats = stats,
             mastery = _state.value.mastery,
             totalLessons = totalLessons,
+            knowledgePractised = knowledgeStates.size,
+            knowledgeTotal = knowledgeTotal,
+            weakestKnowledge = weakest,
         )
     }
 }

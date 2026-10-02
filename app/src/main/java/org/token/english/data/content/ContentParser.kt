@@ -3,6 +3,8 @@ package org.token.english.data.content
 import org.json.JSONArray
 import org.json.JSONObject
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.KnowledgeItem
+import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
@@ -25,7 +27,7 @@ object ContentParser {
      */
     fun bundleVersion(json: String): Int = JSONObject(json).optInt("contentVersion", 1)
 
-    /** Types the offline MVP actually runs; others are suspended (see AGENTS.md). */
+    /** Types the app actually runs; others are parsed-but-inactive (see AGENTS.md). */
     private val supportedTypes = setOf("multiple_choice", "fill_blank", "translation", "listening")
 
     data class RawExercise(
@@ -88,6 +90,29 @@ object ContentParser {
                 estimatedMinutes = o.getInt("estimatedMinutes"),
                 order = o.getInt("order"),
                 grammarTipFa = o.optString("grammarTipFa").ifBlank { null },
+            )
+        }
+    }
+
+    /**
+     * Parses the curriculum knowledge graph (assets/content/knowledge.json).
+     * The graph is authored content, so it goes through the same JSON pipeline as
+     * lessons and vocabulary — no Kotlin change is needed to add a knowledge item.
+     */
+    fun parseKnowledge(json: String): List<KnowledgeItem> {
+        val array = JSONObject(json).getJSONArray("knowledge")
+        return (0 until array.length()).map { i ->
+            val o = array.getJSONObject(i)
+            KnowledgeItem(
+                id = o.getString("id"),
+                type = KnowledgeType.valueOf(o.getString("type").uppercase()),
+                title = o.getString("title"),
+                titleFa = o.getString("titleFa"),
+                level = LearningLevel.valueOf(o.getString("level")),
+                prerequisites = o.optJSONArraytoString("prerequisites"),
+                lessonIds = o.optJSONArraytoString("lessons"),
+                skills = o.optJSONArraytoString("skills")
+                    .mapNotNull { runCatching { Skill.valueOf(it.uppercase()) }.getOrNull() },
             )
         }
     }

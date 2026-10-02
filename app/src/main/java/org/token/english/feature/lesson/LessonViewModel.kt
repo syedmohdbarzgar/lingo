@@ -174,7 +174,7 @@ class LessonViewModel(
         submitting = true
         viewModelScope.launch {
             try {
-                val outcome = container.submitExercise(exercise, answer)
+                val outcome = container.submitExercise(exercise, answer, System.currentTimeMillis())
                 _state.update {
                     it.copy(
                         outcome = outcome,

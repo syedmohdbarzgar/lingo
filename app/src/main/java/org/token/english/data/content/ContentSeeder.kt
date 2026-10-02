@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.first
 import org.json.JSONArray
 import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.entity.ExerciseEntity
+import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.VocabularyEntity
 import org.token.english.domain.repository.SettingsRepository
@@ -28,17 +29,22 @@ class ContentSeeder(
         val lessonsJson = readAsset("content/lessons.json")
         val bundleVersion = ContentParser.bundleVersion(lessonsJson)
         val current = settingsRepository.settings.first().contentVersion
-        if (current == bundleVersion && dao.countVocabulary() > 0) return
+        // The knowledge table is checked too: an install seeded before the graph
+        // existed must still receive it (MIGRATION_2_3 only creates the table).
+        if (current == bundleVersion && dao.countVocabulary() > 0 && dao.countKnowledgeItems() > 0) return
 
         val vocabularyJson = readAsset("content/vocabulary.json")
         val exercisesJson = readAsset("content/exercises.json")
         val placementJson = readAsset("content/placement.json")
+        val knowledgeJson = readAsset("content/knowledge.json")
         warnOnVersionMismatch("vocabulary.json", vocabularyJson, bundleVersion)
         warnOnVersionMismatch("exercises.json", exercisesJson, bundleVersion)
         warnOnVersionMismatch("placement.json", placementJson, bundleVersion)
+        warnOnVersionMismatch("knowledge.json", knowledgeJson, bundleVersion)
 
         val lessons = ContentParser.parseLessons(lessonsJson)
         val vocabulary = ContentParser.parseVocabulary(vocabularyJson)
+        val knowledge = ContentParser.parseKnowledge(knowledgeJson)
         val exercises = ContentParser.parseRawExercises(exercisesJson) +
             ContentParser.parseRawPlacement(placementJson)
 
@@ -76,6 +82,18 @@ class ContentSeeder(
                     type = it.type,
                     orderIndex = it.orderIndex,
                     payloadJson = it.payloadJson,
+                )
+            },
+            knowledge = knowledge.map {
+                KnowledgeItemEntity(
+                    id = it.id,
+                    type = it.type.name,
+                    title = it.title,
+                    titleFa = it.titleFa,
+                    level = it.level.name,
+                    prerequisitesJson = JSONArray(it.prerequisites).toString(),
+                    lessonIdsJson = JSONArray(it.lessonIds).toString(),
+                    skillsJson = JSONArray(it.skills.map { skill -> skill.name }).toString(),
                 )
             },
         )

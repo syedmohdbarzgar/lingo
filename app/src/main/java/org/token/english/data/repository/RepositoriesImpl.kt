@@ -12,19 +12,28 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import org.token.english.core.common.TimeUtil
 import org.token.english.data.content.ContentParser
+import org.json.JSONArray
 import org.token.english.data.local.dao.ContentDao
+import org.token.english.data.local.dao.KnowledgeDao
 import org.token.english.data.local.dao.ProgressDao
 import org.token.english.data.local.dao.ReviewDao
 import org.token.english.data.local.entity.ExerciseEntity
+import org.token.english.data.local.entity.KnowledgeItemEntity
+import org.token.english.data.local.entity.KnowledgeStateEntity
 import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.ReviewAttemptEntity
 import org.token.english.data.local.entity.ReviewItemEntity
 import org.token.english.data.local.entity.VocabularyEntity
+import org.token.english.domain.engine.DefaultKnowledgeEngine
+import org.token.english.domain.engine.KnowledgeEvidence
 import org.token.english.domain.engine.MasteryEngine
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.KnowledgeItem
+import org.token.english.domain.model.KnowledgeState
+import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewAttempt
@@ -36,11 +45,97 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
+
+// ------------------------------------------------------- Knowledge graph
+
+/**
+ * Learner state per knowledge item. Writes are one atomic read-modify-write per
+ * affected node, and reads rebuild the node list from the seeded content table so
+ * a re-seed can never leave stale curriculum data behind.
+ */
+class KnowledgeRepositoryImpl(
+    private val contentDao: ContentDao,
+    private val knowledgeDao: KnowledgeDao,
+    private val engine: DefaultKnowledgeEngine = DefaultKnowledgeEngine(),
+) : KnowledgeRepository {
+
+    override fun observeStates(): Flow<List<KnowledgeState>> =
+        knowledgeDao.observeStates().map { rows -> rows.map { it.toDomain() } }
+
+    override fun observePractisedCount(): Flow<Int> =
+        knowledgeDao.observeStates().map { it.size }
+
+    override suspend fun getState(itemId: String): KnowledgeState? =
+        knowledgeDao.getState(itemId)?.toDomain()
+
+    override suspend fun itemsForLesson(lessonId: String): List<KnowledgeItem> =
+        allItems().filter { lessonId in it.lessonIds }
+
+    override suspend fun allItems(): List<KnowledgeItem> =
+        contentDao.getKnowledgeItems().map { it.toDomain() }
+
+    override suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long) {
+        KnowledgeEvidence.itemsFor(itemsForLesson(lessonId), skill).forEach { item ->
+            knowledgeDao.updateAtomic(item.id) { existing ->
+                engine.applyAttempt(item.id, existing?.toDomain(), correct, now).toEntity()
+            }
+        }
+    }
+
+    override suspend fun reset() = knowledgeDao.clear()
+}
+
+private fun KnowledgeStateEntity.toDomain(): KnowledgeState = KnowledgeState(
+    itemId = itemId,
+    mastery = mastery,
+    exposureCount = exposureCount,
+    consecutiveCorrect = consecutiveCorrect,
+    consecutiveIncorrect = consecutiveIncorrect,
+    intervalDays = intervalDays,
+    easeFactor = easeFactor,
+    repetitions = repetitions,
+    lapses = lapses,
+    lastReviewedAt = lastReviewedAt,
+    nextReviewAt = nextReviewAt,
+)
+
+private fun KnowledgeState.toEntity(): KnowledgeStateEntity = KnowledgeStateEntity(
+    itemId = itemId,
+    mastery = mastery,
+    exposureCount = exposureCount,
+    consecutiveCorrect = consecutiveCorrect,
+    consecutiveIncorrect = consecutiveIncorrect,
+    intervalDays = intervalDays,
+    easeFactor = easeFactor,
+    repetitions = repetitions,
+    lapses = lapses,
+    lastReviewedAt = lastReviewedAt,
+    nextReviewAt = nextReviewAt,
+)
+
+private fun KnowledgeItemEntity.toDomain(): KnowledgeItem = KnowledgeItem(
+    id = id,
+    type = KnowledgeType.valueOf(type.uppercase()),
+    title = title,
+    titleFa = titleFa,
+    level = LearningLevel.valueOf(level),
+    prerequisites = prerequisitesJson.toStringList(),
+    lessonIds = lessonIdsJson.toStringList(),
+    skills = skillsJson.toStringList()
+        .mapNotNull { runCatching { Skill.valueOf(it.uppercase()) }.getOrNull() },
+)
+
+/** Tolerates a malformed cell rather than crashing the whole graph. */
+private fun String.toStringList(): List<String> = runCatching {
+    val array = JSONArray(this)
+    (0 until array.length()).map { array.getString(it) }
+}.getOrDefault(emptyList())
 
 // ---------------------------------------------------------------- Lessons
 

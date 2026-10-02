@@ -7,6 +7,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import org.token.english.data.local.entity.ExerciseEntity
+import org.token.english.data.local.entity.KnowledgeItemEntity
+import org.token.english.data.local.entity.KnowledgeStateEntity
 import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.ReviewAttemptEntity
@@ -65,6 +67,13 @@ interface ContentDao {
     @Query("SELECT * FROM exercise WHERE lessonId = :lessonId ORDER BY orderIndex ASC")
     suspend fun getExercises(lessonId: String): List<ExerciseEntity>
 
+    // Knowledge graph
+    @Query("SELECT * FROM knowledge_item ORDER BY id ASC")
+    suspend fun getKnowledgeItems(): List<KnowledgeItemEntity>
+
+    @Query("SELECT COUNT(*) FROM knowledge_item")
+    suspend fun countKnowledgeItems(): Int
+
     // Content writes (seeding only)
 
     /**
@@ -76,13 +85,16 @@ interface ContentDao {
         lessons: List<LessonEntity>,
         vocabulary: List<VocabularyEntity>,
         exercises: List<ExerciseEntity>,
+        knowledge: List<KnowledgeItemEntity>,
     ) {
         clearExercises()
         clearVocabulary()
+        clearKnowledgeItems()
         clearLessons()
         insertLessons(lessons)
         insertVocabulary(vocabulary)
         insertExercises(exercises)
+        insertKnowledgeItems(knowledge)
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -94,6 +106,9 @@ interface ContentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercises(items: List<ExerciseEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKnowledgeItems(items: List<KnowledgeItemEntity>)
+
     @Query("DELETE FROM lesson")
     suspend fun clearLessons()
 
@@ -102,6 +117,9 @@ interface ContentDao {
 
     @Query("DELETE FROM exercise")
     suspend fun clearExercises()
+
+    @Query("DELETE FROM knowledge_item")
+    suspend fun clearKnowledgeItems()
 
     @Query("DELETE FROM lesson_state")
     suspend fun clearLessonStates()
@@ -214,4 +232,32 @@ interface ProgressDao {
 
     @Query("DELETE FROM study_session")
     suspend fun clearSessions()
+}
+
+@Dao
+interface KnowledgeDao {
+    @Query("SELECT * FROM knowledge_state")
+    fun observeStates(): Flow<List<KnowledgeStateEntity>>
+
+    @Query("SELECT * FROM knowledge_state WHERE itemId = :itemId")
+    suspend fun getState(itemId: String): KnowledgeStateEntity?
+
+    @Query("SELECT COUNT(*) FROM knowledge_state")
+    suspend fun countPractised(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(item: KnowledgeStateEntity)
+
+    /**
+     * Atomic read-modify-write of one node's state — same pattern as skill
+     * mastery: the value handed to [compute] is the row as it exists inside this
+     * transaction, so two answers can never interleave between read and write.
+     */
+    @Transaction
+    suspend fun updateAtomic(itemId: String, compute: (KnowledgeStateEntity?) -> KnowledgeStateEntity) {
+        upsert(compute(getState(itemId)))
+    }
+
+    @Query("DELETE FROM knowledge_state")
+    suspend fun clear()
 }

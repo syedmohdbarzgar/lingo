@@ -133,6 +133,26 @@ fun ProgressScreen() {
                         )
                     }
                 }
+
+                if (state.knowledgeTotal > 0) {
+                    AppCard {
+                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
+                            SectionHeader("گراف دانش")
+                            SkillProgressBar(
+                                label = "گره‌های تمرین‌شده",
+                                progress = state.knowledgePractised.toFloat() / state.knowledgeTotal,
+                                valueText = "${state.knowledgePractised} از ${state.knowledgeTotal}",
+                            )
+                            state.weakestKnowledge?.let { weakest ->
+                                Text(
+                                    text = "ضعیف‌ترین گره فعلی: $weakest",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }

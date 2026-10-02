@@ -1,12 +1,12 @@
 package org.token.english.domain.model
 
-/** CEFR levels (methodology spec §2). The offline bundle ships all six (A1–C2, 4 lessons each). */
+/** CEFR levels (methodology spec §2). The bundled curriculum ships all six (A1–C2). */
 enum class LearningLevel { A1, A2, B1, B2, C1, C2 }
 
 /**
  * Skill dimensions tracked per learner (methodology spec §19).
  * PRONUNCIATION and FLUENCY were removed: they need speech evaluation, which is
- * suspended while offline (AGENTS.md), and advertising a skill the app cannot
+ * suspended until speech evaluation exists (AGENTS.md), and advertising a skill the app cannot
  * train would make mastery/recommendations dishonest. SPEAKING stays only as
  * the suspended exercise placeholder.
  */
@@ -103,7 +103,7 @@ sealed interface Exercise {
         override val explanation: String? = null,
     ) : Exercise
 
-    /** Requires speech evaluation (cloud/on-device recognizer) — suspended while offline. */
+    /** Requires speech evaluation (on-device or cloud recognizer) — not implemented yet. */
     data class Speaking(
         override val id: String,
         override val lessonId: String,
@@ -149,6 +149,58 @@ data class ReviewAttempt(
     val result: ReviewResult,
     val responseTimeMs: Long,
     val source: String,
+)
+
+/**
+ * What kind of knowledge a graph node represents. Deliberately not the same axis
+ * as [Skill]: "inversion" is GRAMMAR knowledge that trains the GRAMMAR and
+ * WRITING skill meters, so type and skills are separate.
+ */
+enum class KnowledgeType { GRAMMAR, VOCABULARY, DISCOURSE, PHONOLOGY }
+
+/**
+ * One learnable unit — the thing mastery and spaced repetition should eventually
+ * be about, instead of a raw exercise or an anonymous skill bucket (audit §4/§19).
+ *
+ * A knowledge item is taught by one or more lessons and assessed by the exercises
+ * of those lessons, so a single item collects evidence from many exercise formats
+ * (multiple choice, fill blank, translation, listening).
+ *
+ * `prerequisites` are ids of items to learn first — these are the curriculum graph
+ * edges that [org.token.english.domain.engine.KnowledgeGraph] reasons over.
+ */
+data class KnowledgeItem(
+    val id: String,
+    val type: KnowledgeType,
+    val title: String,
+    val titleFa: String,
+    val level: LearningLevel,
+    val prerequisites: List<String>,
+    val lessonIds: List<String>,
+    val skills: List<Skill>,
+)
+
+/**
+ * Per-knowledge-item learner state (audit §20). This is the learner model: how
+ * well each curriculum node is known, how often it has been practised, and when
+ * it should come back for review.
+ *
+ * `mastery` is the exponentially-weighted 0..1 estimate; `intervalDays`,
+ * `easeFactor` and `nextReviewAt` are the SM-2 schedule, shared with the review
+ * queue so "known" means the same thing everywhere.
+ */
+data class KnowledgeState(
+    val itemId: String,
+    val mastery: Float,
+    val exposureCount: Int,
+    val consecutiveCorrect: Int,
+    val consecutiveIncorrect: Int,
+    val intervalDays: Int,
+    val easeFactor: Float,
+    val repetitions: Int,
+    val lapses: Int,
+    val lastReviewedAt: Long?,
+    val nextReviewAt: Long,
 )
 
 data class SkillMastery(

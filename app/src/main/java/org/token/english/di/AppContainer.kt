@@ -14,6 +14,7 @@ import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.TtsAudioPlayer
 import org.token.english.data.content.ContentSeeder
 import org.token.english.data.local.AppDatabase
+import org.token.english.data.repository.KnowledgeRepositoryImpl
 import org.token.english.data.repository.LessonRepositoryImpl
 import org.token.english.data.repository.ProgressRepositoryImpl
 import org.token.english.data.repository.ReviewRepositoryImpl
@@ -25,6 +26,7 @@ import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.MasteryEngine
 import org.token.english.domain.engine.ReviewScheduler
 import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
@@ -39,7 +41,7 @@ import org.token.english.domain.usecase.SubmitReviewUseCase
 /**
  * Manual dependency container. Constructor injection at the class level,
  * container-level wiring here — Hilt/KSP-Hilt is deliberately avoided to keep the
- * offline MVP's build simple under AGP 9 built-in Kotlin (see AGENTS.md).
+ * MVP's build simple under AGP 9 built-in Kotlin (see AGENTS.md).
  */
 class AppContainer(context: Context, appScope: CoroutineScope) {
 
@@ -48,7 +50,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
     // Data
     val database: AppDatabase by lazy {
         Room.databaseBuilder(appContext, AppDatabase::class.java, "english.db")
-            .addMigrations(AppDatabase.MIGRATION_1_2)
+            // Every migration must be listed here: Room throws at open time when a
+            // path from the installed version is missing, which would crash an
+            // upgrading install before the seeder ever runs.
+            .addMigrations(
+                AppDatabase.MIGRATION_1_2,
+                AppDatabase.MIGRATION_2_3,
+                AppDatabase.MIGRATION_3_4,
+            )
             .build()
     }
     val settingsRepository: SettingsRepository by lazy { SettingsRepositoryImpl(appContext) }
@@ -59,6 +68,9 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
         VocabularyRepositoryImpl(database.contentDao())
     }
     val reviewRepository: ReviewRepository by lazy { ReviewRepositoryImpl(database.reviewDao()) }
+    val knowledgeRepository: KnowledgeRepository by lazy {
+        KnowledgeRepositoryImpl(database.contentDao(), database.knowledgeDao())
+    }
     val progressRepository: ProgressRepository by lazy {
         ProgressRepositoryImpl(
             contentDao = database.contentDao(),
@@ -90,7 +102,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
     val reviewScheduler: ReviewScheduler by lazy { Sm2ReviewScheduler() }
     val learningPlanner: LearningPlanner by lazy { DefaultLearningPlanner() }
 
-    // Audio (on-device TTS — offline)
+    // Audio (on-device TTS — no network needed)
     val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }
 
     // Store billing — implementation comes from the active product flavor
@@ -172,7 +184,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
 
     // Use cases
     val submitExercise: SubmitExerciseUseCase by lazy {
-        SubmitExerciseUseCase(progressRepository)
+        SubmitExerciseUseCase(progressRepository, knowledgeRepository)
     }
     val completeLesson: CompleteLessonUseCase by lazy {
         CompleteLessonUseCase(lessonRepository, progressRepository)

@@ -3,6 +3,8 @@ package org.token.english.domain.repository
 import kotlinx.coroutines.flow.Flow
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.KnowledgeItem
+import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
@@ -43,6 +45,37 @@ interface ReviewRepository {
     suspend fun schedule(item: ReviewItem)
     suspend fun recordAttempt(attempt: ReviewAttempt)
     suspend fun getAttempts(contentId: String): List<ReviewAttempt>
+    suspend fun reset()
+}
+
+/**
+ * Learner state per curriculum node (audit §5/§19/§20).
+ *
+ * The content half (which nodes a lesson teaches) is a graph read; the progress
+ * half is written as answers arrive. Both live here because callers always want
+ * them together: "which nodes did this lesson just give evidence about?".
+ */
+interface KnowledgeRepository {
+    /** State of every practised node; a node missing from the list is unpractised. */
+    fun observeStates(): Flow<List<KnowledgeState>>
+
+    fun observePractisedCount(): Flow<Int>
+
+    suspend fun getState(itemId: String): KnowledgeState?
+
+    /** Curriculum nodes a lesson teaches (authored graph, not learner data). */
+    suspend fun itemsForLesson(lessonId: String): List<KnowledgeItem>
+
+    /** The whole curriculum graph, for coverage counts and per-node labels. */
+    suspend fun allItems(): List<KnowledgeItem>
+
+    /**
+     * Records one graded answer against every knowledge item it is evidence
+     * about. Never throws for an unknown lesson (e.g. the placement test) — there
+     * is simply nothing to attribute the answer to.
+     */
+    suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long)
+
     suspend fun reset()
 }
 
