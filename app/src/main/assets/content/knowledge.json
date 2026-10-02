@@ -1,0 +1,1186 @@
+{
+  "contentVersion": 6,
+  "knowledge": [
+    {
+      "id": "vocab.greetings",
+      "type": "VOCABULARY",
+      "title": "Greetings and courtesy phrases",
+      "titleFa": "سلام و عبارات ادب",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.greetings.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.verb-be",
+      "type": "GRAMMAR",
+      "title": "The verb be (am / is / are)",
+      "titleFa": "فعل be (am / is / are)",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.greetings.lesson-01",
+        "a1.introductions.lesson-01",
+        "a1.family.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.daily-routine",
+      "type": "VOCABULARY",
+      "title": "Daily routine verbs",
+      "titleFa": "فعل‌های کارهای روزمره",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.daily-routine.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.present-simple-affirmative",
+      "type": "GRAMMAR",
+      "title": "Present simple — affirmative",
+      "titleFa": "حال ساده — جملهٔ مثبت",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a1.daily-routine.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.third-person-s",
+      "type": "GRAMMAR",
+      "title": "Third person -s in the present",
+      "titleFa": "قاعدهٔ s سوم‌شخص در حال ساده",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a1.daily-routine.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.have-got",
+      "type": "GRAMMAR",
+      "title": "have / have got for possession",
+      "titleFa": "have و have got برای مالکیت",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a1.family.lesson-01",
+        "a2.health.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.family",
+      "type": "VOCABULARY",
+      "title": "Family and people",
+      "titleFa": "خانواده و افراد",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.greetings"
+      ],
+      "lessons": [
+        "a1.family.lesson-01",
+        "a1.introductions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY"
+      ]
+    },
+    {
+      "id": "grammar.possessive-adjectives",
+      "type": "GRAMMAR",
+      "title": "Possessive adjectives (my / your / his / her)",
+      "titleFa": "صفت‌های ملکی",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a1.introductions.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.how-much-questions",
+      "type": "GRAMMAR",
+      "title": "How much / how many questions",
+      "titleFa": "پرسش‌های How much و How many",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a1.shopping.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.numbers-prices",
+      "type": "VOCABULARY",
+      "title": "Numbers, money and prices",
+      "titleFa": "اعداد، پول و قیمت",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.daily-routine"
+      ],
+      "lessons": [
+        "a1.shopping.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.present-continuous",
+      "type": "GRAMMAR",
+      "title": "Present continuous for right now",
+      "titleFa": "حال استمراری برای همین حالا",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a1.weather.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.weather-seasons",
+      "type": "VOCABULARY",
+      "title": "Weather and seasons",
+      "titleFa": "آب‌وهوا و فصل‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.daily-routine"
+      ],
+      "lessons": [
+        "a1.weather.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.future-will",
+      "type": "GRAMMAR",
+      "title": "will for plans and predictions",
+      "titleFa": "will برای برنامه و پیش‌بینی",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.airport.lesson-01",
+        "b1.plans.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.obligation-need-have-to",
+      "type": "GRAMMAR",
+      "title": "need to / have to for obligation",
+      "titleFa": "need to و have to برای الزام",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.airport.lesson-01",
+        "a2.health.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.would-like-politeness",
+      "type": "GRAMMAR",
+      "title": "would like and polite requests",
+      "titleFa": "would like و درخواست مؤدبانه",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a2.restaurant.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "grammar.some-any-countability",
+      "type": "GRAMMAR",
+      "title": "some / any and countable nouns",
+      "titleFa": "some و any و اسم‌های قابل‌شمارش",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.restaurant.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.prepositions-of-place",
+      "type": "GRAMMAR",
+      "title": "Prepositions and directions of place",
+      "titleFa": "حروف اضافهٔ مکان و مسیر",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a2.directions.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.should-advice",
+      "type": "GRAMMAR",
+      "title": "should / shouldn't for advice",
+      "titleFa": "should و shouldn't برای توصیه",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.health.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.gerund-after-verbs",
+      "type": "GRAMMAR",
+      "title": "verb + -ing after enjoy / like",
+      "titleFa": "فعل + ing بعد از enjoy و like",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.hobbies.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.infinitive-after-verbs",
+      "type": "GRAMMAR",
+      "title": "verb + to-infinitive after want / decide",
+      "titleFa": "to + مصدر بعد از want و decide",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a2.hobbies.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.there-is-there-are",
+      "type": "GRAMMAR",
+      "title": "there is / there are",
+      "titleFa": "ساختار there is و there are",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a2.city-life.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.comparatives",
+      "type": "GRAMMAR",
+      "title": "Comparatives and superlatives",
+      "titleFa": "صفت‌های برتر و برترین",
+      "level": "A2",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a2.city-life.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.past-simple",
+      "type": "GRAMMAR",
+      "title": "Past simple",
+      "titleFa": "گذشتهٔ ساده",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "b1.work.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.present-perfect-for-since",
+      "type": "GRAMMAR",
+      "title": "Present perfect with for / since",
+      "titleFa": "حال کامل با for و since",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.past-simple"
+      ],
+      "lessons": [
+        "b1.work.lesson-01",
+        "b1.money.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.passive-simple",
+      "type": "GRAMMAR",
+      "title": "The passive (simple tenses)",
+      "titleFa": "مجهول در زمان‌های ساده",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.past-simple"
+      ],
+      "lessons": [
+        "b1.news.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.reason-cause",
+      "type": "DISCOURSE",
+      "title": "Expressing reason and cause",
+      "titleFa": "بیان دلیل و علت",
+      "level": "B1",
+      "prerequisites": [],
+      "lessons": [
+        "b1.news.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "READING"
+      ]
+    },
+    {
+      "id": "grammar.going-to-future",
+      "type": "GRAMMAR",
+      "title": "be going to for intentions",
+      "titleFa": "be going to برای قصد و برنامه",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.future-will"
+      ],
+      "lessons": [
+        "b1.plans.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.first-conditional",
+      "type": "GRAMMAR",
+      "title": "First conditional (real future)",
+      "titleFa": "شرطی نوع اول",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.future-will"
+      ],
+      "lessons": [
+        "b1.plans.lesson-01",
+        "b1.health-lifestyle.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.second-conditional",
+      "type": "GRAMMAR",
+      "title": "Second conditional (hypothetical)",
+      "titleFa": "شرطی نوع دوم",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.past-simple"
+      ],
+      "lessons": [
+        "b1.plans.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.past-continuous",
+      "type": "GRAMMAR",
+      "title": "Past continuous",
+      "titleFa": "گذشتهٔ استمراری",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.past-simple"
+      ],
+      "lessons": [
+        "b1.experiences.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.past-perfect",
+      "type": "GRAMMAR",
+      "title": "Past perfect",
+      "titleFa": "ماضی بعید",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.past-simple"
+      ],
+      "lessons": [
+        "b1.experiences.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.collocation-make-do",
+      "type": "VOCABULARY",
+      "title": "make / do and basic collocations",
+      "titleFa": "make و do و هم‌نشینی‌های پایه",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.daily-routine"
+      ],
+      "lessons": [
+        "b1.money.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "grammar.modals-advice-ought",
+      "type": "GRAMMAR",
+      "title": "ought to / had better for advice",
+      "titleFa": "ought to و had better برای توصیه",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.should-advice"
+      ],
+      "lessons": [
+        "b1.health-lifestyle.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "discourse.habit-and-frequency",
+      "type": "DISCOURSE",
+      "title": "Habits and frequency expressions",
+      "titleFa": "عادت‌ها و قیدهای تکرار",
+      "level": "B1",
+      "prerequisites": [
+        "grammar.third-person-s"
+      ],
+      "lessons": [
+        "b1.health-lifestyle.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.relative-clauses",
+      "type": "GRAMMAR",
+      "title": "Relative clauses (who / which / that)",
+      "titleFa": "جمله‌های موصولی",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "b2.technology.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.passive-with-modals",
+      "type": "GRAMMAR",
+      "title": "Passive with modals",
+      "titleFa": "مجهول با افعال وجهی",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.passive-simple"
+      ],
+      "lessons": [
+        "b2.technology.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.modals-of-deduction",
+      "type": "GRAMMAR",
+      "title": "Modals of deduction (must / might / can't)",
+      "titleFa": "افعال وجهی استنباط (must / might / can't)",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.passive-simple"
+      ],
+      "lessons": [
+        "b2.environment.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.tentative-conditionals",
+      "type": "GRAMMAR",
+      "title": "Tentative and unreal conditionals",
+      "titleFa": "شرطی‌های فرضی و نامحتمل",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.second-conditional"
+      ],
+      "lessons": [
+        "b2.environment.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "discourse.reported-speech-basic",
+      "type": "DISCOURSE",
+      "title": "Reported speech (statements)",
+      "titleFa": "نقل قول غیرمستقیم (جملهٔ خبری)",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.past-perfect"
+      ],
+      "lessons": [
+        "b2.interview.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "grammar.reported-questions",
+      "type": "GRAMMAR",
+      "title": "Reported questions and commands",
+      "titleFa": "نقل قول پرسش‌ها و دستورها",
+      "level": "B2",
+      "prerequisites": [
+        "discourse.reported-speech-basic"
+      ],
+      "lessons": [
+        "b2.interview.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.used-to-and-would",
+      "type": "GRAMMAR",
+      "title": "used to / would for past habits",
+      "titleFa": "used to و would برای عادت گذشته",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.past-continuous"
+      ],
+      "lessons": [
+        "b2.media.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.wish-and-regret",
+      "type": "GRAMMAR",
+      "title": "wish / if only for regret",
+      "titleFa": "wish و if only برای حسرت",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.past-perfect"
+      ],
+      "lessons": [
+        "b2.media.lesson-01",
+        "c1.culture.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.present-perfect-passive",
+      "type": "GRAMMAR",
+      "title": "Present perfect passive",
+      "titleFa": "مجهول حال کامل",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.present-perfect-for-since",
+        "grammar.passive-simple"
+      ],
+      "lessons": [
+        "b2.problems.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.complaint-register",
+      "type": "DISCOURSE",
+      "title": "Complaining politely in writing",
+      "titleFa": "شکایت مؤدبانه در نوشتار",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.passive-simple"
+      ],
+      "lessons": [
+        "b2.problems.lesson-01"
+      ],
+      "skills": [
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.hedging",
+      "type": "DISCOURSE",
+      "title": "Hedging and cautious claims",
+      "titleFa": "احتیاط زبانی و ادعای محتاطانه",
+      "level": "B2",
+      "prerequisites": [
+        "discourse.complaint-register"
+      ],
+      "lessons": [
+        "b2.research.lesson-01"
+      ],
+      "skills": [
+        "WRITING",
+        "READING"
+      ]
+    },
+    {
+      "id": "grammar.subject-verb-agreement",
+      "type": "GRAMMAR",
+      "title": "Subject-verb agreement with tricky nouns",
+      "titleFa": "هماهنگی فاعل و فعل با اسم‌های خاص",
+      "level": "B2",
+      "prerequisites": [
+        "grammar.third-person-s"
+      ],
+      "lessons": [
+        "b2.research.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.inversion-negative-adverbials",
+      "type": "GRAMMAR",
+      "title": "Inversion after negative adverbials",
+      "titleFa": "وارونه‌سازی پس از قیدهای منفی",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.second-conditional"
+      ],
+      "lessons": [
+        "c1.academic.lesson-01",
+        "c1.persuasion.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.passive-reporting",
+      "type": "DISCOURSE",
+      "title": "Passive reporting structures (It is argued that …)",
+      "titleFa": "ساختارهای مجهول گزارشی",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.passive-with-modals"
+      ],
+      "lessons": [
+        "c1.academic.lesson-01"
+      ],
+      "skills": [
+        "WRITING",
+        "READING"
+      ]
+    },
+    {
+      "id": "grammar.mixed-conditionals",
+      "type": "GRAMMAR",
+      "title": "Mixed conditionals",
+      "titleFa": "شرطی‌های ترکیبی",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.second-conditional",
+        "grammar.past-perfect"
+      ],
+      "lessons": [
+        "c1.persuasion.lesson-01",
+        "c1.culture.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.modals-in-the-past",
+      "type": "GRAMMAR",
+      "title": "Modals in the past (should have, needn't have)",
+      "titleFa": "افعال وجهی در گذشته",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.modals-of-deduction"
+      ],
+      "lessons": [
+        "c1.persuasion.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "discourse.narrative-tenses",
+      "type": "DISCOURSE",
+      "title": "Narrative tense sequencing",
+      "titleFa": "توالی زمان‌ها در روایت",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.past-continuous"
+      ],
+      "lessons": [
+        "c1.culture.lesson-01"
+      ],
+      "skills": [
+        "READING",
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "vocab.phrasal-verbs",
+      "type": "VOCABULARY",
+      "title": "Phrasal verbs and their particles",
+      "titleFa": "فعل‌های عبارتی و حروف اضافه‌شان",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.collocation-make-do"
+      ],
+      "lessons": [
+        "c1.phrasal-idioms.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY"
+      ]
+    },
+    {
+      "id": "vocab.idioms-and-figurative",
+      "type": "VOCABULARY",
+      "title": "Idioms and figurative meaning",
+      "titleFa": "اصطلاحات و معنای مجازی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.phrasal-verbs"
+      ],
+      "lessons": [
+        "c1.phrasal-idioms.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "READING"
+      ]
+    },
+    {
+      "id": "grammar.modals-of-deduction-past",
+      "type": "GRAMMAR",
+      "title": "Deduction about the past (must have, can't have)",
+      "titleFa": "استنباط دربارهٔ گذشته",
+      "level": "C1",
+      "prerequisites": [
+        "grammar.modals-of-deduction"
+      ],
+      "lessons": [
+        "c1.inference.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "discourse.inference-and-implication",
+      "type": "DISCOURSE",
+      "title": "Inference and implied meaning",
+      "titleFa": "استنباط و معنای تلویحی",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.hedging"
+      ],
+      "lessons": [
+        "c1.inference.lesson-01"
+      ],
+      "skills": [
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.register-and-formality",
+      "type": "DISCOURSE",
+      "title": "Register, formality and tone",
+      "titleFa": "سبک، رسمیت و لحن",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.hedging"
+      ],
+      "lessons": [
+        "c1.register.lesson-01"
+      ],
+      "skills": [
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.nominalisation",
+      "type": "DISCOURSE",
+      "title": "Nominalisation in formal writing",
+      "titleFa": "اسم‌سازی در نوشتار رسمی",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.register-and-formality"
+      ],
+      "lessons": [
+        "c1.register.lesson-01"
+      ],
+      "skills": [
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.markers-and-linking",
+      "type": "DISCOURSE",
+      "title": "Discourse markers and logical linking",
+      "titleFa": "نشانگرهای گفتمانی و پیوند منطقی",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.reason-cause"
+      ],
+      "lessons": [
+        "c1.cohesion.lesson-01"
+      ],
+      "skills": [
+        "WRITING",
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.reference-and-ellipsis",
+      "type": "DISCOURSE",
+      "title": "Reference, substitution and ellipsis",
+      "titleFa": "ارجاع، جانشینی و حذف",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.markers-and-linking"
+      ],
+      "lessons": [
+        "c1.cohesion.lesson-01"
+      ],
+      "skills": [
+        "WRITING",
+        "READING"
+      ]
+    },
+    {
+      "id": "vocab.semantic-precision",
+      "type": "VOCABULARY",
+      "title": "Semantic precision and word choice",
+      "titleFa": "دقت معنایی و انتخاب واژه",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.idioms-and-figurative"
+      ],
+      "lessons": [
+        "c2.nuance.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "vocab.connotation",
+      "type": "VOCABULARY",
+      "title": "Connotation and register of synonyms",
+      "titleFa": "بار معنایی و سطح واژه‌های هم‌معنا",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.semantic-precision"
+      ],
+      "lessons": [
+        "c2.nuance.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY"
+      ]
+    },
+    {
+      "id": "discourse.rhetorical-emphasis",
+      "type": "DISCOURSE",
+      "title": "Rhetorical emphasis and repetition",
+      "titleFa": "تأکید بلاغی و تکرار",
+      "level": "C2",
+      "prerequisites": [
+        "grammar.inversion-negative-adverbials"
+      ],
+      "lessons": [
+        "c2.rhetoric.lesson-01"
+      ],
+      "skills": [
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.irony-and-tone",
+      "type": "DISCOURSE",
+      "title": "Irony, tone and the gap between words and meaning",
+      "titleFa": "کنایه، لحن و فاصلهٔ واژه و معنا",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.connotation"
+      ],
+      "lessons": [
+        "c2.rhetoric.lesson-01",
+        "c2.literature.lesson-01"
+      ],
+      "skills": [
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.evidence-and-claims",
+      "type": "DISCOURSE",
+      "title": "Linking claims to evidence",
+      "titleFa": "پیوند ادعا به شواهد",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.passive-reporting"
+      ],
+      "lessons": [
+        "c2.science.lesson-01"
+      ],
+      "skills": [
+        "READING",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.definition-and-classification",
+      "type": "DISCOURSE",
+      "title": "Defining, classifying and exemplifying",
+      "titleFa": "تعریف، طبقه‌بندی و مثال‌آوری",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.nominalisation"
+      ],
+      "lessons": [
+        "c2.science.lesson-01"
+      ],
+      "skills": [
+        "WRITING"
+      ]
+    },
+    {
+      "id": "discourse.narrative-voice-and-ambiguity",
+      "type": "DISCOURSE",
+      "title": "Narrative voice, subtext and ambiguity",
+      "titleFa": "صدای راوی، معنای پنهان و ابهام",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.irony-and-tone"
+      ],
+      "lessons": [
+        "c2.literature.lesson-01"
+      ],
+      "skills": [
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.concession-and-refutation",
+      "type": "DISCOURSE",
+      "title": "Conceding a point, then refuting it",
+      "titleFa": "امتیاز دادن و سپس رد کردن",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.markers-and-linking"
+      ],
+      "lessons": [
+        "c2.argumentation.lesson-01"
+      ],
+      "skills": [
+        "WRITING",
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.logical-fallacies",
+      "type": "DISCOURSE",
+      "title": "Naming logical fallacies",
+      "titleFa": "تشخیص و نام‌گذاری مغالطه‌ها",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.concession-and-refutation"
+      ],
+      "lessons": [
+        "c2.argumentation.lesson-01"
+      ],
+      "skills": [
+        "READING",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "vocab.collocation-strength",
+      "type": "VOCABULARY",
+      "title": "Collocation strength and naturalness",
+      "titleFa": "قوت و طبیعی بودن هم‌نشینی واژه‌ها",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.collocation-make-do"
+      ],
+      "lessons": [
+        "c2.collocation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "vocab.delexical-verbs",
+      "type": "VOCABULARY",
+      "title": "Delexical verbs (have a look, take a break)",
+      "titleFa": "فعل‌های سبک",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.collocation-strength"
+      ],
+      "lessons": [
+        "c2.collocation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY"
+      ]
+    },
+    {
+      "id": "discourse.understatement-and-litotes",
+      "type": "DISCOURSE",
+      "title": "Understatement and litotes",
+      "titleFa": "کم‌گویی و نفیِ نقیض",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.irony-and-tone"
+      ],
+      "lessons": [
+        "c2.irony.lesson-01"
+      ],
+      "skills": [
+        "READING"
+      ]
+    },
+    {
+      "id": "discourse.pragmatic-implicature",
+      "type": "DISCOURSE",
+      "title": "Pragmatic implicature and what is left unsaid",
+      "titleFa": "تلویح کاربردشناختی و ناگفته‌ها",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.inference-and-implication"
+      ],
+      "lessons": [
+        "c2.irony.lesson-01"
+      ],
+      "skills": [
+        "READING"
+      ]
+    }
+  ]
+}

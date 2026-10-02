@@ -1,5 +1,5 @@
 {
-  "contentVersion": 4,
+  "contentVersion": 6,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -2435,6 +2435,1434 @@
         "dead metaphor"
       ],
       "lessonId": "c2.literature.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.name",
+      "word": "name",
+      "translation": "نام",
+      "definition": "What a person or thing is called",
+      "pronunciation": "/neɪm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "My name is Sara."
+      ],
+      "collocations": [
+        "first name",
+        "full name"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.friend",
+      "word": "friend",
+      "translation": "دوست",
+      "definition": "A person you like and know well",
+      "pronunciation": "/frend/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "This is my friend Ali."
+      ],
+      "collocations": [
+        "best friend",
+        "close friend"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.meet",
+      "word": "meet",
+      "translation": "ملاقات کردن",
+      "definition": "To see and speak to someone for the first time or again",
+      "pronunciation": "/miːt/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Nice to meet you."
+      ],
+      "collocations": [
+        "meet a friend",
+        "meet for the first time"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.new",
+      "word": "new",
+      "translation": "جدید",
+      "definition": "Not existing or known before",
+      "pronunciation": "/njuː/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "She is my new colleague."
+      ],
+      "collocations": [
+        "brand new",
+        "new student"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.work",
+      "word": "work",
+      "translation": "کار کردن",
+      "definition": "To do a job, especially to earn money",
+      "pronunciation": "/wɜːrk/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "I work in a hospital."
+      ],
+      "collocations": [
+        "work as a teacher",
+        "work in an office"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.introductions.word.live",
+      "word": "live",
+      "translation": "زندگی کردن",
+      "definition": "To have your home in a place",
+      "pronunciation": "/lɪv/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "I live in Tehran."
+      ],
+      "collocations": [
+        "live in a city",
+        "live with family"
+      ],
+      "lessonId": "a1.introductions.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.rain",
+      "word": "rain",
+      "translation": "باران",
+      "definition": "Water that falls from clouds",
+      "pronunciation": "/reɪn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The rain stopped in the afternoon."
+      ],
+      "collocations": [
+        "heavy rain",
+        "light rain"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.sunny",
+      "word": "sunny",
+      "translation": "آفتابی",
+      "definition": "With a lot of bright light from the sun",
+      "pronunciation": "/ˈsʌni/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "It is sunny today."
+      ],
+      "collocations": [
+        "a sunny day",
+        "warm and sunny"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.cloud",
+      "word": "cloud",
+      "translation": "ابر",
+      "definition": "A white or grey mass in the sky made of water drops",
+      "pronunciation": "/klaʊd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "There are dark clouds over the city."
+      ],
+      "collocations": [
+        "dark clouds",
+        "grey clouds"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.wind",
+      "word": "wind",
+      "translation": "باد",
+      "definition": "Air that moves quickly outside",
+      "pronunciation": "/wɪnd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The wind is strong today."
+      ],
+      "collocations": [
+        "strong wind",
+        "cold wind"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.season",
+      "word": "season",
+      "translation": "فصل",
+      "definition": "One of the four parts of the year",
+      "pronunciation": "/ˈsiːzn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Spring is my favourite season."
+      ],
+      "collocations": [
+        "the rainy season",
+        "dry season"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a1.weather.word.warm",
+      "word": "warm",
+      "translation": "گرم",
+      "definition": "A little hot, in a pleasant way",
+      "pronunciation": "/wɔːrm/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "It is warm in April."
+      ],
+      "collocations": [
+        "warm weather",
+        "keep warm"
+      ],
+      "lessonId": "a1.weather.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.hobby",
+      "word": "hobby",
+      "translation": "سرگرمی",
+      "definition": "An activity you enjoy doing in your free time",
+      "pronunciation": "/ˈhɒbi/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Photography is my main hobby."
+      ],
+      "collocations": [
+        "take up a hobby",
+        "favourite hobby"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.collect",
+      "word": "collect",
+      "translation": "جمع‌آوری کردن",
+      "definition": "To bring things together and keep them",
+      "pronunciation": "/kəˈlekt/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "He collects old coins."
+      ],
+      "collocations": [
+        "collect stamps",
+        "collect coins"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.painting",
+      "word": "painting",
+      "translation": "نقاشی",
+      "definition": "The activity or result of making pictures with paint",
+      "pronunciation": "/ˈpeɪntɪŋ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "She spends Sundays painting."
+      ],
+      "collocations": [
+        "oil painting",
+        "watercolour painting"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.photography",
+      "word": "photography",
+      "translation": "عکاسی",
+      "definition": "The art of taking photographs",
+      "pronunciation": "/fəˈtɒɡrəfi/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "I took a photography class last year."
+      ],
+      "collocations": [
+        "wildlife photography",
+        "take up photography"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.member",
+      "word": "member",
+      "translation": "عضو",
+      "definition": "A person who belongs to a group or club",
+      "pronunciation": "/ˈmembər/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "I am a member of a chess club."
+      ],
+      "collocations": [
+        "club member",
+        "become a member"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.hobbies.word.spare-time",
+      "word": "spare time",
+      "translation": "وقت آزاد",
+      "definition": "Time when you are not working or studying",
+      "pronunciation": "/speər taɪm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "What do you do in your spare time?"
+      ],
+      "collocations": [
+        "in my spare time",
+        "use your spare time"
+      ],
+      "lessonId": "a2.hobbies.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.neighbourhood",
+      "word": "neighbourhood",
+      "translation": "محله",
+      "definition": "The area of a town where people live",
+      "pronunciation": "/ˈneɪbərhʊd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Our neighbourhood is very quiet."
+      ],
+      "collocations": [
+        "quiet neighbourhood",
+        "safe neighbourhood"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.crowded",
+      "word": "crowded",
+      "translation": "شلوغ",
+      "definition": "Full of people",
+      "pronunciation": "/ˈkraʊdɪd/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "The market is crowded on Fridays."
+      ],
+      "collocations": [
+        "crowded street",
+        "get crowded"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.traffic",
+      "word": "traffic",
+      "translation": "ترافیک",
+      "definition": "The cars and other vehicles moving on a road",
+      "pronunciation": "/ˈtræfɪk/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "There is heavy traffic in the morning."
+      ],
+      "collocations": [
+        "heavy traffic",
+        "traffic jam"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.convenient",
+      "word": "convenient",
+      "translation": "راحت و در دسترس",
+      "definition": "Easy and useful, without causing problems",
+      "pronunciation": "/kənˈviːniənt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "The flat is convenient for the station."
+      ],
+      "collocations": [
+        "convenient location",
+        "convenient for"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.park",
+      "word": "park",
+      "translation": "پارک",
+      "definition": "An open public area with grass and trees",
+      "pronunciation": "/pɑːrk/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "We walk in the park every evening."
+      ],
+      "collocations": [
+        "public park",
+        "go to the park"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "a2.city-life.word.subway",
+      "word": "subway",
+      "translation": "مترو",
+      "definition": "An underground railway system in a city",
+      "pronunciation": "/ˈsʌbweɪ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "I take the subway to work."
+      ],
+      "collocations": [
+        "subway station",
+        "take the subway"
+      ],
+      "lessonId": "a2.city-life.lesson-01"
+    },
+    {
+      "id": "b1.money.word.budget",
+      "word": "budget",
+      "translation": "بودجه",
+      "definition": "A plan for how much money you can spend",
+      "pronunciation": "/ˈbʌdʒɪt/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "We set a monthly budget for food."
+      ],
+      "collocations": [
+        "monthly budget",
+        "stick to a budget"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.money.word.save",
+      "word": "save",
+      "translation": "پس‌انداز کردن",
+      "definition": "To keep money for later instead of spending it",
+      "pronunciation": "/seɪv/",
+      "level": "B1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "I save a small amount every month."
+      ],
+      "collocations": [
+        "save money",
+        "save up for"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.money.word.expense",
+      "word": "expense",
+      "translation": "هزینه",
+      "definition": "Money that you have to spend on something",
+      "pronunciation": "/ɪkˈspens/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Rent is our biggest expense."
+      ],
+      "collocations": [
+        "monthly expenses",
+        "living expenses"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.money.word.afford",
+      "word": "afford",
+      "translation": "توان مالی داشتن",
+      "definition": "To have enough money for something",
+      "pronunciation": "/əˈfɔːrd/",
+      "level": "B1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "We cannot afford a new car this year."
+      ],
+      "collocations": [
+        "can afford to",
+        "hardly afford"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.money.word.debt",
+      "word": "debt",
+      "translation": "بدهی",
+      "definition": "Money that you owe to someone",
+      "pronunciation": "/det/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "He is working hard to pay off his debt."
+      ],
+      "collocations": [
+        "pay off a debt",
+        "get into debt"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.money.word.income",
+      "word": "income",
+      "translation": "درآمد",
+      "definition": "The money you receive from work or investments",
+      "pronunciation": "/ˈɪnkʌm/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Her income increased after the promotion."
+      ],
+      "collocations": [
+        "monthly income",
+        "source of income"
+      ],
+      "lessonId": "b1.money.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.balanced-diet",
+      "word": "balanced diet",
+      "translation": "رژیم غذایی متعادل",
+      "definition": "Food that contains the right amounts of everything you need",
+      "pronunciation": "/ˈbælənst ˈdaɪət/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "A balanced diet includes fruit and vegetables."
+      ],
+      "collocations": [
+        "maintain a balanced diet",
+        "eat a balanced diet"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.exercise",
+      "word": "exercise",
+      "translation": "ورزش کردن",
+      "definition": "Physical activity that keeps you healthy",
+      "pronunciation": "/ˈeksərsaɪz/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Regular exercise reduces stress."
+      ],
+      "collocations": [
+        "regular exercise",
+        "take exercise"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.stress",
+      "word": "stress",
+      "translation": "استرس",
+      "definition": "Worry caused by a difficult situation",
+      "pronunciation": "/stres/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Too much stress affects your sleep."
+      ],
+      "collocations": [
+        "reduce stress",
+        "under stress"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.sleep",
+      "word": "sleep",
+      "translation": "خواب",
+      "definition": "The rest your body takes at night with your eyes closed",
+      "pronunciation": "/sliːp/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Most adults need eight hours of sleep."
+      ],
+      "collocations": [
+        "get enough sleep",
+        "a lack of sleep"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.habit",
+      "word": "habit",
+      "translation": "عادت",
+      "definition": "Something you do often, almost without thinking",
+      "pronunciation": "/ˈhæbɪt/",
+      "level": "B1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Reading before bed is a good habit."
+      ],
+      "collocations": [
+        "break a habit",
+        "form a habit"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b1.health-lifestyle.word.skip",
+      "word": "skip",
+      "translation": "حذف کردن، جا انداختن",
+      "definition": "To not do something you usually do",
+      "pronunciation": "/skɪp/",
+      "level": "B1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Never skip breakfast before an exam."
+      ],
+      "collocations": [
+        "skip a meal",
+        "skip class"
+      ],
+      "lessonId": "b1.health-lifestyle.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.complaint",
+      "word": "complaint",
+      "translation": "شکایت",
+      "definition": "A statement that something is wrong or unsatisfactory",
+      "pronunciation": "/kəmˈpleɪnt/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "We received a complaint about the delay."
+      ],
+      "collocations": [
+        "make a complaint",
+        "deal with a complaint"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.refund",
+      "word": "refund",
+      "translation": "بازپرداخت",
+      "definition": "Money returned to you when you are not satisfied",
+      "pronunciation": "/ˈriːfʌnd/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The shop offered a full refund."
+      ],
+      "collocations": [
+        "full refund",
+        "ask for a refund"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.resolve",
+      "word": "resolve",
+      "translation": "حل کردن",
+      "definition": "To find an answer to a problem or disagreement",
+      "pronunciation": "/rɪˈzɒlv/",
+      "level": "B2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "The issue was resolved within two days."
+      ],
+      "collocations": [
+        "resolve an issue",
+        "resolve a dispute"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.deadline",
+      "word": "deadline",
+      "translation": "مهلت",
+      "definition": "The time by which something must be finished",
+      "pronunciation": "/ˈdedlaɪn/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "We are working to a tight deadline."
+      ],
+      "collocations": [
+        "meet a deadline",
+        "miss a deadline"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.delay",
+      "word": "delay",
+      "translation": "تأخیر",
+      "definition": "A situation in which something happens later than planned",
+      "pronunciation": "/dɪˈleɪ/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "There was a two-hour delay at the airport."
+      ],
+      "collocations": [
+        "long delay",
+        "without delay"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.problems.word.compensate",
+      "word": "compensate",
+      "translation": "جبران کردن",
+      "definition": "To pay or give something for a loss or damage",
+      "pronunciation": "/ˈkɒmpenseɪt/",
+      "level": "B2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "The airline agreed to compensate the passengers."
+      ],
+      "collocations": [
+        "compensate for",
+        "compensate somebody for"
+      ],
+      "lessonId": "b2.problems.lesson-01"
+    },
+    {
+      "id": "b2.research.word.evidence",
+      "word": "evidence",
+      "translation": "شواهد",
+      "definition": "Facts or signs that show something is true",
+      "pronunciation": "/ˈevɪdəns/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "There is little evidence for this claim."
+      ],
+      "collocations": [
+        "strong evidence",
+        "provide evidence"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "b2.research.word.hypothesis",
+      "word": "hypothesis",
+      "translation": "فرضیه",
+      "definition": "An idea suggested as an explanation, not yet proved",
+      "pronunciation": "/haɪˈpɒθəsɪs/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The data support the original hypothesis."
+      ],
+      "collocations": [
+        "test a hypothesis",
+        "reject a hypothesis"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "b2.research.word.sample",
+      "word": "sample",
+      "translation": "نمونه",
+      "definition": "A small group taken from a larger group for testing",
+      "pronunciation": "/ˈsɑːmpl/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The sample was too small to be reliable."
+      ],
+      "collocations": [
+        "random sample",
+        "sample size"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "b2.research.word.indicate",
+      "word": "indicate",
+      "translation": "نشان دادن",
+      "definition": "To show that something is likely to be true",
+      "pronunciation": "/ˈɪndɪkeɪt/",
+      "level": "B2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "The results indicate a clear trend."
+      ],
+      "collocations": [
+        "results indicate",
+        "strongly indicate"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "b2.research.word.reliable",
+      "word": "reliable",
+      "translation": "قابل‌اعتماد",
+      "definition": "Able to be trusted to be correct",
+      "pronunciation": "/rɪˈlaɪəbl/",
+      "level": "B2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "We need more reliable data."
+      ],
+      "collocations": [
+        "reliable source",
+        "highly reliable"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "b2.research.word.bias",
+      "word": "bias",
+      "translation": "سوگیری",
+      "definition": "An unfair preference that affects judgement",
+      "pronunciation": "/ˈbaɪəs/",
+      "level": "B2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The study was criticised for its bias."
+      ],
+      "collocations": [
+        "selection bias",
+        "avoid bias"
+      ],
+      "lessonId": "b2.research.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.imply",
+      "word": "imply",
+      "translation": "به‌طور غیرمستقیم رساندن",
+      "definition": "To suggest something without saying it directly",
+      "pronunciation": "/ɪmˈplaɪ/",
+      "level": "C1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "His silence implied agreement."
+      ],
+      "collocations": [
+        "strongly imply",
+        "imply that"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.infer",
+      "word": "infer",
+      "translation": "استنباط کردن",
+      "definition": "To reach an opinion from the available evidence",
+      "pronunciation": "/ɪnˈfɜːr/",
+      "level": "C1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "From her tone we inferred that she disagreed."
+      ],
+      "collocations": [
+        "reasonably infer",
+        "infer from"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.assumption",
+      "word": "assumption",
+      "translation": "فرض، پیش‌فرض",
+      "definition": "Something you accept as true without proof",
+      "pronunciation": "/əˈsʌmpʃn/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The argument rests on a questionable assumption."
+      ],
+      "collocations": [
+        "make an assumption",
+        "challenge an assumption"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.ambiguity",
+      "word": "ambiguity",
+      "translation": "ابهام",
+      "definition": "The state of having more than one possible meaning",
+      "pronunciation": "/ˌæmbɪˈɡjuːəti/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The wording leaves room for ambiguity."
+      ],
+      "collocations": [
+        "deliberate ambiguity",
+        "remove ambiguity"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.overstate",
+      "word": "overstate",
+      "translation": "اغراق کردن، بیش از حد بزرگ‌نمایی کردن",
+      "definition": "To describe something as more important than it is",
+      "pronunciation": "/ˌəʊvərˈsteɪt/",
+      "level": "C1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "It is hard to overstate the impact of the reform."
+      ],
+      "collocations": [
+        "hard to overstate",
+        "widely overstated"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.inference.word.unspoken",
+      "word": "unspoken",
+      "translation": "ناگفته",
+      "definition": "Understood without being said aloud",
+      "pronunciation": "/ʌnˈspəʊkən/",
+      "level": "C1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "There was an unspoken agreement between them."
+      ],
+      "collocations": [
+        "unspoken rule",
+        "remain unspoken"
+      ],
+      "lessonId": "c1.inference.lesson-01"
+    },
+    {
+      "id": "c1.register.word.register",
+      "word": "register",
+      "translation": "سبک زبانی",
+      "definition": "The level of formality of language used in a situation",
+      "pronunciation": "/ˈredʒɪstər/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The letter uses a formal register throughout."
+      ],
+      "collocations": [
+        "formal register",
+        "appropriate register"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.register.word.formal",
+      "word": "formal",
+      "translation": "رسمی",
+      "definition": "Following official or serious conventions of language",
+      "pronunciation": "/ˈfɔːrml/",
+      "level": "C1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "We would be grateful for a formal reply."
+      ],
+      "collocations": [
+        "formal letter",
+        "formal occasion"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.register.word.colloquial",
+      "word": "colloquial",
+      "translation": "محاوره‌ای",
+      "definition": "Used in ordinary conversation rather than formal writing",
+      "pronunciation": "/kəˈləʊkwiəl/",
+      "level": "C1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "The dialogue is full of colloquial expressions."
+      ],
+      "collocations": [
+        "colloquial English",
+        "colloquial term"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.register.word.nominalisation",
+      "word": "nominalisation",
+      "translation": "اسم‌سازی",
+      "definition": "Turning a verb or adjective into a noun",
+      "pronunciation": "/ˌnɒmɪnəlaɪˈzeɪʃn/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Academic writing relies heavily on nominalisation."
+      ],
+      "collocations": [
+        "heavy nominalisation",
+        "avoid nominalisation"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.register.word.hedge",
+      "word": "hedge",
+      "translation": "تلطیف کردن، احتیاط در بیان",
+      "definition": "To soften a statement so it sounds less definite",
+      "pronunciation": "/hedʒ/",
+      "level": "C1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Writers hedge their claims with may and tends to."
+      ],
+      "collocations": [
+        "hedge a claim",
+        "deliberately hedge"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.register.word.courtesy",
+      "word": "courtesy",
+      "translation": "ادب، نزاکت",
+      "definition": "Polite behaviour showing respect for others",
+      "pronunciation": "/ˈkɜːrtəsi/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "She had the courtesy to reply on the same day."
+      ],
+      "collocations": [
+        "common courtesy",
+        "as a courtesy"
+      ],
+      "lessonId": "c1.register.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.cohesion",
+      "word": "cohesion",
+      "translation": "انسجام",
+      "definition": "The way parts of a text connect and hold together",
+      "pronunciation": "/kəʊˈhiːʒn/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Good cohesion makes an essay easy to follow."
+      ],
+      "collocations": [
+        "textual cohesion",
+        "lack of cohesion"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.discourse-marker",
+      "word": "discourse marker",
+      "translation": "نشانگر گفتمانی",
+      "definition": "A word or phrase that signals how ideas are related",
+      "pronunciation": "/ˈdɪskɔːrs ˈmɑːrkər/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "However and therefore are common discourse markers."
+      ],
+      "collocations": [
+        "use a discourse marker",
+        "sentence-initial marker"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.antecedent",
+      "word": "antecedent",
+      "translation": "مرجع پیشین",
+      "definition": "The word that a pronoun or referring expression points back to",
+      "pronunciation": "/ˌæntɪˈsiːdnt/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The pronoun has no clear antecedent in this paragraph."
+      ],
+      "collocations": [
+        "clear antecedent",
+        "ambiguous antecedent"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.ellipsis",
+      "word": "ellipsis",
+      "translation": "حذف (در زبان)",
+      "definition": "Leaving out words that the reader can supply from context",
+      "pronunciation": "/ɪˈlɪpsɪs/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Ellipsis keeps the dialogue natural and fast."
+      ],
+      "collocations": [
+        "use ellipsis",
+        "verbal ellipsis"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.paraphrase",
+      "word": "paraphrase",
+      "translation": "بازگویی",
+      "definition": "To express someone else's meaning in your own words",
+      "pronunciation": "/ˈpærəfreɪz/",
+      "level": "C1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "You must paraphrase the source rather than copy it."
+      ],
+      "collocations": [
+        "paraphrase a source",
+        "accurate paraphrase"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c1.cohesion.word.transition",
+      "word": "transition",
+      "translation": "گذار، انتقال",
+      "definition": "A change from one idea, section or state to another",
+      "pronunciation": "/trænˈzɪʃn/",
+      "level": "C1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The transition between the two sections feels abrupt."
+      ],
+      "collocations": [
+        "smooth transition",
+        "mark a transition"
+      ],
+      "lessonId": "c1.cohesion.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.fallacy",
+      "word": "fallacy",
+      "translation": "مغالطه",
+      "definition": "A mistaken belief or a fault in reasoning",
+      "pronunciation": "/ˈfæləsi/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Attacking the speaker is a classic fallacy."
+      ],
+      "collocations": [
+        "logical fallacy",
+        "common fallacy"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.concede",
+      "word": "concede",
+      "translation": "پذیرفتن، امتیاز دادن",
+      "definition": "To admit that something is true before arguing against it",
+      "pronunciation": "/kənˈsiːd/",
+      "level": "C2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "She conceded the point and moved on to the main issue."
+      ],
+      "collocations": [
+        "concede a point",
+        "reluctantly concede"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.refute",
+      "word": "refute",
+      "translation": "رد کردن (با دلیل)",
+      "definition": "To prove that a statement or theory is wrong",
+      "pronunciation": "/rɪˈfjuːt/",
+      "level": "C2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "The data refute the earlier explanation."
+      ],
+      "collocations": [
+        "refute a claim",
+        "flatly refute"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.premise",
+      "word": "premise",
+      "translation": "مقدمه (منطقی)",
+      "definition": "A statement that an argument is based on",
+      "pronunciation": "/ˈpremɪs/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The conclusion does not follow from the premises."
+      ],
+      "collocations": [
+        "false premise",
+        "underlying premise"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.assertion",
+      "word": "assertion",
+      "translation": "ادعا",
+      "definition": "A confident statement made without proof",
+      "pronunciation": "/əˈsɜːrʃn/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The essay offers assertion where it needs evidence."
+      ],
+      "collocations": [
+        "bold assertion",
+        "unsupported assertion"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.argumentation.word.straw-man",
+      "word": "straw man",
+      "translation": "مغالطهٔ آدم‌کاهی",
+      "definition": "Attacking a weaker version of an opponent's argument",
+      "pronunciation": "/strɔː mæn/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "That is a straw man; nobody proposed such a policy."
+      ],
+      "collocations": [
+        "attack a straw man",
+        "straw man argument"
+      ],
+      "lessonId": "c2.argumentation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.collocation",
+      "word": "collocation",
+      "translation": "هم‌نشینی واژه",
+      "definition": "A combination of words that habitually occur together",
+      "pronunciation": "/ˌkɒləˈkeɪʃn/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Make a decision is a strong collocation; do a decision is not."
+      ],
+      "collocations": [
+        "strong collocation",
+        "typical collocation"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.collocate",
+      "word": "collocate",
+      "translation": "هم‌نشین شدن",
+      "definition": "To regularly appear together with another word",
+      "pronunciation": "/ˈkɒləkeɪt/",
+      "level": "C2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Heavily collocates with rain and with criticism."
+      ],
+      "collocations": [
+        "collocate with",
+        "commonly collocate"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.delexical-verb",
+      "word": "delexical verb",
+      "translation": "فعل سبک",
+      "definition": "A verb whose meaning comes mostly from the noun after it",
+      "pronunciation": "/diːˈleksɪkl vɜːrb/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Have, take and make are common delexical verbs."
+      ],
+      "collocations": [
+        "use a delexical verb",
+        "common delexical verb"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.lexical",
+      "word": "lexical",
+      "translation": "واژگانی",
+      "definition": "Related to the words of a language rather than its grammar",
+      "pronunciation": "/ˈleksɪkl/",
+      "level": "C2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "The essay shows impressive lexical range."
+      ],
+      "collocations": [
+        "lexical resource",
+        "lexical density"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.idiomatic",
+      "word": "idiomatic",
+      "translation": "اصطلاحی، طبیعی",
+      "definition": "Sound like a native speaker's natural word choices",
+      "pronunciation": "/ˌɪdiəˈmætɪk/",
+      "level": "C2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "Her English is fluent and highly idiomatic."
+      ],
+      "collocations": [
+        "idiomatic English",
+        "sound idiomatic"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.collocation.word.precision",
+      "word": "precision",
+      "translation": "دقت",
+      "definition": "The quality of being exact and clearly expressed",
+      "pronunciation": "/prɪˈsɪʒn/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The report is written with precision."
+      ],
+      "collocations": [
+        "with precision",
+        "precision of language"
+      ],
+      "lessonId": "c2.collocation.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.understatement",
+      "word": "understatement",
+      "translation": "کم‌گویی",
+      "definition": "Saying something is smaller or less important than it really is",
+      "pronunciation": "/ˈʌndərsteɪtmənt/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Calling the storm a little rain is a fine understatement."
+      ],
+      "collocations": [
+        "a classic understatement",
+        "deliberate understatement"
+      ],
+      "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.litotes",
+      "word": "litotes",
+      "translation": "کم‌گویی تأکیدی (نفیِ نقیض)",
+      "definition": "Expressing a positive idea by denying its opposite",
+      "pronunciation": "/ˈlaɪtətiːz/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Not uncommon is a typical litotes for fairly common."
+      ],
+      "collocations": [
+        "use litotes",
+        "rhetorical litotes"
+      ],
+      "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.deadpan",
+      "word": "deadpan",
+      "translation": "با چهرهٔ بی‌احساس",
+      "definition": "Showing no emotion while saying something funny or ironic",
+      "pronunciation": "/ˈdedpæn/",
+      "level": "C2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "He delivered the joke in a deadpan voice."
+      ],
+      "collocations": [
+        "deadpan humour",
+        "deadpan delivery"
+      ],
+      "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.subtext",
+      "word": "subtext",
+      "translation": "معنای پنهان",
+      "definition": "A meaning that is implied rather than stated",
+      "pronunciation": "/ˈsʌbtekst/",
+      "level": "C2",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The subtext of the scene is that he already knows."
+      ],
+      "collocations": [
+        "political subtext",
+        "read the subtext"
+      ],
+      "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.self-deprecating",
+      "word": "self-deprecating",
+      "translation": "خودکوچک‌کننده",
+      "definition": "Making yourself seem modest by joking about your weaknesses",
+      "pronunciation": "/ˌself ˈdeprəkeɪtɪŋ/",
+      "level": "C2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "Her self-deprecating humour put everyone at ease."
+      ],
+      "collocations": [
+        "self-deprecating humour",
+        "self-deprecating remark"
+      ],
+      "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "c2.irony.word.facetious",
+      "word": "facetious",
+      "translation": "شوخ‌طبع و نامناسب",
+      "definition": "Trying to be funny about a serious matter",
+      "pronunciation": "/fəˈsiːʃəs/",
+      "level": "C2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "The remark was facetious and badly timed."
+      ],
+      "collocations": [
+        "facetious remark",
+        "sound facetious"
+      ],
+      "lessonId": "c2.irony.lesson-01"
     }
   ]
 }

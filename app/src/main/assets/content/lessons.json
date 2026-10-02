@@ -1,5 +1,5 @@
 {
-  "contentVersion": 4,
+  "contentVersion": 6,
   "lessons": [
     {
       "id": "a1.greetings.lesson-01",
@@ -240,6 +240,146 @@
       "estimatedMinutes": 10,
       "order": 24,
       "grammarTipFa": "معنا از بافت می‌آید نه لفظ مستقیم: tone لحن راوی و irony کنایه است — همیشه بپرس گوینده چه می‌داند که خواننده نمی‌داند."
+    },
+    {
+      "id": "a1.introductions.lesson-01",
+      "level": "A1",
+      "title": "Introductions",
+      "titleFa": "معرفی خود و دیگران",
+      "topic": "People",
+      "estimatedMinutes": 5,
+      "order": 25,
+      "grammarTipFa": "برای معرفی از فعل be استفاده کن: I am Mina / This is Ali — و صفت‌های ملکی را با اسم بیاور: my name، your friend، his sister."
+    },
+    {
+      "id": "a1.weather.lesson-01",
+      "level": "A1",
+      "title": "Weather and Seasons",
+      "titleFa": "آب‌وهوا و فصل‌ها",
+      "topic": "Nature",
+      "estimatedMinutes": 5,
+      "order": 26,
+      "grammarTipFa": "برای هوا همین حالا از حال استمراری استفاده کن: It is raining now — اما برای عادت و آب‌وهوای کلی حال ساده: It rains a lot in winter."
+    },
+    {
+      "id": "a2.hobbies.lesson-01",
+      "level": "A2",
+      "title": "Hobbies and Free Time",
+      "titleFa": "سرگرمی و اوقات فراغت",
+      "topic": "Daily Life",
+      "estimatedMinutes": 6,
+      "order": 27,
+      "grammarTipFa": "بعضی فعل‌ها بعد از خود ing می‌خواهند: I enjoy reading — و بعضی to + فعل: I want to learn. فعل را با شکل درستش حفظ کن، نه با قاعده."
+    },
+    {
+      "id": "a2.city-life.lesson-01",
+      "level": "A2",
+      "title": "City Life",
+      "titleFa": "زندگی شهری",
+      "topic": "Daily Life",
+      "estimatedMinutes": 6,
+      "order": 28,
+      "grammarTipFa": "برای وجود چیزی از there is (مفرد) و there are (جمع) استفاده کن — و برای مقایسه‌ی دو شهر صفت + er + than: Tehran is bigger than Shiraz."
+    },
+    {
+      "id": "b1.money.lesson-01",
+      "level": "B1",
+      "title": "Money and Budgeting",
+      "titleFa": "پول و بودجه‌بندی",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 29,
+      "grammarTipFa": "مدت با for و نقطه‌ی شروع با since می‌آید و فعل حال کامل می‌ماند: I have saved money for two years / since 2023."
+    },
+    {
+      "id": "b1.health-lifestyle.lesson-01",
+      "level": "B1",
+      "title": "Health and Lifestyle",
+      "titleFa": "سلامت و سبک زندگی",
+      "topic": "Health",
+      "estimatedMinutes": 7,
+      "order": 30,
+      "grammarTipFa": "توصیه با should / ought to و منع با shouldn't — و شرطی نوع اول برای نتیجه‌ی واقعی: If you sleep well, you will feel better."
+    },
+    {
+      "id": "b2.problems.lesson-01",
+      "level": "B2",
+      "title": "Solving Problems",
+      "titleFa": "حل مسئله و شکایت",
+      "topic": "Work",
+      "estimatedMinutes": 8,
+      "order": 31,
+      "grammarTipFa": "شکایت رسمی مجهول و مودبانه است: The item has not been delivered yet — و مسئولیت را با need + ing یا need to be + قسمت سوم بگو."
+    },
+    {
+      "id": "b2.research.lesson-01",
+      "level": "B2",
+      "title": "Research and Evidence",
+      "titleFa": "پژوهش و شواهد",
+      "topic": "Study",
+      "estimatedMinutes": 8,
+      "order": 32,
+      "grammarTipFa": "در زبان علمی هیچ‌چیز را قطعی نگو: It may suggest / This tends to indicate — احتیاط زبانی (hedging) بخشی از دقت علمی است."
+    },
+    {
+      "id": "c1.inference.lesson-01",
+      "level": "C1",
+      "title": "Reading Between the Lines",
+      "titleFa": "خواندن بین خطوط",
+      "topic": "Study",
+      "estimatedMinutes": 9,
+      "order": 33,
+      "grammarTipFa": "برای استنباط درباره‌ی گذشته از must have / can't have / might have استفاده کن: She must have forgotten — یعنی شواهد به این نتیجه می‌رسد، نه اینکه دیده‌ایم."
+    },
+    {
+      "id": "c1.register.lesson-01",
+      "level": "C1",
+      "title": "Register and Formality",
+      "titleFa": "سبک رسمی و غیررسمی",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 34,
+      "grammarTipFa": "نوشتار رسمی فعل را اسم می‌کند (nominalisation): We decided → Our decision — و مدعی را نرم می‌کند: it could be argued, rather than it is obvious."
+    },
+    {
+      "id": "c1.cohesion.lesson-01",
+      "level": "C1",
+      "title": "Discourse and Cohesion",
+      "titleFa": "انسجام و پیوند متن",
+      "topic": "Study",
+      "estimatedMinutes": 9,
+      "order": 35,
+      "grammarTipFa": "اتصال‌دهنده‌ها معنا را عوض می‌کنند: however تضاد، therefore نتیجه و moreover افزودن است — و ارجاع با this/that/the former جای تکرار را می‌گیرد."
+    },
+    {
+      "id": "c2.argumentation.lesson-01",
+      "level": "C2",
+      "title": "Argument and Fallacy",
+      "titleFa": "استدلال و مغالطه",
+      "topic": "Debate",
+      "estimatedMinutes": 10,
+      "order": 36,
+      "grammarTipFa": "استدلال قوی ابتدا امتیاز طرف مقابل را می‌پذیرد (concede) و بعد پاسخ می‌دهد: Granted that X, nevertheless Y — نادیده‌گرفتن مخالف، خودش مغالطه است."
+    },
+    {
+      "id": "c2.collocation.lesson-01",
+      "level": "C2",
+      "title": "Collocation and Precision",
+      "titleFa": "هم‌نشینی واژه‌ها و دقت",
+      "topic": "Language",
+      "estimatedMinutes": 10,
+      "order": 37,
+      "grammarTipFa": "در سطح C2 واژه‌ها جفت‌جفت حفظ می‌شوند نه تک‌تک: make a decision نه do a decision، take responsibility نه get responsibility — ترکیب غلط حتی با گرامر درست، غیرطبیعی است."
+    },
+    {
+      "id": "c2.irony.lesson-01",
+      "level": "C2",
+      "title": "Irony and Subtext",
+      "titleFa": "کنایه و معنای پنهان",
+      "topic": "Culture",
+      "estimatedMinutes": 10,
+      "order": 38,
+      "grammarTipFa": "گاهی کم‌گویی از پرگویی قوی‌تر است: Not bad for a beginner یعنی تحسین — و litotes (not uncommon) معنای مثبت می‌رساند."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 4,
+  "contentVersion": 6,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -1392,7 +1392,8 @@
       "options": [
         "would be",
         "is",
-        "were"
+        "were",
+        "will be"
       ],
       "correctIndex": 2
     },
@@ -2300,6 +2301,1340 @@
       "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "belies یعنی «نقض می‌کند، خلافِ چیزی را نشان می‌دهد» — کلید در فعل است، نه در واژه‌های مجاور."
+    },
+    {
+      "id": "a1.introductions.ex.01",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Which sentence introduces someone correctly?",
+      "questionFa": "کدام جمله کسی را درست معرفی می‌کند؟",
+      "options": [
+        "This is my friend Ali.",
+        "This my friend Ali is.",
+        "My friend Ali this is.",
+        "Is this my friend Ali."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای معرفی از ساختار This is + نام استفاده کن؛ فعل be در این جمله حذف نمی‌شود."
+    },
+    {
+      "id": "a1.introductions.ex.02",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"name\" mean?",
+      "questionFa": "معنی «name» چیست؟",
+      "options": [
+        "خانه",
+        "نام",
+        "دوست",
+        "کار"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.introductions.ex.03",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Nice to ______ you. My name is Sara.",
+      "accepted": [
+        "meet"
+      ],
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.introductions.ex.04",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "اسم من مریم است.",
+      "accepted": [
+        "my name is maryam",
+        "my name is mariam",
+        "i am maryam",
+        "i'm maryam"
+      ],
+      "bank": [
+        "my",
+        "name",
+        "is",
+        "maryam",
+        "i",
+        "am",
+        "your",
+        "are"
+      ]
+    },
+    {
+      "id": "a1.introductions.ex.05",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Nice to meet you. I am from Iran.",
+      "accepted": [
+        "nice to meet you i am from iran",
+        "nice to meet you im from iran"
+      ]
+    },
+    {
+      "id": "a1.introductions.ex.06",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Where are you from? — ______",
+      "questionFa": "اهل کجایی؟ — ______",
+      "options": [
+        "I from Tehran am.",
+        "Am I from Tehran.",
+        "I am from Tehran.",
+        "From Tehran I."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "ترتیب درست فاعل + be + متمم است: I am from Tehran."
+    },
+    {
+      "id": "a1.weather.ex.01",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "There are many grey clouds in the sky. It is ______.",
+      "questionFa": "آسمان پر از ابر خاکستری است. هوا ______ است.",
+      "options": [
+        "cloudy",
+        "sunny",
+        "snowy",
+        "dry"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.weather.ex.02",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"season\" mean?",
+      "questionFa": "معنی «season» چیست؟",
+      "options": [
+        "باران",
+        "ابر",
+        "باد",
+        "فصل"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.weather.ex.03",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "It is ______ today. Let us go to the beach.",
+      "accepted": [
+        "sunny",
+        "hot",
+        "warm"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.weather.ex.04",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "هوا امروز سرد است.",
+      "accepted": [
+        "the weather is cold today",
+        "it is cold today",
+        "today the weather is cold"
+      ],
+      "bank": [
+        "the",
+        "weather",
+        "is",
+        "cold",
+        "today",
+        "it",
+        "hot",
+        "are"
+      ]
+    },
+    {
+      "id": "a1.weather.ex.05",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "It is raining and the wind is strong.",
+      "accepted": [
+        "it is raining and the wind is strong",
+        "its raining and the wind is strong"
+      ]
+    },
+    {
+      "id": "a1.weather.ex.06",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "It ______ a lot in winter here.",
+      "questionFa": "زمستان‌ها اینجا زیاد باران می‌بارد.",
+      "options": [
+        "rain",
+        "rains",
+        "have rained",
+        "raining"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای عادت و آب‌وهوای کلی زمان حال ساده است و با it فعل s می‌گیرد: it rains."
+    },
+    {
+      "id": "a2.hobbies.ex.01",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "I enjoy ______ in my spare time.",
+      "questionFa": "از ______ در وقت آزادم لذت می‌برم.",
+      "options": [
+        "to paint",
+        "painting",
+        "paint",
+        "painted"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از enjoy همیشه ing می‌آید: enjoy painting. فعل بعد از خودش شکل ثابتی می‌خواهد، نه free choice."
+    },
+    {
+      "id": "a2.hobbies.ex.02",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"hobby\" mean?",
+      "questionFa": "معنی «hobby» چیست؟",
+      "options": [
+        "شغل تمام‌وقت",
+        "سرگرمی",
+        "امتحان",
+        "مسافرت کاری"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.hobbies.ex.03",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "She wants ______ learn photography this year.",
+      "accepted": [
+        "to"
+      ],
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.hobbies.ex.04",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "من در وقت آزادم کتاب می‌خوانم.",
+      "accepted": [
+        "i read books in my spare time",
+        "i read books in my free time",
+        "in my spare time i read books"
+      ],
+      "bank": [
+        "i",
+        "read",
+        "books",
+        "in",
+        "my",
+        "spare",
+        "time",
+        "free",
+        "at",
+        "the"
+      ]
+    },
+    {
+      "id": "a2.hobbies.ex.05",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "I am a member of a chess club.",
+      "accepted": [
+        "i am a member of a chess club",
+        "im a member of a chess club"
+      ]
+    },
+    {
+      "id": "a2.hobbies.ex.06",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "He ______ old coins and stamps.",
+      "questionFa": "او سکه‌ها و تمبرهای قدیمی ______.",
+      "options": [
+        "collect",
+        "collecting",
+        "collects",
+        "is collect"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "با he/she/it در زمان حال ساده فعل s می‌گیرد: he collects."
+    },
+    {
+      "id": "a2.city-life.ex.01",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Tehran is ______ than Shiraz.",
+      "questionFa": "تهران ______ شیراز است.",
+      "options": [
+        "big",
+        "biggest",
+        "more big",
+        "bigger"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "صفت تک‌هجایی در مقایسه er می‌گیرد و با than می‌آید: bigger than."
+    },
+    {
+      "id": "a2.city-life.ex.02",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"crowded\" mean?",
+      "questionFa": "معنی «crowded» چیست؟",
+      "options": [
+        "شلوغ",
+        "خلوت",
+        "کثیف",
+        "ارزان"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.city-life.ex.03",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "There ______ two parks near my house.",
+      "accepted": [
+        "are"
+      ],
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.city-life.ex.04",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "این محله خیلی آرام است.",
+      "accepted": [
+        "this neighbourhood is very quiet",
+        "this neighborhood is very quiet",
+        "this neighbourhood is very calm",
+        "this neighborhood is very calm"
+      ],
+      "bank": [
+        "this",
+        "neighbourhood",
+        "is",
+        "very",
+        "quiet",
+        "are",
+        "much",
+        "too"
+      ]
+    },
+    {
+      "id": "a2.city-life.ex.05",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "There is heavy traffic in the morning.",
+      "accepted": [
+        "there is heavy traffic in the morning",
+        "theres heavy traffic in the morning"
+      ]
+    },
+    {
+      "id": "a2.city-life.ex.06",
+      "lessonId": "a2.city-life.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "The subway is very ______ for the city centre.",
+      "questionFa": "مترو برای مرکز شهر بسیار ______ است.",
+      "options": [
+        "convenient",
+        "crowded",
+        "traffic",
+        "season"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.money.ex.01",
+      "lessonId": "b1.money.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "We ______ a budget at the start of every month.",
+      "questionFa": "ابتدای هر ماه ______ می‌کنیم.",
+      "options": [
+        "make",
+        "do",
+        "take",
+        "get"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "با budget فعل make هم‌نشین است: make a budget — نه do a budget."
+    },
+    {
+      "id": "b1.money.ex.02",
+      "lessonId": "b1.money.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "I have saved money ______ 2022.",
+      "questionFa": "من از سال ۲۰۲۲ پول پس‌انداز می‌کنم.",
+      "options": [
+        "for",
+        "since",
+        "during",
+        "from"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "since برای نقطهٔ شروع (2022) و for برای طول مدت (two years) به کار می‌رود و فعل حال کامل می‌ماند."
+    },
+    {
+      "id": "b1.money.ex.03",
+      "lessonId": "b1.money.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "We cannot ______ a new car this year.",
+      "accepted": [
+        "afford"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.money.ex.04",
+      "lessonId": "b1.money.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "او بدهی‌اش را پرداخت کرد.",
+      "accepted": [
+        "he paid off his debt",
+        "she paid off her debt",
+        "he paid his debt off"
+      ],
+      "bank": [
+        "he",
+        "paid",
+        "off",
+        "his",
+        "debt",
+        "she",
+        "in",
+        "for"
+      ]
+    },
+    {
+      "id": "b1.money.ex.05",
+      "lessonId": "b1.money.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Rent is our biggest monthly expense.",
+      "accepted": [
+        "rent is our biggest monthly expense",
+        "rent is our biggest expense"
+      ]
+    },
+    {
+      "id": "b1.money.ex.06",
+      "lessonId": "b1.money.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"income\" mean?",
+      "questionFa": "معنی «income» چیست؟",
+      "options": [
+        "هزینه",
+        "بدهی",
+        "درآمد",
+        "مالیات"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.01",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "You ______ get more sleep if you feel tired.",
+      "questionFa": "اگر خسته‌ای، بهتر است بیشتر بخوابی.",
+      "options": [
+        "should to",
+        "should",
+        "are should",
+        "shoulding"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از should فعل بدون to می‌آید: should get — modalها خودشان نشانهٔ وجه‌اند و to نمی‌خواهند."
+    },
+    {
+      "id": "b1.health-lifestyle.ex.02",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"a balanced diet\" mean?",
+      "questionFa": "معنی «a balanced diet» چیست؟",
+      "options": [
+        "غذای آمادهٔ سریع",
+        "رژیم لاغری سخت",
+        "رژیم غذایی متعادل",
+        "حذف کامل گوشت"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.03",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Regular exercise helps you ______ stress.",
+      "accepted": [
+        "reduce",
+        "lower",
+        "manage",
+        "cut"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.04",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "من هر روز ورزش می‌کنم.",
+      "accepted": [
+        "i exercise every day",
+        "i do exercise every day",
+        "i work out every day"
+      ],
+      "bank": [
+        "i",
+        "exercise",
+        "every",
+        "day",
+        "do",
+        "work",
+        "out",
+        "all"
+      ]
+    },
+    {
+      "id": "b1.health-lifestyle.ex.05",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Most adults need eight hours of sleep.",
+      "accepted": [
+        "most adults need eight hours of sleep",
+        "most adults need 8 hours of sleep"
+      ]
+    },
+    {
+      "id": "b1.health-lifestyle.ex.06",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "If you sleep well, you ______ better tomorrow.",
+      "questionFa": "اگر خوب بخوابی، فردا بهتر ______.",
+      "options": [
+        "will feel",
+        "feel will",
+        "would felt",
+        "are feel"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "شرطی نوع اول: جملهٔ if با حال ساده، جملهٔ نتیجه با will + فعل ساده."
+    },
+    {
+      "id": "b2.problems.ex.01",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The parcel has not been ______ yet.",
+      "questionFa": "بسته هنوز ______ نشده است.",
+      "options": [
+        "delivering",
+        "delivered",
+        "deliver",
+        "delivers"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "مجهول حال کامل: has/have been + قسمت سوم فعل — و فاعل واقعی مهم نیست، پس مجهول طبیعی‌تر است."
+    },
+    {
+      "id": "b2.problems.ex.02",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"refund\" mean?",
+      "questionFa": "معنی «refund» چیست؟",
+      "options": [
+        "جریمهٔ دیرکرد",
+        "تخفیف",
+        "بازپرداخت پول",
+        "فاکتور رسمی"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.problems.ex.03",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "We would like to make a ______ about the delay.",
+      "accepted": [
+        "complaint"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.problems.ex.04",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "این مشکل ظرف دو روز حل شد.",
+      "accepted": [
+        "the problem was resolved within two days",
+        "the issue was resolved within two days",
+        "the problem was solved within two days"
+      ],
+      "bank": [
+        "the",
+        "problem",
+        "was",
+        "resolved",
+        "within",
+        "two",
+        "days",
+        "solved",
+        "in",
+        "for"
+      ]
+    },
+    {
+      "id": "b2.problems.ex.05",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "The item has not been delivered yet.",
+      "accepted": [
+        "the item has not been delivered yet",
+        "the item hasnt been delivered yet"
+      ]
+    },
+    {
+      "id": "b2.problems.ex.06",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "The airline agreed to ______ the passengers.",
+      "questionFa": "شرکت هواپیمایی موافقت کرد مسافران را ______ کند.",
+      "options": [
+        "compensation",
+        "compensating",
+        "be compensate",
+        "compensate"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "بعد از to مصدر بدون ing می‌آید و compensate فعل است، نه اسم compensation."
+    },
+    {
+      "id": "b2.research.ex.01",
+      "lessonId": "b2.research.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The results ______ that the treatment works.",
+      "questionFa": "نتایج ______ که این درمان مؤثر است.",
+      "options": [
+        "indicates",
+        "indicate",
+        "indicating",
+        "is indicate"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "results جمع است، پس فعل بدون s می‌آید: the results indicate."
+    },
+    {
+      "id": "b2.research.ex.02",
+      "lessonId": "b2.research.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"bias\" mean?",
+      "questionFa": "معنی «bias» چیست؟",
+      "options": [
+        "دقت اندازه‌گیری",
+        "سوگیری",
+        "اندازهٔ نمونه",
+        "آزمایش شاهد"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.research.ex.03",
+      "lessonId": "b2.research.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The ______ was too small to give reliable results.",
+      "accepted": [
+        "sample",
+        "sample size"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.research.ex.04",
+      "lessonId": "b2.research.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "شواهد از این فرضیه پشتیبانی نمی‌کند.",
+      "accepted": [
+        "the evidence does not support this hypothesis",
+        "the evidence does not support the hypothesis",
+        "there is no evidence for this hypothesis"
+      ],
+      "bank": [
+        "the",
+        "evidence",
+        "does",
+        "not",
+        "support",
+        "this",
+        "hypothesis",
+        "do",
+        "for",
+        "from"
+      ]
+    },
+    {
+      "id": "b2.research.ex.05",
+      "lessonId": "b2.research.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "The findings may suggest a link, but more data are needed.",
+      "accepted": [
+        "the findings may suggest a link but more data are needed",
+        "the findings may suggest a link but more data is needed"
+      ]
+    },
+    {
+      "id": "b2.research.ex.06",
+      "lessonId": "b2.research.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "There is little ______ for such a strong claim.",
+      "questionFa": "برای چنین ادعای قوی شواهد کمی وجود دارد.",
+      "options": [
+        "evidences",
+        "evident",
+        "evidence",
+        "evidently"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "evidence غیرقابل‌شمارش است: همیشه مفرد می‌ماند و s نمی‌گیرد."
+    },
+    {
+      "id": "c1.inference.ex.01",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "She has not arrived and her phone is off. She ______ have forgotten.",
+      "questionFa": "نرسیده و تلفنش خاموش است. حتماً فراموش کرده است.",
+      "options": [
+        "must",
+        "should",
+        "would",
+        "can"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "must have + قسمت سوم فعل یعنی از شواهد به نتیجه می‌رسیم، نه اینکه دیده باشیم — should have یعنی کار درست انجام نشده."
+    },
+    {
+      "id": "c1.inference.ex.02",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Read: The room was spotless, though nobody had seen a cleaner. What can we infer?",
+      "questionFa": "اتاق بی‌نقص تمیز بود، هرچند هیچ‌کس نظافتچی ندیده بود. چه نتیجه‌ای می‌توان گرفت؟",
+      "options": [
+        "اتاق هرگز تمیز نشده بود",
+        "نظافتچی وجود نداشته است",
+        "اتاق خالی مانده بوده است",
+        "کسی آن را تمیز کرده است، حتی اگر دیده نشده"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "though مخالفت با انتظار را نشان می‌دهد: نبودِ شاهد دلیل بر نبودِ علت نیست."
+    },
+    {
+      "id": "c1.inference.ex.03",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Her silence ______ that she disagreed with the plan.",
+      "accepted": [
+        "implied",
+        "implies",
+        "suggested"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.inference.ex.04",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "او حتماً قرار ما را فراموش کرده است.",
+      "accepted": [
+        "she must have forgotten our appointment",
+        "he must have forgotten our appointment",
+        "she must have forgotten the appointment"
+      ],
+      "bank": [
+        "she",
+        "must",
+        "have",
+        "forgotten",
+        "our",
+        "appointment",
+        "should",
+        "forgot"
+      ]
+    },
+    {
+      "id": "c1.inference.ex.05",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "The report does not say so, but it implies a serious risk.",
+      "accepted": [
+        "the report does not say so but it implies a serious risk",
+        "the report doesnt say so but it implies a serious risk"
+      ]
+    },
+    {
+      "id": "c1.inference.ex.06",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "He cannot have written this alone; the style ______ two different hands.",
+      "questionFa": "او به‌تنهایی این را ننوشته؛ سبک ______ دو دست متفاوت است.",
+      "options": [
+        "suggests",
+        "suggest",
+        "is suggest",
+        "suggesting"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل the style مفرد است، پس فعل s می‌گیرد: the style suggests."
+    },
+    {
+      "id": "c1.register.ex.01",
+      "lessonId": "c1.register.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Which version is the most formal?",
+      "questionFa": "کدام نسخه رسمی‌ترین است؟",
+      "options": [
+        "We would be grateful if you could reply.",
+        "Can you reply, yeah?",
+        "Get back to me fast.",
+        "Reply soon, OK?"
+      ],
+      "correctIndex": 0,
+      "skill": "WRITING",
+      "explanationFa": "ساختارهای مودبانه و غیرمستقیم مثل would be grateful و could نشانهٔ سبک رسمی‌اند."
+    },
+    {
+      "id": "c1.register.ex.02",
+      "lessonId": "c1.register.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"register\" mean in language study?",
+      "questionFa": "معنی «register» در زبان‌شناسی چیست؟",
+      "options": [
+        "سبک زبانی متناسب با موقعیت",
+        "لهجهٔ محلی",
+        "سرعت گفتار",
+        "تعداد واژه‌های متن"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.register.ex.03",
+      "lessonId": "c1.register.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Academic writers often ______ their claims with may and tends to.",
+      "accepted": [
+        "hedge",
+        "soften",
+        "qualify"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.register.ex.04",
+      "lessonId": "c1.register.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "این تصمیم مورد انتقاد قرار گرفت.",
+      "accepted": [
+        "this decision was criticised",
+        "this decision was criticized",
+        "the decision was criticised",
+        "the decision was criticized"
+      ],
+      "bank": [
+        "this",
+        "decision",
+        "was",
+        "criticised",
+        "the",
+        "is",
+        "criticise",
+        "by"
+      ]
+    },
+    {
+      "id": "c1.register.ex.05",
+      "lessonId": "c1.register.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "We would be grateful for a formal reply at your earliest convenience.",
+      "accepted": [
+        "we would be grateful for a formal reply at your earliest convenience"
+      ]
+    },
+    {
+      "id": "c1.register.ex.06",
+      "lessonId": "c1.register.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Turning \"decide\" into \"decision\" is an example of ______.",
+      "questionFa": "تبدیل «decide» به «decision» نمونهٔ چیست؟",
+      "options": [
+        "collocation",
+        "ellipsis",
+        "litotes",
+        "nominalisation"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.cohesion.ex.01",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The results were inconclusive; ______, further tests are needed.",
+      "questionFa": "نتایج قطعی نبود؛ ______ آزمایش‌های بیشتری لازم است.",
+      "options": [
+        "however",
+        "therefore",
+        "for example",
+        "in contrast"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "رابطهٔ دو جمله «نتیجه» است، نه «تضاد» — پس therefore درست است و however معنا را برعکس می‌کند."
+    },
+    {
+      "id": "c1.cohesion.ex.02",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What is a discourse marker?",
+      "questionFa": "نشانگر گفتمانی چیست؟",
+      "options": [
+        "نشانهٔ نگارشی مثل ویرگول",
+        "قید مکان",
+        "واژه‌ای که رابطهٔ میان ایده‌ها را نشان می‌دهد",
+        "فعل عبارتی غیررسمی"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.cohesion.ex.03",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The pronoun \"it\" in this sentence has no clear ______.",
+      "accepted": [
+        "antecedent",
+        "reference"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.cohesion.ex.04",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "با این حال، شواهد قانع‌کننده نیست.",
+      "accepted": [
+        "however the evidence is not convincing",
+        "however the evidence is not conclusive",
+        "nevertheless the evidence is not convincing"
+      ],
+      "bank": [
+        "however",
+        "the",
+        "evidence",
+        "is",
+        "not",
+        "convincing",
+        "therefore",
+        "are"
+      ]
+    },
+    {
+      "id": "c1.cohesion.ex.05",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "However, the evidence is far from conclusive.",
+      "accepted": [
+        "however the evidence is far from conclusive"
+      ]
+    },
+    {
+      "id": "c1.cohesion.ex.06",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Leaving out repeated words that the reader can supply is called ______.",
+      "questionFa": "حذف واژه‌های تکراری که خواننده می‌تواند خودش بیاورد، چه نام دارد؟",
+      "options": [
+        "ellipsis",
+        "paraphrase",
+        "transition",
+        "cohesion"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.argumentation.ex.01",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "That is a ______ argument: nobody ever proposed such a policy.",
+      "questionFa": "این یک استدلال ______ است: هیچ‌کس چنین سیاستی پیشنهاد نکرده بود.",
+      "options": [
+        "straw man",
+        "premise",
+        "concession",
+        "assertion"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "حمله به نسخهٔ ضعیف یا ساختگیِ حرف مخالف، مغالطهٔ آدم‌کاهی (straw man) است."
+    },
+    {
+      "id": "c2.argumentation.ex.02",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Which move makes an argument stronger?",
+      "questionFa": "کدام کار استدلال را قوی‌تر می‌کند؟",
+      "options": [
+        "نادیده گرفتن نظر مخالف",
+        "پذیرفتن امتیاز مخالف و سپس پاسخ دادن",
+        "تکرار ادعا با تأکید بیشتر",
+        "تغییر موضوع به موضوعی آسان‌تر"
+      ],
+      "correctIndex": 1,
+      "skill": "WRITING",
+      "explanationFa": "ساختار Granted that X, nevertheless Y اعتماد را بالا می‌برد؛ نادیده گرفتن مخالف خودش ضعف استدلال است."
+    },
+    {
+      "id": "c2.argumentation.ex.03",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The new data ______ the earlier explanation.",
+      "accepted": [
+        "refute",
+        "refuted"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.argumentation.ex.04",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "نتیجه از مقدمات به‌دست نمی‌آید.",
+      "accepted": [
+        "the conclusion does not follow from the premises",
+        "the conclusion does not follow from the premises given"
+      ],
+      "bank": [
+        "the",
+        "conclusion",
+        "does",
+        "not",
+        "follow",
+        "from",
+        "premises",
+        "do",
+        "of",
+        "in"
+      ]
+    },
+    {
+      "id": "c2.argumentation.ex.05",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "She conceded the point, then moved on to the main issue.",
+      "accepted": [
+        "she conceded the point then moved on to the main issue"
+      ]
+    },
+    {
+      "id": "c2.argumentation.ex.06",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "A confident statement made without proof is an ______.",
+      "questionFa": "گزارهٔ مطمئنی که بدون دلیل بیان شود، یک ______ است.",
+      "options": [
+        "assertively",
+        "assert",
+        "assertion",
+        "assertive"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.collocation.ex.01",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Which pairing is the natural collocation in English?",
+      "questionFa": "کدام ترکیب در انگلیسی هم‌نشینی طبیعی است؟",
+      "options": [
+        "strong tea",
+        "powerful tea",
+        "forceful tea",
+        "mighty tea"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "در انگلیسی چای strong است، نه powerful — درجهٔ چای با strong/weak بیان می‌شود، مانند strong coffee."
+    },
+    {
+      "id": "c2.collocation.ex.02",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"collocation\" mean?",
+      "questionFa": "معنی «collocation» چیست؟",
+      "options": [
+        "ترجمهٔ واژه‌به‌واژه",
+        "ریشه‌شناسی واژه",
+        "هم‌نشینی طبیعی واژه‌ها",
+        "قاعدهٔ گرامری ثابت"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.collocation.ex.03",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "You should ______ responsibility for the mistake.",
+      "accepted": [
+        "take",
+        "accept"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.collocation.ex.04",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "معنای این واژه از همنشینی‌اش می‌آید، نه از معنای تک‌تک واژه‌ها.",
+      "accepted": [
+        "the meaning of this word comes from its collocations not from the words alone",
+        "the meaning comes from its collocations not from the words alone"
+      ],
+      "bank": [
+        "the",
+        "meaning",
+        "comes",
+        "from",
+        "its",
+        "collocations",
+        "not",
+        "words",
+        "alone",
+        "come"
+      ]
+    },
+    {
+      "id": "c2.collocation.ex.05",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "A strong collocation sounds natural to native speakers.",
+      "accepted": [
+        "a strong collocation sounds natural to native speakers"
+      ]
+    },
+    {
+      "id": "c2.collocation.ex.06",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "In \"have a shower\", the verb have is a ______.",
+      "questionFa": "در «have a shower» فعل have یک ______ است.",
+      "options": [
+        "modal verb",
+        "delexical verb",
+        "phrasal verb",
+        "linking verb"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "معنای اصلی از اسم می‌آید (shower) و فعل رنگ می‌بازد؛ take/have در take a break هم همین‌گونه‌اند."
+    },
+    {
+      "id": "c2.irony.ex.01",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "He called the hurricane a bit of wind. This is ______.",
+      "questionFa": "توفان را «کمی باد» نامید. این ______ است.",
+      "options": [
+        "understatement",
+        "hyperbole",
+        "ambiguity",
+        "collocation"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.irony.ex.02",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "\"Not uncommon\" used to mean fairly common is an example of ______.",
+      "questionFa": "«Not uncommon» به‌معنی نسبتاً رایج، نمونهٔ چیست؟",
+      "options": [
+        "hyperbole",
+        "ellipsis",
+        "litotes",
+        "nominalisation"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.irony.ex.03",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Saying \"not bad\" to mean very good is a kind of ______.",
+      "accepted": [
+        "understatement",
+        "litotes"
+      ],
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.irony.ex.04",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "معنای پنهان این صحنه این است که او از قبل می‌داند.",
+      "accepted": [
+        "the subtext of this scene is that he already knows",
+        "the subtext of the scene is that he already knows"
+      ],
+      "bank": [
+        "the",
+        "subtext",
+        "of",
+        "this",
+        "scene",
+        "is",
+        "that",
+        "he",
+        "already",
+        "knows"
+      ]
+    },
+    {
+      "id": "c2.irony.ex.05",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Her self-deprecating humour put everyone at ease.",
+      "accepted": [
+        "her self-deprecating humour put everyone at ease",
+        "her self deprecating humour put everyone at ease"
+      ]
+    },
+    {
+      "id": "c2.irony.ex.06",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Read: \"Oh, wonderful, another delay.\" The speaker is ______.",
+      "questionFa": "«چه عالی، یک تأخیر دیگر.» گوینده در حال ______ است.",
+      "options": [
+        "expressing genuine delight",
+        "asking a question",
+        "being ironic",
+        "making a promise"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "واژهٔ مثبت در بافت منفی معنا را برعکس می‌کند — کنایه از تضاد میان واژه و موقعیت ساخته می‌شود."
     }
   ]
 }
