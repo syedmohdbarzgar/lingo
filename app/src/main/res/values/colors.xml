@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Brand colors (see files/stitch_english_learning_app_design_system/design.md) -->
+<resources>
+    <color name="primary_50">#F4F8FF</color>
+    <color name="primary_100">#E8F2FF</color>
+    <color name="primary_200">#BFDBFE</color>
+    <color name="primary_300">#93C5FD</color>
+    <color name="primary_400">#60A5FA</color>
+    <color name="primary_500">#3D7FF2</color>
+    <color name="primary_600">#2169EF</color>
+    <color name="primary_700">#1856C7</color>
+    <color name="primary_800">#123E91</color>
+    <color name="primary_900">#0F2D6B</color>
+    <color name="neutral_950">#0F172A</color>
+    <color name="night_background">#0B1220</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

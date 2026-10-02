@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme (Compose host — no ActionBar). -->
+    <style name="Theme.English" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_400</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">@color/neutral_950</item>
+        <item name="colorSecondary">@color/primary_300</item>
+        <item name="colorSecondaryVariant">@color/primary_400</item>
+        <item name="colorOnSecondary">@color/neutral_950</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/night_background</item>
+    </style>
+</resources>

@@ -1,0 +1,2305 @@
+{
+  "contentVersion": 4,
+  "exercises": [
+    {
+      "id": "a1.greetings.ex.01",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"thank you\" mean?",
+      "questionFa": "معنی «thank you» چیست؟",
+      "options": [
+        "ممنون",
+        "ببخشید",
+        "بعداً می‌بینمت",
+        "لطفاً"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "a1.greetings.ex.02",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Choose the correct greeting for the morning:",
+      "questionFa": "کدام سلام مخصوص صبح است؟",
+      "options": [
+        "Good night",
+        "Good morning",
+        "Goodbye",
+        "Good evening"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "a1.greetings.ex.03",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Hello, ______ are you?",
+      "accepted": [
+        "how"
+      ]
+    },
+    {
+      "id": "a1.greetings.ex.04",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "از آشنایی شما خوشوقتم.",
+      "accepted": [
+        "nice to meet you",
+        "it's nice to meet you",
+        "pleased to meet you"
+      ],
+      "bank": [
+        "nice",
+        "to",
+        "meet",
+        "you",
+        "see",
+        "glad",
+        "hello"
+      ]
+    },
+    {
+      "id": "a1.greetings.ex.05",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Thank you for your help.",
+      "accepted": [
+        "thank you for your help"
+      ]
+    },
+    {
+      "id": "a1.greetings.ex.06",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Which phrase is polite when asking for something?",
+      "questionFa": "کدام عبارت برای درخواست مؤدبانه است؟",
+      "options": [
+        "give me",
+        "hey",
+        "please",
+        "now"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "a1.daily-routine.ex.01",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"wake up\" mean?",
+      "questionFa": "معنی «wake up» چیست؟",
+      "options": [
+        "صبحانه خوردن",
+        "خوابیدن",
+        "دوش گرفتن",
+        "بیدار شدن"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "a1.daily-routine.ex.02",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "I usually ______ coffee in the morning.",
+      "accepted": [
+        "drink"
+      ]
+    },
+    {
+      "id": "a1.daily-routine.ex.03",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جمله درست را انتخاب کنید:",
+      "options": [
+        "I go to work by bus.",
+        "I going to work by bus.",
+        "I am go to work by bus.",
+        "Go I to work by bus."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "a1.daily-routine.ex.04",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "من معمولاً صبح بیدار می‌شوم.",
+      "accepted": [
+        "i usually wake up in the morning",
+        "i usually wake up early in the morning"
+      ],
+      "bank": [
+        "i",
+        "usually",
+        "wake",
+        "up",
+        "in",
+        "the",
+        "morning",
+        "at",
+        "early",
+        "never"
+      ]
+    },
+    {
+      "id": "a1.daily-routine.ex.05",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "We watch TV in the evening.",
+      "accepted": [
+        "we watch tv in the evening"
+      ]
+    },
+    {
+      "id": "a1.daily-routine.ex.06",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "fill_blank",
+      "order": 6,
+      "sentence": "I take a ______ every morning.",
+      "accepted": [
+        "shower",
+        "a shower"
+      ]
+    },
+    {
+      "id": "a1.family.ex.01",
+      "lessonId": "a1.family.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"sister\" mean?",
+      "questionFa": "معنی «sister» چیست؟",
+      "options": [
+        "برادر",
+        "خواهر",
+        "مادر",
+        "دختر"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "a1.family.ex.02",
+      "lessonId": "a1.family.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Your mother's husband is your ______.",
+      "questionFa": "شوهر مادر شما ______ شماست.",
+      "options": [
+        "son",
+        "brother",
+        "father",
+        "waiter"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "a1.family.ex.03",
+      "lessonId": "a1.family.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "My ______ is a teacher. (مادر)",
+      "accepted": [
+        "mother"
+      ]
+    },
+    {
+      "id": "a1.family.ex.04",
+      "lessonId": "a1.family.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "من یک برادر دارم.",
+      "accepted": [
+        "i have one brother",
+        "i have a brother"
+      ],
+      "bank": [
+        "i",
+        "have",
+        "one",
+        "brother",
+        "two",
+        "sister",
+        "a",
+        "the"
+      ]
+    },
+    {
+      "id": "a1.family.ex.05",
+      "lessonId": "a1.family.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "My father works at a bank.",
+      "accepted": [
+        "my father works at a bank"
+      ]
+    },
+    {
+      "id": "a1.family.ex.06",
+      "lessonId": "a1.family.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جمله درست را انتخاب کنید:",
+      "options": [
+        "They having one son.",
+        "They has one son.",
+        "They are have one son.",
+        "They have one son."
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "a2.airport.ex.01",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What do you show before boarding?",
+      "questionFa": "قبل از سوار شدن چه چیزی را نشان می‌دهید؟",
+      "options": [
+        "boarding pass",
+        "luggage",
+        "menu",
+        "bill"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "a2.airport.ex.02",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"departure\" mean?",
+      "questionFa": "معنی «departure» چیست؟",
+      "options": [
+        "ورود",
+        "حرکت / پرواز",
+        "چمدان",
+        "گیت"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "a2.airport.ex.03",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Excuse me, where is gate 12? It's over ______, next to the coffee shop.",
+      "accepted": [
+        "there",
+        "over there"
+      ]
+    },
+    {
+      "id": "a2.airport.ex.04",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "لطفاً گذرنامه‌تان را نشان بدهید.",
+      "accepted": [
+        "please show me your passport",
+        "please show your passport",
+        "show me your passport please"
+      ]
+    },
+    {
+      "id": "a2.airport.ex.05",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Where is gate twelve?",
+      "accepted": [
+        "where is gate 12",
+        "where is gate twelve"
+      ]
+    },
+    {
+      "id": "a2.airport.ex.06",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "The flight to Dubai ______ at 9 p.m.",
+      "questionFa": "پرواز دبی ساعت ۹ شب ______ می‌شود.",
+      "options": [
+        "departing",
+        "depart",
+        "departs",
+        "departed the"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "a2.restaurant.ex.01",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"bill\" mean?",
+      "questionFa": "معنی «bill» چیست؟",
+      "options": [
+        "منو",
+        "رزرو",
+        "پیشخدمت",
+        "حساب"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "a2.restaurant.ex.02",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Choose the polite way to ask for the bill:",
+      "questionFa": "درخواست مؤدبانه صورتحساب کدام است؟",
+      "options": [
+        "Can we have the bill, please?",
+        "Give the bill!",
+        "Bill now.",
+        "I want bill."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "a2.restaurant.ex.03",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I would like to ______ chicken, please.",
+      "accepted": [
+        "order"
+      ]
+    },
+    {
+      "id": "a2.restaurant.ex.04",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "translation",
+      "order": 4,
+      "prompt": "این سوپ خوشمزه است.",
+      "accepted": [
+        "this soup is delicious",
+        "this soup is tasty"
+      ]
+    },
+    {
+      "id": "a2.restaurant.ex.05",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "listening",
+      "order": 5,
+      "text": "Can I see the menu, please?",
+      "accepted": [
+        "can i see the menu please",
+        "can i have the menu please"
+      ]
+    },
+    {
+      "id": "a2.restaurant.ex.06",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "I have a ______ for two people.",
+      "questionFa": "برای دو نفر ______ دارم.",
+      "options": [
+        "breakfast",
+        "reservation",
+        "departure",
+        "brother"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "a1.shopping.ex.01",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "How much ___ these shoes?",
+      "questionFa": "قیمت این کفش‌ها چند است؟",
+      "options": [
+        "be",
+        "is",
+        "are",
+        "do"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "a1.shopping.ex.02",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "I'd like ___ kilo of apples, please.",
+      "questionFa": "لطفاً یک کیلو سیب می‌خواهم.",
+      "options": [
+        "some",
+        "an",
+        "the",
+        "a"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "a1.shopping.ex.03",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "This shirt is very ___. It only costs five pounds.",
+      "accepted": [
+        "cheap"
+      ]
+    },
+    {
+      "id": "a1.shopping.ex.04",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "How ___ water do you drink every day?",
+      "accepted": [
+        "much"
+      ]
+    },
+    {
+      "id": "a1.shopping.ex.05",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "این کیف چند است؟",
+      "accepted": [
+        "how much is this bag",
+        "how much does this bag cost",
+        "what's the price of this bag"
+      ],
+      "bank": [
+        "how",
+        "much",
+        "is",
+        "this",
+        "bag",
+        "what",
+        "the",
+        "price",
+        "of",
+        "cost",
+        "does"
+      ]
+    },
+    {
+      "id": "a1.shopping.ex.06",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The supermarket is open until nine o'clock.",
+      "accepted": [
+        "the supermarket is open until nine o'clock",
+        "the supermarket is open until nine oclock",
+        "the supermarket is open until nine o clock"
+      ]
+    },
+    {
+      "id": "a2.directions.ex.01",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Go straight ___ and then turn left.",
+      "questionFa": "مستقیم بروید و بعد بپیچید چپ.",
+      "options": [
+        "ahead",
+        "on",
+        "off",
+        "up"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "a2.directions.ex.02",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The bank is ___ the post office and the pharmacy.",
+      "questionFa": "بانک بین اداره پست و داروخانه است.",
+      "options": [
+        "under",
+        "between",
+        "in",
+        "at"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "a2.directions.ex.03",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Turn right ___ the second traffic light.",
+      "accepted": [
+        "at"
+      ]
+    },
+    {
+      "id": "a2.directions.ex.04",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Walk ___ this street until you see the church.",
+      "accepted": [
+        "down",
+        "along"
+      ]
+    },
+    {
+      "id": "a2.directions.ex.05",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "ایستگاه اتوبوس روبروی بانک است.",
+      "accepted": [
+        "the bus stop is opposite the bank",
+        "the bus stop is across from the bank"
+      ]
+    },
+    {
+      "id": "a2.directions.ex.06",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Take the second turning on the right.",
+      "accepted": [
+        "take the second turning on the right",
+        "take the second turn on the right"
+      ]
+    },
+    {
+      "id": "a2.health.ex.01",
+      "lessonId": "a2.health.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "You have to ___ this medicine twice a day.",
+      "questionFa": "باید این دارو را دو بار در روز بخورید.",
+      "options": [
+        "taken",
+        "taking",
+        "take",
+        "took"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "a2.health.ex.02",
+      "lessonId": "a2.health.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "She ___ sick, so she stayed home from work.",
+      "questionFa": "او مریض بود، بنابراین در خانه ماند.",
+      "options": [
+        "has",
+        "were",
+        "is",
+        "was"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "a2.health.ex.03",
+      "lessonId": "a2.health.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I have a terrible ___. I need some aspirin.",
+      "accepted": [
+        "headache"
+      ]
+    },
+    {
+      "id": "a2.health.ex.04",
+      "lessonId": "a2.health.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "If you have a fever, you should ___ plenty of water.",
+      "accepted": [
+        "drink"
+      ]
+    },
+    {
+      "id": "a2.health.ex.05",
+      "lessonId": "a2.health.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "من دیروز پیش دکتر رفتم.",
+      "accepted": [
+        "i went to the doctor yesterday",
+        "i went to the doctors yesterday",
+        "yesterday i went to the doctor"
+      ]
+    },
+    {
+      "id": "a2.health.ex.06",
+      "lessonId": "a2.health.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Take one pill after breakfast.",
+      "accepted": [
+        "take one pill after breakfast"
+      ]
+    },
+    {
+      "id": "b1.work.ex.01",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "I ___ for this company since 2019.",
+      "questionFa": "من از سال ۲۰۱۹ برای این شرکت کار می‌کنم.",
+      "options": [
+        "have worked",
+        "worked",
+        "am working",
+        "work"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "b1.work.ex.02",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "He said he ___ the report already.",
+      "questionFa": "او گفت که قبلاً گزارش را تمام کرده است.",
+      "options": [
+        "is finishing",
+        "had finished",
+        "finishes",
+        "will finish"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "b1.work.ex.03",
+      "lessonId": "b1.work.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I have never ___ to Turkey before.",
+      "accepted": [
+        "been"
+      ]
+    },
+    {
+      "id": "b1.work.ex.04",
+      "lessonId": "b1.work.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "When ___ you apply for this job?",
+      "accepted": [
+        "did"
+      ]
+    },
+    {
+      "id": "b1.work.ex.05",
+      "lessonId": "b1.work.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "من سه سال پیش این شرکت را ترک کردم.",
+      "accepted": [
+        "i left this company three years ago",
+        "i left the company three years ago",
+        "i quit this company three years ago"
+      ]
+    },
+    {
+      "id": "b1.work.ex.06",
+      "lessonId": "b1.work.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "I have worked in this field for over ten years.",
+      "accepted": [
+        "i have worked in this field for over ten years"
+      ]
+    },
+    {
+      "id": "b1.news.ex.01",
+      "lessonId": "b1.news.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "A new law ___ last month.",
+      "questionFa": "ماه گذشته قانون جدیدی تصویب شد.",
+      "options": [
+        "passes",
+        "passed",
+        "was passed",
+        "was passing"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "b1.news.ex.02",
+      "lessonId": "b1.news.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "___ the heavy rain, the match was postponed.",
+      "questionFa": "به خاطر باران شدید، بازی به تعویق افتاد.",
+      "options": [
+        "However",
+        "Because",
+        "Although",
+        "Due to"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "b1.news.ex.03",
+      "lessonId": "b1.news.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The bridge ___ built in the nineteenth century.",
+      "accepted": [
+        "was"
+      ]
+    },
+    {
+      "id": "b1.news.ex.04",
+      "lessonId": "b1.news.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The news ___ broadcast at six o'clock every evening.",
+      "accepted": [
+        "is"
+      ]
+    },
+    {
+      "id": "b1.news.ex.05",
+      "lessonId": "b1.news.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "این کتاب توسط یک نویسنده ایرانی نوشته شده است.",
+      "accepted": [
+        "this book was written by an iranian writer",
+        "this book was written by an iranian author"
+      ]
+    },
+    {
+      "id": "b1.news.ex.06",
+      "lessonId": "b1.news.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The new airport will be opened next year.",
+      "accepted": [
+        "the new airport will be opened next year"
+      ]
+    },
+    {
+      "id": "b1.plans.ex.01",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "If I ___ more time, I would learn Japanese.",
+      "questionFa": "اگر وقت بیشتری داشتم، ژاپنی یاد می‌گرفتم.",
+      "options": [
+        "had",
+        "have",
+        "will have",
+        "was having"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "b1.plans.ex.02",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "This time next week, I ___ on a beach in Greece.",
+      "questionFa": "همین موقع هفته دیگر، روی ساحل یونان خواهم بود.",
+      "options": [
+        "lie",
+        "will be lying",
+        "will lie",
+        "am lying"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "b1.plans.ex.03",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "If she studied harder, she ___ pass the exam.",
+      "accepted": [
+        "would"
+      ]
+    },
+    {
+      "id": "b1.plans.ex.04",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I'm going to ___ a new course next month.",
+      "accepted": [
+        "take"
+      ]
+    },
+    {
+      "id": "b1.plans.ex.05",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "اگر هوا خوب بود، به پیک‌نیک می‌رفتیم.",
+      "accepted": [
+        "if the weather was nice we would go on a picnic",
+        "if the weather were nice we would go on a picnic",
+        "if the weather is nice we will go on a picnic"
+      ]
+    },
+    {
+      "id": "b1.plans.ex.06",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "We are going to move house next month.",
+      "accepted": [
+        "we are going to move house next month",
+        "we are going to move next month"
+      ]
+    },
+    {
+      "id": "b1.experiences.ex.01",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "By the time we arrived, the film ___ .",
+      "questionFa": "تا وقتی رسیدیم، فیلم شروع شده بود.",
+      "options": [
+        "was starting",
+        "started",
+        "had started",
+        "has started"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "b1.experiences.ex.02",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "While I ___ dinner, the phone rang.",
+      "questionFa": "در حال شام خوردن بودم که تلفن زنگ خورد.",
+      "options": [
+        "have cooked",
+        "cooked",
+        "had cooked",
+        "was cooking"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "b1.experiences.ex.03",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "When I got to the station, the train ___ already left.",
+      "accepted": [
+        "had"
+      ]
+    },
+    {
+      "id": "b1.experiences.ex.04",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "What were you ___ at nine o'clock last night?",
+      "accepted": [
+        "doing"
+      ]
+    },
+    {
+      "id": "b1.experiences.ex.05",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "وقتی رسیدم، آن‌ها رفته بودند.",
+      "accepted": [
+        "when i arrived they had left",
+        "when i arrived they had gone"
+      ]
+    },
+    {
+      "id": "b1.experiences.ex.06",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "We were watching TV when the lights went out.",
+      "accepted": [
+        "we were watching tv when the lights went out"
+      ]
+    },
+    {
+      "id": "b2.technology.ex.01",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The device ___ was invented last year has changed our lives.",
+      "questionFa": "دستگاهی که سال گذشته اختراع شد زندگی ما را تغییر داده است.",
+      "options": [
+        "that",
+        "who",
+        "whose",
+        "what"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "b2.technology.ex.02",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "Most of the world's data ___ stored in data centers.",
+      "questionFa": "بیشتر داده‌های جهان در مراکز داده نگهداری می‌شود.",
+      "options": [
+        "has stored",
+        "is stored",
+        "are stored",
+        "stores"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "b2.technology.ex.03",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The company ___ I work for develops artificial intelligence.",
+      "accepted": [
+        "that",
+        "which",
+        "for which"
+      ]
+    },
+    {
+      "id": "b2.technology.ex.04",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "This technology can be ___ in many different ways.",
+      "accepted": [
+        "used"
+      ]
+    },
+    {
+      "id": "b2.technology.ex.05",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "این اختراع زندگی روزمره ما را متحول کرده است.",
+      "accepted": [
+        "this invention has transformed our daily life",
+        "this invention has changed our daily life"
+      ]
+    },
+    {
+      "id": "b2.technology.ex.06",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Artificial intelligence is being used in almost every industry.",
+      "accepted": [
+        "artificial intelligence is being used in almost every industry"
+      ]
+    },
+    {
+      "id": "b2.environment.ex.01",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The air smells terrible — there ___ be a factory nearby.",
+      "questionFa": "هوا وحشتناک بو می‌دهد — حتماً کارخانه‌ای نزدیک هست.",
+      "options": [
+        "would",
+        "can",
+        "must",
+        "should"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "b2.environment.ex.02",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "They ___ have missed the flight; their car is still at the airport.",
+      "questionFa": "نباید پرواز را از دست داده باشند؛ ماشینشان هنوز فرودگاه است.",
+      "options": [
+        "wouldn't",
+        "mustn't",
+        "shouldn't",
+        "can't"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "b2.environment.ex.03",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The sea level might ___ by half a metre by 2100.",
+      "accepted": [
+        "rise"
+      ]
+    },
+    {
+      "id": "b2.environment.ex.04",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "If governments ___ stricter laws, pollution would decrease.",
+      "accepted": [
+        "introduced",
+        "made",
+        "passed"
+      ]
+    },
+    {
+      "id": "b2.environment.ex.05",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "به نظر می‌رسد آب‌وهوا در حال تغییر است.",
+      "accepted": [
+        "it seems that the climate is changing",
+        "it seems the climate is changing",
+        "it appears that the climate is changing"
+      ]
+    },
+    {
+      "id": "b2.environment.ex.06",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Recycling can help reduce the amount of waste.",
+      "accepted": [
+        "recycling can help reduce the amount of waste"
+      ]
+    },
+    {
+      "id": "b2.interview.ex.01",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The interviewer asked me where I ___ my last job.",
+      "questionFa": "مصاحبه‌کننده پرسید کجا شغل قبلی‌ام را پیدا کردم.",
+      "options": [
+        "had found",
+        "find",
+        "have found",
+        "was finding"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "b2.interview.ex.02",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "I get ___ well with all my colleagues.",
+      "questionFa": "با همه همکارانم رابطه خوبی دارم.",
+      "options": [
+        "off",
+        "along",
+        "on",
+        "up"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "b2.interview.ex.03",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I look forward to ___ from you.",
+      "accepted": [
+        "hearing"
+      ]
+    },
+    {
+      "id": "b2.interview.ex.04",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "She was offered the job after a short ___.",
+      "accepted": [
+        "interview"
+      ]
+    },
+    {
+      "id": "b2.interview.ex.05",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "او پرسید چرا به این شغل علاقه‌مندم.",
+      "accepted": [
+        "he asked why i was interested in the job",
+        "she asked why i was interested in the job"
+      ]
+    },
+    {
+      "id": "b2.interview.ex.06",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "I was in charge of a team of fifteen people.",
+      "accepted": [
+        "i was in charge of a team of fifteen people",
+        "i was in charge of a team of 15 people"
+      ]
+    },
+    {
+      "id": "b2.media.ex.01",
+      "lessonId": "b2.media.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "I wish I ___ more time to relax in the evenings.",
+      "questionFa": "کاش وقت بیشتری برای استراحت شبانه داشتم.",
+      "options": [
+        "would have",
+        "have",
+        "had",
+        "will have"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "b2.media.ex.02",
+      "lessonId": "b2.media.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "She ___ smoke, but she gave up two years ago.",
+      "questionFa": "او قبلاً سیگار می‌کشید، اما دو سال پیش ترک کرد.",
+      "options": [
+        "uses to",
+        "is used to",
+        "was using to",
+        "used to"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "b2.media.ex.03",
+      "lessonId": "b2.media.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "By next year, we ___ completed the entire project.",
+      "accepted": [
+        "will have"
+      ]
+    },
+    {
+      "id": "b2.media.ex.04",
+      "lessonId": "b2.media.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The advert was designed to ___ a new product.",
+      "accepted": [
+        "promote"
+      ]
+    },
+    {
+      "id": "b2.media.ex.05",
+      "lessonId": "b2.media.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "کاش زودتر این برنامه را دیده بودم.",
+      "accepted": [
+        "i wish i had watched this programme earlier",
+        "i wish i had seen this programme earlier",
+        "i wish i had watched this program earlier"
+      ]
+    },
+    {
+      "id": "b2.media.ex.06",
+      "lessonId": "b2.media.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The newspaper has been published every day since 1850.",
+      "accepted": [
+        "the newspaper has been published every day since 1850"
+      ]
+    },
+    {
+      "id": "c1.academic.ex.01",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Not until I read the appendix ___ the flaw in the argument.",
+      "questionFa": "تازه وقتی پیوست را خواندم، ایراد استدلال را دیدم.",
+      "options": [
+        "did I notice",
+        "I noticed",
+        "I did notice",
+        "noticed I"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "c1.academic.ex.02",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The results ___ be interpreted with caution.",
+      "questionFa": "نتایج باید با احتیاط تفسیر شوند.",
+      "options": [
+        "might have been",
+        "must",
+        "should have",
+        "would"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "c1.academic.ex.03",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Had the sample been larger, the findings ___ more reliable.",
+      "accepted": [
+        "would have been",
+        "would be"
+      ]
+    },
+    {
+      "id": "c1.academic.ex.04",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The data ___ collected over a period of ten years.",
+      "accepted": [
+        "were",
+        "was"
+      ]
+    },
+    {
+      "id": "c1.academic.ex.05",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "این فرضیه پیش از آزمایش مورد تردید قرار گرفت.",
+      "accepted": [
+        "the hypothesis was questioned before the experiment",
+        "the hypothesis had been questioned before the experiment"
+      ]
+    },
+    {
+      "id": "c1.academic.ex.06",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The findings have been subject to considerable debate.",
+      "accepted": [
+        "the findings have been subject to considerable debate"
+      ]
+    },
+    {
+      "id": "c1.persuasion.ex.01",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Rarely ___ such a well-organized argument.",
+      "questionFa": "به ندرت چنین استدلال منظمی دیده می‌شود.",
+      "options": [
+        "did I heard",
+        "I have heard",
+        "have I heard",
+        "I heard"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "c1.persuasion.ex.02",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "You ___ have told me you were running late!",
+      "questionFa": "باید به من می‌گفتی دیر می‌کنی!",
+      "options": [
+        "might",
+        "must",
+        "can",
+        "should"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "c1.persuasion.ex.03",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "He ___ have forgotten about the meeting; his coat is still here.",
+      "accepted": [
+        "must"
+      ]
+    },
+    {
+      "id": "c1.persuasion.ex.04",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Little ___ that his decision would change everything.",
+      "accepted": [
+        "did he know"
+      ]
+    },
+    {
+      "id": "c1.persuasion.ex.05",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "هرگز نباید آن فرصت را از دست می‌دادم.",
+      "accepted": [
+        "i should never have missed that opportunity",
+        "i should never have missed the opportunity"
+      ]
+    },
+    {
+      "id": "c1.persuasion.ex.06",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Had they known the cost, they would have chosen differently.",
+      "accepted": [
+        "had they known the cost they would have chosen differently"
+      ]
+    },
+    {
+      "id": "c1.culture.ex.01",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "If I ___ to the party last night, I would have met her.",
+      "questionFa": "اگر دیشب به مهمانی رفته بودم، او را می‌دیدم.",
+      "options": [
+        "had gone",
+        "went",
+        "would go",
+        "have gone"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "c1.culture.ex.02",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "If only he ___ quieter during the film!",
+      "questionFa": "کاش در طول فیلم آرام‌تر بود!",
+      "options": [
+        "would be",
+        "is",
+        "were"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "c1.culture.ex.03",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I wish I ___ more about classical music.",
+      "accepted": [
+        "knew"
+      ]
+    },
+    {
+      "id": "c1.culture.ex.04",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "She speaks as if she ___ the whole story.",
+      "accepted": [
+        "knew",
+        "knows"
+      ]
+    },
+    {
+      "id": "c1.culture.ex.05",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "کاش زودتر شروع کرده بودم.",
+      "accepted": [
+        "if only i had started earlier",
+        "i wish i had started earlier",
+        "i wish i had begun earlier"
+      ]
+    },
+    {
+      "id": "c1.culture.ex.06",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The film was not as good as I had expected.",
+      "accepted": [
+        "the film was not as good as i had expected",
+        "the movie was not as good as i had expected"
+      ]
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.01",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The meeting was ___ until next Friday.",
+      "questionFa": "جلسه به جمعه هفته بعد موکول شد.",
+      "options": [
+        "put out",
+        "put on",
+        "put off",
+        "put up"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.02",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "I can't ___ what you're saying — could you speak up?",
+      "questionFa": "نمی‌فهمم چه می‌گویی — بلندتر حرف بزن؟",
+      "options": [
+        "make off",
+        "make up",
+        "make over",
+        "make out"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.03",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "She ___ her old job to travel the world.",
+      "accepted": [
+        "gave up",
+        "quit"
+      ]
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.04",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Please ___ on the lights; it's dark in here.",
+      "accepted": [
+        "turn"
+      ]
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.05",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "آن پیشنهاد را رد کردیم چون غیرعملی بود.",
+      "accepted": [
+        "we turned down the offer because it was impractical",
+        "we turned down the offer because it was not practical"
+      ]
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.06",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "He ended up becoming a famous writer.",
+      "accepted": [
+        "he ended up becoming a famous writer"
+      ]
+    },
+    {
+      "id": "c2.nuance.ex.01",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The politician's statement was deliberately ___; nobody could tell what she really meant.",
+      "questionFa": "بیانیه سیاستمدار عمداً مبهم بود؛ هیچ‌کس نمی‌فهمید واقعاً چه منظوری دارد.",
+      "options": [
+        "ambiguous",
+        "clear",
+        "eloquent",
+        "conclusive"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "c2.nuance.ex.02",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The two proposals are superficially similar, but the ___ between them is significant.",
+      "questionFa": "این دو پیشنهاد ظاهراً شبیه‌اند، اما تفاوت‌شان معنادار است.",
+      "options": [
+        "condition",
+        "distinction",
+        "collision",
+        "tradition"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "c2.nuance.ex.03",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Her explanation was concise but somewhat ___.",
+      "accepted": [
+        "vague",
+        "thin",
+        "cursory"
+      ]
+    },
+    {
+      "id": "c2.nuance.ex.04",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The evidence is too ___ to support such a strong claim.",
+      "accepted": [
+        "slight",
+        "thin",
+        "flimsy",
+        "weak"
+      ]
+    },
+    {
+      "id": "c2.nuance.ex.05",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "تفاوت ظریفی میان این دو کلمه وجود دارد.",
+      "accepted": [
+        "there is a subtle difference between these two words",
+        "there is a fine difference between these two words",
+        "there is a subtle distinction between these two words"
+      ]
+    },
+    {
+      "id": "c2.nuance.ex.06",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "Her remarks were deliberately vague.",
+      "accepted": [
+        "her remarks were deliberately vague"
+      ]
+    },
+    {
+      "id": "c2.rhetoric.ex.01",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "So compelling was her speech that nobody could ___ her logic.",
+      "questionFa": "سخنرانی‌اش چنان متقاعدکننده بود که هیچ‌کس نمی‌توانست منطقش را رد کند.",
+      "options": [
+        "declare",
+        "confess",
+        "refute",
+        "surrender"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "c2.rhetoric.ex.02",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The author's prose is marked by its ___ and precision.",
+      "questionFa": "نثر نویسنده به ایجاز و دقت شهره است.",
+      "options": [
+        "concisely",
+        "conciliatory",
+        "concierge",
+        "concision"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "c2.rhetoric.ex.03",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Never in my life ___ I witnessed such arrogance.",
+      "accepted": [
+        "have"
+      ]
+    },
+    {
+      "id": "c2.rhetoric.ex.04",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "His speech was so eloquent that it left the audience ___.",
+      "accepted": [
+        "speechless",
+        "in awe",
+        "stunned"
+      ]
+    },
+    {
+      "id": "c2.rhetoric.ex.05",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "سخنرانی آنچنان بلیغ بود که همه را مسحور خود کرد.",
+      "accepted": [
+        "the speech was so eloquent that it captivated everyone",
+        "the speech was so eloquent that it enchanted everyone",
+        "the speech was so eloquent that it captivated them all"
+      ]
+    },
+    {
+      "id": "c2.rhetoric.ex.06",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The senator's rhetoric masked a striking lack of substance.",
+      "accepted": [
+        "the senator's rhetoric masked a striking lack of substance"
+      ]
+    },
+    {
+      "id": "c2.science.ex.01",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The findings are ___ with the hypothesis, but far from conclusive.",
+      "questionFa": "یافته‌ها با فرضیه سازگارند، اما از قطعیت بسیار فاصله دارند.",
+      "options": [
+        "consistent",
+        "insistent",
+        "persistent",
+        "resistant"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "c2.science.ex.02",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The phenomenon has been the subject of __ among researchers for decades.",
+      "questionFa": "این پدیده دهه‌هاست موضوع بحث میان پژوهشگران بوده است.",
+      "options": [
+        "speculator",
+        "speculation",
+        "speculative",
+        "speculatively"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "c2.science.ex.03",
+      "lessonId": "c2.science.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Further research is needed to ___ this theory.",
+      "accepted": [
+        "confirm",
+        "substantiate",
+        "corroborate",
+        "support"
+      ]
+    },
+    {
+      "id": "c2.science.ex.04",
+      "lessonId": "c2.science.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The results were broadly ___, with only minor discrepancies.",
+      "accepted": [
+        "replicated",
+        "consistent",
+        "reproduced"
+      ]
+    },
+    {
+      "id": "c2.science.ex.05",
+      "lessonId": "c2.science.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "این فرضیه نیاز به شواهد بیشتری دارد.",
+      "accepted": [
+        "this hypothesis needs more evidence",
+        "this hypothesis requires more evidence"
+      ]
+    },
+    {
+      "id": "c2.science.ex.06",
+      "lessonId": "c2.science.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The results corroborate the initial hypothesis.",
+      "accepted": [
+        "the results corroborate the initial hypothesis"
+      ]
+    },
+    {
+      "id": "c2.literature.ex.01",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "The novel's ending is deliberately ___, leaving the reader to draw their own conclusion.",
+      "questionFa": "پایان رمان عمداً مبهم است و خواننده را به نتیجه‌گیری خودش وا می‌گذارد.",
+      "options": [
+        "definite",
+        "literal",
+        "ambiguous",
+        "unequivocal"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "c2.literature.ex.02",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "The narrator's tone is deeply ___, undercutting the praise in every sentence.",
+      "questionFa": "لحن راوی عمیقاً کنایه‌آمیز است و تعریف هر جمله را زیر سؤال می‌برد.",
+      "options": [
+        "naive",
+        "earnest",
+        "sincere",
+        "ironic"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "c2.literature.ex.03",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The author ___ the plight of the urban poor with unflinching honesty.",
+      "accepted": [
+        "depicts",
+        "portrays",
+        "evokes"
+      ]
+    },
+    {
+      "id": "c2.literature.ex.04",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Critics saw the ending as an ___ of the protagonist's failure.",
+      "accepted": [
+        "allegory",
+        "metaphor",
+        "foreshadowing"
+      ]
+    },
+    {
+      "id": "c2.literature.ex.05",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "translation",
+      "order": 5,
+      "prompt": "پایان داستان کنایه‌آمیز بود.",
+      "accepted": [
+        "the ending of the story was ironic",
+        "the story's ending was ironic",
+        "the ending was ironic"
+      ]
+    },
+    {
+      "id": "c2.literature.ex.06",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "listening",
+      "order": 6,
+      "text": "The novel explores the ambiguity of memory.",
+      "accepted": [
+        "the novel explores the ambiguity of memory"
+      ]
+    },
+    {
+      "id": "a1.greetings.ex.07",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"hello\" mean?",
+      "questionFa": "معنی «hello» چیست؟",
+      "options": [
+        "سلام",
+        "حرکت / پرواز (رفتن)",
+        "قیمت",
+        "گوشه، چهارراه"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.daily-routine.ex.07",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"wake up\" mean?",
+      "questionFa": "معنی «wake up» چیست؟",
+      "options": [
+        "رزرو / رزرواسیون",
+        "بیدار شدن",
+        "مستقیم",
+        "دارو"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.family.ex.07",
+      "lessonId": "a1.family.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"mother\" mean?",
+      "questionFa": "معنی «mother» چیست؟",
+      "options": [
+        "سردرد",
+        "کیلوگرم",
+        "مادر",
+        "مهلت"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.shopping.ex.07",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"price\" mean?",
+      "questionFa": "معنی «price» چیست؟",
+      "options": [
+        "گزارش",
+        "تقاطع",
+        "حرفه، مسیر شغلی",
+        "قیمت"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.airport.ex.07",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"passport\" mean?",
+      "questionFa": "معنی «passport» چیست؟",
+      "options": [
+        "گذرنامه",
+        "درد",
+        "تیتر، تیتر اصلی",
+        "قصد داشتن"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.restaurant.ex.07",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"menu\" mean?",
+      "questionFa": "معنی «menu» چیست؟",
+      "options": [
+        "صلاحیت، مدرک تحصیلی",
+        "منو (فهرست غذا)",
+        "تصمیم گرفتن",
+        "به‌یادماندنی"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.directions.ex.07",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"straight\" mean?",
+      "questionFa": "معنی «straight» چیست؟",
+      "options": [
+        "سفر، مسیر",
+        "پخش کردن",
+        "مستقیم",
+        "منسوخ، قدیمی"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a2.health.ex.07",
+      "lessonId": "a2.health.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"headache\" mean?",
+      "questionFa": "معنی «headache» چیست؟",
+      "options": [
+        "پایدار",
+        "گزینه",
+        "نوآوری",
+        "سردرد"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.work.ex.07",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"career\" mean?",
+      "questionFa": "معنی «career» چیست؟",
+      "options": [
+        "حرفه، مسیر شغلی",
+        "در خارج از کشور",
+        "آلودگی",
+        "نقاط قوت، قدرت"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.news.ex.07",
+      "lessonId": "b1.news.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"headline\" mean?",
+      "questionFa": "معنی «headline» چیست؟",
+      "options": [
+        "مصنوعی",
+        "تیتر، تیتر اصلی",
+        "داوطلب، کاندیدا",
+        "مخاطب، تماشاگر"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.plans.ex.07",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"decide\" mean?",
+      "questionFa": "معنی «decide» چیست؟",
+      "options": [
+        "تبلیغات",
+        "تجدیدپذیر",
+        "تصمیم گرفتن",
+        "روش‌شناسی"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b1.experiences.ex.07",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"journey\" mean?",
+      "questionFa": "معنی «journey» چیست؟",
+      "options": [
+        "قانع‌کننده",
+        "واجد شرایط",
+        "فرضیه",
+        "سفر، مسیر"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.technology.ex.07",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"innovation\" mean?",
+      "questionFa": "معنی «innovation» چیست؟",
+      "options": [
+        "نوآوری",
+        "تأثیر گذاشتن",
+        "استدلال متقابل",
+        "زیرنویس"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.environment.ex.07",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"pollution\" mean?",
+      "questionFa": "معنی «pollution» چیست؟",
+      "options": [
+        "قابل توجه، چشمگیر",
+        "آلودگی",
+        "سینمایی",
+        "به تعویق انداختن"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.interview.ex.07",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"candidate\" mean?",
+      "questionFa": "معنی «candidate» چیست؟",
+      "options": [
+        "دست کشیدن",
+        "بلاغت، سخنوری",
+        "داوطلب، کاندیدا",
+        "ظریف، پنهان"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "b2.media.ex.07",
+      "lessonId": "b2.media.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"advertising\" mean?",
+      "questionFa": "معنی «advertising» چیست؟",
+      "options": [
+        "رد کردن، ابطال کردن",
+        "روایت",
+        "مبهم",
+        "تبلیغات"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.academic.ex.07",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"hypothesis\" mean?",
+      "questionFa": "معنی «hypothesis» چیست؟",
+      "options": [
+        "فرضیه",
+        "پیش کشیدن (موضوع)",
+        "بلاغت، فصاحت",
+        "تأیید کردن (شواهد)"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.persuasion.ex.07",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"counterargument\" mean?",
+      "questionFa": "معنی «counterargument» چیست؟",
+      "options": [
+        "تلویحاً بیان کردن",
+        "استدلال متقابل",
+        "تجربی، مبتنی بر مشاهده",
+        "قهرمان اصلی داستان"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.culture.ex.07",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"cinematic\" mean?",
+      "questionFa": "معنی «cinematic» چیست؟",
+      "options": [
+        "راوی",
+        "قانع کردن",
+        "سینمایی",
+        "صبح بخیر"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.07",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"give up\" mean?",
+      "questionFa": "معنی «give up» چیست؟",
+      "options": [
+        "صبحانه",
+        "پدیده",
+        "سلام",
+        "دست کشیدن"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.nuance.ex.07",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"ambiguous\" mean?",
+      "questionFa": "معنی «ambiguous» چیست؟",
+      "options": [
+        "مبهم",
+        "استعاره",
+        "بیدار شدن",
+        "پدر"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.rhetoric.ex.07",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"eloquence\" mean?",
+      "questionFa": "معنی «eloquence» چیست؟",
+      "options": [
+        "از آشنایی شما خوشوقتم",
+        "بلاغت، فصاحت",
+        "مادر",
+        "کارت پرواز"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.science.ex.07",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"empirical\" mean?",
+      "questionFa": "معنی «empirical» چیست؟",
+      "options": [
+        "گذرنامه",
+        "عصر",
+        "تجربی، مبتنی بر مشاهده",
+        "پیشخدمت"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "c2.literature.ex.07",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "What does \"narrator\" mean?",
+      "questionFa": "معنی «narrator» چیست؟",
+      "options": [
+        "ارزان",
+        "دختر",
+        "منو (فهرست غذا)",
+        "راوی"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "a1.greetings.ex.08",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"Nice to meet you.\" What does it mean?",
+      "questionFa": "این جمله چه معنی‌ای دارد؟",
+      "options": [
+        "از آشنایی شما خوشوقتم",
+        "خداحافظ، شب بخیر",
+        "لطفاً آهسته صحبت کنید",
+        "ممنون، کمکم می‌کنید"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "جمله‌ای برای شروع آشنایی — معنی از کل جمله به‌دست می‌آید، نه از تک‌تک واژه‌ها."
+    },
+    {
+      "id": "a2.airport.ex.08",
+      "lessonId": "a2.airport.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"Please proceed to gate twelve.\" What should you do?",
+      "questionFa": "با دیدن این جمله در فرودگاه چه باید بکنید؟",
+      "options": [
+        "چمدان خود را تحویل دهید",
+        "به سمت دروازهٔ پرواز بروید",
+        "بلیت را پاره کنید",
+        "در صف گذرنامه بمانید"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "proceed یعنی «ادامه بده، برو جلو» — gate هم محل سوار شدن به هواپیماست."
+    },
+    {
+      "id": "b1.work.ex.08",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"The position requires five years of experience.\" What is true?",
+      "questionFa": "کدام گزینه درست است؟",
+      "options": [
+        "پنج نفر استخدام می‌شوند",
+        "این شرکت پنج سال قدمت دارد",
+        "این موقعیت شغلی پنج سال تجربه می‌خواهد",
+        "حقوق بعد از پنج سال اضافه می‌شود"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "requires یعنی «لازم دارد» — فاعل جمله خود موقعیت شغلی است، نه شرکت."
+    },
+    {
+      "id": "b2.technology.ex.08",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"The app drains the battery within hours.\" What happens?",
+      "questionFa": "چه اتفاقی می‌افتد؟",
+      "options": [
+        "برنامه از اینترنت زیادی استفاده می‌کند",
+        "برنامه باتری را شارژ می‌کند",
+        "برنامه بعد از چند ساعت بسته می‌شود",
+        "برنامه باتری را در عرض چند ساعت خالی می‌کند"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "drain از ریشهٔ «تخلیه کردن» است — subject فعال این کار، خود برنامه است."
+    },
+    {
+      "id": "c1.academic.ex.08",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"The findings challenge the prevailing assumption.\" What is claimed?",
+      "questionFa": "چه ادعایی مطرح شده است؟",
+      "options": [
+        "یافته‌ها فرض رایج را به چالش می‌کشند",
+        "یافته‌ها فرض رایج را تأیید می‌کنند",
+        "یافته‌ها هنوز منتشر نشده‌اند",
+        "فرض رایج بر یافته‌ها مقدم است"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "prevailing یعنی «حاکم، رایج» و challenge در نوشتار آکادمیک یعنی «به چالش کشیدن»، نه دعوت به مبارزه."
+    },
+    {
+      "id": "c2.literature.ex.08",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Read: \"The narrator's tone belies the tale's optimism.\" What is meant?",
+      "questionFa": "منظور از این جمله چیست؟",
+      "options": [
+        "راوی داستان را باور دارد",
+        "لحن راوی با خوش‌بینی داستان در تضاد است",
+        "داستان کاملاً بدبینانه است",
+        "راوی از نتیجهٔ داستان آگاه است"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "belies یعنی «نقض می‌کند، خلافِ چیزی را نشان می‌دهد» — کلید در فعل است، نه در واژه‌های مجاور."
+    }
+  ]
+}

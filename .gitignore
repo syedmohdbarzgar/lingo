@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Gradle / Android build output
+# ---------------------------------------------------------------------------
+*.iml
+.gradle/
+build/
+/captures
+.externalNativeBuild
+.cxx
+.kotlin/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+release/
+output-metadata.json
+
+# ---------------------------------------------------------------------------
+# Local configuration & secrets — NEVER commit these
+# keystore.properties holds storeFile/storePassword/keyAlias/keyPassword and
+# the marketplace keys (bazaarRsaKey / myketPublicKey). See AGENTS.md §4a.
+# ---------------------------------------------------------------------------
+local.properties
+keystore.properties
+*.jks
+*.keystore
+*.p12
+*.pepk
+
+# ---------------------------------------------------------------------------
+# IDE (Android Studio / IntelliJ) — local machine state
+# ---------------------------------------------------------------------------
+.idea/
+
+# ---------------------------------------------------------------------------
+# Tooling / OS noise
+# ---------------------------------------------------------------------------
+.freebuff/
+.DS_Store
+Thumbs.db
+*.log
+*.hprof

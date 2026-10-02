@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Auto Backup rules (API 31+).
+
+   The DataStore file (datastore/app_settings.preferences_pb) carries the trial
+   checkpoint and the subscription mirror. Restoring it on another device would
+   replay or erase entitlements, so it is excluded from both cloud backup and
+   device-to-device transfer (checklist P3). Learning progress lives in Room
+   (english.db) and stays backed up — it is non-sensitive and restorable.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="datastore/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="datastore/" />
+    </device-transfer>
+</data-extraction-rules>

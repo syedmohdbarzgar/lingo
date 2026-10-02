@@ -1,0 +1,425 @@
+{
+  "contentVersion": 4,
+  "questions": [
+    {
+      "id": "placement.q01",
+      "type": "multiple_choice",
+      "level": "A1",
+      "question": "Choose the correct greeting:",
+      "questionFa": "سلام درست را انتخاب کنید:",
+      "options": [
+        "Good morning",
+        "Good morn",
+        "Morning good",
+        "Go morning"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q02",
+      "type": "multiple_choice",
+      "level": "A1",
+      "question": "I ______ coffee every morning.",
+      "questionFa": "من هر صبح قهوه ______ می‌نوشم.",
+      "options": [
+        "drinks",
+        "drink",
+        "am drink",
+        "drinking"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q03",
+      "type": "multiple_choice",
+      "level": "A1",
+      "question": "______ a book on the table.",
+      "questionFa": "______ روی میز است.",
+      "options": [
+        "Is have",
+        "There are",
+        "There is",
+        "Has"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q19",
+      "type": "multiple_choice",
+      "level": "A1",
+      "question": "What does \"apple\" mean?",
+      "questionFa": "معنی «apple» چیست؟",
+      "options": [
+        "انگور",
+        "موز",
+        "پرتقال",
+        "سیب"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q20",
+      "type": "multiple_choice",
+      "level": "A1",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "She likes coffee.",
+        "She like coffee.",
+        "She liking coffee.",
+        "She is like coffee."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q04",
+      "type": "multiple_choice",
+      "level": "A2",
+      "question": "He ______ his homework yesterday.",
+      "questionFa": "او دیروز تکالیفش را ______.",
+      "options": [
+        "finishing",
+        "finished",
+        "has finish",
+        "finishes"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q05",
+      "type": "multiple_choice",
+      "level": "A2",
+      "question": "You ______ see a doctor if it gets worse.",
+      "questionFa": "اگر بدتر شد ______ دکتر ببینید.",
+      "options": [
+        "would",
+        "mustn't",
+        "should",
+        "mightn't"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q06",
+      "type": "multiple_choice",
+      "level": "A2",
+      "question": "This film is much ______ than the last one.",
+      "questionFa": "این فیلم خیلی ______ از فیلم قبلی است.",
+      "options": [
+        "good",
+        "more good",
+        "best",
+        "better"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q21",
+      "type": "multiple_choice",
+      "level": "A2",
+      "question": "What is the opposite of \"cheap\"?",
+      "questionFa": "متضاد «cheap» چیست؟",
+      "options": [
+        "expensive",
+        "luxurious",
+        "costly",
+        "valuable"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q22",
+      "type": "multiple_choice",
+      "level": "A2",
+      "question": "Choose the correct question for the answer: \"The meeting is at nine.\"",
+      "questionFa": "برای پاسخ «جلسه ساعت نه است» پرسش درست را انتخاب کنید:",
+      "options": [
+        "Where is the meeting?",
+        "What time is the meeting?",
+        "Who is at the meeting?",
+        "Why is the meeting?"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q07",
+      "type": "multiple_choice",
+      "level": "B1",
+      "question": "I ______ in Tehran since 2018.",
+      "questionFa": "من از سال ۲۰۱۸ در تهران ______.",
+      "options": [
+        "am living",
+        "lived",
+        "have lived",
+        "live"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q08",
+      "type": "multiple_choice",
+      "level": "B1",
+      "question": "The letter ______ yesterday.",
+      "questionFa": "نامه دیروز ______ شد.",
+      "options": [
+        "was send",
+        "sent",
+        "is sending",
+        "was sent"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q09",
+      "type": "multiple_choice",
+      "level": "B1",
+      "question": "She said she ______ busy at the moment.",
+      "questionFa": "او گفت که در آن لحظه ______ است.",
+      "options": [
+        "was",
+        "is",
+        "has been",
+        "will be"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q23",
+      "type": "multiple_choice",
+      "level": "B1",
+      "question": "What does \"reliable\" mean?",
+      "questionFa": "معنی «reliable» چیست؟",
+      "options": [
+        "flexible",
+        "dependable",
+        "expensive",
+        "curious"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q24",
+      "type": "multiple_choice",
+      "level": "B1",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "I never have tried sushi.",
+        "I have never try sushi.",
+        "I've never tried sushi.",
+        "I've never tried sushi nor."
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q10",
+      "type": "multiple_choice",
+      "level": "B2",
+      "question": "If I ______ ten minutes earlier, I wouldn't have missed the train.",
+      "questionFa": "اگر ده دقیقه زودتر ______، قطار را از دست نمی‌دادم.",
+      "options": [
+        "left",
+        "have left",
+        "would leave",
+        "had left"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q11",
+      "type": "multiple_choice",
+      "level": "B2",
+      "question": "The man ______ car was stolen reported it to the police.",
+      "questionFa": "مردی که ______ ماشینش دزدیده شد به پلیس گزارش داد.",
+      "options": [
+        "whose",
+        "who's",
+        "which",
+        "that's"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q12",
+      "type": "multiple_choice",
+      "level": "B2",
+      "question": "I wish I ______ more time to relax this week.",
+      "questionFa": "کاش این هفته وقت بیشتری برای استراحت ______.",
+      "options": [
+        "am having",
+        "had",
+        "would have",
+        "have"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q25",
+      "type": "multiple_choice",
+      "level": "B2",
+      "question": "By the time we arrived, the movie ______.",
+      "questionFa": "وقتی رسیدیم، فیلم از قبل ______ بود.",
+      "options": [
+        "already starts",
+        "has already started",
+        "had already started",
+        "was starting"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q26",
+      "type": "multiple_choice",
+      "level": "B2",
+      "question": "The board decided to ______ the decision until Monday.",
+      "questionFa": "هیئت تصمیم را تا دوشنبه ______ کرد.",
+      "options": [
+        "pretend",
+        "precede",
+        "predict",
+        "postpone"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q13",
+      "type": "multiple_choice",
+      "level": "C1",
+      "question": "Never ______ such a complete mess in my life!",
+      "questionFa": "هرگز در زندگی‌ام چنین آشفتگی‌ای ______!",
+      "options": [
+        "have I seen",
+        "I have seen",
+        "I saw",
+        "did I saw"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q14",
+      "type": "multiple_choice",
+      "level": "C1",
+      "question": "You ______ have told me you were coming — I waited an hour!",
+      "questionFa": "باید به من می‌گفتی می‌آیی — یک ساعت منتظر ماندم!",
+      "options": [
+        "must",
+        "should",
+        "can",
+        "need"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q15",
+      "type": "multiple_choice",
+      "level": "C1",
+      "question": "If he had taken the job, he ______ in Dubai now.",
+      "questionFa": "اگر آن شغل را قبول کرده بود، الان در دبی ______.",
+      "options": [
+        "would have lived",
+        "will live",
+        "would be living",
+        "lived"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q27",
+      "type": "multiple_choice",
+      "level": "C1",
+      "question": "Hardly ______ the phone when it rang again.",
+      "questionFa": "به‌محض اینکه گوشی را گذاشتم، دوباره زنگ خورد.",
+      "options": [
+        "I put down",
+        "I had put down",
+        "did I put down",
+        "had I put down"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q28",
+      "type": "multiple_choice",
+      "level": "C1",
+      "question": "Which word is closest in meaning to \"ambiguous\"?",
+      "questionFa": "کدام واژه به «ambiguous» نزدیک‌تر است؟",
+      "options": [
+        "unclear",
+        "ambitious",
+        "amusing",
+        "ancient"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q16",
+      "type": "multiple_choice",
+      "level": "C2",
+      "question": "His explanation was concise but rather ______.",
+      "questionFa": "توضیحش مختصر بود اما تا حدی ______.",
+      "options": [
+        "lucid",
+        "vague",
+        "detailed",
+        "precise"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "placement.q17",
+      "type": "multiple_choice",
+      "level": "C2",
+      "question": "The senator's remarks were heavy with ______.",
+      "questionFa": "اظهارات سناتور سرشار از ______ بود.",
+      "options": [
+        "clarity",
+        "honesty",
+        "irony",
+        "sincerity"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "id": "placement.q18",
+      "type": "multiple_choice",
+      "level": "C2",
+      "question": "Independent sources ______ the initial hypothesis.",
+      "questionFa": "منابع مستقل فرضیه اولیه را ______ کردند.",
+      "options": [
+        "contradicted",
+        "understated",
+        "ignored",
+        "corroborated"
+      ],
+      "correctIndex": 3
+    },
+    {
+      "id": "placement.q29",
+      "type": "multiple_choice",
+      "level": "C2",
+      "question": "The politician's answer was deliberately ______, avoiding any firm commitment.",
+      "questionFa": "پاسخ سیاستمدار عمداً ______ بود و از هر تعهد مشخصی طفره می‌رفت.",
+      "options": [
+        "equivocal",
+        "eloquent",
+        "eminent",
+        "exemplary"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "placement.q30",
+      "type": "multiple_choice",
+      "level": "C2",
+      "question": "The evidence was too ______ to support a conviction.",
+      "questionFa": "مدارک برای محکومیت خیلی ______ بودند.",
+      "options": [
+        "tenacious",
+        "tenuous",
+        "tantamount",
+        "transient"
+      ],
+      "correctIndex": 1
+    }
+  ]
+}

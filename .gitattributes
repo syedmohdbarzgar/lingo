@@ -1,0 +1,14 @@
+# Normalize line endings. Git stores LF in the repo regardless of checkout OS,
+# so the Gradle wrapper shell script never arrives CRLF-mangled on Linux/macOS.
+* text=auto
+
+# Shell scripts must stay LF or they fail with "$'\r': command not found".
+*.sh   text eol=lf
+gradlew text eol=lf
+gradlew.bat text eol=crlf
+
+# Wrapper jar and other binaries are never line-ending converted.
+*.jar binary
+*.png binary
+*.webp binary
+*.ttf binary

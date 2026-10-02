@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Auto Backup rules for API < 31 (ignored on 31+, where data_extraction_rules
+   applies). DataStore holds the trial checkpoint and subscription mirror and
+   must not travel between devices — see data_extraction_rules.xml.
+-->
+<full-backup-content>
+    <exclude domain="file" path="datastore/" />
+</full-backup-content>

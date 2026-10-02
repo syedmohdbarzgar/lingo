@@ -1,0 +1,245 @@
+{
+  "contentVersion": 4,
+  "lessons": [
+    {
+      "id": "a1.greetings.lesson-01",
+      "level": "A1",
+      "title": "Greetings",
+      "titleFa": "سلام و احوالپرسی",
+      "topic": "Basics",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "grammarTipFa": "سلام‌ها به زمان روز بستگی دارند: Good morning تا ظهر، Good afternoon عصر، Good evening غروب — و Good night فقط هنگام خداحافظی شب است."
+    },
+    {
+      "id": "a1.daily-routine.lesson-01",
+      "level": "A1",
+      "title": "Daily Routine",
+      "titleFa": "روزمرگی",
+      "topic": "Daily Life",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "grammarTipFa": "برای کارهای تکراری از زمان حال ساده استفاده کن: I go to work — با he/she به فعل s می‌چسبد: She goes."
+    },
+    {
+      "id": "a1.family.lesson-01",
+      "level": "A1",
+      "title": "My Family",
+      "titleFa": "خانواده من",
+      "topic": "People",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "grammarTipFa": "داشتن اعضا با have / have got: I have got two brothers — در پرسش، Do you have…? و در پاسخ کوتاه Yes, I do."
+    },
+    {
+      "id": "a1.shopping.lesson-01",
+      "level": "A1",
+      "title": "Shopping and Numbers",
+      "titleFa": "خرید و اعداد",
+      "topic": "Shopping",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "grammarTipFa": "قیمت را با How much is…? (مفرد) و How much are…? (جمع) بپرس؛ اعداد ترتیبی بعد از اسم می‌آیند: twenty dollars."
+    },
+    {
+      "id": "a2.airport.lesson-01",
+      "level": "A2",
+      "title": "At the Airport",
+      "titleFa": "در فرودگاه",
+      "topic": "Travel",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "grammarTipFa": "در فرودگاه اغلب با need to / have to سر و کار داریم: You have to show your passport — و زمان آینده برای برنامه‌ها: The flight will depart."
+    },
+    {
+      "id": "a2.restaurant.lesson-01",
+      "level": "A2",
+      "title": "At the Restaurant",
+      "titleFa": "در رستوران",
+      "topic": "Food",
+      "estimatedMinutes": 6,
+      "order": 6,
+      "grammarTipFa": "سفارش مودبانه با I'd like… و پیشنهاد با Would you like…؟ — برای غیرقابل شمارش از some/any استفاده کن: some water."
+    },
+    {
+      "id": "a2.directions.lesson-01",
+      "level": "A2",
+      "title": "Directions",
+      "titleFa": "مسیریابی",
+      "topic": "Travel",
+      "estimatedMinutes": 6,
+      "order": 7,
+      "grammarTipFa": "صفت‌های مکانی بعد از فعل می‌آیند: turn left، go straight، it's next to the bank — حرف اضافه مکان را از on/at/in دقیق انتخاب کن."
+    },
+    {
+      "id": "a2.health.lesson-01",
+      "level": "A2",
+      "title": "At the Doctor",
+      "titleFa": "نزد دکتر",
+      "topic": "Health",
+      "estimatedMinutes": 6,
+      "order": 8,
+      "grammarTipFa": "درد را با have got بیان کن: I have got a headache — و توصیه با should: You should rest / You shouldn't smoke."
+    },
+    {
+      "id": "b1.work.lesson-01",
+      "level": "B1",
+      "title": "Work and Career",
+      "titleFa": "کار و حرفه",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 9,
+      "grammarTipFa": "وضعیت فعلی با زمان حال استمراری (I'm working) و تجربه‌ی کاری بدون زمان مشخص با حال کامل (I have worked in…)."
+    },
+    {
+      "id": "b1.news.lesson-01",
+      "level": "B1",
+      "title": "News and Media",
+      "titleFa": "خبر و رسانه",
+      "topic": "Media",
+      "estimatedMinutes": 7,
+      "order": 10,
+      "grammarTipFa": "خبر اغلب مجهول است: The law was announced yesterday — و برای نقل خبر از say/report با گذشته استفاده کن."
+    },
+    {
+      "id": "b1.plans.lesson-01",
+      "level": "B1",
+      "title": "Plans and Decisions",
+      "titleFa": "برنامه‌ها و تصمیم‌ها",
+      "topic": "Daily Life",
+      "estimatedMinutes": 7,
+      "order": 11,
+      "grammarTipFa": "قصد از قبل‌پذیرفته‌شده با be going to و تصمیم لحظه‌ای با will — شرطی نوع اول: If it rains, I will stay home."
+    },
+    {
+      "id": "b1.experiences.lesson-01",
+      "level": "B1",
+      "title": "Sharing Experiences",
+      "titleFa": "به اشتراک گذاشتن تجربه‌ها",
+      "topic": "Travel",
+      "estimatedMinutes": 7,
+      "order": 12,
+      "grammarTipFa": "تجربه بدون زمان مشخص با حال کامل: I have visited Turkey — با ever/never برای پرسش و for/since برای مدت."
+    },
+    {
+      "id": "b2.technology.lesson-01",
+      "level": "B2",
+      "title": "Technology and Society",
+      "titleFa": "فناوری و جامعه",
+      "topic": "Technology",
+      "estimatedMinutes": 8,
+      "order": 13,
+      "grammarTipFa": "مقایسه با more و the most: more efficient، the most useful — و امکان‌سنجی با can/could."
+    },
+    {
+      "id": "b2.environment.lesson-01",
+      "level": "B2",
+      "title": "Environment and Climate",
+      "titleFa": "محیط زیست و اقلیم",
+      "topic": "Nature",
+      "estimatedMinutes": 8,
+      "order": 14,
+      "grammarTipFa": "مجهول پیشرفته: It is believed that… — و انتقاد به گذشته با should have + قسمت سوم: You should have recycled it."
+    },
+    {
+      "id": "b2.interview.lesson-01",
+      "level": "B2",
+      "title": "Job Interviews",
+      "titleFa": "مصاحبه شغلی",
+      "topic": "Work",
+      "estimatedMinutes": 8,
+      "order": 15,
+      "grammarTipFa": "پاسخ تجربه را با ساختار STAR بده (موقعیت، کار، نتیجه) و نقل‌قول غیرمستقیم را با He said that… گزارش کن."
+    },
+    {
+      "id": "b2.media.lesson-01",
+      "level": "B2",
+      "title": "Media and Advertising",
+      "titleFa": "رسانه و تبلیغات",
+      "topic": "Media",
+      "estimatedMinutes": 8,
+      "order": 16,
+      "grammarTipFa": "used to برای عادتِ گذشته است و would فقط برای تکرارهای عادی گذشته — هر دو گذشته را نشان می‌دهند نه حال را."
+    },
+    {
+      "id": "c1.academic.lesson-01",
+      "level": "C1",
+      "title": "Academic Writing",
+      "titleFa": "نوشتار آکادمیک",
+      "topic": "Study",
+      "estimatedMinutes": 9,
+      "order": 17,
+      "grammarTipFa": "نوشتن رسمی از مجهول بهره می‌برد: It is argued that… — و اتصال‌دهنده‌های منطقی مثل however، therefore، furthermore ساختار را نگه می‌دارند."
+    },
+    {
+      "id": "c1.persuasion.lesson-01",
+      "level": "C1",
+      "title": "Persuasion and Debate",
+      "titleFa": "مباحثه و قانع‌سازی",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 18,
+      "grammarTipFa": "تأکید بلاغی با وارونه‌سازی: Had I known… / Not only did he disagree… — که جمله را رسمی‌تر و نیرومندتر می‌کند."
+    },
+    {
+      "id": "c1.culture.lesson-01",
+      "level": "C1",
+      "title": "Film and Culture",
+      "titleFa": "سینما و فرهنگ",
+      "topic": "Culture",
+      "estimatedMinutes": 9,
+      "order": 19,
+      "grammarTipFa": "وصاف رویدادها با گذشته استمراری: I was watching the film when… — و تفاوت would با usedTo در روایت."
+    },
+    {
+      "id": "c1.phrasal-idioms.lesson-01",
+      "level": "C1",
+      "title": "Idioms and Phrasal Verbs",
+      "titleFa": "اصطلاحات و فعل‌های عبارتی",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 20,
+      "grammarTipFa": "فعل‌های عبارتی قابل ترجمه‌ی لفظی نیستند: give up یعنی دست کشیدن — حرف اضافه معنی را عوض می‌کند."
+    },
+    {
+      "id": "c2.nuance.lesson-01",
+      "level": "C2",
+      "title": "Precision and Nuance",
+      "titleFa": "دقت و ظرافت زبانی",
+      "topic": "Language",
+      "estimatedMinutes": 10,
+      "order": 21,
+      "grammarTipFa": "هر هم‌معنای بار خودش را دارد: tiny کوچک‌تر از small است، rather یعنی تا حدی و hardly یعنی به‌ندرت — انتخاب واژه = انتخاب دقت."
+    },
+    {
+      "id": "c2.rhetoric.lesson-01",
+      "level": "C2",
+      "title": "Style and Rhetoric",
+      "titleFa": "سبک و بلاغت",
+      "topic": "Language",
+      "estimatedMinutes": 10,
+      "order": 22,
+      "grammarTipFa": "کنایه با وارونه‌سازی ساخته می‌شود: Little did he know… — و تکرار هدفمند واژه‌ها ضرباهنگ سخن را می‌سازد."
+    },
+    {
+      "id": "c2.science.lesson-01",
+      "level": "C2",
+      "title": "Science and Discovery",
+      "titleFa": "علم و کشف",
+      "topic": "Science",
+      "estimatedMinutes": 10,
+      "order": 23,
+      "grammarTipFa": "زبان علمی مجهول و دقیق است: The phenomenon was observed… — و تعریف با X refers to… / X is defined as…"
+    },
+    {
+      "id": "c2.literature.lesson-01",
+      "level": "C2",
+      "title": "Literature and Meaning",
+      "titleFa": "ادبیات و معنا",
+      "topic": "Books",
+      "estimatedMinutes": 10,
+      "order": 24,
+      "grammarTipFa": "معنا از بافت می‌آید نه لفظ مستقیم: tone لحن راوی و irony کنایه است — همیشه بپرس گوینده چه می‌داند که خواننده نمی‌داند."
+    }
+  ]
+}

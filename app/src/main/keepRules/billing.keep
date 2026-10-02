@@ -1,0 +1,16 @@
+# In-app billing keep rules (AGENTS.md §4a) — billing is the one feature that
+# must never break under obfuscation. Play Billing ships thorough consumer
+# rules; Poolakey ships an EMPTY proguard.txt and myket-billing-client ships
+# none, so both are kept explicitly here (they are small — safety over size).
+#
+# AGP 9.3 keeps rules in src/<variant>/keepRules/*.keep (default Android rules
+# like proguard-android-optimize.txt are included automatically).
+
+# AIDL interface shared with the market apps (bundled by Poolakey and Play Billing)
+-keep class com.android.vending.billing.** { *; }
+
+# Cafe Bazaar (Poolakey) — binder callbacks, PurchaseInfo parsing, security check
+-keep class ir.cafebazaar.poolakey.** { *; }
+
+# Myket (myket-billing-client) — IabHelper/ServiceIAB/org.json purchase parsing
+-keep class ir.myket.billingclient.** { *; }
