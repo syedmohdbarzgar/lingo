@@ -210,9 +210,9 @@ fun SettingsScreen(
 
             AppCard {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-                    SectionHeader("درباره نسخه آفلاین")
+                    SectionHeader("درباره برنامه")
                     Text(
-                        text = "این نسخه کاملاً آفلاین است: درس‌ها، واژگان و مرور فاصله‌دار بدون اینترنت کار می‌کنند.",
+                        text = "درس‌ها، واژگان و مرور فاصله‌دار کامل روی دستگاه ذخیره شده‌اند و بدون اینترنت هم کار می‌کنند.",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Text(

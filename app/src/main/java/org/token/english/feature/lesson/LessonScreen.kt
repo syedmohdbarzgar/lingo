@@ -248,10 +248,10 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.Speaking -> {
-                    // Suspended while offline (needs speech evaluation) — AGENTS.md
+                    // Speech evaluation is not implemented yet — AGENTS.md
                     SectionHeader("تمرین مکالمه")
                     Text(
-                        text = "این تمرین به ارزیابی گفتار نیاز دارد و در نسخه آفلاین غیرفعال است.",
+                        text = "این تمرین به ارزیابی گفتار نیاز دارد و هنوز فعال نشده است.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

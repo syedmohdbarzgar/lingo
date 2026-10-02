@@ -20,7 +20,7 @@ import java.util.Calendar
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * Daily review reminder (checklist P9) — offline, on-device, no services:
+ * Daily review reminder (checklist P9) — on-device, no services, no network:
  * an inexact daily AlarmManager reminder at 19:00 shows a local notification.
  * Scheduling is persisted through the settings flag and re-applied after a
  * reboot (alarms do not survive one). POST_NOTIFICATIONS is requested in the

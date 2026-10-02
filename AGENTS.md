@@ -1,7 +1,9 @@
 # AGENTS.md — Freebuff English Learning App (org.token.english)
 
 > این سند «حقیقت مرجع» برای هر انسان یا ایجنتی است که روی این پروژه کار می‌کند.
-> اپ **کاملاً آفلاین** است؛ هر قابلیتی که به اینترنت/سرویس ابری نیاز دارد باید «معلق» بماند (جدول پایین).
+> هستهٔ یادگیری **آفلاین-محور** است: بدون سرور و بدون بک‌اند کامل کار می‌کند و باید همیشه بدون
+> اینترنت هم کار کند. قابلیت‌های آنلاین مجازند؛ فقط چیزهایی که به **زیرساخت بک‌اند/سرور**
+> نیاز دارند معلق می‌مانند (جدول پایین).
 
 ---
 
@@ -21,17 +23,34 @@ Authoritative specs live in `files/`:
 
 Specs are **design intent, not proof of implementation** — verify claims against the code.
 
-## 2. Build & verify (run these before claiming done)
+## 2. Build & verify
+
+**The everyday loop is tests, not APKs.** Compiling all three flavours after every change is slow
+and buys nothing — it is only needed at release points or when putting a build on a device:
+
+```bash
+./gradlew :app:testBazaarDebugUnitTest   # unit tests + typechecks main sources (the fast gate)
+./gradlew validateContent                # content gate (also runs in preBuild)
+```
+
+Hardware check — builds and installs only when a device is actually attached, and exits quietly
+(no build at all) when none is:
+
+```bash
+scripts/install_debug.sh                 # bazaar (default); or myket | googlePlay
+scripts/install_debug.sh --list-devices
+```
+
+Release points only:
 
 ```bash
 ./gradlew :app:assembleBazaarDebug      # Cafe Bazaar APK (Poolakey billing)
 ./gradlew :app:assembleMyketDebug       # Myket APK (myket-billing-client)
 ./gradlew :app:assembleGooglePlayDebug  # Google Play APK (Play Billing 9)
-./gradlew :app:testDebugUnitTest        # runs unit tests (JUnit)
 ```
 
-All green as of the billing integration (Oct 2026). There is **no CI** in this repo.
-Quick smoke (no APK): `./gradlew :app:compileBazaarDebugKotlin :app:compileMyketDebugKotlin :app:compileGooglePlayDebugKotlin`.
+Notes: only per-flavour unit-test tasks exist (`testDebugUnitTest` is not a task under AGP 9's
+`onlyEnableUnitTestForTheTestedBuildType`). There is **no CI** in this repo.
 
 ### Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 
@@ -64,7 +83,7 @@ org.token.english
 │   ├── engine/                # ReviewScheduler (SM-2-lite), MasteryEngine, LearningPlanner
 │   └── usecase/               # SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, ScorePlacement
 ├── data/
-│   ├── local/                 # Room: entities, DAOs, AppDatabase (version 1, no schema export)
+│   ├── local/                 # Room: entities, DAOs, AppDatabase (version 4, schemas exported)
 │   ├── content/               # ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/            # Repository impls + SettingsRepositoryImpl (DataStore)
 ├── di/AppContainer.kt         # Manual DI container (+ appViewModelFactory helper)
@@ -89,16 +108,27 @@ data    → domain (implements interfaces) + Room/DataStore
 - **DI is manual** (`AppContainer`): constructor injection per class, container-level wiring.
   Hilt was deliberately skipped — its plugin/KSP interaction under AGP 9 built-in Kotlin adds
   risk with no MVP value. Revisit only if the container grows past ~25 bindings.
-- Engines (`Sm2ReviewScheduler`, `DefaultMasteryEngine`, `DefaultLearningPlanner`) are pure and
-  swappable: the UI must never learn how intervals/mastery are computed (technical spec §19).
+- Engines are pure and swappable: `Sm2ReviewScheduler`, `DefaultMasteryEngine`,
+  `DefaultLearningPlanner`, plus the knowledge layer — `KnowledgeGraph` (prerequisite ordering and
+  unlocking) and `DefaultKnowledgeEngine` (how one graded answer moves a node's mastery and review
+  date). The UI must never learn how intervals/mastery are computed (technical spec §19).
+- **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
+  is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
+  and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
+  `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
+  mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
 
-## 4. Offline policy — what is ACTIVE vs SUSPENDED
+## 4. Connectivity policy — what is ACTIVE vs SUSPENDED
 
-The app has exactly **one permission: `INTERNET`, used only by in-app billing** (price lookup,
-store checkout, subscription verification — verified in the merged manifest). Learning features
-must never use the network: no sync, no analytics, no remote content, no crash reporting.
-Any new use of `INTERNET` requires an explicit product decision. Data is local-only (Room +
-DataStore); `allowBackup` stays on because data is non-sensitive learning progress.
+The app is **offline-first, not offline-only** (product decision, Oct 2026). The learning core
+runs entirely from local data (Room + DataStore) and must keep working with no network at all —
+that is a hard requirement, not a preference. Online capabilities are otherwise allowed again;
+the only things held back are features that require a **backend/server** to be built and operated.
+
+`INTERNET` is currently used only by in-app billing (price lookup, store checkout, subscription
+verification — verified in the merged manifest). Any *new* online feature must state which service
+it calls and why, must degrade gracefully when offline, and must not block the learning core.
+`allowBackup` stays on because data is non-sensitive learning progress.
 
 Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK bumps):
 
@@ -111,7 +141,7 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 All flavors also carry `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a
 real app permission).
 
-### Active (offline, must keep working)
+### Active (must keep working offline)
 
 - Bundled A1–C2 lessons, vocabulary, exercises, placement test (assets/content)
 - Lesson flow, answer checking, skill mastery
@@ -120,22 +150,33 @@ real app permission).
 - Listening via **on-device Android TTS** (no audio files, no network)
 - Vocabulary browser + search
 - Theme (system/light/dark), sound toggle, daily goal, reset
-- Subscription purchase/restore via the store (the only online surface, §4a)
+- Subscription purchase/restore via the store (the only online surface today, §4a)
 
-### Suspended (offline build — do NOT implement while offline)
+### Suspended — needs backend/server infrastructure (do NOT implement yet)
+
+These are blocked by infrastructure, not by the offline rule. Building them means standing up and
+operating a service first, so they stay out of scope until that exists.
 
 | Feature | Why it's suspended | Where the seam is |
 |---|---|---|
-| Speaking / pronunciation evaluation | Needs speech recognition (cloud or GMS) | `Exercise.Speaking` exists in domain; UI shows a "غیرفعال" placeholder in `LessonScreen` |
-| AI conversation / AI feedback | Needs a backend | Future: `ConversationEngine` interface (technical spec §38) |
-| Cloud sync, auth, backup | Needs a backend | `id/updatedAt/syncState` fields are **not** added yet; keep repositories local-only |
-| Downloadable content packages | Needs a server + validation | `ContentSeeder.CONTENT_VERSION` is the upgrade hook; keep single bundled version |
-| Analytics upload | Privacy + network | No analytics module exists. Intentional. |
-| Daily review reminders | Needs notifications/WorkManager permission flow | Not wired; do not add silently |
-| B1–C2 content | **SHIPPED (v2 bundle)** — 4 lessons per level A1–C2 | Content pipeline only; extend via `assets/content/*.json` + `CONTENT_VERSION` bump |
+| AI conversation / AI feedback | Needs a backend (model hosting + API) | Future: `ConversationEngine` interface (technical spec §38) |
+| Cloud sync, auth, backup | Needs a backend + accounts | `id/updatedAt/syncState` fields are **not** added yet; keep repositories local-only |
+| Downloadable content packages | Needs a server + signed content validation | `ContentSeeder` is keyed by the JSON `contentVersion` — the upgrade hook already exists |
+| Analytics upload | Needs a collection endpoint **and** a privacy decision (opt-in, minimal, anonymous) | No analytics module exists. Intentional. |
 
-If a task requires one of these, **stop and confirm with the user first** — it is suspended by
-explicit decision, not by oversight.
+If a task requires one of these, **stop and confirm with the user first**.
+
+### Unblocked by the connectivity policy — not built yet
+
+These do **not** need a backend, so they may be built whenever they are prioritised:
+
+| Feature | State | Where the app hooks in |
+|---|---|---|
+| Speaking / pronunciation evaluation | Domain type exists, UI shows a placeholder | `Exercise.Speaking` + the "غیرفعال" branch in `LessonScreen`; an on-device recognizer needs no server |
+| Remote crash reporting | Not implemented | Pick a provider deliberately — it is a network + privacy decision, not a default |
+
+Completed and removed from this list: B1–C2 content (shipped in the **v5 bundle** — 6 lessons per
+level A1–B2, 7 for C1/C2) and daily review reminders (now **active**, `reminder/DailyReminder.kt`).
 
 ## 4a. Monetization — subscription × 3 marketplaces
 
@@ -165,15 +206,32 @@ Rules:
 
 ## 5. Content pipeline
 
-- Source of truth: `app/src/main/assets/content/{lessons,vocabulary,exercises,placement}.json`.
-- `ContentSeeder` runs at app start; re-seeds when `CONTENT_VERSION` changes (settings key
-  `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`.
-- **CEFR bundle (contentVersion 2):** 24 lessons (4 per level A1–C2), 144 exercises (6/lesson,
-  4 types), 144 vocabulary entries (6/lesson), placement = 18 questions in six graded bands of 3
-  (A1→C2, ordered by difficulty). Grammar points per level follow the British Council / EQUALS
-  Core Inventory grammar tables (verified against examenglish.com/CEFR, Oct 2026):
-  e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion + mixed
-  conditionals + modals in the past; C2 = nuance/precision vocabulary.
+- Source of truth: `app/src/main/assets/content/{lessons,vocabulary,exercises,placement,knowledge}.json`.
+  `knowledge.json` is the **curriculum graph**: one node per learnable unit, with
+  `prerequisites` (ids of nodes to learn first), the `lessons` that teach it, its CEFR `level` and
+  the `skills` it trains. `KnowledgeGraph` (pure, in `domain/engine`) orders and unlocks it; it is
+  seeded into the `knowledge_item` table. Repositories/UI must not hard-code curriculum order.
+- `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
+  `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
+  **inside the JSON** — there is no Kotlin constant to bump (technical spec §63).
+- **`./gradlew validateContent`** (wired into `preBuild`) is the content gate. It checks unique ids,
+  dangling `lessonId` references, valid CEFR levels and exercise types, `correctIndex` in range,
+  `fill_blank` blank markers, non-empty accepted answers, duplicate words within a lesson, matching
+  bundle versions, and full lesson coverage (every lesson needs vocabulary, exercises and at least
+  one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
+  cycle** exists. It reports **all** problems at once, not just the first. Run it after every
+  content edit.
+- **CEFR bundle (contentVersion 6):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 258
+  exercises (6/lesson + 12 reading items), 228 vocabulary entries (6/lesson), 72 knowledge items,
+  placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
+  the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
+  Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
+  mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
+- Exercise mix is intentionally varied: `multiple_choice`, `fill_blank`, `translation`, `listening`,
+  and authored `skill` tags (VOCABULARY / GRAMMAR / READING / WRITING) so mastery is not dominated
+  by recognition questions. Correct-answer positions stay balanced —
+  `scripts/balance_answer_positions.mjs` restores the invariant and `ContentDistributionTest`
+  enforces it.
 - Placement scoring is **band-based** (`ScorePlacementUseCase`): walks bands bottom-up, band
   passes at ≥2/3 with ≥60% cumulative accuracy, stops at first failed band, floor A1.
   Question `level` tags in placement.json are documentation; scoring uses array order + `bandSize=3`.
@@ -192,23 +250,29 @@ Rules:
   (which re-assert LTR). Never put raw English in an RTL layout.
 - Feedback is never color-only: always icon + text (`CorrectBanner`/`IncorrectBanner`).
 - Touch targets ≥ 48dp (`TouchTargetMin`), primary buttons 48dp high, cards 16dp radius.
-- Every feature screen needs empty/loading/error states (design.md §37–39); offline errors must
-  never claim "no internet" — the app simply has no internet.
+- Every feature screen needs empty/loading/error states (design.md §37–39). The learning core
+  works offline, so a local failure must never be blamed on the network. Only a genuinely online
+  action (e.g. a purchase) may show a connectivity error — and it must be specific about it.
 - Streak must never visually outweigh learning progress (design.md §25).
 
 ## 7. Security posture
 
-- Exactly one permission (`INTERNET`, billing-only). No other network code paths: grep for
-  `retrofit`/`okhttp`/`URL(` in app sources should stay empty — billing SDKs are the exception.
+- One permission today (`INTERNET`, billing-only). New online features may add permissions, but
+  each one must be documented in the table above with the service it talks to. Today the only
+  network code paths are the billing SDKs — grep for `retrofit`/`okhttp`/`URL(` in app sources
+  should stay empty otherwise.
 - No secrets in the repo: store keys and signing config live in untracked `keystore.properties`.
 - Data is non-sensitive learning progress; stored unencrypted in app-private storage.
 - If sync ever ships: add Network Security Config, certificate pinning decision, and an ADR first.
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `:app:testDebugUnitTest`): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
-  `EntitlementPolicyTest` (trial/subscription gating).
+  `EntitlementPolicyTest` (trial/subscription gating), `KnowledgeGraphTest` (curriculum graph),
+  `ContentSeederTest` / `ContentDistributionTest` (content pipeline).
+- Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
+  content edit run them with `--rerun` or they silently report UP-TO-DATE.
 - Instrumented test files are still the Android Studio templates (not maintained).
 - When you change engine logic, extend these tests first; UI changes rely on manual verification
   (no emulator CI in this environment).
@@ -218,9 +282,11 @@ Rules:
 1. Persian UI strings live inline in composables (single-locale MVP; extraction to
    `strings.xml` is open design debt — do it when adding a second locale).
 2. Epoch millis (`Long`) for time — `java.time` needs desugaring at minSdk 24.
-3. A feature is done when: all three flavor builds + unit tests pass, empty/loading/error
-   states exist, RTL/LTR verified, no hardcoded design tokens, no new permissions (billing's
-   `INTERNET` is the only one), and this file updated if architecture or the suspended list changed.
+3. A feature is done when: unit tests pass, `./gradlew validateContent` passes if content changed,
+   empty/loading/error states exist, RTL/LTR verified, no hardcoded design tokens, no undocumented
+   permissions, the learning core still works with no network, and this file updated if architecture
+   or the suspended list changed. All three flavour builds are checked at release points and on
+   hardware via `scripts/install_debug.sh` — **not** after every change.
 
 ## 10. Known design debt (accepted, tracked here)
 
@@ -228,7 +294,9 @@ Rules:
   through support if a user claims a lost subscription.
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar.
-- Room `version = 1`, `exportSchema = false` — the first schema change needs migrations + schema export.
+- Room is at `version = 4` with exported schemas (`app/schemas`). Schema changes must ship a
+  migration **and** be added to `AppContainer.database` — Room throws at open time when a path from
+  the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items
   until the ViewModel is recreated.
 - `studied seconds` are credited on screen close/finish (best effort), not via a foreground timer.

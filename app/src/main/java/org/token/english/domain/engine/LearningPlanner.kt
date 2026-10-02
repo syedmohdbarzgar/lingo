@@ -51,7 +51,7 @@ class DefaultLearningPlanner(
         // Trained-but-weak skills first (worst score wins). Skills never
         // exercised yet are unproven — they count as weakest and fill the
         // remaining slots, so they DO appear in suggestions (checklist P6).
-        // SPEAKING cannot be exercised offline (suspended), so it is never
+        // SPEAKING has no exercises yet (speech evaluation not built), so it is never
         // recommended — no dead-end suggestions.
         val trainable = Skill.entries.filter { it != Skill.SPEAKING }
         val trainedWeak = trainable
