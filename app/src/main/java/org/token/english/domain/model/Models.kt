@@ -262,6 +262,10 @@ data class LearningAction(
     val reasonFa: String,
     /** Lower runs first. See [LearningActionType]. */
     val priority: Int,
+    /** Rough minutes this action needs, so the surface can budget the day (audit §1.1). */
+    val estimatedMinutes: Int = 0,
+    /** The mastery dimension this action targets, or null when not applicable. */
+    val dimension: MasteryDimension? = null,
 )
 
 /**
