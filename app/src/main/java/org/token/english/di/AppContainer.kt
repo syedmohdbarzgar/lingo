@@ -47,6 +47,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
 
     private val appContext: Context = context.applicationContext
 
+    // Engines — declared before any repository/eager property that reads them:
+    // `studyStats` is eager and forces `progressRepository` during <init>, whose
+    // initializer touches `masteryEngine`; a later-declared `by lazy` delegate is
+    // still null at that point (NPE on Lazy.getValue). Keep this block first.
+    val masteryEngine: MasteryEngine by lazy { DefaultMasteryEngine() }
+    val reviewScheduler: ReviewScheduler by lazy { Sm2ReviewScheduler() }
+    val learningPlanner: LearningPlanner by lazy { DefaultLearningPlanner() }
+
     // Data
     val database: AppDatabase by lazy {
         Room.databaseBuilder(appContext, AppDatabase::class.java, "english.db")
@@ -96,11 +104,6 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
     /** True while any activity is visible — gates study-time crediting (P7). */
     val isAppInForeground: Boolean
         get() = (appContext as? org.token.english.EnglishApp)?.isAppInForeground ?: true
-
-    // Engines
-    val masteryEngine: MasteryEngine by lazy { DefaultMasteryEngine() }
-    val reviewScheduler: ReviewScheduler by lazy { Sm2ReviewScheduler() }
-    val learningPlanner: LearningPlanner by lazy { DefaultLearningPlanner() }
 
     // Audio (on-device TTS — no network needed)
     val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }

@@ -233,7 +233,11 @@ private fun QuestionContent(state: PlacementUiState, onEvent: (PlacementEvent) -
             question.questionFa?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyMedium,
+                    // May open with English («Not uncommon» …) — pin the
+                    // paragraph to RTL so first-strong can't reverse the Persian.
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                    ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }

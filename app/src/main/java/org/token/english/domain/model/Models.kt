@@ -229,6 +229,97 @@ data class TodayPlan(
     val recommendedSkills: List<Skill>,
 )
 
+/**
+ * The kind of study move a planner can ask for (audit §5).
+ *
+ * Ordered by urgency in [org.token.english.domain.engine.AdaptiveLearningPlanner]:
+ * a due review beats fixing a prerequisite, which beats a brand-new unit.
+ */
+enum class LearningActionType {
+    /** Spaced-repetition cards are due right now. */
+    REVIEW,
+
+    /** A prerequisite is unseen or too weak — study it before the dependent node. */
+    REMEDIATE,
+
+    /** A brand-new, unlocked curriculum node. */
+    LEARN,
+
+    /** A node the learner has met but not yet consolidated. */
+    PRACTISE,
+}
+
+/**
+ * One ordered "do this now" the engine can justify. The UI only renders it; it
+ * never decides what it says (technical spec §19). `reasonFa` is authored by the
+ * engine so every recommendation carries its own explanation.
+ */
+data class LearningAction(
+    val type: LearningActionType,
+    /** The curriculum node to act on, or `null` for an undirected review block. */
+    val itemId: String?,
+    val titleFa: String,
+    val reasonFa: String,
+    /** Lower runs first. See [LearningActionType]. */
+    val priority: Int,
+)
+
+/**
+ * The kinds of knowing a single mastery number hides (audit §2). A learner can
+ * recognise a word (pick it from options) and still fail to produce it from
+ * memory; collapsing both into one score is what lets the app serve recognition
+ * exercises forever (audit §6).
+ *
+ * Ordered from least to most demanding, so comparisons and tie-breaks are
+ * deterministic and a weaker dimension can be named meaningfully.
+ */
+enum class MasteryDimension {
+    /** Choosing among options — the easiest evidence. */
+    RECOGNITION,
+
+    /** Producing a known form from a cue (fill the blank). */
+    RECALL,
+
+    /** Understanding meaning in real time (listening). */
+    COMPREHENSION,
+
+    /** Applying a rule to build a new utterance (translation). */
+    APPLICATION,
+
+    /** Free production without a scaffold (speaking). */
+    PRODUCTION,
+
+    /** Durability of the above over a delay — carried by the SRS interval, not one answer. */
+    RETENTION,
+}
+
+/**
+ * Mastery broken down by [MasteryDimension] (audit §2). A dimension the learner
+ * has never been assessed on is simply absent — distinct from a practised-and-
+ * failed 0f. Reads default absent to 0f so "not yet known" ranks as a weakness,
+ * while [isEstablished] still distinguishes the two.
+ */
+data class MasteryProfile(
+    val byDimension: Map<MasteryDimension, Float> = emptyMap(),
+) {
+    /** Practised mastery for [dimension], or 0f when never assessed. */
+    fun masteryOf(dimension: MasteryDimension): Float = byDimension[dimension] ?: 0f
+
+    /** True once at least one graded answer has moved this dimension. */
+    fun isEstablished(dimension: MasteryDimension): Boolean = byDimension.containsKey(dimension)
+
+    /** Mean of the practised dimensions; 0f when nothing has been assessed yet. */
+    val overall: Float
+        get() = if (byDimension.isEmpty()) 0f else byDimension.values.average().toFloat()
+
+    /**
+     * The least-known dimension among [candidates], deterministic on ties
+     * (declaration order). `null` when the candidate set is empty.
+     */
+    fun weakestOf(candidates: Collection<MasteryDimension>): MasteryDimension? =
+        candidates.minWithOrNull(compareBy({ masteryOf(it) }, { it.ordinal }))
+}
+
 data class AppSettings(
     val isFirstLaunch: Boolean,
     val level: LearningLevel,

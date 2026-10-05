@@ -25,6 +25,10 @@ data class HomeUiState(
     val plan: TodayPlan? = null,
     val stats: StudyStats? = null,
     val mastery: Map<Skill, Float> = emptyMap(),
+    /** True once every lesson at the learner's current level is completed. */
+    val levelComplete: Boolean = false,
+    /** The next level above the current one that still has pending lessons. */
+    val nextLevel: LearningLevel? = null,
     val access: org.token.english.core.billing.AccessLevel = org.token.english.core.billing.AccessLevel.TRIAL,
     val trialRemainingMillis: Long = 0L,
 )
@@ -132,6 +136,14 @@ class HomeViewModel(
         val completedIds = states.filter { it.completed }.map { it.lessonId }.toSet()
         val nextLesson = org.token.english.domain.engine.nextLessonFor(lessons, completedIds, level)
 
+        // Level progression: a learner who has finished every lesson at their
+        // current level needs a clear way up, not just the next lesson card.
+        val currentLevelPending = lessons.any { it.level == level && it.id !in completedIds }
+        val nextLevel = LearningLevel.entries
+            .filter { it.ordinal > level.ordinal }
+            .firstOrNull { lvl -> lessons.any { it.level == lvl && it.id !in completedIds } }
+        val levelComplete = lessons.isNotEmpty() && !currentLevelPending
+
         val plan = container.learningPlanner.createPlan(
             dueReviewCount = dueCount,
             nextLesson = nextLesson,
@@ -148,7 +160,15 @@ class HomeViewModel(
             mastery = mastery,
             access = access,
             trialRemainingMillis = trialRemainingMillis,
+            levelComplete = levelComplete,
+            nextLevel = nextLevel,
         )
+    }
+
+    /** Moves the learner up to the next level that still has lessons to do. */
+    fun advanceLevel() {
+        val target = _state.value.nextLevel ?: return
+        viewModelScope.launch { container.settingsRepository.setLevel(target) }
     }
 
     private fun greeting(): String {

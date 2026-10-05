@@ -9,4 +9,12 @@
         <item name="colorOnSecondary">@color/neutral_950</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/night_background</item>
     </style>
+
+    <!-- Blank system splash in dark mode too; the custom SplashActivity draws the brand. -->
+    <style name="Theme.English.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/night_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
+        <item name="windowSplashScreenAnimationDuration">0</item>
+        <item name="postSplashScreenTheme">@style/Theme.English</item>
+    </style>
 </resources>

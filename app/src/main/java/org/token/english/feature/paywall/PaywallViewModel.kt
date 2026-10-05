@@ -82,6 +82,11 @@ class PaywallViewModel(
                 if (storeReachable) billing.fetchPlans() else emptyList()
             }
             val plans = result.getOrElse { emptyList() }
+                // Plans arrive with an empty price when the store couldn't answer
+                // (product missing / panel not ready / old store app). Showing an
+                // unpriced card is a dead end — drop them so the precise message
+                // below explains what actually happened instead.
+                .filter { it.priceText.isNotBlank() }
             _state.update {
                 it.copy(
                     isLoading = false,

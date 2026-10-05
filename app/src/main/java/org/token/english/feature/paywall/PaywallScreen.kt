@@ -193,7 +193,8 @@ private fun Hero(state: PaywallUiState) {
                 }
 
                 org.token.english.core.billing.AccessLevel.PREMIUM -> "اشتراک شما فعال است. ممنونیم!"
-                org.token.english.core.billing.AccessLevel.LOCKED -> "برای ادامه یادگیری، اشتراک فعال کنید."
+                org.token.english.core.billing.AccessLevel.LOCKED ->
+                    "برای ادامه یادگیری، اشتراک فعال کنید. برای اعضا: خرید یا بازیابی اشتراک از همین صفحه انجام می‌شود."
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -274,16 +275,20 @@ private fun PlanCard(
 
 @Composable
 private fun Benefits() {
-    AppCard {
-        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
+    AppCard(Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.compact),
+        ) {
             SectionHeader("با اشتراک چه می‌گیرید")
             listOf(
-                "همه درس‌های A1 و A2 بدون محدودیت",
+                "همه درس‌های A1 تا C2 بدون محدودیت",
                 "مرور هوشمند واژگان با فاصله‌گذاری منظم",
                 "آمار پیشرفت و مسیر یادگیری شخصی‌سازی‌شده",
                 "به‌روزرسانی محتوای جدید، بدون پرداخت اضافه",
             ).forEach { benefit ->
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -296,6 +301,7 @@ private fun Benefits() {
                     Text(
                         text = benefit,
                         style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.weight(1f),
                     )
                 }
             }

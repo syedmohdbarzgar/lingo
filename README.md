@@ -21,6 +21,23 @@ re-assert LTR, because the root layout is forced RTL.
 
 ---
 
+## Contents
+
+- [What is in the app today](#what-is-in-the-app-today)
+- [Design preview](#design-preview)
+- [Build and run](#build-and-run)
+- [Project layout](#project-layout)
+- [Content pipeline](#content-pipeline)
+- [Testing](#testing)
+- [Connectivity](#connectivity)
+- [Known limitations](#known-limitations)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Documentation](#documentation)
+- [License](#license)
+
+---
+
 ## What is in the app today
 
 **Learning flow**
@@ -86,10 +103,40 @@ clock does not hand out extra trial time.
 
 ---
 
+## Design preview
+
+These are the original design mockups, kept in `files/` as design intent — not screenshots of the
+running app. The built UI follows them through the shared design-system tokens rather than by
+copying pixels.
+
+| Home | Lesson | Review |
+|---|---|---|
+| <img src="files/stitch_english_learning_app_design_system/home/screen.png" width="220" alt="Home screen mockup"> | <img src="files/stitch_english_learning_app_design_system/lesson_exercise/screen.png" width="220" alt="Lesson screen mockup"> | <img src="files/stitch_english_learning_app_design_system/review/screen.png" width="220" alt="Review screen mockup"> |
+
+| Progress | Roadmap | Settings |
+|---|---|---|
+| <img src="files/stitch_english_learning_app_design_system/progress/screen.png" width="220" alt="Progress screen mockup"> | <img src="files/stitch_english_learning_app_design_system/learning_roadmap/screen.png" width="220" alt="Learning roadmap mockup"> | <img src="files/stitch_english_learning_app_design_system/settings_profile/screen.png" width="220" alt="Settings screen mockup"> |
+
+The brand board is at
+[`lingua_english_learning_brand_board.png`](files/stitch_english_learning_app_design_system/lingua_english_learning_brand_board.png/screen.png).
+
+---
+
 ## Build and run
 
 The everyday loop is **tests, not APKs**. Compiling all three flavours after every change is slow
 and buys nothing — do it at release points or when putting a build on a device.
+
+### Requirements
+
+- **JDK 25** — the version the project is verified against. Gradle runs on the JVM you launch it
+  with; the foojay toolchain resolver in `settings.gradle.kts` can provision a missing toolchain.
+- **Android SDK** with platform **37** and matching build-tools, plus `platform-tools` for ADB.
+  Point the build at it with `sdk.dir` in an untracked `local.properties`.
+- **No local Gradle install** — always use the wrapper (`./gradlew`), which pins Gradle 9.5.0.
+- A device or emulator is only needed for instrumented tests or manual UI checks; the unit-test gate
+  runs on the JVM alone.
+- Optional: `keystore.properties` for release signing and the marketplace billing keys.
 
 ```bash
 # Fast gate: unit tests, and a typecheck of the main sources that comes for free.
@@ -182,6 +229,27 @@ data    → domain (implements the interfaces) + Room/DataStore
   AGP 9's built-in Kotlin adds risk for no MVP value.
 - Engines are pure and swappable. The UI must never learn how intervals or mastery are computed.
 
+### How a screen gets its data
+
+```
+Composable (feature/<screen>/…Screen.kt)
+      │  emits Events
+      ▼
+ViewModel  ── StateFlow<UiState> ──▶ recomposition (state is the single source of truth)
+      │  calls use cases / repositories
+      ▼
+domain/usecase ──▶ domain/engine   (pure: ReviewScheduler, MasteryEngine,
+      │                             LearningPlanner, KnowledgeGraph, KnowledgeEngine)
+      ▼
+domain/repository (interfaces)
+      │  implemented by
+      ▼
+data/repository ──▶ Room (local) + DataStore (preferences)   ← the whole learning core
+      │
+      └─▶ core/billing BillingGateway → the flavour's PlatformBillingGateway → store SDK
+                                                                            (the only network path)
+```
+
 ---
 
 ## Content pipeline
@@ -266,6 +334,54 @@ offline, and must not block the learning core.
 - Studied seconds are credited on screen close/finish (best effort), not by a foreground timer.
 - A streak day requires at least 60 seconds of study.
 - Single `:app` module; split it when build times or ownership demand it.
+
+---
+
+## Roadmap
+
+Nothing here is committed to a date; it is the order in which the pieces make sense.
+
+**Buildable offline (no backend required)**
+
+- Move the spaced-repetition queue onto the knowledge graph — schedule and re-serve each due
+  curriculum node's own exercises, and feed review grades into node mastery the way lesson answers
+  already do.
+- Skill-profile placement: score the placement test per skill instead of a single overall band.
+- An error taxonomy so each miss is classified (vocabulary gap vs grammar vs comprehension) and
+  drives what comes next — then adaptive difficulty on top of it.
+- `writing` and `conversation` exercise types (the exercise model already has room for them).
+- On-device speech evaluation for the `speaking` exercise, which currently renders as inactive.
+- Remote crash reporting — a deliberate provider and privacy decision, not a default.
+
+**Suspended until a backend exists**
+
+AI conversation and feedback, cloud sync / authentication / backup, downloadable content packages,
+and analytics upload. [`AGENTS.md`](AGENTS.md) §4 explains the reasoning and the seams already left
+in place for each.
+
+**Infrastructure**
+
+- CI that runs the unit-test gate and `validateContent` on every push (there is none today).
+
+---
+
+## Contributing
+
+[`AGENTS.md`](AGENTS.md) is the authoritative reference — read it before changing anything. The
+short version:
+
+- **Run the gates locally.** There is no CI, so nothing checks your branch but you:
+  `./gradlew :app:testBazaarDebugUnitTest`, and `./gradlew validateContent` after any content edit.
+- **Content is data, not code.** Add lessons, words, exercises and knowledge nodes in the JSON
+  bundle and bump `contentVersion`; new content needs no Kotlin change.
+- **Respect the layers.** `domain/` stays pure Kotlin (no Android, no Room, no Compose), and the UI
+  never learns how intervals or mastery are computed.
+- **Use the design tokens.** Never hardcode colours, spacings or radii; Persian strings live inline
+  in composables and English text goes through the LTR components.
+- **Offline stays sacred.** The learning core must keep working with no network, and anything that
+  needs a backend must be confirmed with the maintainer before it is built.
+- A change is done when the tests pass, `validateContent` passes if content moved, empty, loading
+  and error states exist, RTL/LTR is verified, and no undocumented permission was added.
 
 ---
 

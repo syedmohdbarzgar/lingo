@@ -158,7 +158,11 @@ private fun ExerciseContent(
                     exercise.questionFa?.let {
                         Text(
                             text = it,
-                            style = MaterialTheme.typography.bodyMedium,
+                            // Authored Persian may open with English («Not
+                            // uncommon» …): pin RTL so first-strong can't flip it.
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -277,7 +281,11 @@ private fun ExerciseContent(
                         explanation?.let { tip ->
                             Text(
                                 text = "نکته: $tip",
-                                style = MaterialTheme.typography.bodySmall,
+                                // Long mixed tips wrap across lines — keep the
+                                // paragraph pinned to RTL for stable bidi wrapping.
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                                ),
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }

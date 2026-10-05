@@ -2,10 +2,14 @@ package org.token.english.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.billing.AccessLevel
+import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.di.AppContainer
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
@@ -14,6 +18,10 @@ import org.token.english.domain.model.ThemeMode
 data class SettingsUiState(
     val isLoading: Boolean = true,
     val settings: AppSettings? = null,
+    /** Current entitlement so the subscription card can state it plainly. */
+    val access: AccessLevel = AccessLevel.TRIAL,
+    val trialRemainingMillis: Long = 0L,
+    val subscriptionUntil: Long = 0L,
 )
 
 class SettingsViewModel(
@@ -23,11 +31,45 @@ class SettingsViewModel(
     private val _state = MutableStateFlow(SettingsUiState())
     val state: StateFlow<SettingsUiState> = _state.asStateFlow()
 
+    private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
+
     init {
         viewModelScope.launch {
             container.settingsRepository.settings.collect {
-                _state.value = SettingsUiState(isLoading = false, settings = it)
+                // Keep the entitlement fields — this collector must not wipe them.
+                _state.update { s -> s.copy(isLoading = false, settings = it) }
             }
+        }
+        viewModelScope.launch {
+            container.settingsRepository.observeTrialAndSubscription().collect { ts ->
+                trialAndSubscription = ts
+                recomputeAccess()
+            }
+        }
+        viewModelScope.launch {
+            // Trial remaining decays with wall time while the flow stays silent —
+            // tick so the status line never shows a stale countdown.
+            while (true) {
+                delay(60_000L)
+                if (trialAndSubscription != null) recomputeAccess()
+            }
+        }
+    }
+
+    private fun recomputeAccess() {
+        val ts = trialAndSubscription ?: return
+        val now = System.currentTimeMillis()
+        val remaining = org.token.english.core.billing.TrialClock.remainingMs(
+            ts.trialClockState(),
+            now,
+            android.os.SystemClock.elapsedRealtime(),
+        )
+        _state.update {
+            it.copy(
+                access = EntitlementPolicy.level(now, remaining, ts.subscriptionUntil),
+                trialRemainingMillis = remaining,
+                subscriptionUntil = ts.subscriptionUntil,
+            )
         }
     }
 

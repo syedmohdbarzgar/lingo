@@ -27,16 +27,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.English">
 
+        <!-- Custom launch screen: blank system splash theme, then the brand while
+             the content bundle seeds. This is the entry point now. -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.English">
+            android:theme="@style/Theme.English.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.English" />
 
         <!-- Daily review reminder (inexact daily alarm → local notification).
              exported=false: only the system's BOOT_COMPLETED reaches it. -->

@@ -385,6 +385,9 @@ tasks.named("preBuild") {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.core.ktx)
+    // System splash compatibility: blank the default splash and hand off to the
+    // custom SplashActivity (see themes.xml / SplashActivity.kt).
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 

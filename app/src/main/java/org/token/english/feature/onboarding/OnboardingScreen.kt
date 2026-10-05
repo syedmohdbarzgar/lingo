@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Grade
 import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.TrendingUp
+import androidx.compose.material.icons.outlined.WorkspacePremium
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -60,6 +62,12 @@ private val pages = listOf(
         title = "مهارت واقعی بساز.",
         subtitle = "شنیدن، خواندن و تولید زبان در موقعیت‌های واقعی، نه فقط حفظ کردن.",
     ),
+    OnboardingPage(
+        icon = Icons.Outlined.WorkspacePremium,
+        title = "۷ روز رایگان، بعد اشتراک.",
+        subtitle = "کل محتوا ۷ روز به‌صورت رایگان در دسترس است. بعد از آن، برای ادامه یادگیری " +
+            "اشتراک ماهانه یا سالانه از فروشگاه فعال می‌شود و هر زمان می‌توانی لغو کنی.",
+    ),
 )
 
 class OnboardingViewModel(
@@ -86,6 +94,9 @@ fun OnboardingScreen(
     Column(
         Modifier
             .fillMaxSize()
+            // The app shell no longer folds system insets into its content, and
+            // onboarding has no TopAppBar of its own — so it pads them itself.
+            .safeDrawingPadding()
             .padding(AppSpacing.lg),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {

@@ -41,6 +41,7 @@ import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.labelFa
 import org.token.english.di.appViewModelFactory
+import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,6 +100,15 @@ fun HomeScreen(
         ) {
             DailyGoalCard(state)
 
+            val nextLevel = state.nextLevel
+            if (state.levelComplete && nextLevel != null) {
+                LevelUpCard(
+                    currentLevel = state.level,
+                    nextLevel = nextLevel,
+                    onAdvance = vm::advanceLevel,
+                )
+            }
+
             TrialBanner(state, onOpenPaywall = onOpenPaywall)
 
             state.plan?.let { plan ->
@@ -141,13 +151,45 @@ fun HomeScreen(
     }
 }
 
+/**
+ * Shown once the learner has finished every lesson at their current level, so the
+ * path upward is explicit instead of implied by the next-lesson card.
+ */
+@Composable
+private fun LevelUpCard(
+    currentLevel: LearningLevel,
+    nextLevel: LearningLevel,
+    onAdvance: () -> Unit,
+) {
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("سطح بعدی")
+            Text(
+                text = "سطح ${currentLevel.name} را کامل کردید.",
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = "برای ادامه مسیر، به سطح ${nextLevel.name} بروید.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            PrimaryButton(
+                text = "ادامه در سطح ${nextLevel.name}",
+                onClick = onAdvance,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    }
+}
+
 @Composable
 private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
-    // Premium subscribers see nothing; trial learners get a calm, non-blocking nudge.
+    // Premium subscribers see nothing; trial learners always see how much free
+    // time is left — the subscription requirement has to be visible from day one,
+    // not only in the last two days of the trial.
     if (state.access != org.token.english.core.billing.AccessLevel.TRIAL) return
     val hours = state.trialRemainingMillis / (60 * 60 * 1000)
-    // A 7-day trial only earns a nudge in its last two days.
-    if (hours > 48) return
+    val days = state.trialRemainingMillis / (24 * 60 * 60 * 1000)
 
     AppCard(onClick = onOpenPaywall) {
         Row(
@@ -158,8 +200,8 @@ private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                 Text(
                     text = when {
-                        hours >= 24 -> "دوره رایگان کمتر از ${hours / 24} روز دیگر تمام می‌شود"
-                        hours >= 1 -> "دوره رایگان $hours ساعت دیگر تمام می‌شود"
+                        days >= 1 -> "دوره رایگان شما $days روز و ${hours % 24} ساعت دیگر ادامه دارد"
+                        hours >= 1 -> "دوره رایگان شما $hours ساعت دیگر ادامه دارد"
                         else -> "دوره رایگان رو به پایان است"
                     },
                     style = MaterialTheme.typography.titleSmall,

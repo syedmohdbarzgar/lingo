@@ -68,6 +68,8 @@ One Gradle module (`:app`), package boundaries mirror the future multi-module sp
 
 ```text
 org.token.english
+├── SplashActivity.kt          # Custom launch screen: blank system splash (Theme.English.Starting),
+│                              #   waits for content seeding, then hands off to MainActivity
 ├── MainActivity.kt            # Compose host: theme gate + forced RTL root
 ├── EnglishApp.kt              # Application → owns AppContainer, seeds content, mirrors sound flag
 ├── navigation/                # Routes + NavHost + bottom bar (4 tabs)
@@ -112,6 +114,12 @@ data    → domain (implements interfaces) + Room/DataStore
   `DefaultLearningPlanner`, plus the knowledge layer — `KnowledgeGraph` (prerequisite ordering and
   unlocking) and `DefaultKnowledgeEngine` (how one graded answer moves a node's mastery and review
   date). The UI must never learn how intervals/mastery are computed (technical spec §19).
+- The adaptive layer on top of that graph is also pure and tested: `PrerequisiteEngine`
+  (readiness / remediation / dependency depth), `AdaptiveLearningPlanner` (the ordered, justified
+  "what to study now and why"), `DefaultMasteryProfileEngine` (mastery split by dimension —
+  recognition / recall / comprehension / application / production), and `AdaptiveExerciseSelector`
+  (front-loads the exercise formats whose mastery dimension is still weak). Wired to the UI only
+  after the decisions themselves are proven; today they are exercised by their unit tests.
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
@@ -270,7 +278,9 @@ Rules:
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription gating), `KnowledgeGraphTest` (curriculum graph),
-  `ContentSeederTest` / `ContentDistributionTest` (content pipeline).
+  `ContentSeederTest` / `ContentDistributionTest` (content pipeline), plus the adaptive layer —
+  `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest`, `MasteryProfileEngineTest`,
+  `AdaptiveExerciseSelectorTest`, `ReviewLifecycleTest` (pinned SRS lifecycle numbers).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
   content edit run them with `--rerun` or they silently report UP-TO-DATE.
 - Instrumented test files are still the Android Studio templates (not maintained).

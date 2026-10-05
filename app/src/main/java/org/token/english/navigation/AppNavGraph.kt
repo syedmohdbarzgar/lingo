@@ -1,5 +1,8 @@
 package org.token.english.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -124,6 +127,11 @@ fun AppNavGraph(startDestination: String) {
     }
 
     Scaffold(
+        // The shell only reserves space for the bottom bar; each screen's own
+        // Scaffold consumes the system insets (its TopAppBar pads the status bar).
+        // Leaving the default insets here double-counts the status bar and leaves
+        // an unusual gap above every toolbar.
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             val showBottomBar = tabs.any { it.route == currentRoute }
             if (showBottomBar) {
@@ -168,7 +176,7 @@ fun AppNavGraph(startDestination: String) {
 private val LOCK_EXEMPT = setOf(Routes.ONBOARDING, Routes.PLACEMENT, Routes.SETTINGS)
 
 private fun NavGraphBuilder.paywall(navController: NavHostController) {
-    composable(Routes.PAYWALL) {
+    composable(Routes.PAYWALL, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         PaywallScreen(
             onClose = { navController.popBackStack() },
             onLockedExit = {
@@ -189,7 +197,7 @@ private fun NavGraphBuilder.paywall(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.onboarding(navController: NavHostController) {
-    composable(Routes.ONBOARDING) {
+    composable(Routes.ONBOARDING, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         OnboardingScreen(
             onPlacement = { navController.navigate(Routes.PLACEMENT) },
             onSkip = {
@@ -202,7 +210,7 @@ private fun NavGraphBuilder.onboarding(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.placement(navController: NavHostController) {
-    composable(Routes.PLACEMENT) {
+    composable(Routes.PLACEMENT, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         PlacementScreen(
             onFinished = {
                 navController.navigate(Routes.HOME) {
@@ -215,7 +223,7 @@ private fun NavGraphBuilder.placement(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.home(navController: NavHostController) {
-    composable(Routes.HOME) {
+    composable(Routes.HOME, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         HomeScreen(
             onOpenLesson = { navController.navigate(Routes.lesson(it)) },
             onOpenSettings = { navController.navigate(Routes.SETTINGS) },
@@ -230,6 +238,10 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
     composable(
         route = Routes.LESSON,
         arguments = listOf(navArgument("lessonId") { type = NavType.StringType }),
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
     ) { entry ->
         val lessonId = entry.arguments?.getString("lessonId").orEmpty()
         LessonScreen(
@@ -240,7 +252,7 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.review(navController: NavHostController) {
-    composable(Routes.REVIEW) {
+    composable(Routes.REVIEW, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         ReviewScreen(
             onBrowseVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onGoHome = { navController.navigate(Routes.HOME) },
@@ -249,7 +261,7 @@ private fun NavGraphBuilder.review(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
-    composable(Routes.VOCABULARY) {
+    composable(Routes.VOCABULARY, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         VocabularyScreen(
             onOpenDetail = { navController.navigate(Routes.vocabularyDetail(it)) },
         )
@@ -257,6 +269,10 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
     composable(
         route = Routes.VOCABULARY_DETAIL,
         arguments = listOf(navArgument("vocabId") { type = NavType.StringType }),
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
     ) { entry ->
         val vocabId = entry.arguments?.getString("vocabId").orEmpty()
         VocabularyDetailScreen(
@@ -267,14 +283,27 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.progress(navController: NavHostController) {
-    composable(Routes.PROGRESS) { ProgressScreen() }
+    composable(
+        route = Routes.PROGRESS,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
+    ) { ProgressScreen() }
 }
 
 private fun NavGraphBuilder.settings(navController: NavHostController) {
-    composable(Routes.SETTINGS) {
+    composable(
+        route = Routes.SETTINGS,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
+    ) {
         SettingsScreen(
             onBack = { navController.popBackStack() },
             onReTakePlacement = { navController.navigate(Routes.PLACEMENT) },
+            onOpenPaywall = { navController.navigate(Routes.PAYWALL) },
         )
     }
 }

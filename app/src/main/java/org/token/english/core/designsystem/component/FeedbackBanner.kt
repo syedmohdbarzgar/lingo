@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
@@ -82,7 +83,10 @@ private fun FeedbackSurface(
         icon()
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium,
+            // Persian UI copy that embeds English ("پاسخ درست: passport",
+            // "مرور بعدی: Jan 5" …): pin the paragraph to RTL so a leading
+            // Latin run can't flip the whole sentence via first-strong.
+            style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Rtl),
             color = content,
         )
     }
