@@ -27,8 +27,13 @@ object KnowledgeEvidence {
      * Knowledge items an attempt of [skill] counts for, in priority order:
      *
      * 1. the lesson's items of the matching type,
-     * 2. items that explicitly list [skill],
+     * 2. items that explicitly list [skill] — unioned with (1), never either/or,
      * 3. every item of the lesson.
+     *
+     * Step 2 must be a union: a PHONOLOGY node lists LISTENING, but listening's
+     * default knowledge type is VOCABULARY (A-7). Under an either/or rule such a
+     * node would never see an attempt and would sit at zero mastery forever,
+     * while a lesson always has vocabulary nodes to match on.
      *
      * Step 3 is deliberate: a translation exercise really does test both the
      * lesson's words and its grammar, so spreading the evidence beats dropping
@@ -39,8 +44,9 @@ object KnowledgeEvidence {
         if (lessonItems.isEmpty()) return emptyList()
         val wanted = knowledgeTypeFor(skill)
         val byType = lessonItems.filter { it.type == wanted }
-        if (byType.isNotEmpty()) return byType
         val bySkill = lessonItems.filter { skill in it.skills }
-        return bySkill.ifEmpty { lessonItems }
+        // Type-first order keeps the result deterministic across callers.
+        val union = (byType + bySkill).distinctBy { it.id }
+        return union.ifEmpty { lessonItems }
     }
 }

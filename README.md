@@ -73,14 +73,14 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 7)**
+**Content bundle (JSON `contentVersion` 8)**
 
 | | Count |
 |---|---|
 | Lessons | 38 — 6 each for A1/A2/B1/B2, 7 each for C1/C2 |
-| Exercises | 258 |
+| Exercises | 264 |
 | Vocabulary entries | 228 |
-| Knowledge items | 72 |
+| Knowledge items | 75 |
 | Placement questions | 30 |
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of

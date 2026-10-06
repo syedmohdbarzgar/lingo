@@ -1,5 +1,5 @@
 {
-  "contentVersion": 7,
+  "contentVersion": 8,
   "lessons": [
     {
       "id": "a1.greetings.lesson-01",
@@ -9,7 +9,7 @@
       "topic": "Basics",
       "estimatedMinutes": 5,
       "order": 1,
-      "grammarTipFa": "## قاعده\nسلام‌ها به زمان روز بستگی دارند: Good morning تا ظهر، Good afternoon از ظهر تا غروب، Good evening غروب به بعد. Good night فقط هنگام خداحافظی است، نه سلام.\n## جدول\nGood morning! — صبح بخیر\nGood afternoon! — عصر بخیر (تا غروب)\nGood evening! — عصر/شب بخیر\nGood night! — شب بخیر (خداحافظی)\n## مثال‌ها\nGood morning, Sara! — صبح بخیر، سارا!\nGood evening. How are you? — عصر بخیر. حالت چطور است؟\nGood night, see you tomorrow. — شب بخیر، فردا می‌بینمت.\n## خطاهای رایج\nGood night را به‌جای سلام به کار نبرید — فقط هنگام خداحافظی شب است.\nاگر مطمئن نیستید، Hi یا Hello برای هر وقت روز بی‌خطر است."
+      "grammarTipFa": "## قاعده\nسلام‌ها به زمان روز بستگی دارند: Good morning تا ظهر، Good afternoon از ظهر تا غروب، Good evening غروب به بعد. Good night فقط هنگام خداحافظی است، نه سلام.\n## جدول\nGood morning! — صبح بخیر\nGood afternoon! — عصر بخیر (تا غروب)\nGood evening! — عصر/شب بخیر\nGood night! — شب بخیر (خداحافظی)\n## مثال‌ها\nGood morning, Sara! — صبح بخیر، سارا!\nGood evening. How are you? — عصر بخیر. حالت چطور است؟\nGood night, see you tomorrow. — شب بخیر، فردا می‌بینمت.\n## خطاهای رایج\nGood night را به‌جای سلام به کار نبرید — فقط هنگام خداحافظی شب است.\nاگر مطمئن نیستید، Hi یا Hello برای هر وقت روز بی‌خطر است.\n## تلفظ\nhello: تکیه روی هجای دوم است (he-LLO) و هجای اول یک /ə/ خنثی و کوتاه است، نه /e/.\nthank با آوای /θ/ گفته می‌شود — زبان میان دندان‌ها؛ «سَنک» با /s/ غلط است.\nplease و meet واکهٔ بلند /iː/ دارند؛ کوتاه خواندنشان آن‌ها را به «پلیس» و «میت» نزدیک می‌کند."
     },
     {
       "id": "a1.daily-routine.lesson-01",
@@ -19,7 +19,7 @@
       "topic": "Daily Life",
       "estimatedMinutes": 5,
       "order": 2,
-      "grammarTipFa": "## قاعده\nبرای کارهای تکراری و روزمره از زمان حال ساده استفاده کن. با he/she/it به فعل s می‌چسبد: She goes to work. در پرسش و منفی، فعل کمکی do/does می‌آید و فعل اصلی لخت می‌شود.\n## جدول\nI work / You work / He works / She works / They work\nDoes she work? — Yes, she does.\nShe doesn't work on Fridays.\n## مثال‌ها\nI usually wake up at seven. — معمولاً ساعت هفت بیدار می‌شوم.\nShe goes to work by bus. — او با اتوبوس به سر کار می‌رود.\nDo you drink coffee in the morning? — صبح قهوه می‌نوشی؟\n## خطاهای رایج\ns را برای I/you/we/they نگذارید: «I works» غلط است.\nبعد از does، فعل دوباره s نمی‌گیرد: «Does she goes?» غلط است."
+      "grammarTipFa": "## قاعده\nبرای کارهای تکراری و روزمره از زمان حال ساده استفاده کن. با he/she/it به فعل s می‌چسبد: She goes to work. در پرسش و منفی، فعل کمکی do/does می‌آید و فعل اصلی لخت می‌شود.\n## جدول\nI work / You work / He works / She works / They work\nDoes she work? — Yes, she does.\nShe doesn't work on Fridays.\n## مثال‌ها\nI usually wake up at seven. — معمولاً ساعت هفت بیدار می‌شوم.\nShe goes to work by bus. — او با اتوبوس به سر کار می‌رود.\nDo you drink coffee in the morning? — صبح قهوه می‌نوشی؟\n## خطاهای رایج\ns را برای I/you/we/they نگذارید: «I works» غلط است.\nبعد از does، فعل دوباره s نمی‌گیرد: «Does she goes?» غلط است.\n## تلفظ\nwake با واکهٔ دوهجایی /eɪ/ است؛ آن را مثل /e/ کوتاه نخوانید.\nusually روی هجای اول تکیه دارد (US-ually) و هجای دوم /jə/ ضعیف است.\nbreakfast دو هجاست و تکیه روی اول می‌افتد: BREK-fest؛ هجای دوم /ə/ کوتاه است."
     },
     {
       "id": "a1.family.lesson-01",
@@ -29,7 +29,7 @@
       "topic": "People",
       "estimatedMinutes": 5,
       "order": 3,
-      "grammarTipFa": "## قاعده\nداشتن اعضا و چیزها با have یا have got بیان می‌شود. با he/she/it شکل has می‌آید. پرسش با Do/Does…have? شروع می‌شود و پاسخ کوتاه Yes, I do است.\n## جدول\nI have / You have / He has / She has / We have\nI have got two brothers.\nDo you have a sister? — Yes, I do.\n## مثال‌ها\nI have got two brothers. — دو برادر دارم.\nShe has a daughter and a son. — او یک دختر و یک پسر دارد.\nDo you have any cousins? — عموزاده یا عموزاده‌ای داری؟\n## خطاهای رایج\nبرای he/she نگویید «She have» — «She has» درست است.\nفعل داشتن را حذف نکنید: «She two brothers» غلط، «She has two brothers» درست."
+      "grammarTipFa": "## قاعده\nداشتن اعضا و چیزها با have یا have got بیان می‌شود. با he/she/it شکل has می‌آید. پرسش با Do/Does…have? شروع می‌شود و پاسخ کوتاه Yes, I do است.\n## جدول\nI have / You have / He has / She has / We have\nI have got two brothers.\nDo you have a sister? — Yes, I do.\n## مثال‌ها\nI have got two brothers. — دو برادر دارم.\nShe has a daughter and a son. — او یک دختر و یک پسر دارد.\nDo you have any cousins? — عموزاده یا عموزاده‌ای داری؟\n## خطاهای رایج\nبرای he/she نگویید «She have» — «She has» درست است.\nفعل داشتن را حذف نکنید: «She two brothers» غلط، «She has two brothers» درست.\n## تلفظ\nfamily سه هجاست و تکیه روی اول است: FA-mi-ly؛ هجای میانی /ə/ خنثی است.\nsister و brother هر دو روی هجای اول تکیه دارند و -er آخر کوتاه /ə/ است.\ndaughter با واکهٔ بلند /ɔː/ و بدون r تلفظ می‌شود؛ کشش واکه را حفظ کنید."
     },
     {
       "id": "a1.shopping.lesson-01",
@@ -39,7 +39,7 @@
       "topic": "Shopping",
       "estimatedMinutes": 5,
       "order": 4,
-      "grammarTipFa": "## قاعده\nقیمت را با How much is…? (مفرد/غیرقابل شمارش) و How much are…? (جمع) بپرس. اعداد ترتیبی بعد از اسم و معمولاً با the می‌آیند: the second floor.\n## جدول\nHow much is this shirt? — این پیراهن چند است؟\nHow much are these shoes? — این کفش‌ها چندند؟\nthe first / the second / the third\n## مثال‌ها\nHow much is this jacket? — این کت چند است؟\nIt's twenty dollars. — بیست دلار است.\nThe shoes are on the second floor. — کفش‌ها طبقه‌ی دوم است.\n## خطاهای رایج\n«How much cost?» غلط است — فعل is لازم: «How much is it?»\nترتیبی را قبل از اسم نگذارید: «floor second» غلط، «the second floor» درست."
+      "grammarTipFa": "## قاعده\nقیمت را با How much is…? (مفرد/غیرقابل شمارش) و How much are…? (جمع) بپرس. اعداد ترتیبی بعد از اسم و معمولاً با the می‌آیند: the second floor.\n## جدول\nHow much is this shirt? — این پیراهن چند است؟\nHow much are these shoes? — این کفش‌ها چندند؟\nthe first / the second / the third\n## مثال‌ها\nHow much is this jacket? — این کت چند است؟\nIt's twenty dollars. — بیست دلار است.\nThe shoes are on the second floor. — کفش‌ها طبقه‌ی دوم است.\n## خطاهای رایج\n«How much cost?» غلط است — فعل is لازم: «How much is it?»\nترتیبی را قبل از اسم نگذارید: «floor second» غلط، «the second floor» درست.\n## تلفظ\ncheap و expensive هر دو با واکهٔ بلند /iː/ شروع می‌شوند؛ آن را کوتاه نخوانید.\nmoney با /ʌ/ کوتاه تلفظ می‌شود (MUN-ey)، نه /uː/.\nدر پرسش How much…؟ تکیه روی much می‌افتد و h در how نرم و کوتاه است."
     },
     {
       "id": "a2.airport.lesson-01",
@@ -249,7 +249,7 @@
       "topic": "People",
       "estimatedMinutes": 5,
       "order": 25,
-      "grammarTipFa": "## قاعده\nبرای معرفی خود و دیگران از فعل be استفاده کن: I am Mina / This is Ali. صفت‌های ملکی همیشه قبل از اسم می‌آیند و صاحب را نشان می‌دهند: my name، your friend، his sister.\n## جدول\nI am / You are / He is / She is / It is\nmy / your / his / her / our / their\n## مثال‌ها\nMy name is Mina. — اسم من مینا است.\nThis is my friend Ali. — این دوست من علی است.\nHer sister is a doctor. — خواهر او دکتر است.\n## خطاهای رایج\nملکی با apostrophe نمی‌آید: «she's book» غلط است — «her book» درست.\nحذف فعل be اشتباه است: «I Mina» نه، «I am Mina»."
+      "grammarTipFa": "## قاعده\nبرای معرفی خود و دیگران از فعل be استفاده کن: I am Mina / This is Ali. صفت‌های ملکی همیشه قبل از اسم می‌آیند و صاحب را نشان می‌دهند: my name، your friend، his sister.\n## جدول\nI am / You are / He is / She is / It is\nmy / your / his / her / our / their\n## مثال‌ها\nMy name is Mina. — اسم من مینا است.\nThis is my friend Ali. — این دوست من علی است.\nHer sister is a doctor. — خواهر او دکتر است.\n## خطاهای رایج\nملکی با apostrophe نمی‌آید: «she's book» غلط است — «her book» درست.\nحذف فعل be اشتباه است: «I Mina» نه، «I am Mina».\n## تلفظ\nname با واکهٔ دوهجایی /eɪ/ است؛ آن را با /e/ کوتاه نخوانید.\nدر What's your name? تکیه روی name می‌افتد و 's به صدای /z/ می‌رسد.\nspell و from هر دو واکهٔ کوتاه دارند؛ کشیدن‌شان جمله را سنگین و غیرطبیعی می‌کند."
     },
     {
       "id": "a1.weather.lesson-01",
@@ -259,7 +259,7 @@
       "topic": "Nature",
       "estimatedMinutes": 5,
       "order": 26,
-      "grammarTipFa": "## قاعده\nبرای وضعیت لحظه‌ای آب‌وهوا از حال استمراری (be + ing) استفاده کن: It is raining now. برای عادت و کلیت هوا حال ساده به کار می‌رود: It rains a lot in winter.\n## جدول\nIt is raining now. — دارد باران می‌آید (لحظه‌ای)\nIt is cold today. — امروز سرد است (وضعیت)\nIt rains a lot in winter. — زمستان زیاد باران می‌بارد (عادت)\n## مثال‌ها\nLook! It's raining. — ببین! باران می‌آید.\nIt is very cold today. — امروز خیلی سرد است.\nIt snows in the mountains. — در کوه‌ها برف می‌بارد.\n## خطاهای رایج\nفعل be را ing نکنید: «It is raininging» و «It is rain» غلط — درست «It is raining» است.\nبرای مشاهده‌ی همین حالا از حال ساده نیاید: «Look, it rains» غلط است."
+      "grammarTipFa": "## قاعده\nبرای وضعیت لحظه‌ای آب‌وهوا از حال استمراری (be + ing) استفاده کن: It is raining now. برای عادت و کلیت هوا حال ساده به کار می‌رود: It rains a lot in winter.\n## جدول\nIt is raining now. — دارد باران می‌آید (لحظه‌ای)\nIt is cold today. — امروز سرد است (وضعیت)\nIt rains a lot in winter. — زمستان زیاد باران می‌بارد (عادت)\n## مثال‌ها\nLook! It's raining. — ببین! باران می‌آید.\nIt is very cold today. — امروز خیلی سرد است.\nIt snows in the mountains. — در کوه‌ها برف می‌بارد.\n## خطاهای رایج\nفعل be را ing نکنید: «It is raininging» و «It is rain» غلط — درست «It is raining» است.\nبرای مشاهده‌ی همین حالا از حال ساده نیاید: «Look, it rains» غلط است.\n## تلفظ\nrain با واکهٔ دوهجایی /eɪ/ است، نه /e/ کوتاه.\nhot واکهٔ کوتاه /ɒ/ دارد؛ کشیدن آن تلفظ را خراب می‌کند.\nsunny روی هجای اول تکیه دارد (SUN-ny) و هجای دوم /i/ کوتاه است؛ wind با /ɪ/ کوتاه است."
     },
     {
       "id": "a2.hobbies.lesson-01",

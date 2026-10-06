@@ -229,8 +229,9 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 7):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 258
-  exercises (6/lesson + 12 reading items), 228 vocabulary entries (6/lesson), 72 knowledge items,
+- **CEFR bundle (contentVersion 8):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 264
+  exercises (6/lesson + 12 reading items + 6 A1 pronunciation drills), 228 vocabulary entries
+  (6/lesson), 75 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
@@ -255,6 +256,13 @@ Rules:
   single-answer `fill_blank` must appear with a reason in
   `ContentDistributionTest.reviewedSingleAnswerBlanks`; new ones fail the test until
   equivalents are added or justified.
+- Phonology / pronunciation (A-7, A1 only): each A1 lesson teaches a `## تلفظ` section in its
+  `grammarTipFa` (vowel length, word stress, word sounds — an unknown header parses to a CUSTOM
+  card, so no schema change), is covered by a PHONOLOGY knowledge item, and has a guided
+  listening drill (`listening` + `explanationFa` naming what to hear). PHONOLOGY nodes list the
+  `LISTENING` skill and are **never prerequisites** of other items: `KnowledgeEvidence.itemsFor`
+  unions type-matches with explicit skill tags so listening moves them, but gating a lesson on
+  pronunciation mastery would strand learners. `PhonologyCoverageTest` enforces all of it.
 
 ## 6. Design system rules (from design.md)
 
@@ -284,7 +292,9 @@ Rules:
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription gating), `KnowledgeGraphTest` (curriculum graph),
-  `ContentSeederTest` / `ContentDistributionTest` (content pipeline), plus the adaptive layer —
+  `ContentSeederTest` / `ContentDistributionTest` (content pipeline), `KnowledgeEngineTest`
+  (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
+  (A1 pronunciation coverage), plus the adaptive layer —
   `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest`, `MasteryProfileEngineTest`,
   `AdaptiveExerciseSelectorTest`, `ReviewLifecycleTest` (pinned SRS lifecycle numbers).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a

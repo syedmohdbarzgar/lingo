@@ -1,5 +1,5 @@
 {
-  "contentVersion": 7,
+  "contentVersion": 8,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -1180,6 +1180,51 @@
       ],
       "skills": [
         "READING"
+      ]
+    },
+    {
+      "id": "phonology.vowel-length",
+      "type": "PHONOLOGY",
+      "title": "Vowel length: short and long vowels",
+      "titleFa": "کشش واکه‌ها: واکهٔ کوتاه و بلند",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.introductions.lesson-01",
+        "a1.weather.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.word-stress",
+      "type": "PHONOLOGY",
+      "title": "Word stress and weak syllables",
+      "titleFa": "تکیهٔ کلمه و هجاهای ضعیف",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.daily-routine.lesson-01",
+        "a1.family.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.th-sounds",
+      "type": "PHONOLOGY",
+      "title": "The sounds /θ/ and /ð/",
+      "titleFa": "آوای th: /θ/ و /ð/",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.greetings.lesson-01",
+        "a1.shopping.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
       ]
     }
   ]

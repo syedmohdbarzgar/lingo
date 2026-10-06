@@ -179,6 +179,30 @@ class KnowledgeEngineTest {
     }
 
     @Test
+    fun `skill-tagged nodes are credited even when a type match exists`() {
+        val vocab = item("v", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
+        val phonology = item("p", KnowledgeType.PHONOLOGY, listOf(Skill.LISTENING))
+        val grammar = item("g", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR))
+        // A-7: listening's default type is VOCABULARY, so the phonology node only
+        // collects evidence through its LISTENING tag — the rule must union both
+        // axes or the node stays at zero mastery forever.
+        assertEquals(
+            listOf("v", "p"),
+            KnowledgeEvidence.itemsFor(listOf(vocab, phonology), Skill.LISTENING).map { it.id },
+        )
+        // A node that matches neither axis is still excluded.
+        assertEquals(
+            listOf("v", "p"),
+            KnowledgeEvidence.itemsFor(listOf(vocab, phonology, grammar), Skill.LISTENING).map { it.id },
+        )
+        // Speaking is phonology's own evidence axis (suspended feature, same rule).
+        assertEquals(
+            listOf("p"),
+            KnowledgeEvidence.itemsFor(listOf(vocab, phonology), Skill.SPEAKING).map { it.id },
+        )
+    }
+
+    @Test
     fun `a lesson with no knowledge items attributes nothing instead of failing`() {
         assertTrue(KnowledgeEvidence.itemsFor(emptyList(), Skill.GRAMMAR).isEmpty())
     }

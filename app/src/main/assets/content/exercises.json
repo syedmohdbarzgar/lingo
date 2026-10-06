@@ -1,5 +1,5 @@
 {
-  "contentVersion": 7,
+  "contentVersion": 8,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -3660,6 +3660,72 @@
       "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "واژهٔ مثبت در بافت منفی معنا را برعکس می‌کند — کنایه از تضاد میان واژه و موقعیت ساخته می‌شود."
+    },
+    {
+      "id": "a1.greetings.ex.09",
+      "lessonId": "a1.greetings.lesson-01",
+      "type": "listening",
+      "order": 9,
+      "text": "Nice to meet you, Sara.",
+      "accepted": [
+        "nice to meet you sara"
+      ],
+      "explanationFa": "به کشش واکهٔ /iː/ در meet و /aɪ/ در nice گوش کن."
+    },
+    {
+      "id": "a1.daily-routine.ex.08",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "I wake up at seven and take a shower.",
+      "accepted": [
+        "i wake up at seven and take a shower"
+      ],
+      "explanationFa": "به واکهٔ دوهجایی /eɪ/ در wake و تکیهٔ usually در جمله گوش کن."
+    },
+    {
+      "id": "a1.family.ex.08",
+      "lessonId": "a1.family.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My sister lives with our father.",
+      "accepted": [
+        "my sister lives with our father"
+      ],
+      "explanationFa": "به تکیهٔ هجای اول در sister و father و /ə/ کوتاهِ -er گوش کن."
+    },
+    {
+      "id": "a1.shopping.ex.08",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "This shirt is cheap and that one is expensive.",
+      "accepted": [
+        "this shirt is cheap and that one is expensive"
+      ],
+      "explanationFa": "به /iː/ بلند در cheap و expensive گوش کن."
+    },
+    {
+      "id": "a1.introductions.ex.07",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "My name is Amir and I am from Iran.",
+      "accepted": [
+        "my name is amir and i am from iran"
+      ],
+      "explanationFa": "به /eɪ/ در name و تکیهٔ جمله روی name گوش کن."
+    },
+    {
+      "id": "a1.weather.ex.07",
+      "lessonId": "a1.weather.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "It is cold and rainy this morning.",
+      "accepted": [
+        "it is cold and rainy this morning"
+      ],
+      "explanationFa": "به /eɪ/ در rainy و واکهٔ کوتاه /ɒ/ در hot و /əʊ/ در cold گوش کن."
     }
   ]
 }
