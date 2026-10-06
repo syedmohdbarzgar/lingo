@@ -21,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.AppLinearProgress
@@ -57,6 +59,9 @@ import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.appViewModelFactory
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.GrammarSection
+import org.token.english.domain.model.GrammarSectionKind
+import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -290,12 +295,20 @@ private fun ExerciseContent(
                     } else {
                         IncorrectBanner(
                             modifier = Modifier.fillMaxWidth(),
-                            message = "پاسخ درست: ${outcome.correctAnswer}",
+                            message = if (outcome.almostCorrect) {
+                                // A-2: one edit away — actionable spelling feedback
+                                // instead of a bare miss (still graded wrong).
+                                "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
+                            } else {
+                                "پاسخ درست: ${outcome.correctAnswer}"
+                            },
                         )
                         // A short explanation after a miss: the authored one if the
                         // content has it, otherwise the lesson's grammar tip (P4).
                         val explanation = exercise.explanation
-                            ?: state.lesson?.grammarTipFa?.takeIf {
+                            // First section only — the multi-section A-8 text must not
+                            // be dumped wholesale after a miss (summary = rule section).
+                            ?: state.lesson?.grammarSummary?.takeIf {
                                 AnswerChecker.skillOf(exercise) == Skill.GRAMMAR
                             }
                         explanation?.let { tip ->
@@ -413,13 +426,10 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
-            lesson.grammarTipFa?.let { tip ->
-                AppCard {
-                    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        SectionHeader("نکتهٔ گرامری")
-                        Text(text = tip, style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
+            lesson.grammarTipFa?.let { _ ->
+                // A-8 stage 1: sectioned teaching cards (rule/table/examples/
+                // mistakes); a legacy plain tip renders as its single TIP card.
+                GrammarTeachingCards(lesson = lesson)
             }
         }
 
@@ -479,6 +489,133 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
             onClick = { onEvent(LessonEvent.StartExercises) },
             modifier = Modifier.fillMaxWidth(),
         )
+    }
+}
+
+/**
+ * A-8 stage 1: the lesson's grammar teaching page as one card per section —
+ * rule, forms table, bilingual examples, common mistakes of Persian speakers.
+ * Sections come from the multi-section format inside `grammarTipFa`; a legacy
+ * plain tip parses to a single TIP section and renders like the old card.
+ */
+@Composable
+private fun GrammarTeachingCards(lesson: Lesson) {
+    lesson.grammarSections.forEach { section ->
+        when (section.kind) {
+            GrammarSectionKind.EXAMPLES -> GrammarExamplesCard(section)
+            GrammarSectionKind.TABLE -> GrammarTableCard(section)
+            GrammarSectionKind.MISTAKES -> GrammarMistakesCard(section)
+            else -> AppCard {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    SectionHeader(section.title)
+                    Text(
+                        text = section.lines.joinToString("\n"),
+                        // Persian prose with embedded English words: pin RTL so a
+                        // leading Latin run can't flip the paragraph (first-strong).
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                        ),
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** Rule / table / example cards are content, not decoration — one coherent block each. */
+@Composable
+private fun GrammarExamplesCard(section: GrammarSection) {
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader(section.title)
+            section.lines.forEach { line ->
+                // Authored line: «English — فارسی». No dash → English only.
+                val parts = line.split(" — ", limit = 2)
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    EnglishText(
+                        text = parts[0],
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    if (parts.size == 2) {
+                        Text(
+                            text = parts[1],
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** The forms table is English-only — lay it out LTR inside the forced-RTL root. */
+@Composable
+private fun GrammarTableCard(section: GrammarSection) {
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            SectionHeader(section.title)
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(
+                            BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                            MaterialTheme.shapes.small,
+                        )
+                        .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.small)
+                        .padding(AppSpacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                ) {
+                    section.lines.forEach { line ->
+                        EnglishText(text = line, style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Common mistakes get the warning palette (icon + text, never color alone —
+ * design.md §50) so they read as caution without becoming an error banner.
+ */
+@Composable
+private fun GrammarMistakesCard(section: GrammarSection) {
+    val extended = LocalAppExtendedColors.current
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.medium)
+            .background(extended.warningContainer, MaterialTheme.shapes.medium)
+            .padding(AppSpacing.md),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+        ) {
+            Icon(
+                imageVector = Icons.Default.Warning,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = extended.onWarning,
+            )
+            Text(
+                text = section.title,
+                style = MaterialTheme.typography.titleSmall,
+                color = extended.onWarning,
+            )
+        }
+        section.lines.forEach { line ->
+            Text(
+                text = line,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                ),
+                color = extended.onWarning,
+            )
+        }
     }
 }
 

@@ -29,9 +29,21 @@ data class Lesson(
     val topic: String,
     val estimatedMinutes: Int,
     val order: Int,
-    /** Short grammar hint shown in the intro stage and after grammar misses. */
+    /**
+     * Grammar teaching text. Plain legacy tip, or the multi-section A-8 format
+     * (`## قاعده` / `## جدول` / `## مثال‌ها` / `## خطاهای رایج`) — the stored
+     * string is unchanged, so no schema or migration is involved (A-8 option 1).
+     */
     val grammarTipFa: String? = null,
-)
+) {
+    /** Sectioned view of [grammarTipFa] for the intro teaching cards. */
+    val grammarSections: List<GrammarSection>
+        get() = parseGrammarTip(grammarTipFa)
+
+    /** First section as plain text — the short hint shown after a grammar miss. */
+    val grammarSummary: String?
+        get() = grammarSections.firstOrNull()?.asText()?.takeIf { it.isNotBlank() }
+}
 
 data class LessonState(
     val lessonId: String,
