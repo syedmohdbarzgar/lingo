@@ -1,5 +1,5 @@
 {
-  "contentVersion": 8,
+  "contentVersion": 9,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -3863,6 +3863,720 @@
         "sound facetious"
       ],
       "lessonId": "c2.irony.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.umbrella",
+      "word": "umbrella",
+      "translation": "چتر",
+      "definition": "A folding frame used for protection against rain",
+      "pronunciation": "/ʌmˈbrelə/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "It's raining — take an umbrella."
+      ],
+      "collocations": [
+        "take an umbrella",
+        "umbrella stand"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.apple",
+      "word": "apple",
+      "translation": "سیب",
+      "definition": "A round firm fruit with red, green or yellow skin",
+      "pronunciation": "/ˈæp.əl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "She eats an apple every day."
+      ],
+      "collocations": [
+        "apple tree",
+        "apple juice"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.orange",
+      "word": "orange",
+      "translation": "پرتقال",
+      "definition": "A round citrus fruit with a thick orange skin",
+      "pronunciation": "/ˈɒr.ɪndʒ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "I'd like an orange, please."
+      ],
+      "collocations": [
+        "orange juice",
+        "peel an orange"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.hour",
+      "word": "hour",
+      "translation": "ساعت (۶۰ دقیقه)",
+      "definition": "A period of sixty minutes",
+      "pronunciation": "/ˈaʊ.ər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The journey takes an hour."
+      ],
+      "collocations": [
+        "half an hour",
+        "rush hour"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.sun",
+      "word": "sun",
+      "translation": "خورشید",
+      "definition": "The star that gives the Earth light and heat",
+      "pronunciation": "/sʌn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The sun rises in the east."
+      ],
+      "collocations": [
+        "in the sun",
+        "sun rise"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.articles.word.hotel",
+      "word": "hotel",
+      "translation": "هتل",
+      "definition": "A building where travellers pay to stay",
+      "pronunciation": "/həʊˈtel/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "We stayed at a hotel by the sea."
+      ],
+      "collocations": [
+        "hotel room",
+        "book a hotel"
+      ],
+      "lessonId": "a1.articles.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.child",
+      "word": "child",
+      "translation": "کودک",
+      "definition": "A young human who is not yet an adult — plural: children",
+      "pronunciation": "/tʃaɪld/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "There are twenty children in the class."
+      ],
+      "collocations": [
+        "young child",
+        "child care"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.man",
+      "word": "man",
+      "translation": "مرد",
+      "definition": "An adult male person — plural: men",
+      "pronunciation": "/mæn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The man is waiting outside."
+      ],
+      "collocations": [
+        "young man",
+        "old man"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.woman",
+      "word": "woman",
+      "translation": "زن",
+      "definition": "An adult female person — plural: women",
+      "pronunciation": "/ˈwʊm.ən/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Two women work in this office."
+      ],
+      "collocations": [
+        "young woman",
+        "women's rights"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.foot",
+      "word": "foot",
+      "translation": "پا",
+      "definition": "The part of the body at the end of the leg — plural: feet",
+      "pronunciation": "/fʊt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "My left foot hurts."
+      ],
+      "collocations": [
+        "on foot",
+        "foot of the hill"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.leaf",
+      "word": "leaf",
+      "translation": "برگ",
+      "definition": "The flat green part of a plant — plural: leaves",
+      "pronunciation": "/liːf/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "A dry leaf fell from the tree."
+      ],
+      "collocations": [
+        "autumn leaf",
+        "tea leaf"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.plurals.word.box",
+      "word": "box",
+      "translation": "جعبه",
+      "definition": "A container with straight sides and a lid",
+      "pronunciation": "/bɒks/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Put the books in a box."
+      ],
+      "collocations": [
+        "shoe box",
+        "box office"
+      ],
+      "lessonId": "a1.plurals.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.friend",
+      "word": "friend",
+      "translation": "دوست",
+      "definition": "A person you know well and like",
+      "pronunciation": "/frend/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "My friend lives in Tehran."
+      ],
+      "collocations": [
+        "best friend",
+        "make friends"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.teacher",
+      "word": "teacher",
+      "translation": "معلم، آموزگار",
+      "definition": "A person whose job is to teach",
+      "pronunciation": "/ˈtiː.tʃər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Our teacher speaks English slowly."
+      ],
+      "collocations": [
+        "English teacher",
+        "head teacher"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.sister",
+      "word": "sister",
+      "translation": "خواهر",
+      "definition": "A girl or woman who has the same parents as you",
+      "pronunciation": "/ˈsɪs.tər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Her sister works at a hospital."
+      ],
+      "collocations": [
+        "younger sister",
+        "sister city"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.brother",
+      "word": "brother",
+      "translation": "برادر",
+      "definition": "A boy or man who has the same parents as you",
+      "pronunciation": "/ˈbrʌð.ər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "He helps his brother with homework."
+      ],
+      "collocations": [
+        "older brother",
+        "twin brother"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.doctor",
+      "word": "doctor",
+      "translation": "پزشک، دکتر",
+      "definition": "A person trained to treat ill people",
+      "pronunciation": "/ˈdɒk.tər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The doctor examined the patient."
+      ],
+      "collocations": [
+        "see a doctor",
+        "family doctor"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.pronouns.word.student",
+      "word": "student",
+      "translation": "دانش‌آموز، دانشجو",
+      "definition": "A person who is studying at a school or university",
+      "pronunciation": "/ˈstjuː.dənt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The teacher helped the students."
+      ],
+      "collocations": [
+        "medical student",
+        "exchange student"
+      ],
+      "lessonId": "a1.pronouns.lesson-01"
+    },
+    {
+      "id": "a1.can.word.swim",
+      "word": "swim",
+      "translation": "شنا کردن",
+      "definition": "To move through water using your body",
+      "pronunciation": "/swɪm/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "I can swim but I can't dive."
+      ],
+      "collocations": [
+        "swim well",
+        "go swimming"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.can.word.drive",
+      "word": "drive",
+      "translation": "رانندگی کردن",
+      "definition": "To control and move a car",
+      "pronunciation": "/draɪv/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "She can drive a car."
+      ],
+      "collocations": [
+        "drive a car",
+        "drive home"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.can.word.speak",
+      "word": "speak",
+      "translation": "صحبت کردن",
+      "definition": "To say words using your voice",
+      "pronunciation": "/spiːk/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "He can speak three languages."
+      ],
+      "collocations": [
+        "speak English",
+        "speak up"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.can.word.cook",
+      "word": "cook",
+      "translation": "آشپزی کردن",
+      "definition": "To prepare food with heat",
+      "pronunciation": "/kʊk/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "My father can cook very well."
+      ],
+      "collocations": [
+        "cook dinner",
+        "home cooking"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.can.word.play",
+      "word": "play",
+      "translation": "بازی کردن، نواختن",
+      "definition": "To take part in a game or to make music",
+      "pronunciation": "/pleɪ/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Can you play the guitar?"
+      ],
+      "collocations": [
+        "play football",
+        "play the piano"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.can.word.run",
+      "word": "run",
+      "translation": "دویدن",
+      "definition": "To move fast on foot",
+      "pronunciation": "/rʌn/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "She can run five kilometres."
+      ],
+      "collocations": [
+        "run fast",
+        "go for a run"
+      ],
+      "lessonId": "a1.can.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.stop",
+      "word": "stop",
+      "translation": "توقف کردن",
+      "definition": "To finish moving or doing something",
+      "pronunciation": "/stɒp/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Stop! The light is red."
+      ],
+      "collocations": [
+        "stop here",
+        "bus stop"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.wait",
+      "word": "wait",
+      "translation": "منتظر ماندن",
+      "definition": "To stay somewhere until something happens",
+      "pronunciation": "/weɪt/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Wait for me at the gate."
+      ],
+      "collocations": [
+        "wait a moment",
+        "can't wait"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.sit",
+      "word": "sit",
+      "translation": "نشستن",
+      "definition": "To rest with your weight on your bottom",
+      "pronunciation": "/sɪt/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Please sit down."
+      ],
+      "collocations": [
+        "sit down",
+        "sit here"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.open",
+      "word": "open",
+      "translation": "باز کردن",
+      "definition": "To move something so it is no longer closed",
+      "pronunciation": "/ˈəʊ.pən/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Open your books, please."
+      ],
+      "collocations": [
+        "open the door",
+        "open up"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.close",
+      "word": "close",
+      "translation": "بستن",
+      "definition": "To move something so that there is no opening",
+      "pronunciation": "/kləʊz/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Close the window, please."
+      ],
+      "collocations": [
+        "close the door",
+        "close your eyes"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.imperatives.word.listen",
+      "word": "listen",
+      "translation": "گوش دادن",
+      "definition": "To give your attention to a sound",
+      "pronunciation": "/ˈlɪs.ən/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Listen to the instructions carefully."
+      ],
+      "collocations": [
+        "listen to",
+        "listen carefully"
+      ],
+      "lessonId": "a1.imperatives.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.what",
+      "word": "what",
+      "translation": "چه، چه‌چیزی",
+      "definition": "Used to ask about a thing or fact",
+      "pronunciation": "/wɒt/",
+      "level": "A1",
+      "partOfSpeech": "pronoun",
+      "examples": [
+        "What is your name?"
+      ],
+      "collocations": [
+        "what time",
+        "what kind of"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.where",
+      "word": "where",
+      "translation": "کجا، کدام‌جا",
+      "definition": "Used to ask about a place",
+      "pronunciation": "/weər/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        "Where do you live?"
+      ],
+      "collocations": [
+        "where to",
+        "where from"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.when",
+      "word": "when",
+      "translation": "کی، چه‌وقت",
+      "definition": "Used to ask about a time",
+      "pronunciation": "/wen/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        "When does the class start?"
+      ],
+      "collocations": [
+        "since when",
+        "when to"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.why",
+      "word": "why",
+      "translation": "چرا، به چه دلیل",
+      "definition": "Used to ask about a reason",
+      "pronunciation": "/waɪ/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        "Why are you late?"
+      ],
+      "collocations": [
+        "why not",
+        "the reason why"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.who",
+      "word": "who",
+      "translation": "چه کسی",
+      "definition": "Used to ask about a person",
+      "pronunciation": "/huː/",
+      "level": "A1",
+      "partOfSpeech": "pronoun",
+      "examples": [
+        "Who is that woman?"
+      ],
+      "collocations": [
+        "who else",
+        "whoever"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a1.question-words.word.how",
+      "word": "how",
+      "translation": "چگونه، چطور",
+      "definition": "Used to ask about manner or degree",
+      "pronunciation": "/haʊ/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        "How do you pronounce this?"
+      ],
+      "collocations": [
+        "how about",
+        "how come"
+      ],
+      "lessonId": "a1.question-words.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.go",
+      "word": "go",
+      "translation": "رفتن",
+      "definition": "Movement verb — past form: went",
+      "pronunciation": "/ɡəʊ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "We went to the coast last weekend."
+      ],
+      "collocations": [
+        "go out",
+        "go home"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.buy",
+      "word": "buy",
+      "translation": "خریدن",
+      "definition": "To get something by paying for it — past form: bought",
+      "pronunciation": "/baɪ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "She bought a new phone yesterday."
+      ],
+      "collocations": [
+        "buy a ticket",
+        "buy groceries"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.see",
+      "word": "see",
+      "translation": "دیدن",
+      "definition": "To notice something with your eyes — past form: saw",
+      "pronunciation": "/siː/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "I saw an old friend at the market."
+      ],
+      "collocations": [
+        "see a film",
+        "see you soon"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.eat",
+      "word": "eat",
+      "translation": "خوردن",
+      "definition": "To take food into your mouth — past form: ate",
+      "pronunciation": "/iːt/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "We ate at a small restaurant."
+      ],
+      "collocations": [
+        "eat out",
+        "eat breakfast"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.take",
+      "word": "take",
+      "translation": "گرفتن، برداشتن",
+      "definition": "To move something with you — past form: took",
+      "pronunciation": "/teɪk/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "The train took two hours."
+      ],
+      "collocations": [
+        "take a taxi",
+        "take the bus"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
+    },
+    {
+      "id": "a2.past-simple.word.write",
+      "word": "write",
+      "translation": "نوشتن",
+      "definition": "To produce words on paper or a screen — past form: wrote",
+      "pronunciation": "/raɪt/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        "He wrote an email last night."
+      ],
+      "collocations": [
+        "write down",
+        "write an email"
+      ],
+      "lessonId": "a2.past-simple.lesson-01"
     }
   ]
 }

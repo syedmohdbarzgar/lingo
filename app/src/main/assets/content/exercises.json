@@ -1,5 +1,5 @@
 {
-  "contentVersion": 8,
+  "contentVersion": 9,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -1411,11 +1411,11 @@
       "questionFa": "کاش در طول فیلم آرام‌تر بود!",
       "options": [
         "would be",
-        "is",
         "were",
+        "is",
         "will be"
       ],
-      "correctIndex": 2
+      "correctIndex": 1
     },
     {
       "id": "c1.culture.ex.03",
@@ -2332,12 +2332,12 @@
       "question": "Which sentence introduces someone correctly?",
       "questionFa": "کدام جمله کسی را درست معرفی می‌کند؟",
       "options": [
-        "This is my friend Ali.",
-        "This my friend Ali is.",
         "My friend Ali this is.",
+        "This my friend Ali is.",
+        "This is my friend Ali.",
         "Is this my friend Ali."
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "GRAMMAR",
       "explanationFa": "برای معرفی از ساختار This is + نام استفاده کن؛ فعل be در این جمله حذف نمی‌شود."
     },
@@ -2350,11 +2350,11 @@
       "questionFa": "معنی «name» چیست؟",
       "options": [
         "خانه",
-        "نام",
+        "کار",
         "دوست",
-        "کار"
+        "نام"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -2411,12 +2411,12 @@
       "question": "Where are you from? — ______",
       "questionFa": "اهل کجایی؟ — ______",
       "options": [
-        "I from Tehran am.",
-        "Am I from Tehran.",
         "I am from Tehran.",
+        "Am I from Tehran.",
+        "I from Tehran am.",
         "From Tehran I."
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "ترتیب درست فاعل + be + متمم است: I am from Tehran."
     },
@@ -2428,12 +2428,12 @@
       "question": "There are many grey clouds in the sky. It is ______.",
       "questionFa": "آسمان پر از ابر خاکستری است. هوا ______ است.",
       "options": [
-        "cloudy",
         "sunny",
+        "cloudy",
         "snowy",
         "dry"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -2446,10 +2446,10 @@
       "options": [
         "باران",
         "ابر",
-        "باد",
-        "فصل"
+        "فصل",
+        "باد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -2507,11 +2507,11 @@
       "questionFa": "زمستان‌ها اینجا زیاد باران می‌بارد.",
       "options": [
         "rain",
-        "rains",
+        "raining",
         "have rained",
-        "raining"
+        "rains"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "برای عادت و آب‌وهوای کلی زمان حال ساده است و با it فعل s می‌گیرد: it rains."
     },
@@ -2523,12 +2523,12 @@
       "question": "I enjoy ______ in my spare time.",
       "questionFa": "از ______ در وقت آزادم لذت می‌برم.",
       "options": [
-        "to paint",
         "painting",
+        "to paint",
         "paint",
         "painted"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "بعد از enjoy همیشه ing می‌آید: enjoy painting. فعل بعد از خودش شکل ثابتی می‌خواهد، نه free choice."
     },
@@ -2697,12 +2697,12 @@
       "question": "The subway is very ______ for the city centre.",
       "questionFa": "مترو برای مرکز شهر بسیار ______ است.",
       "options": [
-        "convenient",
         "crowded",
+        "convenient",
         "traffic",
         "season"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -2713,12 +2713,12 @@
       "question": "We ______ a budget at the start of every month.",
       "questionFa": "ابتدای هر ماه ______ می‌کنیم.",
       "options": [
-        "make",
-        "do",
         "take",
+        "do",
+        "make",
         "get"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "با budget فعل make هم‌نشین است: make a budget — نه do a budget."
     },
@@ -2731,11 +2731,11 @@
       "questionFa": "من از سال ۲۰۲۲ پول پس‌انداز می‌کنم.",
       "options": [
         "for",
-        "since",
+        "from",
         "during",
-        "from"
+        "since"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "since برای نقطهٔ شروع (2022) و for برای طول مدت (two years) به کار می‌رود و فعل حال کامل می‌ماند."
     },
@@ -2792,12 +2792,12 @@
       "question": "What does \"income\" mean?",
       "questionFa": "معنی «income» چیست؟",
       "options": [
-        "هزینه",
-        "بدهی",
         "درآمد",
+        "بدهی",
+        "هزینه",
         "مالیات"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY"
     },
     {
@@ -2888,12 +2888,12 @@
       "question": "If you sleep well, you ______ better tomorrow.",
       "questionFa": "اگر خوب بخوابی، فردا بهتر ______.",
       "options": [
-        "will feel",
+        "are feel",
         "feel will",
         "would felt",
-        "are feel"
+        "will feel"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "شرطی نوع اول: جملهٔ if با حال ساده، جملهٔ نتیجه با will + فعل ساده."
     },
@@ -2905,12 +2905,12 @@
       "question": "The parcel has not been ______ yet.",
       "questionFa": "بسته هنوز ______ نشده است.",
       "options": [
-        "delivering",
         "delivered",
+        "delivering",
         "deliver",
         "delivers"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "مجهول حال کامل: has/have been + قسمت سوم فعل — و فاعل واقعی مهم نیست، پس مجهول طبیعی‌تر است."
     },
@@ -2923,11 +2923,11 @@
       "questionFa": "معنی «refund» چیست؟",
       "options": [
         "جریمهٔ دیرکرد",
-        "تخفیف",
         "بازپرداخت پول",
+        "تخفیف",
         "فاکتور رسمی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -2987,10 +2987,10 @@
       "options": [
         "compensation",
         "compensating",
-        "be compensate",
-        "compensate"
+        "compensate",
+        "be compensate"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "بعد از to مصدر بدون ing می‌آید و compensate فعل است، نه اسم compensation."
     },
@@ -3003,11 +3003,11 @@
       "questionFa": "نتایج ______ که این درمان مؤثر است.",
       "options": [
         "indicates",
-        "indicate",
+        "is indicate",
         "indicating",
-        "is indicate"
+        "indicate"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "results جمع است، پس فعل بدون s می‌آید: the results indicate."
     },
@@ -3019,12 +3019,12 @@
       "question": "What does \"bias\" mean?",
       "questionFa": "معنی «bias» چیست؟",
       "options": [
-        "دقت اندازه‌گیری",
         "سوگیری",
+        "دقت اندازه‌گیری",
         "اندازهٔ نمونه",
         "آزمایش شاهد"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY"
     },
     {
@@ -3083,11 +3083,11 @@
       "questionFa": "برای چنین ادعای قوی شواهد کمی وجود دارد.",
       "options": [
         "evidences",
-        "evident",
         "evidence",
+        "evident",
         "evidently"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR",
       "explanationFa": "evidence غیرقابل‌شمارش است: همیشه مفرد می‌ماند و s نمی‌گیرد."
     },
@@ -3099,12 +3099,12 @@
       "question": "She has not arrived and her phone is off. She ______ have forgotten.",
       "questionFa": "نرسیده و تلفنش خاموش است. حتماً فراموش کرده است.",
       "options": [
-        "must",
-        "should",
         "would",
+        "should",
+        "must",
         "can"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "GRAMMAR",
       "explanationFa": "must have + قسمت سوم فعل یعنی از شواهد به نتیجه می‌رسیم، نه اینکه دیده باشیم — should have یعنی کار درست انجام نشده."
     },
@@ -3196,12 +3196,12 @@
       "question": "Which version is the most formal?",
       "questionFa": "کدام نسخه رسمی‌ترین است؟",
       "options": [
-        "We would be grateful if you could reply.",
         "Can you reply, yeah?",
+        "We would be grateful if you could reply.",
         "Get back to me fast.",
         "Reply soon, OK?"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "WRITING",
       "explanationFa": "ساختارهای مودبانه و غیرمستقیم مثل would be grateful و could نشانهٔ سبک رسمی‌اند."
     },
@@ -3213,12 +3213,12 @@
       "question": "What does \"register\" mean in language study?",
       "questionFa": "معنی «register» در زبان‌شناسی چیست؟",
       "options": [
-        "سبک زبانی متناسب با موقعیت",
-        "لهجهٔ محلی",
         "سرعت گفتار",
+        "لهجهٔ محلی",
+        "سبک زبانی متناسب با موقعیت",
         "تعداد واژه‌های متن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -3291,12 +3291,12 @@
       "question": "The results were inconclusive; ______, further tests are needed.",
       "questionFa": "نتایج قطعی نبود؛ ______ آزمایش‌های بیشتری لازم است.",
       "options": [
-        "however",
         "therefore",
+        "however",
         "for example",
         "in contrast"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "رابطهٔ دو جمله «نتیجه» است، نه «تضاد» — پس therefore درست است و however معنا را برعکس می‌کند."
     },
@@ -3309,11 +3309,11 @@
       "questionFa": "نشانگر گفتمانی چیست؟",
       "options": [
         "نشانهٔ نگارشی مثل ویرگول",
-        "قید مکان",
         "واژه‌ای که رابطهٔ میان ایده‌ها را نشان می‌دهد",
+        "قید مکان",
         "فعل عبارتی غیررسمی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -3368,12 +3368,12 @@
       "question": "Leaving out repeated words that the reader can supply is called ______.",
       "questionFa": "حذف واژه‌های تکراری که خواننده می‌تواند خودش بیاورد، چه نام دارد؟",
       "options": [
-        "ellipsis",
-        "paraphrase",
         "transition",
+        "paraphrase",
+        "ellipsis",
         "cohesion"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -3384,12 +3384,12 @@
       "question": "That is a ______ argument: nobody ever proposed such a policy.",
       "questionFa": "این یک استدلال ______ است: هیچ‌کس چنین سیاستی پیشنهاد نکرده بود.",
       "options": [
-        "straw man",
+        "assertion",
         "premise",
         "concession",
-        "assertion"
+        "straw man"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "حمله به نسخهٔ ضعیف یا ساختگیِ حرف مخالف، مغالطهٔ آدم‌کاهی (straw man) است."
     },
@@ -3401,12 +3401,12 @@
       "question": "Which move makes an argument stronger?",
       "questionFa": "کدام کار استدلال را قوی‌تر می‌کند؟",
       "options": [
-        "نادیده گرفتن نظر مخالف",
         "پذیرفتن امتیاز مخالف و سپس پاسخ دادن",
+        "نادیده گرفتن نظر مخالف",
         "تکرار ادعا با تأکید بیشتر",
         "تغییر موضوع به موضوعی آسان‌تر"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "WRITING",
       "explanationFa": "ساختار Granted that X, nevertheless Y اعتماد را بالا می‌برد؛ نادیده گرفتن مخالف خودش ضعف استدلال است."
     },
@@ -3464,11 +3464,11 @@
       "questionFa": "گزارهٔ مطمئنی که بدون دلیل بیان شود، یک ______ است.",
       "options": [
         "assertively",
-        "assert",
         "assertion",
+        "assert",
         "assertive"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -3479,12 +3479,12 @@
       "question": "Which pairing is the natural collocation in English?",
       "questionFa": "کدام ترکیب در انگلیسی هم‌نشینی طبیعی است؟",
       "options": [
-        "strong tea",
-        "powerful tea",
         "forceful tea",
+        "powerful tea",
+        "strong tea",
         "mighty tea"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "در انگلیسی چای strong است، نه powerful — درجهٔ چای با strong/weak بیان می‌شود، مانند strong coffee."
     },
@@ -3498,10 +3498,10 @@
       "options": [
         "ترجمهٔ واژه‌به‌واژه",
         "ریشه‌شناسی واژه",
-        "هم‌نشینی طبیعی واژه‌ها",
-        "قاعدهٔ گرامری ثابت"
+        "قاعدهٔ گرامری ثابت",
+        "هم‌نشینی طبیعی واژه‌ها"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -3557,12 +3557,12 @@
       "question": "In \"have a shower\", the verb have is a ______.",
       "questionFa": "در «have a shower» فعل have یک ______ است.",
       "options": [
-        "modal verb",
         "delexical verb",
+        "modal verb",
         "phrasal verb",
         "linking verb"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "معنای اصلی از اسم می‌آید (shower) و فعل رنگ می‌بازد؛ take/have در take a break هم همین‌گونه‌اند."
     },
@@ -3574,12 +3574,12 @@
       "question": "He called the hurricane a bit of wind. This is ______.",
       "questionFa": "توفان را «کمی باد» نامید. این ______ است.",
       "options": [
-        "understatement",
         "hyperbole",
+        "understatement",
         "ambiguity",
         "collocation"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -3654,10 +3654,10 @@
       "options": [
         "expressing genuine delight",
         "asking a question",
-        "being ironic",
-        "making a promise"
+        "making a promise",
+        "being ironic"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "واژهٔ مثبت در بافت منفی معنا را برعکس می‌کند — کنایه از تضاد میان واژه و موقعیت ساخته می‌شود."
     },
@@ -3726,6 +3726,1781 @@
         "it is cold and rainy this morning"
       ],
       "explanationFa": "به /eɪ/ در rainy و واکهٔ کوتاه /ɒ/ در hot و /əʊ/ در cold گوش کن."
+    },
+    {
+      "id": "a1.articles.ex.01",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "She is a university student.",
+        "She is an university student.",
+        "She is the university student.",
+        "She is student a university."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.articles.ex.02",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "There is ___ egg and some bread in the fridge.",
+      "accepted": [
+        "an"
+      ]
+    },
+    {
+      "id": "a1.articles.ex.03",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "A sun rises in the east.",
+        "The sun rises in the east.",
+        "Sun rises in the east.",
+        "The sun rise in the east."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.articles.ex.04",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "I drink a water every day.",
+        "I drink the water every day.",
+        "I drink water every day.",
+        "I drink waters every day."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.articles.ex.05",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Please close ___ door. It's cold in here.",
+      "accepted": [
+        "the"
+      ]
+    },
+    {
+      "id": "a1.articles.ex.06",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I bought book. The book is on the table.",
+        "I bought a book. A book is on the table.",
+        "I bought the book. A book is on the table.",
+        "I bought a book. The book is on the table."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.articles.ex.07",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "The hotel is next to the bank.",
+      "accepted": [
+        "the hotel is next to the bank"
+      ],
+      "explanationFa": "به تلفظ the با صدای /ðə/ ضعیف و تکیهٔ hotel گوش کن."
+    },
+    {
+      "id": "a1.articles.ex.08",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"umbrella\" mean?",
+      "questionFa": "معنی «umbrella» چیست؟",
+      "options": [
+        "چتر",
+        "کلاه",
+        "بادبزن",
+        "کیف"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.plurals.ex.01",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "There are three childs in the park.",
+        "There are three children in the park.",
+        "There is three children in the park.",
+        "There are three child in the park."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.plurals.ex.02",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "There are twenty ___ in the class.",
+      "accepted": [
+        "children",
+        "students"
+      ]
+    },
+    {
+      "id": "a1.plurals.ex.03",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "She buyed two boxes of tea.",
+        "She bought two box of tea.",
+        "She bought two boxes of tea.",
+        "She bought two boxes teas."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.plurals.ex.04",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Choose the correct plural of “leaf”:",
+      "questionFa": "جمع درست «leaf» کدام است؟",
+      "options": [
+        "leave",
+        "leafs",
+        "leafes",
+        "leaves"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.plurals.ex.05",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "multiple_choice",
+      "order": 5,
+      "question": "Choose the correct plural of “woman”:",
+      "questionFa": "جمع درست «woman» کدام است؟",
+      "options": [
+        "women",
+        "womans",
+        "womens",
+        "womanes"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.plurals.ex.06",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "fill_blank",
+      "order": 6,
+      "sentence": "How many ___ does your brother have?",
+      "accepted": [
+        "children",
+        "kids"
+      ]
+    },
+    {
+      "id": "a1.plurals.ex.07",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "There are three children in the park.",
+      "accepted": [
+        "there are three children in the park"
+      ],
+      "explanationFa": "به پایانِ /n/ در children و تکیهٔ جمله روی three گوش کن."
+    },
+    {
+      "id": "a1.plurals.ex.08",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"box\" mean?",
+      "questionFa": "معنی «box» چیست؟",
+      "options": [
+        "بطری",
+        "جعبه",
+        "کیسه",
+        "قفسه"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.01",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "He help his sister every day.",
+        "Him helps his sister every day.",
+        "He helps his sister every day.",
+        "His helps him sister every day."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.02",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "The teacher asked ___ to open our books.",
+      "accepted": [
+        "us"
+      ]
+    },
+    {
+      "id": "a1.pronouns.ex.03",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "Me gave the book to her.",
+        "I gave the book to she.",
+        "I gave the book to hers.",
+        "I gave the book to her."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.04",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "He and I are here.",
+        "Me and him are here.",
+        "Him and me are here.",
+        "He and me are here."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.05",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 5,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "We met they at the station.",
+        "We met them at the station.",
+        "Us met them at the station.",
+        "We met their at the station."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.06",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Please give it to mine.",
+        "Please give it to I.",
+        "Please give it to me.",
+        "Please me give it to you."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.pronouns.ex.07",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "We met them at the station.",
+      "accepted": [
+        "we met them at the station"
+      ],
+      "explanationFa": "به /ðəm/ کوتاه در them و تکیهٔ فعلِ met گوش کن."
+    },
+    {
+      "id": "a1.pronouns.ex.08",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"teacher\" mean?",
+      "questionFa": "معنی «teacher» چیست؟",
+      "options": [
+        "دانشمند",
+        "دانش‌آموز",
+        "مدیر",
+        "معلم"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.can.ex.01",
+      "lessonId": "a1.can.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "She can drive a car.",
+        "She cans drive a car.",
+        "She can drives a car.",
+        "She can to drive a car."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.can.ex.02",
+      "lessonId": "a1.can.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "I ___ play the guitar — it's too difficult.",
+      "accepted": [
+        "can't",
+        "cannot"
+      ]
+    },
+    {
+      "id": "a1.can.ex.03",
+      "lessonId": "a1.can.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Choose the correct form:",
+      "questionFa": "شکل درست را انتخاب کنید:",
+      "options": [
+        "I can to swim.",
+        "I can swim.",
+        "I can swims.",
+        "I cans swim."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.can.ex.04",
+      "lessonId": "a1.can.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Choose the correct question:",
+      "questionFa": "پرسش درست را انتخاب کنید:",
+      "options": [
+        "You can speak English?",
+        "Do you can speak English?",
+        "Can you speak English?",
+        "Can speak you English?"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.can.ex.05",
+      "lessonId": "a1.can.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "We ___ arrive before six, so let's leave at five.",
+      "accepted": [
+        "can"
+      ]
+    },
+    {
+      "id": "a1.can.ex.06",
+      "lessonId": "a1.can.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "I cans run fast when I was young.",
+        "I can run fast when I was young.",
+        "I could to run fast when I was young.",
+        "I could run fast when I was young."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.can.ex.07",
+      "lessonId": "a1.can.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "My father can cook very well.",
+      "accepted": [
+        "my father can cook very well"
+      ],
+      "explanationFa": "به /kən/ ضعیفِ can در جملهٔ خبری و تکیهٔ cook گوش کن."
+    },
+    {
+      "id": "a1.can.ex.08",
+      "lessonId": "a1.can.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"swim\" mean?",
+      "questionFa": "معنی «swim» چیست؟",
+      "options": [
+        "شنا کردن",
+        "غواصی",
+        "دویدن",
+        "پیاده‌روی"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.imperatives.ex.01",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Don't runs in the corridor.",
+        "Don't run in the corridor.",
+        "Don't to run in the corridor.",
+        "Not run in the corridor."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.imperatives.ex.02",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "___ the door, please. It's cold outside.",
+      "accepted": [
+        "close",
+        "shut"
+      ]
+    },
+    {
+      "id": "a1.imperatives.ex.03",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "Opens your books, please.",
+        "You open your books, please.",
+        "Open your books, please.",
+        "To open your books, please."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.imperatives.ex.04",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Choose the correct polite request:",
+      "questionFa": "درخواست مؤدبانهٔ درست را انتخاب کنید:",
+      "options": [
+        "Please waits here.",
+        "Please to wait here.",
+        "You please waiting here.",
+        "Please wait here."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.imperatives.ex.05",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Don't ___ the wire. It's dangerous.",
+      "accepted": [
+        "touch",
+        "hold"
+      ]
+    },
+    {
+      "id": "a1.imperatives.ex.06",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct negative:",
+      "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
+      "options": [
+        "Don't touch the wire.",
+        "Don't to touch the wire.",
+        "Not touch the wire.",
+        "Doesn't touch the wire."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.imperatives.ex.07",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "Please close the door.",
+      "accepted": [
+        "please close the door"
+      ],
+      "explanationFa": "به تکیهٔ close و آزادسازیِ پایانیِ /r/ در door گوش کن."
+    },
+    {
+      "id": "a1.imperatives.ex.08",
+      "lessonId": "a1.imperatives.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"stop\" mean?",
+      "questionFa": "معنی «stop» چیست؟",
+      "options": [
+        "شروع کردن",
+        "توقف کردن",
+        "منتظر ماندن",
+        "ادامه دادن"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.question-words.ex.01",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "You are from where?",
+        "Where you are from?",
+        "Where are you from?",
+        "Where from you are?"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.question-words.ex.02",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "___ does the train leave? — At six.",
+      "accepted": [
+        "when",
+        "what time"
+      ]
+    },
+    {
+      "id": "a1.question-words.ex.03",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Choose the correct question:",
+      "questionFa": "پرسش درست را انتخاب کنید:",
+      "options": [
+        "This means what?",
+        "What means this?",
+        "How means this?",
+        "What does this mean?"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.question-words.ex.04",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Which question asks about a reason?",
+      "questionFa": "کدام پرسش دلیل را می‌پرسد؟",
+      "options": [
+        "Why are you late?",
+        "Where are you late?",
+        "When are you late?",
+        "Who are you late?"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.question-words.ex.05",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "___ do you live? — In Tehran.",
+      "accepted": [
+        "where"
+      ]
+    },
+    {
+      "id": "a1.question-words.ex.06",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct question word:",
+      "questionFa": "کلمهٔ پرسشی درست را انتخاب کنید:",
+      "options": [
+        "How much students are in your class?",
+        "How many students are in your class?",
+        "How old students are in your class?",
+        "How long students are in your class?"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.question-words.ex.07",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "What time does the train leave?",
+      "accepted": [
+        "what time does the train leave"
+      ],
+      "explanationFa": "به تکیهٔ what و time و آهنگ بالاروندهٔ پایان پرسش گوش کن."
+    },
+    {
+      "id": "a1.question-words.ex.08",
+      "lessonId": "a1.question-words.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"why\" mean?",
+      "questionFa": "معنی «why» چیست؟",
+      "options": [
+        "کی",
+        "کجا",
+        "چرا",
+        "چگونه"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.past-simple.ex.01",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "We were go to the coast last weekend.",
+        "We go to the coast last weekend.",
+        "We have went to the coast last weekend.",
+        "We went to the coast last weekend."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.past-simple.ex.02",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "fill_blank",
+      "order": 2,
+      "sentence": "She ___ a new phone yesterday.",
+      "accepted": [
+        "bought",
+        "got"
+      ]
+    },
+    {
+      "id": "a2.past-simple.ex.03",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "Choose the correct negative:",
+      "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
+      "options": [
+        "I didn't see your message.",
+        "I didn't saw your message.",
+        "I don't saw your message.",
+        "I didn't seen your message."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.past-simple.ex.04",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "multiple_choice",
+      "order": 4,
+      "question": "Choose the correct question:",
+      "questionFa": "پرسش درست را انتخاب کنید:",
+      "options": [
+        "Did she left?",
+        "Did she leave?",
+        "Did she leaving?",
+        "Does she leave yesterday?"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.past-simple.ex.05",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "He ___ an email last night.",
+      "accepted": [
+        "wrote",
+        "sent"
+      ]
+    },
+    {
+      "id": "a2.past-simple.ex.06",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "Choose the correct past form:",
+      "questionFa": "شکل گذشتهٔ درست را انتخاب کنید:",
+      "options": [
+        "They buy a new car yesterday.",
+        "They buyed a new car.",
+        "They bought a new car.",
+        "They has bought a new car."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.past-simple.ex.07",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "listening",
+      "order": 7,
+      "text": "We went to the coast last weekend.",
+      "accepted": [
+        "we went to the coast last weekend"
+      ],
+      "explanationFa": "به کششِ /eɪ/ در coast و تکیهٔ weekend گوش کن."
+    },
+    {
+      "id": "a2.past-simple.ex.08",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"buy\" mean?",
+      "questionFa": "معنی «buy» چیست؟",
+      "options": [
+        "پرداخت کردن",
+        "فروختن",
+        "چیدن",
+        "خریدن"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.daily-routine.ex.09",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "My brother works in a bank.",
+        "My brother work in a bank.",
+        "My brother working in a bank.",
+        "My brother is work in a bank."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.daily-routine.ex.10",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "She go to school by bus.",
+        "She goes to school by bus.",
+        "She going to school by bus.",
+        "He go to school by bus."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.daily-routine.ex.11",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "order": 11,
+      "type": "multiple_choice",
+      "question": "Choose the correct negative:",
+      "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
+      "options": [
+        "They don't works at weekends.",
+        "They doesn't work at weekends.",
+        "They don't work at weekends.",
+        "They aren't work at weekends."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.introductions.ex.08",
+      "lessonId": "a1.introductions.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "This is I book.",
+        "This is mine book.",
+        "This is me book.",
+        "This is my book."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.introductions.ex.09",
+      "lessonId": "a1.introductions.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Her name is Sara.",
+        "She name is Sara.",
+        "Hers name is Sara.",
+        "Her name are Sara."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.introductions.ex.10",
+      "lessonId": "a1.introductions.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "Us teacher speaks English.",
+        "Our teacher speaks English.",
+        "Ours teacher speaks English.",
+        "Our teacher speak English."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.shopping.ex.09",
+      "lessonId": "a1.shopping.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct question:",
+      "questionFa": "پرسش درست را انتخاب کنید:",
+      "options": [
+        "How many shoe are in the box?",
+        "How much shoes are in the box?",
+        "How many shoes are in the box?",
+        "How many shoes is in the box?"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.shopping.ex.10",
+      "lessonId": "a1.shopping.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Choose the correct question:",
+      "questionFa": "پرسش درست را انتخاب کنید:",
+      "options": [
+        "How much are these shirt?",
+        "How many is this shirt?",
+        "How much are this shirt?",
+        "How much is this shirt?"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.weather.ex.08",
+      "lessonId": "a1.weather.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "It is raining now.",
+        "It raining now.",
+        "It is rain now.",
+        "It are raining now."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.weather.ex.09",
+      "lessonId": "a1.weather.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Look! The baby sleeps now.",
+        "Look! The baby is sleeping.",
+        "Look! The baby is sleep.",
+        "Look! The baby are sleeping."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.weather.ex.10",
+      "lessonId": "a1.weather.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I am study English right now.",
+        "I studying English right now.",
+        "I am studying English right now.",
+        "I are studying English right now."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.weather.ex.11",
+      "lessonId": "a1.weather.lesson-01",
+      "order": 11,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "She are working today.",
+        "She working today.",
+        "She is work today.",
+        "She is working today."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a1.weather.ex.12",
+      "lessonId": "a1.weather.lesson-01",
+      "order": 12,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Wait a moment — I am getting dressed.",
+        "Wait a moment — I getting dressed.",
+        "Wait a moment — I am get dressed.",
+        "Wait a moment — I am getting dress."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.city-life.ex.07",
+      "lessonId": "a2.city-life.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "There is many parks in this city.",
+        "There are many parks in this city.",
+        "There are many park in this city.",
+        "It many parks in this city."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.city-life.ex.08",
+      "lessonId": "a2.city-life.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "There is new library the near school.",
+        "There are a new library near the school.",
+        "There is a new library near the school.",
+        "Has a new library near the school."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.city-life.ex.09",
+      "lessonId": "a2.city-life.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "This flat is expensive than ours.",
+        "This flat is expensiver than ours.",
+        "This flat is most expensive than ours.",
+        "This flat is more expensive than ours."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.city-life.ex.10",
+      "lessonId": "a2.city-life.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "The traffic is worse in the morning.",
+        "The traffic is more worse in the morning.",
+        "The traffic is worst in the morning.",
+        "The traffic are worse in the morning."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.directions.ex.08",
+      "lessonId": "a2.directions.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "The bank is between from the school and the mosque.",
+        "The bank is between the school and the mosque.",
+        "The bank is among the school and the mosque.",
+        "The bank is in the school and the mosque."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.directions.ex.09",
+      "lessonId": "a2.directions.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "Go straight and turn left on the traffic lights.",
+        "Go straight and turn left in the traffic lights.",
+        "Go straight and turn left at the traffic lights.",
+        "Go straight and turn left to the traffic lights."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.health.ex.08",
+      "lessonId": "a2.health.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct advice:",
+      "questionFa": "توصیهٔ درست را انتخاب کنید:",
+      "options": [
+        "You should drinks more water.",
+        "You should to drink more water.",
+        "You should drinking more water.",
+        "You should drink more water."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.health.ex.09",
+      "lessonId": "a2.health.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "You shouldn't eat so much sugar.",
+        "You shouldn't to eat so much sugar.",
+        "You shouldn't eating so much sugar.",
+        "You shouldn't eats so much sugar."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.hobbies.ex.07",
+      "lessonId": "a2.hobbies.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I enjoy to read in the evening.",
+        "I enjoy reading in the evening.",
+        "I enjoy read in the evening.",
+        "I enjoying read in the evening."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.hobbies.ex.08",
+      "lessonId": "a2.hobbies.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "They decided traveling in May.",
+        "They decided travel in May.",
+        "They decided to travel in May.",
+        "They decides to travel in May."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.hobbies.ex.09",
+      "lessonId": "a2.hobbies.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "He liking swimming but he hating running.",
+        "He likes to swimming but he hates to running.",
+        "He likes swim but he hates run.",
+        "He likes swimming but he hates running."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.restaurant.ex.08",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I would like a cup of tea, please.",
+        "I would to like a cup of tea, please.",
+        "I would like tea a cup of, please.",
+        "I would like to tea a cup, please."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.restaurant.ex.09",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "We would to like to order now.",
+        "We would like to order now.",
+        "We would like order now.",
+        "We would liking to order now."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.restaurant.ex.10",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "There isn't no sugar in the cake.",
+        "There isn't some sugar in the cake.",
+        "There isn't any sugar in the cake.",
+        "There aren't any sugar in the cake."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "a2.restaurant.ex.11",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 11,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "I doesn't have any coins.",
+        "I don't have some coins.",
+        "I don't have no coins.",
+        "I don't have any coins."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.experiences.ex.08",
+      "lessonId": "b1.experiences.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I was reading when you called.",
+        "I was read when you called.",
+        "I did reading when you called.",
+        "I were reading when you called."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.experiences.ex.09",
+      "lessonId": "b1.experiences.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "She had finish her work before the meeting started.",
+        "She had finished her work before the meeting started.",
+        "She has had finished her work before the meeting started.",
+        "She had finished her work before the meeting was starting."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.07",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "You ought to eating less sugar.",
+        "You ought eat less sugar.",
+        "You ought to eat less sugar.",
+        "You oughts to eat less sugar."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.08",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "You had better sees a dentist today.",
+        "You had better to see a dentist today.",
+        "You had better seeing a dentist today.",
+        "You had better see a dentist today."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.09",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct advice:",
+      "questionFa": "توصیهٔ درست را انتخاب کنید:",
+      "options": [
+        "You ought to walk to work more often.",
+        "You ought to walking to work more often.",
+        "You ought walking to work more often.",
+        "You oughts to walk to work more often."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.health-lifestyle.ex.10",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "order": 10,
+      "type": "fill_blank",
+      "sentence": "You had better ___ a coat — it's cold outside.",
+      "accepted": [
+        "wear",
+        "take",
+        "bring",
+        "put on"
+      ]
+    },
+    {
+      "id": "b1.money.ex.07",
+      "lessonId": "b1.money.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I have worked here since two years.",
+        "I have worked here for two years.",
+        "I am working here for two years.",
+        "I have worked here two years ago."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.work.ex.09",
+      "lessonId": "b1.work.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "She is managing the team since 2021.",
+        "She has managed the team for 2021.",
+        "She has managed the team since 2021.",
+        "She has managed the team since three years."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.news.ex.08",
+      "lessonId": "b1.news.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "The company was founding in 1990.",
+        "The company was found in 1990.",
+        "The company is founded in 1990.",
+        "The company was founded in 1990."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.news.ex.09",
+      "lessonId": "b1.news.lesson-01",
+      "order": 9,
+      "type": "fill_blank",
+      "sentence": "The bridge ___ last year.",
+      "accepted": [
+        "was built",
+        "was constructed",
+        "was completed"
+      ]
+    },
+    {
+      "id": "b1.plans.ex.08",
+      "lessonId": "b1.plans.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "We are going to move next month.",
+        "We going to move next month.",
+        "We are go to move next month.",
+        "We are going move next month."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b1.plans.ex.09",
+      "lessonId": "b1.plans.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "If I had time, I will travel more.",
+        "If I had time, I would travel more.",
+        "If I have time, I would travel more.",
+        "If I had time, I would travelled more."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.environment.ex.08",
+      "lessonId": "b2.environment.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "It must being the oldest bridge in the region.",
+        "It must to be the oldest bridge in the region.",
+        "It must be the oldest bridge in the region.",
+        "It must been the oldest bridge in the region."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.environment.ex.09",
+      "lessonId": "b2.environment.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "If I were the manager, I would changed the policy.",
+        "If I am the manager, I would change the policy.",
+        "If I were the manager, I will change the policy.",
+        "If I were the manager, I would change the policy."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.interview.ex.08",
+      "lessonId": "b2.interview.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct reported question:",
+      "questionFa": "گزارش پرسش درست را انتخاب کنید:",
+      "options": [
+        "She asked where I had worked before.",
+        "She asked where had I worked before.",
+        "She asked where did I work before.",
+        "She asked that where I had worked before."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.interview.ex.09",
+      "lessonId": "b2.interview.lesson-01",
+      "order": 9,
+      "type": "fill_blank",
+      "sentence": "He asked me what time the meeting ___.",
+      "accepted": [
+        "started",
+        "began",
+        "would start"
+      ]
+    },
+    {
+      "id": "b2.media.ex.08",
+      "lessonId": "b2.media.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "I use to watch this show every week.",
+        "I used to watch this show every week.",
+        "I used to watching this show every week.",
+        "I used watching this show every week."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.media.ex.09",
+      "lessonId": "b2.media.lesson-01",
+      "order": 9,
+      "type": "fill_blank",
+      "sentence": "When we were children, we ___ play in the street.",
+      "accepted": [
+        "used to",
+        "would"
+      ]
+    },
+    {
+      "id": "b2.problems.ex.07",
+      "lessonId": "b2.problems.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "The issue have been resolved.",
+        "The issue has resolved.",
+        "The issue has been resolved.",
+        "The issue has been resolving."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.problems.ex.08",
+      "lessonId": "b2.problems.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "The emails have been sending to the clients.",
+        "The emails has been sent to the clients.",
+        "The emails have been send to the clients.",
+        "The emails have been sent to the clients."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.problems.ex.09",
+      "lessonId": "b2.problems.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Three complaints have been logged this week.",
+        "Three complaints has been logged this week.",
+        "Three complaints have been logging this week.",
+        "Three complaints have logged been this week."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.problems.ex.10",
+      "lessonId": "b2.problems.lesson-01",
+      "order": 10,
+      "type": "fill_blank",
+      "sentence": "The road ___ since Monday.",
+      "accepted": [
+        "has been repaired",
+        "has been fixed",
+        "has been rebuilt"
+      ]
+    },
+    {
+      "id": "b2.problems.ex.11",
+      "lessonId": "b2.problems.lesson-01",
+      "order": 11,
+      "type": "fill_blank",
+      "sentence": "Your request ___ — you can collect the permit.",
+      "accepted": [
+        "has been approved",
+        "has been granted",
+        "has been accepted"
+      ]
+    },
+    {
+      "id": "b2.research.ex.07",
+      "lessonId": "b2.research.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Mathematics are my favourite subject.",
+        "Mathematics is my favourite subject.",
+        "Mathematics was my favourite subjects.",
+        "Mathematics were my favourite subject."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.research.ex.08",
+      "lessonId": "b2.research.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "The news were surprising.",
+        "The news are surprising.",
+        "The news is surprising.",
+        "The newses are surprising."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.research.ex.09",
+      "lessonId": "b2.research.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "Everybodies know the answer.",
+        "Everybody know the answer.",
+        "Everybody are knowing the answer.",
+        "Everybody knows the answer."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.research.ex.10",
+      "lessonId": "b2.research.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "There is a lot of traffic on this road.",
+        "There are a lot of traffic on this road.",
+        "There is a lot of traffics on this road.",
+        "There be a lot of traffic on this road."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.technology.ex.09",
+      "lessonId": "b2.technology.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "The woman which lives next door is a doctor.",
+        "The woman who lives next door is a doctor.",
+        "The woman whom lives next door is a doctor.",
+        "The woman lives who next door is a doctor."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "b2.technology.ex.10",
+      "lessonId": "b2.technology.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "The report must be finish by Friday.",
+        "The report must finished be by Friday.",
+        "The report must be finished by Friday.",
+        "The report must been finished by Friday."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.inference.ex.07",
+      "lessonId": "c1.inference.lesson-01",
+      "order": 7,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "He must to have missed the train.",
+        "He must missed the train.",
+        "He must have miss the train.",
+        "He must have missed the train."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.inference.ex.08",
+      "lessonId": "c1.inference.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "They can't have finished already.",
+        "They can't finished already.",
+        "They can't have finish already.",
+        "They can't have been finish already."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.inference.ex.09",
+      "lessonId": "c1.inference.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "She might forgotten about the meeting.",
+        "She might have forgotten about the meeting.",
+        "She might have forget about the meeting.",
+        "She might to have forgotten about the meeting."
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.inference.ex.10",
+      "lessonId": "c1.inference.lesson-01",
+      "order": 10,
+      "type": "multiple_choice",
+      "question": "Choose the correct inference:",
+      "questionFa": "نتیجه‌گیری درست را انتخاب کنید:",
+      "options": [
+        "They must have leave an hour ago — the lights are off.",
+        "They must left an hour ago — the lights are off.",
+        "They must have left an hour ago — the lights are off.",
+        "They must have leaving an hour ago — the lights are off."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.persuasion.ex.08",
+      "lessonId": "c1.persuasion.lesson-01",
+      "order": 8,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "You should to have told me earlier.",
+        "You should told me earlier.",
+        "You should have tell me earlier.",
+        "You should have told me earlier."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.persuasion.ex.09",
+      "lessonId": "c1.persuasion.lesson-01",
+      "order": 9,
+      "type": "multiple_choice",
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کنید:",
+      "options": [
+        "We needn't have hurried — the train was late anyway.",
+        "We needn't hurried — the train was late anyway.",
+        "We needn't have hurry — the train was late anyway.",
+        "We don't need have hurried — the train was late anyway."
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
     }
   ]
 }

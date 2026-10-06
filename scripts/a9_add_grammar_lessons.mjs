@@ -11,13 +11,14 @@
  * coverage (vocabulary + exercises + knowledge per lesson) holds once
  * `a9_more_grammar_exercises.mjs` has added the exercises.
  *
- * contentVersion is bumped once for the whole bundle: 7 → 8, in all five
- * files (AGENTS.md §5 — the version is authored inside the JSON).
+ * contentVersion is bumped once for this whole batch: 8 → 9, in all five
+ * files (AGENTS.md §5 — the version is authored inside the JSON). A-7 already
+ * took v8, so A-9 needs its own bump for installed apps to re-seed.
  */
 import fs from "node:fs";
 
 const DIR = "app/src/main/assets/content";
-const NEW_VERSION = 8;
+const NEW_VERSION = 9;
 
 const lessons = [
   {
@@ -191,6 +192,43 @@ I didn't see your message. — پیامت را ندیدم.
 «Yesterday I go to work» غلط است — Yesterday I went to work.`,
   },
 ];
+
+/**
+ * A-7 coverage for the new A1 lessons: `PhonologyCoverageTest` requires every
+ * A1 lesson to teach a `## تلفظ` section, so it is appended to each tip before
+ * the lesson is written (the A-8 parser turns the unknown header into its own
+ * CUSTOM card).
+ */
+const pronunciationSections = {
+  "a1.articles.lesson-01": `a و an بر اساسِ صدا انتخاب می‌شوند، نه حرف: a book اما an apple — صدای اولِ apple مصوت است.
+an hour را با hِ خوانده نشنوید: چون h خاموش است، فقط مصوت می‌آید و an لازم است.
+the معمولاً ضعیف /ðə/ تلفظ می‌شود، نه /ðiː/ کشیده؛ کشیدن آن فقط برای تأکید است.`,
+  "a1.plurals.lesson-01": `پسوند جمع سه صدا دارد: /s/ در cats، /z/ در dogs و /ɪz/ در boxes — پس از صوت‌های sibilant یک هجای اضافه می‌افتد.
+babies با /ˈbeɪbiːz/ خوانده می‌شود و -ies همان /iːz/ است؛ y را حذف نکنید.
+foot کوتاه /fʊt/ است و جمعش feet با /iː/ بلند؛ children را هم مثل معدود کوتاه نخوانید.`,
+  "a1.pronouns.lesson-01": `him و her در گفتار روزمره ضعیف می‌شوند: /ɪm/ و /hə/ — تکیه روی فعل می‌افتد (I SEE him).
+them غالباً /ðəm/ و کوتاه تلفظ می‌شود، نه /ðem/ کشیده.
+it و us هر دو تکیه‌ناپذیرند؛ کشیدنشان جمله را می‌شکند.`,
+  "a1.can.lesson-01": `can در جملهٔ خبری ضعیف /kən/ است، اما در پرسش و هنگام تأکید کامل /kæn/ تلفظ می‌شود: I CAN swim در برابر I can SWIM.
+can't تکیه می‌گیرد چون منفی است: در بریتیش با /ɑː/ باز (کَنت) و در آمریکایی با /æ/.
+could کوتاه /kʊd/ است؛ آن را با /uː/ کشیده نخوانید.`,
+  "a1.imperatives.lesson-01": `جملهٔ امری کوتاه و پرتحرک است؛ تکیه روی فعل می‌افتد: STOP! نه stopِ آهسته.
+در Don't، t اغلب بدون انفجار تلفظ می‌شود و کلمه کوتاه است.
+پایان stop و sit و close با آزادسازی صامت‌ها همراه است: p، t و s را کامل بیان کنید.`,
+  "a1.question-words.lesson-01": `در what و where و when صدای /w/ با گرد کردن لب‌ها ساخته می‌شود؛ آن را با /v/ اشتباه نگیرید.
+در who و how صدای /h/ واضح است و نباید حذف شود.
+در پرسش‌های بلند، تکیه روی کلمهٔ پرسشی می‌افتد و آهنگ پایان جمله بالا می‌رود.`,
+  "a2.past-simple.lesson-01": `در didn't، t اغلب حذف می‌شود و تکیه روی فعل اصلی می‌افتد: I DIDN'T GO.
+شکل‌های گذشته کوتاه‌اند: went /went/ و bought /bɔːt/؛ کشیدن بیش از حدشان غیرطبیعی است.
+yesterday روی هجای اول تکیه دارد: YES-ter-day و هجای میانی /t/ نرم است.`,
+};
+
+for (const lesson of lessons) {
+  const section = pronunciationSections[lesson.id];
+  if (section && !lesson.grammarTipFa.includes("## تلفظ")) {
+    lesson.grammarTipFa = `${lesson.grammarTipFa}\n## تلفظ\n${section}`;
+  }
+}
 
 const vocabulary = [
   // --- a1.articles -------------------------------------------------------

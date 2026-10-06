@@ -1,5 +1,5 @@
 {
-  "contentVersion": 8,
+  "contentVersion": 9,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -364,12 +364,13 @@
       "type": "GRAMMAR",
       "title": "Past simple",
       "titleFa": "گذشتهٔ ساده",
-      "level": "B1",
+      "level": "A2",
       "prerequisites": [
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "b1.work.lesson-01"
+        "b1.work.lesson-01",
+        "a2.past-simple.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -1191,7 +1192,8 @@
       "prerequisites": [],
       "lessons": [
         "a1.introductions.lesson-01",
-        "a1.weather.lesson-01"
+        "a1.weather.lesson-01",
+        "a1.articles.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1206,7 +1208,9 @@
       "prerequisites": [],
       "lessons": [
         "a1.daily-routine.lesson-01",
-        "a1.family.lesson-01"
+        "a1.family.lesson-01",
+        "a1.pronouns.lesson-01",
+        "a1.can.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1222,6 +1226,127 @@
       "lessons": [
         "a1.greetings.lesson-01",
         "a1.shopping.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "grammar.articles-a-an-the",
+      "type": "GRAMMAR",
+      "title": "Articles: a / an / the",
+      "titleFa": "کاربرد a، an و the",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.articles.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.plural-nouns",
+      "type": "GRAMMAR",
+      "title": "Plural nouns (regular and irregular)",
+      "titleFa": "جمع بستن اسم‌ها",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.plurals.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.pronouns-subject-object",
+      "type": "GRAMMAR",
+      "title": "Subject and object pronouns",
+      "titleFa": "ضمایر فاعلی و مفعولی",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a1.pronouns.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.can-ability",
+      "type": "GRAMMAR",
+      "title": "can / can't for ability",
+      "titleFa": "توانایی با can و can't",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.verb-be"
+      ],
+      "lessons": [
+        "a1.can.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.imperatives",
+      "type": "GRAMMAR",
+      "title": "Imperatives (commands and instructions)",
+      "titleFa": "جمله‌های امری",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a1.imperatives.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "grammar.question-words",
+      "type": "GRAMMAR",
+      "title": "Question words (what / where / when / who / why / how)",
+      "titleFa": "کلمات پرسشی",
+      "level": "A1",
+      "prerequisites": [
+        "grammar.present-simple-affirmative"
+      ],
+      "lessons": [
+        "a1.question-words.lesson-01"
+      ],
+      "skills": [
+        "GRAMMAR"
+      ]
+    },
+    {
+      "id": "phonology.final-consonants",
+      "type": "PHONOLOGY",
+      "title": "Final consonant sounds: /s/, /z/, /ɪz/ and released stops",
+      "titleFa": "آوای پایانی: جمع‌ها و آزادسازی صامت‌ها",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.plurals.lesson-01",
+        "a1.imperatives.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.w-h-sounds",
+      "type": "PHONOLOGY",
+      "title": "The sounds /w/ and /h/ in question words",
+      "titleFa": "آوای /w/ و /h/ در کلمات پرسشی",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.question-words.lesson-01"
       ],
       "skills": [
         "LISTENING"

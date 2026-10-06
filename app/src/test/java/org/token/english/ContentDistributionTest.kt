@@ -145,6 +145,11 @@ class ContentDistributionTest {
         "b2.interview.ex.03" to "look forward to + gerund target — no synonym fits the frame",
         "c1.persuasion.ex.03" to "deduction modal with evidence clause — weaker modals change the meaning",
         "c1.culture.ex.03" to "wish + past target — no alternative exists",
+        "a1.articles.ex.02" to "indefinite article target — 'egg' starts with a vowel sound, so only 'an' completes it",
+        "a1.articles.ex.05" to "definite article target — both speakers know which door is meant, no equivalent",
+        "a1.pronouns.ex.02" to "object-pronoun target — the following 'our' can only follow 'us'",
+        "a1.can.ex.05" to "ability modal with a deadline frame — 'must' would turn ability into obligation",
+        "a1.question-words.ex.05" to "interrogative target — only 'where' asks for a place",
     )
 
     @Test

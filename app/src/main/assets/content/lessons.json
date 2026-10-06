@@ -1,5 +1,5 @@
 {
-  "contentVersion": 8,
+  "contentVersion": 9,
   "lessons": [
     {
       "id": "a1.greetings.lesson-01",
@@ -380,6 +380,76 @@
       "estimatedMinutes": 10,
       "order": 38,
       "grammarTipFa": "## قاعده\nگاهی کم‌گویی از پرگویی قوی‌تر است. litotes یعنی نفی ضد برای تأکید: not uncommon = رایج. کنایه‌ی مودبانه مانند «Not bad for a beginner» تحسین را نرم و چاشنی‌دار می‌کند.\n## جدول\nnot uncommon = رایج / not bad = بد نیست\nnot least = مهم‌تر از همه\nunderstatement = کم‌گویی\n## مثال‌ها\nNot bad for a first attempt! — برای اولین بار بد نیست!\nThe solution is not unlike the original. — راه‌حل بی‌شباهت به نسخه‌ی اصلی نیست.\nHe is no fool. — او احمق نیست (یعنی عاقل است).\n## خطاهای رایج\n«not uncommon» را با «not common» اشتباه نگیرید — کاملاً برعکس‌اند.\nلحن کنایه را در موقعیت رسمی بدون اطمینان از فهم طرف به کار نبرید."
+    },
+    {
+      "id": "a1.articles.lesson-01",
+      "level": "A1",
+      "title": "Articles: a, an, the",
+      "titleFa": "کاربرد a، an و the",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 39,
+      "grammarTipFa": "## قاعده\nوقتی از یک چیز ناشناخته حرف می‌زنیم a یا an می‌گذاریم: a book. پیش از صدای مصوت an می‌آید: an apple و an hour (h خاموش است). اگر شنونده دقیقاً بداند منظور کدام چیز است، the می‌گذاریم: the sun، the book on the table. اسم‌های جمع کلی و اسم‌های انتزاعی هیچ حرفی نمی‌خواهند: I like music.\n## جدول\na book / a car / a university — یک (پیش از صدای مصوت)\nan apple / an orange / an hour — یک (پیش از صدای مصوت)\nthe sun / the moon / the first floor — همان مشخص\nI bought a book. The book is on the table. — بار اول a، بار دوم the\n## مثال‌ها\nShe is a doctor. — او پزشک است.\nI need an umbrella. — به چتری احتیاج دارم.\nThe hotel is next to the bank. — هتل کنار بانک است.\n## خطاهای رایج\n«I have a apple» غلط است — پیش از apple باید an بیاید.\nبرای آب، غذا، زبان‌ها و اخبار the نمی‌آید: I drink water.\nبرای چیزی که برای اولین بار معرفی می‌کنید the به کار نبرید: I saw a dog.\n## تلفظ\na و an بر اساسِ صدا انتخاب می‌شوند، نه حرف: a book اما an apple — صدای اولِ apple مصوت است.\nan hour را با hِ خوانده نشنوید: چون h خاموش است، فقط مصوت می‌آید و an لازم است.\nthe معمولاً ضعیف /ðə/ تلفظ می‌شود، نه /ðiː/ کشیده؛ کشیدن آن فقط برای تأکید است."
+    },
+    {
+      "id": "a1.plurals.lesson-01",
+      "level": "A1",
+      "title": "Plural Nouns",
+      "titleFa": "جمع بستن اسم‌ها",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 40,
+      "grammarTipFa": "## قاعده\nبیشتر اسم‌ها با s جمع می‌شوند: cat → cats. اسم‌هایی که به s، sh، ch، x یا o ختم شوند es می‌گیرند: box → boxes. اگر اسم به همزه + y ختم شود y به ies تبدیل می‌شود: baby → babies. بعضی اسامی شکل نامنظم دارند: child → children. اسم‌های غیرقابل شمارش جمع ندارند: water، rice، information.\n## جدول\ncat → cats / box → boxes / watch → watches\nbaby → babies / city → cities\nleaf → leaves / knife → knives\nchild → children / man → men / foot → feet\n## مثال‌ها\nThere are three children in the park. — سه کودک در پارک هستند.\nShe bought two boxes of tea. — دو جعبه چای خرید.\nThe women are waiting outside. — زن‌ها بیرون منتظرند.\n## خطاهای رایج\n«childs» و «mans» غلط‌اند — children و men درست است.\nبعد از عدد همیشه اسم جمع می‌آید: «two child» غلط، «two children» درست.\n«informations» و «advices» جمع ندارند: some information، some advice.\n## تلفظ\nپسوند جمع سه صدا دارد: /s/ در cats، /z/ در dogs و /ɪz/ در boxes — پس از صوت‌های sibilant یک هجای اضافه می‌افتد.\nbabies با /ˈbeɪbiːz/ خوانده می‌شود و -ies همان /iːz/ است؛ y را حذف نکنید.\nfoot کوتاه /fʊt/ است و جمعش feet با /iː/ بلند؛ children را هم مثل معدود کوتاه نخوانید."
+    },
+    {
+      "id": "a1.pronouns.lesson-01",
+      "level": "A1",
+      "title": "Subject and Object Pronouns",
+      "titleFa": "ضمایر فاعلی و مفعولی",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 41,
+      "grammarTipFa": "## قاعده\nضمیر فاعلی جایگزین فاعل می‌شود و قبل از فعل می‌آید: I، you، he، she، it، we، they. ضمیر مفعولی بعد از فعل یا حرف اضافه می‌آید: me، you، him، her، it، us، them. برای کسی که نمی‌شناسیم هم می‌توانیم از they استفاده کنیم.\n## جدول\nفاعلی: I / you / he / she / it / we / they\nمفعولی: me / you / him / her / it / us / them\nI see her. — او را می‌بینم.\nShe gave the book to me. — کتاب را به من داد.\n## مثال‌ها\nHe helps his sister every day. — هر روز به خواهرش کمک می‌کند.\nWe met them at the station. — ما آن‌ها را در ایستگاه دیدیم.\nThe teacher asked us to open our books. — معلم از ما خواست کتاب‌هایمان را باز کنیم.\n## خطاهای رایج\n«Me and him are here» غلط است — He and I are here درست است.\nبعد از حرف اضافه ضمیر فاعلی نیاید: «between you and I» غلط.\n«Her is a teacher» غلط — She is a teacher درست است.\n## تلفظ\nhim و her در گفتار روزمره ضعیف می‌شوند: /ɪm/ و /hə/ — تکیه روی فعل می‌افتد (I SEE him).\nthem غالباً /ðəm/ و کوتاه تلفظ می‌شود، نه /ðem/ کشیده.\nit و us هر دو تکیه‌ناپذیرند؛ کشیدنشان جمله را می‌شکند."
+    },
+    {
+      "id": "a1.can.lesson-01",
+      "level": "A1",
+      "title": "can and can't for Ability",
+      "titleFa": "توانایی با can و can't",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 42,
+      "grammarTipFa": "## قاعده\nبرای بیان توانایی از can استفاده می‌کنیم و بعد از آن فعل لخت می‌آید: I can swim. منفی آن can't یا cannot است. در پرسش، can قبل از فاعل می‌آید: Can you drive? گذشتهٔ آن could است و برای توانایی در گذشته به کار می‌رود.\n## جدول\nI can swim. / She can swim. — فعل هیچ‌وقت s نمی‌گیرد\nI can't / cannot play the guitar.\nCan you speak English? — Yes, I can. / No, I can't.\nHe could run fast when he was young.\n## مثال‌ها\nMy father can cook very well. — پدرم خیلی خوب آشپزی می‌کند.\nWe can't arrive before six. — نمی‌توانیم قبل از شش برسیم.\nCan you help me with this box? — می‌توانی در این جعبه کمکم کنی؟\n## خطاهای رایج\n«I can to swim» غلط است — بعد از can فعل لخت می‌آید: I can swim.\n«She cans drive» و «He can drives» غلط‌اند — نه s می‌گیرد و نه to.\nبرای گذشته نگویید «I can swimmed»: I could swim.\n## تلفظ\ncan در جملهٔ خبری ضعیف /kən/ است، اما در پرسش و هنگام تأکید کامل /kæn/ تلفظ می‌شود: I CAN swim در برابر I can SWIM.\ncan't تکیه می‌گیرد چون منفی است: در بریتیش با /ɑː/ باز (کَنت) و در آمریکایی با /æ/.\ncould کوتاه /kʊd/ است؛ آن را با /uː/ کشیده نخوانید."
+    },
+    {
+      "id": "a1.imperatives.lesson-01",
+      "level": "A1",
+      "title": "Imperatives",
+      "titleFa": "جمله‌های امری",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 43,
+      "grammarTipFa": "## قاعده\nبرای دستور، دستورالعمل و علائم راهنمایی از شکل لخت فعل استفاده می‌کنیم: Sit down. برای نهی، همان شکل لخت را با Don't می‌دهیم: Don't run. برای ملایم‌تر کردن حرف please می‌گذاریم و برای پیشنهاد مشترک از Let's بهره می‌گیریم.\n## جدول\nOpen your books. — کتاب‌هایتان را باز کنید.\nDon't touch the wire. — به سیم دست نزنید.\nPlease wait here. — لطفاً اینجا منتظر بمانید.\nLet's go home. — بیایید به خانه برویم.\n## مثال‌ها\nStop! The light is red. — توقف! چراغ قرمز است.\nListen to the instructions carefully. — به دستورالعمل‌ها دقیق گوش کن.\nClose the door, please. — لطفاً در را ببند.\n## خطاهای رایج\n«Don't goes» غلط است — بعد از don't فعل لخت می‌آید: Don't go.\nبرای دستور فاعل نیاورید: «You close the door» غلط، Close the door درست.\nبعد از Let's فعل با to نمی‌آید: «Let's to go» غلط است.\n## تلفظ\nجملهٔ امری کوتاه و پرتحرک است؛ تکیه روی فعل می‌افتد: STOP! نه stopِ آهسته.\nدر Don't، t اغلب بدون انفجار تلفظ می‌شود و کلمه کوتاه است.\nپایان stop و sit و close با آزادسازی صامت‌ها همراه است: p، t و s را کامل بیان کنید."
+    },
+    {
+      "id": "a1.question-words.lesson-01",
+      "level": "A1",
+      "title": "Question Words",
+      "titleFa": "کلمات پرسشی",
+      "topic": "Language",
+      "estimatedMinutes": 5,
+      "order": 44,
+      "grammarTipFa": "## قاعده\nبرای پرسش از چیز، مکان، زمان، دلیل و نحوه، کلمهٔ پرسشی را اول جمله می‌گذاریم و بعد فعل کمکی می‌آید: Where do you live? اگر فعل be باشد ترتیب فرق می‌کند: Where are you from? پاسخ کوتاه با همان ساختار داده می‌شود.\n## جدول\nWhat — چه‌چیزی / What is your name?\nWhere — کجا / Where do you live?\nWhen — کی / When does the class start?\nWho — چه کسی / Who is that woman?\nWhy — چرا / Why are you late?\nHow — چگونه / How do you pronounce this?\n## مثال‌ها\nWhat time does the train leave? — قطار ساعت چند حرکت می‌کند؟\nHow much is this shirt? — این پیراهن چند است؟\nWhy are you tired today? — امروز چرا خسته‌ای؟\n## خطاهای رایج\n«Where you are from?» غلط است — Where are you from?\n«What means this?» غلط است — What does this mean?\nبعد از how برای اسم‌های شمارشی از many و برای غیرقابل شمارش از much استفاده کنید.\n## تلفظ\nدر what و where و when صدای /w/ با گرد کردن لب‌ها ساخته می‌شود؛ آن را با /v/ اشتباه نگیرید.\nدر who و how صدای /h/ واضح است و نباید حذف شود.\nدر پرسش‌های بلند، تکیه روی کلمهٔ پرسشی می‌افتد و آهنگ پایان جمله بالا می‌رود."
+    },
+    {
+      "id": "a2.past-simple.lesson-01",
+      "level": "A2",
+      "title": "Past Simple",
+      "titleFa": "زمان گذشتهٔ ساده",
+      "topic": "Language",
+      "estimatedMinutes": 6,
+      "order": 45,
+      "grammarTipFa": "## قاعده\nبرای رویداد تمام‌شده در گذشته از شکل گذشتهٔ فعل استفاده می‌کنیم: افعال مرتب ed می‌گیرند (work → worked) و افعال نامنظم شکل ویژه دارند (go → went، see → saw). با he/she/it هم فعل لخت می‌ماند: He worked. در پرسش و منفی از did کمکی می‌گیریم و فعل به شکل لخت برمی‌گردد: Did you see it? I didn't go.\n## جدول\nI / you / he worked — They didn't work.\ngo → went / see → saw / buy → bought / write → wrote\nDid she leave? — Yes, she did. / No, she didn't.\nyesterday / last night / two days ago / in 2019\n## مثال‌ها\nWe went to the coast last weekend. — آخر هفته به ساحل رفتیم.\nShe bought a new phone yesterday. — دیروز یک گوشی نو خرید.\nI didn't see your message. — پیامت را ندیدم.\n## خطاهای رایج\n«I didn't went» غلط است — بعد از didn't فعل لخت می‌آید: I didn't go.\n«He didn't had breakfast» غلط است — He didn't have breakfast.\n«Yesterday I go to work» غلط است — Yesterday I went to work.\n## تلفظ\nدر didn't، t اغلب حذف می‌شود و تکیه روی فعل اصلی می‌افتد: I DIDN'T GO.\nشکل‌های گذشته کوتاه‌اند: went /went/ و bought /bɔːt/؛ کشیدن بیش از حدشان غیرطبیعی است.\nyesterday روی هجای اول تکیه دارد: YES-ter-day و هجای میانی /t/ نرم است."
     }
   ]
 }

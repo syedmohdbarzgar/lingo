@@ -229,13 +229,23 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 8):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 264
-  exercises (6/lesson + 12 reading items + 6 A1 pronunciation drills), 228 vocabulary entries
-  (6/lesson), 75 knowledge items,
+- **CEFR bundle (contentVersion 9):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 383 exercises (6–11/lesson + 12 reading items + A1 pronunciation drills), 270
+  vocabulary entries (6/lesson), 83 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
   mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
+- **A1/A2 gaps closed (A-9):** articles (a/an/the), plural spelling, subject/object pronouns,
+  can for ability, imperatives and question words each got their own A1 lesson (tip + 6 words +
+  6 grammar exercises + phonology coverage + a guided listening drill), and the past simple is
+  now introduced at **A2** (`a2.past-simple.lesson-01`, `grammar.past-simple` level B1 → A2) with
+  `b1.work` still teaching it as a review. Placement bands were re-checked afterwards: still
+  30 questions, five per level, A1 → C2 in order.
+- **Practice bar (A-8):** every GRAMMAR knowledge item needs **at least six grammar-targeting
+  exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the
+  mastery engine uses, so a vocabulary-heavy lesson does not count as grammar practice.
+  `GrammarCoverageTest` fails the build below the bar; add exercises to that topic's lessons.
 - Exercise mix is intentionally varied: `multiple_choice`, `fill_blank`, `translation`, `listening`,
   and authored `skill` tags (VOCABULARY / GRAMMAR / READING / WRITING) so mastery is not dominated
   by recognition questions. Correct-answer positions stay balanced —
@@ -294,7 +304,8 @@ Rules:
   `EntitlementPolicyTest` (trial/subscription gating), `KnowledgeGraphTest` (curriculum graph),
   `ContentSeederTest` / `ContentDistributionTest` (content pipeline), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
-  (A1 pronunciation coverage), plus the adaptive layer —
+  (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic), plus the
+  adaptive layer —
   `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest`, `MasteryProfileEngineTest`,
   `AdaptiveExerciseSelectorTest`, `ReviewLifecycleTest` (pinned SRS lifecycle numbers).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
