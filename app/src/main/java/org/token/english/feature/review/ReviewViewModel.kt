@@ -29,6 +29,8 @@ data class ReviewUiState(
     val typedAnswer: String = "",
     /** Result of a checked production answer: null = not a production card / not checked yet. */
     val answerCorrect: Boolean? = null,
+    /** One edit away from the word (A-2): graded wrong, but shown as «تقریباً درست». */
+    val answerAlmost: Boolean = false,
 ) {
     val currentItem: ReviewItem? get() = queue.getOrNull(index)
     val currentWord: VocabularyItem? get() = currentItem?.let { vocabulary[it.contentId] }
@@ -101,6 +103,7 @@ class ReviewViewModel(
                     revealed = false,
                     typedAnswer = "",
                     answerCorrect = null,
+                    answerAlmost = false,
                     phase = if (due.isEmpty()) ReviewPhase.SUMMARY else it.phase.takeIf { p -> p != ReviewPhase.DONE }
                         ?: ReviewPhase.SUMMARY,
                 )
@@ -120,6 +123,7 @@ class ReviewViewModel(
                     againCount = 0,
                     typedAnswer = "",
                     answerCorrect = null,
+                    answerAlmost = false,
                 )
             }
 
@@ -147,10 +151,14 @@ class ReviewViewModel(
         val s = _state.value
         val word = s.currentWord ?: return
         if (s.revealed || s.typedAnswer.isBlank()) return
+        // Same grading rules as lessons (A-2): digits ≡ words, one-edit near-miss
+        // graded wrong but reported as «تقریباً درست» — never auto-accepted.
+        val verdict = AnswerChecker.grade(listOf(word.word), s.typedAnswer)
         _state.update {
             it.copy(
                 revealed = true,
-                answerCorrect = AnswerChecker.matchesAny(listOf(word.word), s.typedAnswer),
+                answerCorrect = verdict == AnswerChecker.Verdict.CORRECT,
+                answerAlmost = verdict == AnswerChecker.Verdict.ALMOST,
             )
         }
     }
@@ -186,6 +194,7 @@ class ReviewViewModel(
                         revealed = false,
                         typedAnswer = "",
                         answerCorrect = null,
+                        answerAlmost = false,
                         gradedCount = it.gradedCount + 1,
                         againCount = if (result == ReviewResult.AGAIN) it.againCount + 1 else it.againCount,
                         phase = if (next >= queue.size) ReviewPhase.DONE else ReviewPhase.SESSION,

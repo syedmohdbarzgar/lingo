@@ -143,6 +143,17 @@ object AnswerChecker {
     }
 
     /**
+     * List-based grading for surfaces without an [Exercise] — SRS production in
+     * the review session grades a bare vocabulary word the same way lessons do
+     * (checklist A-2 parity: «تقریباً درست» must appear there too).
+     */
+    fun grade(accepted: List<String>, answer: String): Verdict = when {
+        matchesAny(accepted, answer) -> Verdict.CORRECT
+        isAlmost(accepted, answer) -> Verdict.ALMOST
+        else -> Verdict.WRONG
+    }
+
+    /**
      * Near-miss detection (checklist A-2): a single word of at least
      * [ALMOST_MIN_LENGTH] letters exactly one edit (substitution, insertion or
      * deletion) away from an accepted answer. Deliberately narrow:
@@ -159,6 +170,11 @@ object AnswerChecker {
             is Exercise.MultipleChoice -> return false
             is Exercise.Speaking -> return false
         }
+        return isAlmost(accepted, answer)
+    }
+
+    /** Near-miss against raw accepted variants (single word ≥ 5 letters, one edit). */
+    fun isAlmost(accepted: List<String>, answer: String): Boolean {
         val typed = expandContractions(normalize(answer))
         if (typed.isEmpty() || ' ' in typed || typed.length < ALMOST_MIN_LENGTH) return false
         return accepted.any { candidate ->

@@ -246,7 +246,13 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                         } else {
                             IncorrectBanner(
                                 modifier = Modifier.fillMaxWidth(),
-                                message = "پاسخ درست: ${word.word}",
+                                // A-2 parity with lessons: one edit away gets an
+                                // actionable spelling hint, still graded wrong.
+                                message = if (state.answerAlmost) {
+                                    "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${word.word}"
+                                } else {
+                                    "پاسخ درست: ${word.word}"
+                                },
                             )
                         }
                     }

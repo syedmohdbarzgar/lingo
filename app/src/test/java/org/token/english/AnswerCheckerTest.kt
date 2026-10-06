@@ -106,6 +106,17 @@ class AnswerCheckerTest {
     }
 
     @Test
+    fun `list-based grade matches exercise-based rules for review production`() {
+        // The review session grades a bare word (no Exercise) — same verdicts.
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("welcome"), "Welcome!"))
+        assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(listOf("welcome"), "welcom"))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(listOf("welcome"), "hi"))
+        // Digits and multi-word phrases behave like the lesson path.
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("three"), "3"))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(listOf("look forward"), "lok forward"))
+    }
+
+    @Test
     fun `near-miss never fires for multiple choice or multi-word answers`() {
         val mc = Exercise.MultipleChoice(
             id = "x", lessonId = "l", question = "q", questionFa = null,
