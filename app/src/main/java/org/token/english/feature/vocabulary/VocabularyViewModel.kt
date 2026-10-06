@@ -79,7 +79,7 @@ class VocabularyDetailViewModel(
     fun playWord() {
         val word = _state.value.item ?: return
         _state.update { it.copy(isPlaying = true) }
-        container.speak(word.word) { _state.update { it.copy(isPlaying = false) } }
+        container.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
     }
 
     fun addToReview() {

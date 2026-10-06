@@ -26,6 +26,12 @@ data class ExerciseOutcome(
     val correct: Boolean,
     val correctAnswer: String,
     val skill: Skill,
+    /**
+     * One edit away from an accepted answer (checklist A-2): still graded wrong
+     * (no auto-accept, mastery untouched in the positive direction), but the UI
+     * can say «تقریباً درست — املای کلمه را بررسی کن» instead of a bare miss.
+     */
+    val almostCorrect: Boolean = false,
 )
 
 /**
@@ -41,7 +47,8 @@ class SubmitExerciseUseCase(
         answer: String,
         now: Long,
     ): ExerciseOutcome {
-        val correct = AnswerChecker.isCorrect(exercise, answer)
+        val verdict = AnswerChecker.grade(exercise, answer)
+        val correct = verdict == AnswerChecker.Verdict.CORRECT
         val skill = AnswerChecker.skillOf(exercise)
         progress.applyAttempt(skill, correct, source = "lesson")
         // The same answer is also evidence about the curriculum nodes the lesson
@@ -53,6 +60,7 @@ class SubmitExerciseUseCase(
             correct = correct,
             correctAnswer = AnswerChecker.correctAnswerText(exercise),
             skill = skill,
+            almostCorrect = verdict == AnswerChecker.Verdict.ALMOST,
         )
     }
 }

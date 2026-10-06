@@ -110,8 +110,62 @@ class ContentDistributionTest {
 
     @Test
     fun `every content file declares the same bundle version`() {
-        val versions = listOf("lessons.json", "vocabulary.json", "exercises.json", "placement.json")
+        val versions = listOf("lessons.json", "vocabulary.json", "exercises.json", "placement.json", "knowledge.json")
             .associateWith { ContentParser.bundleVersion(contentFile(it).readText()) }
         assertEquals("bundle files declare different contentVersion values: $versions", 1, versions.values.toSet().size)
+    }
+
+    /**
+     * Reviewed single-answer fill_blank exercises (checklist A-2), each with the
+     * pedagogical reason it may accept exactly one answer. This map IS the
+     * report: grep it for the current "open blanks" inventory.
+     *
+     * Everything else with a single accepted answer fails until equivalents are
+     * added or a reason is recorded here; entries that gain equivalents must be
+     * removed again (second assertion) so the list never rots.
+     *
+     * Rule of thumb used when reviewing: a lexical swap inside the SAME
+     * grammatical structure is an equivalent (drink/have); an answer that uses
+     * a different structure and dodges the grammar target is not ("up to"
+     * for a past-continuous blank).
+     */
+    private val reviewedSingleAnswerBlanks = mapOf(
+        "a1.greetings.ex.03" to "unique interrogative — nothing but 'how' completes Hello, ___ are you?",
+        "a1.shopping.ex.04" to "quantifier frame — How ___ water has no alternative",
+        "a2.hobbies.ex.03" to "infinitive marker — wants ___ learn accepts only 'to'",
+        "a2.health.ex.03" to "symptom target — migraine is a different condition, not a synonym",
+        "a2.city-life.ex.03" to "There + plural agreement target — alternatives change tense/number",
+        "b1.work.ex.04" to "past-simple target — 'do' is a different tense the lesson does not teach",
+        "b1.news.ex.03" to "past-simple passive target — 'had been' needs context the sentence lacks",
+        "b1.news.ex.04" to "be-passive agreement on 'news' — 'gets' is a different passive structure",
+        "b1.plans.ex.03" to "unique second-conditional modal",
+        "b1.experiences.ex.03" to "unique past-perfect auxiliary",
+        "b1.experiences.ex.04" to "past-continuous target — 'up to' dodges the -ing structure",
+        "b2.media.ex.03" to "unique future-perfect auxiliary",
+        "b2.interview.ex.03" to "look forward to + gerund target — no synonym fits the frame",
+        "c1.persuasion.ex.03" to "deduction modal with evidence clause — weaker modals change the meaning",
+        "c1.culture.ex.03" to "wish + past target — no alternative exists",
+    )
+
+    @Test
+    fun `open blanks report - every single-answer fill_blank is reviewed`() {
+        val root = JSONObject(contentFile("exercises.json").readText())
+        val array = root.getJSONArray("exercises")
+        val singles = (0 until array.length())
+            .map { array.getJSONObject(it) }
+            .filter { it.optString("type") == "fill_blank" && it.getJSONArray("accepted").length() < 2 }
+            .map { it.getString("id") }
+
+        val unreviewed = singles.filterNot { it in reviewedSingleAnswerBlanks }
+        assertTrue(
+            "single-answer fill_blank(s) without a documented reason — add " +
+                "equivalents to accepted or record why only one answer is valid: $unreviewed",
+            unreviewed.isEmpty(),
+        )
+        val stale = reviewedSingleAnswerBlanks.keys.filterNot { it in singles }
+        assertTrue(
+            "reviewed blank(s) now accept multiple answers — drop them from the allowlist: $stale",
+            stale.isEmpty(),
+        )
     }
 }

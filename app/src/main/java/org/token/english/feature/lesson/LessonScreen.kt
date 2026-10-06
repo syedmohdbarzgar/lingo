@@ -1,5 +1,7 @@
 package org.token.english.feature.lesson
 
+import android.content.Intent
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
@@ -130,6 +133,18 @@ private fun ExerciseContent(
     onEvent: (LessonEvent) -> Unit,
 ) {
     val exercise = state.currentExercise ?: return
+    // B-3: offer the system "install voice data" action only when an activity can
+    // handle it (resolveActivity needs the <queries> entry in the manifest on API 30+).
+    val context = LocalContext.current
+    val canInstallVoiceData = remember(context) {
+        Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)
+            .resolveActivity(context.packageManager) != null
+    }
+    val installVoiceData: (() -> Unit)? = if (canInstallVoiceData) {
+        { context.startActivity(Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)) }
+    } else {
+        null
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -238,11 +253,16 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.Listening -> {
-                    SectionHeader("گوش کن و بنویس")
+                    SectionHeader(
+                        if (state.audioUnavailable) "متن را بخوان و بنویس" else "گوش کن و بنویس",
+                    )
                     ListeningCard(
                         audioText = exercise.audioText,
                         isPlaying = state.isPlaying,
                         onPlay = { onEvent(LessonEvent.ReplayAudio) },
+                        unavailable = state.audioUnavailable,
+                        playbackFailed = state.audioFailed,
+                        onInstallVoiceData = installVoiceData,
                     )
                     AnswerField(
                         value = state.textAnswer,

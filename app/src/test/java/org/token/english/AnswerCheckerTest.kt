@@ -67,6 +67,61 @@ class AnswerCheckerTest {
         assertFalse(AnswerChecker.isCorrect(exercise, "alpha"))
     }
 
+    // --- A-2: digit normalization -------------------------------------------
+
+    @Test
+    fun `digits match their word form in both directions`() {
+        assertTrue(AnswerChecker.isCorrect(fillBlank("three"), "3"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("3"), "three"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("twenty"), "20"))
+        // Digits inside a sentence normalize too.
+        assertTrue(
+            AnswerChecker.matchesAny(listOf("i have three books"), "I have 3 books."),
+        )
+        // Words that merely start with digits stay untouched.
+        assertFalse(AnswerChecker.isCorrect(fillBlank("1st"), "1"))
+        // Out-of-range numbers keep their digits (no map entry).
+        assertTrue(AnswerChecker.matchesAny(listOf("100"), "100"))
+    }
+
+    // --- A-2: near-miss (almost) verdict -------------------------------------
+
+    @Test
+    fun `one edit away from a long word is almost, not correct`() {
+        val ex = fillBlank("welcome")
+        assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(ex, "welcom"))
+        assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(ex, "welcoe"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(ex, "Welcome!"))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(ex, "goodbye"))
+        // "almost" is never an accept — isCorrect must stay false.
+        assertFalse(AnswerChecker.isCorrect(ex, "welcom"))
+    }
+
+    @Test
+    fun `near-miss ignores short words where one edit changes the word`() {
+        // car/cat are 3 letters — one edit must NOT count as almost.
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(fillBlank("car"), "cat"))
+        // Two edits are wrong even on long words (h→y substitution + w insertion).
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(fillBlank("hello"), "yellow"))
+    }
+
+    @Test
+    fun `near-miss never fires for multiple choice or multi-word answers`() {
+        val mc = Exercise.MultipleChoice(
+            id = "x", lessonId = "l", question = "q", questionFa = null,
+            options = listOf("welcome", "goodbye"), correctIndex = 0,
+        )
+        // Options are picked, not typed — no almost state in MC.
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(mc, "welcom"))
+
+        // Sentence-length answers stay exact: edit distance over a phrase
+        // would bless sloppy paraphrases as "almost".
+        val translation = Exercise.Translation(
+            id = "x", lessonId = "l", prompt = "سلام", accepted = listOf("hello world"),
+        )
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(translation, "hello wrld"))
+    }
+
     @Test
     fun `skill tagging wins over the heuristic`() {
         val tagged = Exercise.MultipleChoice(

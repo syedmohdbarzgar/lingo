@@ -73,7 +73,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 6)**
+**Content bundle (JSON `contentVersion` 7)**
 
 | | Count |
 |---|---|

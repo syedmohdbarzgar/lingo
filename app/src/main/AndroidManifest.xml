@@ -16,6 +16,15 @@
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
 
+    <!-- Package visibility (NOT a permission): lets the listening exercise resolve
+         the system "install TTS voice data" screen on API 30+ when no English voice
+         is installed (checklist B-3). -->
+    <queries>
+        <intent>
+            <action android:name="android.speech.tts.engine.INSTALL_TTS_DATA" />
+        </intent>
+    </queries>
+
     <application
         android:name=".EnglishApp"
         android:allowBackup="true"

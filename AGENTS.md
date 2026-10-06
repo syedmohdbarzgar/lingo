@@ -229,7 +229,7 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 6):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 258
+- **CEFR bundle (contentVersion 7):** 38 lessons (A1/A2/B1/B2 = 6 each, C1/C2 = 7 each), 258
   exercises (6/lesson + 12 reading items), 228 vocabulary entries (6/lesson), 72 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
@@ -249,6 +249,12 @@ Rules:
 - Adding content = JSON only (no Kotlin changes), per technical spec §61/§63.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `translation`, `listening`
   (`speaking` parses but is suspended).
+- Typed-answer grading (A-2): digits normalize to words (0–20 + tens), so `3` ≡ `three`;
+  a single word ≥ 5 letters that is one edit from an accepted answer is graded wrong but
+  shown as «تقریباً درست — املای کلمه را بررسی کن» (`AnswerChecker.grade`). Every
+  single-answer `fill_blank` must appear with a reason in
+  `ContentDistributionTest.reviewedSingleAnswerBlanks`; new ones fail the test until
+  equivalents are added or justified.
 
 ## 6. Design system rules (from design.md)
 

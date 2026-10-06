@@ -158,10 +158,15 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
     @Volatile
     var soundEnabled: Boolean = true
 
-    /** Speaks only when the user has sound enabled in settings. */
-    fun speak(text: String, onDone: (() -> Unit)? = null) {
+    /**
+     * Speaks only when the user has sound enabled in settings.
+     * [onDone] always fires when the request ends; [onError] additionally fires
+     * when no sound was produced (engine unavailable or playback failed) — a
+     * mute by user choice is not an error (checklist B-3).
+     */
+    fun speak(text: String, onDone: (() -> Unit)? = null, onError: (() -> Unit)? = null) {
         if (soundEnabled) {
-            audioPlayer.speak(text, onDone)
+            audioPlayer.speak(text, onDone, onError)
         } else {
             onDone?.invoke()
         }

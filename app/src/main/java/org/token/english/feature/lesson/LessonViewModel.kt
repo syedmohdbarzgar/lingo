@@ -41,6 +41,10 @@ data class LessonUiState(
     val repeatsCurrent: Boolean = false,
     val completed: Boolean = false,
     val isPlaying: Boolean = false,
+    /** No English TTS voice on this device — the listening card falls back to text (B-3). */
+    val audioUnavailable: Boolean = false,
+    /** The last playback attempt failed (engine error) — show a retry hint (B-3). */
+    val audioFailed: Boolean = false,
 ) {
     val currentExercise: Exercise? get() = exercises.getOrNull(currentIndex)
     val answeredCorrectly: Boolean? get() = outcome?.correct
@@ -89,6 +93,19 @@ class LessonViewModel(
             while (true) {
                 kotlinx.coroutines.delay(STUDY_TICK_MILLIS)
                 creditStudyTime()
+            }
+        }
+        viewModelScope.launch {
+            // B-3: watch the TTS engine — when no English voice is available the
+            // listening card switches to its text fallback instead of hanging.
+            container.audioPlayer.isEnglishAvailable.collect { available ->
+                _state.update { s ->
+                    when (available) {
+                        false -> s.copy(audioUnavailable = true, isPlaying = false)
+                        true -> if (s.audioUnavailable) s.copy(audioUnavailable = false) else s
+                        null -> s
+                    }
+                }
             }
         }
         viewModelScope.launch {
@@ -150,9 +167,10 @@ class LessonViewModel(
             LessonEvent.Next -> next()
             LessonEvent.ReplayAudio -> playAudio()
             LessonEvent.StartExercises -> startExercises()
-            is LessonEvent.SpeakText -> container.speak(event.text) {
-                _state.update { it.copy(isPlaying = false) }
-            }
+            is LessonEvent.SpeakText -> container.speak(
+                text = event.text,
+                onDone = { _state.update { it.copy(isPlaying = false) } },
+            )
         }
     }
 
@@ -219,6 +237,7 @@ class LessonViewModel(
                 outcome = null,
                 remainingCount = pending.size,
                 repeatsCurrent = false,
+                audioFailed = false,
             )
         }
         viewModelScope.launch {
@@ -239,10 +258,15 @@ class LessonViewModel(
 
     private fun playAudio() {
         val exercise = _state.value.currentExercise as? Exercise.Listening ?: return
-        _state.update { it.copy(isPlaying = true) }
-        container.speak(exercise.audioText) {
-            _state.update { it.copy(isPlaying = false) }
-        }
+        // No English voice → the card already shows the text fallback; do not
+        // pretend to play (isPlaying would hang on "در حال پخش…").
+        if (container.audioPlayer.isEnglishAvailable.value == false) return
+        _state.update { it.copy(isPlaying = true, audioFailed = false) }
+        container.speak(
+            text = exercise.audioText,
+            onDone = { _state.update { it.copy(isPlaying = false) } },
+            onError = { _state.update { it.copy(isPlaying = false, audioFailed = true) } },
+        )
     }
 
     private suspend fun creditStudyTime() {

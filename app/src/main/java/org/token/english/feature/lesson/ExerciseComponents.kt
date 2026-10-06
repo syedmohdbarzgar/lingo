@@ -139,37 +139,89 @@ fun AnswerField(
     }
 }
 
-/** Listening exercise: on-device TTS playback + optional transcript (design.md §21). */
+/**
+ * Listening exercise: on-device TTS playback + optional transcript (design.md §21).
+ *
+ * States (checklist B-3):
+ *  - normal / playing — tap the speaker to (re)play.
+ *  - [unavailable] — no English voice on this device: no fake play affordance;
+ *    the transcript becomes the exercise (read + type) with an install-voice action.
+ *  - [playbackFailed] — an attempt produced no sound: text hint + retry by tap.
+ */
 @Composable
 fun ListeningCard(
     audioText: String,
     isPlaying: Boolean,
     onPlay: () -> Unit,
     modifier: Modifier = Modifier,
+    unavailable: Boolean = false,
+    playbackFailed: Boolean = false,
+    onInstallVoiceData: (() -> Unit)? = null,
 ) {
     var showTranscript by remember { mutableStateOf(false) }
+    // Without audio the transcript IS the exercise — always visible, no toggle:
+    // a hidden text with no sound would make the task impossible.
+    val transcriptVisible = showTranscript || unavailable
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
     ) {
-        Icon(
-            imageVector = Icons.Default.VolumeUp,
-            contentDescription = "پخش صدا",
-            modifier = Modifier
-                .size(64.dp)
-                .clickable(enabled = !isPlaying, onClick = onPlay),
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Text(
-            text = if (isPlaying) "در حال پخش…" else "برای شنیدن ضربه بزنید",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        TextButton(onClick = { showTranscript = !showTranscript }) {
-            Text(if (showTranscript) "پنهان کردن متن" else "نمایش متن")
+        if (unavailable) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.VolumeUp,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Text(
+                        text = "صدای انگلیسی در دسترس نیست",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    Text(
+                        text = "این تمرین را با خواندن متن و تایپ آن ادامه بده",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            onInstallVoiceData?.let { install ->
+                TextButton(onClick = install) {
+                    Text("نصب داده‌های صدا")
+                }
+            }
+        } else {
+            Icon(
+                imageVector = Icons.Default.VolumeUp,
+                contentDescription = "پخش صدا",
+                modifier = Modifier
+                    .size(64.dp)
+                    .clickable(enabled = !isPlaying, onClick = onPlay),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = if (isPlaying) "در حال پخش…" else "برای شنیدن ضربه بزنید",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            // Failure is never color-only: a sentence that says what to do (design.md §50).
+            if (playbackFailed) {
+                Text(
+                    text = "پخش صدا انجام نشد — دوباره ضربه بزنید",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+            TextButton(onClick = { showTranscript = !showTranscript }) {
+                Text(if (showTranscript) "پنهان کردن متن" else "نمایش متن")
+            }
         }
-        if (showTranscript) {
+        if (transcriptVisible) {
             EnglishText(
                 text = audioText,
                 style = MaterialTheme.typography.titleMedium,

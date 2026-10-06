@@ -1,5 +1,5 @@
 {
-  "contentVersion": 6,
+  "contentVersion": 7,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -109,7 +109,9 @@
       "order": 2,
       "sentence": "I usually ______ coffee in the morning.",
       "accepted": [
-        "drink"
+        "drink",
+        "have",
+        "take"
       ]
     },
     {
@@ -208,7 +210,9 @@
       "order": 3,
       "sentence": "My ______ is a teacher. (مادر)",
       "accepted": [
-        "mother"
+        "mother",
+        "mum",
+        "mom"
       ]
     },
     {
@@ -373,7 +377,9 @@
       "order": 3,
       "sentence": "I would like to ______ chicken, please.",
       "accepted": [
-        "order"
+        "order",
+        "have",
+        "get"
       ]
     },
     {
@@ -450,7 +456,9 @@
       "order": 3,
       "sentence": "This shirt is very ___. It only costs five pounds.",
       "accepted": [
-        "cheap"
+        "cheap",
+        "inexpensive",
+        "affordable"
       ]
     },
     {
@@ -537,7 +545,8 @@
       "order": 3,
       "sentence": "Turn right ___ the second traffic light.",
       "accepted": [
-        "at"
+        "at",
+        "by"
       ]
     },
     {
@@ -620,7 +629,8 @@
       "order": 4,
       "sentence": "If you have a fever, you should ___ plenty of water.",
       "accepted": [
-        "drink"
+        "drink",
+        "have"
       ]
     },
     {
@@ -682,7 +692,8 @@
       "order": 3,
       "sentence": "I have never ___ to Turkey before.",
       "accepted": [
-        "been"
+        "been",
+        "visited"
       ]
     },
     {
@@ -835,7 +846,9 @@
       "order": 4,
       "sentence": "I'm going to ___ a new course next month.",
       "accepted": [
-        "take"
+        "take",
+        "start",
+        "do"
       ]
     },
     {
@@ -981,7 +994,8 @@
       "order": 4,
       "sentence": "This technology can be ___ in many different ways.",
       "accepted": [
-        "used"
+        "used",
+        "applied"
       ]
     },
     {
@@ -1042,7 +1056,9 @@
       "order": 3,
       "sentence": "The sea level might ___ by half a metre by 2100.",
       "accepted": [
-        "rise"
+        "rise",
+        "increase",
+        "go up"
       ]
     },
     {
@@ -1126,7 +1142,8 @@
       "order": 4,
       "sentence": "She was offered the job after a short ___.",
       "accepted": [
-        "interview"
+        "interview",
+        "meeting"
       ]
     },
     {
@@ -1198,7 +1215,9 @@
       "order": 4,
       "sentence": "The advert was designed to ___ a new product.",
       "accepted": [
-        "promote"
+        "promote",
+        "advertise",
+        "sell"
       ]
     },
     {
@@ -1343,7 +1362,8 @@
       "order": 4,
       "sentence": "Little ___ that his decision would change everything.",
       "accepted": [
-        "did he know"
+        "did he know",
+        "did he realize"
       ]
     },
     {
@@ -1489,7 +1509,8 @@
       "order": 4,
       "sentence": "Please ___ on the lights; it's dark in here.",
       "accepted": [
-        "turn"
+        "turn",
+        "switch"
       ]
     },
     {
@@ -1627,7 +1648,8 @@
       "order": 3,
       "sentence": "Never in my life ___ I witnessed such arrogance.",
       "accepted": [
-        "have"
+        "have",
+        "had"
       ]
     },
     {
@@ -2342,7 +2364,8 @@
       "order": 3,
       "sentence": "Nice to ______ you. My name is Sara.",
       "accepted": [
-        "meet"
+        "meet",
+        "see"
       ],
       "skill": "GRAMMAR"
     },
@@ -2723,7 +2746,8 @@
       "order": 3,
       "sentence": "We cannot ______ a new car this year.",
       "accepted": [
-        "afford"
+        "afford",
+        "buy"
       ],
       "skill": "VOCABULARY"
     },
@@ -2913,7 +2937,8 @@
       "order": 3,
       "sentence": "We would like to make a ______ about the delay.",
       "accepted": [
-        "complaint"
+        "complaint",
+        "comment"
       ],
       "skill": "VOCABULARY"
     },

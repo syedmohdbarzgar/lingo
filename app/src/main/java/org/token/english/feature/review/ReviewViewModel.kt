@@ -129,7 +129,7 @@ class ReviewViewModel(
 
             ReviewEvent.PlayWord -> {
                 val word = _state.value.currentWord ?: return
-                container.speak(word.word) { _state.update { it.copy(isPlaying = false) } }
+                container.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
             }
 
             ReviewEvent.Reset -> refresh()

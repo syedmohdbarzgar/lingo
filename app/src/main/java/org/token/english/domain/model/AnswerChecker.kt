@@ -11,6 +11,31 @@ object AnswerChecker {
     private val punctuation = Regex("[.!?،,;:]+")
     private val whitespace = Regex("\\s+")
 
+    /**
+     * Grading verdict for a typed answer (checklist A-2).
+     * ALMOST is never credited — it exists only so the UI can say
+     * «تقریباً درست — املای کلمه را بررسی کن» instead of a bare miss.
+     */
+    enum class Verdict { CORRECT, ALMOST, WRONG }
+
+    /** Digits that may stand in for their word form (0–20 + tens). */
+    private val numberWords = mapOf(
+        "0" to "zero", "1" to "one", "2" to "two", "3" to "three",
+        "4" to "four", "5" to "five", "6" to "six", "7" to "seven",
+        "8" to "eight", "9" to "nine", "10" to "ten", "11" to "eleven",
+        "12" to "twelve", "13" to "thirteen", "14" to "fourteen",
+        "15" to "fifteen", "16" to "sixteen", "17" to "seventeen",
+        "18" to "eighteen", "19" to "nineteen", "20" to "twenty",
+        "30" to "thirty", "40" to "forty", "50" to "fifty",
+        "60" to "sixty", "70" to "seventy", "80" to "eighty", "90" to "ninety",
+    )
+
+    /** Standalone 1–2 digit tokens ("3" matches, "1st" and "100" do not). */
+    private val digitToken = Regex("\\b\\d{1,2}\\b")
+
+    /** Minimum length before a single edit counts as a near-miss (checklist A-2). */
+    private const val ALMOST_MIN_LENGTH = 5
+
     /** Common English contractions → their expanded form (apostrophe-normalized). */
     private val contractions = mapOf(
         "i'm" to "i am",
@@ -78,6 +103,9 @@ object AnswerChecker {
         .replace('\u0643', '\u06a9') // Arabic kaf → Persian kaf (ک)
         .replace(punctuation, "")
         .replace(whitespace, " ")
+        // "3" ≡ "three": digits normalize to their word form so a learner who
+        // types the number gets credit against a word-form accepted answer (A-2).
+        .replace(digitToken) { m -> numberWords[m.value] ?: m.value }
 
     /** Expands contractions so `I'm hungry` equals `I am hungry`. */
     fun expandContractions(normalized: String): String =
@@ -105,6 +133,60 @@ object AnswerChecker {
             is Exercise.Speaking -> exercise.referenceAnswers
         }
         return matchesAny(accepted, answer)
+    }
+
+    /** Grades a typed answer: exact match → CORRECT, one-edit near-miss → ALMOST. */
+    fun grade(exercise: Exercise, answer: String): Verdict = when {
+        isCorrect(exercise, answer) -> Verdict.CORRECT
+        isAlmost(exercise, answer) -> Verdict.ALMOST
+        else -> Verdict.WRONG
+    }
+
+    /**
+     * Near-miss detection (checklist A-2): a single word of at least
+     * [ALMOST_MIN_LENGTH] letters exactly one edit (substitution, insertion or
+     * deletion) away from an accepted answer. Deliberately narrow:
+     *  - never applies to multiple choice (options are picked, not typed),
+     *  - never applies to multi-word answers (edit distance over a sentence
+     *    would accept sloppy paraphrases as "almost"),
+     *  - never auto-accepts — the caller still grades the answer wrong.
+     */
+    fun isAlmost(exercise: Exercise, answer: String): Boolean {
+        val accepted = when (exercise) {
+            is Exercise.FillBlank -> exercise.accepted
+            is Exercise.Translation -> exercise.accepted
+            is Exercise.Listening -> exercise.accepted
+            is Exercise.MultipleChoice -> return false
+            is Exercise.Speaking -> return false
+        }
+        val typed = expandContractions(normalize(answer))
+        if (typed.isEmpty() || ' ' in typed || typed.length < ALMOST_MIN_LENGTH) return false
+        return accepted.any { candidate ->
+            val norm = expandContractions(normalize(candidate))
+            ' ' !in norm && norm.length >= ALMOST_MIN_LENGTH && levenshtein(typed, norm, max = 1) == 1
+        }
+    }
+
+    /** Levenshtein distance capped at [max]; returns `max + 1` once exceeded. */
+    private fun levenshtein(a: String, b: String, max: Int): Int {
+        if (a == b) return 0
+        if (kotlin.math.abs(a.length - b.length) > max) return max + 1
+        var prev = IntArray(b.length + 1) { it }
+        var curr = IntArray(b.length + 1)
+        for (i in 1..a.length) {
+            curr[0] = i
+            var rowMin = curr[0]
+            for (j in 1..b.length) {
+                val cost = if (a[i - 1] == b[j - 1]) 0 else 1
+                curr[j] = minOf(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost)
+                if (curr[j] < rowMin) rowMin = curr[j]
+            }
+            if (rowMin > max) return max + 1
+            val tmp = prev
+            prev = curr
+            curr = tmp
+        }
+        return prev[b.length]
     }
 
     /** Human-readable correct answer shown after a miss (design.md §28). */
