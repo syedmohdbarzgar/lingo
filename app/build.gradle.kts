@@ -367,6 +367,19 @@ tasks.register("validateContent") {
                 "Content validation failed (${errors.size} problem(s)):\n" + errors.joinToString("\n"),
             )
         }
+
+        // --- non-blocking nudge (checklist A-1): an exercise without
+        // `explanationFa` teaches nothing after a miss. The hard bar lives in
+        // ExplanationCoverageTest; here we only surface the backlog so content
+        // authors see it while editing.
+        val unexplained = exercises.filter { text(it, "explanationFa").isEmpty() }
+        if (unexplained.isNotEmpty()) {
+            val ids = unexplained.map { text(it, "id") }.sorted()
+            logger.warn(
+                "Content warning: ${ids.size} of ${exercises.size} exercises have no explanationFa " +
+                    "(shown after a wrong answer). Missing: ${ids.joinToString(", ")}",
+            )
+        }
         logger.lifecycle(
             "Content validation passed: ${lessons.size} lessons, ${vocabulary.size} words, " +
                 "${exercises.size} exercises, ${placement.size} placement questions, " +

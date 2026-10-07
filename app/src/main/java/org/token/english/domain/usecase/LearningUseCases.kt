@@ -123,6 +123,7 @@ class GetTodayPlanUseCase(
     private val progress: ProgressRepository,
     private val settingsRepository: SettingsRepository,
     private val planner: LearningPlanner,
+    private val knowledge: KnowledgeRepository,
 ) {
     suspend operator fun invoke(now: Long): TodayPlan {
         val settings: AppSettings = settingsRepository.settings.first()
@@ -135,13 +136,43 @@ class GetTodayPlanUseCase(
         val completedIds = states.filter { it.completed }.map { it.lessonId }.toSet()
         val nextLesson = org.token.english.domain.engine.nextLessonFor(allLessons, completedIds, settings.level)
 
-        return planner.createPlan(
+        val base = planner.createPlan(
             dueReviewCount = due,
             nextLesson = nextLesson,
             masteryBySkill = mastery,
             targetMinutes = settings.dailyGoalMinutes,
             todayStudySeconds = stats.todayStudySeconds,
         )
+
+        // Adaptive slice (checklist B-1): the knowledge engine turns the day into an
+        // ordered, justified list of actions — review first, then remediation of an
+        // unmet prerequisite, then a new unit, then practice. The graph is rebuilt
+        // from the seeded items here (83 nodes) so the use case stays pure and the
+        // planner keeps its no-Android, no-DB contract.
+        val items = knowledge.allItems()
+        val focusItems = nextLesson?.let { knowledge.itemsForLesson(it.id) }.orEmpty()
+        val minutesByItem = focusItems.associate { item ->
+            val lesson = allLessons.firstOrNull { it.id in item.lessonIds }
+            item.id to (lesson?.estimatedMinutes ?: org.token.english.domain.engine.AdaptiveLearningPlanner.DEFAULT_ITEM_MINUTES)
+        }
+        val decision = if (items.isEmpty() || focusItems.isEmpty() && due == 0) {
+            null
+        } else {
+            val graph = org.token.english.domain.engine.DefaultKnowledgeGraph(items)
+            org.token.english.domain.engine.AdaptiveLearningPlanner(
+                graph,
+                org.token.english.domain.engine.PrerequisiteEngine(graph),
+            ).plan(
+                states = knowledge.observeStates().first(),
+                dueReviewCount = due,
+                focusItems = focusItems,
+                targetMinutes = settings.dailyGoalMinutes,
+                todayStudySeconds = stats.todayStudySeconds,
+                estimatedMinutesByItem = minutesByItem,
+            )
+        }
+
+        return base.copy(actions = decision?.actions.orEmpty())
     }
 }
 

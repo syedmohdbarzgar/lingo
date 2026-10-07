@@ -85,7 +85,7 @@ org.token.english
 │   ├── engine/                # ReviewScheduler (SM-2-lite), MasteryEngine, LearningPlanner
 │   └── usecase/               # SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, ScorePlacement
 ├── data/
-│   ├── local/                 # Room: entities, DAOs, AppDatabase (version 4, schemas exported)
+│   ├── local/                 # Room: entities, DAOs, AppDatabase (version 5, schemas exported)
 │   ├── content/               # ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/            # Repository impls + SettingsRepositoryImpl (DataStore)
 ├── di/AppContainer.kt         # Manual DI container (+ appViewModelFactory helper)
@@ -118,8 +118,17 @@ data    → domain (implements interfaces) + Room/DataStore
   (readiness / remediation / dependency depth), `AdaptiveLearningPlanner` (the ordered, justified
   "what to study now and why"), `DefaultMasteryProfileEngine` (mastery split by dimension —
   recognition / recall / comprehension / application / production), and `AdaptiveExerciseSelector`
-  (front-loads the exercise formats whose mastery dimension is still weak). Wired to the UI only
-  after the decisions themselves are proven; today they are exercised by their unit tests.
+  (front-loads the exercise formats whose mastery dimension is still weak).
+- **`AdaptiveLearningPlanner` is now wired to the UI (checklist B-1).** `GetTodayPlanUseCase`
+  builds the graph from the seeded items, plans, and returns the ordered `LearningAction`s inside
+  `TodayPlan.actions`; `HomeScreen` renders them with each action's own `reasonFa` (the "برنامهٔ
+  امروز" card). The rest of the adaptive layer (`AdaptiveExerciseSelector`, `MasteryProfileEngine`,
+  `RemediationEngine`) is still proven only by its unit tests — wire the next slice the same way:
+  decision first, then surface.
+- **Planner time budget (checklist B-2):** review is never dropped for lack of budget — its
+  estimate is capped at half the day's target and it always leads — and the remaining actions
+  stop at the **first** one that does not fit instead of skipping ahead to a cheaper one. With the
+  daily goal already met the plan collapses to the review block; it is never empty.
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
@@ -188,7 +197,9 @@ level A1–B2, 7 for C1/C2) and daily review reminders (now **active**, `reminde
 
 ## 4a. Monetization — subscription × 3 marketplaces
 
-Product decision (user-confirmed): **all content is subscription-gated with a 24h free trial**;
+Product decision (user-confirmed): **all content is subscription-gated with a 7-day free trial**
+(`TrialClock.TRIAL_MILLIS` = `7 * 24h`, consumed against elapsed real time so it survives app
+restarts; it lives in local DataStore only, so clearing app data restarts the trial);
 two plans — `sub_monthly` (monthly) and `sub_yearly` (yearly). Each release build targets one
 market and embeds only that market's billing SDK:
 
@@ -229,7 +240,7 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 9):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+- **CEFR bundle (contentVersion 12):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
   each), 383 exercises (6–11/lesson + 12 reading items + A1 pronunciation drills), 270
   vocabulary entries (6/lesson), 83 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
@@ -246,6 +257,17 @@ Rules:
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the
   mastery engine uses, so a vocabulary-heavy lesson does not count as grammar practice.
   `GrammarCoverageTest` fails the build below the bar; add exercises to that topic's lessons.
+- **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
+  `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
+  Coverage is now **every one of the 383 exercises** (grammar/fill-blank core plus vocabulary
+  meaning, translation and listening items). `ExplanationCoverageTest` enforces 100% on the core
+  set and on the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the
+  invariant); `validateContent` prints any exercise without one as a non-blocking warning. A new
+  exercise of any type ships with its explanation. Every **vocabulary** word additionally carries
+  an authored Persian `explanationFa` (a short usage note): the SRS queue is vocabulary-only, so
+  the review session shows it after a miss, exactly as the lesson screen does. It is a vocabulary
+  column (`VocabularyEntity.explanationFa`, Room v5) and a new word without one fails
+  `ExplanationCoverageTest`.
 - Exercise mix is intentionally varied: `multiple_choice`, `fill_blank`, `translation`, `listening`,
   and authored `skill` tags (VOCABULARY / GRAMMAR / READING / WRITING) so mastery is not dominated
   by recognition questions. Correct-answer positions stay balanced —
@@ -253,7 +275,8 @@ Rules:
   enforces it.
 - Placement scoring is **band-based** (`ScorePlacementUseCase`): walks bands bottom-up, band
   passes at ≥2/3 with ≥60% cumulative accuracy, stops at first failed band, floor A1.
-  Question `level` tags in placement.json are documentation; scoring uses array order + `bandSize=3`.
+  Question `level` tags in placement.json are documentation; scoring uses array order +
+  `ScorePlacementUseCase.DEFAULT_BAND_SIZE = 5` (six bands × 5 = 30 questions).
 - IDs are **stable dotted strings** (`a1.airport.word.passport`, `placement.q01`) — never renumber.
 - `exercise.payloadJson` stores the authored JSON verbatim; `ContentParser.exerciseFromPayload`
   maps it to the sealed `Exercise`. Unknown types are skipped, never crash a lesson.
@@ -331,7 +354,7 @@ Rules:
   through support if a user claims a lost subscription.
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar.
-- Room is at `version = 4` with exported schemas (`app/schemas`). Schema changes must ship a
+- Room is at `version = 5` with exported schemas (`app/schemas`). Schema changes must ship a
   migration **and** be added to `AppContainer.database` — Room throws at open time when a path from
   the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items

@@ -112,6 +112,11 @@ fun HomeScreen(
             TrialBanner(state, onOpenPaywall = onOpenPaywall)
 
             state.plan?.let { plan ->
+                TodayPlanCard(
+                    plan = plan,
+                    onOpenReview = onOpenReview,
+                    onOpenLesson = onOpenLesson,
+                )
                 TodayLessonCard(
                     plan = plan,
                     onStart = { plan.nextLesson?.let { onOpenLesson(it.id) } },
@@ -267,6 +272,65 @@ private fun DailyGoalCard(state: HomeUiState) {
     }
 }
 
+/**
+ * "Today's plan" (checklist B-1): the adaptive planner's ordered actions, each
+ * with the reason the engine chose it. The screen renders the decision — it never
+ * decides the order or the justification (technical spec §19).
+ */
+@Composable
+private fun TodayPlanCard(
+    plan: org.token.english.domain.model.TodayPlan,
+    onOpenReview: () -> Unit,
+    onOpenLesson: (String) -> Unit,
+) {
+    if (plan.actions.isEmpty()) return
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("برنامهٔ امروز")
+            plan.actions.forEach { action ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            text = action.titleFa,
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = action.reasonFa,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    AppChip(label = when (action.type) {
+                        org.token.english.domain.model.LearningActionType.REVIEW -> "مرور"
+                        org.token.english.domain.model.LearningActionType.REMEDIATE -> "پیش‌نیاز"
+                        org.token.english.domain.model.LearningActionType.LEARN -> "درس جدید"
+                        org.token.english.domain.model.LearningActionType.PRACTISE -> "تمرین"
+                    })
+                }
+            }
+            val lead = plan.actions.first()
+            if (lead.type == org.token.english.domain.model.LearningActionType.REVIEW) {
+                PrimaryButton(
+                    text = "شروع مرور ${plan.dueReviewCount} کارت",
+                    onClick = onOpenReview,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else {
+                plan.nextLesson?.let { lesson ->
+                    PrimaryButton(
+                        text = "شروع درس: ${lesson.titleFa}",
+                        onClick = { onOpenLesson(lesson.id) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun TodayLessonCard(
     plan: org.token.english.domain.model.TodayPlan,
@@ -277,7 +341,10 @@ private fun TodayLessonCard(
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             SectionHeader("مسیر امروز")
 
-            if (plan.dueReviewCount > 0) {
+            // The engine-driven card above already offers the review CTA; only
+            // fall back to this row when the plan has no actions yet (graph not
+            // seeded, or a focus-less day).
+            if (plan.dueReviewCount > 0 && plan.actions.isEmpty()) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,

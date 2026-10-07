@@ -73,6 +73,7 @@ class ContentSeeder(
                     examplesJson = JSONArray(it.examples).toString(),
                     collocationsJson = JSONArray(it.collocations).toString(),
                     lessonId = it.lessonId,
+                    explanationFa = it.explanationFa,
                 )
             },
             exercises = exercises.map {

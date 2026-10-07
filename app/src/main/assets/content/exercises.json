@@ -1,5 +1,5 @@
 {
-  "contentVersion": 9,
+  "contentVersion": 12,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -14,7 +14,8 @@
         "بعداً می‌بینمت",
         "لطفاً"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "thank you برای تشکر است؛ ببخشید sorry و لطفاً please است."
     },
     {
       "id": "a1.greetings.ex.02",
@@ -29,7 +30,8 @@
         "Goodbye",
         "Good evening"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "Good morning فقط برای صبح است؛ Good night هنگام خواب و Good evening شب به کار می‌رود."
     },
     {
       "id": "a1.greetings.ex.03",
@@ -39,7 +41,8 @@
       "sentence": "Hello, ______ are you?",
       "accepted": [
         "how"
-      ]
+      ],
+      "explanationFa": "برای پرسیدن حال از how are you? استفاده می‌شود؛ ترتیب ثابت how + are + you است."
     },
     {
       "id": "a1.greetings.ex.04",
@@ -60,7 +63,8 @@
         "see",
         "glad",
         "hello"
-      ]
+      ],
+      "explanationFa": "عبارت ثابت Nice to meet you برای ابراز خوش‌حالی از آشنایی است."
     },
     {
       "id": "a1.greetings.ex.05",
@@ -70,7 +74,8 @@
       "text": "Thank you for your help.",
       "accepted": [
         "thank you for your help"
-      ]
+      ],
+      "explanationFa": "عبارت تشکر: Thank you for your help — تکیهٔ جمله روی help است."
     },
     {
       "id": "a1.greetings.ex.06",
@@ -85,7 +90,8 @@
         "please",
         "now"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "please واژهٔ ادب در درخواست است؛ Give me بدون please خودخواهانه و بی‌ادبانه شنیده می‌شود."
     },
     {
       "id": "a1.daily-routine.ex.01",
@@ -100,7 +106,8 @@
         "دوش گرفتن",
         "بیدار شدن"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "wake up یعنی بیدار شدن؛ صبحانه خوردن have breakfast است."
     },
     {
       "id": "a1.daily-routine.ex.02",
@@ -112,7 +119,8 @@
         "drink",
         "have",
         "take"
-      ]
+      ],
+      "explanationFa": "در زمان حال ساده با فاعل I فعل پایه می‌آید، بدون s: I usually drink coffee."
     },
     {
       "id": "a1.daily-routine.ex.03",
@@ -127,7 +135,8 @@
         "I am go to work by bus.",
         "Go I to work by bus."
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "برای کارهای روزمره زمان حال ساده به کار می‌رود: I go to work — فعل am با فعل اصلی جمع نمی‌شود."
     },
     {
       "id": "a1.daily-routine.ex.04",
@@ -150,7 +159,8 @@
         "at",
         "early",
         "never"
-      ]
+      ],
+      "explanationFa": "قید تکرار usually پیش از فعل اصلی می‌آید: I usually wake up."
     },
     {
       "id": "a1.daily-routine.ex.05",
@@ -160,7 +170,8 @@
       "text": "We watch TV in the evening.",
       "accepted": [
         "we watch tv in the evening"
-      ]
+      ],
+      "explanationFa": "به /w/ در watch و واکهٔ بلند /iː/ در evening گوش کن."
     },
     {
       "id": "a1.daily-routine.ex.06",
@@ -171,7 +182,8 @@
       "accepted": [
         "shower",
         "a shower"
-      ]
+      ],
+      "explanationFa": "هم‌نشینی درست take a shower است؛ اسم قابل‌شمارش مفرد با a می‌آید."
     },
     {
       "id": "a1.family.ex.01",
@@ -186,7 +198,8 @@
         "مادر",
         "دختر"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "sister یعنی خواهر؛ برادر brother است."
     },
     {
       "id": "a1.family.ex.02",
@@ -201,7 +214,8 @@
         "father",
         "waiter"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "همسرِ مادر (mother's husband) پدر است؛ بقیهٔ گزینه‌ها نسبت خانوادگی را اشتباه می‌گویند."
     },
     {
       "id": "a1.family.ex.03",
@@ -213,7 +227,8 @@
         "mother",
         "mum",
         "mom"
-      ]
+      ],
+      "explanationFa": "مادر در انگلیسی mother است و با my مالکیت نشان داده می‌شود."
     },
     {
       "id": "a1.family.ex.04",
@@ -234,7 +249,8 @@
         "sister",
         "a",
         "the"
-      ]
+      ],
+      "explanationFa": "با فاعل I فعل have بدون s می‌آید: I have a brother."
     },
     {
       "id": "a1.family.ex.05",
@@ -244,7 +260,8 @@
       "text": "My father works at a bank.",
       "accepted": [
         "my father works at a bank"
-      ]
+      ],
+      "explanationFa": "به /ɑː/ در father و /æ/ در bank گوش کن."
     },
     {
       "id": "a1.family.ex.06",
@@ -259,7 +276,8 @@
         "They are have one son.",
         "They have one son."
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "با فاعل they فعل have بدون s می‌آید و have با are جمع نمی‌شود: They have one son."
     },
     {
       "id": "a2.airport.ex.01",
@@ -274,7 +292,8 @@
         "menu",
         "bill"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "boarding pass کارت پرواز است که پیش از سوار شدن نشان داده می‌شود."
     },
     {
       "id": "a2.airport.ex.02",
@@ -289,7 +308,8 @@
         "چمدان",
         "گیت"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "departure یعنی حرکت/پرواز (خروج)؛ نقطهٔ مقابل آن arrival (ورود) است."
     },
     {
       "id": "a2.airport.ex.03",
@@ -300,7 +320,8 @@
       "accepted": [
         "there",
         "over there"
-      ]
+      ],
+      "explanationFa": "over there یعنی «آنجا، آن‌طرف»؛ there قید مکان است."
     },
     {
       "id": "a2.airport.ex.04",
@@ -312,7 +333,8 @@
         "please show me your passport",
         "please show your passport",
         "show me your passport please"
-      ]
+      ],
+      "explanationFa": "درخواست مؤدبانه با please + فعل ساده: Please show me your passport."
     },
     {
       "id": "a2.airport.ex.05",
@@ -323,7 +345,8 @@
       "accepted": [
         "where is gate 12",
         "where is gate twelve"
-      ]
+      ],
+      "explanationFa": "gate twelve با تکیه روی twelve و پیوند صداها تلفظ می‌شود."
     },
     {
       "id": "a2.airport.ex.06",
@@ -338,7 +361,8 @@
         "departs",
         "departed the"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "برای برنامهٔ زمان‌بندی‌شده حال ساده به کار می‌رود و فاعل مفرد the flight فعل s می‌گیرد: departs."
     },
     {
       "id": "a2.restaurant.ex.01",
@@ -353,7 +377,8 @@
         "پیشخدمت",
         "حساب"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "bill صورت‌حساب رستوران است؛ menu فهرست غذاست."
     },
     {
       "id": "a2.restaurant.ex.02",
@@ -368,7 +393,8 @@
         "Bill now.",
         "I want bill."
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "درخواست مؤدبانه با Can we have …, please? ساخته می‌شود؛ Give the bill! امری و بی‌ادبانه است."
     },
     {
       "id": "a2.restaurant.ex.03",
@@ -380,7 +406,8 @@
         "order",
         "have",
         "get"
-      ]
+      ],
+      "explanationFa": "بعد از would like to مصدر بدون to می‌آید: would like to order chicken."
     },
     {
       "id": "a2.restaurant.ex.04",
@@ -391,7 +418,8 @@
       "accepted": [
         "this soup is delicious",
         "this soup is tasty"
-      ]
+      ],
+      "explanationFa": "this soup مفرد است، پس فعل is می‌گیرد: This soup is delicious."
     },
     {
       "id": "a2.restaurant.ex.05",
@@ -402,7 +430,8 @@
       "accepted": [
         "can i see the menu please",
         "can i have the menu please"
-      ]
+      ],
+      "explanationFa": "در گفتار سریع can به /kən/ ضعیف تبدیل می‌شود."
     },
     {
       "id": "a2.restaurant.ex.06",
@@ -417,7 +446,8 @@
         "departure",
         "brother"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "رزرو میز در رستوران reservation است؛ بقیهٔ گزینه‌ها با بافت رستوران نمی‌خوانند."
     },
     {
       "id": "a1.shopping.ex.01",
@@ -432,7 +462,8 @@
         "are",
         "do"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "فاعل جمع است (these shoes)، پس فعل are می‌آید و much برای مقدار غیرقابل‌شمارش به کار می‌رود."
     },
     {
       "id": "a1.shopping.ex.02",
@@ -447,7 +478,8 @@
         "the",
         "a"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "a برای اسم قابل‌شمارش مفرد می‌آید: a kilo of apples."
     },
     {
       "id": "a1.shopping.ex.03",
@@ -459,7 +491,8 @@
         "cheap",
         "inexpensive",
         "affordable"
-      ]
+      ],
+      "explanationFa": "«فقط پنج پوند» قیمت پایین را نشان می‌دهد، پس صفت مناسب cheap است."
     },
     {
       "id": "a1.shopping.ex.04",
@@ -469,7 +502,8 @@
       "sentence": "How ___ water do you drink every day?",
       "accepted": [
         "much"
-      ]
+      ],
+      "explanationFa": "water غیرقابل‌شمارش است، پس how much می‌آید نه how many."
     },
     {
       "id": "a1.shopping.ex.05",
@@ -494,7 +528,8 @@
         "of",
         "cost",
         "does"
-      ]
+      ],
+      "explanationFa": "پرسش قیمت با How much is …? ساخته می‌شود."
     },
     {
       "id": "a1.shopping.ex.06",
@@ -506,7 +541,8 @@
         "the supermarket is open until nine o'clock",
         "the supermarket is open until nine oclock",
         "the supermarket is open until nine o clock"
-      ]
+      ],
+      "explanationFa": "به تکیهٔ supermarket و پیوند until nine گوش کن."
     },
     {
       "id": "a2.directions.ex.01",
@@ -521,7 +557,8 @@
         "off",
         "up"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "go straight ahead عبارت ثابتِ «مستقیم جلو برو» است."
     },
     {
       "id": "a2.directions.ex.02",
@@ -536,7 +573,8 @@
         "in",
         "at"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "between برای «بین دو چیز» به کار می‌رود و با and می‌آید."
     },
     {
       "id": "a2.directions.ex.03",
@@ -547,7 +585,8 @@
       "accepted": [
         "at",
         "by"
-      ]
+      ],
+      "explanationFa": "در انگلیسی بریتانیایی turn right at the second traffic light رایج است؛ at نقطهٔ مشخص را نشان می‌دهد."
     },
     {
       "id": "a2.directions.ex.04",
@@ -558,7 +597,8 @@
       "accepted": [
         "down",
         "along"
-      ]
+      ],
+      "explanationFa": "walk down/along this street یعنی «در این خیابان پیش برو»."
     },
     {
       "id": "a2.directions.ex.05",
@@ -569,7 +609,8 @@
       "accepted": [
         "the bus stop is opposite the bank",
         "the bus stop is across from the bank"
-      ]
+      ],
+      "explanationFa": "opposite/across from یعنی «روبروی»: The bus stop is opposite the bank."
     },
     {
       "id": "a2.directions.ex.06",
@@ -580,7 +621,8 @@
       "accepted": [
         "take the second turning on the right",
         "take the second turn on the right"
-      ]
+      ],
+      "explanationFa": "به /ɜː/ در turning و تکیهٔ second گوش کن."
     },
     {
       "id": "a2.health.ex.01",
@@ -595,7 +637,8 @@
         "take",
         "took"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "بعد از have to فعل ساده می‌آید: have to take this medicine."
     },
     {
       "id": "a2.health.ex.02",
@@ -610,7 +653,8 @@
         "is",
         "was"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "جمله گذشته است (stayed)، پس فعل to be نیز گذشته می‌آید و با she می‌شود was."
     },
     {
       "id": "a2.health.ex.03",
@@ -620,7 +664,8 @@
       "sentence": "I have a terrible ___. I need some aspirin.",
       "accepted": [
         "headache"
-      ]
+      ],
+      "explanationFa": "نیاز به آسپرین نشانهٔ headache (سردرد) است."
     },
     {
       "id": "a2.health.ex.04",
@@ -631,7 +676,8 @@
       "accepted": [
         "drink",
         "have"
-      ]
+      ],
+      "explanationFa": "بعد از should فعل ساده می‌آید: should drink plenty of water."
     },
     {
       "id": "a2.health.ex.05",
@@ -643,7 +689,8 @@
         "i went to the doctor yesterday",
         "i went to the doctors yesterday",
         "yesterday i went to the doctor"
-      ]
+      ],
+      "explanationFa": "قید yesterday جمله را گذشته می‌کند، پس فعل گذشتهٔ ساده است: I went."
     },
     {
       "id": "a2.health.ex.06",
@@ -653,7 +700,8 @@
       "text": "Take one pill after breakfast.",
       "accepted": [
         "take one pill after breakfast"
-      ]
+      ],
+      "explanationFa": "به /p/ در pill و /br/ در breakfast گوش کن."
     },
     {
       "id": "b1.work.ex.01",
@@ -668,7 +716,8 @@
         "am working",
         "work"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "since 2019 نقطهٔ شروع است و با حال کامل می‌آید: have worked."
     },
     {
       "id": "b1.work.ex.02",
@@ -683,7 +732,8 @@
         "finishes",
         "will finish"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "در نقل‌قول غیرمستقیم گذشته فعل یک پله عقب می‌رود: finish → had finished."
     },
     {
       "id": "b1.work.ex.03",
@@ -694,7 +744,8 @@
       "accepted": [
         "been",
         "visited"
-      ]
+      ],
+      "explanationFa": "در تجربهٔ زندگی با never از حال کامل استفاده می‌شود: have never been to Turkey."
     },
     {
       "id": "b1.work.ex.04",
@@ -704,7 +755,8 @@
       "sentence": "When ___ you apply for this job?",
       "accepted": [
         "did"
-      ]
+      ],
+      "explanationFa": "پرسش گذشتهٔ ساده با did + فاعل + فعل ساده ساخته می‌شود: When did you apply?"
     },
     {
       "id": "b1.work.ex.05",
@@ -716,7 +768,8 @@
         "i left this company three years ago",
         "i left the company three years ago",
         "i quit this company three years ago"
-      ]
+      ],
+      "explanationFa": "three years ago نقطهٔ زمانی گذشته است و فعل گذشتهٔ ساده می‌گیرد: I left."
     },
     {
       "id": "b1.work.ex.06",
@@ -726,7 +779,8 @@
       "text": "I have worked in this field for over ten years.",
       "accepted": [
         "i have worked in this field for over ten years"
-      ]
+      ],
+      "explanationFa": "در گفتار سریع have به /əv/ ضعیف تبدیل می‌شود."
     },
     {
       "id": "b1.news.ex.01",
@@ -741,7 +795,8 @@
         "was passed",
         "was passing"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "مجهول گذشتهٔ ساده: was/were + قسمت سوم فعل — قانون مفعولِ عمل است، نه فاعل."
     },
     {
       "id": "b1.news.ex.02",
@@ -756,7 +811,8 @@
         "Although",
         "Due to"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "due to + اسم (the heavy rain) رابطهٔ علت را نشان می‌دهد؛ although با یک جملهٔ کامل می‌آید."
     },
     {
       "id": "b1.news.ex.03",
@@ -766,7 +822,8 @@
       "sentence": "The bridge ___ built in the nineteenth century.",
       "accepted": [
         "was"
-      ]
+      ],
+      "explanationFa": "مجهول گذشتهٔ ساده: was built."
     },
     {
       "id": "b1.news.ex.04",
@@ -776,7 +833,8 @@
       "sentence": "The news ___ broadcast at six o'clock every evening.",
       "accepted": [
         "is"
-      ]
+      ],
+      "explanationFa": "the news مفرد است و برای برنامهٔ عادتی حال ساده به کار می‌رود: is broadcast."
     },
     {
       "id": "b1.news.ex.05",
@@ -787,7 +845,8 @@
       "accepted": [
         "this book was written by an iranian writer",
         "this book was written by an iranian author"
-      ]
+      ],
+      "explanationFa": "مجهول گذشته: was written by … — کتاب مفعولِ عمل است."
     },
     {
       "id": "b1.news.ex.06",
@@ -797,7 +856,8 @@
       "text": "The new airport will be opened next year.",
       "accepted": [
         "the new airport will be opened next year"
-      ]
+      ],
+      "explanationFa": "مجهول آینده در گفتار: will be opened با تکیه روی opened."
     },
     {
       "id": "b1.plans.ex.01",
@@ -812,7 +872,8 @@
         "will have",
         "was having"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "شرطی نوع دوم: در جملهٔ if فعل گذشتهٔ ساده و در نتیجه would + فعل ساده می‌آید."
     },
     {
       "id": "b1.plans.ex.02",
@@ -827,7 +888,8 @@
         "will lie",
         "am lying"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "this time next week آیندهٔ در جریان را می‌رساند: will be lying."
     },
     {
       "id": "b1.plans.ex.03",
@@ -837,7 +899,8 @@
       "sentence": "If she studied harder, she ___ pass the exam.",
       "accepted": [
         "would"
-      ]
+      ],
+      "explanationFa": "شرطی نوع دوم در جملهٔ نتیجه would + فعل ساده می‌آید: would pass."
     },
     {
       "id": "b1.plans.ex.04",
@@ -849,7 +912,8 @@
         "take",
         "start",
         "do"
-      ]
+      ],
+      "explanationFa": "برنامهٔ آینده با be going to + فعل ساده: going to take."
     },
     {
       "id": "b1.plans.ex.05",
@@ -861,7 +925,8 @@
         "if the weather was nice we would go on a picnic",
         "if the weather were nice we would go on a picnic",
         "if the weather is nice we will go on a picnic"
-      ]
+      ],
+      "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده."
     },
     {
       "id": "b1.plans.ex.06",
@@ -872,7 +937,8 @@
       "accepted": [
         "we are going to move house next month",
         "we are going to move next month"
-      ]
+      ],
+      "explanationFa": "going to در گفتار سریع به gonna تبدیل می‌شود."
     },
     {
       "id": "b1.experiences.ex.01",
@@ -887,7 +953,8 @@
         "had started",
         "has started"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "by the time + گذشته، فعل بعدی ماضی بعید می‌شود: had started."
     },
     {
       "id": "b1.experiences.ex.02",
@@ -902,7 +969,8 @@
         "had cooked",
         "was cooking"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "while با گذشتهٔ استمراری می‌آید: was cooking، چون عمل ادامه داشت که تلفن زنگ زد."
     },
     {
       "id": "b1.experiences.ex.03",
@@ -912,7 +980,8 @@
       "sentence": "When I got to the station, the train ___ already left.",
       "accepted": [
         "had"
-      ]
+      ],
+      "explanationFa": "had already left ماضی بعید است، برای عملی که پیش از رویدادِ گذشته انجام شده بود."
     },
     {
       "id": "b1.experiences.ex.04",
@@ -922,7 +991,8 @@
       "sentence": "What were you ___ at nine o'clock last night?",
       "accepted": [
         "doing"
-      ]
+      ],
+      "explanationFa": "گذشتهٔ استمراری با was/were + ing ساخته می‌شود: were you doing."
     },
     {
       "id": "b1.experiences.ex.05",
@@ -933,7 +1003,8 @@
       "accepted": [
         "when i arrived they had left",
         "when i arrived they had gone"
-      ]
+      ],
+      "explanationFa": "عملی که پیش از رویداد گذشته کامل شده بود با ماضی بعید می‌آید: had left."
     },
     {
       "id": "b1.experiences.ex.06",
@@ -943,7 +1014,8 @@
       "text": "We were watching TV when the lights went out.",
       "accepted": [
         "we were watching tv when the lights went out"
-      ]
+      ],
+      "explanationFa": "به پیوند watching TV و تکیهٔ lights گوش کن."
     },
     {
       "id": "b2.technology.ex.01",
@@ -958,7 +1030,8 @@
         "whose",
         "what"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "برای اشاره به یک شیء (the device) از that استفاده می‌شود، نه who که برای انسان است."
     },
     {
       "id": "b2.technology.ex.02",
@@ -973,7 +1046,8 @@
         "are stored",
         "stores"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "data غیرقابل‌شمارش و مفرد است، پس مجهول با is stored می‌آید."
     },
     {
       "id": "b2.technology.ex.03",
@@ -985,7 +1059,8 @@
         "that",
         "which",
         "for which"
-      ]
+      ],
+      "explanationFa": "ضمیر موصولی برای شیء that/which است: the company that I work for."
     },
     {
       "id": "b2.technology.ex.04",
@@ -996,7 +1071,8 @@
       "accepted": [
         "used",
         "applied"
-      ]
+      ],
+      "explanationFa": "مجهول با be + قسمت سوم فعل: can be used."
     },
     {
       "id": "b2.technology.ex.05",
@@ -1007,7 +1083,8 @@
       "accepted": [
         "this invention has transformed our daily life",
         "this invention has changed our daily life"
-      ]
+      ],
+      "explanationFa": "اثر تا امروز ادامه دارد، پس حال کامل: has transformed."
     },
     {
       "id": "b2.technology.ex.06",
@@ -1017,7 +1094,8 @@
       "text": "Artificial intelligence is being used in almost every industry.",
       "accepted": [
         "artificial intelligence is being used in almost every industry"
-      ]
+      ],
+      "explanationFa": "به تکیهٔ intelligence و industry گوش کن."
     },
     {
       "id": "b2.environment.ex.01",
@@ -1032,7 +1110,8 @@
         "must",
         "should"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "استنتاج منطقی از شواهد (بوی بد) با must بیان می‌شود: there must be a factory."
     },
     {
       "id": "b2.environment.ex.02",
@@ -1047,7 +1126,8 @@
         "shouldn't",
         "can't"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "برای «غیرممکن بودن» از can't have + قسمت سوم استفاده می‌شود: can't have missed."
     },
     {
       "id": "b2.environment.ex.03",
@@ -1059,7 +1139,8 @@
         "rise",
         "increase",
         "go up"
-      ]
+      ],
+      "explanationFa": "بعد از might فعل ساده می‌آید: might rise."
     },
     {
       "id": "b2.environment.ex.04",
@@ -1071,7 +1152,8 @@
         "introduced",
         "made",
         "passed"
-      ]
+      ],
+      "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده."
     },
     {
       "id": "b2.environment.ex.05",
@@ -1083,7 +1165,8 @@
         "it seems that the climate is changing",
         "it seems the climate is changing",
         "it appears that the climate is changing"
-      ]
+      ],
+      "explanationFa": "It seems that + جمله برای «به نظر می‌رسد»؛ تغییر در جریان است: is changing."
     },
     {
       "id": "b2.environment.ex.06",
@@ -1093,7 +1176,8 @@
       "text": "Recycling can help reduce the amount of waste.",
       "accepted": [
         "recycling can help reduce the amount of waste"
-      ]
+      ],
+      "explanationFa": "به /riːˈsaɪklɪŋ/ و can ضعیف گوش کن."
     },
     {
       "id": "b2.interview.ex.01",
@@ -1108,7 +1192,8 @@
         "have found",
         "was finding"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "در نقل‌قول غیرمستقیم گذشته، فعل یک پله عقب می‌رود: find → had found."
     },
     {
       "id": "b2.interview.ex.02",
@@ -1123,7 +1208,8 @@
         "on",
         "up"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "get along with یعنی «کنار آمدن و رابطهٔ خوب داشتن»."
     },
     {
       "id": "b2.interview.ex.03",
@@ -1133,7 +1219,8 @@
       "sentence": "I look forward to ___ from you.",
       "accepted": [
         "hearing"
-      ]
+      ],
+      "explanationFa": "بعد از look forward to همیشه ing می‌آید: hearing from you."
     },
     {
       "id": "b2.interview.ex.04",
@@ -1144,7 +1231,8 @@
       "accepted": [
         "interview",
         "meeting"
-      ]
+      ],
+      "explanationFa": "مصاحبهٔ کوتاه پیش از استخدام interview است."
     },
     {
       "id": "b2.interview.ex.05",
@@ -1155,7 +1243,8 @@
       "accepted": [
         "he asked why i was interested in the job",
         "she asked why i was interested in the job"
-      ]
+      ],
+      "explanationFa": "نقل‌قول غیرمستقیم: he asked why I was interested… — فعل یک پله عقب می‌رود."
     },
     {
       "id": "b2.interview.ex.06",
@@ -1166,7 +1255,8 @@
       "accepted": [
         "i was in charge of a team of fifteen people",
         "i was in charge of a team of 15 people"
-      ]
+      ],
+      "explanationFa": "to be in charge of یعنی «مسئول بودن» و در گفتار پیوسته تلفظ می‌شود."
     },
     {
       "id": "b2.media.ex.01",
@@ -1181,7 +1271,8 @@
         "had",
         "will have"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "wish + گذشتهٔ ساده برای حسرت در زمان حال: I wish I had more time."
     },
     {
       "id": "b2.media.ex.02",
@@ -1196,7 +1287,8 @@
         "was using to",
         "used to"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "used to + فعل ساده عادت گذشته را نشان می‌دهد؛ is used to معنی دیگری دارد."
     },
     {
       "id": "b2.media.ex.03",
@@ -1206,7 +1298,8 @@
       "sentence": "By next year, we ___ completed the entire project.",
       "accepted": [
         "will have"
-      ]
+      ],
+      "explanationFa": "آیندهٔ کامل: will have + قسمت سوم فعل (completed)."
     },
     {
       "id": "b2.media.ex.04",
@@ -1218,7 +1311,8 @@
         "promote",
         "advertise",
         "sell"
-      ]
+      ],
+      "explanationFa": "هدف آگهی، معرفی و فروش محصول است: to promote a new product."
     },
     {
       "id": "b2.media.ex.05",
@@ -1230,7 +1324,8 @@
         "i wish i had watched this programme earlier",
         "i wish i had seen this programme earlier",
         "i wish i had watched this program earlier"
-      ]
+      ],
+      "explanationFa": "wish + ماضی بعید برای حسرت گذشته: I wish I had watched…"
     },
     {
       "id": "b2.media.ex.06",
@@ -1240,7 +1335,8 @@
       "text": "The newspaper has been published every day since 1850.",
       "accepted": [
         "the newspaper has been published every day since 1850"
-      ]
+      ],
+      "explanationFa": "has been در گفتار به /həz bɪn/ ضعیف می‌شود."
     },
     {
       "id": "c1.academic.ex.01",
@@ -1255,7 +1351,8 @@
         "I did notice",
         "noticed I"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "پس از عبارت منفی در آغاز جمله (Not until …) فعل و فاعل جابه‌جا می‌شوند: did I notice."
     },
     {
       "id": "c1.academic.ex.02",
@@ -1270,7 +1367,8 @@
         "should have",
         "would"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "پس از فعل وجهی (must) مجهول با be + قسمت سوم ساخته می‌شود: must be interpreted."
     },
     {
       "id": "c1.academic.ex.03",
@@ -1281,7 +1379,8 @@
       "accepted": [
         "would have been",
         "would be"
-      ]
+      ],
+      "explanationFa": "شرطی نوع سوم با وارونگی Had + قسمت سوم: نتیجه would have been."
     },
     {
       "id": "c1.academic.ex.04",
@@ -1292,7 +1391,8 @@
       "accepted": [
         "were",
         "was"
-      ]
+      ],
+      "explanationFa": "data جمع است، پس مجهول جمع می‌آید: the data were collected."
     },
     {
       "id": "c1.academic.ex.05",
@@ -1303,7 +1403,8 @@
       "accepted": [
         "the hypothesis was questioned before the experiment",
         "the hypothesis had been questioned before the experiment"
-      ]
+      ],
+      "explanationFa": "مجهول گذشته: was questioned — فاعل خودِ فرضیه است."
     },
     {
       "id": "c1.academic.ex.06",
@@ -1313,7 +1414,8 @@
       "text": "The findings have been subject to considerable debate.",
       "accepted": [
         "the findings have been subject to considerable debate"
-      ]
+      ],
+      "explanationFa": "be subject to یعنی «مورد ... قرار گرفتن»؛ تکیه روی considerable است."
     },
     {
       "id": "c1.persuasion.ex.01",
@@ -1328,7 +1430,8 @@
         "have I heard",
         "I heard"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "Rarely در آغاز جمله وارونگی می‌سازد: Rarely have I heard."
     },
     {
       "id": "c1.persuasion.ex.02",
@@ -1343,7 +1446,8 @@
         "can",
         "should"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "should have + قسمت سوم برای سرزنش کاری که انجام نشده: should have told me."
     },
     {
       "id": "c1.persuasion.ex.03",
@@ -1353,7 +1457,8 @@
       "sentence": "He ___ have forgotten about the meeting; his coat is still here.",
       "accepted": [
         "must"
-      ]
+      ],
+      "explanationFa": "must have + قسمت سوم برای استنتاج قوی از شواهد: must have forgotten."
     },
     {
       "id": "c1.persuasion.ex.04",
@@ -1364,7 +1469,8 @@
       "accepted": [
         "did he know",
         "did he realize"
-      ]
+      ],
+      "explanationFa": "Little در آغاز جمله وارونگی می‌سازد: Little did he know."
     },
     {
       "id": "c1.persuasion.ex.05",
@@ -1375,7 +1481,8 @@
       "accepted": [
         "i should never have missed that opportunity",
         "i should never have missed the opportunity"
-      ]
+      ],
+      "explanationFa": "should never have + قسمت سوم برای پشیمانی: I should never have missed…"
     },
     {
       "id": "c1.persuasion.ex.06",
@@ -1385,7 +1492,8 @@
       "text": "Had they known the cost, they would have chosen differently.",
       "accepted": [
         "had they known the cost they would have chosen differently"
-      ]
+      ],
+      "explanationFa": "شرطی نوع سوم با وارونگی: Had they known … در آغاز جمله."
     },
     {
       "id": "c1.culture.ex.01",
@@ -1400,7 +1508,8 @@
         "would go",
         "have gone"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "شرطی نوع سوم: if + ماضی بعید، نتیجه با would have + قسمت سوم."
     },
     {
       "id": "c1.culture.ex.02",
@@ -1415,7 +1524,8 @@
         "is",
         "will be"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "پس از if only برای آرزو، گذشتهٔ ساده می‌آید و were برای همهٔ فاعل‌ها به کار می‌رود."
     },
     {
       "id": "c1.culture.ex.03",
@@ -1425,7 +1535,8 @@
       "sentence": "I wish I ___ more about classical music.",
       "accepted": [
         "knew"
-      ]
+      ],
+      "explanationFa": "wish + گذشتهٔ ساده برای آرزو در زمان حال: I wish I knew."
     },
     {
       "id": "c1.culture.ex.04",
@@ -1436,7 +1547,8 @@
       "accepted": [
         "knew",
         "knows"
-      ]
+      ],
+      "explanationFa": "as if + گذشتهٔ ساده گویای امری خلاف واقع است."
     },
     {
       "id": "c1.culture.ex.05",
@@ -1448,7 +1560,8 @@
         "if only i had started earlier",
         "i wish i had started earlier",
         "i wish i had begun earlier"
-      ]
+      ],
+      "explanationFa": "if only + ماضی بعید برای حسرت گذشته: if only I had started earlier."
     },
     {
       "id": "c1.culture.ex.06",
@@ -1459,7 +1572,8 @@
       "accepted": [
         "the film was not as good as i had expected",
         "the movie was not as good as i had expected"
-      ]
+      ],
+      "explanationFa": "ساختار مقایسهٔ منفی: not as good as I had expected."
     },
     {
       "id": "c1.phrasal-idioms.ex.01",
@@ -1474,7 +1588,8 @@
         "put off",
         "put up"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "put off یعنی «به تعویق انداختن»؛ سایر ترکیب‌های put معنی متفاوتی دارند."
     },
     {
       "id": "c1.phrasal-idioms.ex.02",
@@ -1489,7 +1604,8 @@
         "make over",
         "make out"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "make out یعنی «فهمیدن و تشخیص دادن»."
     },
     {
       "id": "c1.phrasal-idioms.ex.03",
@@ -1500,7 +1616,8 @@
       "accepted": [
         "gave up",
         "quit"
-      ]
+      ],
+      "explanationFa": "give up یعنی «رها کردن، کنار گذاشتن»: gave up her old job."
     },
     {
       "id": "c1.phrasal-idioms.ex.04",
@@ -1511,7 +1628,8 @@
       "accepted": [
         "turn",
         "switch"
-      ]
+      ],
+      "explanationFa": "turn on the lights یعنی «چراغ را روشن کردن»."
     },
     {
       "id": "c1.phrasal-idioms.ex.05",
@@ -1522,7 +1640,8 @@
       "accepted": [
         "we turned down the offer because it was impractical",
         "we turned down the offer because it was not practical"
-      ]
+      ],
+      "explanationFa": "turn down یعنی «رد کردن»: We turned down the offer."
     },
     {
       "id": "c1.phrasal-idioms.ex.06",
@@ -1532,7 +1651,8 @@
       "text": "He ended up becoming a famous writer.",
       "accepted": [
         "he ended up becoming a famous writer"
-      ]
+      ],
+      "explanationFa": "end up یعنی «سر از جایی درآوردن»."
     },
     {
       "id": "c2.nuance.ex.01",
@@ -1547,7 +1667,8 @@
         "eloquent",
         "conclusive"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "ambiguous یعنی «مبهم و دوپهلو» — همان چیزی که با «هیچ‌کس نفهمید چه می‌گوید» می‌آید."
     },
     {
       "id": "c2.nuance.ex.02",
@@ -1562,7 +1683,8 @@
         "collision",
         "tradition"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "distinction یعنی «تفاوت و تمایز» و با between می‌آید."
     },
     {
       "id": "c2.nuance.ex.03",
@@ -1574,7 +1696,8 @@
         "vague",
         "thin",
         "cursory"
-      ]
+      ],
+      "explanationFa": "تضادِ «concise but» واژهٔ vague (مبهم) را می‌طلبد."
     },
     {
       "id": "c2.nuance.ex.04",
@@ -1587,7 +1710,8 @@
         "thin",
         "flimsy",
         "weak"
-      ]
+      ],
+      "explanationFa": "شاهد ناکافی برای ادعای قوی: too slight/flimsy."
     },
     {
       "id": "c2.nuance.ex.05",
@@ -1599,7 +1723,8 @@
         "there is a subtle difference between these two words",
         "there is a fine difference between these two words",
         "there is a subtle distinction between these two words"
-      ]
+      ],
+      "explanationFa": "subtle difference/distinction یعنی «تفاوت ظریف»."
     },
     {
       "id": "c2.nuance.ex.06",
@@ -1609,7 +1734,8 @@
       "text": "Her remarks were deliberately vague.",
       "accepted": [
         "her remarks were deliberately vague"
-      ]
+      ],
+      "explanationFa": "deliberately یعنی «عمداً»؛ تکیهٔ جمله روی vague است."
     },
     {
       "id": "c2.rhetoric.ex.01",
@@ -1624,7 +1750,8 @@
         "refute",
         "surrender"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "refute یعنی «رد کردن استدلال»؛ بقیهٔ گزینه‌ها با logic نمی‌خوانند."
     },
     {
       "id": "c2.rhetoric.ex.02",
@@ -1639,7 +1766,8 @@
         "concierge",
         "concision"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "بعد از صفت ملکی its اسم می‌آید: its concision (فشردگی)."
     },
     {
       "id": "c2.rhetoric.ex.03",
@@ -1650,7 +1778,8 @@
       "accepted": [
         "have",
         "had"
-      ]
+      ],
+      "explanationFa": "Never در آغاز جمله وارونگی می‌سازد: Never have I witnessed."
     },
     {
       "id": "c2.rhetoric.ex.04",
@@ -1662,7 +1791,8 @@
         "speechless",
         "in awe",
         "stunned"
-      ]
+      ],
+      "explanationFa": "نتیجهٔ سخنرانی فصیح، مبهوت و بی‌سخن ماندنِ شنونده است: left the audience speechless."
     },
     {
       "id": "c2.rhetoric.ex.05",
@@ -1674,7 +1804,8 @@
         "the speech was so eloquent that it captivated everyone",
         "the speech was so eloquent that it enchanted everyone",
         "the speech was so eloquent that it captivated them all"
-      ]
+      ],
+      "explanationFa": "so + صفت + that برای بیان نتیجه: so eloquent that it captivated everyone."
     },
     {
       "id": "c2.rhetoric.ex.06",
@@ -1684,7 +1815,8 @@
       "text": "The senator's rhetoric masked a striking lack of substance.",
       "accepted": [
         "the senator's rhetoric masked a striking lack of substance"
-      ]
+      ],
+      "explanationFa": "mask یعنی «پنهان کردن»؛ تکیه روی striking است."
     },
     {
       "id": "c2.science.ex.01",
@@ -1699,7 +1831,8 @@
         "persistent",
         "resistant"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "explanationFa": "consistent with یعنی «سازگار با»؛ resistant/insistent این معنی را با with نمی‌دهند."
     },
     {
       "id": "c2.science.ex.02",
@@ -1714,7 +1847,8 @@
         "speculative",
         "speculatively"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "explanationFa": "بعد از حرف اضافهٔ of اسم می‌آید: the subject of speculation."
     },
     {
       "id": "c2.science.ex.03",
@@ -1727,7 +1861,8 @@
         "substantiate",
         "corroborate",
         "support"
-      ]
+      ],
+      "explanationFa": "پژوهش بیشتر برای تأیید نظریه است: to confirm/substantiate the theory."
     },
     {
       "id": "c2.science.ex.04",
@@ -1739,7 +1874,8 @@
         "replicated",
         "consistent",
         "reproduced"
-      ]
+      ],
+      "explanationFa": "نتیجهٔ قابل بازتولید با اختلاف‌های جزئی: replicated."
     },
     {
       "id": "c2.science.ex.05",
@@ -1750,7 +1886,8 @@
       "accepted": [
         "this hypothesis needs more evidence",
         "this hypothesis requires more evidence"
-      ]
+      ],
+      "explanationFa": "فاعل this hypothesis مفرد است، پس فعل s می‌گیرد: needs more evidence."
     },
     {
       "id": "c2.science.ex.06",
@@ -1760,7 +1897,8 @@
       "text": "The results corroborate the initial hypothesis.",
       "accepted": [
         "the results corroborate the initial hypothesis"
-      ]
+      ],
+      "explanationFa": "corroborate یعنی «تأیید کردن» — یافته‌ها فرضیهٔ اولیه را تأیید می‌کنند."
     },
     {
       "id": "c2.literature.ex.01",
@@ -1775,7 +1913,8 @@
         "ambiguous",
         "unequivocal"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "explanationFa": "پایانِ بازِ رمان با ambiguous توصیف می‌شود؛ definite نقطهٔ مقابل آن است."
     },
     {
       "id": "c2.literature.ex.02",
@@ -1790,7 +1929,8 @@
         "sincere",
         "ironic"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "explanationFa": "لحنِ متناقض با ستایش ظاهری ironic است."
     },
     {
       "id": "c2.literature.ex.03",
@@ -1802,7 +1942,8 @@
         "depicts",
         "portrays",
         "evokes"
-      ]
+      ],
+      "explanationFa": "depict/portray یعنی «به تصویر کشیدن»: depicts the plight of the urban poor."
     },
     {
       "id": "c2.literature.ex.04",
@@ -1814,7 +1955,8 @@
         "allegory",
         "metaphor",
         "foreshadowing"
-      ]
+      ],
+      "explanationFa": "allegory یعنی «تمثیل» — تفسیر نمادین شکست شخصیت اصلی."
     },
     {
       "id": "c2.literature.ex.05",
@@ -1826,7 +1968,8 @@
         "the ending of the story was ironic",
         "the story's ending was ironic",
         "the ending was ironic"
-      ]
+      ],
+      "explanationFa": "ironic یعنی کنایه‌آمیز — صفت مناسب برای توصیف پایان داستان."
     },
     {
       "id": "c2.literature.ex.06",
@@ -1836,7 +1979,8 @@
       "text": "The novel explores the ambiguity of memory.",
       "accepted": [
         "the novel explores the ambiguity of memory"
-      ]
+      ],
+      "explanationFa": "ambiguity یعنی «ابهام»؛ تکیهٔ جمله روی explores است."
     },
     {
       "id": "a1.greetings.ex.07",
@@ -1852,7 +1996,8 @@
         "گوشه، چهارراه"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "hello یعنی سلام — رایج‌ترین درودِ غیررسمی برای شروع گفت‌وگو."
     },
     {
       "id": "a1.daily-routine.ex.07",
@@ -1868,7 +2013,8 @@
         "دارو"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "wake up یعنی بیدار شدن."
     },
     {
       "id": "a1.family.ex.07",
@@ -1884,7 +2030,8 @@
         "مهلت"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "mother یعنی مادر؛ نقطهٔ مقابلش father (پدر) است."
     },
     {
       "id": "a1.shopping.ex.07",
@@ -1900,7 +2047,8 @@
         "قیمت"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "price یعنی قیمت، بهایی که برای خرید می‌پردازی."
     },
     {
       "id": "a2.airport.ex.07",
@@ -1916,7 +2064,8 @@
         "قصد داشتن"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "passport یعنی گذرنامه."
     },
     {
       "id": "a2.restaurant.ex.07",
@@ -1932,7 +2081,8 @@
         "به‌یادماندنی"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "menu یعنی فهرست غذا."
     },
     {
       "id": "a2.directions.ex.07",
@@ -1948,7 +2098,8 @@
         "منسوخ، قدیمی"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "straight یعنی مستقیم."
     },
     {
       "id": "a2.health.ex.07",
@@ -1964,7 +2115,8 @@
         "سردرد"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "headache یعنی سردرد."
     },
     {
       "id": "b1.work.ex.07",
@@ -1980,7 +2132,8 @@
         "نقاط قوت، قدرت"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "career یعنی حرفه و مسیر شغلی، نه شغل روزمزد."
     },
     {
       "id": "b1.news.ex.07",
@@ -1996,7 +2149,8 @@
         "مخاطب، تماشاگر"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "headline یعنی تیتر اصلی خبر."
     },
     {
       "id": "b1.plans.ex.07",
@@ -2012,7 +2166,8 @@
         "روش‌شناسی"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "decide یعنی تصمیم گرفتن."
     },
     {
       "id": "b1.experiences.ex.07",
@@ -2028,7 +2183,8 @@
         "سفر، مسیر"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "journey یعنی سفر و مسیر."
     },
     {
       "id": "b2.technology.ex.07",
@@ -2044,7 +2200,8 @@
         "زیرنویس"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "innovation یعنی نوآوری."
     },
     {
       "id": "b2.environment.ex.07",
@@ -2060,7 +2217,8 @@
         "به تعویق انداختن"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "pollution یعنی آلودگی."
     },
     {
       "id": "b2.interview.ex.07",
@@ -2076,7 +2234,8 @@
         "ظریف، پنهان"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "candidate یعنی داوطلب/کاندیدا."
     },
     {
       "id": "b2.media.ex.07",
@@ -2092,7 +2251,8 @@
         "تبلیغات"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "advertising یعنی تبلیغات."
     },
     {
       "id": "c1.academic.ex.07",
@@ -2108,7 +2268,8 @@
         "تأیید کردن (شواهد)"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "hypothesis یعنی فرضیه — گزاره‌ای که با آزمایش آزموده می‌شود."
     },
     {
       "id": "c1.persuasion.ex.07",
@@ -2124,7 +2285,8 @@
         "قهرمان اصلی داستان"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "counterargument یعنی استدلال متقابل، پاسخ به استدلال مقابل."
     },
     {
       "id": "c1.culture.ex.07",
@@ -2140,7 +2302,8 @@
         "صبح بخیر"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "cinematic یعنی سینمایی — کیفیتی که یادآور فیلم است."
     },
     {
       "id": "c1.phrasal-idioms.ex.07",
@@ -2156,7 +2319,8 @@
         "دست کشیدن"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "give up یعنی دست کشیدن و رها کردن."
     },
     {
       "id": "c2.nuance.ex.07",
@@ -2172,7 +2336,8 @@
         "پدر"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "ambiguous یعنی مبهم و دوپهلو."
     },
     {
       "id": "c2.rhetoric.ex.07",
@@ -2188,7 +2353,8 @@
         "کارت پرواز"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "eloquence یعنی بلاغت و فصاحت در سخن."
     },
     {
       "id": "c2.science.ex.07",
@@ -2204,7 +2370,8 @@
         "پیشخدمت"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "empirical یعنی تجربی و مبتنی بر مشاهده، نه نظری محض."
     },
     {
       "id": "c2.literature.ex.07",
@@ -2220,7 +2387,8 @@
         "راوی"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "narrator یعنی راوی داستان."
     },
     {
       "id": "a1.greetings.ex.08",
@@ -2355,7 +2523,8 @@
         "نام"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "name یعنی نام؛ برای پرسیدن نام What is your name? می‌گوییم."
     },
     {
       "id": "a1.introductions.ex.03",
@@ -2367,7 +2536,8 @@
         "meet",
         "see"
       ],
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "Nice to meet you عبارت ثابتِ آشنایی است."
     },
     {
       "id": "a1.introductions.ex.04",
@@ -2390,7 +2560,8 @@
         "am",
         "your",
         "are"
-      ]
+      ],
+      "explanationFa": "My name is … ساختار ثابت معرفی نام است."
     },
     {
       "id": "a1.introductions.ex.05",
@@ -2401,7 +2572,8 @@
       "accepted": [
         "nice to meet you i am from iran",
         "nice to meet you im from iran"
-      ]
+      ],
+      "explanationFa": "به /aɪ/ در I و تکیهٔ Iran گوش کن."
     },
     {
       "id": "a1.introductions.ex.06",
@@ -2434,7 +2606,8 @@
         "dry"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "«ابرهای خاکستری در آسمان» آب‌وهوای cloudy (ابری) را می‌رساند."
     },
     {
       "id": "a1.weather.ex.02",
@@ -2450,7 +2623,8 @@
         "باد"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "season یعنی فصل سال: بهار، تابستان، پاییز و زمستان."
     },
     {
       "id": "a1.weather.ex.03",
@@ -2463,7 +2637,8 @@
         "hot",
         "warm"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "«رفتن به ساحل» بافت آب‌وهوای آفتابی/گرم را می‌طلبد: It is sunny today."
     },
     {
       "id": "a1.weather.ex.04",
@@ -2485,7 +2660,8 @@
         "it",
         "hot",
         "are"
-      ]
+      ],
+      "explanationFa": "صفت پس از فعل be می‌آید: The weather is cold today."
     },
     {
       "id": "a1.weather.ex.05",
@@ -2496,7 +2672,8 @@
       "accepted": [
         "it is raining and the wind is strong",
         "its raining and the wind is strong"
-      ]
+      ],
+      "explanationFa": "به /eɪ/ در raining و /ɪ/ کوتاه در wind گوش کن."
     },
     {
       "id": "a1.weather.ex.06",
@@ -2546,7 +2723,8 @@
         "مسافرت کاری"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "hobby یعنی سرگرمی، نه شغل."
     },
     {
       "id": "a2.hobbies.ex.03",
@@ -2557,7 +2735,8 @@
       "accepted": [
         "to"
       ],
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از want مصدر با to می‌آید: wants to learn."
     },
     {
       "id": "a2.hobbies.ex.04",
@@ -2581,7 +2760,8 @@
         "free",
         "at",
         "the"
-      ]
+      ],
+      "explanationFa": "in my spare time یعنی «در وقت آزادم»."
     },
     {
       "id": "a2.hobbies.ex.05",
@@ -2592,7 +2772,8 @@
       "accepted": [
         "i am a member of a chess club",
         "im a member of a chess club"
-      ]
+      ],
+      "explanationFa": "به /tʃ/ در chess و تکیهٔ member گوش کن."
     },
     {
       "id": "a2.hobbies.ex.06",
@@ -2642,7 +2823,8 @@
         "ارزان"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "crowded یعنی شلوغ؛ متضادش quiet (خلوت) است."
     },
     {
       "id": "a2.city-life.ex.03",
@@ -2653,7 +2835,8 @@
       "accepted": [
         "are"
       ],
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "با اسم جمع (two parks) فعل جمع are می‌آید."
     },
     {
       "id": "a2.city-life.ex.04",
@@ -2676,7 +2859,8 @@
         "are",
         "much",
         "too"
-      ]
+      ],
+      "explanationFa": "quiet/calm یعنی آرام؛ فاعل this neighbourhood مفرد است."
     },
     {
       "id": "a2.city-life.ex.05",
@@ -2687,7 +2871,8 @@
       "accepted": [
         "there is heavy traffic in the morning",
         "theres heavy traffic in the morning"
-      ]
+      ],
+      "explanationFa": "heavy traffic یعنی «ترافیک سنگین» و در گفتار پیوسته تلفظ می‌شود."
     },
     {
       "id": "a2.city-life.ex.06",
@@ -2703,7 +2888,8 @@
         "season"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "مترو برای رفتن به مرکز شهر «مناسب و راحت» است، پس convenient می‌آید."
     },
     {
       "id": "b1.money.ex.01",
@@ -2749,7 +2935,8 @@
         "afford",
         "buy"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "afford یعنی «توان مالی داشتن»؛ با cannot معنیِ «امسال پول ماشین نو را نداریم» را می‌دهد."
     },
     {
       "id": "b1.money.ex.04",
@@ -2771,7 +2958,8 @@
         "she",
         "in",
         "for"
-      ]
+      ],
+      "explanationFa": "pay off یعنی «تسویه کردن» بدهی: paid off his debt."
     },
     {
       "id": "b1.money.ex.05",
@@ -2782,7 +2970,8 @@
       "accepted": [
         "rent is our biggest monthly expense",
         "rent is our biggest expense"
-      ]
+      ],
+      "explanationFa": "به تکیهٔ biggest و expense گوش کن."
     },
     {
       "id": "b1.money.ex.06",
@@ -2798,7 +2987,8 @@
         "مالیات"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "income یعنی درآمد (پولی که وارد می‌شود)؛ expense نقطهٔ مقابل آن است."
     },
     {
       "id": "b1.health-lifestyle.ex.01",
@@ -2831,7 +3021,8 @@
         "حذف کامل گوشت"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "a balanced diet یعنی رژیم غذایی متعادل، نه رژیم سخت."
     },
     {
       "id": "b1.health-lifestyle.ex.03",
@@ -2845,7 +3036,8 @@
         "manage",
         "cut"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "reduce/lower stress یعنی «کاهش دادنِ استرس» — کمکِ ورزش به همین کار است."
     },
     {
       "id": "b1.health-lifestyle.ex.04",
@@ -2867,7 +3059,8 @@
         "work",
         "out",
         "all"
-      ]
+      ],
+      "explanationFa": "قید تکرار every day در پایان جمله می‌آید: I exercise every day."
     },
     {
       "id": "b1.health-lifestyle.ex.05",
@@ -2878,7 +3071,8 @@
       "accepted": [
         "most adults need eight hours of sleep",
         "most adults need 8 hours of sleep"
-      ]
+      ],
+      "explanationFa": "به /ɑː/ در adults و پیوند eight hours گوش کن."
     },
     {
       "id": "b1.health-lifestyle.ex.06",
@@ -2928,7 +3122,8 @@
         "فاکتور رسمی"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "refund یعنی بازپرداخت پول."
     },
     {
       "id": "b2.problems.ex.03",
@@ -2940,7 +3135,8 @@
         "complaint",
         "comment"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "make a complaint هم‌نشینی درستِ «شکایت کردن» است؛ comment (نظر) بار شکایت ندارد."
     },
     {
       "id": "b2.problems.ex.04",
@@ -2964,7 +3160,8 @@
         "solved",
         "in",
         "for"
-      ]
+      ],
+      "explanationFa": "مجهول گذشته: was resolved within two days."
     },
     {
       "id": "b2.problems.ex.05",
@@ -2975,7 +3172,8 @@
       "accepted": [
         "the item has not been delivered yet",
         "the item hasnt been delivered yet"
-      ]
+      ],
+      "explanationFa": "has not been در گفتار سریع به hasn't been تبدیل می‌شود."
     },
     {
       "id": "b2.problems.ex.06",
@@ -3025,7 +3223,8 @@
         "آزمایش شاهد"
       ],
       "correctIndex": 0,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "bias یعنی سوگیری — انحرافی که نتیجه را ناعادلانه می‌کند."
     },
     {
       "id": "b2.research.ex.03",
@@ -3037,7 +3236,8 @@
         "sample",
         "sample size"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "sample یعنی «نمونه»؛ نمونهٔ کوچک نتیجهٔ غیرقابل‌اعتماد می‌دهد."
     },
     {
       "id": "b2.research.ex.04",
@@ -3061,7 +3261,8 @@
         "do",
         "for",
         "from"
-      ]
+      ],
+      "explanationFa": "the evidence غیرقابل‌شمارش و مفرد است: does not support."
     },
     {
       "id": "b2.research.ex.05",
@@ -3072,7 +3273,8 @@
       "accepted": [
         "the findings may suggest a link but more data are needed",
         "the findings may suggest a link but more data is needed"
-      ]
+      ],
+      "explanationFa": "به تکیهٔ suggest و شکل جمعِ data گوش کن."
     },
     {
       "id": "b2.research.ex.06",
@@ -3136,7 +3338,8 @@
         "implies",
         "suggested"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "imply یعنی «به‌طور غیرمستقیم رساندن»؛ سکوتِ او همین کار را کرد، نه اینکه صریح بگوید."
     },
     {
       "id": "c1.inference.ex.04",
@@ -3158,7 +3361,8 @@
         "appointment",
         "should",
         "forgot"
-      ]
+      ],
+      "explanationFa": "must have + قسمت سوم برای استنتاج قطعی در گذشته: must have forgotten."
     },
     {
       "id": "c1.inference.ex.05",
@@ -3169,7 +3373,8 @@
       "accepted": [
         "the report does not say so but it implies a serious risk",
         "the report doesnt say so but it implies a serious risk"
-      ]
+      ],
+      "explanationFa": "به /ɪmˈplaɪz/ در implies و تکیهٔ serious گوش کن."
     },
     {
       "id": "c1.inference.ex.06",
@@ -3219,7 +3424,8 @@
         "تعداد واژه‌های متن"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "register در زبان‌شناسی یعنی سبک زبانی متناسب با موقعیت."
     },
     {
       "id": "c1.register.ex.03",
@@ -3232,7 +3438,8 @@
         "soften",
         "qualify"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "hedge یعنی «کلام را محتاطانه/مشروط کردن» با may و tends to — نشانهٔ سبک آکادمیک."
     },
     {
       "id": "c1.register.ex.04",
@@ -3255,7 +3462,8 @@
         "is",
         "criticise",
         "by"
-      ]
+      ],
+      "explanationFa": "مجهول گذشته و بی‌طرف: was criticised — مناسب سبک رسمی."
     },
     {
       "id": "c1.register.ex.05",
@@ -3265,7 +3473,8 @@
       "text": "We would be grateful for a formal reply at your earliest convenience.",
       "accepted": [
         "we would be grateful for a formal reply at your earliest convenience"
-      ]
+      ],
+      "explanationFa": "at your earliest convenience عبارت رسمیِ «در اسرع وقت» است."
     },
     {
       "id": "c1.register.ex.06",
@@ -3281,7 +3490,8 @@
         "nominalisation"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "تبدیل decide (فعل) به decision (اسم) اسم‌سازی یا nominalisation است."
     },
     {
       "id": "c1.cohesion.ex.01",
@@ -3314,7 +3524,8 @@
         "فعل عبارتی غیررسمی"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "discourse marker واژه‌ای است که رابطهٔ میان ایده‌ها را نشان می‌دهد، مانند however."
     },
     {
       "id": "c1.cohesion.ex.03",
@@ -3326,7 +3537,8 @@
         "antecedent",
         "reference"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "antecedent یعنی «مرجعِ ضمیر» — اسمی که it به آن برمی‌گردد."
     },
     {
       "id": "c1.cohesion.ex.04",
@@ -3348,7 +3560,8 @@
         "convincing",
         "therefore",
         "are"
-      ]
+      ],
+      "explanationFa": "however برای تضاد میان دو جمله می‌آید."
     },
     {
       "id": "c1.cohesion.ex.05",
@@ -3358,7 +3571,8 @@
       "text": "However, the evidence is far from conclusive.",
       "accepted": [
         "however the evidence is far from conclusive"
-      ]
+      ],
+      "explanationFa": "far from conclusive یعنی «به‌هیچ‌وجه قاطع نیست»."
     },
     {
       "id": "c1.cohesion.ex.06",
@@ -3374,7 +3588,8 @@
         "cohesion"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "حذف واژه‌های تکراری که خواننده می‌تواند تأمین کند ellipsis است."
     },
     {
       "id": "c2.argumentation.ex.01",
@@ -3420,7 +3635,8 @@
         "refute",
         "refuted"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "refute یعنی «رد کردن»؛ دادهٔ تازه توضیح قبلی را رد می‌کند."
     },
     {
       "id": "c2.argumentation.ex.04",
@@ -3443,7 +3659,8 @@
         "do",
         "of",
         "in"
-      ]
+      ],
+      "explanationFa": "follow from یعنی «نتیجه گرفتن از»: does not follow from the premises."
     },
     {
       "id": "c2.argumentation.ex.05",
@@ -3453,7 +3670,8 @@
       "text": "She conceded the point, then moved on to the main issue.",
       "accepted": [
         "she conceded the point then moved on to the main issue"
-      ]
+      ],
+      "explanationFa": "concede یعنی «پذیرفتن» و move on to یعنی «پرداختن به»."
     },
     {
       "id": "c2.argumentation.ex.06",
@@ -3469,7 +3687,8 @@
         "assertive"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "جملهٔ قاطع و بدون اثبات assertion است."
     },
     {
       "id": "c2.collocation.ex.01",
@@ -3502,7 +3721,8 @@
         "هم‌نشینی طبیعی واژه‌ها"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "collocation یعنی هم‌نشینی طبیعی واژه‌ها."
     },
     {
       "id": "c2.collocation.ex.03",
@@ -3514,7 +3734,8 @@
         "take",
         "accept"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "take responsibility هم‌نشینی درستِ «مسئولیت پذیرفتن» است؛ do/make در این ترکیب نمی‌آید."
     },
     {
       "id": "c2.collocation.ex.04",
@@ -3537,7 +3758,8 @@
         "words",
         "alone",
         "come"
-      ]
+      ],
+      "explanationFa": "معنا از هم‌نشینی می‌آید، پس با not from the words alone تأکید می‌شود."
     },
     {
       "id": "c2.collocation.ex.05",
@@ -3547,7 +3769,8 @@
       "text": "A strong collocation sounds natural to native speakers.",
       "accepted": [
         "a strong collocation sounds natural to native speakers"
-      ]
+      ],
+      "explanationFa": "a strong collocation یعنی هم‌نشینی طبیعی واژه‌ها که برای natives طبیعی به گوش می‌رسد."
     },
     {
       "id": "c2.collocation.ex.06",
@@ -3580,7 +3803,8 @@
         "collocation"
       ],
       "correctIndex": 1,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "توصیف طوفان با «کمی باد» کم‌گویی (understatement) است."
     },
     {
       "id": "c2.irony.ex.02",
@@ -3596,7 +3820,8 @@
         "nominalisation"
       ],
       "correctIndex": 2,
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "not uncommon در معنای fairly common نمونهٔ litotes است: کم‌گویی با نفیِ متضاد."
     },
     {
       "id": "c2.irony.ex.03",
@@ -3608,7 +3833,8 @@
         "understatement",
         "litotes"
       ],
-      "skill": "VOCABULARY"
+      "skill": "VOCABULARY",
+      "explanationFa": "understatement یعنی «کم‌گویی»؛ گفتن not bad در معنای very good نمونهٔ آن است."
     },
     {
       "id": "c2.irony.ex.04",
@@ -3631,7 +3857,8 @@
         "he",
         "already",
         "knows"
-      ]
+      ],
+      "explanationFa": "subtext یعنی «معنای پنهان»: the subtext of this scene is that…"
     },
     {
       "id": "c2.irony.ex.05",
@@ -3642,7 +3869,8 @@
       "accepted": [
         "her self-deprecating humour put everyone at ease",
         "her self deprecating humour put everyone at ease"
-      ]
+      ],
+      "explanationFa": "self-deprecating یعنی طنز به خود؛ put everyone at ease یعنی «همه را آرام کردن»."
     },
     {
       "id": "c2.irony.ex.06",
@@ -3741,7 +3969,8 @@
         "She is student a university."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "university با صدای صامتی /j/ آغاز می‌شود، پس a می‌آید نه an."
     },
     {
       "id": "a1.articles.ex.02",
@@ -3751,7 +3980,8 @@
       "sentence": "There is ___ egg and some bread in the fridge.",
       "accepted": [
         "an"
-      ]
+      ],
+      "explanationFa": "egg با صدای واکه آغاز می‌شود، پس an می‌آید."
     },
     {
       "id": "a1.articles.ex.03",
@@ -3767,7 +3997,8 @@
         "The sun rise in the east."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "برای چیزهای یکتا (خورشید) the می‌آید و فعل با sun مفرد s می‌گیرد."
     },
     {
       "id": "a1.articles.ex.04",
@@ -3783,7 +4014,8 @@
         "I drink waters every day."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "water غیرقابل‌شمارش و در معنای کلی است، پس بدون حرف تعریف می‌آید."
     },
     {
       "id": "a1.articles.ex.05",
@@ -3793,7 +4025,8 @@
       "sentence": "Please close ___ door. It's cold in here.",
       "accepted": [
         "the"
-      ]
+      ],
+      "explanationFa": "منظور دربِ همان اتاقِ مشخص است، پس the door درست است."
     },
     {
       "id": "a1.articles.ex.06",
@@ -3809,7 +4042,8 @@
         "I bought a book. The book is on the table."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بار اول برای معرفی a می‌آید و بار دوم برای چیزِ معلوم the: a book … The book."
     },
     {
       "id": "a1.articles.ex.07",
@@ -3836,7 +4070,8 @@
         "کیف"
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "umbrella یعنی «چتر»؛ بقیهٔ گزینه‌ها واژه‌های مرتبط اما نادرست‌اند."
     },
     {
       "id": "a1.plurals.ex.01",
@@ -3852,7 +4087,8 @@
         "There are three child in the park."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "جمع بی‌قاعدهٔ child، children است، نه childs؛ و فاعل جمع فعل are می‌گیرد."
     },
     {
       "id": "a1.plurals.ex.02",
@@ -3863,7 +4099,8 @@
       "accepted": [
         "children",
         "students"
-      ]
+      ],
+      "explanationFa": "برای شمارش افراد جمع بی‌قاعدهٔ child به کار می‌رود: children."
     },
     {
       "id": "a1.plurals.ex.03",
@@ -3879,7 +4116,8 @@
         "She bought two boxes teas."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "جمع box با es ساخته می‌شود: boxes of tea."
     },
     {
       "id": "a1.plurals.ex.04",
@@ -3895,7 +4133,8 @@
         "leaves"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "leaf با تغییر f به v جمع بسته می‌شود: leaves."
     },
     {
       "id": "a1.plurals.ex.05",
@@ -3911,7 +4150,8 @@
         "womanes"
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "جمع بی‌قاعدهٔ woman، women است."
     },
     {
       "id": "a1.plurals.ex.06",
@@ -3922,7 +4162,8 @@
       "accepted": [
         "children",
         "kids"
-      ]
+      ],
+      "explanationFa": "پس از how many اسم جمع می‌آید: how many children."
     },
     {
       "id": "a1.plurals.ex.07",
@@ -3949,7 +4190,8 @@
         "قفسه"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "box یعنی «جعبه»؛ جمعِ آن boxes می‌شود."
     },
     {
       "id": "a1.pronouns.ex.01",
@@ -3965,7 +4207,8 @@
         "His helps him sister every day."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل he است و فعل s می‌گیرد؛ ملکیت هم با his بیان می‌شود."
     },
     {
       "id": "a1.pronouns.ex.02",
@@ -3975,7 +4218,8 @@
       "sentence": "The teacher asked ___ to open our books.",
       "accepted": [
         "us"
-      ]
+      ],
+      "explanationFa": "پس از فعل asked ضمیر مفعولی می‌آید: asked us."
     },
     {
       "id": "a1.pronouns.ex.03",
@@ -3991,7 +4235,8 @@
         "I gave the book to her."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پس از حرف اضافهٔ to ضمیر مفعولی می‌آید: to her."
     },
     {
       "id": "a1.pronouns.ex.04",
@@ -4007,7 +4252,8 @@
         "He and me are here."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل مرکب هر دو ضمیرِ فاعلی می‌گیرد: He and I are here."
     },
     {
       "id": "a1.pronouns.ex.05",
@@ -4023,7 +4269,8 @@
         "We met their at the station."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "them ضمیر مفعولیِ سوم‌شخص جمع است: We met them."
     },
     {
       "id": "a1.pronouns.ex.06",
@@ -4039,7 +4286,8 @@
         "Please me give it to you."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پس از to ضمیر مفعولی می‌آید: give it to me."
     },
     {
       "id": "a1.pronouns.ex.07",
@@ -4066,7 +4314,8 @@
         "معلم"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "teacher یعنی «معلم»."
     },
     {
       "id": "a1.can.ex.01",
@@ -4082,7 +4331,8 @@
         "She can to drive a car."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "can هرگز s نمی‌گیرد و پس از آن فعل ساده می‌آید: can drive."
     },
     {
       "id": "a1.can.ex.02",
@@ -4093,7 +4343,8 @@
       "accepted": [
         "can't",
         "cannot"
-      ]
+      ],
+      "explanationFa": "ناتوانی با can't + فعل ساده بیان می‌شود."
     },
     {
       "id": "a1.can.ex.03",
@@ -4109,7 +4360,8 @@
         "I cans swim."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از can فعل ساده و بدون to می‌آید: can swim."
     },
     {
       "id": "a1.can.ex.04",
@@ -4125,7 +4377,8 @@
         "Can speak you English?"
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پرسش با can: can + فاعل + فعل ساده."
     },
     {
       "id": "a1.can.ex.05",
@@ -4135,7 +4388,8 @@
       "sentence": "We ___ arrive before six, so let's leave at five.",
       "accepted": [
         "can"
-      ]
+      ],
+      "explanationFa": "توانایی را با can نشان می‌دهیم: we can arrive."
     },
     {
       "id": "a1.can.ex.06",
@@ -4151,7 +4405,8 @@
         "I could run fast when I was young."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "توانایی در گذشته با could + فعل ساده: could run."
     },
     {
       "id": "a1.can.ex.07",
@@ -4178,7 +4433,8 @@
         "پیاده‌روی"
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "swim یعنی «شنا کردن»."
     },
     {
       "id": "a1.imperatives.ex.01",
@@ -4194,7 +4450,8 @@
         "Not run in the corridor."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "امر منفی با Don't + فعل ساده ساخته می‌شود."
     },
     {
       "id": "a1.imperatives.ex.02",
@@ -4205,7 +4462,8 @@
       "accepted": [
         "close",
         "shut"
-      ]
+      ],
+      "explanationFa": "جملهٔ امری با فعل ساده در ابتدا می‌آید: Close the door."
     },
     {
       "id": "a1.imperatives.ex.03",
@@ -4221,7 +4479,8 @@
         "To open your books, please."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "امر مثبت با فعل ساده می‌آید، بدون فاعل و بدون s."
     },
     {
       "id": "a1.imperatives.ex.04",
@@ -4237,7 +4496,8 @@
         "Please wait here."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "درخواست مؤدبانه: please + فعل ساده (please wait)."
     },
     {
       "id": "a1.imperatives.ex.05",
@@ -4248,7 +4508,8 @@
       "accepted": [
         "touch",
         "hold"
-      ]
+      ],
+      "explanationFa": "پس از Don't فعل ساده می‌آید: don't touch."
     },
     {
       "id": "a1.imperatives.ex.06",
@@ -4264,7 +4525,8 @@
         "Doesn't touch the wire."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "امر منفی با Don't + فعل ساده: Don't touch the wire."
     },
     {
       "id": "a1.imperatives.ex.07",
@@ -4291,7 +4553,8 @@
         "ادامه دادن"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "stop یعنی «توقف کردن»."
     },
     {
       "id": "a1.question-words.ex.01",
@@ -4307,7 +4570,8 @@
         "Where from you are?"
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پرسش wh با واژهٔ پرسشی + فعل + فاعل ساخته می‌شود: Where are you from?"
     },
     {
       "id": "a1.question-words.ex.02",
@@ -4318,7 +4582,8 @@
       "accepted": [
         "when",
         "what time"
-      ]
+      ],
+      "explanationFa": "پرسش زمان با when یا what time مطرح می‌شود."
     },
     {
       "id": "a1.question-words.ex.03",
@@ -4334,7 +4599,8 @@
         "What does this mean?"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پرسش با do/does ساخته می‌شود: What does this mean?"
     },
     {
       "id": "a1.question-words.ex.04",
@@ -4350,7 +4616,8 @@
         "Who are you late?"
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "why علت را می‌پرسد."
     },
     {
       "id": "a1.question-words.ex.05",
@@ -4360,7 +4627,8 @@
       "sentence": "___ do you live? — In Tehran.",
       "accepted": [
         "where"
-      ]
+      ],
+      "explanationFa": "پرسش مکان با where مطرح می‌شود."
     },
     {
       "id": "a1.question-words.ex.06",
@@ -4376,7 +4644,8 @@
         "How long students are in your class?"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "how many + اسم جمع + فعل جمع می‌آید."
     },
     {
       "id": "a1.question-words.ex.07",
@@ -4403,7 +4672,8 @@
         "چگونه"
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "why یعنی «چرا»."
     },
     {
       "id": "a2.past-simple.ex.01",
@@ -4419,7 +4689,8 @@
         "We went to the coast last weekend."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "گذشتهٔ سادهٔ بی‌قاعدهٔ go، went است: We went."
     },
     {
       "id": "a2.past-simple.ex.02",
@@ -4430,7 +4701,8 @@
       "accepted": [
         "bought",
         "got"
-      ]
+      ],
+      "explanationFa": "گذشتهٔ buy، bought است."
     },
     {
       "id": "a2.past-simple.ex.03",
@@ -4446,7 +4718,8 @@
         "I didn't seen your message."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "منفی گذشته با didn't + فعل ساده ساخته می‌شود: didn't see."
     },
     {
       "id": "a2.past-simple.ex.04",
@@ -4462,7 +4735,8 @@
         "Does she leave yesterday?"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پرسش گذشته: Did + فاعل + فعل ساده."
     },
     {
       "id": "a2.past-simple.ex.05",
@@ -4473,7 +4747,8 @@
       "accepted": [
         "wrote",
         "sent"
-      ]
+      ],
+      "explanationFa": "گذشتهٔ write، wrote است."
     },
     {
       "id": "a2.past-simple.ex.06",
@@ -4489,7 +4764,8 @@
         "They has bought a new car."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "گذشتهٔ buy، bought است و با yesterday می‌آید."
     },
     {
       "id": "a2.past-simple.ex.07",
@@ -4516,7 +4792,8 @@
         "خریدن"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "buy یعنی «خریدن»؛ گذشتهٔ آن bought است."
     },
     {
       "id": "a1.daily-routine.ex.09",
@@ -4532,7 +4809,8 @@
         "My brother is work in a bank."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل سوم‌شخص مفرد (my brother) در حال ساده s می‌گیرد: works."
     },
     {
       "id": "a1.daily-routine.ex.10",
@@ -4548,7 +4826,8 @@
         "He go to school by bus."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "با she در حال ساده فعل s/‑es می‌گیرد: she goes."
     },
     {
       "id": "a1.daily-routine.ex.11",
@@ -4564,7 +4843,8 @@
         "They aren't work at weekends."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "منفی حال ساده برای they با don't و فعل ساده ساخته می‌شود، نه doesn't و نه s روی فعل."
     },
     {
       "id": "a1.introductions.ex.08",
@@ -4580,7 +4860,8 @@
         "This is my book."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از This is صفت ملکی می‌آید: my book — نه I/mine/me."
     },
     {
       "id": "a1.introductions.ex.09",
@@ -4596,7 +4877,8 @@
         "Her name are Sara."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "صفت ملکی her پیش از اسم می‌آید و فعل با name مفرد، is است."
     },
     {
       "id": "a1.introductions.ex.10",
@@ -4612,7 +4894,8 @@
         "Our teacher speak English."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "صفت ملکی our + اسم می‌آید؛ فعل با teacher سوم‌شخص مفرد s می‌گیرد: speaks."
     },
     {
       "id": "a1.shopping.ex.09",
@@ -4628,7 +4911,8 @@
         "How many shoes is in the box?"
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "how many با اسم جمع و فعل جمع می‌آید: How many shoes are in the box?"
     },
     {
       "id": "a1.shopping.ex.10",
@@ -4644,7 +4928,8 @@
         "How much is this shirt?"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "this shirt مفرد است، پس فعل is می‌آید؛ how much برای پرسیدن قیمت به کار می‌رود."
     },
     {
       "id": "a1.weather.ex.08",
@@ -4660,7 +4945,8 @@
         "It are raining now."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "برای بارش در همین لحظه حال استمراری به کار می‌رود: is raining."
     },
     {
       "id": "a1.weather.ex.09",
@@ -4676,7 +4962,8 @@
         "Look! The baby are sleeping."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "حال استمراری: is + ing — خوابِ کودک همین حالا در جریان است."
     },
     {
       "id": "a1.weather.ex.10",
@@ -4692,7 +4979,8 @@
         "I are studying English right now."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "حال استمراری با فاعل I: am studying."
     },
     {
       "id": "a1.weather.ex.11",
@@ -4708,7 +4996,8 @@
         "She is working today."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "she + is + ing ساختار حال استمراری است."
     },
     {
       "id": "a1.weather.ex.12",
@@ -4724,7 +5013,8 @@
         "Wait a moment — I am getting dress."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "حال استمراری با am + ing؛ get dressed فعل مرکب به معنای «لباس پوشیدن» است."
     },
     {
       "id": "a2.city-life.ex.07",
@@ -4740,7 +5030,8 @@
         "It many parks in this city."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "many parks جمع است، پس there are می‌آید."
     },
     {
       "id": "a2.city-life.ex.08",
@@ -4756,7 +5047,8 @@
         "Has a new library near the school."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "a new library مفرد است، پس there is می‌آید."
     },
     {
       "id": "a2.city-life.ex.09",
@@ -4772,7 +5064,8 @@
         "This flat is more expensive than ours."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "صفات بلند (expensive) با more مقایسه می‌شوند: more expensive than."
     },
     {
       "id": "a2.city-life.ex.10",
@@ -4788,7 +5081,8 @@
         "The traffic are worse in the morning."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "worse خودش صفت تفضیلی بی‌قاعده است و more نمی‌گیرد."
     },
     {
       "id": "a2.directions.ex.08",
@@ -4804,7 +5098,8 @@
         "The bank is in the school and the mosque."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بین دو مکان با between … and می‌آید؛ among برای بیش از دو چیز است."
     },
     {
       "id": "a2.directions.ex.09",
@@ -4820,7 +5115,8 @@
         "Go straight and turn left to the traffic lights."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "at برای نقطهٔ مشخص (چراغ راهنما) به کار می‌رود، نه on/in/to."
     },
     {
       "id": "a2.health.ex.08",
@@ -4836,7 +5132,8 @@
         "You should drink more water."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "should + فعل ساده می‌آید، بدون to و بدون ing."
     },
     {
       "id": "a2.health.ex.09",
@@ -4852,7 +5149,8 @@
         "You shouldn't eats so much sugar."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "منفی should با shouldn't + فعل ساده ساخته می‌شود و فعل s نمی‌گیرد."
     },
     {
       "id": "a2.hobbies.ex.07",
@@ -4868,7 +5166,8 @@
         "I enjoying read in the evening."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از enjoy همیشه ing می‌آید: enjoy reading."
     },
     {
       "id": "a2.hobbies.ex.08",
@@ -4884,7 +5183,8 @@
         "They decides to travel in May."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از decide مصدر با to می‌آید: decided to travel."
     },
     {
       "id": "a2.hobbies.ex.09",
@@ -4900,7 +5200,8 @@
         "He likes swimming but he hates running."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از like و hate هر دو ing می‌آید: likes swimming / hates running."
     },
     {
       "id": "a2.restaurant.ex.08",
@@ -4916,7 +5217,8 @@
         "I would like to tea a cup, please."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "ساختار درست would like + اسم است؛ to پیش از like می‌آید، نه پیش از اسم."
     },
     {
       "id": "a2.restaurant.ex.09",
@@ -4932,7 +5234,8 @@
         "We would liking to order now."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از would like مصدر با to می‌آید: would like to order."
     },
     {
       "id": "a2.restaurant.ex.10",
@@ -4948,7 +5251,8 @@
         "There aren't any sugar in the cake."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "در جملهٔ منفی any می‌آید و هیچ دو منفی‌ای (isn't + no) جمع نمی‌شود: isn't any sugar."
     },
     {
       "id": "a2.restaurant.ex.11",
@@ -4964,7 +5268,8 @@
         "I don't have any coins."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "در جملهٔ منفی با don't از any استفاده می‌شود، نه some و نه منفی مضاعف no."
     },
     {
       "id": "b1.experiences.ex.08",
@@ -4980,7 +5285,8 @@
         "I were reading when you called."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "عملی در جریان (was + ing) که فعل دیگری آن را قطع می‌کند."
     },
     {
       "id": "b1.experiences.ex.09",
@@ -4996,7 +5302,8 @@
         "She had finished her work before the meeting was starting."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "قبل از رویداد گذشته، فعل مقدم با ماضی بعید می‌آید: had finished."
     },
     {
       "id": "b1.health-lifestyle.ex.07",
@@ -5012,7 +5319,8 @@
         "You oughts to eat less sugar."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از ought مصدر با to می‌آید و فعل ساده می‌ماند: ought to eat."
     },
     {
       "id": "b1.health-lifestyle.ex.08",
@@ -5028,7 +5336,8 @@
         "You had better see a dentist today."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از had better فعل ساده می‌آید، بدون to و بدون ing."
     },
     {
       "id": "b1.health-lifestyle.ex.09",
@@ -5044,7 +5353,8 @@
         "You oughts to walk to work more often."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "ought to + فعل ساده: ought to walk."
     },
     {
       "id": "b1.health-lifestyle.ex.10",
@@ -5057,7 +5367,8 @@
         "take",
         "bring",
         "put on"
-      ]
+      ],
+      "explanationFa": "بعد از had better فعل ساده می‌آید: had better wear a coat."
     },
     {
       "id": "b1.money.ex.07",
@@ -5073,7 +5384,8 @@
         "I have worked here two years ago."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "for + طول مدت (two years) با حال کامل می‌آید، نه since که برای نقطهٔ شروع است."
     },
     {
       "id": "b1.work.ex.09",
@@ -5089,7 +5401,8 @@
         "She has managed the team since three years."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "since + نقطهٔ شروع (2021) با حال کامل می‌آید؛ for برای طول مدت است."
     },
     {
       "id": "b1.news.ex.08",
@@ -5105,7 +5418,8 @@
         "The company was founded in 1990."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "قسمت سوم فعل find در معنای «بنیان نهادن» founded است؛ was founding غلط است."
     },
     {
       "id": "b1.news.ex.09",
@@ -5117,7 +5431,8 @@
         "was built",
         "was constructed",
         "was completed"
-      ]
+      ],
+      "explanationFa": "مجهول گذشتهٔ ساده: was built/was completed."
     },
     {
       "id": "b1.plans.ex.08",
@@ -5133,7 +5448,8 @@
         "We are going move next month."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "برای برنامهٔ آینده be going to + فعل ساده می‌آید و بخش go حذف نمی‌شود."
     },
     {
       "id": "b1.plans.ex.09",
@@ -5149,7 +5465,8 @@
         "If I had time, I would travelled more."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده (would travel)."
     },
     {
       "id": "b2.environment.ex.08",
@@ -5165,7 +5482,8 @@
         "It must been the oldest bridge in the region."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از must فعل ساده می‌آید؛ must to/been/being درست نیست."
     },
     {
       "id": "b2.environment.ex.09",
@@ -5181,7 +5499,8 @@
         "If I were the manager, I would change the policy."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "شرطی نوع دوم با were برای همهٔ فاعل‌ها و would + فعل ساده در نتیجه."
     },
     {
       "id": "b2.interview.ex.08",
@@ -5197,7 +5516,8 @@
         "She asked that where I had worked before."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "در نقل‌قول غیرمستقیم فاعل و فعل جابه‌جا نمی‌شوند و فعل به ماضی بعید می‌رود."
     },
     {
       "id": "b2.interview.ex.09",
@@ -5209,7 +5529,8 @@
         "started",
         "began",
         "would start"
-      ]
+      ],
+      "explanationFa": "در نقل‌قول غیرمستقیم زمان فعل عقب می‌رود: will start → would start."
     },
     {
       "id": "b2.media.ex.08",
@@ -5225,7 +5546,8 @@
         "I used watching this show every week."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "عادت گذشته با used to + فعل ساده بیان می‌شود؛ هرگز used to + ing نمی‌آید."
     },
     {
       "id": "b2.media.ex.09",
@@ -5236,7 +5558,8 @@
       "accepted": [
         "used to",
         "would"
-      ]
+      ],
+      "explanationFa": "عادت گذشته با used to/would + فعل ساده: used to play."
     },
     {
       "id": "b2.problems.ex.07",
@@ -5252,7 +5575,8 @@
         "The issue has been resolving."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "مجهول حال کامل: has been + قسمت سوم فعل — the issue has been resolved."
     },
     {
       "id": "b2.problems.ex.08",
@@ -5268,7 +5592,8 @@
         "The emails have been sent to the clients."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل جمع است و مجهول حال کامل با have been + قسمت سوم ساخته می‌شود: have been sent."
     },
     {
       "id": "b2.problems.ex.09",
@@ -5284,7 +5609,8 @@
         "Three complaints have logged been this week."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل جمع (three complaints) با have been + قسمت سوم می‌آید: have been logged."
     },
     {
       "id": "b2.problems.ex.10",
@@ -5296,7 +5622,8 @@
         "has been repaired",
         "has been fixed",
         "has been rebuilt"
-      ]
+      ],
+      "explanationFa": "مجهول حال کامل با since: has been repaired."
     },
     {
       "id": "b2.problems.ex.11",
@@ -5308,7 +5635,8 @@
         "has been approved",
         "has been granted",
         "has been accepted"
-      ]
+      ],
+      "explanationFa": "مجهول حال کامل: has been approved — درخواست تأیید شده است."
     },
     {
       "id": "b2.research.ex.07",
@@ -5324,7 +5652,8 @@
         "Mathematics were my favourite subject."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "Mathematics اسم مفرد به‌شمار می‌آید، پس فعل is می‌گیرد."
     },
     {
       "id": "b2.research.ex.08",
@@ -5340,7 +5669,8 @@
         "The newses are surprising."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "the news مفرد است، پس the news is surprising."
     },
     {
       "id": "b2.research.ex.09",
@@ -5356,7 +5686,8 @@
         "Everybody knows the answer."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "everybody مفرد است و فعل s می‌گیرد: everybody knows."
     },
     {
       "id": "b2.research.ex.10",
@@ -5372,7 +5703,8 @@
         "There be a lot of traffic on this road."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "traffic غیرقابل‌شمارش و مفرد است: there is a lot of traffic."
     },
     {
       "id": "b2.technology.ex.09",
@@ -5388,7 +5720,8 @@
         "The woman lives who next door is a doctor."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "برای شخص از who استفاده می‌شود، نه which/whom."
     },
     {
       "id": "b2.technology.ex.10",
@@ -5404,7 +5737,8 @@
         "The report must been finished by Friday."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "پس از فعل وجهی (must) مجهول با be + قسمت سوم ساخته می‌شود: must be finished."
     },
     {
       "id": "c1.inference.ex.07",
@@ -5420,7 +5754,8 @@
         "He must have missed the train."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "must have + قسمت سوم برای استنتاج گذشته: must have missed."
     },
     {
       "id": "c1.inference.ex.08",
@@ -5436,7 +5771,8 @@
         "They can't have been finish already."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "can't have + قسمت سوم برای غیرممکن دانستن رویداد گذشته: can't have finished."
     },
     {
       "id": "c1.inference.ex.09",
@@ -5452,7 +5788,8 @@
         "She might to have forgotten about the meeting."
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "might have + قسمت سوم برای احتمال در گذشته: might have forgotten."
     },
     {
       "id": "c1.inference.ex.10",
@@ -5468,7 +5805,8 @@
         "They must have leaving an hour ago — the lights are off."
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "must have + قسمت سوم ساختار ثابت استنتاج گذشته است: must have left."
     },
     {
       "id": "c1.persuasion.ex.08",
@@ -5484,7 +5822,8 @@
         "You should have told me earlier."
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "should have + قسمت سوم فعل برای پشیمانی از کار انجام‌نشده."
     },
     {
       "id": "c1.persuasion.ex.09",
@@ -5500,7 +5839,8 @@
         "We don't need have hurried — the train was late anyway."
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "needn't have + قسمت سوم یعنی کار انجام شد اما بیهوده بود."
     }
   ]
 }

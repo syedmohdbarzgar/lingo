@@ -146,18 +146,34 @@ class AdaptiveLearningPlanner(
         // 4. Deterministic order: urgency first, then id so equal priorities are stable.
         val sorted = actions.sortedWith(compareBy({ it.priority }, { it.itemId ?: "" }))
 
-        // 5. Budget enforcement: keep actions in priority order until either the
-        //    daily time budget or the action cap is exhausted. todayStudySeconds
-        //    already spent this calendar day eats into the budget first.
+        // 5. Budget enforcement: keep actions in priority order until the daily time
+        //    budget or the action cap is exhausted. todayStudySeconds already spent
+        //    this calendar day eats into the budget first.
+        //
+        //    Two rules keep the plan honest (checklist B-2):
+        //    - Review is NEVER dropped for lack of budget. Retention decays silently
+        //      while postponed, so a big review block must not lose its slot to a
+        //      cheaper lesson further down the list; its estimate is instead capped
+        //      at half the day's target so a 300-card backlog cannot swallow the day.
+        //    - Everything else stops at the FIRST action that does not fit, rather
+        //      than skipping it for a smaller later one: the plan is a sequence, and
+        //      reordering it silently would misrepresent what to do next.
         val availableMinutes = (targetMinutes - (todayStudySeconds / 60).toInt()).coerceAtLeast(0)
+        val candidates = sorted.take(maxActions)
+        val reviewCap = maxOf(targetMinutes / 2, MIN_REVIEW_MINUTES)
+        val budgeted = mutableListOf<LearningAction>()
         var usedMinutes = 0
-        val budgeted = sorted.take(maxActions).filter { action ->
-            if (usedMinutes + action.estimatedMinutes <= availableMinutes) {
-                usedMinutes += action.estimatedMinutes
-                true
-            } else {
-                false
-            }
+
+        candidates.firstOrNull { it.type == LearningActionType.REVIEW }?.let { review ->
+            val cost = minOf(review.estimatedMinutes, reviewCap)
+            budgeted += review.copy(estimatedMinutes = cost)
+            usedMinutes += cost
+        }
+        for (action in candidates) {
+            if (action.type == LearningActionType.REVIEW) continue
+            if (usedMinutes + action.estimatedMinutes > availableMinutes) break
+            usedMinutes += action.estimatedMinutes
+            budgeted += action
         }
 
         return LearningDecision(

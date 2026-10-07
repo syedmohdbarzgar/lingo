@@ -63,6 +63,12 @@ data class VocabularyItem(
     val examples: List<String>,
     val collocations: List<String>,
     val lessonId: String?,
+    /**
+     * Authored Persian usage note (checklist A-1). Shown in the review session
+     * after a miss — the SRS queue is vocabulary-only, so this is the word's
+     * "why is this the answer" text.
+     */
+    val explanationFa: String? = null,
 )
 
 sealed interface Exercise {
@@ -239,6 +245,13 @@ data class TodayPlan(
     val dueReviewCount: Int,
     val nextLesson: Lesson?,
     val recommendedSkills: List<Skill>,
+    /**
+     * The ordered, self-explaining actions the adaptive planner decided on
+     * (checklist B-1). The UI renders them; it never decides their order or why
+     * they were chosen (technical spec §19). Empty until the curriculum graph is
+     * seeded, so every surface still works from the fields above.
+     */
+    val actions: List<LearningAction> = emptyList(),
 )
 
 /**

@@ -495,6 +495,7 @@ private fun VocabularyEntity.toDomain() = VocabularyItem(
     examples = jsonArrayToList(examplesJson),
     collocations = jsonArrayToList(collocationsJson),
     lessonId = lessonId,
+    explanationFa = explanationFa,
 )
 
 private fun ReviewItemEntity.toDomain() = ReviewItem(

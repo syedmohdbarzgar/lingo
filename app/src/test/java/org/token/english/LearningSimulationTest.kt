@@ -619,4 +619,51 @@ class LearningSimulationTest {
         assertTrue("ease factor was reduced by the miss",
             finalState.easeFactor < 2.5f)
     }
+
+    // -----------------------------------------------------------------------
+    //  Scenario F — A heavy review day must not erase the day (checklist B-2)
+    //     30 due cards against a 10-minute target: the review block has to
+    //     survive, capped, and a lesson must still fit after it.
+    // -----------------------------------------------------------------------
+
+    @Test
+    fun heavyReviewDay_keepsReviewAndStillFitsALesson() {
+        val started = TimeUtil.startOfDay(startTime)
+        val decision = planner.plan(
+            states = emptyList(),
+            dueReviewCount = 30,
+            focusItems = graph.unlocked(emptySet()).take(1),
+            targetMinutes = 10,
+            todayStudySeconds = 0L,
+        )
+
+        assertEquals("review always leads", LearningActionType.REVIEW, decision.actions.first().type)
+        assertEquals(30, decision.dueReviewCount)
+        assertEquals(
+            "the review estimate is capped at half the target",
+            5,
+            decision.actions.first().estimatedMinutes,
+        )
+        assertTrue(
+            "a lesson still fits after the capped review block",
+            decision.actions.any { it.type == LearningActionType.LEARN },
+        )
+        assertTrue(
+            "the plan never exceeds the day's target",
+            decision.estimatedTotalMinutes <= 10,
+        )
+        // Sanity: the same call one day later still surfaces the review.
+        val fulfilled = planner.plan(
+            states = emptyList(),
+            dueReviewCount = 30,
+            focusItems = graph.unlocked(emptySet()).take(1),
+            targetMinutes = 10,
+            todayStudySeconds = TimeUtil.startOfDayPlusDays(started, 1) - started,
+        )
+        assertEquals(
+            "a finished goal still offers retention work",
+            LearningActionType.REVIEW,
+            fulfilled.actions.firstOrNull()?.type,
+        )
+    }
 }

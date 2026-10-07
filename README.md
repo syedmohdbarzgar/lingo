@@ -73,7 +73,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 9)**
+**Content bundle (JSON `contentVersion` 12)**
 
 | | Count |
 |---|---|
@@ -326,7 +326,7 @@ offline, and must not block the learning core.
 - `bazaarRsaKey` unset disables Poolakey verification — release builds refuse to ship in that state.
 - Persian UI strings live inline in composables; extracting them to `strings.xml` is open design
   debt until a second locale appears.
-- Room is at `version = 4` with exported schemas in `app/schemas`. Schema changes must ship a
+- Room is at `version = 5` with exported schemas in `app/schemas`. Schema changes must ship a
   migration **and** be registered in `AppContainer.database` — Room throws at open time when a path
   from the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
 - Due counts capture `now` when the collection starts, so a long-running session will not see newly

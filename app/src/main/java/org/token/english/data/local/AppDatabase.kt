@@ -32,7 +32,7 @@ import org.token.english.data.local.entity.VocabularyEntity
         SkillMasteryEntity::class,
         StudySessionEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -100,6 +100,17 @@ abstract class AppDatabase : RoomDatabase() {
                         "nextReviewAt INTEGER NOT NULL, " +
                         "PRIMARY KEY(itemId))",
                 )
+            }
+        }
+
+        /**
+         * v4 → v5: vocabulary gains an authored Persian usage note (checklist A-1),
+         * shown in the review session after a miss. Additive and nullable, and the
+         * seeder refills it because the bundle contentVersion moved to 12.
+         */
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE vocabulary ADD COLUMN explanationFa TEXT")
             }
         }
     }

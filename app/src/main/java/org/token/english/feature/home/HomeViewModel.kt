@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.di.AppContainer
 import org.token.english.domain.model.LearningLevel
@@ -144,6 +145,7 @@ class HomeViewModel(
             .firstOrNull { lvl -> lessons.any { it.level == lvl && it.id !in completedIds } }
         val levelComplete = lessons.isNotEmpty() && !currentLevelPending
 
+        // Instant, from cached data — the card never waits on a query.
         val plan = container.learningPlanner.createPlan(
             dueReviewCount = dueCount,
             nextLesson = nextLesson,
@@ -163,6 +165,24 @@ class HomeViewModel(
             levelComplete = levelComplete,
             nextLevel = nextLevel,
         )
+        // …then enrich it with the adaptive planner's ordered, justified actions
+        // (checklist B-1), which need a suspend read of the knowledge graph.
+        refreshAdaptivePlan()
+    }
+
+    private var planJob: kotlinx.coroutines.Job? = null
+
+    /**
+     * Asks `GetTodayPlanUseCase` for the full plan. The engine owns the ordering
+     * and the reasons; this ViewModel only stores what it returns.
+     */
+    private fun refreshAdaptivePlan() {
+        planJob?.cancel()
+        planJob = viewModelScope.launch {
+            val full = runCatching { container.getTodayPlan(System.currentTimeMillis()) }.getOrNull()
+                ?: return@launch
+            _state.update { current -> current.copy(plan = full) }
+        }
     }
 
     /** Moves the learner up to the next level that still has lessons to do. */

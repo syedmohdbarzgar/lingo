@@ -1,5 +1,5 @@
 {
-  "contentVersion": 9,
+  "contentVersion": 12,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -16,7 +16,8 @@
         "hello there",
         "say hello"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "درودِ غیررسمی و روزمره؛ صبح‌ها Good morning و هنگام خداحافظی Goodbye می‌گوییم."
     },
     {
       "id": "a1.greetings.word.good-morning",
@@ -32,7 +33,8 @@
       "collocations": [
         "say good morning"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "تنها برای صبح تا حدود ظهر؛ بعد از آن Good afternoon یا Good evening می‌آید."
     },
     {
       "id": "a1.greetings.word.thank-you",
@@ -48,7 +50,8 @@
       "collocations": [
         "thank you very much"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "برای تشکر؛ با very much شدت می‌گیرد: Thank you very much."
     },
     {
       "id": "a1.greetings.word.please",
@@ -64,7 +67,8 @@
       "collocations": [
         "please help me"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "واژهٔ ادب؛ در درخواست و پذیرش می‌آید: Yes, please."
     },
     {
       "id": "a1.greetings.word.goodbye",
@@ -80,7 +84,8 @@
       "collocations": [
         "say goodbye"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "خداحافظی؛ غیررسمی‌اش Bye و خداحافظی شبانه Good night است."
     },
     {
       "id": "a1.greetings.word.nice-to-meet-you",
@@ -96,7 +101,8 @@
       "collocations": [
         "nice to meet you too"
       ],
-      "lessonId": "a1.greetings.lesson-01"
+      "lessonId": "a1.greetings.lesson-01",
+      "explanationFa": "عبارت ثابتِ نخستین آشنایی؛ پاسخش Nice to meet you too است."
     },
     {
       "id": "a1.daily-routine.word.wake-up",
@@ -112,7 +118,8 @@
       "collocations": [
         "wake up early"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "بیدار شدن از خواب؛ اگر خودت از رختخواب بیرون بیایی get up می‌گوییم."
     },
     {
       "id": "a1.daily-routine.word.breakfast",
@@ -129,7 +136,8 @@
         "have breakfast",
         "make breakfast"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "صبحانه؛ با have/make بیاید: have breakfast."
     },
     {
       "id": "a1.daily-routine.word.usually",
@@ -146,7 +154,8 @@
         "usually do",
         "as usual"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "قید تکرار؛ پیش از فعل اصلی و پس از فعل to be: I usually walk."
     },
     {
       "id": "a1.daily-routine.word.shower",
@@ -162,7 +171,8 @@
       "collocations": [
         "take a quick shower"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "دوش گرفتن؛ فعلش take یا have است، نه do: take a shower."
     },
     {
       "id": "a1.daily-routine.word.commute",
@@ -178,7 +188,8 @@
       "collocations": [
         "go to work early"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "رفتن به سر کار؛ با go to + مکان ساخته می‌شود."
     },
     {
       "id": "a1.daily-routine.word.evening",
@@ -195,7 +206,8 @@
         "in the evening",
         "good evening"
       ],
-      "lessonId": "a1.daily-routine.lesson-01"
+      "lessonId": "a1.daily-routine.lesson-01",
+      "explanationFa": "عصر تا پیش از خواب؛ با in the evening می‌آید."
     },
     {
       "id": "a1.family.word.mother",
@@ -212,7 +224,8 @@
         "my mother",
         "mother and father"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "مادر؛ غیررسمی‌اش mum (بریتانیا) یا mom (آمریکا) است."
     },
     {
       "id": "a1.family.word.father",
@@ -228,7 +241,8 @@
       "collocations": [
         "my father"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "پدر؛ غیررسمی‌اش dad است."
     },
     {
       "id": "a1.family.word.sister",
@@ -245,7 +259,8 @@
         "older sister",
         "younger sister"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "خواهر؛ با older/younger تفاوت سنی را می‌رساند."
     },
     {
       "id": "a1.family.word.brother",
@@ -262,7 +277,8 @@
         "older brother",
         "younger brother"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "برادر؛ جمعش brothers است."
     },
     {
       "id": "a1.family.word.son",
@@ -278,7 +294,8 @@
       "collocations": [
         "their son"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "پسرِ فرزند؛ با boy که پسر به‌طور کلی است فرق دارد."
     },
     {
       "id": "a1.family.word.daughter",
@@ -294,7 +311,8 @@
       "collocations": [
         "their daughter"
       ],
-      "lessonId": "a1.family.lesson-01"
+      "lessonId": "a1.family.lesson-01",
+      "explanationFa": "دخترِ فرزند؛ دقیق‌تر از girl است."
     },
     {
       "id": "a2.airport.word.passport",
@@ -311,7 +329,8 @@
         "passport control",
         "valid passport"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "گذرنامه؛ در فرودگاه با passport control می‌آید."
     },
     {
       "id": "a2.airport.word.boarding-pass",
@@ -327,7 +346,8 @@
       "collocations": [
         "show your boarding pass"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "کارت پرواز؛ پیش از سوار شدن به هواپیما نشان داده می‌شود."
     },
     {
       "id": "a2.airport.word.flight",
@@ -344,7 +364,8 @@
         "flight number",
         "book a flight"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "پرواز؛ با flight number (شمارهٔ پرواز) می‌آید."
     },
     {
       "id": "a2.airport.word.gate",
@@ -361,7 +382,8 @@
         "gate number",
         "boarding gate"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "دروازهٔ سوار شدن به هواپیماست، نه درِ ورودی ساختمان."
     },
     {
       "id": "a2.airport.word.luggage",
@@ -378,7 +400,8 @@
         "luggage cart",
         "check-in luggage"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "چمدان و بار؛ غیرقابل‌شمارش است، پس luggages نمی‌گوییم."
     },
     {
       "id": "a2.airport.word.departure",
@@ -395,7 +418,8 @@
         "departure time",
         "departure hall"
       ],
-      "lessonId": "a2.airport.lesson-01"
+      "lessonId": "a2.airport.lesson-01",
+      "explanationFa": "خروج و حرکت؛ نقطهٔ مقابلش arrival (ورود) است."
     },
     {
       "id": "a2.restaurant.word.menu",
@@ -412,7 +436,8 @@
         "daily menu",
         "menu card"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "فهرست غذا؛ در رستوران برای انتخاب غذا به آن نگاه می‌کنی."
     },
     {
       "id": "a2.restaurant.word.waiter",
@@ -428,7 +453,8 @@
       "collocations": [
         "call the waiter"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "پیشخدمتِ مرد؛ برای زن waitress به کار می‌رود."
     },
     {
       "id": "a2.restaurant.word.order",
@@ -445,7 +471,8 @@
         "order food",
         "place an order"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "سفارش دادن؛ با order food یعنی سفارش غذا دادن."
     },
     {
       "id": "a2.restaurant.word.delicious",
@@ -462,7 +489,8 @@
         "delicious meal",
         "delicious food"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "خوشمزه؛ برای غذا و نوشیدنی، نه برای شخص."
     },
     {
       "id": "a2.restaurant.word.bill",
@@ -479,7 +507,8 @@
         "pay the bill",
         "the bill please"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "صورت‌حساب؛ در آمریکا به آن check می‌گویند."
     },
     {
       "id": "a2.restaurant.word.reservation",
@@ -496,7 +525,8 @@
         "make a reservation",
         "reservation under the name"
       ],
-      "lessonId": "a2.restaurant.lesson-01"
+      "lessonId": "a2.restaurant.lesson-01",
+      "explanationFa": "رزرو میز؛ با make a reservation می‌آید."
     },
     {
       "id": "a1.shopping.word.price",
@@ -513,7 +543,8 @@
         "price tag",
         "at this price"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "قیمت؛ با price tag (برچسب قیمت) هم می‌آید."
     },
     {
       "id": "a1.shopping.word.cheap",
@@ -530,7 +561,8 @@
         "cheap price",
         "cheap and cheerful"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "ارزان؛ نقطهٔ مقابلش expensive است."
     },
     {
       "id": "a1.shopping.word.money",
@@ -547,7 +579,8 @@
         "make money",
         "save money"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "پول؛ غیرقابل‌شمارش است، پس moneys نمی‌گوییم."
     },
     {
       "id": "a1.shopping.word.pay",
@@ -564,7 +597,8 @@
         "pay for",
         "pay in cash"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "پرداخت کردن؛ با pay for + چیز می‌آید: pay for the ticket."
     },
     {
       "id": "a1.shopping.word.discount",
@@ -581,7 +615,8 @@
         "get a discount",
         "student discount"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "تخفیف؛ با get a discount می‌آید."
     },
     {
       "id": "a1.shopping.word.kilo",
@@ -598,7 +633,8 @@
         "a kilo of",
         "half a kilo"
       ],
-      "lessonId": "a1.shopping.lesson-01"
+      "lessonId": "a1.shopping.lesson-01",
+      "explanationFa": "کیلوگرم؛ با a kilo of می‌آید: a kilo of apples."
     },
     {
       "id": "a2.directions.word.straight",
@@ -615,7 +651,8 @@
         "go straight",
         "straight ahead"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "مستقیم؛ go straight ahead عبارت ثابتِ «جلوی مستقیم برو» است."
     },
     {
       "id": "a2.directions.word.corner",
@@ -632,7 +669,8 @@
         "turn the corner",
         "on the corner"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "گوشه و چهارراه؛ on the corner یعنی سرِ نبش."
     },
     {
       "id": "a2.directions.word.traffic-light",
@@ -649,7 +687,8 @@
         "at the traffic light",
         "traffic lights are red"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "چراغ راهنما؛ با at the traffic light می‌آید."
     },
     {
       "id": "a2.directions.word.opposite",
@@ -666,7 +705,8 @@
         "opposite the station",
         "just opposite"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "روبرو؛ با across from هم‌معنی است."
     },
     {
       "id": "a2.directions.word.block",
@@ -683,7 +723,8 @@
         "around the block",
         "one block away"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "بلوک شهری، فاصلهٔ میان دو چهارراه؛ one block away."
     },
     {
       "id": "a2.directions.word.intersection",
@@ -700,7 +741,8 @@
         "at the intersection",
         "traffic intersection"
       ],
-      "lessonId": "a2.directions.lesson-01"
+      "lessonId": "a2.directions.lesson-01",
+      "explanationFa": "تقاطع؛ رسمی‌تر از crossroads است."
     },
     {
       "id": "a2.health.word.headache",
@@ -717,7 +759,8 @@
         "have a headache",
         "bad headache"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "سردرد؛ با have a headache می‌آید."
     },
     {
       "id": "a2.health.word.medicine",
@@ -734,7 +777,8 @@
         "take medicine",
         "traditional medicine"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "دارو؛ غیرقابل‌شمارش است، پس medicines نمی‌گوییم."
     },
     {
       "id": "a2.health.word.fever",
@@ -751,7 +795,8 @@
         "have a fever",
         "high fever"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "تب؛ با have a fever می‌آید."
     },
     {
       "id": "a2.health.word.prescription",
@@ -768,7 +813,8 @@
         "write a prescription",
         "fill a prescription"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "نسخهٔ پزشک؛ با write یا fill a prescription."
     },
     {
       "id": "a2.health.word.recover",
@@ -785,7 +831,8 @@
         "recover from",
         "fully recover"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "بهبود یافتن؛ با recover from + بیماری می‌آید."
     },
     {
       "id": "a2.health.word.pain",
@@ -802,7 +849,8 @@
         "in pain",
         "chest pain"
       ],
-      "lessonId": "a2.health.lesson-01"
+      "lessonId": "a2.health.lesson-01",
+      "explanationFa": "درد؛ با in pain یعنی «در درد» می‌آید."
     },
     {
       "id": "b1.work.word.career",
@@ -819,7 +867,8 @@
         "career change",
         "career path"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "مسیر شغلی درازمدت؛ با job که شغل فعلی است فرق دارد."
     },
     {
       "id": "b1.work.word.deadline",
@@ -836,7 +885,8 @@
         "meet a deadline",
         "miss a deadline"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "مهلت؛ با meet a deadline و miss a deadline می‌آید."
     },
     {
       "id": "b1.work.word.colleague",
@@ -853,7 +903,8 @@
         "former colleague",
         "work with colleagues"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "همکار؛ رابطهٔ حرفه‌ای را می‌رساند."
     },
     {
       "id": "b1.work.word.apply",
@@ -870,7 +921,8 @@
         "apply for",
         "apply online"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "درخواست دادن؛ با apply for + شغل می‌آید."
     },
     {
       "id": "b1.work.word.salary",
@@ -887,7 +939,8 @@
         "annual salary",
         "offer a salary"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "حقوق ثابت ماهانه؛ wage دستمزد ساعتی است."
     },
     {
       "id": "b1.work.word.qualification",
@@ -904,7 +957,8 @@
         "gain a qualification",
         "professional qualification"
       ],
-      "lessonId": "b1.work.lesson-01"
+      "lessonId": "b1.work.lesson-01",
+      "explanationFa": "مدرک و صلاحیت تحصیلی یا حرفه‌ای."
     },
     {
       "id": "b1.news.word.headline",
@@ -921,7 +975,8 @@
         "front-page headline",
         "make headlines"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "تیتر اصلی خبر؛ با make headlines (شاخص شدن) هم می‌آید."
     },
     {
       "id": "b1.news.word.report",
@@ -938,7 +993,8 @@
         "news report",
         "annual report"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "گزارش؛ هم اسم است و هم فعل."
     },
     {
       "id": "b1.news.word.source",
@@ -955,7 +1011,8 @@
         "source of information",
         "reliable source"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "منبع خبر؛ با reliable source می‌آید."
     },
     {
       "id": "b1.news.word.announce",
@@ -972,7 +1029,8 @@
         "announce a decision",
         "officially announce"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "اعلام کردنِ رسمی؛ با announce a decision."
     },
     {
       "id": "b1.news.word.journalist",
@@ -989,7 +1047,8 @@
         "investigative journalist",
         "journalist hat"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "روزنامه‌نگار؛ با reporter هم‌معنی است."
     },
     {
       "id": "b1.news.word.broadcast",
@@ -1006,7 +1065,8 @@
         "broadcast live",
         "news broadcast"
       ],
-      "lessonId": "b1.news.lesson-01"
+      "lessonId": "b1.news.lesson-01",
+      "explanationFa": "پخش کردن برنامه؛ هم اسم و هم فعل است."
     },
     {
       "id": "b1.plans.word.decide",
@@ -1023,7 +1083,8 @@
         "decide on",
         "finally decide"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "تصمیم گرفتن؛ با decide on/about + اسم می‌آید."
     },
     {
       "id": "b1.plans.word.intend",
@@ -1040,7 +1101,8 @@
         "intend to",
         "intend to do something"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "قصد داشتن؛ با intend to + فعل ساده می‌آید."
     },
     {
       "id": "b1.plans.word.schedule",
@@ -1057,7 +1119,8 @@
         "behind schedule",
         "class schedule"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "برنامهٔ زمانی؛ behind schedule یعنی عقب از برنامه."
     },
     {
       "id": "b1.plans.word.afford",
@@ -1074,7 +1137,8 @@
         "can't afford",
         "afford to do"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "توان مالی داشتن؛ با can/can't afford to + فعل می‌آید."
     },
     {
       "id": "b1.plans.word.probably",
@@ -1091,7 +1155,8 @@
         "probably not",
         "most probably"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "به احتمال زیاد؛ پیش از فعل اصلی می‌آید."
     },
     {
       "id": "b1.plans.word.option",
@@ -1108,7 +1173,8 @@
         "keep your options open",
         "another option"
       ],
-      "lessonId": "b1.plans.lesson-01"
+      "lessonId": "b1.plans.lesson-01",
+      "explanationFa": "گزینه؛ با keep your options open هم می‌آید."
     },
     {
       "id": "b1.experiences.word.journey",
@@ -1125,7 +1191,8 @@
         "long journey",
         "on the journey"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "سفرِ طولانی و مسیر؛ سفر کوتاه trip است."
     },
     {
       "id": "b1.experiences.word.memorable",
@@ -1142,7 +1209,8 @@
         "memorable moment",
         "highly memorable"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "به‌یادماندنی؛ از ریشهٔ memory ساخته شده است."
     },
     {
       "id": "b1.experiences.word.souvenir",
@@ -1159,7 +1227,8 @@
         "souvenir shop",
         "bring back souvenirs"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "یادگاری سفر؛ با bring back souvenirs می‌آید."
     },
     {
       "id": "b1.experiences.word.explore",
@@ -1176,7 +1245,8 @@
         "explore the area",
         "explore new ideas"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "کاوش کردن؛ برای مکان و ایده هر دو به کار می‌رود."
     },
     {
       "id": "b1.experiences.word.adventure",
@@ -1193,7 +1263,8 @@
         "go on an adventure",
         "sense of adventure"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "ماجراجویی؛ با go on an adventure می‌آید."
     },
     {
       "id": "b1.experiences.word.abroad",
@@ -1210,7 +1281,8 @@
         "live abroad",
         "travel abroad"
       ],
-      "lessonId": "b1.experiences.lesson-01"
+      "lessonId": "b1.experiences.lesson-01",
+      "explanationFa": "در خارج از کشور؛ قید است و با in/to به کار نمی‌رود."
     },
     {
       "id": "b2.technology.word.innovation",
@@ -1227,7 +1299,8 @@
         "drive innovation",
         "technological innovation"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "نوآوری؛ از فعل innovate ساخته شده است."
     },
     {
       "id": "b2.technology.word.obsolete",
@@ -1244,7 +1317,8 @@
         "become obsolete",
         "render obsolete"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "منسوخ؛ با become obsolete می‌آید."
     },
     {
       "id": "b2.technology.word.privacy",
@@ -1261,7 +1335,8 @@
         "privacy policy",
         "invasion of privacy"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "حریم خصوصی؛ غیرقابل‌شمارش است."
     },
     {
       "id": "b2.technology.word.algorithm",
@@ -1278,7 +1353,8 @@
         "search algorithm",
         "recommendation algorithm"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "الگوریتم؛ مجموعه‌ای از دستورهای محاسباتی برای حل یک مسئله."
     },
     {
       "id": "b2.technology.word.device",
@@ -1295,7 +1371,8 @@
         "mobile device",
         "electronic device"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "دستگاه و ابزار الکترونیکی؛ با mobile device."
     },
     {
       "id": "b2.technology.word.artificial",
@@ -1312,7 +1389,8 @@
         "artificial intelligence",
         "artificial light"
       ],
-      "lessonId": "b2.technology.lesson-01"
+      "lessonId": "b2.technology.lesson-01",
+      "explanationFa": "مصنوعی؛ مقابل natural و با artificial intelligence."
     },
     {
       "id": "b2.environment.word.pollution",
@@ -1329,7 +1407,8 @@
         "air pollution",
         "reduce pollution"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "آلودگی؛ غیرقابل‌شمارش است، پس pollutions نمی‌گوییم."
     },
     {
       "id": "b2.environment.word.sustainable",
@@ -1346,7 +1425,8 @@
         "sustainable development",
         "sustainable growth"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "پایدار؛ sustainable development یعنی توسعهٔ پایدار."
     },
     {
       "id": "b2.environment.word.emission",
@@ -1363,7 +1443,8 @@
         "carbon emissions",
         "reduce emissions"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "انتشار آلاینده؛ معمولاً جمع می‌آید: carbon emissions."
     },
     {
       "id": "b2.environment.word.conserve",
@@ -1380,7 +1461,8 @@
         "conserve energy",
         "conserve resources"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "حفاظت و صرفه‌جویی کردن؛ با conserve energy."
     },
     {
       "id": "b2.environment.word.hazard",
@@ -1397,7 +1479,8 @@
         "health hazard",
         "potential hazard"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "خطر و عامل زیان‌آور؛ با health hazard."
     },
     {
       "id": "b2.environment.word.renewable",
@@ -1414,7 +1497,8 @@
         "renewable energy",
         "renewable resources"
       ],
-      "lessonId": "b2.environment.lesson-01"
+      "lessonId": "b2.environment.lesson-01",
+      "explanationFa": "تجدیدپذیر؛ با renewable energy."
     },
     {
       "id": "b2.interview.word.candidate",
@@ -1431,7 +1515,8 @@
         "ideal candidate",
         "candidate for"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "داوطلب و کاندیدا؛ با candidate for + جایگاه می‌آید."
     },
     {
       "id": "b2.interview.word.strength",
@@ -1448,7 +1533,8 @@
         "personal strengths",
         "build strength"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "نقطهٔ قوت؛ جمعش strengths در مصاحبهٔ کاری رایج است."
     },
     {
       "id": "b2.interview.word.experience-noun",
@@ -1465,7 +1551,8 @@
         "work experience",
         "gain experience"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "تجربه؛ در معنای تجربهٔ کاری غیرقابل‌شمارش است."
     },
     {
       "id": "b2.interview.word.achievement",
@@ -1482,7 +1569,8 @@
         "sense of achievement",
         "major achievement"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "دستاورد؛ از فعل achieve ساخته شده است."
     },
     {
       "id": "b2.interview.word.responsible",
@@ -1499,7 +1587,8 @@
         "responsible for",
         "hold responsible"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "مسئول؛ با responsible for + کار می‌آید."
     },
     {
       "id": "b2.interview.word.eligible",
@@ -1516,7 +1605,8 @@
         "eligible for",
         "become eligible"
       ],
-      "lessonId": "b2.interview.lesson-01"
+      "lessonId": "b2.interview.lesson-01",
+      "explanationFa": "واجد شرایط؛ با eligible for می‌آید."
     },
     {
       "id": "b2.media.word.advertising",
@@ -1533,7 +1623,8 @@
         "advertising campaign",
         "false advertising"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "تبلیغات به‌عنوان صنعت؛ یک آگهیِ مشخص advertisement است."
     },
     {
       "id": "b2.media.word.audience",
@@ -1550,7 +1641,8 @@
         "target audience",
         "large audience"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "مخاطبان؛ گروهی که محتوا را می‌بینند یا می‌شنوند."
     },
     {
       "id": "b2.media.word.campaign",
@@ -1567,7 +1659,8 @@
         "marketing campaign",
         "launch a campaign"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "کمپین؛ با launch a campaign می‌آید."
     },
     {
       "id": "b2.media.word.bias",
@@ -1584,7 +1677,8 @@
         "political bias",
         "show a bias"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "سوگیری؛ با political bias."
     },
     {
       "id": "b2.media.word.slogan",
@@ -1601,7 +1695,8 @@
         "catchy slogan",
         "campaign slogan"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "شعار تبلیغاتی؛ جمله‌ای کوتاه و به‌یادماندنی."
     },
     {
       "id": "b2.media.word.influence-verb",
@@ -1618,7 +1713,8 @@
         "strongly influence",
         "influence decisions"
       ],
-      "lessonId": "b2.media.lesson-01"
+      "lessonId": "b2.media.lesson-01",
+      "explanationFa": "تأثیر گذاشتن؛ هم فعل است و هم اسم."
     },
     {
       "id": "c1.academic.word.hypothesis",
@@ -1635,7 +1731,8 @@
         "test a hypothesis",
         "formulate a hypothesis"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "فرضیه؛ با test a hypothesis می‌آید."
     },
     {
       "id": "c1.academic.word.methodology",
@@ -1652,7 +1749,8 @@
         "research methodology",
         "rigorous methodology"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "روش‌شناسی؛ نظام روش‌های یک پژوهش."
     },
     {
       "id": "c1.academic.word.evidence",
@@ -1669,7 +1767,8 @@
         "compelling evidence",
         "in the evidence"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "شواهد؛ غیرقابل‌شمارش است، پس evidences نمی‌گوییم."
     },
     {
       "id": "c1.academic.word.cite",
@@ -1686,7 +1785,8 @@
         "cite a source",
         "cite an example"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "ارجاع دادن؛ با cite a source می‌آید."
     },
     {
       "id": "c1.academic.word.notation",
@@ -1703,7 +1803,8 @@
         "mathematical notation",
         "standard notation"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "نمادگذاری قراردادی؛ مانند mathematical notation."
     },
     {
       "id": "c1.academic.word.substantial",
@@ -1720,7 +1821,8 @@
         "substantial increase",
         "substantial evidence"
       ],
-      "lessonId": "c1.academic.lesson-01"
+      "lessonId": "c1.academic.lesson-01",
+      "explanationFa": "چشمگیر و قابل توجه؛ با substantial evidence."
     },
     {
       "id": "c1.persuasion.word.counterargument",
@@ -1737,7 +1839,8 @@
         "strong counterargument",
         "address a counterargument"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "استدلال متقابل؛ پاسخ به استدلال مخالف."
     },
     {
       "id": "c1.persuasion.word.persuasive",
@@ -1754,7 +1857,8 @@
         "persuasive argument",
         "highly persuasive"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "قانع‌کننده؛ از فعل persuade ساخته شده است."
     },
     {
       "id": "c1.persuasion.word.contention",
@@ -1771,7 +1875,8 @@
         "central contention",
         "in contention"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "ادعای اصلی؛ با central contention می‌آید."
     },
     {
       "id": "c1.persuasion.word.undermine",
@@ -1788,7 +1893,8 @@
         "undermine confidence",
         "undermine authority"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "تضعیف کردن؛ با undermine confidence."
     },
     {
       "id": "c1.persuasion.word.concede",
@@ -1805,7 +1911,8 @@
         "concede a point",
         "reluctantly concede"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "به‌ناچار پذیرفتن؛ با concede a point می‌آید."
     },
     {
       "id": "c1.persuasion.word.rhetoric",
@@ -1822,7 +1929,8 @@
         "political rhetoric",
         "empty rhetoric"
       ],
-      "lessonId": "c1.persuasion.lesson-01"
+      "lessonId": "c1.persuasion.lesson-01",
+      "explanationFa": "بلاغت و سخنوری؛ گاه بار منفی دارد: empty rhetoric."
     },
     {
       "id": "c1.culture.word.cinematic",
@@ -1839,7 +1947,8 @@
         "cinematic style",
         "cinematic experience"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "سینمایی؛ کیفیتی که یادآور فیلم است."
     },
     {
       "id": "c1.culture.word.subtitle",
@@ -1856,7 +1965,8 @@
         "english subtitles",
         "burned-in subtitles"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "زیرنویس؛ معمولاً جمع می‌آید: subtitles."
     },
     {
       "id": "c1.culture.word.portrayal",
@@ -1873,7 +1983,8 @@
         "realistic portrayal",
         "accurate portrayal"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "به تصویر کشیدن؛ از فعل portray ساخته شده است."
     },
     {
       "id": "c1.culture.word.stereotype",
@@ -1890,7 +2001,8 @@
         "gender stereotype",
         "break a stereotype"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "کلیشه؛ با break a stereotype می‌آید."
     },
     {
       "id": "c1.culture.word.director",
@@ -1907,7 +2019,8 @@
         "film director",
         "artistic director"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "کارگردان؛ با film director."
     },
     {
       "id": "c1.culture.word.narrative",
@@ -1924,7 +2037,8 @@
         "main narrative",
         "personal narrative"
       ],
-      "lessonId": "c1.culture.lesson-01"
+      "lessonId": "c1.culture.lesson-01",
+      "explanationFa": "روایت؛ ساختار داستان‌گویی."
     },
     {
       "id": "c1.phrasal-idioms.word.give-up",
@@ -1941,7 +2055,8 @@
         "give up on",
         "never give up"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "دست کشیدن؛ با give up on + شخص یا چیز می‌آید."
     },
     {
       "id": "c1.phrasal-idioms.word.put-off",
@@ -1958,7 +2073,8 @@
         "put off until",
         "put someone off"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "به تعویق انداختن؛ با put off until."
     },
     {
       "id": "c1.phrasal-idioms.word.come-across",
@@ -1975,7 +2091,8 @@
         "come across as",
         "come across something"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "اتفاقی پیدا کردن؛ با come across as یعنی «به نظر رسیدن»."
     },
     {
       "id": "c1.phrasal-idioms.word.get-away-with",
@@ -1992,7 +2109,8 @@
         "get away with murder",
         "get away with it"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "بی‌مجازات ماندن؛ با get away with it."
     },
     {
       "id": "c1.phrasal-idioms.word.run-out-of",
@@ -2009,7 +2127,8 @@
         "run out of time",
         "run out of patience"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "تمام شدن موجودی؛ با run out of time."
     },
     {
       "id": "c1.phrasal-idioms.word.bring-up",
@@ -2026,7 +2145,8 @@
         "bring up a topic",
         "bring up a subject"
       ],
-      "lessonId": "c1.phrasal-idioms.lesson-01"
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "explanationFa": "پیش کشیدن موضوع؛ با bring up a topic."
     },
     {
       "id": "c2.nuance.word.ambiguous",
@@ -2043,7 +2163,8 @@
         "deeply ambiguous",
         "ambiguous statement"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "مبهم و دوپهلو؛ از آن دو معنا برداشت می‌شود."
     },
     {
       "id": "c2.nuance.word.subtle",
@@ -2060,7 +2181,8 @@
         "subtle difference",
         "subtle hint"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "ظریف و پنهان؛ با subtle difference."
     },
     {
       "id": "c2.nuance.word.connotation",
@@ -2077,7 +2199,8 @@
         "negative connotation",
         "subtle connotation"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "بار معنایی ضمنی؛ می‌تواند مثبت یا منفی باشد."
     },
     {
       "id": "c2.nuance.word.vague",
@@ -2094,7 +2217,8 @@
         "vague idea",
         "deliberately vague"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "مبهم و نامشخص؛ اغلب بار منفی دارد."
     },
     {
       "id": "c2.nuance.word.distinction",
@@ -2111,7 +2235,8 @@
         "draw a distinction",
         "fine distinction"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "تمایز؛ با draw a distinction می‌آید."
     },
     {
       "id": "c2.nuance.word.imply",
@@ -2128,7 +2253,8 @@
         "strongly imply",
         "imply that"
       ],
-      "lessonId": "c2.nuance.lesson-01"
+      "lessonId": "c2.nuance.lesson-01",
+      "explanationFa": "تلویحاً بیان کردن؛ گوینده imply می‌کند و شنونده infer."
     },
     {
       "id": "c2.rhetoric.word.eloquence",
@@ -2145,7 +2271,8 @@
         "gift for eloquence",
         "political eloquence"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "فصاحت و بلاغت؛ از صفت eloquent ساخته شده است."
     },
     {
       "id": "c2.rhetoric.word.refute",
@@ -2162,7 +2289,8 @@
         "refute a claim",
         "disprove and refute"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "رد کردن با دلیل؛ قوی‌تر از deny است."
     },
     {
       "id": "c2.rhetoric.word.concision",
@@ -2179,7 +2307,8 @@
         "elegant concision",
         "tone of concision"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "ایجاز؛ کوتاه‌گویی همراه با روشنی."
     },
     {
       "id": "c2.rhetoric.word.irony",
@@ -2196,7 +2325,8 @@
         "deep irony",
         "dramatic irony"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "کنایه؛ تضاد میان ظاهر و معنای واقعی."
     },
     {
       "id": "c2.rhetoric.word.arrogance",
@@ -2213,7 +2343,8 @@
         "sheer arrogance",
         "air of arrogance"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "تکبر؛ صفتش arrogant است."
     },
     {
       "id": "c2.rhetoric.word.persuade",
@@ -2230,7 +2361,8 @@
         "persuade someone to",
         "try to persuade"
       ],
-      "lessonId": "c2.rhetoric.lesson-01"
+      "lessonId": "c2.rhetoric.lesson-01",
+      "explanationFa": "قانع کردن؛ با persuade somebody to do."
     },
     {
       "id": "c2.science.word.empirical",
@@ -2247,7 +2379,8 @@
         "empirical evidence",
         "empirical research"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "تجربی؛ مبتنی بر مشاهده و آزمایش، نه نظریهٔ محض."
     },
     {
       "id": "c2.science.word.corroborate",
@@ -2264,7 +2397,8 @@
         "corroborate evidence",
         "corroborate a claim"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "تأیید کردن با شواهد مستقل."
     },
     {
       "id": "c2.science.word.speculation",
@@ -2281,7 +2415,8 @@
         "widespread speculation",
         "pure speculation"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "حدس و گمان؛ با pure speculation."
     },
     {
       "id": "c2.science.word.variable",
@@ -2298,7 +2433,8 @@
         "control variable",
         "independent variable"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "متغیر؛ در پژوهش چیزی که تغییر می‌کند."
     },
     {
       "id": "c2.science.word.precise",
@@ -2315,7 +2451,8 @@
         "precise wording",
         "to be precise"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "دقیق؛ با precise wording."
     },
     {
       "id": "c2.science.word.phenomenon",
@@ -2332,7 +2469,8 @@
         "natural phenomenon",
         "social phenomenon"
       ],
-      "lessonId": "c2.science.lesson-01"
+      "lessonId": "c2.science.lesson-01",
+      "explanationFa": "پدیده؛ جمعش phenomena است."
     },
     {
       "id": "c2.literature.word.narrator",
@@ -2349,7 +2487,8 @@
         "unreliable narrator",
         "first-person narrator"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "راوی داستان؛ با unreliable narrator."
     },
     {
       "id": "c2.literature.word.protagonist",
@@ -2366,7 +2505,8 @@
         "main protagonist",
         "tragic protagonist"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "قهرمان اصلی؛ نقطهٔ مقابلش antagonist است."
     },
     {
       "id": "c2.literature.word.allegory",
@@ -2383,7 +2523,8 @@
         "political allegory",
         "moral allegory"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "تمثیل؛ داستانی با معنای نمادینِ زیرین."
     },
     {
       "id": "c2.literature.word.foreshadowing",
@@ -2400,7 +2541,8 @@
         "subtle foreshadowing",
         "heavy foreshadowing"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "پیش‌درآمد؛ نشانه‌ای از رویداد آیندهٔ داستان."
     },
     {
       "id": "c2.literature.word.imagery",
@@ -2417,7 +2559,8 @@
         "vivid imagery",
         "powerful imagery"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "تصویرسازی زبانی؛ با vivid imagery."
     },
     {
       "id": "c2.literature.word.metaphor",
@@ -2434,7 +2577,8 @@
         "extended metaphor",
         "dead metaphor"
       ],
-      "lessonId": "c2.literature.lesson-01"
+      "lessonId": "c2.literature.lesson-01",
+      "explanationFa": "استعاره؛ با extended metaphor."
     },
     {
       "id": "a1.introductions.word.name",
@@ -2451,7 +2595,8 @@
         "first name",
         "full name"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "نام؛ با first name و full name می‌آید."
     },
     {
       "id": "a1.introductions.word.friend",
@@ -2468,7 +2613,8 @@
         "best friend",
         "close friend"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "دوست؛ با make friends یعنی «دوست پیدا کردن»."
     },
     {
       "id": "a1.introductions.word.meet",
@@ -2485,7 +2631,8 @@
         "meet a friend",
         "meet for the first time"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "ملاقات کردن؛ با meet for the first time."
     },
     {
       "id": "a1.introductions.word.new",
@@ -2502,7 +2649,8 @@
         "brand new",
         "new student"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "جدید؛ با brand new یعنی «کاملاً نو»."
     },
     {
       "id": "a1.introductions.word.work",
@@ -2519,7 +2667,8 @@
         "work as a teacher",
         "work in an office"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "کار کردن؛ با work as + شغل می‌آید."
     },
     {
       "id": "a1.introductions.word.live",
@@ -2536,7 +2685,8 @@
         "live in a city",
         "live with family"
       ],
-      "lessonId": "a1.introductions.lesson-01"
+      "lessonId": "a1.introductions.lesson-01",
+      "explanationFa": "زندگی کردن؛ با live in + مکان می‌آید."
     },
     {
       "id": "a1.weather.word.rain",
@@ -2553,7 +2703,8 @@
         "heavy rain",
         "light rain"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "باران؛ غیرقابل‌شمارش است، با heavy rain می‌آید."
     },
     {
       "id": "a1.weather.word.sunny",
@@ -2570,7 +2721,8 @@
         "a sunny day",
         "warm and sunny"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "آفتابی؛ با a sunny day می‌آید."
     },
     {
       "id": "a1.weather.word.cloud",
@@ -2587,7 +2739,8 @@
         "dark clouds",
         "grey clouds"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "ابر؛ صفتش cloudy (ابری) است."
     },
     {
       "id": "a1.weather.word.wind",
@@ -2604,7 +2757,8 @@
         "strong wind",
         "cold wind"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "باد؛ با strong wind می‌آید."
     },
     {
       "id": "a1.weather.word.season",
@@ -2621,7 +2775,8 @@
         "the rainy season",
         "dry season"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "فصل سال؛ با the rainy season هم می‌آید."
     },
     {
       "id": "a1.weather.word.warm",
@@ -2638,7 +2793,8 @@
         "warm weather",
         "keep warm"
       ],
-      "lessonId": "a1.weather.lesson-01"
+      "lessonId": "a1.weather.lesson-01",
+      "explanationFa": "گرم و مطبوع؛ گرمای شدید hot است."
     },
     {
       "id": "a2.hobbies.word.hobby",
@@ -2655,7 +2811,8 @@
         "take up a hobby",
         "favourite hobby"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "سرگرمی؛ با take up a hobby می‌آید."
     },
     {
       "id": "a2.hobbies.word.collect",
@@ -2672,7 +2829,8 @@
         "collect stamps",
         "collect coins"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "جمع‌آوری کردن؛ با collect stamps."
     },
     {
       "id": "a2.hobbies.word.painting",
@@ -2689,7 +2847,8 @@
         "oil painting",
         "watercolour painting"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "نقاشی؛ هم به فعالیت و هم به اثر گفته می‌شود."
     },
     {
       "id": "a2.hobbies.word.photography",
@@ -2706,7 +2865,8 @@
         "wildlife photography",
         "take up photography"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "عکاسی؛ با take up photography."
     },
     {
       "id": "a2.hobbies.word.member",
@@ -2723,7 +2883,8 @@
         "club member",
         "become a member"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "عضو؛ با become a member."
     },
     {
       "id": "a2.hobbies.word.spare-time",
@@ -2740,7 +2901,8 @@
         "in my spare time",
         "use your spare time"
       ],
-      "lessonId": "a2.hobbies.lesson-01"
+      "lessonId": "a2.hobbies.lesson-01",
+      "explanationFa": "وقت آزاد؛ با in my spare time می‌آید."
     },
     {
       "id": "a2.city-life.word.neighbourhood",
@@ -2757,7 +2919,8 @@
         "quiet neighbourhood",
         "safe neighbourhood"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "محله؛ با quiet neighbourhood."
     },
     {
       "id": "a2.city-life.word.crowded",
@@ -2774,7 +2937,8 @@
         "crowded street",
         "get crowded"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "شلوغ؛ با crowded street."
     },
     {
       "id": "a2.city-life.word.traffic",
@@ -2791,7 +2955,8 @@
         "heavy traffic",
         "traffic jam"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "ترافیک؛ غیرقابل‌شمارش است، با heavy traffic."
     },
     {
       "id": "a2.city-life.word.convenient",
@@ -2808,7 +2973,8 @@
         "convenient location",
         "convenient for"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "راحت و در دسترس؛ با convenient for."
     },
     {
       "id": "a2.city-life.word.park",
@@ -2825,7 +2991,8 @@
         "public park",
         "go to the park"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "پارک؛ با public park."
     },
     {
       "id": "a2.city-life.word.subway",
@@ -2842,7 +3009,8 @@
         "subway station",
         "take the subway"
       ],
-      "lessonId": "a2.city-life.lesson-01"
+      "lessonId": "a2.city-life.lesson-01",
+      "explanationFa": "مترو؛ در بریتانیا underground یا tube می‌گویند."
     },
     {
       "id": "b1.money.word.budget",
@@ -2859,7 +3027,8 @@
         "monthly budget",
         "stick to a budget"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "بودجه؛ با stick to a budget."
     },
     {
       "id": "b1.money.word.save",
@@ -2876,7 +3045,8 @@
         "save money",
         "save up for"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "پس‌انداز کردن؛ با save up for می‌آید."
     },
     {
       "id": "b1.money.word.expense",
@@ -2893,7 +3063,8 @@
         "monthly expenses",
         "living expenses"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "هزینه؛ معمولاً جمع می‌آید: living expenses."
     },
     {
       "id": "b1.money.word.afford",
@@ -2910,7 +3081,8 @@
         "can afford to",
         "hardly afford"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "توان مالی داشتن؛ با can't afford."
     },
     {
       "id": "b1.money.word.debt",
@@ -2927,7 +3099,8 @@
         "pay off a debt",
         "get into debt"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "بدهی؛ با pay off a debt."
     },
     {
       "id": "b1.money.word.income",
@@ -2944,7 +3117,8 @@
         "monthly income",
         "source of income"
       ],
-      "lessonId": "b1.money.lesson-01"
+      "lessonId": "b1.money.lesson-01",
+      "explanationFa": "درآمد؛ نقطهٔ مقابلش expense (هزینه) است."
     },
     {
       "id": "b1.health-lifestyle.word.balanced-diet",
@@ -2961,7 +3135,8 @@
         "maintain a balanced diet",
         "eat a balanced diet"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "رژیم غذایی متعادل؛ با eat a balanced diet."
     },
     {
       "id": "b1.health-lifestyle.word.exercise",
@@ -2978,7 +3153,8 @@
         "regular exercise",
         "take exercise"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "ورزش؛ هم اسم است و هم فعل."
     },
     {
       "id": "b1.health-lifestyle.word.stress",
@@ -2995,7 +3171,8 @@
         "reduce stress",
         "under stress"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "استرس؛ با reduce stress."
     },
     {
       "id": "b1.health-lifestyle.word.sleep",
@@ -3012,7 +3189,8 @@
         "get enough sleep",
         "a lack of sleep"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "خواب؛ غیرقابل‌شمارش، با get enough sleep."
     },
     {
       "id": "b1.health-lifestyle.word.habit",
@@ -3029,7 +3207,8 @@
         "break a habit",
         "form a habit"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "عادت؛ با break/form a habit می‌آید."
     },
     {
       "id": "b1.health-lifestyle.word.skip",
@@ -3046,7 +3225,8 @@
         "skip a meal",
         "skip class"
       ],
-      "lessonId": "b1.health-lifestyle.lesson-01"
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "explanationFa": "جا انداختن؛ با skip a meal."
     },
     {
       "id": "b2.problems.word.complaint",
@@ -3063,7 +3243,8 @@
         "make a complaint",
         "deal with a complaint"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "شکایت؛ با make a complaint."
     },
     {
       "id": "b2.problems.word.refund",
@@ -3080,7 +3261,8 @@
         "full refund",
         "ask for a refund"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "بازپرداخت پول؛ با ask for a refund."
     },
     {
       "id": "b2.problems.word.resolve",
@@ -3097,7 +3279,8 @@
         "resolve an issue",
         "resolve a dispute"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "حل کردن مشکل؛ با resolve an issue."
     },
     {
       "id": "b2.problems.word.deadline",
@@ -3114,7 +3297,8 @@
         "meet a deadline",
         "miss a deadline"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "مهلت؛ با meet a deadline."
     },
     {
       "id": "b2.problems.word.delay",
@@ -3131,7 +3315,8 @@
         "long delay",
         "without delay"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "تأخیر؛ با without delay می‌آید."
     },
     {
       "id": "b2.problems.word.compensate",
@@ -3148,7 +3333,8 @@
         "compensate for",
         "compensate somebody for"
       ],
-      "lessonId": "b2.problems.lesson-01"
+      "lessonId": "b2.problems.lesson-01",
+      "explanationFa": "جبران کردن؛ با compensate for."
     },
     {
       "id": "b2.research.word.evidence",
@@ -3165,7 +3351,8 @@
         "strong evidence",
         "provide evidence"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "شواهد؛ غیرقابل‌شمارش است و s نمی‌گیرد."
     },
     {
       "id": "b2.research.word.hypothesis",
@@ -3182,7 +3369,8 @@
         "test a hypothesis",
         "reject a hypothesis"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "فرضیه؛ با test یا reject a hypothesis."
     },
     {
       "id": "b2.research.word.sample",
@@ -3199,7 +3387,8 @@
         "random sample",
         "sample size"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "نمونه؛ با sample size."
     },
     {
       "id": "b2.research.word.indicate",
@@ -3216,7 +3405,8 @@
         "results indicate",
         "strongly indicate"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "نشان دادن؛ با results indicate."
     },
     {
       "id": "b2.research.word.reliable",
@@ -3233,7 +3423,8 @@
         "reliable source",
         "highly reliable"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "قابل‌اعتماد؛ با reliable source."
     },
     {
       "id": "b2.research.word.bias",
@@ -3250,7 +3441,8 @@
         "selection bias",
         "avoid bias"
       ],
-      "lessonId": "b2.research.lesson-01"
+      "lessonId": "b2.research.lesson-01",
+      "explanationFa": "سوگیری؛ با avoid bias."
     },
     {
       "id": "c1.inference.word.imply",
@@ -3267,7 +3459,8 @@
         "strongly imply",
         "imply that"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "تلویحاً رساندن؛ گوینده imply می‌کند."
     },
     {
       "id": "c1.inference.word.infer",
@@ -3284,7 +3477,8 @@
         "reasonably infer",
         "infer from"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "استنباط کردن؛ شنونده infer می‌کند."
     },
     {
       "id": "c1.inference.word.assumption",
@@ -3301,7 +3495,8 @@
         "make an assumption",
         "challenge an assumption"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "فرض و پیش‌فرض؛ با make an assumption."
     },
     {
       "id": "c1.inference.word.ambiguity",
@@ -3318,7 +3513,8 @@
         "deliberate ambiguity",
         "remove ambiguity"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "ابهام؛ با remove ambiguity."
     },
     {
       "id": "c1.inference.word.overstate",
@@ -3335,7 +3531,8 @@
         "hard to overstate",
         "widely overstated"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "اغراق کردن؛ نقطهٔ مقابلش understate است."
     },
     {
       "id": "c1.inference.word.unspoken",
@@ -3352,7 +3549,8 @@
         "unspoken rule",
         "remain unspoken"
       ],
-      "lessonId": "c1.inference.lesson-01"
+      "lessonId": "c1.inference.lesson-01",
+      "explanationFa": "ناگفته؛ با unspoken rule."
     },
     {
       "id": "c1.register.word.register",
@@ -3369,7 +3567,8 @@
         "formal register",
         "appropriate register"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "سبک زبانی؛ میزان رسمی‌بودن متناسب با موقعیت."
     },
     {
       "id": "c1.register.word.formal",
@@ -3386,7 +3585,8 @@
         "formal letter",
         "formal occasion"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "رسمی؛ نقطهٔ مقابلش informal و colloquial است."
     },
     {
       "id": "c1.register.word.colloquial",
@@ -3403,7 +3603,8 @@
         "colloquial English",
         "colloquial term"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "محاوره‌ای؛ مناسب گفتار غیررسمی."
     },
     {
       "id": "c1.register.word.nominalisation",
@@ -3420,7 +3621,8 @@
         "heavy nominalisation",
         "avoid nominalisation"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "اسم‌سازی؛ تبدیل فعل به اسم مانند decide → decision."
     },
     {
       "id": "c1.register.word.hedge",
@@ -3437,7 +3639,8 @@
         "hedge a claim",
         "deliberately hedge"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "تلطیف کردن ادعا؛ با may و tends to."
     },
     {
       "id": "c1.register.word.courtesy",
@@ -3454,7 +3657,8 @@
         "common courtesy",
         "as a courtesy"
       ],
-      "lessonId": "c1.register.lesson-01"
+      "lessonId": "c1.register.lesson-01",
+      "explanationFa": "ادب و نزاکت؛ با common courtesy."
     },
     {
       "id": "c1.cohesion.word.cohesion",
@@ -3471,7 +3675,8 @@
         "textual cohesion",
         "lack of cohesion"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "انسجام متن؛ پیوند میان جمله‌ها."
     },
     {
       "id": "c1.cohesion.word.discourse-marker",
@@ -3488,7 +3693,8 @@
         "use a discourse marker",
         "sentence-initial marker"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "نشانگر گفتمانی؛ رابطهٔ میان ایده‌ها را نشان می‌دهد."
     },
     {
       "id": "c1.cohesion.word.antecedent",
@@ -3505,7 +3711,8 @@
         "clear antecedent",
         "ambiguous antecedent"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "مرجع پیشین؛ اسمی که ضمیر به آن برمی‌گردد."
     },
     {
       "id": "c1.cohesion.word.ellipsis",
@@ -3522,7 +3729,8 @@
         "use ellipsis",
         "verbal ellipsis"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "حذف واژه‌های تکراری که خواننده می‌تواند تأمین کند."
     },
     {
       "id": "c1.cohesion.word.paraphrase",
@@ -3539,7 +3747,8 @@
         "paraphrase a source",
         "accurate paraphrase"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "بازگویی؛ همان معنا با کلمات خودت."
     },
     {
       "id": "c1.cohesion.word.transition",
@@ -3556,7 +3765,8 @@
         "smooth transition",
         "mark a transition"
       ],
-      "lessonId": "c1.cohesion.lesson-01"
+      "lessonId": "c1.cohesion.lesson-01",
+      "explanationFa": "گذار میان بخش‌های متن."
     },
     {
       "id": "c2.argumentation.word.fallacy",
@@ -3573,7 +3783,8 @@
         "logical fallacy",
         "common fallacy"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "مغالطه؛ خطای استدلالی که نتیجه را بی‌اعتبار می‌کند."
     },
     {
       "id": "c2.argumentation.word.concede",
@@ -3590,7 +3801,8 @@
         "concede a point",
         "reluctantly concede"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "امتیاز دادن در بحث؛ پذیرفتن جزئی از حرف مخالف."
     },
     {
       "id": "c2.argumentation.word.refute",
@@ -3607,7 +3819,8 @@
         "refute a claim",
         "flatly refute"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "رد کردن با دلیل."
     },
     {
       "id": "c2.argumentation.word.premise",
@@ -3624,7 +3837,8 @@
         "false premise",
         "underlying premise"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "مقدمهٔ منطقی؛ پایه‌ای که نتیجه بر آن سوار است."
     },
     {
       "id": "c2.argumentation.word.assertion",
@@ -3641,7 +3855,8 @@
         "bold assertion",
         "unsupported assertion"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "ادعا؛ گزاره‌ای که هنوز اثبات نشده است."
     },
     {
       "id": "c2.argumentation.word.straw-man",
@@ -3658,7 +3873,8 @@
         "attack a straw man",
         "straw man argument"
       ],
-      "lessonId": "c2.argumentation.lesson-01"
+      "lessonId": "c2.argumentation.lesson-01",
+      "explanationFa": "مغالطهٔ آدم‌کاهی؛ حمله به نسخهٔ ضعیف‌شدهٔ حرف مخالف."
     },
     {
       "id": "c2.collocation.word.collocation",
@@ -3675,7 +3891,8 @@
         "strong collocation",
         "typical collocation"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "هم‌نشینی واژه‌ها؛ ترکیب طبیعی که natives به کار می‌برند."
     },
     {
       "id": "c2.collocation.word.collocate",
@@ -3692,7 +3909,8 @@
         "collocate with",
         "commonly collocate"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "هم‌نشین شدن؛ با collocate with."
     },
     {
       "id": "c2.collocation.word.delexical-verb",
@@ -3709,7 +3927,8 @@
         "use a delexical verb",
         "common delexical verb"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "فعل سبک؛ معنای اصلی در اسم است، مانند take a shower."
     },
     {
       "id": "c2.collocation.word.lexical",
@@ -3726,7 +3945,8 @@
         "lexical resource",
         "lexical density"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "واژگانی؛ مربوط به واژه‌ها و گنجینهٔ واژگان."
     },
     {
       "id": "c2.collocation.word.idiomatic",
@@ -3743,7 +3963,8 @@
         "idiomatic English",
         "sound idiomatic"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "اصطلاحی و طبیعی؛ با idiomatic English."
     },
     {
       "id": "c2.collocation.word.precision",
@@ -3760,7 +3981,8 @@
         "with precision",
         "precision of language"
       ],
-      "lessonId": "c2.collocation.lesson-01"
+      "lessonId": "c2.collocation.lesson-01",
+      "explanationFa": "دقت؛ با with precision."
     },
     {
       "id": "c2.irony.word.understatement",
@@ -3777,7 +3999,8 @@
         "a classic understatement",
         "deliberate understatement"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "کم‌گویی؛ کوچک‌نمایی عامدانه برای تأکید."
     },
     {
       "id": "c2.irony.word.litotes",
@@ -3794,7 +4017,8 @@
         "use litotes",
         "rhetorical litotes"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "کم‌گویی با نفیِ نقیض، مانند not uncommon."
     },
     {
       "id": "c2.irony.word.deadpan",
@@ -3811,7 +4035,8 @@
         "deadpan humour",
         "deadpan delivery"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "با چهرهٔ بی‌احساس؛ طنزِ خشک."
     },
     {
       "id": "c2.irony.word.subtext",
@@ -3828,7 +4053,8 @@
         "political subtext",
         "read the subtext"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "معنای پنهانِ زیر متن."
     },
     {
       "id": "c2.irony.word.self-deprecating",
@@ -3845,7 +4071,8 @@
         "self-deprecating humour",
         "self-deprecating remark"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "خودکوچک‌کننده؛ طنز به خود."
     },
     {
       "id": "c2.irony.word.facetious",
@@ -3862,7 +4089,8 @@
         "facetious remark",
         "sound facetious"
       ],
-      "lessonId": "c2.irony.lesson-01"
+      "lessonId": "c2.irony.lesson-01",
+      "explanationFa": "شوخ‌طبع اما نامناسبِ موقعیت."
     },
     {
       "id": "a1.articles.word.umbrella",
@@ -3879,7 +4107,8 @@
         "take an umbrella",
         "umbrella stand"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "چتر؛ با take an umbrella."
     },
     {
       "id": "a1.articles.word.apple",
@@ -3896,7 +4125,8 @@
         "apple tree",
         "apple juice"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "سیب؛ با apple juice."
     },
     {
       "id": "a1.articles.word.orange",
@@ -3913,7 +4143,8 @@
         "orange juice",
         "peel an orange"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "پرتقال؛ با orange juice."
     },
     {
       "id": "a1.articles.word.hour",
@@ -3930,7 +4161,8 @@
         "half an hour",
         "rush hour"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "ساعت (۶۰ دقیقه)؛ h در تلفظ خوانده نمی‌شود، پس an hour."
     },
     {
       "id": "a1.articles.word.sun",
@@ -3947,7 +4179,8 @@
         "in the sun",
         "sun rise"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "خورشید؛ یکتاست، پس با the می‌آید: the sun."
     },
     {
       "id": "a1.articles.word.hotel",
@@ -3964,7 +4197,8 @@
         "hotel room",
         "book a hotel"
       ],
-      "lessonId": "a1.articles.lesson-01"
+      "lessonId": "a1.articles.lesson-01",
+      "explanationFa": "هتل؛ با book a hotel."
     },
     {
       "id": "a1.plurals.word.child",
@@ -3981,7 +4215,8 @@
         "young child",
         "child care"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "کودک؛ جمعش بی‌قاعده است: children."
     },
     {
       "id": "a1.plurals.word.man",
@@ -3998,7 +4233,8 @@
         "young man",
         "old man"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "مرد؛ جمعش بی‌قاعده است: men."
     },
     {
       "id": "a1.plurals.word.woman",
@@ -4015,7 +4251,8 @@
         "young woman",
         "women's rights"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "زن؛ جمعش بی‌قاعده است: women."
     },
     {
       "id": "a1.plurals.word.foot",
@@ -4032,7 +4269,8 @@
         "on foot",
         "foot of the hill"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "پا؛ جمعش بی‌قاعده است: feet."
     },
     {
       "id": "a1.plurals.word.leaf",
@@ -4049,7 +4287,8 @@
         "autumn leaf",
         "tea leaf"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "برگ؛ جمعش با تغییر f به v ساخته می‌شود: leaves."
     },
     {
       "id": "a1.plurals.word.box",
@@ -4066,7 +4305,8 @@
         "shoe box",
         "box office"
       ],
-      "lessonId": "a1.plurals.lesson-01"
+      "lessonId": "a1.plurals.lesson-01",
+      "explanationFa": "جعبه؛ جمعش با es ساخته می‌شود: boxes."
     },
     {
       "id": "a1.pronouns.word.friend",
@@ -4083,7 +4323,8 @@
         "best friend",
         "make friends"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "دوست؛ با make friends یعنی «دوست پیدا کردن»."
     },
     {
       "id": "a1.pronouns.word.teacher",
@@ -4100,7 +4341,8 @@
         "English teacher",
         "head teacher"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "معلم؛ با English teacher."
     },
     {
       "id": "a1.pronouns.word.sister",
@@ -4117,7 +4359,8 @@
         "younger sister",
         "sister city"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "خواهر؛ با younger sister."
     },
     {
       "id": "a1.pronouns.word.brother",
@@ -4134,7 +4377,8 @@
         "older brother",
         "twin brother"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "برادر؛ با twin brother."
     },
     {
       "id": "a1.pronouns.word.doctor",
@@ -4151,7 +4395,8 @@
         "see a doctor",
         "family doctor"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "پزشک؛ با see a doctor."
     },
     {
       "id": "a1.pronouns.word.student",
@@ -4168,7 +4413,8 @@
         "medical student",
         "exchange student"
       ],
-      "lessonId": "a1.pronouns.lesson-01"
+      "lessonId": "a1.pronouns.lesson-01",
+      "explanationFa": "دانش‌آموز یا دانشجو؛ با exchange student."
     },
     {
       "id": "a1.can.word.swim",
@@ -4185,7 +4431,8 @@
         "swim well",
         "go swimming"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "شنا کردن؛ با go swimming."
     },
     {
       "id": "a1.can.word.drive",
@@ -4202,7 +4449,8 @@
         "drive a car",
         "drive home"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "رانندگی کردن؛ با drive a car."
     },
     {
       "id": "a1.can.word.speak",
@@ -4219,7 +4467,8 @@
         "speak English",
         "speak up"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "صحبت کردن؛ با speak English."
     },
     {
       "id": "a1.can.word.cook",
@@ -4236,7 +4485,8 @@
         "cook dinner",
         "home cooking"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "آشپزی کردن؛ هم اسم (آشپز) و هم فعل."
     },
     {
       "id": "a1.can.word.play",
@@ -4253,7 +4503,8 @@
         "play football",
         "play the piano"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "بازی کردن یا نواختن ساز؛ با play the piano."
     },
     {
       "id": "a1.can.word.run",
@@ -4270,7 +4521,8 @@
         "run fast",
         "go for a run"
       ],
-      "lessonId": "a1.can.lesson-01"
+      "lessonId": "a1.can.lesson-01",
+      "explanationFa": "دویدن؛ با go for a run."
     },
     {
       "id": "a1.imperatives.word.stop",
@@ -4287,7 +4539,8 @@
         "stop here",
         "bus stop"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "توقف کردن؛ هم فعل است و هم اسم (ایستگاه)."
     },
     {
       "id": "a1.imperatives.word.wait",
@@ -4304,7 +4557,8 @@
         "wait a moment",
         "can't wait"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "منتظر ماندن؛ با wait a moment."
     },
     {
       "id": "a1.imperatives.word.sit",
@@ -4321,7 +4575,8 @@
         "sit down",
         "sit here"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "نشستن؛ با sit down."
     },
     {
       "id": "a1.imperatives.word.open",
@@ -4338,7 +4593,8 @@
         "open the door",
         "open up"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "باز کردن؛ با open the door."
     },
     {
       "id": "a1.imperatives.word.close",
@@ -4355,7 +4611,8 @@
         "close the door",
         "close your eyes"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "بستن؛ با close your eyes."
     },
     {
       "id": "a1.imperatives.word.listen",
@@ -4372,7 +4629,8 @@
         "listen to",
         "listen carefully"
       ],
-      "lessonId": "a1.imperatives.lesson-01"
+      "lessonId": "a1.imperatives.lesson-01",
+      "explanationFa": "گوش دادن؛ با listen to + چیز می‌آید."
     },
     {
       "id": "a1.question-words.word.what",
@@ -4389,7 +4647,8 @@
         "what time",
         "what kind of"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "چه و چه‌چیز؛ با what time و what kind of."
     },
     {
       "id": "a1.question-words.word.where",
@@ -4406,7 +4665,8 @@
         "where to",
         "where from"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "کجا؛ با where from."
     },
     {
       "id": "a1.question-words.word.when",
@@ -4423,7 +4683,8 @@
         "since when",
         "when to"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "کی و چه‌وقت؛ با since when."
     },
     {
       "id": "a1.question-words.word.why",
@@ -4440,7 +4701,8 @@
         "why not",
         "the reason why"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "چرا؛ پاسخش با because می‌آید."
     },
     {
       "id": "a1.question-words.word.who",
@@ -4457,7 +4719,8 @@
         "who else",
         "whoever"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "چه کسی؛ برای پرسش از فاعل به کار می‌رود."
     },
     {
       "id": "a1.question-words.word.how",
@@ -4474,7 +4737,8 @@
         "how about",
         "how come"
       ],
-      "lessonId": "a1.question-words.lesson-01"
+      "lessonId": "a1.question-words.lesson-01",
+      "explanationFa": "چگونه؛ با how about و how come."
     },
     {
       "id": "a2.past-simple.word.go",
@@ -4491,7 +4755,8 @@
         "go out",
         "go home"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "رفتن؛ گذشته‌اش بی‌قاعده است: went."
     },
     {
       "id": "a2.past-simple.word.buy",
@@ -4508,7 +4773,8 @@
         "buy a ticket",
         "buy groceries"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "خریدن؛ گذشته‌اش بی‌قاعده است: bought."
     },
     {
       "id": "a2.past-simple.word.see",
@@ -4525,7 +4791,8 @@
         "see a film",
         "see you soon"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "دیدن؛ گذشته‌اش بی‌قاعده است: saw."
     },
     {
       "id": "a2.past-simple.word.eat",
@@ -4542,7 +4809,8 @@
         "eat out",
         "eat breakfast"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "خوردن؛ گذشته‌اش بی‌قاعده است: ate."
     },
     {
       "id": "a2.past-simple.word.take",
@@ -4559,7 +4827,8 @@
         "take a taxi",
         "take the bus"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "گرفتن و برداشتن؛ گذشته‌اش بی‌قاعده است: took."
     },
     {
       "id": "a2.past-simple.word.write",
@@ -4576,7 +4845,8 @@
         "write down",
         "write an email"
       ],
-      "lessonId": "a2.past-simple.lesson-01"
+      "lessonId": "a2.past-simple.lesson-01",
+      "explanationFa": "نوشتن؛ گذشته‌اش بی‌قاعده است: wrote."
     }
   ]
 }

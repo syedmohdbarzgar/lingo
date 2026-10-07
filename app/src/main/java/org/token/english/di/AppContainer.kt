@@ -65,6 +65,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
                 AppDatabase.MIGRATION_1_2,
                 AppDatabase.MIGRATION_2_3,
                 AppDatabase.MIGRATION_3_4,
+                AppDatabase.MIGRATION_4_5,
             )
             .build()
     }
@@ -201,7 +202,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
         SubmitReviewUseCase(reviewRepository, reviewScheduler, progressRepository)
     }
     val getTodayPlan: GetTodayPlanUseCase by lazy {
-        GetTodayPlanUseCase(lessonRepository, reviewRepository, progressRepository, settingsRepository, learningPlanner)
+        GetTodayPlanUseCase(
+            lessons = lessonRepository,
+            reviews = reviewRepository,
+            progress = progressRepository,
+            settingsRepository = settingsRepository,
+            planner = learningPlanner,
+            knowledge = knowledgeRepository,
+        )
     }
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }
 }

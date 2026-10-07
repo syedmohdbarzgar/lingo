@@ -190,4 +190,64 @@ class AdaptiveLearningPlannerTest {
             decision.actions.count { it.type == LearningActionType.REMEDIATE },
         )
     }
+
+    // --- time budget (checklist B-2) -----------------------------------------
+
+    @Test
+    fun `a large review block is kept and its estimate capped`() {
+        // 30 due cards would estimate 30 minutes against a 10-minute target: the
+        // old per-action filter dropped the whole block. It must survive, capped
+        // at half the target, so the rest of the day still has a slot.
+        val decision = planner.plan(
+            states = emptyList(),
+            dueReviewCount = 30,
+            focusItems = listOf(item("a")),
+            targetMinutes = 10,
+            todayStudySeconds = 0L,
+        )
+        val review = decision.actions.first()
+        assertEquals(LearningActionType.REVIEW, review.type)
+        assertEquals(30, decision.dueReviewCount)
+        assertTrue(
+            "review estimate is capped at half the target, was ${review.estimatedMinutes}",
+            review.estimatedMinutes <= 5,
+        )
+        assertTrue(
+            "a lesson still fits after the capped review block",
+            decision.actions.any { it.type != LearningActionType.REVIEW },
+        )
+    }
+
+    @Test
+    fun `review still leads the day once the goal is met`() {
+        // todayStudySeconds already exceeds the target → availableMinutes == 0.
+        // The day must not read as empty: retention work is still surfaced.
+        val decision = planner.plan(
+            states = emptyList(),
+            dueReviewCount = 4,
+            focusItems = listOf(item("a")),
+            targetMinutes = 10,
+            todayStudySeconds = 15 * 60L,
+        )
+        assertEquals(listOf(LearningActionType.REVIEW), decision.actions.map { it.type })
+        assertEquals(0, decision.remainingMinutes)
+    }
+
+    @Test
+    fun `the plan stops at the first action that does not fit`() {
+        // 12-minute target: review is capped to 5, then two 5-minute lessons fit
+        // (10) and the third would overflow — the plan must end there, not skip it
+        // for a cheaper later action.
+        val focus = listOf(item("a"), item("d"))
+        val decision = planner.plan(
+            states = listOf(state("a", 0.1f), state("d", 0.1f)),
+            dueReviewCount = 3,
+            focusItems = focus,
+            targetMinutes = 12,
+            todayStudySeconds = 0L,
+        )
+        assertEquals(LearningActionType.REVIEW, decision.actions.first().type)
+        assertTrue(decision.actions.size <= 3)
+        assertTrue(decision.estimatedTotalMinutes <= 12)
+    }
 }

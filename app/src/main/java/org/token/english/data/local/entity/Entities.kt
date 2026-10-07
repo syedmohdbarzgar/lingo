@@ -30,6 +30,8 @@ data class VocabularyEntity(
     val examplesJson: String,
     val collocationsJson: String,
     val lessonId: String?,
+    /** Authored Persian usage note, shown after a missed review card (A-1). */
+    val explanationFa: String? = null,
 )
 
 @Entity(tableName = "exercise")

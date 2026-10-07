@@ -229,6 +229,16 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                                 textAlign = TextAlign.Center,
                             )
                         }
+                        // Authored Persian usage note (A-1): the same "why" the
+                        // lesson screen shows after a miss.
+                        word.explanationFa?.let { note ->
+                            Text(
+                                text = note,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                         if (word.collocations.isNotEmpty()) {
                             Text(
                                 text = word.collocations.joinToString(" · "),
@@ -254,6 +264,15 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                                     "پاسخ درست: ${word.word}"
                                 },
                             )
+                            // Explain the miss (A-1), as the lesson screen does.
+                            word.explanationFa?.let { note ->
+                                Text(
+                                    text = note,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                     }
                 }

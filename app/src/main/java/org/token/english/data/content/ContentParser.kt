@@ -133,6 +133,8 @@ object ContentParser {
                 examples = o.optJSONArraytoString("examples"),
                 collocations = o.optJSONArraytoString("collocations"),
                 lessonId = o.optString("lessonId").ifBlank { null },
+                // Authored Persian usage note (A-1) — shown after a missed review card.
+                explanationFa = o.optString("explanationFa").ifBlank { null },
             )
         }
     }
