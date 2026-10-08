@@ -1,5 +1,5 @@
 {
-  "contentVersion": 14,
+  "contentVersion": 15,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -4847,6 +4847,354 @@
       ],
       "lessonId": "a2.past-simple.lesson-01",
       "explanationFa": "نوشتن؛ گذشته‌اش بی‌قاعده است: wrote."
+    },
+    {
+      "id": "a1.alphabet.word.alphabet",
+      "word": "alphabet",
+      "translation": "الفبا",
+      "definition": "All the letters from A to Z",
+      "pronunciation": "/ˈælfəbet/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The English alphabet has twenty-six letters."
+      ],
+      "collocations": [
+        "learn the alphabet"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "کل ۲۶ حرف انگلیسی. برای شمردن حروف بگو letters، نه alphabets."
+    },
+    {
+      "id": "a1.alphabet.word.letter",
+      "word": "letter",
+      "translation": "حرف",
+      "definition": "One symbol of the alphabet",
+      "pronunciation": "/ˈletər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The letter A is the first one."
+      ],
+      "collocations": [
+        "capital letter",
+        "letter sound"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "یک نماد از الفبا؛ شکل بزرگش capital letter و شکل کوچکش small letter است."
+    },
+    {
+      "id": "a1.alphabet.word.capital-letter",
+      "word": "capital letter",
+      "translation": "حرف بزرگ",
+      "definition": "The big form of a letter",
+      "pronunciation": "/ˈkæpɪtl ˈletər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Every name starts with a capital letter."
+      ],
+      "collocations": [
+        "start with a capital letter"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "شکل بزرگ حرف؛ در آغاز نام‌ها و جمله‌ها می‌آید: Sara نه sara."
+    },
+    {
+      "id": "a1.alphabet.word.small-letter",
+      "word": "small letter",
+      "translation": "حرف کوچک",
+      "definition": "The usual, lowercase form of a letter",
+      "pronunciation": "/smɔːl ˈletər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Write your email address in small letters."
+      ],
+      "collocations": [
+        "in small letters"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "شکل کوچک و رایج حرف؛ در ایمیل و نشانی اینترنتی همه را کوچک می‌نویسیم."
+    },
+    {
+      "id": "a1.alphabet.word.vowel",
+      "word": "vowel",
+      "translation": "حرف صدادار",
+      "definition": "A, E, I, O and U",
+      "pronunciation": "/ˈvaʊəl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "The letters A, E, I, O and U are vowels."
+      ],
+      "collocations": [
+        "vowel sound"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "پنج حرف صدادار A, E, I, O, U؛ بقیهٔ حروف بی‌صدا (consonant) هستند."
+    },
+    {
+      "id": "a1.alphabet.word.sound",
+      "word": "sound",
+      "translation": "صدا",
+      "definition": "What you hear when you say a letter",
+      "pronunciation": "/saʊnd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Every letter has its own sound."
+      ],
+      "collocations": [
+        "letter sound",
+        "the sound of a word"
+      ],
+      "lessonId": "a1.alphabet.lesson-01",
+      "explanationFa": "صدایی که می‌شنوی، جدا از نام حرف؛ نام B «بی» است ولی صدایش /b/ است."
+    },
+    {
+      "id": "a1.spelling.word.spell",
+      "word": "spell",
+      "translation": "هجی کردن",
+      "definition": "To say the letters of a word in order",
+      "pronunciation": "/spel/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        "Can you spell your name, please?"
+      ],
+      "collocations": [
+        "spell a word",
+        "how do you spell"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "حرف‌های یک واژه را به ترتیب گفتن: S-A-R-A."
+    },
+    {
+      "id": "a1.spelling.word.name",
+      "word": "name",
+      "translation": "نام",
+      "definition": "What someone or something is called",
+      "pronunciation": "/neɪm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "My name is Sara."
+      ],
+      "collocations": [
+        "first name",
+        "full name"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "نام کوچک؛ نام خانوادگی surname یا family name است."
+    },
+    {
+      "id": "a1.spelling.word.surname",
+      "word": "surname",
+      "translation": "نام خانوادگی",
+      "definition": "Your family name",
+      "pronunciation": "/ˈsɜːrneɪm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Her surname is Ahmadi."
+      ],
+      "collocations": [
+        "family surname",
+        "write your surname"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "نام خانوادگی؛ در گفتار محاوره‌ای last name و family name هم می‌گویند."
+    },
+    {
+      "id": "a1.spelling.word.address",
+      "word": "address",
+      "translation": "نشانی",
+      "definition": "Where you live, or an email location",
+      "pronunciation": "/ˈædres/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Please write your address here."
+      ],
+      "collocations": [
+        "email address",
+        "home address"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "نشانی خانه یا ایمیل؛ املایش دو d و دو s دارد."
+    },
+    {
+      "id": "a1.spelling.word.double",
+      "word": "double",
+      "translation": "دوتایی",
+      "definition": "Two of the same letter or thing",
+      "pronunciation": "/ˈdʌbl/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        "My name has a double L."
+      ],
+      "collocations": [
+        "double letter"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "حرف تکراری؛ در هجی‌کردن می‌گوییم double L یعنی دو تا L."
+    },
+    {
+      "id": "a1.spelling.word.email",
+      "word": "email",
+      "translation": "ایمیل",
+      "definition": "A message sent over the internet",
+      "pronunciation": "/ˈiːmeɪl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "Send me an email, please."
+      ],
+      "collocations": [
+        "email address",
+        "send an email"
+      ],
+      "lessonId": "a1.spelling.lesson-01",
+      "explanationFa": "پیام اینترنتی؛ در نشانی ایمیل همه را با حرف کوچک بنویس."
+    },
+    {
+      "id": "a1.numbers.word.zero",
+      "word": "zero",
+      "translation": "صفر",
+      "definition": "The number 0",
+      "pronunciation": "/ˈzɪəroʊ/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "Zero comes before one."
+      ],
+      "collocations": [
+        "below zero"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۰؛ در شماره‌تلفن محاوره‌ای «o» هم گفته می‌شود."
+    },
+    {
+      "id": "a1.numbers.word.one",
+      "word": "one",
+      "translation": "یک",
+      "definition": "The number 1",
+      "pronunciation": "/wʌn/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "I have one brother."
+      ],
+      "collocations": [
+        "one more"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۱؛ با won («برنده شد») هم‌صدا است، پس به بافت جمله دقت کن."
+    },
+    {
+      "id": "a1.numbers.word.two",
+      "word": "two",
+      "translation": "دو",
+      "definition": "The number 2",
+      "pronunciation": "/tuː/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "Two plus two is four."
+      ],
+      "collocations": [
+        "two of them"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۲؛ با to و too هم‌صدا است."
+    },
+    {
+      "id": "a1.numbers.word.three",
+      "word": "three",
+      "translation": "سه",
+      "definition": "The number 3",
+      "pronunciation": "/θriː/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "There are three books on the desk."
+      ],
+      "collocations": [
+        "three times"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۳؛ با /θ/ گفته می‌شود و با tree (درخت) اشتباه نشود."
+    },
+    {
+      "id": "a1.numbers.word.twelve",
+      "word": "twelve",
+      "translation": "دوازده",
+      "definition": "The number 12",
+      "pronunciation": "/twelv/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "A year has twelve months."
+      ],
+      "collocations": [
+        "twelve o'clock"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۱۲؛ شبیه twenty نیست — twelve دوازده و twenty بیست است."
+    },
+    {
+      "id": "a1.numbers.word.twenty",
+      "word": "twenty",
+      "translation": "بیست",
+      "definition": "The number 20",
+      "pronunciation": "/ˈtwenti/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "There are twenty students in the class."
+      ],
+      "collocations": [
+        "twenty years old"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۲۰؛ تکیه روی هجای اول است و با thirty اشتباه نشود."
+    },
+    {
+      "id": "a1.numbers.word.hundred",
+      "word": "hundred",
+      "translation": "صد",
+      "definition": "The number 100",
+      "pronunciation": "/ˈhʌndrəd/",
+      "level": "A1",
+      "partOfSpeech": "number",
+      "examples": [
+        "A hundred is ten times ten."
+      ],
+      "collocations": [
+        "a hundred percent"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد ۱۰۰؛ جمعش hundreds است: hundreds of people."
+    },
+    {
+      "id": "a1.numbers.word.number",
+      "word": "number",
+      "translation": "عدد",
+      "definition": "A word or symbol used for counting",
+      "pronunciation": "/ˈnʌmbər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        "What is your phone number?"
+      ],
+      "collocations": [
+        "phone number",
+        "a big number"
+      ],
+      "lessonId": "a1.numbers.lesson-01",
+      "explanationFa": "عدد یا شماره؛ حرف d در تلفظ خوانده نمی‌شود (/ˈnʌmbər/)."
     }
   ]
 }

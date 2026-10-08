@@ -1,6 +1,36 @@
 {
-  "contentVersion": 14,
+  "contentVersion": 15,
   "lessons": [
+    {
+      "id": "a1.alphabet.lesson-01",
+      "level": "A1",
+      "title": "The Alphabet",
+      "titleFa": "الفبای انگلیسی",
+      "topic": "Foundations",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "grammarTipFa": "## قاعده\nانگلیسی ۲۶ حرف دارد: از A تا Z. هر حرف دو شکل دارد — حرف بزرگ (capital) در آغاز نام‌ها و جمله‌ها، و حرف کوچک (small) در بقیهٔ جاها. پنج حرف صدادار (vowel) داریم: A, E, I, O, U؛ بقیه بی‌صدا (consonant) هستند.\n## جدول\nA B C D E F G\nH I J K L M N\nO P Q R S T U\nV W X Y Z\nحروف صدادار: A, E, I, O, U\n## مثال‌ها\nMy name starts with a capital letter. — نام من با حرف بزرگ شروع می‌شود.\nThe letter A is the first letter. — حرف A اولین حرف است.\nE is a vowel. — E یک حرف صدادار است.\n## خطاهای رایج\nشکل بزرگ و کوچک را قاطی نکنید: در آغاز جمله و نام همیشه حرف بزرگ می‌آید: Sara نه sara.\nنام حرف را با صدایش اشتباه نگیرید: نام حرف B «بی» است، اما در واژه صدای /b/ می‌دهد.\n## تلفظ\nنامِ حروف را جدا از صدایشان یاد بگیرید: B «بی» (/biː/) است ولی در واژه صدای /b/ می‌دهد.\nواکهٔ نامِ حروف بلند است: A /eɪ/, E /iː/, I /aɪ/, O /oʊ/, U /juː/.\nحروف صدادار در واژه‌ها صداهای متفاوتی می‌سازند؛ به تفاوت a در cat و cake گوش کنید."
+    },
+    {
+      "id": "a1.spelling.lesson-01",
+      "level": "A1",
+      "title": "Spelling Your Name",
+      "titleFa": "هجی کردن نام",
+      "topic": "Foundations",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "grammarTipFa": "## قاعده\nهجی‌کردن (spelling) یعنی گفتن حروف یک واژه به ترتیب، مثلاً S-A-R-A. برای پرسیدن از How do you spell …? استفاده کن. حرف تکراری را با double می‌گوییم: L-L می‌شود double L.\n## جدول\nHow do you spell your name? — نامت را چطور هجی می‌کنی؟\nS-A-R-A — اِس-اِی-آر-اِی\ndouble L — دو تا L\n## مثال‌ها\nCan you spell your surname, please? — می‌توانی نام خانوادگی‌ات را هجی کنی؟\nMy name has a double L. — نام من دو تا L دارد.\nWrite your email in small letters. — ایمیلت را با حروف کوچک بنویس.\n## خطاهای رایج\nدر ایمیل و نشانی اینترنتی همه‌چیز را با حرف کوچک بنویسید.\nحرف‌های تکراری را جا نیندازید: address دو تا d و دو تا s دارد.\n## تلفظ\nنام حروف در هجی‌کردن بلند و روشن گفته می‌شود؛ W را «double U» (/ˈdʌbljuː/) می‌گوییم.\nH /eɪtʃ/ را با نام‌های کوتاه اشتباه نگیرید؛ کشش واکهٔ آخرش را نگه دارید.\nدر هجی‌کردن بین حروف مکث کنید تا شنونده آن‌ها را جدا بشنود."
+    },
+    {
+      "id": "a1.numbers.lesson-01",
+      "level": "A1",
+      "title": "Numbers 0–20",
+      "titleFa": "اعداد صفر تا بیست",
+      "topic": "Foundations",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "grammarTipFa": "## قاعده\nعددهای ۰ تا ۱۲ واژهٔ مستقل دارند و از ۱۳ تا ۱۹ با پسوند -teen ساخته می‌شوند (thirteen, fourteen …). دهگان‌ها پسوند -ty دارند (twenty, thirty …). عدد را هم با رقم (digits) و هم با واژه (words) می‌نویسیم.\n## جدول\n0 zero — 1 one — 2 two — 3 three — 4 four — 5 five\n6 six — 7 seven — 8 eight — 9 nine — 10 ten\n11 eleven — 12 twelve — 13 thirteen — 15 fifteen — 18 eighteen\n20 twenty — 30 thirty — 100 a hundred\n## مثال‌ها\nThere are twelve months in a year. — سال دوازده ماه دارد.\nThree plus two is five. — سه به‌علاوهٔ دو می‌شود پنج.\nThere are twenty students in the class. — بیست دانش‌آموز در کلاس هستند.\n## خطاهای رایج\nشکل حروفی عدد را درست بنویسید: eight نه eigth، و twelve نه twelwe.\nشکل واژه‌ای و رقمی را قاطی نکنید: در متن رسمی twenty students بهتر از 20 students است.\n## تلفظ\nteen و ty را جدا کنید: thirteen (تکیه روی -teen) با thirty (تکیه روی هجای اول) فرق دارد.\nthree با /θ/ شروع می‌شود — زبان میان دندان‌ها؛ با tree (درخت) اشتباه نکنید.\ntwelve و twenty هر دو /tw/ دارند و با واکهٔ کوتاه /e/ شروع می‌شوند."
+    },
     {
       "id": "a1.greetings.lesson-01",
       "level": "A1",
@@ -8,7 +38,7 @@
       "titleFa": "سلام و احوالپرسی",
       "topic": "Basics",
       "estimatedMinutes": 5,
-      "order": 1,
+      "order": 4,
       "grammarTipFa": "## قاعده\nسلام‌ها به زمان روز بستگی دارند: Good morning تا ظهر، Good afternoon از ظهر تا غروب، Good evening غروب به بعد. Good night فقط هنگام خداحافظی است، نه سلام.\n## جدول\nGood morning! — صبح بخیر\nGood afternoon! — عصر بخیر (تا غروب)\nGood evening! — عصر/شب بخیر\nGood night! — شب بخیر (خداحافظی)\n## مثال‌ها\nGood morning, Sara! — صبح بخیر، سارا!\nGood evening. How are you? — عصر بخیر. حالت چطور است؟\nGood night, see you tomorrow. — شب بخیر، فردا می‌بینمت.\n## خطاهای رایج\nGood night را به‌جای سلام به کار نبرید — فقط هنگام خداحافظی شب است.\nاگر مطمئن نیستید، Hi یا Hello برای هر وقت روز بی‌خطر است.\n## تلفظ\nhello: تکیه روی هجای دوم است (he-LLO) و هجای اول یک /ə/ خنثی و کوتاه است، نه /e/.\nthank با آوای /θ/ گفته می‌شود — زبان میان دندان‌ها؛ «سَنک» با /s/ غلط است.\nplease و meet واکهٔ بلند /iː/ دارند؛ کوتاه خواندنشان آن‌ها را به «پلیس» و «میت» نزدیک می‌کند."
     },
     {
@@ -18,7 +48,7 @@
       "titleFa": "روزمرگی",
       "topic": "Daily Life",
       "estimatedMinutes": 5,
-      "order": 2,
+      "order": 5,
       "grammarTipFa": "## قاعده\nبرای کارهای تکراری و روزمره از زمان حال ساده استفاده کن. با he/she/it به فعل s می‌چسبد: She goes to work. در پرسش و منفی، فعل کمکی do/does می‌آید و فعل اصلی لخت می‌شود.\n## جدول\nI work / You work / He works / She works / They work\nDoes she work? — Yes, she does.\nShe doesn't work on Fridays.\n## مثال‌ها\nI usually wake up at seven. — معمولاً ساعت هفت بیدار می‌شوم.\nShe goes to work by bus. — او با اتوبوس به سر کار می‌رود.\nDo you drink coffee in the morning? — صبح قهوه می‌نوشی؟\n## خطاهای رایج\ns را برای I/you/we/they نگذارید: «I works» غلط است.\nبعد از does، فعل دوباره s نمی‌گیرد: «Does she goes?» غلط است.\n## تلفظ\nwake با واکهٔ دوهجایی /eɪ/ است؛ آن را مثل /e/ کوتاه نخوانید.\nusually روی هجای اول تکیه دارد (US-ually) و هجای دوم /jə/ ضعیف است.\nbreakfast دو هجاست و تکیه روی اول می‌افتد: BREK-fest؛ هجای دوم /ə/ کوتاه است."
     },
     {
@@ -28,7 +58,7 @@
       "titleFa": "خانواده من",
       "topic": "People",
       "estimatedMinutes": 5,
-      "order": 3,
+      "order": 6,
       "grammarTipFa": "## قاعده\nداشتن اعضا و چیزها با have یا have got بیان می‌شود. با he/she/it شکل has می‌آید. پرسش با Do/Does…have? شروع می‌شود و پاسخ کوتاه Yes, I do است.\n## جدول\nI have / You have / He has / She has / We have\nI have got two brothers.\nDo you have a sister? — Yes, I do.\n## مثال‌ها\nI have got two brothers. — دو برادر دارم.\nShe has a daughter and a son. — او یک دختر و یک پسر دارد.\nDo you have any cousins? — عموزاده یا عموزاده‌ای داری؟\n## خطاهای رایج\nبرای he/she نگویید «She have» — «She has» درست است.\nفعل داشتن را حذف نکنید: «She two brothers» غلط، «She has two brothers» درست.\n## تلفظ\nfamily سه هجاست و تکیه روی اول است: FA-mi-ly؛ هجای میانی /ə/ خنثی است.\nsister و brother هر دو روی هجای اول تکیه دارند و -er آخر کوتاه /ə/ است.\ndaughter با واکهٔ بلند /ɔː/ و بدون r تلفظ می‌شود؛ کشش واکه را حفظ کنید."
     },
     {
@@ -38,7 +68,7 @@
       "titleFa": "خرید و اعداد",
       "topic": "Shopping",
       "estimatedMinutes": 5,
-      "order": 4,
+      "order": 7,
       "grammarTipFa": "## قاعده\nقیمت را با How much is…? (مفرد/غیرقابل شمارش) و How much are…? (جمع) بپرس. اعداد ترتیبی بعد از اسم و معمولاً با the می‌آیند: the second floor.\n## جدول\nHow much is this shirt? — این پیراهن چند است؟\nHow much are these shoes? — این کفش‌ها چندند؟\nthe first / the second / the third\n## مثال‌ها\nHow much is this jacket? — این کت چند است؟\nIt's twenty dollars. — بیست دلار است.\nThe shoes are on the second floor. — کفش‌ها طبقه‌ی دوم است.\n## خطاهای رایج\n«How much cost?» غلط است — فعل is لازم: «How much is it?»\nترتیبی را قبل از اسم نگذارید: «floor second» غلط، «the second floor» درست.\n## تلفظ\ncheap و expensive هر دو با واکهٔ بلند /iː/ شروع می‌شوند؛ آن را کوتاه نخوانید.\nmoney با /ʌ/ کوتاه تلفظ می‌شود (MUN-ey)، نه /uː/.\nدر پرسش How much…؟ تکیه روی much می‌افتد و h در how نرم و کوتاه است."
     },
     {
@@ -48,7 +78,7 @@
       "titleFa": "در فرودگاه",
       "topic": "Travel",
       "estimatedMinutes": 6,
-      "order": 5,
+      "order": 8,
       "grammarTipFa": "## قاعده\nاجبار و الزام با need to یا have to بیان می‌شود: You have to show your passport. برای برنامه‌ی از قبل تعیین‌شده از زمان آینده will استفاده کن: The flight will depart at ten.\n## جدول\nI have to / You have to / He has to / She has to\nI need to buy a ticket.\nThe flight will depart at ten.\n## مثال‌ها\nYou have to show your passport. — باید پاسپورتتان را نشان دهید.\nI need to buy a ticket. — باید بلیت بخرم.\nThe gate will close in twenty minutes. — گیت بیست دقیقه‌ی دیگر بسته می‌شود.\n## خطاهای رایج\nبعد از have to فعل اصلی لخت می‌آید: «I have to to show» یا «I have to showing» غلط.\nبرای he/she نگویید «he have to» — «he has to» درست است."
     },
     {
@@ -58,7 +88,7 @@
       "titleFa": "در رستوران",
       "topic": "Food",
       "estimatedMinutes": 6,
-      "order": 6,
+      "order": 9,
       "grammarTipFa": "## قاعده\nسفارش مودبانه با I'd like… (= I would like) مطرح کن و پیشنهاد را با Would you like…? بپرس. برای غیرقابل شمارش (water, bread) و جمع‌های ناموجود در جمله از some و در پرسش/منفی از any استفاده کن.\n## جدول\nI'd like a salad, please.\nWould you like some coffee?\nWe don't have any bread.\nIs there any water?\n## مثال‌ها\nI'd like chicken, please. — می‌خواهم مرغ سفارش بدهم، لطفاً.\nWould you like some tea? — چای میل دارید؟\nWe don't have any more plates. — دیگر بشقابی نداریم.\n## خطاهای رایج\nI want در رستوران خشن و کودکانه است — «I'd like» مودبانه است.\nsome در پیشنهاد درست است (Would you like some tea؟) ولی در پرسش معمولی any می‌آید: «Is there any tea?»"
     },
     {
@@ -68,7 +98,7 @@
       "titleFa": "مسیریابی",
       "topic": "Travel",
       "estimatedMinutes": 6,
-      "order": 7,
+      "order": 10,
       "grammarTipFa": "## قاعده\nفعل و صفت مکان بعد از فعل می‌آیند: turn left، go straight. حرف اضافه را دقیق انتخاب کن: on برای سطح و کنار خیابان، at برای نقطه‌ی مشخص، in برای درون.\n## جدول\nturn left / turn right / go straight\non the left / on the right\nat the bank / at the corner\nin front of the hotel\n## مثال‌ها\nTurn right at the second traffic light. — سمت راست بپیچید، سر چراغ دوم.\nThe bank is on the left. — بانک سمت چپ است.\nGo straight for two minutes. — دو دقیقه مستقیم بروید.\n## خطاهای رایج\n«in the left» غلط است — «on the left» درست.\nبعد از go، جهت بدون to می‌آید: «go to straight» غلط، «go straight» درست."
     },
     {
@@ -78,7 +108,7 @@
       "titleFa": "نزد دکتر",
       "topic": "Health",
       "estimatedMinutes": 6,
-      "order": 8,
+      "order": 11,
       "grammarTipFa": "## قاعده\nدرد و بیماری را با have got به همراه a بیان کن: I have got a headache. توصیه با should و نهی با shouldn't داده می‌شود و بعد از آن‌ها فعل لخت می‌آید.\n## جدول\nI have got a headache / a cough / a fever\nYou should rest.\nYou shouldn't smoke.\n## مثال‌ها\nI have got a terrible headache. — سردرد شدیدی دارم.\nYou should drink plenty of water. — باید آب فراوان بنوشید.\nYou shouldn't take medicine without advice. — نباید بدون توصیه دارو مصرف کنی.\n## خطاهای رایج\nحرف تعریف a را با درد حذف نکنید: «I have got headache» غلط — «a headache».\nبعد از should فعل لخت می‌آید: «should to rest» غلط است."
     },
     {
@@ -88,7 +118,7 @@
       "titleFa": "کار و حرفه",
       "topic": "Work",
       "estimatedMinutes": 7,
-      "order": 9,
+      "order": 12,
       "grammarTipFa": "## قاعده\nوضعیت همین حالا با حال استمراری می‌آید: I'm working. تجربه‌ی کاری بدون زمان مشخص با حال کامل (have/has + قسمت سوم) بیان می‌شود: I have worked in finance for years.\n## جدول\nI am working now.\nI have worked in this field for ten years.\nHave you ever worked abroad?\n## مثال‌ها\nI'm working on a new project. — روی پروژه‌ی جدیدی کار می‌کنم.\nI have worked in this field for ten years. — ده سال در این حوزه کار کرده‌ام.\nShe has never worked abroad. — او هرگز خارج از کشور کار نکرده است.\n## خطاهای رایج\nسوم شخص را با have نگیرید: «She have worked» غلط — «She has worked».\nبا زمان مشخص گذشته حال کامل نیاید: «I have seen him yesterday» غلط — «I saw him yesterday»."
     },
     {
@@ -98,7 +128,7 @@
       "titleFa": "خبر و رسانه",
       "topic": "Media",
       "estimatedMinutes": 7,
-      "order": 10,
+      "order": 13,
       "grammarTipFa": "## قاعده\nخبر اغلب مجهول است چون فاعل مهم نیست: The law was announced yesterday. ساختار مجهول = be + قسمت سوم. برای نقل خبر با say/report از گذشته استفاده کن: The minister said that…\n## جدول\nActive: People announced the law.\nPassive: The law was announced (by people).\nwas / were + قسمت سوم\n## مثال‌ها\nThe law was announced yesterday. — قانون دیروز اعلام شد.\nThe results will be published next week. — نتایج هفته‌ی بعد منتشر می‌شود.\nThe minister said that the plan had changed. — وزیر گفت که طرح تغییر کرده است.\n## خطاهای رایج\nدر مجهول، فعل be را حذف نکنید: «The law announced yesterday» غلط — «was announced».\nفاعل مجهول را فقط وقتی اضافه کنید که مهم است (by the minister)."
     },
     {
@@ -108,7 +138,7 @@
       "titleFa": "برنامه‌ها و تصمیم‌ها",
       "topic": "Daily Life",
       "estimatedMinutes": 7,
-      "order": 11,
+      "order": 14,
       "grammarTipFa": "## قاعده\nقصد از قبل‌پذیرفته‌شده با be going to و تصمیم لحظه‌ای یا پیش‌بینی با will می‌آید. شرطی نوع اول برای نتیجه‌ی واقعی است: If + زمان حال ساده، will + فعل لخت — بعد از if هرگز will نمی‌آید.\n## جدول\nI am going to study medicine. — قصد دارم پزشکی بخوانم.\nIt will rain tomorrow. — فردا باران می‌آید.\nIf it rains, I will stay home.\n## مثال‌ها\nI'm going to take a course next month. — ماه بعد می‌خواهم دوره‌ای بگذرانم.\nIf it rains, we will stay home. — اگر باران بیاید، خانه می‌مانیم.\nThe train will leave at five. — قطار ساعت پنج حرکت می‌کند.\n## خطاهای رایج\nدر بخش شرط بعد از if از will استفاده نکنید: «If it will rain» غلط — «If it rains».\nبعد از be، to فراموش نشود: «I am go» غلط — «I am going»."
     },
     {
@@ -118,7 +148,7 @@
       "titleFa": "به اشتراک گذاشتن تجربه‌ها",
       "topic": "Travel",
       "estimatedMinutes": 7,
-      "order": 12,
+      "order": 15,
       "grammarTipFa": "## قاعده\nتجربه بدون زمان مشخص با حال کامل ساخته می‌شود: I have visited Turkey. پرسش با ever و پاسخ منفی با never. مدت با for (مدت زمان) و نقطه‌ی شروع با since می‌آید.\n## جدول\nHave you ever…? — Yes, I have. / No, I never have.\nfor two years / for a long time\nsince 2022 / since Monday\n## مثال‌ها\nI have never been to Japan. — هرگز به ژاپن نرفته‌ام.\nShe has worked here since 2020. — او از ۲۰۲۰ اینجا کار می‌کند.\nWe have lived in Tehran for ten years. — ده سال در تهران زندگی کرده‌ایم.\n## خطاهای رایج\nبرای مدت از for و برای نقطه از since استفاده کنید: «for 2020» غلط — «since 2020».\nبا زمان مشخص گذشته (last week, yesterday) حال کامل نیاید."
     },
     {
@@ -128,7 +158,7 @@
       "titleFa": "فناوری و جامعه",
       "topic": "Technology",
       "estimatedMinutes": 8,
-      "order": 13,
+      "order": 16,
       "grammarTipFa": "## قاعده\nبرای دو چیز more + صفت بلند و برای سه یا بیشتر the most می‌آید. امکان‌سنجی و توانایی با can (حال) و احتمال با could بیان می‌شود؛ هر دو با فعل لخت.\n## جدول\nmore efficient / the most useful / less reliable\ncan + لخت / could + لخت\n## مثال‌ها\nThis device is more efficient than the old one. — این دستگاه از آن قدیمی کارآمدتر است.\nSolar power is the most promising source. — انرژی خورشیدی امیدوارکننده‌ترین منبع است.\nIt could reduce energy use. — می‌تواند مصرف انرژی را کم کند.\n## خطاهای رایج\n«more easier» غلط است — یک درجه‌بندی کافی است: «easier».\nصفت کوتاه با er است: «more small» غلط، «smaller» درست."
     },
     {
@@ -138,7 +168,7 @@
       "titleFa": "محیط زیست و اقلیم",
       "topic": "Nature",
       "estimatedMinutes": 8,
-      "order": 14,
+      "order": 17,
       "grammarTipFa": "## قاعده\nدر خبر و گزارش از مجهول گزارشی استفاده کن: It is believed that…. برای انتقاد به گذشته و کاری که نشده، should have + قسمت سوم می‌آید: You should have recycled it.\n## جدول\nIt is believed that… / It is reported that…\nshould have + قسمت سوم (انتقاد به گذشته)\nshouldn't have + قسمت سوم (کار اشتباه گذشته)\n## مثال‌ها\nIt is believed that the ice cap is melting. — باور بر این است که یخ‌پوش در حال ذوب است.\nYou should have recycled this bottle. — باید این بطری را بازیافت می‌کردی.\nPlastic should be banned. — پلاستیک باید ممنوع شود.\n## خطاهای رایج\nبعد از should have قسمت اول فعل نیاید: «should have went» غلط — «should have gone».\nدر مجهول فاعل نامشخص را با by someone اضافه نکنید."
     },
     {
@@ -148,7 +178,7 @@
       "titleFa": "مصاحبه شغلی",
       "topic": "Work",
       "estimatedMinutes": 8,
-      "order": 15,
+      "order": 18,
       "grammarTipFa": "## قاعده\nنقل‌قول غیرمستقیم با He said that… ساخته می‌شود و معمولاً زمان یک قدم عقب می‌کشد: «I am busy» → He said he was busy. تجربه را با ساختار STAR تعریف کن: Situation، Task، Action، Result.\n## جدول\n«I will call you» → He said he would call.\n«I work here» → She said she worked there.\n## مثال‌ها\nHe said that the position was still open. — گفت که موقعیت هنوز باز است.\nShe said she had worked in a team of five. — گفت در تیم پنج‌نفره کار کرده بود.\nI described the result and what I had learned. — نتیجه و آنچه آموخته بودم را توضیح دادم.\n## خطاهای رایج\nزمان نقل‌قول را عقب بکشید: «He said he is busy» غلط — «he was busy».\nضمیر را متناسب تغییر دهید: «I» در نقل‌قول به he/she تبدیل می‌شود."
     },
     {
@@ -158,7 +188,7 @@
       "titleFa": "رسانه و تبلیغات",
       "topic": "Media",
       "estimatedMinutes": 8,
-      "order": 16,
+      "order": 19,
       "grammarTipFa": "## قاعده\nused to برای عادت یا وضعیت گذشته است که دیگر ادامه ندارد. would فقط برای تکرارهای عادی گذشته به کار می‌رود، نه وضعیت. هر دو با فعل لخت می‌آیند.\n## جدول\nI used to watch TV every night. (عادتِ گذشته)\nWe would play after school. (تکرار گذشته)\nHe didn't use to smoke. / Did you use to…?\n## مثال‌ها\nI used to read newspapers every morning. — قبلاً هر صبح روزنامه می‌خواندم.\nWe would travel by train every summer. — هر تابستان با قطار سفر می‌کردیم.\nThere used to be a cinema here. — قبلاً اینجا سینما بود.\n## خطاهای رایج\nبعد از used to فعل ing نمی‌آید: «used to going» غلط — «used to go».\nبرای وضعیت ثابت گذشته از would استفاده نکنید: «I would live in Tehran» غلط است."
     },
     {
@@ -168,7 +198,7 @@
       "titleFa": "نوشتار آکادمیک",
       "topic": "Study",
       "estimatedMinutes": 9,
-      "order": 17,
+      "order": 20,
       "grammarTipFa": "## قاعده\nنوشتن رسمی از مجهول بهره می‌برد تا تمرکز بر ادعا بماند نه نویسنده: It is argued that…. اتصال‌دهنده‌های منطقی (however, therefore, furthermore) رابطه‌ی جملات را نگه می‌دارند و متن را منسجم می‌کنند.\n## جدول\nIt is argued that… / It should be noted that…\nHowever (تضاد) / Therefore (نتیجه) / Furthermore (افزودن) / In contrast (مقایسه)\n## مثال‌ها\nIt is argued that education reduces inequality. — استدلال بر این است که آموزش نابرابری را کاهش می‌دهد.\nThe sample was small; therefore, the results are limited. — نمونه کوچک بود؛ بنابراین نتایج محدودند.\nFurthermore, no control group was used. — افزون بر این، گروه کنترلی به کار نرفت.\n## خطاهای رایج\nبعد از اتصال‌دهنده‌ی ابتدای جمله ویرگول بگذارید: «Therefore, …» نه «Therefore …».\nهر جمله را با However شروع نکنید — تنوع اتصال‌دهنده‌ها لازم است."
     },
     {
@@ -178,7 +208,7 @@
       "titleFa": "مباحثه و قانع‌سازی",
       "topic": "Debate",
       "estimatedMinutes": 9,
-      "order": 18,
+      "order": 21,
       "grammarTipFa": "## قاعده\nتأکید بلاغی با وارونه‌سازی (inversion) ساخته می‌شود: جای فعل کمکی و فاعل عوض می‌شود. بعد از عبارت منفی یا تأکیدی در ابتدای جمله (Not only, Never, Little, Had…) ساختار وارونه می‌آید و جمله رسمی‌تر و نیرومندتر می‌شود.\n## جدول\nHad I known… = If I had known…\nNever have I seen… / Little did he know…\nNot only did he disagree, but he also…\n## مثال‌ها\nHad I known, I would have acted differently. — اگر می‌دانستم، جور دیگری عمل می‌کردم.\nNever have I witnessed such arrogance. — هرگز چنین غروری ندیده بودم.\nLittle did he know that everything would change. — اصلاً نمی‌دانست که همه‌چیز تغییر خواهد کرد.\n## خطاهای رایج\nزمان فعل را در وارونه عقب نبرید: «Had I knew» غلط — «Had I known».\nوارونه فقط بعد از عبارت تأکیدی/منفی ابتدای جمله می‌آید، نه هر جمله‌ای."
     },
     {
@@ -188,7 +218,7 @@
       "titleFa": "سینما و فرهنگ",
       "topic": "Culture",
       "estimatedMinutes": 9,
-      "order": 19,
+      "order": 22,
       "grammarTipFa": "## قاعده\nدر روایت، پس‌زمینه‌ی رویداد با گذشته استمراری (was/were + ing) و رویداد اصلی با گذشته‌ی ساده می‌آید. در روایت، would مانند used to تکرار گذشته را نشان می‌دهد اما وضعیت نمی‌دهد.\n## جدول\nI was watching the film when the power went off.\nWhen + گذشته ساده (وقفه) / was/were + ing (پس‌زمینه)\nIn those days, we would meet after school.\n## مثال‌ها\nI was watching the film when the power went off. — داشتم فیلم می‌دیدم که برق رفت.\nShe was reading when I called. — داشت کتاب می‌خواند که زنگ زدم.\nIn those days we would meet after school. — در آن روزها بعد از مدرسه هم را می‌دیدیم.\n## خطاهای رایج\n«I was know» غلط است — know فعل وضعیتی است و استمراری نمی‌شود: «I knew».\nهر دو بخش را استمراری نکنید: «was watching when the power was going off» → «went off»."
     },
     {
@@ -198,7 +228,7 @@
       "titleFa": "اصطلاحات و فعل‌های عبارتی",
       "topic": "Language",
       "estimatedMinutes": 9,
-      "order": 20,
+      "order": 23,
       "grammarTipFa": "## قاعده\nفعل عبارتی = فعل + حرف اضافه که معنایی مستقل و غیرلفظی دارد: give up یعنی دست کشیدن، نه «دادن بالا». حرف اضافه معنی را عوض می‌کند، پس آن را جزء واژه حفظ کن.\n## جدول\ngive up = دست کشیدن / give away = بخشیدن\nlook after = مراقبت کردن / look forward to = انتظار داشتن\nturn on / turn off = روشن / خاموش کردن\n## مثال‌ها\nHe gave up smoking last year. — سال پیش سیگار را کنار گذاشت.\nI look forward to hearing from you. — مشتاق شنیدن خبر از شما هستم.\nPlease turn on the lights. — لطفاً چراغ‌ها را روشن کن.\n## خطاهای رایج\nمعنی را از جمع کردن لغویه‌ها نسازید: give up ≠ «بده بالا».\nبعد از look forward to فعل ing می‌آید: «look forward to hear» غلط است."
     },
     {
@@ -208,7 +238,7 @@
       "titleFa": "دقت و ظرافت زبانی",
       "topic": "Language",
       "estimatedMinutes": 10,
-      "order": 21,
+      "order": 24,
       "grammarTipFa": "## قاعده\nهر هم‌معنایی بار معنایی خودش را دارد: tiny کوچک‌تر و حساس‌تر از small است؛ rather یعنی «تا حدی» و hardly یعنی «به‌ندرت». انتخاب واژه یعنی انتخاب دقت — بافت تعیین می‌کند کدام درست است.\n## جدول\ntiny < small < large\nrather (تا حدی) / hardly (به‌ندرت) / quite (کاملاً)\nbegin (رسمی) / start (عامیانه‌تر)\n## مثال‌ها\nA tiny mistake changed the result. — یک خطای کوچک نتیجه را عوض کرد.\nHe hardly spoke at all. — اصلاً حرفی نزد.\nThe results were rather inconclusive. — نتایج تا حدی قطعی نبودند.\n## خطاهای رایج\nhardly را با «با سختی» اشتباه نگیرید: «I worked hardly» غلط — «I worked hard».\nquite در انگلیسی بریتانیایی «کاملاً» و در آمریکایی گاه «تا حدی» است — بافت را بسنجید."
     },
     {
@@ -218,7 +248,7 @@
       "titleFa": "سبک و بلاغت",
       "topic": "Language",
       "estimatedMinutes": 10,
-      "order": 22,
+      "order": 25,
       "grammarTipFa": "## قاعده\nکنایه با وارونه‌سازی ساخته می‌شود: Little did he know… یعنی اصلاً نمی‌دانست. تکرار هدفمند واژه‌ها (repetition) ضرباهنگ سخن را می‌سازد و پیام را به‌یادماندنی می‌کند.\n## جدول\nLittle did he know…\nNever had she seen…\nNot until … did …\n## مثال‌ها\nLittle did he know that his decision would change everything. — اصلاً نمی‌دانست که تصمیمش همه‌چیز را عوض خواهد کرد.\nIt was a long night, a long wait, and a longer silence. — شبی دراز بود، انتظاری دراز و سکوتی درازتر.\nNever had the room been so quiet. — هرگز اتاق این‌قدر ساکت نبود.\n## خطاهای رایج\nکنایه را با لحن کاملاً مستقیم ننویسید تا خواننده آن را تحسین واقعی نپندارد.\nدر وارونه زمان فعل را حفظ کنید: «Little did he knew» غلط است."
     },
     {
@@ -228,7 +258,7 @@
       "titleFa": "علم و کشف",
       "topic": "Science",
       "estimatedMinutes": 10,
-      "order": 23,
+      "order": 26,
       "grammarTipFa": "## قاعده\nزبان علمی مجهول و دقیق است چون روش مهم‌تر از پژوهشگر است: The phenomenon was observed…. تعریف مفاهیم با X refers to… یا X is defined as… ارائه می‌شود و واحد اندازه‌گیری همیشه ذکر می‌شود.\n## جدول\nThe sample was analyzed.\nX refers to… / X is defined as…\n… is measured in / is expressed as…\n## مثال‌ها\nThe phenomenon was observed over six months. — پدیده شش ماهه مشاهده شد.\nTemperature is measured in degrees Celsius. — دما بر حسب درجه سانتی‌گراد اندازه‌گیری می‌شود.\nThis term refers to a gradual change. — این اصطلاح به تغییر تدریجی اشاره دارد.\n## خطاهای رایج\nتعریف را بدون فعل نگذارید: «X, a gradual change» جمله نیست — «X refers to a gradual change».\nدر مجهول علمی فاعل نامشخص را با by people اضافه نکنید."
     },
     {
@@ -238,7 +268,7 @@
       "titleFa": "ادبیات و معنا",
       "topic": "Books",
       "estimatedMinutes": 10,
-      "order": 24,
+      "order": 27,
       "grammarTipFa": "## قاعده\nمعنا از بافت می‌آید نه لفظ مستقیم. tone (لحن راوی) با mood (حال‌وهوای متن) فرق دارد و irony یعنی گفتن خلاف آنچه منظور است. همیشه بپرس گوینده چه می‌داند که خواننده نمی‌داند.\n## جدول\ntone = لحن راوی / mood = حال‌وهوای متن\nirony = کنایه / foreshadowing = پیش‌درآمد\nfigurative = تمثیلی/مجازی\n## مثال‌ها\nThe narrator's tone is calm, but the mood is tense. — لحن راوی آرام است اما حال‌وهوای متن پرتنش.\nSaying «what a lovely day» in the rain is irony. — گفتن «چه روز قشنگی» زیر باران کنایه است.\nThe ending foreshadows a sequel. — پایان‌بندی ادامه‌ی داستان را پیش‌بینی می‌کند.\n## خطاهای رایج\ntone و mood را یکی نگیرید — یکی نگاه راوی است و دیگری فضای متن.\nfigurative را «احساسی» ترجمه نکنید — «تمثیلی/مجازی» است."
     },
     {
@@ -248,7 +278,7 @@
       "titleFa": "معرفی خود و دیگران",
       "topic": "People",
       "estimatedMinutes": 5,
-      "order": 25,
+      "order": 28,
       "grammarTipFa": "## قاعده\nبرای معرفی خود و دیگران از فعل be استفاده کن: I am Mina / This is Ali. صفت‌های ملکی همیشه قبل از اسم می‌آیند و صاحب را نشان می‌دهند: my name، your friend، his sister.\n## جدول\nI am / You are / He is / She is / It is\nmy / your / his / her / our / their\n## مثال‌ها\nMy name is Mina. — اسم من مینا است.\nThis is my friend Ali. — این دوست من علی است.\nHer sister is a doctor. — خواهر او دکتر است.\n## خطاهای رایج\nملکی با apostrophe نمی‌آید: «she's book» غلط است — «her book» درست.\nحذف فعل be اشتباه است: «I Mina» نه، «I am Mina».\n## تلفظ\nname با واکهٔ دوهجایی /eɪ/ است؛ آن را با /e/ کوتاه نخوانید.\nدر What's your name? تکیه روی name می‌افتد و 's به صدای /z/ می‌رسد.\nspell و from هر دو واکهٔ کوتاه دارند؛ کشیدن‌شان جمله را سنگین و غیرطبیعی می‌کند."
     },
     {
@@ -258,7 +288,7 @@
       "titleFa": "آب‌وهوا و فصل‌ها",
       "topic": "Nature",
       "estimatedMinutes": 5,
-      "order": 26,
+      "order": 29,
       "grammarTipFa": "## قاعده\nبرای وضعیت لحظه‌ای آب‌وهوا از حال استمراری (be + ing) استفاده کن: It is raining now. برای عادت و کلیت هوا حال ساده به کار می‌رود: It rains a lot in winter.\n## جدول\nIt is raining now. — دارد باران می‌آید (لحظه‌ای)\nIt is cold today. — امروز سرد است (وضعیت)\nIt rains a lot in winter. — زمستان زیاد باران می‌بارد (عادت)\n## مثال‌ها\nLook! It's raining. — ببین! باران می‌آید.\nIt is very cold today. — امروز خیلی سرد است.\nIt snows in the mountains. — در کوه‌ها برف می‌بارد.\n## خطاهای رایج\nفعل be را ing نکنید: «It is raininging» و «It is rain» غلط — درست «It is raining» است.\nبرای مشاهده‌ی همین حالا از حال ساده نیاید: «Look, it rains» غلط است.\n## تلفظ\nrain با واکهٔ دوهجایی /eɪ/ است، نه /e/ کوتاه.\nhot واکهٔ کوتاه /ɒ/ دارد؛ کشیدن آن تلفظ را خراب می‌کند.\nsunny روی هجای اول تکیه دارد (SUN-ny) و هجای دوم /i/ کوتاه است؛ wind با /ɪ/ کوتاه است."
     },
     {
@@ -268,7 +298,7 @@
       "titleFa": "سرگرمی و اوقات فراغت",
       "topic": "Daily Life",
       "estimatedMinutes": 6,
-      "order": 27,
+      "order": 30,
       "grammarTipFa": "## قاعده\nبعضی فعل‌ها بعد از خود ing می‌خواهند (enjoy, love, mind) و بعضی to + فعل (want, need, decide, would like). این دسته‌ها را با شکل کامل خودشان حفظ کن، نه با قاعده‌ی کلی.\n## جدول\nenjoy + doing / love + doing / mind + doing\nwant to do / need to do / decide to do / would like to do\n## مثال‌ها\nI enjoy reading books. — از خواندن کتاب لذت می‌برم.\nShe wants to learn photography. — او می‌خواهد عکاسی یاد بگیرد.\nDo you like swimming? — شنا دوست داری؟\n## خطاهای رایج\n«I enjoy to read» غلط است — enjoy همیشه ing می‌خواهد.\nبعد از want نگذارید ing: «I want going» غلط، «I want to go» درست."
     },
     {
@@ -278,7 +308,7 @@
       "titleFa": "زندگی شهری",
       "topic": "Daily Life",
       "estimatedMinutes": 6,
-      "order": 28,
+      "order": 31,
       "grammarTipFa": "## قاعده\nوجود چیزی با there is (مفرد و غیرقابل شمارش) و there are (جمع) بیان می‌شود. برای مقایسه‌ی دو چیز، صفت کوتاه er می‌گیرد و با than وصل می‌شود: bigger than.\n## جدول\nThere is a park. / There are two parks.\nbig → bigger than / small → smaller than\ngood → better than / bad → worse than\n## مثال‌ها\nThere are two parks near my house. — نزدیک خانه‌ام دو پارک هست.\nTehran is bigger than Shiraz. — تهران از شیراز بزرگ‌تر است.\nIs there a pharmacy here? — اینجا داروخانه هست؟\n## خطاهای رایج\nبرای وجود از «It has» استفاده نکنید — آن مالکیت می‌رساند: «There are two parks» درست.\nصفت را با more مقایسه نکنید: «more big» غلط، «bigger» درست."
     },
     {
@@ -288,7 +318,7 @@
       "titleFa": "پول و بودجه‌بندی",
       "topic": "Work",
       "estimatedMinutes": 7,
-      "order": 29,
+      "order": 32,
       "grammarTipFa": "## قاعده\nبرای چیزی که در گذشته شروع شده و هنوز ادامه دارد، حال کامل + for (مدت) یا since (نقطه‌ی شروع) به کار می‌رود. فعل باید معنای ادامه بدهد: save, live, work.\n## جدول\nfor two years / for a long time / since 2023 / since Monday\nI have saved money for two years.\n## مثال‌ها\nI have saved money for two years. — دو سال است پس‌انداز می‌کنم.\nShe has worked here since 2021. — او از ۲۰۲۱ اینجا کار می‌کند.\nWe haven't paid the rent since March. — از مارس اجاره را نداده‌ایم.\n## خطاهای رایج\nفعل‌های یک‌باره (buy, start) را با for/since در حال کامل نیاورید: «I have bought it for two years» غلط.\nsince فقط با نقطه‌ی زمانی می‌آید، for با مدت."
     },
     {
@@ -298,7 +328,7 @@
       "titleFa": "سلامت و سبک زندگی",
       "topic": "Health",
       "estimatedMinutes": 7,
-      "order": 30,
+      "order": 33,
       "grammarTipFa": "## قاعده\nتوصیه با should یا ought to و منع با shouldn't داده می‌شود؛ ought to بعد از خودش to دارد ولی should ندارد. نتیجه‌ی واقعی آینده با شرطی نوع اول می‌آید: If you sleep well, you will feel better.\n## جدول\nYou should exercise. / You ought to rest. / You shouldn't skip breakfast.\nIf + حال ساده, will + فعل لخت\n## مثال‌ها\nIf you drink enough water, you will feel better. — اگر آب کافی بنوشی، بهتر می‌شوی.\nYou should walk for half an hour a day. — باید نیم ساعت در روز پیاده‌روی کنی.\nYou shouldn't skip breakfast. — نباید صبحانه را حذف کنی.\n## خطاهای رایج\n«should to exercise» غلط است — should بدون to و ought to با to.\nبعد از if در شرطی نوع اول از will استفاده نکنید."
     },
     {
@@ -308,7 +338,7 @@
       "titleFa": "حل مسئله و شکایت",
       "topic": "Work",
       "estimatedMinutes": 8,
-      "order": 31,
+      "order": 34,
       "grammarTipFa": "## قاعده\nشکایت رسمی و مودبانه با مجهول حال کامل بیان می‌شود: The item has not been delivered yet. برای «لازم است» از need + ing (فعال) یا need to be + قسمت سوم (مجهول) استفاده کن — هر دو یک معنا.\n## جدول\nThe item has not been delivered yet.\nThe order hasn't been processed.\nThe parcel needs checking. = The parcel needs to be checked.\n## مثال‌ها\nI'd like to complain about the delay. — می‌خواهم درباره‌ی تأخیر شکایت کنم.\nThe item has not been delivered yet. — کالا هنوز تحویل داده نشده است.\nThis document needs checking. — این سند باید بررسی شود.\n## خطاهای رایج\nدر مجهول حال کامل، be و قسمت سوم هر دو لازم‌اند: «has not deliver» غلط — «has not been delivered».\nشکایت را با «You are bad!» شروع نکنید — ساختار رسمی مودبانه‌تر است."
     },
     {
@@ -318,7 +348,7 @@
       "titleFa": "پژوهش و شواهد",
       "topic": "Study",
       "estimatedMinutes": 8,
-      "order": 32,
+      "order": 35,
       "grammarTipFa": "## قاعده\nدر زبان علمی هیچ‌چیز را قطعی نگو مگر شواهد قطعی باشد. احتیاط زبانی (hedging) با may, might, could, tends to, appears to انجام می‌شود و بخشی از دقت علمی است.\n## جدول\nmay / might / could + لخت\ntends to + لخت\nIt appears that… / The data suggest that…\n## مثال‌ها\nThe data may suggest a link between the two. — داده‌ها ممکن است نشان‌دهنده‌ی پیوندی میان این دو باشند.\nThis tends to indicate a change in behaviour. — این معمولاً بر تغییری در رفتار دلالت دارد.\nThe results appear to confirm the theory. — نتایج ظاهراً نظریه را تأیید می‌کنند.\n## خطاهای رایج\n«This proves that» فقط وقتی درست است که واقعاً اثبات شده باشد.\n«Maybe» محاوره است — در نوشتار علمی از may استفاده کنید."
     },
     {
@@ -328,7 +358,7 @@
       "titleFa": "خواندن بین خطوط",
       "topic": "Study",
       "estimatedMinutes": 9,
-      "order": 33,
+      "order": 36,
       "grammarTipFa": "## قاعده\nبرای استنباط درباره‌ی گذشته از must have (قطعیت)، can't have (نفی قطعی) و might/may have (احتمال) با قسمت سوم استفاده کن. این ساختارها شواهد را نتیجه می‌گیرند، نه دیدن خود رویداد.\n## جدول\nmust have + قسمت سوم (قطعیت)\ncan't have + قسمت سوم (نفی قطعی)\nmight / may have + قسمت سوم (احتمال)\n## مثال‌ها\nShe must have forgotten the meeting. — حتماً جلسه را فراموش کرده است.\nHe can't have finished already. — نمی‌تواند هنوز تمام کرده باشد.\nThey might have missed the train. — شاید قطار را از دست داده باشند.\n## خطاهای رایج\nبعد از must have قسمت اول فعل نیاید: «must have went» غلط — «must have gone».\nاین ساختار مخصوص گذشته است — برای استنباط از حال به کار نرود."
     },
     {
@@ -338,7 +368,7 @@
       "titleFa": "سبک رسمی و غیررسمی",
       "topic": "Language",
       "estimatedMinutes": 9,
-      "order": 34,
+      "order": 37,
       "grammarTipFa": "## قاعده\nنوشتار رسمی فعل را اسم می‌کند (nominalisation): We decided → Our decision was…؛ The company failed → The failure of the company…. ادعاهای نوپا را نرم کن تا رسمی بماند: it could be argued، نه it is obvious.\n## جدول\ndecide → decision / analyze → analysis / improve → improvement\nit could be argued that… / it seems that…\n## مثال‌ها\nOur decision was to postpone the meeting. — تصمیم ما تعویق جلسه بود.\nThe failure of the plan was unexpected. — شکست طرح غیرمنتظره بود.\nIt could be argued that costs will rise. — می‌توان استدلال کرد که هزینه‌ها بالا می‌رود.\n## خطاهای رایج\nدر متن رسمی از محاوره پرهیز کنید: «a lot of» → «a considerable amount of».\nادعای نوپا را قطعی نکنید: «obviously» و «clearly» را حذف یا نرم کنید."
     },
     {
@@ -348,7 +378,7 @@
       "titleFa": "انسجام و پیوند متن",
       "topic": "Study",
       "estimatedMinutes": 9,
-      "order": 35,
+      "order": 38,
       "grammarTipFa": "## قاعده\nاتصال‌دهنده‌ها رابطه‌ی منطقی جملات‌اند: however تضاد، therefore نتیجه، moreover افزودن. برای ارجاع به‌جای تکرار اسم‌ها از this/that/the former/the latter استفاده کن تا متن منسجم بماند.\n## جدول\nhowever (تضاد) / therefore (نتیجه) / moreover (افزودن)\nin addition (افزودن) / nevertheless (با این حال)\nthis / that / the former / the latter\n## مثال‌ها\nThe plan was costly; however, it succeeded. — طرح پرهزینه بود؛ با این حال موفق شد.\nCosts rose; therefore, prices followed. — هزینه‌ها بالا رفت؛ بنابراین قیمت‌ها هم بالا رفتند.\nThe latter approach is safer. — رویکرد دوم ایمن‌تر است.\n## خطاهای رایج\nbut و however را با هم در یک جمله نیاورید — یکی کافی است.\nارجاع مبهم نکنید: «This is wrong» بدون مشخص کردن this به چه چیزی اشاره دارد."
     },
     {
@@ -358,7 +388,7 @@
       "titleFa": "استدلال و مغالطه",
       "topic": "Debate",
       "estimatedMinutes": 10,
-      "order": 36,
+      "order": 39,
       "grammarTipFa": "## قاعده\nاستدلال قوی اول امتیاز طرف مقابل را می‌پذیرد (concede) و بعد پاسخ می‌دهد: Granted that X, nevertheless Y. نادیده‌گرفتن مخالف، خودش مغالطه است (straw man).\n## جدول\nGranted that…, nevertheless…\nAdmittedly, … / Although…, …\nwhile it is true that…\n## مثال‌ها\nGranted that costs are high, nevertheless the plan is viable. — درست است که هزینه‌ها بالاست، با این حال طرح عملی است.\nAdmittedly, the sample was small. — البته نمونه کوچک بود.\nAlthough both views have merit, the second is stronger. — هرچند هر دو دیدگاه ارزش دارند، دومی قوی‌تر است.\n## خطاهای رایج\nپاسخ را قبل از پذیرش نیاورید — ترتیب concede سپس rebuttal است.\nاتصال‌دهنده را دوتا نکنید: «Although…, but…» غلط — یکی کافی است."
     },
     {
@@ -368,7 +398,7 @@
       "titleFa": "هم‌نشینی واژه‌ها و دقت",
       "topic": "Language",
       "estimatedMinutes": 10,
-      "order": 37,
+      "order": 40,
       "grammarTipFa": "## قاعده\nواژه‌ها در سطح بالا جفت‌جفت حفظ می‌شوند: make a decision نه do a decision، take responsibility نه get responsibility. ترکیب غلط حتی با گرامر درست، غیرطبیعی و نشانه‌ی سطح پایین است.\n## جدول\nmake a decision / take a break / pay attention\nbreak the rules / heavy rain / strong tea\n## مثال‌ها\nWe made a decision yesterday. — دیروز تصمیمی گرفتیم.\nPay attention to the details. — به جزئیات توجه کن.\nThe traffic was heavy this morning. — صبح ترافیک سنگین بود.\n## خطاهای رایج\n«do a decision» و «make homework» غلط‌اند — make/do را بر اساس هم‌نشینی حفظ کنید.\nصفت را از زبان مادری وام نگیرید: «strong rain» غلط — «heavy rain»."
     },
     {
@@ -378,7 +408,7 @@
       "titleFa": "کنایه و معنای پنهان",
       "topic": "Culture",
       "estimatedMinutes": 10,
-      "order": 38,
+      "order": 41,
       "grammarTipFa": "## قاعده\nگاهی کم‌گویی از پرگویی قوی‌تر است. litotes یعنی نفی ضد برای تأکید: not uncommon = رایج. کنایه‌ی مودبانه مانند «Not bad for a beginner» تحسین را نرم و چاشنی‌دار می‌کند.\n## جدول\nnot uncommon = رایج / not bad = بد نیست\nnot least = مهم‌تر از همه\nunderstatement = کم‌گویی\n## مثال‌ها\nNot bad for a first attempt! — برای اولین بار بد نیست!\nThe solution is not unlike the original. — راه‌حل بی‌شباهت به نسخه‌ی اصلی نیست.\nHe is no fool. — او احمق نیست (یعنی عاقل است).\n## خطاهای رایج\n«not uncommon» را با «not common» اشتباه نگیرید — کاملاً برعکس‌اند.\nلحن کنایه را در موقعیت رسمی بدون اطمینان از فهم طرف به کار نبرید."
     },
     {
@@ -388,7 +418,7 @@
       "titleFa": "کاربرد a، an و the",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 39,
+      "order": 42,
       "grammarTipFa": "## قاعده\nوقتی از یک چیز ناشناخته حرف می‌زنیم a یا an می‌گذاریم: a book. پیش از صدای مصوت an می‌آید: an apple و an hour (h خاموش است). اگر شنونده دقیقاً بداند منظور کدام چیز است، the می‌گذاریم: the sun، the book on the table. اسم‌های جمع کلی و اسم‌های انتزاعی هیچ حرفی نمی‌خواهند: I like music.\n## جدول\na book / a car / a university — یک (پیش از صدای مصوت)\nan apple / an orange / an hour — یک (پیش از صدای مصوت)\nthe sun / the moon / the first floor — همان مشخص\nI bought a book. The book is on the table. — بار اول a، بار دوم the\n## مثال‌ها\nShe is a doctor. — او پزشک است.\nI need an umbrella. — به چتری احتیاج دارم.\nThe hotel is next to the bank. — هتل کنار بانک است.\n## خطاهای رایج\n«I have a apple» غلط است — پیش از apple باید an بیاید.\nبرای آب، غذا، زبان‌ها و اخبار the نمی‌آید: I drink water.\nبرای چیزی که برای اولین بار معرفی می‌کنید the به کار نبرید: I saw a dog.\n## تلفظ\na و an بر اساسِ صدا انتخاب می‌شوند، نه حرف: a book اما an apple — صدای اولِ apple مصوت است.\nan hour را با hِ خوانده نشنوید: چون h خاموش است، فقط مصوت می‌آید و an لازم است.\nthe معمولاً ضعیف /ðə/ تلفظ می‌شود، نه /ðiː/ کشیده؛ کشیدن آن فقط برای تأکید است."
     },
     {
@@ -398,7 +428,7 @@
       "titleFa": "جمع بستن اسم‌ها",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 40,
+      "order": 43,
       "grammarTipFa": "## قاعده\nبیشتر اسم‌ها با s جمع می‌شوند: cat → cats. اسم‌هایی که به s، sh، ch، x یا o ختم شوند es می‌گیرند: box → boxes. اگر اسم به همزه + y ختم شود y به ies تبدیل می‌شود: baby → babies. بعضی اسامی شکل نامنظم دارند: child → children. اسم‌های غیرقابل شمارش جمع ندارند: water، rice، information.\n## جدول\ncat → cats / box → boxes / watch → watches\nbaby → babies / city → cities\nleaf → leaves / knife → knives\nchild → children / man → men / foot → feet\n## مثال‌ها\nThere are three children in the park. — سه کودک در پارک هستند.\nShe bought two boxes of tea. — دو جعبه چای خرید.\nThe women are waiting outside. — زن‌ها بیرون منتظرند.\n## خطاهای رایج\n«childs» و «mans» غلط‌اند — children و men درست است.\nبعد از عدد همیشه اسم جمع می‌آید: «two child» غلط، «two children» درست.\n«informations» و «advices» جمع ندارند: some information، some advice.\n## تلفظ\nپسوند جمع سه صدا دارد: /s/ در cats، /z/ در dogs و /ɪz/ در boxes — پس از صوت‌های sibilant یک هجای اضافه می‌افتد.\nbabies با /ˈbeɪbiːz/ خوانده می‌شود و -ies همان /iːz/ است؛ y را حذف نکنید.\nfoot کوتاه /fʊt/ است و جمعش feet با /iː/ بلند؛ children را هم مثل معدود کوتاه نخوانید."
     },
     {
@@ -408,7 +438,7 @@
       "titleFa": "ضمایر فاعلی و مفعولی",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 41,
+      "order": 44,
       "grammarTipFa": "## قاعده\nضمیر فاعلی جایگزین فاعل می‌شود و قبل از فعل می‌آید: I، you، he، she، it، we، they. ضمیر مفعولی بعد از فعل یا حرف اضافه می‌آید: me، you، him، her، it، us، them. برای کسی که نمی‌شناسیم هم می‌توانیم از they استفاده کنیم.\n## جدول\nفاعلی: I / you / he / she / it / we / they\nمفعولی: me / you / him / her / it / us / them\nI see her. — او را می‌بینم.\nShe gave the book to me. — کتاب را به من داد.\n## مثال‌ها\nHe helps his sister every day. — هر روز به خواهرش کمک می‌کند.\nWe met them at the station. — ما آن‌ها را در ایستگاه دیدیم.\nThe teacher asked us to open our books. — معلم از ما خواست کتاب‌هایمان را باز کنیم.\n## خطاهای رایج\n«Me and him are here» غلط است — He and I are here درست است.\nبعد از حرف اضافه ضمیر فاعلی نیاید: «between you and I» غلط.\n«Her is a teacher» غلط — She is a teacher درست است.\n## تلفظ\nhim و her در گفتار روزمره ضعیف می‌شوند: /ɪm/ و /hə/ — تکیه روی فعل می‌افتد (I SEE him).\nthem غالباً /ðəm/ و کوتاه تلفظ می‌شود، نه /ðem/ کشیده.\nit و us هر دو تکیه‌ناپذیرند؛ کشیدنشان جمله را می‌شکند."
     },
     {
@@ -418,7 +448,7 @@
       "titleFa": "توانایی با can و can't",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 42,
+      "order": 45,
       "grammarTipFa": "## قاعده\nبرای بیان توانایی از can استفاده می‌کنیم و بعد از آن فعل لخت می‌آید: I can swim. منفی آن can't یا cannot است. در پرسش، can قبل از فاعل می‌آید: Can you drive? گذشتهٔ آن could است و برای توانایی در گذشته به کار می‌رود.\n## جدول\nI can swim. / She can swim. — فعل هیچ‌وقت s نمی‌گیرد\nI can't / cannot play the guitar.\nCan you speak English? — Yes, I can. / No, I can't.\nHe could run fast when he was young.\n## مثال‌ها\nMy father can cook very well. — پدرم خیلی خوب آشپزی می‌کند.\nWe can't arrive before six. — نمی‌توانیم قبل از شش برسیم.\nCan you help me with this box? — می‌توانی در این جعبه کمکم کنی؟\n## خطاهای رایج\n«I can to swim» غلط است — بعد از can فعل لخت می‌آید: I can swim.\n«She cans drive» و «He can drives» غلط‌اند — نه s می‌گیرد و نه to.\nبرای گذشته نگویید «I can swimmed»: I could swim.\n## تلفظ\ncan در جملهٔ خبری ضعیف /kən/ است، اما در پرسش و هنگام تأکید کامل /kæn/ تلفظ می‌شود: I CAN swim در برابر I can SWIM.\ncan't تکیه می‌گیرد چون منفی است: در بریتیش با /ɑː/ باز (کَنت) و در آمریکایی با /æ/.\ncould کوتاه /kʊd/ است؛ آن را با /uː/ کشیده نخوانید."
     },
     {
@@ -428,7 +458,7 @@
       "titleFa": "جمله‌های امری",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 43,
+      "order": 46,
       "grammarTipFa": "## قاعده\nبرای دستور، دستورالعمل و علائم راهنمایی از شکل لخت فعل استفاده می‌کنیم: Sit down. برای نهی، همان شکل لخت را با Don't می‌دهیم: Don't run. برای ملایم‌تر کردن حرف please می‌گذاریم و برای پیشنهاد مشترک از Let's بهره می‌گیریم.\n## جدول\nOpen your books. — کتاب‌هایتان را باز کنید.\nDon't touch the wire. — به سیم دست نزنید.\nPlease wait here. — لطفاً اینجا منتظر بمانید.\nLet's go home. — بیایید به خانه برویم.\n## مثال‌ها\nStop! The light is red. — توقف! چراغ قرمز است.\nListen to the instructions carefully. — به دستورالعمل‌ها دقیق گوش کن.\nClose the door, please. — لطفاً در را ببند.\n## خطاهای رایج\n«Don't goes» غلط است — بعد از don't فعل لخت می‌آید: Don't go.\nبرای دستور فاعل نیاورید: «You close the door» غلط، Close the door درست.\nبعد از Let's فعل با to نمی‌آید: «Let's to go» غلط است.\n## تلفظ\nجملهٔ امری کوتاه و پرتحرک است؛ تکیه روی فعل می‌افتد: STOP! نه stopِ آهسته.\nدر Don't، t اغلب بدون انفجار تلفظ می‌شود و کلمه کوتاه است.\nپایان stop و sit و close با آزادسازی صامت‌ها همراه است: p، t و s را کامل بیان کنید."
     },
     {
@@ -438,7 +468,7 @@
       "titleFa": "کلمات پرسشی",
       "topic": "Language",
       "estimatedMinutes": 5,
-      "order": 44,
+      "order": 47,
       "grammarTipFa": "## قاعده\nبرای پرسش از چیز، مکان، زمان، دلیل و نحوه، کلمهٔ پرسشی را اول جمله می‌گذاریم و بعد فعل کمکی می‌آید: Where do you live? اگر فعل be باشد ترتیب فرق می‌کند: Where are you from? پاسخ کوتاه با همان ساختار داده می‌شود.\n## جدول\nWhat — چه‌چیزی / What is your name?\nWhere — کجا / Where do you live?\nWhen — کی / When does the class start?\nWho — چه کسی / Who is that woman?\nWhy — چرا / Why are you late?\nHow — چگونه / How do you pronounce this?\n## مثال‌ها\nWhat time does the train leave? — قطار ساعت چند حرکت می‌کند؟\nHow much is this shirt? — این پیراهن چند است؟\nWhy are you tired today? — امروز چرا خسته‌ای؟\n## خطاهای رایج\n«Where you are from?» غلط است — Where are you from?\n«What means this?» غلط است — What does this mean?\nبعد از how برای اسم‌های شمارشی از many و برای غیرقابل شمارش از much استفاده کنید.\n## تلفظ\nدر what و where و when صدای /w/ با گرد کردن لب‌ها ساخته می‌شود؛ آن را با /v/ اشتباه نگیرید.\nدر who و how صدای /h/ واضح است و نباید حذف شود.\nدر پرسش‌های بلند، تکیه روی کلمهٔ پرسشی می‌افتد و آهنگ پایان جمله بالا می‌رود."
     },
     {
@@ -448,7 +478,7 @@
       "titleFa": "زمان گذشتهٔ ساده",
       "topic": "Language",
       "estimatedMinutes": 6,
-      "order": 45,
+      "order": 48,
       "grammarTipFa": "## قاعده\nبرای رویداد تمام‌شده در گذشته از شکل گذشتهٔ فعل استفاده می‌کنیم: افعال مرتب ed می‌گیرند (work → worked) و افعال نامنظم شکل ویژه دارند (go → went، see → saw). با he/she/it هم فعل لخت می‌ماند: He worked. در پرسش و منفی از did کمکی می‌گیریم و فعل به شکل لخت برمی‌گردد: Did you see it? I didn't go.\n## جدول\nI / you / he worked — They didn't work.\ngo → went / see → saw / buy → bought / write → wrote\nDid she leave? — Yes, she did. / No, she didn't.\nyesterday / last night / two days ago / in 2019\n## مثال‌ها\nWe went to the coast last weekend. — آخر هفته به ساحل رفتیم.\nShe bought a new phone yesterday. — دیروز یک گوشی نو خرید.\nI didn't see your message. — پیامت را ندیدم.\n## خطاهای رایج\n«I didn't went» غلط است — بعد از didn't فعل لخت می‌آید: I didn't go.\n«He didn't had breakfast» غلط است — He didn't have breakfast.\n«Yesterday I go to work» غلط است — Yesterday I went to work.\n## تلفظ\nدر didn't، t اغلب حذف می‌شود و تکیه روی فعل اصلی می‌افتد: I DIDN'T GO.\nشکل‌های گذشته کوتاه‌اند: went /went/ و bought /bɔːt/؛ کشیدن بیش از حدشان غیرطبیعی است.\nyesterday روی هجای اول تکیه دارد: YES-ter-day و هجای میانی /t/ نرم است."
     }
   ]

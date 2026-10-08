@@ -158,8 +158,10 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 | `myket` | `INTERNET`, `ir.mservices.market.BILLING` | `AD_ID` is **removed** via `tools:node="remove"` (play-services-ads-identifier comes in transitively; the SDK guards its own ad-id call) |
 | `googlePlay` | `INTERNET`, `com.android.vending.BILLING`, `ACCESS_NETWORK_STATE` | last two are declared by Play Billing itself — required, keep |
 
-All flavors also carry `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a
-real app permission).
+All flavors also carry `POST_NOTIFICATIONS` (declared in the main manifest — the daily reminder
+posts a local notification on API 33+; without the declaration the Settings request is a no-op and
+`lintBazaarDebug` fails with `MissingPermission`) and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`
+(system-generated, not a real app permission).
 
 ### Active (must keep working offline)
 
@@ -243,13 +245,20 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 14):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 383 exercises (6–11/lesson + 12 reading items + A1 pronunciation drills), 270
-  vocabulary entries (6/lesson), 83 knowledge items,
+- **CEFR bundle (contentVersion 15):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 407 exercises (6–11/lesson + reading items + A1 pronunciation drills), 290
+  vocabulary entries (6/lesson, 8 in the numbers lesson), 89 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
   mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
+- **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–20 come
+  **before** Greetings, so a complete beginner meets letters before words. Three A1 lessons
+  (`a1.alphabet.lesson-01`, `a1.spelling.lesson-01`, `a1.numbers.lesson-01`, orders 1–3 with
+  every other lesson shifted by three), 20 words, 24 exercises and 6 knowledge items
+  (`vocab.alphabet`, `vocab.spelling`, `vocab.numbers` + a PHONOLOGY node per lesson), and
+  `vocab.greetings` now lists `vocab.alphabet` as a prerequisite. Applied by
+  `scripts/p1_foundation_lessons.mjs`; bundle 14 → 15.
 - **A1/A2 gaps closed (A-9):** articles (a/an/the), plural spelling, subject/object pronouns,
   can for ability, imperatives and question words each got their own A1 lesson (tip + 6 words +
   6 grammar exercises + phonology coverage + a guided listening drill), and the past simple is
@@ -303,14 +312,25 @@ Rules:
 - `exercise.payloadJson` stores the authored JSON verbatim; `ContentParser.exerciseFromPayload`
   maps it to the sealed `Exercise`. Unknown types are skipped, never crash a lesson.
 - Adding content = JSON only (no Kotlin changes), per technical spec §61/§63.
+- **The JSON files are the source of truth, not the scripts (A-12).** `scripts/*.mjs` are one-shot
+  batch tools kept as the record of *how* a batch was applied; each guards itself against a second
+  run. Never re-run an applied batch script — it would overwrite later hand edits. After any content
+  edit run `node scripts/balance_answer_positions.mjs` (correct-answer balance) and then
+  `validateContent` + the content tests with `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `translation`, `listening`
   (`speaking` parses but is suspended).
 - Typed-answer grading (A-2): digits normalize to words (0–20 + tens), so `3` ≡ `three`;
   a single word ≥ 5 letters that is one edit from an accepted answer is graded wrong but
-  shown as «تقریباً درست — املای کلمه را بررسی کن» (`AnswerChecker.grade`). Every
+  shown as «تقریباً درست — املای کلمه را بررسی کن» (`AnswerChecker.grade`). ALMOST is a
+  **spelling** signal, so it never fires on a GRAMMAR item (A-2b): `listen` vs `listens` is a
+  missing `-s`, not a typo, and the lesson shows a plain miss plus the item's explanation. Every
   single-answer `fill_blank` must appear with a reason in
   `ContentDistributionTest.reviewedSingleAnswerBlanks`; new ones fail the test until
   equivalents are added or justified.
+- **A dot/comma between digits is a decimal (A-2b):** `normalize` protects it before stripping
+  punctuation, so `3.5` can never collapse into `35`; a sentence-final dot still goes (`3.` ≡
+  `three`), and a digit run glued to letters or to a separator (`1st`, `20th`, `3.5`) is left as
+  typed instead of becoming `thirtyth`.
 - Phonology / pronunciation (A-7, A1 only): each A1 lesson teaches a `## تلفظ` section in its
   `grammarTipFa` (vowel length, word stress, word sounds — an unknown header parses to a CUSTOM
   card, so no schema change), is covered by a PHONOLOGY knowledge item, and has a guided
@@ -344,7 +364,7 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 209 tests / 29 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 211 tests / 29 classes as of
   the P0 + P1-1 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription gating) + `SubscriptionRecoveryTest` (renewal
@@ -392,5 +412,11 @@ Rules:
   the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items
   until the ViewModel is recreated.
+- The daily reminder is pinned to 19:00 local (`DailyReminder.REMINDER_HOUR`); the time is not
+  learner-configurable yet (checklist B-4).
+- The ALMOST hint is suppressed for GRAMMAR items but cannot tell "one edit away from a *different*
+  word" (A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
+  learner is still told to check the spelling. Accepted: the banner shows the correct answer
+  alongside it, so the word itself is never ambiguous.
 - `studied seconds` are credited on screen close/finish (best effort), not via a foreground timer.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.

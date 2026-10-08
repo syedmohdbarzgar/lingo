@@ -17,6 +17,19 @@ class AnswerCheckerTest {
         accepted = accepted.toList(),
     )
 
+    /**
+     * A vocabulary-tagged blank. The near-miss hint is a *spelling* signal, so it
+     * only applies where the learner is spelling a word (A-2b) — a plain blank
+     * falls back to the GRAMMAR heuristic and never reaches ALMOST.
+     */
+    private fun vocabBlank(vararg accepted: String) = Exercise.FillBlank(
+        id = "x",
+        lessonId = "l",
+        sentence = "I'm happy.",
+        accepted = accepted.toList(),
+        skill = Skill.VOCABULARY,
+    )
+
     @Test
     fun `curly apostrophe equals straight apostrophe`() {
         assertEquals("i'm", AnswerChecker.normalize("I\u2019m"))
@@ -84,11 +97,30 @@ class AnswerCheckerTest {
         assertTrue(AnswerChecker.matchesAny(listOf("100"), "100"))
     }
 
+    /**
+     * A-2b latent collision: the old normalizer stripped every dot and comma, so a
+     * decimal collapsed into a whole number (`3.5` → `35`). Nothing in the bundle
+     * has a price or a time yet, but the first price lesson would silently grade
+     * `3.5` as `35`.
+     */
+    @Test
+    fun `a decimal point between digits is never swallowed`() {
+        assertEquals("3.5", AnswerChecker.normalize("3.5"))
+        assertFalse(AnswerChecker.matchesAny(listOf("35"), "3.5"))
+        assertFalse(AnswerChecker.matchesAny(listOf("3.5"), "35"))
+        // A sentence-final dot is still punctuation: `3.` ≡ `three`.
+        assertEquals("three", AnswerChecker.normalize("3."))
+        assertTrue(AnswerChecker.matchesAny(listOf("three"), "3."))
+        // Ordinals stay glued to their letters (never `thirtyth`).
+        assertEquals("20th", AnswerChecker.normalize("20th"))
+        assertEquals("three", AnswerChecker.normalize("3"))
+    }
+
     // --- A-2: near-miss (almost) verdict -------------------------------------
 
     @Test
     fun `one edit away from a long word is almost, not correct`() {
-        val ex = fillBlank("welcome")
+        val ex = vocabBlank("welcome")
         assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(ex, "welcom"))
         assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(ex, "welcoe"))
         assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(ex, "Welcome!"))
@@ -100,9 +132,35 @@ class AnswerCheckerTest {
     @Test
     fun `near-miss ignores short words where one edit changes the word`() {
         // car/cat are 3 letters — one edit must NOT count as almost.
-        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(fillBlank("car"), "cat"))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(vocabBlank("car"), "cat"))
         // Two edits are wrong even on long words (h→y substitution + w insertion).
-        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(fillBlank("hello"), "yellow"))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(vocabBlank("hello"), "yellow"))
+    }
+
+    /**
+     * A-2b: a grammar item must never claim the learner made a spelling slip. The
+     * canonical pair is `listen` / `listens` — one letter apart, but the error is a
+     * missing third-person `-s`, so "check the spelling" sends them looking in the
+     * wrong place. The item's own explanation says what the form should have been.
+     */
+    @Test
+    fun `a grammar blank never reports a near-miss spelling`() {
+        val thirdPerson = Exercise.FillBlank(
+            id = "x",
+            lessonId = "l",
+            sentence = "She ______ to music every evening.",
+            accepted = listOf("listens"),
+        )
+        assertEquals(Skill.GRAMMAR, AnswerChecker.skillOf(thirdPerson))
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(thirdPerson, "listen"))
+        // ...while the same edit on a *vocabulary* target is still a spelling hint.
+        assertEquals(
+            AnswerChecker.Verdict.ALMOST,
+            AnswerChecker.grade(vocabBlank("listens"), "listen"),
+        )
+
+        // A grammar target is judged as a form: the correct form is still correct.
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(thirdPerson, "Listens."))
     }
 
     @Test

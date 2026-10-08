@@ -13,11 +13,14 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.token.english.EnglishApp
 import org.token.english.R
 import java.util.Calendar
-import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Daily review reminder (checklist P9) — on-device, no services, no network:
@@ -68,25 +71,35 @@ object DailyReminder {
 
 class DailyReminderReceiver : BroadcastReceiver() {
 
+    /**
+     * Never `runBlocking` here (checklist B-4): the broadcast runs on the main
+     * thread and blocking it to read DataStore can trip an ANR. `goAsync()` hands
+     * the receiver a limited window instead, and `finish()` releases it in every
+     * path (including failure) so the system never keeps the process alive.
+     */
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            // Alarms die with the reboot — restore only if the learner enabled it.
-            val enabled = runBlockingSetting(context) ?: return
-            if (enabled) DailyReminder.schedule(context)
-            return
+        val pendingResult = goAsync()
+        val appContext = context.applicationContext
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            try {
+                if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+                    // Alarms die with the reboot — restore only if the learner enabled it.
+                    if (reminderEnabled(appContext)) DailyReminder.schedule(appContext)
+                } else {
+                    showNotification(appContext)
+                }
+            } finally {
+                pendingResult.finish()
+            }
         }
-        showNotification(context)
     }
 
-    private fun runBlockingSetting(context: Context): Boolean? = try {
-        val app = context.applicationContext as? EnglishApp ?: return null
-        kotlinx.coroutines.runBlocking {
-            app.container.settingsRepository.settings.first().dailyReminderEnabled
-        }
-    } catch (e: CancellationException) {
-        throw e
+    /** Settings read behind the boot handler; a failure just means "do not schedule". */
+    private suspend fun reminderEnabled(context: Context): Boolean = try {
+        val app = context.applicationContext as? EnglishApp ?: return false
+        app.container.settingsRepository.settings.first().dailyReminderEnabled
     } catch (t: Throwable) {
-        null
+        false
     }
 
     private fun showNotification(context: Context) {
@@ -113,7 +126,8 @@ class DailyReminderReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         val notification = NotificationCompat.Builder(context, DailyReminder.CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            // Monochrome status-bar icon (B-4) — the launcher icon renders as a blob.
+            .setSmallIcon(R.drawable.ic_stat_reminder)
             .setContentTitle("مرور امروز آماده است")
             .setContentText("چند دقیقه‌ای سر واژه‌ها بنشین تا یادگیری‌ات تازه بماند.")
             .setAutoCancel(true)

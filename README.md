@@ -45,6 +45,9 @@ re-assert LTR, because the root layout is forced RTL.
 - **Placement test** — 30 questions in six graded bands of five (A1→C2). Scoring is band-based: a
   band passes at ≥ 2/3 with ≥ 60 % cumulative accuracy, scoring stops at the first failed band, and
   the result floors at A1. It doubles as a per-skill assessment (P1-1): each question carries an authored skill, so the result screen shows a per-skill read and the placement answers calibrate the learner's skill profile from day one.
+- **Foundations first** — the alphabet and letter names, spelling your name, and numbers 0–20 are the
+  first three A1 lessons, so a complete beginner meets letters before words. Greetings now sits
+  behind the alphabet in the curriculum graph.
 - **Lessons** — an intro stage (word list, short Persian grammar tip, optional audio) followed by
   exercises. A wrong answer shows a short explanation and re-asks that same item once in the same
   session, so a miss is never just a score.
@@ -73,14 +76,14 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 14)**
+**Content bundle (JSON `contentVersion` 15)**
 
 | | Count |
 |---|---|
-| Lessons | 45 — A1: 12, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 383 |
-| Vocabulary entries | 270 |
-| Knowledge items | 83 |
+| Lessons | 48 — A1: 15, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
+| Exercises | 407 |
+| Vocabulary entries | 290 |
+| Knowledge items | 89 |
 | Placement questions | 30 |
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
@@ -289,7 +292,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-209 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
+211 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

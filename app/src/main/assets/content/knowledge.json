@@ -1,5 +1,5 @@
 {
-  "contentVersion": 14,
+  "contentVersion": 15,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -7,7 +7,9 @@
       "title": "Greetings and courtesy phrases",
       "titleFa": "سلام و عبارات ادب",
       "level": "A1",
-      "prerequisites": [],
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
       "lessons": [
         "a1.greetings.lesson-01"
       ],
@@ -1347,6 +1349,95 @@
       "prerequisites": [],
       "lessons": [
         "a1.question-words.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.alphabet",
+      "type": "VOCABULARY",
+      "title": "The English alphabet and its letters",
+      "titleFa": "الفبای انگلیسی و حروف آن",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.alphabet.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.spelling",
+      "type": "VOCABULARY",
+      "title": "Spelling names and addresses",
+      "titleFa": "هجی کردن نام و نشانی",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.spelling.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "WRITING"
+      ]
+    },
+    {
+      "id": "vocab.numbers",
+      "type": "VOCABULARY",
+      "title": "Numbers 0–20 and 100",
+      "titleFa": "اعداد ۰ تا ۲۰ و صد",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.numbers.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.letter-names",
+      "type": "PHONOLOGY",
+      "title": "Letter names and vowel sounds",
+      "titleFa": "نام حروف و صداهای واکه‌ای",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.alphabet.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.spelling-aloud",
+      "type": "PHONOLOGY",
+      "title": "Saying letters aloud while spelling",
+      "titleFa": "گفتن حروف هنگام هجی کردن",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.spelling.lesson-01"
+      ],
+      "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "phonology.number-sounds",
+      "type": "PHONOLOGY",
+      "title": "The /θ/ in three and the -teen / -ty contrast",
+      "titleFa": "آوای /θ/ در three و تفاوت teen و ty",
+      "level": "A1",
+      "prerequisites": [],
+      "lessons": [
+        "a1.numbers.lesson-01"
       ],
       "skills": [
         "LISTENING"

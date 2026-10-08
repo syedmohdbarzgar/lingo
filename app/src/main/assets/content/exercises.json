@@ -1,5 +1,5 @@
 {
-  "contentVersion": 14,
+  "contentVersion": 15,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -5841,6 +5841,396 @@
       "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "needn't have + قسمت سوم یعنی کار انجام شد اما بیهوده بود."
+    },
+    {
+      "id": "a1.alphabet.ex.01",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "How many letters are there in the English alphabet?",
+      "questionFa": "الفبای انگلیسی چند حرف دارد؟",
+      "options": [
+        "twenty-four",
+        "twenty-six",
+        "twenty-eight",
+        "twenty-two"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "الفبای انگلیسی ۲۶ حرف دارد — از A تا Z.",
+      "order": 1
+    },
+    {
+      "id": "a1.alphabet.ex.02",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which letter comes after C?",
+      "questionFa": "بعد از C کدام حرف می‌آید؟",
+      "options": [
+        "E",
+        "B",
+        "D",
+        "F"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "ترتیب الفبا A, B, C, D است؛ پس بعد از C حرف D می‌آید.",
+      "order": 2
+    },
+    {
+      "id": "a1.alphabet.ex.03",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which one is a capital letter?",
+      "questionFa": "کدام‌یک حرف بزرگ است؟",
+      "options": [
+        "g",
+        "b",
+        "d",
+        "A"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "حرف بزرگ (capital) شکل بلند حرف است؛ b, d, g شکل کوچک‌اند.",
+      "order": 3
+    },
+    {
+      "id": "a1.alphabet.ex.04",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which letter is a vowel?",
+      "questionFa": "کدام حرف صدادار است؟",
+      "options": [
+        "E",
+        "B",
+        "C",
+        "D"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "حروف صدادار A, E, I, O, U هستند؛ B, C, D بی‌صدا هستند.",
+      "order": 4
+    },
+    {
+      "id": "a1.alphabet.ex.05",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "translation",
+      "prompt": "حرف A اولین حرف الفباست.",
+      "accepted": [
+        "a is the first letter",
+        "a is the first letter of the alphabet",
+        "the letter a is the first letter"
+      ],
+      "bank": [
+        "a",
+        "is",
+        "the",
+        "first",
+        "letter",
+        "of",
+        "alphabet",
+        "second"
+      ],
+      "explanationFa": "برای اشاره به جایگاه یک حرف از the first letter استفاده کن؛ ترتیب جمله: A is the first letter.",
+      "order": 5
+    },
+    {
+      "id": "a1.alphabet.ex.06",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "listening",
+      "text": "The English alphabet has twenty-six letters.",
+      "accepted": [
+        "the english alphabet has twenty six letters",
+        "the english alphabet has 26 letters"
+      ],
+      "explanationFa": "به عدد twenty-six گوش کن و /s/ پایانی letters را بشنو — انتهای واژه‌ها در انگلیسی واضح‌تر از فارسی گفته می‌شود.",
+      "order": 6
+    },
+    {
+      "id": "a1.alphabet.ex.07",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "What does \"vowel\" mean?",
+      "questionFa": "معنی «vowel» چیست؟",
+      "options": [
+        "حرف بزرگ",
+        "حرف صدادار",
+        "حرف کوچک",
+        "الفبا"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "vowel حرف صدادار است — A, E, I, O, U؛ حرف بزرگ capital letter است.",
+      "order": 7
+    },
+    {
+      "id": "a1.alphabet.ex.08",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which sentence is correct?",
+      "questionFa": "کدام جمله درست است؟",
+      "options": [
+        "A the letter is first letter.",
+        "Letter the A is first the letter.",
+        "The letter A is the first letter.",
+        "First the letter is A letter."
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "ترتیب جملهٔ انگلیسی ثابت است: نهاد + فعل + بقیه؛ «The letter A is the first letter» درست است و جابهجا کردن واژهها جمله را بیمعنی میکند.",
+      "order": 8
+    },
+    {
+      "id": "a1.spelling.ex.01",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which spelling is correct?",
+      "questionFa": "کدام املای درست است؟",
+      "options": [
+        "mornning",
+        "mornin",
+        "moorning",
+        "morning"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "واژهٔ morning دو n دارد و به g ختم می‌شود.",
+      "order": 9
+    },
+    {
+      "id": "a1.spelling.ex.02",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which word has a double letter?",
+      "questionFa": "کدام واژه حرف تکراری دارد؟",
+      "options": [
+        "letter",
+        "name",
+        "spell",
+        "email"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "در letter حرف t دو بار آمده است؛ بقیهٔ واژه‌ها حرف تکراری ندارند.",
+      "order": 10
+    },
+    {
+      "id": "a1.spelling.ex.03",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "fill_blank",
+      "sentence": "My ______ is Ahmadi.",
+      "accepted": [
+        "surname",
+        "family name",
+        "last name"
+      ],
+      "explanationFa": "برای نام خانوادگی surname یا family name می‌گوییم؛ بعد از My شکل مفرد می‌آید.",
+      "order": 11
+    },
+    {
+      "id": "a1.spelling.ex.04",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "translation",
+      "prompt": "نامت را چطور هجی می‌کنی؟",
+      "accepted": [
+        "how do you spell your name",
+        "how do you spell your name please",
+        "how do you spell your name?"
+      ],
+      "bank": [
+        "how",
+        "do",
+        "you",
+        "spell",
+        "your",
+        "name",
+        "what",
+        "is"
+      ],
+      "explanationFa": "پرسش ثابت How do you spell …? است؛ بعد از do فعل لخت می‌آید.",
+      "order": 12
+    },
+    {
+      "id": "a1.spelling.ex.05",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "listening",
+      "text": "Can you spell your surname, please?",
+      "accepted": [
+        "can you spell your surname please"
+      ],
+      "explanationFa": "به نام حروف داخل surname و مکث بین واژه‌ها گوش کن؛ هجی‌کردن حرف‌ها را جدا و روشن می‌گوید.",
+      "order": 13
+    },
+    {
+      "id": "a1.spelling.ex.06",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which spelling of the number 8 is correct?",
+      "questionFa": "املای درست عدد ۸ کدام است؟",
+      "options": [
+        "eigth",
+        "eight",
+        "eit",
+        "eaght"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "عدد ۸ را eight می‌نویسیم: e-i-g-h-t؛ جای g و h را عوض نکن.",
+      "order": 14
+    },
+    {
+      "id": "a1.spelling.ex.07",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "multiple_choice",
+      "question": "What does \"surname\" mean?",
+      "questionFa": "معنی «surname» چیست؟",
+      "options": [
+        "هجی کردن",
+        "نشانی",
+        "نام خانوادگی",
+        "دوتایی"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "surname یعنی نام خانوادگی؛ address نشانی و spell هجی کردن است.",
+      "order": 15
+    },
+    {
+      "id": "a1.spelling.ex.08",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "fill_blank",
+      "sentence": "Please write your ______ address.",
+      "accepted": [
+        "email",
+        "e-mail"
+      ],
+      "explanationFa": "نشانی اینترنتی email address است و با حرف کوچک نوشته می‌شود.",
+      "order": 16
+    },
+    {
+      "id": "a1.numbers.ex.01",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which number comes after nine?",
+      "questionFa": "بعد از nine کدام عدد می‌آید؟",
+      "options": [
+        "twenty",
+        "eleven",
+        "twelve",
+        "ten"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "پس از nine عدد ten (۱۰) می‌آید؛ eleven یازده است.",
+      "order": 17
+    },
+    {
+      "id": "a1.numbers.ex.02",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "multiple_choice",
+      "question": "Which word is the number 20?",
+      "questionFa": "کدام واژه عدد ۲۰ است؟",
+      "options": [
+        "twenty",
+        "twelve",
+        "two",
+        "ten"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "twenty بیست است؛ twelve دوازده و two دو است — شکل‌ها شبیه‌اند ولی معنی یکی نیست.",
+      "order": 18
+    },
+    {
+      "id": "a1.numbers.ex.03",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "fill_blank",
+      "sentence": "There are ______ months in a year.",
+      "accepted": [
+        "twelve",
+        "12"
+      ],
+      "explanationFa": "سال دوازده ماه دارد؛ هم واژهٔ twelve و هم رقم 12 پذیرفته است.",
+      "order": 19
+    },
+    {
+      "id": "a1.numbers.ex.04",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "fill_blank",
+      "sentence": "Three plus two is ______.",
+      "accepted": [
+        "five",
+        "5"
+      ],
+      "explanationFa": "سه به‌علاوهٔ دو پنج می‌شود؛ شکل واژه‌ای five است.",
+      "order": 20
+    },
+    {
+      "id": "a1.numbers.ex.05",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "multiple_choice",
+      "question": "How do you write the number 3 in words?",
+      "questionFa": "عدد ۳ را با واژه چطور می‌نویسیم؟",
+      "options": [
+        "tree",
+        "three",
+        "thre",
+        "threa"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "عدد ۳ را three می‌نویسیم؛ tree به معنی درخت است.",
+      "order": 21
+    },
+    {
+      "id": "a1.numbers.ex.06",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "translation",
+      "prompt": "کلاس بیست دانش‌آموز دارد.",
+      "accepted": [
+        "the class has twenty students",
+        "there are twenty students in the class",
+        "the classroom has twenty students"
+      ],
+      "bank": [
+        "the",
+        "class",
+        "has",
+        "twenty",
+        "students",
+        "there",
+        "are",
+        "in"
+      ],
+      "explanationFa": "برای شمارش هم has و هم there are درست است؛ عدد پیش از اسم جمع می‌آید: twenty students.",
+      "order": 22
+    },
+    {
+      "id": "a1.numbers.ex.07",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "multiple_choice",
+      "question": "What does \"hundred\" mean?",
+      "questionFa": "معنی «hundred» چیست؟",
+      "options": [
+        "دوازده",
+        "بیست",
+        "صد",
+        "صفر"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "hundred یعنی صد؛ twenty بیست، twelve دوازده و zero صفر است.",
+      "order": 23
+    },
+    {
+      "id": "a1.numbers.ex.08",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "listening",
+      "text": "There are twenty students in the class.",
+      "accepted": [
+        "there are twenty students in the class"
+      ],
+      "explanationFa": "به /tw/ در آغاز twenty و تکیه روی هجای اولش گوش کن؛ با twelve اشتباه نکن.",
+      "order": 24
     }
   ]
 }

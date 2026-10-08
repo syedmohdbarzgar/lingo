@@ -10,6 +10,11 @@
          re-schedule itself after a reboot, when alarms are wiped. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- Runtime permission on API 33+: the daily reminder is a local notification,
+         so it must be DECLARED here or the Settings request is a no-op and the
+         notification never appears. Requested in Settings when the toggle turns on. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <!-- myket-billing-client drags in play-services-ads-identifier; we never read
          the advertising id (the SDK guards its own call), so deny the permission. -->
     <uses-permission

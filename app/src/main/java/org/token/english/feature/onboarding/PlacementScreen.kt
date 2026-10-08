@@ -351,6 +351,15 @@ private fun ResultContent(
             result.bySkill.takeIf { it.isNotEmpty() }?.let { reports ->
             Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                 SectionHeader("مهارت‌های سنجیده‌شده")
+                // A-6: honest scope. The test is recognition-based and measures
+                // exactly these skills — do not let the report read as a full
+                // profile of reading, writing or speaking too.
+                Text(
+                    text = "این آزمون گرامر و واژگان را می‌سنجد؛ مهارت‌های دیگر با تمرین‌های درس‌ها شکل می‌گیرند.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
                 reports.forEach { report ->
                     SkillReportRow(report)
                 }

@@ -12,6 +12,16 @@ object AnswerChecker {
     private val whitespace = Regex("\\s+")
 
     /**
+     * A dot or comma with digits on BOTH sides is a decimal/thousands separator,
+     * not sentence punctuation (checklist A-2b). It is swapped for [SEPARATOR]
+     * before the punctuation strip and restored after, so `3.5` can never collapse
+     * into `35` — the collision that would make a price lesson ungradeable.
+     * A sentence-final dot (`3.`) still goes, so `3.` ≡ `three` keeps working.
+     */
+    private val digitSeparator = Regex("(?<=\\d)[.,](?=\\d)")
+    private const val SEPARATOR = "\u0001"
+
+    /**
      * Grading verdict for a typed answer (checklist A-2).
      * ALMOST is never credited — it exists only so the UI can say
      * «تقریباً درست — املای کلمه را بررسی کن» instead of a bare miss.
@@ -30,8 +40,8 @@ object AnswerChecker {
         "60" to "sixty", "70" to "seventy", "80" to "eighty", "90" to "ninety",
     )
 
-    /** Standalone 1–2 digit tokens ("3" matches, "1st" and "100" do not). */
-    private val digitToken = Regex("\\b\\d{1,2}\\b")
+    /** Any run of digits; [normalize] decides whether it may become a word. */
+    private val numberRun = Regex("\\d+")
 
     /** Minimum length before a single edit counts as a near-miss (checklist A-2). */
     private const val ALMOST_MIN_LENGTH = 5
@@ -93,19 +103,33 @@ object AnswerChecker {
 
     private val contractionRegex = Regex("\\b(" + contractions.keys.joinToString("|") { Regex.escape(it) } + ")\\b")
 
-    fun normalize(raw: String): String = raw
-        .trim()
-        .lowercase()
-        .replace(Regex("[\u2018\u2019\u02bc\u00b4`]"), "'") // curly/typographic apostrophes → straight
-        .replace("\u200c", "") // ZWNJ removed (Persian)
-        .replace('\u064a', '\u06cc') // Arabic yeh → Persian yeh (ی)
-        .replace('\u0649', '\u06cc') // alef maksura → Persian yeh
-        .replace('\u0643', '\u06a9') // Arabic kaf → Persian kaf (ک)
-        .replace(punctuation, "")
-        .replace(whitespace, " ")
+    fun normalize(raw: String): String {
+        val stripped = raw
+            .trim()
+            .lowercase()
+            .replace(Regex("[\u2018\u2019\u02bc\u00b4`]"), "'") // curly/typographic apostrophes → straight
+            .replace("\u200c", "") // ZWNJ removed (Persian)
+            .replace('\u064a', '\u06cc') // Arabic yeh → Persian yeh (ی)
+            .replace('\u0649', '\u06cc') // alef maksura → Persian yeh
+            .replace('\u0643', '\u06a9') // Arabic kaf → Persian kaf (ک)
+            .replace(digitSeparator, SEPARATOR) // protect 3.5 / 1,000 before stripping
+            .replace(punctuation, "")
+            .replace(whitespace, " ")
+            .replace(SEPARATOR, ".")
         // "3" ≡ "three": digits normalize to their word form so a learner who
         // types the number gets credit against a word-form accepted answer (A-2).
-        .replace(digitToken) { m -> numberWords[m.value] ?: m.value }
+        // A run that is glued to other digits or to a protected separator (`3.5`,
+        // `9.30`) or to letters (`1st`, `30th`) is left exactly as typed.
+        return stripped.replace(numberRun) { m ->
+            val before = stripped.getOrNull(m.range.first - 1)
+            val after = stripped.getOrNull(m.range.last + 1)
+            if (glued(before) || glued(after)) m.value else numberWords[m.value] ?: m.value
+        }
+    }
+
+    /** True when [c] would make a neighbouring digit run part of a bigger token. */
+    private fun glued(c: Char?): Boolean =
+        c != null && (c.isDigit() || c.isLetter() || c == '.' || c == ',' || c == ':')
 
     /** Expands contractions so `I'm hungry` equals `I am hungry`. */
     fun expandContractions(normalized: String): String =
@@ -135,9 +159,20 @@ object AnswerChecker {
         return matchesAny(accepted, answer)
     }
 
-    /** Grades a typed answer: exact match → CORRECT, one-edit near-miss → ALMOST. */
+    /**
+     * Grades a typed answer: exact match → CORRECT, one-edit near-miss → ALMOST.
+     *
+     * ALMOST is a **spelling** signal, so it is not offered where the learner was
+     * asked for a form rather than a spelling (checklist A-2b): on a GRAMMAR item
+     * `listen` vs `listens` is a missing `-s`, not a typo, and telling the learner
+     * to "check the spelling" points at the wrong thing. Grammar items therefore
+     * grade straight to WRONG — the item's own explanation says what the form
+     * should have been. The review session (bare words, [grade] below) keeps the
+     * near-miss hint, because there the target really is one word's spelling.
+     */
     fun grade(exercise: Exercise, answer: String): Verdict = when {
         isCorrect(exercise, answer) -> Verdict.CORRECT
+        skillOf(exercise) == Skill.GRAMMAR -> Verdict.WRONG
         isAlmost(exercise, answer) -> Verdict.ALMOST
         else -> Verdict.WRONG
     }
