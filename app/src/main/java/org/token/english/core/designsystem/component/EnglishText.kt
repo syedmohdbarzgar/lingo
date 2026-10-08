@@ -49,8 +49,11 @@ fun EnglishText(
  * Returns the paragraph text direction to use for [text].
  * Mirrors [TextDirection.Content] but forces LTR whenever the first strong
  * letter is not a plain English letter (A–Z / a–z).
+ *
+ * `internal` (not private) so the BiDi rule is unit tested in the JVM — see
+ * `BidiTextTest`. Nothing Android-specific is involved: it is a pure string rule.
  */
-private fun textDirectionFor(text: String): TextDirection {
+internal fun textDirectionFor(text: String): TextDirection {
     return if (firstStrongIsLtr(text)) TextDirection.Content else TextDirection.Ltr
 }
 
@@ -59,8 +62,11 @@ private fun textDirectionFor(text: String): TextDirection {
  * (whitespace, digits, punctuation, format chars such as ZWNJ, marks, emoji) and
  * reports whether the first letter found is an ASCII Latin letter — the only
  * letters EnglishText is meant to lay out LTR-first.
+ *
+ * `internal` for the same reason as [textDirectionFor]: it is the BiDi rule the
+ * whole RTL root layout depends on, so it is pinned by a test.
  */
-private fun firstStrongIsLtr(text: String): Boolean {
+internal fun firstStrongIsLtr(text: String): Boolean {
     var i = 0
     while (i < text.length) {
         val cp = text.codePointAt(i)

@@ -125,6 +125,21 @@ class RemediationEngineTest {
     }
 
     @Test
+    fun `findWeakness works without an injected depth resolver`() {
+        // Regression: the depth resolver used to be a `lateinit` that threw
+        // UninitializedPropertyAccessException unless withDepthResolver() had been
+        // called first — findWeakness crashed on a freshly constructed engine. The
+        // default must resolve depth by itself.
+        val states = mapOf("b" to state("b", 0.3f))
+        val exercises = exercisesFor("l1", listOf(mc("e1")))
+
+        val weakness = RemediationEngine(graph).findWeakness(states, exercises)!!
+
+        assertEquals("b", weakness.itemId)
+        assertEquals("b depends on a, so it sits one level deep", 1, weakness.depth)
+    }
+
+    @Test
     fun `findWeakness reports blocked dependents`() {
         // a is weak, b depends on a, c is independent.
         val states = mapOf("a" to state("a", 0.2f))

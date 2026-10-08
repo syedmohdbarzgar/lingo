@@ -2,6 +2,9 @@ package org.token.english.domain.usecase
 
 import kotlinx.coroutines.flow.first
 import org.token.english.domain.engine.LearningPlanner
+import org.token.english.domain.engine.PlacementAnswer
+import org.token.english.domain.engine.PlacementAssessment
+import org.token.english.domain.engine.PlacementAssessmentEngine
 import org.token.english.domain.engine.ReviewScheduler
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.AppSettings
@@ -213,5 +216,25 @@ class ScorePlacementUseCase {
     companion object {
         /** Questions per CEFR band in placement.json (6 bands × 5 = 30 total). */
         const val DEFAULT_BAND_SIZE = 5
+    }
+}
+
+/**
+ * Scores a finished placement test as a *skill assessment* (P1-1), not just a
+ * single CEFR level: returns the overall estimate plus a per-skill read from
+ * [PlacementAssessmentEngine], and calibrates skill mastery from the very same
+ * answers so the learner's profile starts informed instead of blank.
+ *
+ * Mastery is seeded by replaying each answer through [ProgressRepository] — never
+ * by writing mastery directly — so the EWMA stays the single source of truth and a
+ * correct placement answer means the same thing as a correct lesson answer.
+ */
+class AssessPlacementUseCase(
+    private val progress: ProgressRepository,
+    private val engine: PlacementAssessmentEngine = PlacementAssessmentEngine(),
+) {
+    suspend operator fun invoke(answers: List<PlacementAnswer>): PlacementAssessment {
+        answers.forEach { progress.applyAttempt(it.skill, it.correct, source = "placement") }
+        return engine(answers)
     }
 }

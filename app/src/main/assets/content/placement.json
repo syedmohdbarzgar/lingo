@@ -1,5 +1,5 @@
 {
-  "contentVersion": 12,
+  "contentVersion": 14,
   "questions": [
     {
       "id": "placement.q01",
@@ -13,7 +13,8 @@
         "Morning good",
         "Go morning"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q02",
@@ -27,7 +28,8 @@
         "am drink",
         "drinking"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q03",
@@ -41,7 +43,8 @@
         "There is",
         "Has"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q19",
@@ -55,7 +58,8 @@
         "پرتقال",
         "سیب"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q20",
@@ -69,7 +73,8 @@
         "She liking coffee.",
         "She is like coffee."
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q04",
@@ -83,7 +88,8 @@
         "has finish",
         "finishes"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q05",
@@ -97,7 +103,8 @@
         "should",
         "mightn't"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q06",
@@ -111,7 +118,8 @@
         "best",
         "better"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q21",
@@ -125,7 +133,8 @@
         "costly",
         "valuable"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q22",
@@ -139,7 +148,8 @@
         "Who is at the meeting?",
         "Why is the meeting?"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q07",
@@ -153,7 +163,8 @@
         "have lived",
         "live"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q08",
@@ -167,7 +178,8 @@
         "is sending",
         "was sent"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q09",
@@ -181,7 +193,8 @@
         "has been",
         "will be"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q23",
@@ -195,7 +208,8 @@
         "expensive",
         "curious"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q24",
@@ -209,7 +223,8 @@
         "I've never tried sushi.",
         "I've never tried sushi nor."
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q10",
@@ -223,7 +238,8 @@
         "would leave",
         "had left"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q11",
@@ -237,7 +253,8 @@
         "which",
         "that's"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q12",
@@ -251,7 +268,8 @@
         "would have",
         "have"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q25",
@@ -265,7 +283,8 @@
         "had already started",
         "was starting"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q26",
@@ -279,7 +298,8 @@
         "predict",
         "postpone"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q13",
@@ -293,7 +313,8 @@
         "I saw",
         "did I saw"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q14",
@@ -307,7 +328,8 @@
         "can",
         "need"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q15",
@@ -321,7 +343,8 @@
         "would be living",
         "lived"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q27",
@@ -335,7 +358,8 @@
         "did I put down",
         "had I put down"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "GRAMMAR"
     },
     {
       "id": "placement.q28",
@@ -349,7 +373,8 @@
         "amusing",
         "ancient"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q16",
@@ -363,7 +388,8 @@
         "detailed",
         "precise"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q17",
@@ -377,7 +403,8 @@
         "irony",
         "sincerity"
       ],
-      "correctIndex": 2
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q18",
@@ -391,7 +418,8 @@
         "ignored",
         "corroborated"
       ],
-      "correctIndex": 3
+      "correctIndex": 3,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q29",
@@ -405,7 +433,8 @@
         "eminent",
         "exemplary"
       ],
-      "correctIndex": 0
+      "correctIndex": 0,
+      "skill": "VOCABULARY"
     },
     {
       "id": "placement.q30",
@@ -419,7 +448,8 @@
         "tantamount",
         "transient"
       ],
-      "correctIndex": 1
+      "correctIndex": 1,
+      "skill": "VOCABULARY"
     }
   ]
 }

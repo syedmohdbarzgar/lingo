@@ -136,6 +136,9 @@ tasks.register("validateContent") {
         val levels = setOf("A1", "A2", "B1", "B2", "C1", "C2")
         // Mirrors ContentParser.supportedTypes — `speaking` parses but is suspended.
         val exerciseTypes = setOf("multiple_choice", "fill_blank", "translation", "listening")
+        // Mirrors domain Skill — an authored tag must name a real skill, otherwise
+        // ContentParser silently drops it and mastery falls back to the heuristic.
+        val skills = setOf("VOCABULARY", "GRAMMAR", "LISTENING", "SPEAKING", "READING", "WRITING")
         val errors = mutableListOf<String>()
         val dir = contentDir.asFile
 
@@ -207,7 +210,15 @@ tasks.register("validateContent") {
             }
         }
 
+        fun checkSkill(id: String, o: Map<*, *>) {
+            val skill = text(o, "skill")
+            if (skill.isNotEmpty() && skill.uppercase() !in skills) {
+                report(id, "invalid skill \"$skill\"")
+            }
+        }
+
         fun checkExercise(id: String, type: String, o: Map<*, *>) {
+            checkSkill(id, o)
             when (type) {
                 "multiple_choice" -> {
                     if (text(o, "question").isEmpty()) report(id, "blank question")
@@ -305,6 +316,7 @@ tasks.register("validateContent") {
             if (id in exerciseIds) report(id, "id already used by an exercise")
             if (text(question, "level") !in levels) report(id, "invalid level \"${text(question, "level")}\"")
             if (text(question, "question").isEmpty()) report(id, "blank question")
+            checkSkill(id, question)
             checkChoiceAnswer(id, question)
         }
 

@@ -50,7 +50,9 @@ Release points only:
 ```
 
 Notes: only per-flavour unit-test tasks exist (`testDebugUnitTest` is not a task under AGP 9's
-`onlyEnableUnitTestForTheTestedBuildType`). There is **no CI** in this repo.
+`onlyEnableUnitTestForTheTestedBuildType`). CI lives in `.github/workflows/ci.yml` — the same two
+fast gates (content validation + unit tests) and `lintBazaarDebug` on every push/PR; the three
+flavor assemblies only on schedule/manual dispatch/tags. There is no emulator or device job.
 
 ### Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 
@@ -83,7 +85,8 @@ org.token.english
 │   ├── model/                 # Lesson, VocabularyItem, Exercise(sealed), ReviewItem, AnswerChecker…
 │   ├── repository/            # Repository interfaces (implemented in data/)
 │   ├── engine/                # ReviewScheduler (SM-2-lite), MasteryEngine, LearningPlanner
-│   └── usecase/               # SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, ScorePlacement
+│   └── usecase/               # SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan,
+│                              #   ScorePlacement + AssessPlacement (P1-1 skill assessment)
 ├── data/
 │   ├── local/                 # Room: entities, DAOs, AppDatabase (version 5, schemas exported)
 │   ├── content/               # ContentParser (org.json) + ContentSeeder (assets → Room)
@@ -240,7 +243,7 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 12):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+- **CEFR bundle (contentVersion 14):** 45 lessons (A1 = 12, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
   each), 383 exercises (6–11/lesson + 12 reading items + A1 pronunciation drills), 270
   vocabulary entries (6/lesson), 83 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
@@ -253,6 +256,18 @@ Rules:
   now introduced at **A2** (`a2.past-simple.lesson-01`, `grammar.past-simple` level B1 → A2) with
   `b1.work` still teaching it as a review. Placement bands were re-checked afterwards: still
   30 questions, five per level, A1 → C2 in order.
+- **Content correctness pass (P0-9):** the bundle was audited end-to-end and two silent defects
+  fixed, both now enforced by `VocabularyContentTest`:
+  (a) the generated "What does X mean?" choices (`scripts/enrich_content.mjs` writes one per
+  lesson at `*.ex.07`) drew their distractors from a global cursor, so an A1 item could offer a
+  C2 gloss — distractors now come from the lesson's own vocabulary;
+  (b) two vocabulary examples (`a1.shopping.word.price`, `…word.discount`) never named their word.
+  Every vocabulary example must now contain its word (inflection-tolerant: `blocks` illustrates
+  `block`, `children` illustrates `child`, separable phrasal verbs may split) — the genuinely
+  irregular forms live in an explicit allowlist that fails the build when it rots.
+  `scripts/p0_fix_a1a2_content.mjs` is the one-shot batch that applied it; the count stayed
+  45/270/383/30/83 (edits in place, the bundle moved 12 → 13). Placement gained its `skill`
+  tags in the same style of in-place edit (bundle 13 → 14, P1-1); no counts changed.
 - **Practice bar (A-8):** every GRAMMAR knowledge item needs **at least six grammar-targeting
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the
   mastery engine uses, so a vocabulary-heavy lesson does not count as grammar practice.
@@ -277,6 +292,13 @@ Rules:
   passes at ≥2/3 with ≥60% cumulative accuracy, stops at first failed band, floor A1.
   Question `level` tags in placement.json are documentation; scoring uses array order +
   `ScorePlacementUseCase.DEFAULT_BAND_SIZE = 5` (six bands × 5 = 30 questions).
+- **Placement is also a skill assessment (P1-1).** Every placement question carries an authored
+  `skill` (11 VOCABULARY, 19 GRAMMAR — the two axes the test actually measures; no fake tags).
+  `PlacementAssessmentEngine` (pure) returns the overall level from the same band scorer plus a
+  per-skill accuracy read, `strengths` and weakest-first `focusSkills`; `AssessPlacementUseCase`
+  then replays the answers through `ProgressRepository.applyAttempt` so skill mastery starts
+  calibrated instead of blank — never by writing mastery directly, so the EWMA stays single-source.
+  The result screen shows the per-skill breakdown; unmeasured skills are never listed.
 - IDs are **stable dotted strings** (`a1.airport.word.passport`, `placement.q01`) — never renumber.
 - `exercise.payloadJson` stores the authored JSON verbatim; `ContentParser.exerciseFromPayload`
   maps it to the sealed `Exercise`. Unknown types are skipped, never crash a lesson.
@@ -322,15 +344,26 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 209 tests / 29 classes as of
+  the P0 + P1-1 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
-  `EntitlementPolicyTest` (trial/subscription gating), `KnowledgeGraphTest` (curriculum graph),
-  `ContentSeederTest` / `ContentDistributionTest` (content pipeline), `KnowledgeEngineTest`
+  `EntitlementPolicyTest` (trial/subscription gating) + `SubscriptionRecoveryTest` (renewal
+  boundaries, reinstall restore, store-truth reconciliation), `KnowledgeGraphTest` (curriculum
+  graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
+  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
-  (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic), plus the
+  (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
+  `RoomMigrationTest` (migration ↔ exported schema, no gaps), `BidiTextTest` (BiDi direction rule
+  + no Persian in English exercise fields), `PlacementAssessmentTest` (per-skill read from the
+  placement answers), `LearningPathJourneyTest` (install → placement →
+  lesson → miss/retry → complete → review → progress, on the real bundle, incl. placement
+  calibrating mastery), plus the
   adaptive layer —
-  `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest`, `MasteryProfileEngineTest`,
-  `AdaptiveExerciseSelectorTest`, `ReviewLifecycleTest` (pinned SRS lifecycle numbers).
+  `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest` (never exceeds the daily target),
+  `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`,
+  `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
+- `.github/workflows/ci.yml` runs the same two gates (validate + unit tests) plus `lintBazaarDebug`
+  and the three flavor assemblies (the last only on schedule/manual dispatch/tags).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
   content edit run them with `--rerun` or they silently report UP-TO-DATE.
 - Instrumented test files are still the Android Studio templates (not maintained).

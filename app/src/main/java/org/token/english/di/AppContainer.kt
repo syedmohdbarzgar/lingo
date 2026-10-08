@@ -34,6 +34,7 @@ import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
+import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
@@ -212,4 +213,9 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
         )
     }
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }
+
+    /** Placement as a skill assessment (P1-1): scores *and* calibrates mastery. */
+    val assessPlacement: AssessPlacementUseCase by lazy {
+        AssessPlacementUseCase(progressRepository)
+    }
 }

@@ -44,7 +44,7 @@ re-assert LTR, because the root layout is forced RTL.
 
 - **Placement test** — 30 questions in six graded bands of five (A1→C2). Scoring is band-based: a
   band passes at ≥ 2/3 with ≥ 60 % cumulative accuracy, scoring stops at the first failed band, and
-  the result floors at A1.
+  the result floors at A1. It doubles as a per-skill assessment (P1-1): each question carries an authored skill, so the result screen shows a per-skill read and the placement answers calibrate the learner's skill profile from day one.
 - **Lessons** — an intro stage (word list, short Persian grammar tip, optional audio) followed by
   exercises. A wrong answer shows a short explanation and re-asks that same item once in the same
   session, so a miss is never just a score.
@@ -73,7 +73,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 12)**
+**Content bundle (JSON `contentVersion` 14)**
 
 | | Count |
 |---|---|
@@ -165,7 +165,9 @@ scripts/install_debug.sh --list-devices
 ./gradlew :app:assembleGooglePlayDebug  # Google Play APK
 ```
 
-There is **no CI** in this repository yet.
+**CI** (`.github/workflows/ci.yml`) runs the two fast gates (content validation + unit tests) and
+`lintBazaarDebug` on every push and pull request; the three flavor assemblies run on a schedule,
+manual dispatch or a tag, because building every flavor on every commit buys nothing.
 
 ### Toolchain
 
@@ -287,9 +289,12 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-77 unit tests across 12 classes, covering the pure cores: review scheduling, mastery and answer
-checking, streak day keys, entitlement policy, trial clock, placement scoring, the content pipeline,
-the knowledge graph and the knowledge engine.
+209 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
+mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
+and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
+and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
+has its own tests. `LearningPathJourneyTest` runs the whole learner journey on the real bundle with
+in-memory repositories, so the pieces are proven to compose, not just to work alone.
 
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.
@@ -346,7 +351,6 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 - Move the spaced-repetition queue onto the knowledge graph — schedule and re-serve each due
   curriculum node's own exercises, and feed review grades into node mastery the way lesson answers
   already do.
-- Skill-profile placement: score the placement test per skill instead of a single overall band.
 - An error taxonomy so each miss is classified (vocabulary gap vs grammar vs comprehension) and
   drives what comes next — then adaptive difficulty on top of it.
 - `writing` and `conversation` exercise types (the exercise model already has room for them).
@@ -370,7 +374,7 @@ in place for each.
 [`AGENTS.md`](AGENTS.md) is the authoritative reference — read it before changing anything. The
 short version:
 
-- **Run the gates locally.** There is no CI, so nothing checks your branch but you:
+- **Run the gates locally.** CI runs them too, but a red pipeline is a slow way to learn:
   `./gradlew :app:testBazaarDebugUnitTest`, and `./gradlew validateContent` after any content edit.
 - **Content is data, not code.** Add lessons, words, exercises and knowledge nodes in the JSON
   bundle and bump `contentVersion`; new content needs no Kotlin change.

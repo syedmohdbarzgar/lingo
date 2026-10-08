@@ -1,5 +1,5 @@
 {
-  "contentVersion": 12,
+  "contentVersion": 14,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -1991,9 +1991,9 @@
       "questionFa": "معنی «hello» چیست؟",
       "options": [
         "سلام",
-        "حرکت / پرواز (رفتن)",
-        "قیمت",
-        "گوشه، چهارراه"
+        "صبح بخیر",
+        "ممنون",
+        "لطفاً"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2004,17 +2004,17 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 7,
-      "question": "What does \"wake up\" mean?",
-      "questionFa": "معنی «wake up» چیست؟",
+      "question": "What does \"breakfast\" mean?",
+      "questionFa": "معنی «breakfast» چیست؟",
       "options": [
-        "رزرو / رزرواسیون",
         "بیدار شدن",
-        "مستقیم",
-        "دارو"
+        "صبحانه",
+        "معمولاً",
+        "دوش گرفتن"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
-      "explanationFa": "wake up یعنی بیدار شدن."
+      "explanationFa": "breakfast یعنی صبحانه — نخستین وعدهٔ روز، پیش از رفتن به سر کار."
     },
     {
       "id": "a1.family.ex.07",
@@ -2024,10 +2024,10 @@
       "question": "What does \"mother\" mean?",
       "questionFa": "معنی «mother» چیست؟",
       "options": [
-        "سردرد",
-        "کیلوگرم",
+        "پدر",
+        "خواهر",
         "مادر",
-        "مهلت"
+        "برادر"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2041,9 +2041,9 @@
       "question": "What does \"price\" mean?",
       "questionFa": "معنی «price» چیست؟",
       "options": [
-        "گزارش",
-        "تقاطع",
-        "حرفه، مسیر شغلی",
+        "ارزان",
+        "پول",
+        "پرداخت کردن",
         "قیمت"
       ],
       "correctIndex": 3,
@@ -2059,9 +2059,9 @@
       "questionFa": "معنی «passport» چیست؟",
       "options": [
         "گذرنامه",
-        "درد",
-        "تیتر، تیتر اصلی",
-        "قصد داشتن"
+        "کارت پرواز",
+        "پرواز",
+        "گیت (ورودی هواپیما)"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2075,10 +2075,10 @@
       "question": "What does \"menu\" mean?",
       "questionFa": "معنی «menu» چیست؟",
       "options": [
-        "صلاحیت، مدرک تحصیلی",
+        "پیشخدمت",
         "منو (فهرست غذا)",
-        "تصمیم گرفتن",
-        "به‌یادماندنی"
+        "سفارش دادن",
+        "خوشمزه"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
@@ -2092,10 +2092,10 @@
       "question": "What does \"straight\" mean?",
       "questionFa": "معنی «straight» چیست؟",
       "options": [
-        "سفر، مسیر",
-        "پخش کردن",
+        "گوشه، چهارراه",
+        "چراغ راهنمایی",
         "مستقیم",
-        "منسوخ، قدیمی"
+        "روبروی"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2109,9 +2109,9 @@
       "question": "What does \"headache\" mean?",
       "questionFa": "معنی «headache» چیست؟",
       "options": [
-        "پایدار",
-        "گزینه",
-        "نوآوری",
+        "دارو",
+        "تب",
+        "نسخه پزشک",
         "سردرد"
       ],
       "correctIndex": 3,
@@ -2127,9 +2127,9 @@
       "questionFa": "معنی «career» چیست؟",
       "options": [
         "حرفه، مسیر شغلی",
-        "در خارج از کشور",
-        "آلودگی",
-        "نقاط قوت، قدرت"
+        "مهلت",
+        "همکار",
+        "درخواست دادن"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2143,10 +2143,10 @@
       "question": "What does \"headline\" mean?",
       "questionFa": "معنی «headline» چیست؟",
       "options": [
-        "مصنوعی",
+        "گزارش",
         "تیتر، تیتر اصلی",
-        "داوطلب، کاندیدا",
-        "مخاطب، تماشاگر"
+        "منبع",
+        "اعلام کردن"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
@@ -2160,10 +2160,10 @@
       "question": "What does \"decide\" mean?",
       "questionFa": "معنی «decide» چیست؟",
       "options": [
-        "تبلیغات",
-        "تجدیدپذیر",
+        "قصد داشتن",
+        "برنامه زمانی",
         "تصمیم گرفتن",
-        "روش‌شناسی"
+        "توانایی مالی داشتن"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2177,9 +2177,9 @@
       "question": "What does \"journey\" mean?",
       "questionFa": "معنی «journey» چیست؟",
       "options": [
-        "قانع‌کننده",
-        "واجد شرایط",
-        "فرضیه",
+        "به‌یادماندنی",
+        "یادگاری",
+        "کاوش کردن",
         "سفر، مسیر"
       ],
       "correctIndex": 3,
@@ -2195,9 +2195,9 @@
       "questionFa": "معنی «innovation» چیست؟",
       "options": [
         "نوآوری",
-        "تأثیر گذاشتن",
-        "استدلال متقابل",
-        "زیرنویس"
+        "منسوخ، قدیمی",
+        "حریم خصوصی",
+        "الگوریتم"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2211,10 +2211,10 @@
       "question": "What does \"pollution\" mean?",
       "questionFa": "معنی «pollution» چیست؟",
       "options": [
-        "قابل توجه، چشمگیر",
+        "پایدار",
         "آلودگی",
-        "سینمایی",
-        "به تعویق انداختن"
+        "انتشار (آلاینده)",
+        "حفاظت کردن، صرفه‌جویی"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
@@ -2228,10 +2228,10 @@
       "question": "What does \"candidate\" mean?",
       "questionFa": "معنی «candidate» چیست؟",
       "options": [
-        "دست کشیدن",
-        "بلاغت، سخنوری",
+        "نقاط قوت، قدرت",
+        "تجربه",
         "داوطلب، کاندیدا",
-        "ظریف، پنهان"
+        "دستاورد"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2245,9 +2245,9 @@
       "question": "What does \"advertising\" mean?",
       "questionFa": "معنی «advertising» چیست؟",
       "options": [
-        "رد کردن، ابطال کردن",
-        "روایت",
-        "مبهم",
+        "مخاطب، تماشاگر",
+        "کمپین",
+        "سوگیری",
         "تبلیغات"
       ],
       "correctIndex": 3,
@@ -2263,9 +2263,9 @@
       "questionFa": "معنی «hypothesis» چیست؟",
       "options": [
         "فرضیه",
-        "پیش کشیدن (موضوع)",
-        "بلاغت، فصاحت",
-        "تأیید کردن (شواهد)"
+        "روش‌شناسی",
+        "شواهد",
+        "ارجاع دادن، نقل قول کردن"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2279,10 +2279,10 @@
       "question": "What does \"counterargument\" mean?",
       "questionFa": "معنی «counterargument» چیست؟",
       "options": [
-        "تلویحاً بیان کردن",
+        "قانع‌کننده",
         "استدلال متقابل",
-        "تجربی، مبتنی بر مشاهده",
-        "قهرمان اصلی داستان"
+        "منازعه، ادعای اصلی",
+        "تضعیف کردن، پایه‌ها را سست کردن"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
@@ -2296,10 +2296,10 @@
       "question": "What does \"cinematic\" mean?",
       "questionFa": "معنی «cinematic» چیست؟",
       "options": [
-        "راوی",
-        "قانع کردن",
+        "زیرنویس",
+        "به تصویر کشیدن",
         "سینمایی",
-        "صبح بخیر"
+        "کلیشه، قالب ذهنی"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2313,9 +2313,9 @@
       "question": "What does \"give up\" mean?",
       "questionFa": "معنی «give up» چیست؟",
       "options": [
-        "صبحانه",
-        "پدیده",
-        "سلام",
+        "به تعویق انداختن",
+        "به طور اتفاقی پیدا کردن",
+        "بی‌مجازات ماندن",
         "دست کشیدن"
       ],
       "correctIndex": 3,
@@ -2331,9 +2331,9 @@
       "questionFa": "معنی «ambiguous» چیست؟",
       "options": [
         "مبهم",
-        "استعاره",
-        "بیدار شدن",
-        "پدر"
+        "ظریف، پنهان",
+        "بار معنایی، تلویح",
+        "مبهم، نامشخص"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
@@ -2347,10 +2347,10 @@
       "question": "What does \"eloquence\" mean?",
       "questionFa": "معنی «eloquence» چیست؟",
       "options": [
-        "از آشنایی شما خوشوقتم",
+        "رد کردن، ابطال کردن",
         "بلاغت، فصاحت",
-        "مادر",
-        "کارت پرواز"
+        "ایجاز",
+        "کنایه، طنز تلخ"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY",
@@ -2364,10 +2364,10 @@
       "question": "What does \"empirical\" mean?",
       "questionFa": "معنی «empirical» چیست؟",
       "options": [
-        "گذرنامه",
-        "عصر",
+        "تأیید کردن (شواهد)",
+        "حدس و گمان",
         "تجربی، مبتنی بر مشاهده",
-        "پیشخدمت"
+        "متغیر"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
@@ -2381,9 +2381,9 @@
       "question": "What does \"narrator\" mean?",
       "questionFa": "معنی «narrator» چیست؟",
       "options": [
-        "ارزان",
-        "دختر",
-        "منو (فهرست غذا)",
+        "قهرمان اصلی داستان",
+        "تمثیل اخلاقی",
+        "پیش‌درآمد، نشانه آینده",
         "راوی"
       ],
       "correctIndex": 3,

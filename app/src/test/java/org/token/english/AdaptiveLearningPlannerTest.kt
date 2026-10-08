@@ -219,6 +219,50 @@ class AdaptiveLearningPlannerTest {
     }
 
     @Test
+    fun `the plan never exceeds the user's daily target`() {
+        // The invariant across every combination of target, backlog and time
+        // already spent (P0: the day must never be planned longer than its goal).
+        val focus = listOf(item("a"), item("d"))
+        val states = listOf(state("a", 0.1f), state("d", 0.1f))
+        for (target in listOf(1, 2, 5, 8, 10, 15, 30, 60)) {
+            for (due in listOf(0, 3, 30, 300)) {
+                for (spentSeconds in listOf(0L, 61L, 300L, 600L, 3600L, 86_400L)) {
+                    val decision = planner.plan(
+                        states = states,
+                        dueReviewCount = due,
+                        focusItems = focus,
+                        targetMinutes = target,
+                        todayStudySeconds = spentSeconds,
+                    )
+                    assertTrue(
+                        "target=$target due=$due spent=$spentSeconds planned " +
+                            "${decision.estimatedTotalMinutes} minutes",
+                        decision.estimatedTotalMinutes <= target,
+                    )
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `a partially spent minute already counts against the budget`() {
+        // 61 seconds is two elapsed minutes, not one: rounding down would hand the
+        // plan a minute the learner has already used.
+        val decision = planner.plan(
+            states = listOf(state("a", 0.1f)),
+            dueReviewCount = 0,
+            focusItems = listOf(item("a")),
+            targetMinutes = 10,
+            todayStudySeconds = 61L,
+        )
+        assertEquals(
+            "8 minutes of budget remain after 61s",
+            8,
+            decision.remainingMinutes + decision.estimatedTotalMinutes,
+        )
+    }
+
+    @Test
     fun `review still leads the day once the goal is met`() {
         // todayStudySeconds already exceeds the target → availableMinutes == 0.
         // The day must not read as empty: retention work is still surfaced.

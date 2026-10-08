@@ -1,5 +1,5 @@
 {
-  "contentVersion": 12,
+  "contentVersion": 14,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -537,7 +537,7 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "How much is this?"
+        "The price of this bag is too high."
       ],
       "collocations": [
         "price tag",
@@ -609,7 +609,7 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Everything is twenty percent off today."
+        "There is a big discount on shoes today."
       ],
       "collocations": [
         "get a discount",

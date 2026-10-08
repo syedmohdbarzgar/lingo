@@ -166,7 +166,6 @@ class RemediationEngine(
         )
 
         val weakestDim = ordered.firstOrNull()?.let { ExerciseDimension.dimensionOf(it) }
-        val remaining = ordered.map { it.id }
 
         return Plan(
             targetId = itemId,
@@ -274,20 +273,30 @@ class RemediationEngine(
         return count
     }
 
-    private fun depth(id: String): Int = graphDepth(id)
+    /**
+     * Dependency depth, via [PrerequisiteEngine]'s precomputed, cycle-safe depths.
+     * The fallback engine is built on first use, so a caller that never injects a
+     * resolver still gets correct depths instead of an
+     * `UninitializedPropertyAccessException` (the previous `lateinit` crashed
+     * [findWeakness] whenever [withDepthResolver] had not been called).
+     */
+    private val defaultDepthResolver by lazy { PrerequisiteEngine(graph) }
+    private var depthResolver: ((String) -> Int)? = null
 
-    /** Delegates to the PrerequisiteEngine's precomputed depth. */
-    private lateinit var graphDepth: (String) -> Int
+    private fun depth(id: String): Int {
+        val resolver = depthResolver ?: defaultDepthResolver::depth
+        return resolver(id)
+    }
 
     // ----------------------------------------------------------- wiring
 
     /**
-     * Injects the depth function from [PrerequisiteEngine] so this engine can
-     * report dependency depth without duplicating the cycle-safe traversal.
-     * Must be called before [plan] if depth is needed.
+     * Overrides the depth resolution (optional). The default already delegates to
+     * [PrerequisiteEngine], so this exists only for callers that want to share a
+     * resolver or supply a cheaper one.
      */
     fun withDepthResolver(resolver: (String) -> Int) {
-        graphDepth = resolver
+        depthResolver = resolver
     }
 
     // ----------------------------------------------------------- labels

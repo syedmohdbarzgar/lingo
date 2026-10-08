@@ -158,9 +158,19 @@ class AdaptiveLearningPlanner(
         //    - Everything else stops at the FIRST action that does not fit, rather
         //      than skipping it for a smaller later one: the plan is a sequence, and
         //      reordering it silently would misrepresent what to do next.
-        val availableMinutes = (targetMinutes - (todayStudySeconds / 60).toInt()).coerceAtLeast(0)
+        //
+        //    Time accounting (P0): seconds already studied are rounded UP to whole
+        //    minutes, because a partially elapsed minute is time the learner has
+        //    already spent — rounding down would hand the plan more budget than the
+        //    day actually has.
+        val spentMinutes = ((todayStudySeconds + 59) / 60).toInt()
+        val availableMinutes = (targetMinutes - spentMinutes).coerceAtLeast(0)
         val candidates = sorted.take(maxActions)
-        val reviewCap = maxOf(targetMinutes / 2, MIN_REVIEW_MINUTES)
+        //    Review is capped at half the TARGET (not the remaining budget), which
+        //    is what makes the whole plan provably never exceed the user's chosen
+        //    target: review ≤ target/2, and every later action is bounded by the
+        //    remaining budget, so the total can never pass the target.
+        val reviewCap = targetMinutes / 2
         val budgeted = mutableListOf<LearningAction>()
         var usedMinutes = 0
 

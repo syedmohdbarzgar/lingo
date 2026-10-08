@@ -94,7 +94,9 @@ echo "Building and installing ${FLAVOR}Debug..."
 # ${FLAVOR^} upper-cases the first letter → installer task name.
 ./gradlew ":app:install${FLAVOR^}Debug"
 
-# Bring the app to the front so the install is actually visible.
-"$ADB" shell am start -n "org.token.english/.MainActivity" >/dev/null 2>&1 \
-  && echo "Launched org.token.english/.MainActivity" \
+# Bring the app to the front so the install is actually visible. The launcher
+# activity is .SplashActivity (it waits for content seeding, then hands off to
+# MainActivity, which is exported=false and cannot be started from adb shell).
+"$ADB" shell am start -n "org.token.english/.SplashActivity" >/dev/null 2>&1 \
+  && echo "Launched org.token.english/.SplashActivity" \
   || echo "Installed, but could not launch automatically — open the app manually."
