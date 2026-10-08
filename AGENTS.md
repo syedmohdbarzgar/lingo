@@ -245,20 +245,20 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 15):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 407 exercises (6–11/lesson + reading items + A1 pronunciation drills), 290
+- **CEFR bundle (contentVersion 18):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 417 exercises (6–11/lesson + reading items + A1 pronunciation drills), 290
   vocabulary entries (6/lesson, 8 in the numbers lesson), 89 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
   mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
-- **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–20 come
+- **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–100 come
   **before** Greetings, so a complete beginner meets letters before words. Three A1 lessons
   (`a1.alphabet.lesson-01`, `a1.spelling.lesson-01`, `a1.numbers.lesson-01`, orders 1–3 with
   every other lesson shifted by three), 20 words, 24 exercises and 6 knowledge items
   (`vocab.alphabet`, `vocab.spelling`, `vocab.numbers` + a PHONOLOGY node per lesson), and
   `vocab.greetings` now lists `vocab.alphabet` as a prerequisite. Applied by
-  `scripts/p1_foundation_lessons.mjs`; bundle 14 → 15.
+  `scripts/archive/p1_foundation_lessons.mjs`; bundle 14 → 15.
 - **A1/A2 gaps closed (A-9):** articles (a/an/the), plural spelling, subject/object pronouns,
   can for ability, imperatives and question words each got their own A1 lesson (tip + 6 words +
   6 grammar exercises + phonology coverage + a guided listening drill), and the past simple is
@@ -267,14 +267,14 @@ Rules:
   30 questions, five per level, A1 → C2 in order.
 - **Content correctness pass (P0-9):** the bundle was audited end-to-end and two silent defects
   fixed, both now enforced by `VocabularyContentTest`:
-  (a) the generated "What does X mean?" choices (`scripts/enrich_content.mjs` writes one per
+  (a) the generated "What does X mean?" choices (`scripts/archive/enrich_content.mjs` writes one per
   lesson at `*.ex.07`) drew their distractors from a global cursor, so an A1 item could offer a
   C2 gloss — distractors now come from the lesson's own vocabulary;
   (b) two vocabulary examples (`a1.shopping.word.price`, `…word.discount`) never named their word.
   Every vocabulary example must now contain its word (inflection-tolerant: `blocks` illustrates
   `block`, `children` illustrates `child`, separable phrasal verbs may split) — the genuinely
   irregular forms live in an explicit allowlist that fails the build when it rots.
-  `scripts/p0_fix_a1a2_content.mjs` is the one-shot batch that applied it; the count stayed
+  `scripts/archive/p0_fix_a1a2_content.mjs` is the one-shot batch that applied it; the count stayed
   45/270/383/30/83 (edits in place, the bundle moved 12 → 13). Placement gained its `skill`
   tags in the same style of in-place edit (bundle 13 → 14, P1-1); no counts changed.
 - **Practice bar (A-8):** every GRAMMAR knowledge item needs **at least six grammar-targeting
@@ -312,13 +312,20 @@ Rules:
 - `exercise.payloadJson` stores the authored JSON verbatim; `ContentParser.exerciseFromPayload`
   maps it to the sealed `Exercise`. Unknown types are skipped, never crash a lesson.
 - Adding content = JSON only (no Kotlin changes), per technical spec §61/§63.
-- **The JSON files are the source of truth, not the scripts (A-12).** `scripts/*.mjs` are one-shot
-  batch tools kept as the record of *how* a batch was applied; each guards itself against a second
-  run. Never re-run an applied batch script — it would overwrite later hand edits. After any content
-  edit run `node scripts/balance_answer_positions.mjs` (correct-answer balance) and then
-  `validateContent` + the content tests with `--rerun`.
+- **The JSON files are the source of truth, not the scripts (A-12).** Applied batches live in
+  `scripts/archive/` (see its README) purely as the record of *how* a change was made — **never
+  re-run one**, it would overwrite later hand edits. `scripts/` itself holds only what you still
+  run: `balance_answer_positions.mjs` and `install_debug.sh`. After any content edit run
+  `node scripts/balance_answer_positions.mjs`, then `validateContent` + the content tests with
+  `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `translation`, `listening`
   (`speaking` parses but is suspended).
+- **Every `fill_blank` must carry an authored `skill` (A-2b)** — `validateContent` rejects an
+  untagged one. The heuristic default (GRAMMAR) used to decide whether a near-miss was reported as
+  a spelling slip, which is a pedagogical call the author has to make: word-choice blanks are
+  `VOCABULARY` (a typo gets the hint), form blanks are `GRAMMAR` (no hint). Tagging them honestly
+  left 13 grammar topics under the six-exercise bar, so `scripts/archive/p1_grammar_topup.mjs`
+  added real form practice rather than letting a fallback define the bar.
 - Typed-answer grading (A-2): digits normalize to words (0–20 + tens), so `3` ≡ `three`;
   a single word ≥ 5 letters that is one edit from an accepted answer is graded wrong but
   shown as «تقریباً درست — املای کلمه را بررسی کن» (`AnswerChecker.grade`). ALMOST is a
@@ -364,7 +371,7 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 211 tests / 29 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 212 tests / 29 classes as of
   the P0 + P1-1 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription gating) + `SubscriptionRecoveryTest` (renewal

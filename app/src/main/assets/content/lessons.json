@@ -1,5 +1,5 @@
 {
-  "contentVersion": 15,
+  "contentVersion": 18,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -24,8 +24,8 @@
     {
       "id": "a1.numbers.lesson-01",
       "level": "A1",
-      "title": "Numbers 0–20",
-      "titleFa": "اعداد صفر تا بیست",
+      "title": "Numbers 0–100",
+      "titleFa": "اعداد صفر تا صد",
       "topic": "Foundations",
       "estimatedMinutes": 6,
       "order": 3,

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 15,
+  "contentVersion": 18,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -42,6 +42,7 @@
       "accepted": [
         "how"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "برای پرسیدن حال از how are you? استفاده می‌شود؛ ترتیب ثابت how + are + you است."
     },
     {
@@ -120,6 +121,7 @@
         "have",
         "take"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "در زمان حال ساده با فاعل I فعل پایه می‌آید، بدون s: I usually drink coffee."
     },
     {
@@ -183,6 +185,7 @@
         "shower",
         "a shower"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "هم‌نشینی درست take a shower است؛ اسم قابل‌شمارش مفرد با a می‌آید."
     },
     {
@@ -228,6 +231,7 @@
         "mum",
         "mom"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "مادر در انگلیسی mother است و با my مالکیت نشان داده می‌شود."
     },
     {
@@ -321,6 +325,7 @@
         "there",
         "over there"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "over there یعنی «آنجا، آن‌طرف»؛ there قید مکان است."
     },
     {
@@ -407,6 +412,7 @@
         "have",
         "get"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "بعد از would like to مصدر بدون to می‌آید: would like to order chicken."
     },
     {
@@ -492,6 +498,7 @@
         "inexpensive",
         "affordable"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "«فقط پنج پوند» قیمت پایین را نشان می‌دهد، پس صفت مناسب cheap است."
     },
     {
@@ -503,6 +510,7 @@
       "accepted": [
         "much"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "water غیرقابل‌شمارش است، پس how much می‌آید نه how many."
     },
     {
@@ -586,6 +594,7 @@
         "at",
         "by"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "در انگلیسی بریتانیایی turn right at the second traffic light رایج است؛ at نقطهٔ مشخص را نشان می‌دهد."
     },
     {
@@ -598,6 +607,7 @@
         "down",
         "along"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "walk down/along this street یعنی «در این خیابان پیش برو»."
     },
     {
@@ -665,6 +675,7 @@
       "accepted": [
         "headache"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "نیاز به آسپرین نشانهٔ headache (سردرد) است."
     },
     {
@@ -677,6 +688,7 @@
         "drink",
         "have"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "بعد از should فعل ساده می‌آید: should drink plenty of water."
     },
     {
@@ -745,6 +757,7 @@
         "been",
         "visited"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "در تجربهٔ زندگی با never از حال کامل استفاده می‌شود: have never been to Turkey."
     },
     {
@@ -756,6 +769,7 @@
       "accepted": [
         "did"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پرسش گذشتهٔ ساده با did + فاعل + فعل ساده ساخته می‌شود: When did you apply?"
     },
     {
@@ -823,6 +837,7 @@
       "accepted": [
         "was"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "مجهول گذشتهٔ ساده: was built."
     },
     {
@@ -834,6 +849,7 @@
       "accepted": [
         "is"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "the news مفرد است و برای برنامهٔ عادتی حال ساده به کار می‌رود: is broadcast."
     },
     {
@@ -900,6 +916,7 @@
       "accepted": [
         "would"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "شرطی نوع دوم در جملهٔ نتیجه would + فعل ساده می‌آید: would pass."
     },
     {
@@ -913,6 +930,7 @@
         "start",
         "do"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "برنامهٔ آینده با be going to + فعل ساده: going to take."
     },
     {
@@ -981,6 +999,7 @@
       "accepted": [
         "had"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "had already left ماضی بعید است، برای عملی که پیش از رویدادِ گذشته انجام شده بود."
     },
     {
@@ -992,6 +1011,7 @@
       "accepted": [
         "doing"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "گذشتهٔ استمراری با was/were + ing ساخته می‌شود: were you doing."
     },
     {
@@ -1060,6 +1080,7 @@
         "which",
         "for which"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "ضمیر موصولی برای شیء that/which است: the company that I work for."
     },
     {
@@ -1072,6 +1093,7 @@
         "used",
         "applied"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "مجهول با be + قسمت سوم فعل: can be used."
     },
     {
@@ -1140,6 +1162,7 @@
         "increase",
         "go up"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "بعد از might فعل ساده می‌آید: might rise."
     },
     {
@@ -1153,6 +1176,7 @@
         "made",
         "passed"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده."
     },
     {
@@ -1220,6 +1244,7 @@
       "accepted": [
         "hearing"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "بعد از look forward to همیشه ing می‌آید: hearing from you."
     },
     {
@@ -1232,6 +1257,7 @@
         "interview",
         "meeting"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "مصاحبهٔ کوتاه پیش از استخدام interview است."
     },
     {
@@ -1299,6 +1325,7 @@
       "accepted": [
         "will have"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "آیندهٔ کامل: will have + قسمت سوم فعل (completed)."
     },
     {
@@ -1312,6 +1339,7 @@
         "advertise",
         "sell"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "هدف آگهی، معرفی و فروش محصول است: to promote a new product."
     },
     {
@@ -1380,6 +1408,7 @@
         "would have been",
         "would be"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "شرطی نوع سوم با وارونگی Had + قسمت سوم: نتیجه would have been."
     },
     {
@@ -1392,6 +1421,7 @@
         "were",
         "was"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "data جمع است، پس مجهول جمع می‌آید: the data were collected."
     },
     {
@@ -1458,6 +1488,7 @@
       "accepted": [
         "must"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "must have + قسمت سوم برای استنتاج قوی از شواهد: must have forgotten."
     },
     {
@@ -1470,6 +1501,7 @@
         "did he know",
         "did he realize"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "Little در آغاز جمله وارونگی می‌سازد: Little did he know."
     },
     {
@@ -1536,6 +1568,7 @@
       "accepted": [
         "knew"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "wish + گذشتهٔ ساده برای آرزو در زمان حال: I wish I knew."
     },
     {
@@ -1548,6 +1581,7 @@
         "knew",
         "knows"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "as if + گذشتهٔ ساده گویای امری خلاف واقع است."
     },
     {
@@ -1617,6 +1651,7 @@
         "gave up",
         "quit"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "give up یعنی «رها کردن، کنار گذاشتن»: gave up her old job."
     },
     {
@@ -1629,6 +1664,7 @@
         "turn",
         "switch"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "turn on the lights یعنی «چراغ را روشن کردن»."
     },
     {
@@ -1697,6 +1733,7 @@
         "thin",
         "cursory"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "تضادِ «concise but» واژهٔ vague (مبهم) را می‌طلبد."
     },
     {
@@ -1711,6 +1748,7 @@
         "flimsy",
         "weak"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "شاهد ناکافی برای ادعای قوی: too slight/flimsy."
     },
     {
@@ -1779,6 +1817,7 @@
         "have",
         "had"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "Never در آغاز جمله وارونگی می‌سازد: Never have I witnessed."
     },
     {
@@ -1792,6 +1831,7 @@
         "in awe",
         "stunned"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "نتیجهٔ سخنرانی فصیح، مبهوت و بی‌سخن ماندنِ شنونده است: left the audience speechless."
     },
     {
@@ -1862,6 +1902,7 @@
         "corroborate",
         "support"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "پژوهش بیشتر برای تأیید نظریه است: to confirm/substantiate the theory."
     },
     {
@@ -1875,6 +1916,7 @@
         "consistent",
         "reproduced"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "نتیجهٔ قابل بازتولید با اختلاف‌های جزئی: replicated."
     },
     {
@@ -1943,6 +1985,7 @@
         "portrays",
         "evokes"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "depict/portray یعنی «به تصویر کشیدن»: depicts the plight of the urban poor."
     },
     {
@@ -1956,6 +1999,7 @@
         "metaphor",
         "foreshadowing"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "allegory یعنی «تمثیل» — تفسیر نمادین شکست شخصیت اصلی."
     },
     {
@@ -3981,6 +4025,7 @@
       "accepted": [
         "an"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "egg با صدای واکه آغاز می‌شود، پس an می‌آید."
     },
     {
@@ -4026,6 +4071,7 @@
       "accepted": [
         "the"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "منظور دربِ همان اتاقِ مشخص است، پس the door درست است."
     },
     {
@@ -4100,6 +4146,7 @@
         "children",
         "students"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "برای شمارش افراد جمع بی‌قاعدهٔ child به کار می‌رود: children."
     },
     {
@@ -4163,6 +4210,7 @@
         "children",
         "kids"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پس از how many اسم جمع می‌آید: how many children."
     },
     {
@@ -4219,6 +4267,7 @@
       "accepted": [
         "us"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پس از فعل asked ضمیر مفعولی می‌آید: asked us."
     },
     {
@@ -4344,6 +4393,7 @@
         "can't",
         "cannot"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "ناتوانی با can't + فعل ساده بیان می‌شود."
     },
     {
@@ -4389,6 +4439,7 @@
       "accepted": [
         "can"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "توانایی را با can نشان می‌دهیم: we can arrive."
     },
     {
@@ -4463,6 +4514,7 @@
         "close",
         "shut"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "جملهٔ امری با فعل ساده در ابتدا می‌آید: Close the door."
     },
     {
@@ -4509,6 +4561,7 @@
         "touch",
         "hold"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پس از Don't فعل ساده می‌آید: don't touch."
     },
     {
@@ -4583,6 +4636,7 @@
         "when",
         "what time"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پرسش زمان با when یا what time مطرح می‌شود."
     },
     {
@@ -4628,6 +4682,7 @@
       "accepted": [
         "where"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "پرسش مکان با where مطرح می‌شود."
     },
     {
@@ -4702,6 +4757,7 @@
         "bought",
         "got"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "گذشتهٔ buy، bought است."
     },
     {
@@ -4748,6 +4804,7 @@
         "wrote",
         "sent"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "گذشتهٔ write، wrote است."
     },
     {
@@ -5368,6 +5425,7 @@
         "bring",
         "put on"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "بعد از had better فعل ساده می‌آید: had better wear a coat."
     },
     {
@@ -5432,6 +5490,7 @@
         "was constructed",
         "was completed"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "مجهول گذشتهٔ ساده: was built/was completed."
     },
     {
@@ -5530,6 +5589,7 @@
         "began",
         "would start"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "در نقل‌قول غیرمستقیم زمان فعل عقب می‌رود: will start → would start."
     },
     {
@@ -5559,6 +5619,7 @@
         "used to",
         "would"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "عادت گذشته با used to/would + فعل ساده: used to play."
     },
     {
@@ -5623,6 +5684,7 @@
         "has been fixed",
         "has been rebuilt"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "مجهول حال کامل با since: has been repaired."
     },
     {
@@ -5636,6 +5698,7 @@
         "has been granted",
         "has been accepted"
       ],
+      "skill": "GRAMMAR",
       "explanationFa": "مجهول حال کامل: has been approved — درخواست تأیید شده است."
     },
     {
@@ -6023,6 +6086,7 @@
         "family name",
         "last name"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "برای نام خانوادگی surname یا family name می‌گوییم؛ بعد از My شکل مفرد می‌آید.",
       "order": 11
     },
@@ -6103,6 +6167,7 @@
         "email",
         "e-mail"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "نشانی اینترنتی email address است و با حرف کوچک نوشته می‌شود.",
       "order": 16
     },
@@ -6149,6 +6214,7 @@
         "twelve",
         "12"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "سال دوازده ماه دارد؛ هم واژهٔ twelve و هم رقم 12 پذیرفته است.",
       "order": 19
     },
@@ -6161,6 +6227,7 @@
         "five",
         "5"
       ],
+      "skill": "VOCABULARY",
       "explanationFa": "سه به‌علاوهٔ دو پنج می‌شود؛ شکل واژه‌ای five است.",
       "order": 20
     },
@@ -6231,6 +6298,176 @@
       ],
       "explanationFa": "به /tw/ در آغاز twenty و تکیه روی هجای اولش گوش کن؛ با twelve اشتباه نکن.",
       "order": 24
+    },
+    {
+      "id": "a1.daily-routine.ex.12",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 12,
+      "question": "She ______ to work every day.",
+      "questionFa": "او هر روز به سر کار می‌رود.",
+      "options": [
+        "gone",
+        "go",
+        "going",
+        "goes"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "با he/she/it فعل s می‌گیرد: She goes to work. شکل سادهٔ go فقط برای I/you/we/they درست است."
+    },
+    {
+      "id": "a1.daily-routine.ex.13",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "question": "They ______ breakfast at seven.",
+      "questionFa": "آن‌ها ساعت هفت صبحانه می‌خورند.",
+      "options": [
+        "have",
+        "has",
+        "having",
+        "haves"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "با they شکل سادهٔ فعل می‌آید: They have breakfast. فقط he/she/it شکل has می‌گیرد."
+    },
+    {
+      "id": "a1.shopping.ex.11",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "question": "______ money do you have?",
+      "questionFa": "چقدر پول داری؟",
+      "options": [
+        "How many",
+        "How much",
+        "How long",
+        "How often"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "money غیرقابل‌شمارش است، پس How much می‌آید؛ How many فقط با اسم قابل‌شمارش جمع می‌آید (How many books)."
+    },
+    {
+      "id": "a2.restaurant.ex.12",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 12,
+      "question": "I would like ______ coffee, please.",
+      "questionFa": "لطفاً یک قهوه می‌خواهم.",
+      "options": [
+        "a",
+        "any",
+        "some",
+        "many"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "در جملهٔ مثبت و درخواست مؤدبانه از some استفاده می‌کنیم؛ any در جملهٔ منفی و پرسشی می‌آید و coffee غیرقابل‌شمارش است."
+    },
+    {
+      "id": "a2.health.ex.10",
+      "lessonId": "a2.health.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "question": "You ______ stay in bed if you feel dizzy.",
+      "questionFa": "اگر سرگیجه داری، بهتر است در رختخواب بمانی.",
+      "options": [
+        "shoulding",
+        "should to",
+        "are should",
+        "should"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای توصیه از should + فعل ساده استفاده می‌کنیم: You should stay in bed. after a modal the verb never takes to or -ing."
+    },
+    {
+      "id": "a2.health.ex.11",
+      "lessonId": "a2.health.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "question": "I ______ to take this medicine twice a day.",
+      "questionFa": "باید این دارو را روزی دو بار بخورم.",
+      "options": [
+        "have",
+        "has",
+        "am",
+        "do"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای اجبار از have to استفاده می‌کنیم و با I شکل have می‌آید: I have to take it. شکل has فقط برای he/she/it است."
+    },
+    {
+      "id": "b1.plans.ex.10",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "question": "She ______ going to start a new course next month.",
+      "questionFa": "او ماه آینده قرار است دورهٔ جدیدی شروع کند.",
+      "options": [
+        "are",
+        "is",
+        "be",
+        "were"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "در ساختار going to فعل be با نهاد هم‌آهنگ می‌شود: She is going to start. با she شکل are یا were غلط است."
+    },
+    {
+      "id": "b2.environment.ex.10",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "question": "The temperature ______ rise if emissions continue.",
+      "questionFa": "اگر انتشار گازها ادامه یابد، دما ممکن است بالا برود.",
+      "options": [
+        "might to",
+        "mights",
+        "might",
+        "is might"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای احتمال از فعل وجهی might + فعل ساده استفاده می‌کنیم: might rise. فعل وجهی s و to نمی‌گیرد."
+    },
+    {
+      "id": "b2.interview.ex.10",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "question": "He asked me ______ I had any questions.",
+      "questionFa": "او از من پرسید که آیا سؤالی دارم.",
+      "options": [
+        "if that",
+        "that",
+        "what",
+        "whether"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "در نقل قول یک پرسش بله/خیر از whether (یا if) استفاده می‌کنیم و جمله به ترتیب خبری می‌آید: whether I had any questions."
+    },
+    {
+      "id": "b2.media.ex.10",
+      "lessonId": "b2.media.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "question": "She ______ have long hair when she was a child.",
+      "questionFa": "او در کودکی موهای بلند داشت.",
+      "options": [
+        "used to",
+        "use to",
+        "uses to",
+        "is used to"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای عادت گذشته از used to + فعل ساده استفاده می‌کنیم: She used to have long hair. is used to معنی «عادت داشتن به چیزی» را می‌دهد، نه عادت گذشته."
     }
   ]
 }

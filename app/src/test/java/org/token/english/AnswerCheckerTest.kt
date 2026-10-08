@@ -163,6 +163,35 @@ class AnswerCheckerTest {
         assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(thirdPerson, "Listens."))
     }
 
+    /**
+     * The other half of A-2b: a typo on a *word-choice* blank is still a spelling
+     * slip, so the hint must survive there. `My ______ is a teacher.` is a
+     * vocabulary blank and ships with `skill: VOCABULARY` exactly so this holds —
+     * the fallback default (GRAMMAR) used to swallow it.
+     */
+    @Test
+    fun `a typo on a vocabulary blank is still a spelling hint`() {
+        val wordChoice = Exercise.FillBlank(
+            id = "a1.family.ex.03",
+            lessonId = "a1.family.lesson-01",
+            sentence = "My ______ is a teacher.",
+            accepted = listOf("mother", "mum", "mom"),
+            skill = Skill.VOCABULARY,
+        )
+        assertEquals(AnswerChecker.Verdict.ALMOST, AnswerChecker.grade(wordChoice, "mothr"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(wordChoice, "Mother."))
+
+        // The same typo kind against a form blank stays a plain miss.
+        val formBlank = Exercise.FillBlank(
+            id = "a1.articles.ex.05",
+            lessonId = "a1.articles.lesson-01",
+            sentence = "Please close ______ door.",
+            accepted = listOf("the"),
+            skill = Skill.GRAMMAR,
+        )
+        assertEquals(AnswerChecker.Verdict.WRONG, AnswerChecker.grade(formBlank, "tha"))
+    }
+
     @Test
     fun `list-based grade matches exercise-based rules for review production`() {
         // The review session grades a bare word (no Exercise) — same verdicts.

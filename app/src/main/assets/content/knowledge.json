@@ -1,5 +1,5 @@
 {
-  "contentVersion": 15,
+  "contentVersion": 18,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -1389,8 +1389,8 @@
     {
       "id": "vocab.numbers",
       "type": "VOCABULARY",
-      "title": "Numbers 0–20 and 100",
-      "titleFa": "اعداد ۰ تا ۲۰ و صد",
+      "title": "Numbers 0–100: counting, spelling and saying them",
+      "titleFa": "اعداد ۰ تا ۱۰۰: شمارش، املای واژه‌ای و خواندن",
       "level": "A1",
       "prerequisites": [],
       "lessons": [

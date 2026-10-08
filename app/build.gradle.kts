@@ -229,6 +229,12 @@ tasks.register("validateContent") {
                     if (sentence.isEmpty()) report(id, "blank sentence")
                     if (!sentence.contains("___")) report(id, "sentence has no ___ blank marker")
                     if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
+                    // A-2b: an untagged blank silently falls back to GRAMMAR, which decides
+                    // whether a near-miss is reported as a spelling slip. That is a content
+                    // decision, so the author has to make it explicitly.
+                    if (text(o, "skill").isEmpty()) {
+                        report(id, "fill_blank must declare skill (VOCABULARY or GRAMMAR)")
+                    }
                 }
                 "translation" -> {
                     if (text(o, "prompt").isEmpty()) report(id, "blank prompt")

@@ -17,7 +17,7 @@ import java.io.File
  *    irregular forms (went/children/women/implied …) are listed explicitly and
  *    the list may not rot.
  *
- * 2. A machine-generated "What does X mean?" choice (`scripts/enrich_content.mjs`
+ * 2. A machine-generated "What does X mean?" choice (`scripts/archive/enrich_content.mjs`
  *    writes exactly one per lesson, always at `*.ex.07`) must draw every option
  *    from the lesson's own vocabulary. It used to pick distractors from a
  *    global cursor, so an A1 question could offer a C2 gloss (and vice versa),
