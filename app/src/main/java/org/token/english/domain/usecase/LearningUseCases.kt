@@ -214,8 +214,12 @@ class ScorePlacementUseCase {
     }
 
     companion object {
-        /** Questions per CEFR band in placement.json (6 bands × 5 = 30 total). */
-        const val DEFAULT_BAND_SIZE = 5
+        /**
+         * Questions per CEFR band in placement.json (6 bands × 6 = 36 total).
+         * Each band carries one reading-comprehension item alongside the grammar
+         * and vocabulary ones, so the per-skill report measures reading too (A-6).
+         */
+        const val DEFAULT_BAND_SIZE = 6
     }
 }
 

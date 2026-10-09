@@ -42,7 +42,9 @@ re-assert LTR, because the root layout is forced RTL.
 
 **Learning flow**
 
-- **Placement test** — 30 questions in six graded bands of five (A1→C2). Scoring is band-based: a
+- **Placement test** — 36 questions in six graded bands of six (A1→C2), including one reading
+  comprehension item per band so the test measures reading alongside grammar and vocabulary (A-6).
+  Scoring is band-based: a
   band passes at ≥ 2/3 with ≥ 60 % cumulative accuracy, scoring stops at the first failed band, and
   the result floors at A1. It doubles as a per-skill assessment (P1-1): each question carries an authored skill, so the result screen shows a per-skill read and the placement answers calibrate the learner's skill profile from day one.
 - **Foundations first** — the alphabet and letter names, spelling your name, and numbers 0–100 are the
@@ -76,15 +78,15 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 19)**
+**Content bundle (JSON `contentVersion` 20)**
 
 | | Count |
 |---|---|
 | Lessons | 48 — A1: 15, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 417 |
+| Exercises | 441 |
 | Vocabulary entries | 290 |
 | Knowledge items | 89 |
-| Placement questions | 30 |
+| Placement questions | 36 |
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
 `contentVersion`, which is declared inside the files themselves.
@@ -107,9 +109,11 @@ clock does not hand out extra trial time.
 
 **Free with the Zaribar app:** while the companion app `org.token.zaribar` is installed, the
 subscription is free — the grant is re-checked on every foreground and ends when the companion is
-removed. The app shows a Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`) so the
-learner can keep it installed. The check is a single local `PackageManager` lookup: no server, no
-permission, and it is declared in the manifest `<queries>` block for API 30+ visibility.
+removed. The install is trusted only when its signing certificate matches
+`CompanionApp.EXPECTED_SIGNING_SHA256` (the package id alone would be spoofable). The app shows a
+Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`) so the learner can keep it
+installed. The check is a single local `PackageManager` lookup: no server, no permission, and it is
+declared in the manifest `<queries>` block for API 30+ visibility.
 
 ---
 
@@ -299,7 +303,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-221 unit tests across 30 classes. The pure cores carry the most weight — review scheduling,
+232 unit tests across 32 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

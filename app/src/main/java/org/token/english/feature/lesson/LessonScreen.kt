@@ -171,6 +171,15 @@ private fun ExerciseContent(
         AppCard {
             when (exercise) {
                 is Exercise.MultipleChoice -> {
+                    // A-5: a comprehension item shows its reading text first — the
+                    // learner reads, then answers. Plain question items have none.
+                    exercise.passage?.let { text ->
+                        SectionHeader("متن را بخوانید")
+                        EnglishText(
+                            text = text,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
                     EnglishText(
                         text = exercise.question,
                         style = MaterialTheme.typography.titleMedium,

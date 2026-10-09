@@ -171,6 +171,8 @@ object ContentParser {
                 lessonId = lessonId,
                 question = o.getString("question"),
                 questionFa = o.optString("questionFa").ifBlank { null },
+                // A-5: optional passage shown above the question (comprehension items).
+                passage = o.optString("passage").ifBlank { null },
                 options = o.getJSONArray("options").let { arr ->
                     (0 until arr.length()).map { arr.getString(it) }
                 },

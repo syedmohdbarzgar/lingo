@@ -13,9 +13,10 @@ class ScorePlacementTest {
 
     private fun allBands(vararg bands: List<Boolean>): List<Boolean> = bands.flatMap { it }
 
-    private val perfect = band(true, true, true, true, true)
-    private val fourOfFive = band(true, true, true, true, false)
-    private val threeOfFive = band(true, true, true, false, false)
+    private val perfect = band(true, true, true, true, true, true)
+    private val fiveOfSix = band(true, true, true, true, true, false)
+    private val fourOfSix = band(true, true, true, true, false, false)
+    private val threeOfSix = band(true, true, true, false, false, false)
 
     @Test
     fun `empty results fall back to A1`() {
@@ -29,16 +30,17 @@ class ScorePlacementTest {
     }
 
     @Test
-    fun `four of five passes a band`() {
-        val results = allBands(fourOfFive, fourOfFive)
+    fun `four of six passes a band`() {
+        // 4/6 is exactly the 2/3 band bar.
+        val results = allBands(fourOfSix, fourOfSix)
         assertEquals(LearningLevel.A2, scorer(results))
     }
 
     @Test
-    fun `three of five fails a band so the walk stops there`() {
+    fun `three of six fails a band so the walk stops there`() {
         val results = allBands(
             perfect, // A1 passed
-            threeOfFive, // A2 fails (3/5 < 2/3)
+            threeOfSix, // A2 fails (3/6 < 2/3)
             perfect, // B1 — never reached
         )
         assertEquals(LearningLevel.A1, scorer(results))
@@ -49,7 +51,7 @@ class ScorePlacementTest {
         val results = allBands(
             perfect, // A1
             perfect, // A2
-            threeOfFive, // B1 fails
+            threeOfSix, // B1 fails
             perfect, // B2 — ignored
             perfect, // C1 — ignored
             perfect, // C2 — ignored
@@ -60,10 +62,10 @@ class ScorePlacementTest {
     @Test
     fun `one wrong per band keeps climbing while the band holds`() {
         val results = allBands(
-            fourOfFive, // A1 4/5, cum 4/5
-            fourOfFive, // A2 4/5, cum 8/10
-            fourOfFive, // B1 4/5, cum 12/15
-            threeOfFive, // B2 3/5 fails → stop
+            fiveOfSix, // A1 5/6, cum 5/6
+            fiveOfSix, // A2 5/6, cum 10/12
+            fiveOfSix, // B1 5/6, cum 15/18
+            threeOfSix, // B2 3/6 fails → stop
         )
         assertEquals(LearningLevel.B1, scorer(results))
     }
@@ -80,7 +82,7 @@ class ScorePlacementTest {
     }
 
     @Test
-    fun `default band size matches the 30-question bundle`() {
-        assertEquals(5, ScorePlacementUseCase.DEFAULT_BAND_SIZE)
+    fun `default band size matches the 36-question bundle`() {
+        assertEquals(6, ScorePlacementUseCase.DEFAULT_BAND_SIZE)
     }
 }

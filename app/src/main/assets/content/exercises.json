@@ -1,5 +1,5 @@
 {
-  "contentVersion": 19,
+  "contentVersion": 20,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -6468,6 +6468,438 @@
       "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "برای عادت گذشته از used to + فعل ساده استفاده می‌کنیم: She used to have long hair. is used to معنی «عادت داشتن به چیزی» را می‌دهد، نه عادت گذشته."
+    },
+    {
+      "id": "a1.daily-routine.ex.14",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
+      "question": "What time does Sara wake up?",
+      "questionFa": "سارا چه ساعتی بیدار می‌شود؟",
+      "options": [
+        "At six",
+        "At seven",
+        "At nine",
+        "At ten"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "زمان بیدار شدن در جملهٔ «I wake up at seven every morning» آمده است."
+    },
+    {
+      "id": "a1.daily-routine.ex.15",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
+      "question": "Who does Sara have breakfast with?",
+      "questionFa": "سارا صبحانه را با چه کسی می‌خورد؟",
+      "options": [
+        "Her friends",
+        "Her teacher",
+        "Her family",
+        "Her doctor"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "متن می‌گوید «have breakfast with my family» — یعنی با خانواده‌اش."
+    },
+    {
+      "id": "a1.daily-routine.ex.16",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
+      "question": "What does Sara do in the evening?",
+      "questionFa": "سارا عصرها چه کار می‌کند؟",
+      "options": [
+        "She wakes up",
+        "She goes to school",
+        "She has breakfast",
+        "She does her homework"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "جملهٔ «in the evening I do my homework» کار عصر او را می‌گوید."
+    },
+    {
+      "id": "a1.daily-routine.ex.17",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "I wake up at seven every morning.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "من هر صبح ساعت هفت بیدار می‌شوم.",
+        "من هر شب ساعت هفت می‌خوابم.",
+        "من هر صبح ساعت هفت درس می‌خوانم.",
+        "من هر صبح ساعت هفت صبحانه می‌خورم."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«wake up» یعنی «بیدار شدن»، نه خوابیدن؛ «every morning» = «هر صبح»."
+    },
+    {
+      "id": "a2.restaurant.ex.13",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "passage": "Last Friday, Ali and his friends went to a new restaurant near the station. Ali ordered grilled chicken, and his friends chose pizza and salad. The food was delicious, but the service was slow, so they waited almost an hour.",
+      "question": "Where did Ali and his friends go?",
+      "questionFa": "علی و دوستانش کجا رفتند؟",
+      "options": [
+        "To the station",
+        "To a new restaurant",
+        "To a hotel",
+        "To a market"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "متن می‌گوید «went to a new restaurant near the station» — رستورانی نزدیک ایستگاه."
+    },
+    {
+      "id": "a2.restaurant.ex.14",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "Last Friday, Ali and his friends went to a new restaurant near the station. Ali ordered grilled chicken, and his friends chose pizza and salad. The food was delicious, but the service was slow, so they waited almost an hour.",
+      "question": "What did Ali order?",
+      "questionFa": "علی چه چیزی سفارش داد؟",
+      "options": [
+        "Salad",
+        "Pizza",
+        "Grilled chicken",
+        "Soup"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«Ali ordered grilled chicken» — پیتزا و سالاد انتخاب دوستانش بود."
+    },
+    {
+      "id": "a2.restaurant.ex.15",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "Last Friday, Ali and his friends went to a new restaurant near the station. Ali ordered grilled chicken, and his friends chose pizza and salad. The food was delicious, but the service was slow, so they waited almost an hour.",
+      "question": "Why did they wait a long time?",
+      "questionFa": "چرا مدت زیادی منتظر ماندند؟",
+      "options": [
+        "The restaurant was closed",
+        "The food was cold",
+        "They arrived late",
+        "The service was slow"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«the service was slow» دلیل انتظار طولانی است."
+    },
+    {
+      "id": "a2.restaurant.ex.16",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The food was delicious, but the service was slow.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "غذا خوشمزه بود، اما سرویس کند بود.",
+        "غذا سرد بود و سرویس هم بد بود.",
+        "غذا گران بود ولی سریع آمد.",
+        "غذا خوشمزه نبود اما سرویس خوب بود."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«delicious» = خوشمزه و «slow» = کند؛ «but» تضاد این دو را نشان می‌دهد."
+    },
+    {
+      "id": "b1.work.ex.10",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "passage": "Mina started a new job last month. At first she was nervous, because the tasks were difficult and the software was new to her. Her manager gave her a week of training, and a colleague helped her every afternoon. By the end of the month, she could finish most tasks on her own.",
+      "question": "Why was Mina nervous at first?",
+      "questionFa": "چرا مینا در ابتدا مضطرب بود؟",
+      "options": [
+        "She did not like her colleagues",
+        "The tasks were difficult and the software was new",
+        "The office was very far away",
+        "She had too much free time"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "دلیل اضطراب صریحاً در متن آمده: کارها سخت بودند و نرم‌افزار برایش تازه بود."
+    },
+    {
+      "id": "b1.work.ex.11",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "passage": "Mina started a new job last month. At first she was nervous, because the tasks were difficult and the software was new to her. Her manager gave her a week of training, and a colleague helped her every afternoon. By the end of the month, she could finish most tasks on her own.",
+      "question": "How did her colleague help her?",
+      "questionFa": "همکارش چگونه به او کمک کرد؟",
+      "options": [
+        "By doing her tasks for her",
+        "By giving her a week of training",
+        "By helping her every afternoon",
+        "By finding her a new job"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "آموزش یک‌هفته‌ای کارِ مدیر بود؛ همکار «every afternoon» کمک می‌کرد."
+    },
+    {
+      "id": "b1.work.ex.12",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 12,
+      "passage": "Mina started a new job last month. At first she was nervous, because the tasks were difficult and the software was new to her. Her manager gave her a week of training, and a colleague helped her every afternoon. By the end of the month, she could finish most tasks on her own.",
+      "question": "What could Mina do by the end of the month?",
+      "questionFa": "مینا تا پایان ماه چه کاری می‌توانست بکند؟",
+      "options": [
+        "Work without any software",
+        "Change to a different team",
+        "Become the manager",
+        "Finish most tasks on her own"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«she could finish most tasks on her own» یعنی بیشتر کارها را مستقل انجام می‌داد."
+    },
+    {
+      "id": "b1.work.ex.13",
+      "lessonId": "b1.work.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "passage": "Her manager gave her a week of training.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "مدیرش یک هفته آموزش به او داد.",
+        "او یک هفته به مدیرش آموزش داد.",
+        "مدیرش یک هفته مرخصی به او داد.",
+        "او یک هفته دیرتر شروع کرد."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "فاعلِ جمله «manager» است و مفعول «her»؛ پس مدیر به او آموزش داد."
+    },
+    {
+      "id": "b2.environment.ex.11",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "passage": "Many cities are trying to reduce air pollution by limiting the number of cars in the centre. Some have introduced low-emission zones, where drivers of older vehicles must pay a fee to enter. Supporters say the measure improves public health and encourages people to use buses and bicycles. Critics argue that it mostly affects drivers who cannot afford a newer car, and that public transport must improve first.",
+      "question": "What are some cities doing to reduce air pollution?",
+      "questionFa": "برخی شهرها برای کاهش آلودگی هوا چه می‌کنند؟",
+      "options": [
+        "Building more car parks",
+        "Limiting cars in the centre",
+        "Closing all bicycle lanes",
+        "Encouraging older cars to enter"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "متن می‌گوید تعداد خودروها در مرکز شهر محدود می‌شود."
+    },
+    {
+      "id": "b2.environment.ex.12",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 12,
+      "passage": "Many cities are trying to reduce air pollution by limiting the number of cars in the centre. Some have introduced low-emission zones, where drivers of older vehicles must pay a fee to enter. Supporters say the measure improves public health and encourages people to use buses and bicycles. Critics argue that it mostly affects drivers who cannot afford a newer car, and that public transport must improve first.",
+      "question": "What must drivers of older vehicles do in a low-emission zone?",
+      "questionFa": "رانندگان خودروهای قدیمی در منطقهٔ کم‌آلاینده چه باید بکنند؟",
+      "options": [
+        "Buy a bicycle",
+        "Leave their car at home",
+        "Pay a fee to enter",
+        "Drive only at night"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«drivers of older vehicles must pay a fee to enter» — پرداخت هزینه برای ورود."
+    },
+    {
+      "id": "b2.environment.ex.13",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "passage": "Many cities are trying to reduce air pollution by limiting the number of cars in the centre. Some have introduced low-emission zones, where drivers of older vehicles must pay a fee to enter. Supporters say the measure improves public health and encourages people to use buses and bicycles. Critics argue that it mostly affects drivers who cannot afford a newer car, and that public transport must improve first.",
+      "question": "What do critics of the measure argue?",
+      "questionFa": "منتقدان این اقدام چه می‌گویند؟",
+      "options": [
+        "Buses cause the pollution",
+        "Pollution is not a real problem",
+        "Older cars are cleaner",
+        "Public transport must improve first"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "منتقدان می‌گویند این اقدام بیشتر به رانندگان کم‌توان ضربه می‌زند و حمل‌ونقل عمومی باید اول بهتر شود."
+    },
+    {
+      "id": "b2.environment.ex.14",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "Supporters say the measure improves public health.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "طرفداران می‌گویند این اقدام سلامت عمومی را بهبود می‌بخشد.",
+        "منتقدان می‌گویند این اقدام سلامت عمومی را بدتر می‌کند.",
+        "طرفداران می‌گویند این اقدام ترافیک را کم نمی‌کند.",
+        "منتقدان می‌گویند این اقدام برای رانندگان ارزان‌تر است."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«improves public health» = «سلامت عمومی را بهبود می‌بخشد»."
+    },
+    {
+      "id": "c1.academic.ex.09",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 9,
+      "passage": "The study set out to examine whether short, regular breaks improve concentration during long periods of study. One group took a five-minute break every half hour, while the other worked without interruption. Although both groups reported similar levels of motivation, the first group made significantly fewer errors in the final test. The authors caution, however, that the sample was small and that the results may not apply to every type of task.",
+      "question": "What did the study set out to examine?",
+      "questionFa": "پژوهش قصد داشت چه چیزی را بررسی کند؟",
+      "options": [
+        "How long students can study without food",
+        "Whether short breaks improve concentration",
+        "Why motivation changes during the day",
+        "Which subjects are the most difficult"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "هدف پژوهش در جملهٔ اول صریحاً بیان شده است."
+    },
+    {
+      "id": "c1.academic.ex.10",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "passage": "The study set out to examine whether short, regular breaks improve concentration during long periods of study. One group took a five-minute break every half hour, while the other worked without interruption. Although both groups reported similar levels of motivation, the first group made significantly fewer errors in the final test. The authors caution, however, that the sample was small and that the results may not apply to every type of task.",
+      "question": "What did the first group do?",
+      "questionFa": "گروه اول چه کاری انجام داد؟",
+      "options": [
+        "Studied only at night",
+        "Worked without any interruption",
+        "Took a five-minute break every half hour",
+        "Took a break once a day"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«One group took a five-minute break every half hour» رفتار گروه اول را می‌گوید."
+    },
+    {
+      "id": "c1.academic.ex.11",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "passage": "The study set out to examine whether short, regular breaks improve concentration during long periods of study. One group took a five-minute break every half hour, while the other worked without interruption. Although both groups reported similar levels of motivation, the first group made significantly fewer errors in the final test. The authors caution, however, that the sample was small and that the results may not apply to every type of task.",
+      "question": "Why do the authors caution about the results?",
+      "questionFa": "چرا نویسندگان دربارهٔ نتایج احتیاط می‌کنند؟",
+      "options": [
+        "The breaks were too long",
+        "The students were not motivated",
+        "The test was too easy",
+        "The sample was small"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "آن‌ها هشدار می‌دهند که «the sample was small» — نمونه کوچک بوده است."
+    },
+    {
+      "id": "c1.academic.ex.12",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "multiple_choice",
+      "order": 12,
+      "passage": "The first group made significantly fewer errors in the final test.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "گروه اول در آزمون نهایی به‌طور معناداری خطای کمتری داشت.",
+        "گروه اول در آزمون نهایی خطای بیشتری داشت.",
+        "گروه دوم در آزمون نهایی عملکرد بهتری داشت.",
+        "هر دو گروه در آزمون نهایی یکسان بودند."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«significantly fewer errors» = «خطای معناداری کمتر» برای گروه اول."
+    },
+    {
+      "id": "c2.science.ex.08",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "passage": "Far from being a passive storage system, memory appears to be reconstructive: each time we recall an event, we rebuild it rather than replay a fixed recording. This helps explain why two witnesses can sincerely remember the same scene differently. Sceptics point out that such findings are hard to replicate outside the laboratory, yet the reconstructive view has become the dominant framework in cognitive science.",
+      "question": "How does the passage describe memory?",
+      "questionFa": "متن حافظه را چگونه توصیف می‌کند؟",
+      "options": [
+        "As a passive storage system",
+        "As reconstructive rather than a fixed recording",
+        "As something that never changes",
+        "As a laboratory instrument"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "متن «reconstructive» بودن حافظه را در برابر «fixed recording» می‌گذارد."
+    },
+    {
+      "id": "c2.science.ex.09",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 9,
+      "passage": "Far from being a passive storage system, memory appears to be reconstructive: each time we recall an event, we rebuild it rather than replay a fixed recording. This helps explain why two witnesses can sincerely remember the same scene differently. Sceptics point out that such findings are hard to replicate outside the laboratory, yet the reconstructive view has become the dominant framework in cognitive science.",
+      "question": "What does the reconstructive view help explain?",
+      "questionFa": "دیدگاه بازسازی‌کننده چه چیزی را توضیح می‌دهد؟",
+      "options": [
+        "Why memory improves with age",
+        "Why people forget their childhood",
+        "Why witnesses remember the same scene differently",
+        "Why laboratories are unreliable"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«two witnesses can sincerely remember the same scene differently» نتیجهٔ همین دیدگاه است."
+    },
+    {
+      "id": "c2.science.ex.10",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 10,
+      "passage": "Far from being a passive storage system, memory appears to be reconstructive: each time we recall an event, we rebuild it rather than replay a fixed recording. This helps explain why two witnesses can sincerely remember the same scene differently. Sceptics point out that such findings are hard to replicate outside the laboratory, yet the reconstructive view has become the dominant framework in cognitive science.",
+      "question": "What do sceptics point out?",
+      "questionFa": "شک‌گرایان به چه نکته‌ای اشاره می‌کنند؟",
+      "options": [
+        "Witnesses usually agree",
+        "The reconstructive view is dominant",
+        "Memory is a fixed recording",
+        "The findings are hard to replicate outside the laboratory"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«such findings are hard to replicate outside the laboratory» ادعای شک‌گرایان است."
+    },
+    {
+      "id": "c2.science.ex.11",
+      "lessonId": "c2.science.lesson-01",
+      "type": "multiple_choice",
+      "order": 11,
+      "passage": "Each time we recall an event, we rebuild it rather than replay a fixed recording.",
+      "question": "What does this sentence mean?",
+      "questionFa": "این جمله چه معنایی دارد؟",
+      "options": [
+        "هر بار که رویدادی را به یاد می‌آوریم، آن را بازسازی می‌کنیم نه اینکه یک ضبط ثابت را پخش کنیم.",
+        "هر بار که رویدادی را فراموش می‌کنیم، آن را بازسازی می‌کنیم.",
+        "حافظه مانند یک ضبط ثابت است که هرگز تغییر نمی‌کند.",
+        "ما رویدادها را دقیقاً همان‌طور که بودند پخش می‌کنیم."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«rather than» = «نه اینکه»؛ حافظه بازسازی می‌شود، نه بازپخش یک ضبط ثابت."
     }
   ]
 }

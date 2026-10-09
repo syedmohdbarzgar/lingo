@@ -271,6 +271,11 @@ private fun QuestionContent(state: PlacementUiState, onEvent: (PlacementEvent) -
         )
 
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            // A-6: reading items carry a short passage; render it above the question.
+            question.passage?.let { passage ->
+                SectionHeader("متن را بخوانید")
+                EnglishText(text = passage, style = MaterialTheme.typography.bodyLarge)
+            }
             EnglishText(text = question.question, style = MaterialTheme.typography.titleMedium)
             question.questionFa?.let {
                 Text(
@@ -353,9 +358,9 @@ private fun ResultContent(
                 SectionHeader("مهارت‌های سنجیده‌شده")
                 // A-6: honest scope. The test is recognition-based and measures
                 // exactly these skills — do not let the report read as a full
-                // profile of reading, writing or speaking too.
+                // profile of listening, speaking or writing too.
                 Text(
-                    text = "این آزمون گرامر و واژگان را می‌سنجد؛ مهارت‌های دیگر با تمرین‌های درس‌ها شکل می‌گیرند.",
+                    text = "این آزمون گرامر، واژگان و درک مطلب را می‌سنجد؛ شنیدن، گفتار و نوشتن با تمرین‌های درس‌ها شکل می‌گیرند.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,

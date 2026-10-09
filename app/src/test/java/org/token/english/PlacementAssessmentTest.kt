@@ -24,22 +24,22 @@ class PlacementAssessmentTest {
     private fun answer(skill: Skill, correct: Boolean, level: LearningLevel = LearningLevel.A1) =
         PlacementAnswer(level = level, skill = skill, correct = correct)
 
-    /** Six bands of five, all correct — the same shape a real full placement run has. */
+    /** Six bands of six, all correct — the same shape a real full placement run has. */
     @Test
     fun `all correct answers reach C2 and agree with the band scorer`() {
-        val answers = (1..30).map { answer(Skill.GRAMMAR, correct = true) }
+        val answers = (1..36).map { answer(Skill.GRAMMAR, correct = true) }
         val assessment = engine(answers)
 
         assertEquals(LearningLevel.C2, assessment.level)
         assertEquals(ScorePlacementUseCase()(answers.map { it.correct }), assessment.level)
-        assertEquals(30, assessment.answered)
+        assertEquals(36, assessment.answered)
     }
 
     @Test
     fun `a failed first band floors the level at A1`() {
-        // A1 band: 1/5 correct — fails the 2/3 band bar, so the walk stops.
-        val answers = List(5) { answer(Skill.GRAMMAR, correct = it == 0) } +
-            List(25) { answer(Skill.GRAMMAR, correct = true) }
+        // A1 band: 1/6 correct — fails the 2/3 band bar, so the walk stops.
+        val answers = List(6) { answer(Skill.GRAMMAR, correct = it == 0) } +
+            List(30) { answer(Skill.GRAMMAR, correct = true) }
         assertEquals(LearningLevel.A1, engine(answers).level)
     }
 

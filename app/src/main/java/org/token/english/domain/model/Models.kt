@@ -97,6 +97,13 @@ sealed interface Exercise {
         override val lessonId: String,
         val question: String,
         val questionFa: String?,
+        /**
+         * Optional English reading text shown above the question (checklist A-5).
+         * Comprehension items carry a short passage here (3–5 sentences);
+         * "choose the meaning" items carry the single sentence under test. Null
+         * for ordinary one-line questions. Always English — the UI renders it LTR.
+         */
+        val passage: String? = null,
         val options: List<String>,
         val correctIndex: Int,
         override val skill: Skill? = null,

@@ -121,6 +121,8 @@ class BidiTextTest {
             val keys = buildList {
                 addAll(listOf("question", "sentence", "text"))
                 if (type != "translation") add("prompt")
+                // A-5: an authored reading passage is English and renders LTR.
+                add("passage")
             }
             keys.forEach { key ->
                 val value = o.optString(key)

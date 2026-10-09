@@ -32,3 +32,4 @@ Gradle treats them as up to date otherwise).
 | `p1_tag_blank_skills.mjs` | Authored `skill` on every fill-in-the-blank (A-2b) |
 | `p1_grammar_topup.mjs` | Grammar practice for the topics the honest blank tagging left short of the six-exercise bar (A-8) |
 | `p1_bilingual_examples.mjs` | Two bilingual {en, fa} example sentences per word; bundle 18 → 19 (A-10) |
+| `p1_reading_and_meaning.mjs` | One 3–5-sentence reading passage + three comprehension questions per level and an En→Fa "choose the meaning" item; one reading item per placement band; bundle 19 → 20 (A-5, A-6) |

@@ -346,7 +346,7 @@ class LearningPathJourneyTest {
         val app = harness()
         val questions = ContentParser.parsePlacementQuestions(contentFile("placement.json").readText())
             .filterIsInstance<Exercise.MultipleChoice>()
-        assertEquals("the bundle ships six bands of five", 30, questions.size)
+        assertEquals("the bundle ships six bands of six", 36, questions.size)
 
         // Run it as a learner who is solid on grammar and shaky on vocabulary.
         val answers = questions.mapIndexed { index, question ->
@@ -361,10 +361,11 @@ class LearningPathJourneyTest {
 
         val assessment = app.assessPlacement(answers)
 
-        // Only the skills this test actually measures are reported (in Skill order).
-        assertEquals(listOf(Skill.VOCABULARY, Skill.GRAMMAR), assessment.bySkill.map { it.skill })
+        // Only the skills this test actually measures are reported (in Skill order);
+        // reading is now one of them (A-6).
+        assertEquals(listOf(Skill.VOCABULARY, Skill.GRAMMAR, Skill.READING), assessment.bySkill.map { it.skill })
         assertEquals(listOf(Skill.GRAMMAR), assessment.strengths)
-        assertEquals(listOf(Skill.VOCABULARY), assessment.focusSkills)
+        assertEquals(listOf(Skill.VOCABULARY, Skill.READING), assessment.focusSkills)
 
         // Calibration: the profile is no longer blank, and it reflects the answers.
         val mastery = app.progress.masteryFlow.value
@@ -384,12 +385,12 @@ class LearningPathJourneyTest {
         assertEquals(
             "all-correct placement answers unlock the top band",
             LearningLevel.C2,
-            ScorePlacementUseCase()(List(30) { true }),
+            ScorePlacementUseCase()(List(36) { true }),
         )
         assertEquals(
             "a learner who passes only the first two bands is placed at A2",
             LearningLevel.A2,
-            ScorePlacementUseCase()(List(10) { true } + List(20) { false }),
+            ScorePlacementUseCase()(List(12) { true } + List(24) { false }),
         )
 
         // --- 3. Start the lesson ----------------------------------------------

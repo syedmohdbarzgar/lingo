@@ -227,9 +227,13 @@ Rules:
   the paywall or Settings opens — it never outlives the install. Detection is one local
   `PackageManager` lookup (`core/billing/CompanionApp.kt`, offline, no permission); the
   package must stay listed in the manifest `<queries>` block or API 30+ package visibility
-  hides it. While the grant is active, the paywall replaces the plans with the free state and
-  a Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`, web fallback) so the
-  learner can keep/restore zaribar.
+  hides it. **The install is only trusted when its signing certificate matches
+  `CompanionApp.EXPECTED_SIGNING_SHA256`** (N-1: the package id alone is spoofable by any APK
+  that declares it); `CompanionSignature` does the normalization/matching and is unit-tested
+  because the Android lookup cannot run on the JVM. While the grant is active, the paywall
+  replaces the plans with the free state and a Cafe Bazaar download link
+  (`bazaar://details?id=org.token.zaribar`, web fallback) so the learner can keep/restore
+  zaribar — shown in every flavor on purpose, since the companion is published on Bazaar only.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
   and — when the companion grant is active — a "subscription is free" banner with the link.
@@ -256,10 +260,10 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 19):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 417 exercises (6–11/lesson + reading items + A1 pronunciation drills), 290
+- **CEFR bundle (contentVersion 20):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 441 exercises (6–11/lesson + reading passages + meaning items + A1 pronunciation drills), 290
   vocabulary entries (6/lesson, 8 in the numbers lesson), 89 knowledge items,
-  placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
+  placement = 36 questions in six graded bands of 6 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
   mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
@@ -284,8 +288,8 @@ Rules:
   can for ability, imperatives and question words each got their own A1 lesson (tip + 6 words +
   6 grammar exercises + phonology coverage + a guided listening drill), and the past simple is
   now introduced at **A2** (`a2.past-simple.lesson-01`, `grammar.past-simple` level B1 → A2) with
-  `b1.work` still teaching it as a review. Placement bands were re-checked afterwards: still
-  30 questions, five per level, A1 → C2 in order.
+  `b1.work` still teaching it as a review. Placement bands were re-checked afterwards (at the
+  time 30 questions, five per level, A1 → C2 in order; A-6 later grew it to six per band).
 - **Content correctness pass (P0-9):** the bundle was audited end-to-end and two silent defects
   fixed, both now enforced by `VocabularyContentTest`:
   (a) the generated "What does X mean?" choices (`scripts/archive/enrich_content.mjs` writes one per
@@ -304,7 +308,7 @@ Rules:
   `GrammarCoverageTest` fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is now **every one of the 383 exercises** (grammar/fill-blank core plus vocabulary
+  Coverage is now **every one of the 441 exercises** (grammar/fill-blank core plus vocabulary
   meaning, translation and listening items). `ExplanationCoverageTest` enforces 100% on the core
   set and on the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the
   invariant); `validateContent` prints any exercise without one as a non-blocking warning. A new
@@ -321,9 +325,18 @@ Rules:
 - Placement scoring is **band-based** (`ScorePlacementUseCase`): walks bands bottom-up, band
   passes at ≥2/3 with ≥60% cumulative accuracy, stops at first failed band, floor A1.
   Question `level` tags in placement.json are documentation; scoring uses array order +
-  `ScorePlacementUseCase.DEFAULT_BAND_SIZE = 5` (six bands × 5 = 30 questions).
+  `ScorePlacementUseCase.DEFAULT_BAND_SIZE = 6` (six bands × 6 = 36 questions).
+- **Reading comprehension and meaning items (A-5).** `Exercise.MultipleChoice` carries an optional
+  `passage` (English, rendered above the question by `LessonScreen`/`PlacementScreen`). Six lessons
+  — one per level A1→C2 — hold a 3–5-sentence passage with three comprehension questions that each
+  repeat the passage, so a re-queued question is still answerable alone; each of those lessons also
+  gets one English→Persian "What does this sentence mean?" item. `ReadingContentTest` enforces the
+  passage shape (3–5 sentences, English, reused by ≥2 questions), one passage per level, Persian
+  options on the meaning items, and the placement reading questions. One-shot batch:
+  `scripts/archive/p1_reading_and_meaning.mjs` (never re-run).
 - **Placement is also a skill assessment (P1-1).** Every placement question carries an authored
-  `skill` (11 VOCABULARY, 19 GRAMMAR — the two axes the test actually measures; no fake tags).
+  `skill` (11 VOCABULARY, 19 GRAMMAR, 6 READING — the three axes the test actually measures; no fake
+  tags). A-6 added one reading item per band and grew each band to six.
   `PlacementAssessmentEngine` (pure) returns the overall level from the same band scorer plus a
   per-skill accuracy read, `strengths` and weakest-first `focusSkills`; `AssessPlacementUseCase`
   then replays the answers through `ProgressRepository.applyAttempt` so skill mastery starts
@@ -394,14 +407,16 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 221 tests / 30 classes as of
-  the zaribar-companion pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 232 tests / 32 classes as of
+  the reading-content pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
-  (companion package id + Bazaar links) + `SubscriptionRecoveryTest` (renewal
+  (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
+  (certificate normalization/matching) + `SubscriptionRecoveryTest` (renewal
   boundaries, reinstall restore, store-truth reconciliation), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
-  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `KnowledgeEngineTest`
+  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ReadingContentTest`
+  (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
   (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
   `RoomMigrationTest` (migration ↔ exported schema, no gaps), `BidiTextTest` (BiDi direction rule
@@ -433,6 +448,12 @@ Rules:
    hardware via `scripts/install_debug.sh` — **not** after every change.
 
 ## 10. Known design debt (accepted, tracked here)
+
+- **The companion signing digest is not configured yet** (`CompanionApp.EXPECTED_SIGNING_SHA256`
+  is empty), so the free-access grant currently trusts the `org.token.zaribar` package id alone
+  and any APK declaring it unlocks the paid tier. Paste the Zaribar release key digest from
+  `keytool -printcert -jarfile zaribar.apk` to close N-1; the check is already implemented and
+  unit-tested. (A release-time hard failure like `bazaarRsaKey`'s is a possible follow-up.)
 
 - Myket has no real subscriptions: expiry is local and lost on reinstall — re-prove purchase
   through support if a user claims a lost subscription.

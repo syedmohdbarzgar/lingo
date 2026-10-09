@@ -222,6 +222,8 @@ tasks.register("validateContent") {
             when (type) {
                 "multiple_choice" -> {
                     if (text(o, "question").isEmpty()) report(id, "blank question")
+                    // A-5: an authored reading passage (optional) must not be empty.
+                    if (o.containsKey("passage") && text(o, "passage").isEmpty()) report(id, "blank passage")
                     checkChoiceAnswer(id, o)
                 }
                 "fill_blank" -> {

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 19,
+  "contentVersion": 20,
   "questions": [
     {
       "id": "placement.q01",
@@ -77,6 +77,22 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "placement.r01",
+      "type": "multiple_choice",
+      "level": "A1",
+      "passage": "Tom has a small dog. Every morning he takes it to the park near his house. The dog loves to run, and Tom throws a ball for it.",
+      "question": "Where does Tom take his dog every morning?",
+      "questionFa": "تام هر صبح سگش را کجا می‌برد؟",
+      "options": [
+        "To school",
+        "To the park",
+        "To the market",
+        "To the station"
+      ],
+      "correctIndex": 1,
+      "skill": "READING"
+    },
+    {
       "id": "placement.q04",
       "type": "multiple_choice",
       "level": "A2",
@@ -84,11 +100,11 @@
       "questionFa": "او دیروز تکالیفش را ______.",
       "options": [
         "finishing",
-        "finished",
         "has finish",
+        "finished",
         "finishes"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -100,10 +116,10 @@
       "options": [
         "would",
         "mustn't",
-        "should",
-        "mightn't"
+        "mightn't",
+        "should"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -113,12 +129,12 @@
       "question": "This film is much ______ than the last one.",
       "questionFa": "این فیلم خیلی ______ از فیلم قبلی است.",
       "options": [
-        "good",
+        "better",
         "more good",
         "best",
-        "better"
+        "good"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -128,12 +144,12 @@
       "question": "What is the opposite of \"cheap\"?",
       "questionFa": "متضاد «cheap» چیست؟",
       "options": [
-        "expensive",
         "luxurious",
+        "expensive",
         "costly",
         "valuable"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -144,12 +160,28 @@
       "questionFa": "برای پاسخ «جلسه ساعت نه است» پرسش درست را انتخاب کنید:",
       "options": [
         "Where is the meeting?",
-        "What time is the meeting?",
         "Who is at the meeting?",
+        "What time is the meeting?",
         "Why is the meeting?"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "placement.r02",
+      "type": "multiple_choice",
+      "level": "A2",
+      "passage": "Nina wanted to buy a gift for her mother. She went to the shop and chose a blue scarf. It cost twenty dollars, so she paid with her card.",
+      "question": "What did Nina buy?",
+      "questionFa": "نینا چه چیزی خرید؟",
+      "options": [
+        "A pair of shoes",
+        "A red hat",
+        "A book",
+        "A blue scarf"
+      ],
+      "correctIndex": 3,
+      "skill": "READING"
     },
     {
       "id": "placement.q07",
@@ -158,12 +190,12 @@
       "question": "I ______ in Tehran since 2018.",
       "questionFa": "من از سال ۲۰۱۸ در تهران ______.",
       "options": [
-        "am living",
-        "lived",
         "have lived",
+        "lived",
+        "am living",
         "live"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -174,11 +206,11 @@
       "questionFa": "نامه دیروز ______ شد.",
       "options": [
         "was send",
-        "sent",
+        "was sent",
         "is sending",
-        "was sent"
+        "sent"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -188,12 +220,12 @@
       "question": "She said she ______ busy at the moment.",
       "questionFa": "او گفت که در آن لحظه ______ است.",
       "options": [
-        "was",
-        "is",
         "has been",
+        "is",
+        "was",
         "will be"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -204,11 +236,11 @@
       "questionFa": "معنی «reliable» چیست؟",
       "options": [
         "flexible",
-        "dependable",
+        "curious",
         "expensive",
-        "curious"
+        "dependable"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -218,13 +250,29 @@
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
-        "I never have tried sushi.",
-        "I have never try sushi.",
         "I've never tried sushi.",
+        "I have never try sushi.",
+        "I never have tried sushi.",
         "I've never tried sushi nor."
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "placement.r03",
+      "type": "multiple_choice",
+      "level": "B1",
+      "passage": "The train was delayed because of heavy snow. Many passengers waited on the cold platform. The station staff brought hot tea and explained that the train would arrive in an hour.",
+      "question": "Why was the train delayed?",
+      "questionFa": "چرا قطار تأخیر داشت؟",
+      "options": [
+        "Because of a strike",
+        "Because of heavy snow",
+        "Because of an accident",
+        "Because of a broken engine"
+      ],
+      "correctIndex": 1,
+      "skill": "READING"
     },
     {
       "id": "placement.q10",
@@ -235,10 +283,10 @@
       "options": [
         "left",
         "have left",
-        "would leave",
-        "had left"
+        "had left",
+        "would leave"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -248,12 +296,12 @@
       "question": "The man ______ car was stolen reported it to the police.",
       "questionFa": "مردی که ______ ماشینش دزدیده شد به پلیس گزارش داد.",
       "options": [
-        "whose",
+        "that's",
         "who's",
         "which",
-        "that's"
+        "whose"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -263,12 +311,12 @@
       "question": "I wish I ______ more time to relax this week.",
       "questionFa": "کاش این هفته وقت بیشتری برای استراحت ______.",
       "options": [
-        "am having",
         "had",
+        "am having",
         "would have",
         "have"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -279,11 +327,11 @@
       "questionFa": "وقتی رسیدیم، فیلم از قبل ______ بود.",
       "options": [
         "already starts",
-        "has already started",
         "had already started",
+        "has already started",
         "was starting"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -295,11 +343,27 @@
       "options": [
         "pretend",
         "precede",
-        "predict",
-        "postpone"
+        "postpone",
+        "predict"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY"
+    },
+    {
+      "id": "placement.r04",
+      "type": "multiple_choice",
+      "level": "B2",
+      "passage": "A recent survey found that most employees prefer working from home two days a week. They said they save time on commuting and feel less stressed. However, some managers worry that teamwork becomes harder.",
+      "question": "What do most employees prefer?",
+      "questionFa": "بیشتر کارمندان چه چیزی را ترجیح می‌دهند؟",
+      "options": [
+        "Working only in the office",
+        "Working from home every day",
+        "Working longer hours",
+        "Working from home two days a week"
       ],
       "correctIndex": 3,
-      "skill": "VOCABULARY"
+      "skill": "READING"
     },
     {
       "id": "placement.q13",
@@ -377,6 +441,22 @@
       "skill": "VOCABULARY"
     },
     {
+      "id": "placement.r05",
+      "type": "multiple_choice",
+      "level": "C1",
+      "passage": "Critics of the new policy argue that it places too much emphasis on test scores. They claim that schools may neglect creativity and critical thinking. Supporters respond that standardised results help identify struggling students early.",
+      "question": "What do critics of the new policy argue?",
+      "questionFa": "منتقدان سیاست جدید چه استدلالی دارند؟",
+      "options": [
+        "Test scores are too low",
+        "Schools may neglect creativity and critical thinking",
+        "Policies should change every year",
+        "Creativity is easy to measure"
+      ],
+      "correctIndex": 1,
+      "skill": "READING"
+    },
+    {
       "id": "placement.q16",
       "type": "multiple_choice",
       "level": "C2",
@@ -384,11 +464,11 @@
       "questionFa": "توضیحش مختصر بود اما تا حدی ______.",
       "options": [
         "lucid",
-        "vague",
         "detailed",
+        "vague",
         "precise"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -400,10 +480,10 @@
       "options": [
         "clarity",
         "honesty",
-        "irony",
-        "sincerity"
+        "sincerity",
+        "irony"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -413,12 +493,12 @@
       "question": "Independent sources ______ the initial hypothesis.",
       "questionFa": "منابع مستقل فرضیه اولیه را ______ کردند.",
       "options": [
-        "contradicted",
+        "corroborated",
         "understated",
         "ignored",
-        "corroborated"
+        "contradicted"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY"
     },
     {
@@ -428,12 +508,12 @@
       "question": "The politician's answer was deliberately ______, avoiding any firm commitment.",
       "questionFa": "پاسخ سیاستمدار عمداً ______ بود و از هر تعهد مشخصی طفره می‌رفت.",
       "options": [
-        "equivocal",
         "eloquent",
+        "equivocal",
         "eminent",
         "exemplary"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -444,12 +524,28 @@
       "questionFa": "مدارک برای محکومیت خیلی ______ بودند.",
       "options": [
         "tenacious",
-        "tenuous",
         "tantamount",
+        "tenuous",
         "transient"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
+    },
+    {
+      "id": "placement.r06",
+      "type": "multiple_choice",
+      "level": "C2",
+      "passage": "The author's argument rests on the assumption that readers share her understanding of irony. Where that assumption fails, the text can seem sincere, and its criticism is easily missed. A careful reader, she suggests, must attend to tone as much as to content.",
+      "question": "What assumption does the author's argument rest on?",
+      "questionFa": "استدلال نویسنده بر چه فرضی استوار است؟",
+      "options": [
+        "That the text is sincere",
+        "That irony is never used",
+        "That readers ignore tone",
+        "That readers share her understanding of irony"
+      ],
+      "correctIndex": 3,
+      "skill": "READING"
     }
   ]
 }
