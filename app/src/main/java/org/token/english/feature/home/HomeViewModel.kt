@@ -32,6 +32,11 @@ data class HomeUiState(
     val nextLevel: LearningLevel? = null,
     val access: org.token.english.core.billing.AccessLevel = org.token.english.core.billing.AccessLevel.TRIAL,
     val trialRemainingMillis: Long = 0L,
+    /** Why access is held — a free companion grant is not a paid subscription. */
+    val accessReason: org.token.english.core.billing.AccessReason =
+        org.token.english.core.billing.AccessReason.NONE,
+    /** True while the free-access companion app (org.token.zaribar) is installed. */
+    val companionInstalled: Boolean = false,
 )
 
 class HomeViewModel(
@@ -50,6 +55,9 @@ class HomeViewModel(
     private var dueCount: Int = 0
     private var access: org.token.english.core.billing.AccessLevel =
         org.token.english.core.billing.AccessLevel.TRIAL
+    private var accessReason: org.token.english.core.billing.AccessReason =
+        org.token.english.core.billing.AccessReason.NONE
+    private var companionInstalled: Boolean = false
     private var trialRemainingMillis: Long = 0L
     private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
 
@@ -57,6 +65,15 @@ class HomeViewModel(
         viewModelScope.launch {
             container.settingsRepository.observeTrialAndSubscription().collect { ts ->
                 trialAndSubscription = ts
+                recomputeAccess()
+            }
+        }
+        viewModelScope.launch {
+            // Free companion grant: re-read the install state (the user may have
+            // installed/removed zaribar since the process started) and follow it.
+            container.refreshCompanionInstalled()
+            container.companionInstalled.collect { installed ->
+                companionInstalled = installed
                 recomputeAccess()
             }
         }
@@ -125,11 +142,14 @@ class HomeViewModel(
         val state = ts.trialClockState()
         val elapsed = android.os.SystemClock.elapsedRealtime()
         trialRemainingMillis = org.token.english.core.billing.TrialClock.remainingMs(state, now, elapsed)
-        access = org.token.english.core.billing.EntitlementPolicy.level(
+        val entitlement = org.token.english.core.billing.EntitlementPolicy.entitlement(
             now = now,
             trialRemainingMs = trialRemainingMillis,
             subscriptionUntil = ts.subscriptionUntil,
+            companionAppInstalled = companionInstalled,
         )
+        access = entitlement.level
+        accessReason = entitlement.reason
         rebuild()
     }
 
@@ -161,6 +181,8 @@ class HomeViewModel(
             stats = stats,
             mastery = mastery,
             access = access,
+            accessReason = accessReason,
+            companionInstalled = companionInstalled,
             trialRemainingMillis = trialRemainingMillis,
             levelComplete = levelComplete,
             nextLevel = nextLevel,

@@ -63,20 +63,49 @@ object ProductIds {
     }
 }
 
-/** What the learner may access right now (trial → subscription). */
+/** What the learner may access right now (trial → subscription → companion). */
 enum class AccessLevel { TRIAL, PREMIUM, LOCKED }
+
+/**
+ * *Why* access is granted — the UI has to explain it honestly (a free grant from
+ * the companion app is not a paid subscription and must not be announced as one).
+ */
+enum class AccessReason { SUBSCRIPTION, COMPANION_APP, TRIAL, NONE }
+
+/** Access level plus the reason it is held, so no surface has to guess. */
+data class Entitlement(
+    val level: AccessLevel,
+    val reason: AccessReason,
+)
 
 /**
  * Pure entitlement rules — unit tested, no Android types.
  * Trial *duration* accounting lives in [TrialClock]; this object only decides
- * access from the two numbers it is given.
+ * access from the numbers it is given.
+ *
+ * Precedence: a live subscription is reported as such (a paying learner with the
+ * companion installed still gets the "subscription" wording), then the free
+ * companion grant ([CompanionApp.PACKAGE] installed), then the trial, then locked.
  */
 object EntitlementPolicy {
-    fun level(now: Long, trialRemainingMs: Long, subscriptionUntil: Long): AccessLevel = when {
-        subscriptionUntil > now -> AccessLevel.PREMIUM
-        trialRemainingMs > 0L -> AccessLevel.TRIAL
-        else -> AccessLevel.LOCKED
+    fun entitlement(
+        now: Long,
+        trialRemainingMs: Long,
+        subscriptionUntil: Long,
+        companionAppInstalled: Boolean = false,
+    ): Entitlement = when {
+        subscriptionUntil > now -> Entitlement(AccessLevel.PREMIUM, AccessReason.SUBSCRIPTION)
+        companionAppInstalled -> Entitlement(AccessLevel.PREMIUM, AccessReason.COMPANION_APP)
+        trialRemainingMs > 0L -> Entitlement(AccessLevel.TRIAL, AccessReason.TRIAL)
+        else -> Entitlement(AccessLevel.LOCKED, AccessReason.NONE)
     }
+
+    fun level(
+        now: Long,
+        trialRemainingMs: Long,
+        subscriptionUntil: Long,
+        companionAppInstalled: Boolean = false,
+    ): AccessLevel = entitlement(now, trialRemainingMs, subscriptionUntil, companionAppInstalled).level
 }
 
 /** Reads/writes the persisted subscription state (DataStore-backed). */

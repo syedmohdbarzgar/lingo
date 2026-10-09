@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
+import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.di.AppContainer
 import org.token.english.domain.model.AppSettings
@@ -22,6 +23,10 @@ data class SettingsUiState(
     val access: AccessLevel = AccessLevel.TRIAL,
     val trialRemainingMillis: Long = 0L,
     val subscriptionUntil: Long = 0L,
+    /** Why access is held — a free companion grant is not a purchase. */
+    val accessReason: AccessReason = AccessReason.NONE,
+    /** True while the free-access companion app (org.token.zaribar) is installed. */
+    val companionInstalled: Boolean = false,
 )
 
 class SettingsViewModel(
@@ -32,8 +37,17 @@ class SettingsViewModel(
     val state: StateFlow<SettingsUiState> = _state.asStateFlow()
 
     private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
+    private var companionInstalled: Boolean = false
 
     init {
+        viewModelScope.launch {
+            // Free companion grant: re-read the install state, then follow changes.
+            container.refreshCompanionInstalled()
+            container.companionInstalled.collect { installed ->
+                companionInstalled = installed
+                recomputeAccess()
+            }
+        }
         viewModelScope.launch {
             container.settingsRepository.settings.collect {
                 // Keep the entitlement fields — this collector must not wipe them.
@@ -64,9 +78,17 @@ class SettingsViewModel(
             now,
             android.os.SystemClock.elapsedRealtime(),
         )
+        val entitlement = EntitlementPolicy.entitlement(
+            now = now,
+            trialRemainingMs = remaining,
+            subscriptionUntil = ts.subscriptionUntil,
+            companionAppInstalled = companionInstalled,
+        )
         _state.update {
             it.copy(
-                access = EntitlementPolicy.level(now, remaining, ts.subscriptionUntil),
+                access = entitlement.level,
+                accessReason = entitlement.reason,
+                companionInstalled = companionInstalled,
                 trialRemainingMillis = remaining,
                 subscriptionUntil = ts.subscriptionUntil,
             )

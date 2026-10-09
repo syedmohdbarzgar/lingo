@@ -34,7 +34,13 @@ class EnglishApp : Application() {
             }
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
-            override fun onActivityResumed(activity: Activity) = Unit
+            override fun onActivityResumed(activity: Activity) {
+                // The free-access companion (org.token.zaribar) can be installed or
+                // removed between sessions; the grant must follow the install, not
+                // wait for the next cold start.
+                appScope.launch { container.refreshCompanionInstalled() }
+            }
+
             override fun onActivityPaused(activity: Activity) = Unit
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
             override fun onActivityDestroyed(activity: Activity) = Unit
@@ -67,6 +73,7 @@ class EnglishApp : Application() {
         // Trial + store subscription check (payment is the only online surface),
         // then keep the trial checkpoint advancing with real elapsed time.
         appScope.launch {
+            container.refreshCompanionInstalled()
             container.refreshEntitlements()
             while (true) {
                 delay(TRIAL_CHECKPOINT_MS)

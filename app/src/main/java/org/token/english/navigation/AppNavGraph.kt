@@ -89,6 +89,10 @@ fun AppNavGraph(startDestination: String) {
     val app = LocalContext.current.applicationContext as EnglishApp
     val access by remember { app.container.settingsRepository.observeTrialAndSubscription() }
         .collectAsStateWithLifecycle(initialValue = null)
+    // Free-access companion (org.token.zaribar): while it is installed the app is
+    // unlocked without a purchase, so gating must consider it too.
+    val companionInstalled by remember { app.container.companionInstalled }
+        .collectAsStateWithLifecycle(initialValue = false)
     // Entitlement depends on wall-clock time, but the flow only emits when the
     // stored values change — tick `now` so a trial that expires mid-session
     // locks the app without waiting for a restart.
@@ -108,6 +112,7 @@ fun AppNavGraph(startDestination: String) {
                 elapsedRealtime = android.os.SystemClock.elapsedRealtime(),
             ),
             subscriptionUntil = it.subscriptionUntil,
+            companionAppInstalled = companionInstalled,
         )
     }
     val locked = accessLevel == org.token.english.core.billing.AccessLevel.LOCKED

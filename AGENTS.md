@@ -218,10 +218,21 @@ Rules:
 
 - UI/domain only see `core/billing/BillingGateway` — store specifics live in the flavor's
   `PlatformBillingGateway`. Adding a 4th market = new flavor + one file, zero UI changes.
-- Access rules are pure & unit-tested: `EntitlementPolicy` (TRIAL → PREMIUM → LOCKED) in
+- Access rules are pure & unit-tested: `EntitlementPolicy` (SUBSCRIPTION → COMPANION_APP →
+  TRIAL → LOCKED, with an `AccessReason` so the UI never calls a free grant a purchase) in
   `core/billing/Billing.kt`.
+- **Free-access companion (product decision, Oct 2026, user-confirmed): while the Zaribar app
+  (`org.token.zaribar`) is installed the subscription is free.** The grant follows the install
+  and is re-checked on every foreground (`EnglishApp.onActivityResumed`) and whenever Home,
+  the paywall or Settings opens — it never outlives the install. Detection is one local
+  `PackageManager` lookup (`core/billing/CompanionApp.kt`, offline, no permission); the
+  package must stay listed in the manifest `<queries>` block or API 30+ package visibility
+  hides it. While the grant is active, the paywall replaces the plans with the free state and
+  a Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`, web fallback) so the
+  learner can keep/restore zaribar.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
-  exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner.
+  exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
+  and — when the companion grant is active — a "subscription is free" banner with the link.
 - Store is source of truth; active subscriptions are mirrored locally with a 32-day grace so
   short offline spells don't lock the learner out.
 - Release signing: fill `keystore.properties` (`storeFile/storePassword/keyAlias/keyPassword`,
@@ -381,10 +392,11 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 213 tests / 29 classes as of
-  the P0 + P1-1 pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 221 tests / 30 classes as of
+  the zaribar-companion pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
-  `EntitlementPolicyTest` (trial/subscription gating) + `SubscriptionRecoveryTest` (renewal
+  `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
+  (companion package id + Bazaar links) + `SubscriptionRecoveryTest` (renewal
   boundaries, reinstall restore, store-truth reconciliation), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
   `VocabularyContentTest` (example-contains-word + same-lesson distractors), `KnowledgeEngineTest`

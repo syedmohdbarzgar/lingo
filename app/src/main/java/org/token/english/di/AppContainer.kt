@@ -4,12 +4,14 @@ import android.content.Context
 import android.os.SystemClock
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.TtsAudioPlayer
 import org.token.english.data.content.ContentSeeder
@@ -109,6 +111,25 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
 
     // Audio (on-device TTS — no network needed)
     val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }
+
+    // Free-access companion app (org.token.zaribar): while it is installed the
+    // subscription is free — see CompanionApp. Re-checked on every foreground and
+    // whenever a paywall/home surface opens, so the grant can never outlive the
+    // install that justifies it.
+    val companionDetector: org.token.english.core.billing.CompanionDetector by lazy {
+        org.token.english.core.billing.PackageManagerCompanionDetector(appContext)
+    }
+    private val _companionInstalled = MutableStateFlow(false)
+
+    /** Latest result of the companion lookup (false until the first check). */
+    val companionInstalled: StateFlow<Boolean> = _companionInstalled.asStateFlow()
+
+    /** PackageManager lookup; never throws. Cheap enough to re-run on resume. */
+    suspend fun refreshCompanionInstalled(): Boolean = withContext(Dispatchers.IO) {
+        val installed = runCatching { companionDetector.isInstalled() }.getOrDefault(false)
+        _companionInstalled.value = installed
+        installed
+    }
 
     // Store billing — implementation comes from the active product flavor
     // (src/bazaar, src/myket or src/googlePlay). See AGENTS.md §4.

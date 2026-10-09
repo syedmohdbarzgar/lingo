@@ -92,8 +92,9 @@ The bundle is authored data only: extending it needs **no Kotlin change**, just 
 **Subscription**
 
 All content is subscription-gated with a **7-day free trial**; plans are `sub_monthly` and
-`sub_yearly`. Access is decided by a pure, unit-tested `EntitlementPolicy` (TRIAL → PREMIUM →
-LOCKED). Each release build targets one market and embeds only that market's billing SDK:
+`sub_yearly`. Access is decided by a pure, unit-tested `EntitlementPolicy` (SUBSCRIPTION →
+COMPANION_APP → TRIAL → LOCKED). Each release build targets one market and embeds only that
+market's billing SDK:
 
 | Flavour | Store | SDK |
 |---|---|---|
@@ -103,6 +104,12 @@ LOCKED). Each release build targets one market and embeds only that market's bil
 
 The trial is measured with wall-clock time plus `elapsedRealtime` checkpoints, so moving the device
 clock does not hand out extra trial time.
+
+**Free with the Zaribar app:** while the companion app `org.token.zaribar` is installed, the
+subscription is free — the grant is re-checked on every foreground and ends when the companion is
+removed. The app shows a Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`) so the
+learner can keep it installed. The check is a single local `PackageManager` lookup: no server, no
+permission, and it is declared in the manifest `<queries>` block for API 30+ visibility.
 
 ---
 
@@ -292,7 +299,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-213 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
+221 unit tests across 30 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

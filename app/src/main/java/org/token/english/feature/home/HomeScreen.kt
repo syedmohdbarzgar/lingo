@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -111,6 +112,8 @@ fun HomeScreen(
 
             TrialBanner(state, onOpenPaywall = onOpenPaywall)
 
+            CompanionFreeBanner(state)
+
             state.plan?.let { plan ->
                 TodayPlanCard(
                     plan = plan,
@@ -181,6 +184,38 @@ private fun LevelUpCard(
             PrimaryButton(
                 text = "ادامه در سطح ${nextLevel.name}",
                 onClick = onAdvance,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    }
+}
+
+/**
+ * Free-access companion (org.token.zaribar): while it is installed the
+ * subscription costs nothing. Say so plainly and keep the Cafe Bazaar download
+ * link at hand — the free access ends if the companion is removed, so the link
+ * is what lets the learner keep it on the device.
+ */
+@Composable
+private fun CompanionFreeBanner(state: HomeUiState) {
+    if (state.accessReason != org.token.english.core.billing.AccessReason.COMPANION_APP) return
+    val context = LocalContext.current
+
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("اشتراک رایگان فعال است")
+            Text(
+                text = "برنامهٔ «زریبار» روی این دستگاه نصب است، بنابراین دسترسی شما به همهٔ درس‌ها رایگان است.",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
+                text = "تا زمانی که «زریبار» نصب بماند، اشتراک رایگان ادامه دارد.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            SecondaryButton(
+                text = "دانلود زریبار از کافه بازار",
+                onClick = { org.token.english.core.billing.CompanionApp.openDownloadPage(context) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }

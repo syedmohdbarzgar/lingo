@@ -33,11 +33,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppCard
@@ -95,6 +98,13 @@ fun PaywallScreen(
 
             when {
                 state.isLoading -> LoadingBlock()
+
+                // Free access from the companion app (org.token.zaribar): selling a
+                // subscription here would be dishonest, so the plans are replaced by
+                // the free state plus the Bazaar link that keeps the grant alive.
+                state.accessReason == AccessReason.COMPANION_APP -> CompanionFreeBlock(
+                    onClose = { if (locked) onLockedExit() else onClose() },
+                )
 
                 state.plans.isNotEmpty() -> {
                     state.plans.forEach { plan ->
@@ -181,7 +191,11 @@ private fun Hero(state: PaywallUiState) {
             textAlign = TextAlign.Center,
         )
         Text(
-            text = when (state.access) {
+            text = when {
+                state.accessReason == AccessReason.COMPANION_APP ->
+                    "اشتراک شما رایگان است: برنامهٔ «زریبار» روی این دستگاه نصب است."
+
+                else -> when (state.access) {
                 org.token.english.core.billing.AccessLevel.TRIAL -> {
                     val hours = state.trialRemainingMillis / (60 * 60 * 1000)
                     val days = state.trialRemainingMillis / (24 * 60 * 60 * 1000)
@@ -195,11 +209,48 @@ private fun Hero(state: PaywallUiState) {
                 org.token.english.core.billing.AccessLevel.PREMIUM -> "اشتراک شما فعال است. ممنونیم!"
                 org.token.english.core.billing.AccessLevel.LOCKED ->
                     "برای ادامه یادگیری، اشتراک فعال کنید. برای اعضا: خرید یا بازیابی اشتراک از همین صفحه انجام می‌شود."
+                }
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+/**
+ * Free state granted by the companion app: no purchase, but the learner must be
+ * able to reinstall (or update) zaribar from Cafe Bazaar — removing it ends the
+ * free access.
+ */
+@Composable
+private fun CompanionFreeBlock(onClose: () -> Unit) {
+    val context = LocalContext.current
+    AppCard(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("اشتراک رایگان زریبار")
+            Text(
+                text = "برنامهٔ «زریبار» روی این دستگاه نصب است، بنابراین نیازی به خرید اشتراک نیست و همهٔ درس‌ها باز است.",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
+                text = "اگر «زریبار» را حذف کنید، این دسترسی رایگان پایان می‌یابد. با نصب دوباره از کافه بازار باز می‌گردد.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            SecondaryButton(
+                text = "دانلود زریبار از کافه بازار",
+                onClick = { CompanionApp.openDownloadPage(context) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            SecondaryButton(
+                text = "بستن",
+                onClick = onClose,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
     }
 }
 

@@ -308,24 +308,38 @@ private fun SubscriptionCard(state: SettingsUiState, onOpenPaywall: () -> Unit) 
             val subDays =
                 (state.subscriptionUntil - System.currentTimeMillis()) / (24 * 60 * 60 * 1000)
             Text(
-                text = when (state.access) {
-                    org.token.english.core.billing.AccessLevel.TRIAL -> when {
-                        days >= 1 -> "دوره آزمایشی رایگان — $days روز و ${hours % 24} ساعت باقی‌مانده."
-                        hours >= 1 -> "دوره آزمایشی رایگان — کمتر از $hours ساعت دیگر."
-                        else -> "دوره آزمایشی رو به پایان است."
+                text = when {
+                    // Free grant from the companion app — never announced as a
+                    // purchase, and it lasts only while zaribar stays installed.
+                    state.accessReason == org.token.english.core.billing.AccessReason.COMPANION_APP ->
+                        "اشتراک رایگان — برنامهٔ «زریبار» روی این دستگاه نصب است؛ تا وقتی نصب بماند نیازی به خرید نیست."
+
+                    else -> when (state.access) {
+                        org.token.english.core.billing.AccessLevel.TRIAL -> when {
+                            days >= 1 -> "دوره آزمایشی رایگان — $days روز و ${hours % 24} ساعت باقی‌مانده."
+                            hours >= 1 -> "دوره آزمایشی رایگان — کمتر از $hours ساعت دیگر."
+                            else -> "دوره آزمایشی رو به پایان است."
+                        }
+
+                        org.token.english.core.billing.AccessLevel.PREMIUM ->
+                            if (subDays >= 1) "اشتراک فعال — $subDays روز دیگر تمدید می‌شود."
+                            else "اشتراک شما فعال است."
+
+                        org.token.english.core.billing.AccessLevel.LOCKED ->
+                            "اشتراکی فعال نیست. برای ادامه یادگیری، اشتراک بخرید یا خرید قبلی را بازیابی کنید."
                     }
-
-                    org.token.english.core.billing.AccessLevel.PREMIUM ->
-                        if (subDays >= 1) "اشتراک فعال — $subDays روز دیگر تمدید می‌شود."
-                        else "اشتراک شما فعال است."
-
-                    org.token.english.core.billing.AccessLevel.LOCKED ->
-                        "اشتراکی فعال نیست. برای ادامه یادگیری، اشتراک بخرید یا خرید قبلی را بازیابی کنید."
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            if (state.access == org.token.english.core.billing.AccessLevel.PREMIUM) {
+            val context = LocalContext.current
+            if (state.accessReason == org.token.english.core.billing.AccessReason.COMPANION_APP) {
+                SecondaryButton(
+                    text = "دانلود زریبار از کافه بازار",
+                    onClick = { org.token.english.core.billing.CompanionApp.openDownloadPage(context) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else if (state.access == org.token.english.core.billing.AccessLevel.PREMIUM) {
                 SecondaryButton(
                     text = "مدیریت اشتراک",
                     onClick = onOpenPaywall,

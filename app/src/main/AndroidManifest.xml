@@ -21,13 +21,17 @@
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
 
-    <!-- Package visibility (NOT a permission): lets the listening exercise resolve
-         the system "install TTS voice data" screen on API 30+ when no English voice
-         is installed (checklist B-3). -->
+    <!-- Package visibility (NOT a permission):
+         * resolves the system "install TTS voice data" screen on API 30+ when no
+           English voice is installed (checklist B-3);
+         * lets the app see the free-access companion app `org.token.zaribar` —
+           without this line PackageManager hides it on API 30+ and the free
+           subscription would never activate. -->
     <queries>
         <intent>
             <action android:name="android.speech.tts.engine.INSTALL_TTS_DATA" />
         </intent>
+        <package android:name="org.token.zaribar" />
     </queries>
 
     <application

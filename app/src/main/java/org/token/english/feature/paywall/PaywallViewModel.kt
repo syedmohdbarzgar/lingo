@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
+import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.PurchaseOutcome
@@ -28,6 +29,10 @@ data class PaywallUiState(
     val access: AccessLevel = AccessLevel.TRIAL,
     val trialRemainingMillis: Long = 0L,
     val storeName: String = "",
+    /** Why access is held right now — a free companion grant is not a purchase. */
+    val accessReason: AccessReason = AccessReason.NONE,
+    /** True while the free-access companion app (org.token.zaribar) is installed. */
+    val companionInstalled: Boolean = false,
 )
 
 class PaywallViewModel(
@@ -40,9 +45,19 @@ class PaywallViewModel(
     val state: StateFlow<PaywallUiState> = _state.asStateFlow()
 
     private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
+    private var companionInstalled: Boolean = false
 
     init {
         _state.update { it.copy(storeName = STORE_NAME) }
+        viewModelScope.launch {
+            // Re-check the companion install when the paywall opens: a learner may
+            // have installed zaribar since launch, which makes the app free.
+            container.refreshCompanionInstalled()
+            container.companionInstalled.collect { installed ->
+                companionInstalled = installed
+                recomputeAccess()
+            }
+        }
         viewModelScope.launch {
             container.settingsRepository.observeTrialAndSubscription().collect { ts ->
                 trialAndSubscription = ts
@@ -65,9 +80,17 @@ class PaywallViewModel(
         val now = System.currentTimeMillis()
         val elapsed = android.os.SystemClock.elapsedRealtime()
         val remaining = org.token.english.core.billing.TrialClock.remainingMs(ts.trialClockState(), now, elapsed)
+        val entitlement = EntitlementPolicy.entitlement(
+            now = now,
+            trialRemainingMs = remaining,
+            subscriptionUntil = ts.subscriptionUntil,
+            companionAppInstalled = companionInstalled,
+        )
         _state.update {
             it.copy(
-                access = EntitlementPolicy.level(now, remaining, ts.subscriptionUntil),
+                access = entitlement.level,
+                accessReason = entitlement.reason,
+                companionInstalled = companionInstalled,
                 trialRemainingMillis = remaining,
             )
         }
