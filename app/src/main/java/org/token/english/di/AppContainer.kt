@@ -112,10 +112,10 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
     // Audio (on-device TTS — no network needed)
     val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }
 
-    // Free-access companion app (org.token.zaribar): while it is installed the
-    // subscription is free — see CompanionApp. Re-checked on every foreground and
-    // whenever a paywall/home surface opens, so the grant can never outlive the
-    // install that justifies it.
+    // Free-access companion app (org.token.zaribar): while it is installed *and
+    // signed by the expected key* the subscription is free — see CompanionApp.
+    // Re-checked on every foreground and whenever a paywall/home surface opens, so
+    // the grant can never outlive the install that justifies it.
     val companionDetector: org.token.english.core.billing.CompanionDetector by lazy {
         org.token.english.core.billing.PackageManagerCompanionDetector(appContext)
     }
@@ -126,7 +126,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
 
     /** PackageManager lookup; never throws. Cheap enough to re-run on resume. */
     suspend fun refreshCompanionInstalled(): Boolean = withContext(Dispatchers.IO) {
-        val installed = runCatching { companionDetector.isInstalled() }.getOrDefault(false)
+        val installed = runCatching { companionDetector.isTrusted() }.getOrDefault(false)
         _companionInstalled.value = installed
         installed
     }
