@@ -44,6 +44,7 @@ import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
+import org.token.english.domain.model.VocabularyExample
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
@@ -492,7 +493,7 @@ private fun VocabularyEntity.toDomain() = VocabularyItem(
     pronunciation = pronunciation,
     level = runCatching { LearningLevel.valueOf(level) }.getOrDefault(LearningLevel.A1),
     partOfSpeech = partOfSpeech,
-    examples = jsonArrayToList(examplesJson),
+    examples = jsonExamples(examplesJson),
     collocations = jsonArrayToList(collocationsJson),
     lessonId = lessonId,
     explanationFa = explanationFa,
@@ -544,4 +545,23 @@ private fun ReviewAttempt.toEntity() = ReviewAttemptEntity(
 private fun jsonArrayToList(json: String): List<String> = runCatching {
     val arr = org.json.JSONArray(json)
     (0 until arr.length()).map { arr.getString(it) }
+}.getOrDefault(emptyList())
+
+/**
+ * Reads the stored bilingual examples (A-10). The stored array is objects
+ * (`{en, fa}`) as written by [org.token.english.data.content.ContentSeeder], but a
+ * database still holding the legacy `["sentence"]` array must keep loading — the
+ * version-gated re-seed replaces it on the next launch, and until then the
+ * sentence is better shown than dropped.
+ */
+private fun jsonExamples(json: String): List<VocabularyExample> = runCatching {
+    val arr = org.json.JSONArray(json)
+    (0 until arr.length()).mapNotNull { i ->
+        when (val entry = arr.opt(i)) {
+            is org.json.JSONObject -> entry.optString("en").takeIf { it.isNotBlank() }
+                ?.let { VocabularyExample(it, entry.optString("fa")) }
+            is String -> entry.takeIf { it.isNotBlank() }?.let { VocabularyExample(it, "") }
+            else -> null
+        }
+    }
 }.getOrDefault(emptyList())

@@ -286,7 +286,19 @@ tasks.register("validateContent") {
             if (text(word, "word").isEmpty()) report(id, "blank word")
             if (text(word, "translation").isEmpty()) report(id, "blank translation")
             if (text(word, "level") !in levels) report(id, "invalid level \"${text(word, "level")}\"")
-            if (array(word, "examples").isEmpty()) report(id, "no examples")
+            val examples = array(word, "examples")
+            if (examples.size < 2) report(id, "needs at least 2 examples (has ${examples.size})")
+            examples.forEachIndexed { ei, raw ->
+                val example = raw as? Map<*, *>
+                if (example == null) {
+                    report(id, "example[$ei] must be an object {en, fa} — plain strings are the legacy format")
+                    return@forEachIndexed
+                }
+                if (text(example, "en").isEmpty()) report(id, "example[$ei] has no English sentence")
+                val fa = text(example, "fa")
+                if (fa.isEmpty()) report(id, "example[$ei] has no Persian translation")
+                else if (fa.none { it in '\u0600'..'\u06FF' }) report(id, "example[$ei] translation has no Persian characters")
+            }
             val lessonId = text(word, "lessonId")
             if (lessonId.isNotEmpty() && lessonId !in lessonIds) report(id, "lessonId \"$lessonId\" is not a lesson")
             seenWords += "${text(word, "word").lowercase()} @ $lessonId"

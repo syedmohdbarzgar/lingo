@@ -31,3 +31,4 @@ Gradle treats them as up to date otherwise).
 | `p1_tag_placement_skills.mjs` | Authored `skill` on every placement question (P1-1) |
 | `p1_tag_blank_skills.mjs` | Authored `skill` on every fill-in-the-blank (A-2b) |
 | `p1_grammar_topup.mjs` | Grammar practice for the topics the honest blank tagging left short of the six-exercise bar (A-8) |
+| `p1_bilingual_examples.mjs` | Two bilingual {en, fa} example sentences per word; bundle 18 → 19 (A-10) |

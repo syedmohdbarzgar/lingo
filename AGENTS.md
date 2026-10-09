@@ -245,13 +245,23 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 18):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+- **CEFR bundle (contentVersion 19):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
   each), 417 exercises (6–11/lesson + reading items + A1 pronunciation drills), 290
   vocabulary entries (6/lesson, 8 in the numbers lesson), 89 knowledge items,
   placement = 30 questions in six graded bands of 5 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
   Oct 2026): e.g. B1 = 2nd/3rd conditional + reported speech + simple passive; C1 = inversion +
   mixed conditionals + modals in the past; C2 = nuance/precision vocabulary.
+- **Vocabulary depth (A-10, bundle 18 → 19):** every word carries **two** example sentences, each a
+  bilingual object `{"en": …, "fa": …}` authored in `vocabulary.json` (290 words × 2 = 580 English
+  sentences, all with Persian). The shape lives inside the existing `VocabularyEntity.examplesJson`
+  TEXT column — the column type never changed, `ContentParser`/`RepositoriesImpl` accept the legacy
+  plain-string shape, and `ContentSeeder` clear+inserts every row on the version bump — so **no Room
+  schema migration is needed**: Room stays at `version = 5` and `RoomMigrationTest` keeps proving the
+  existing path (a migration would rewrite nothing). `validateContent` and `VocabularyContentTest`
+  both require ≥ 2 examples per word with a non-empty Persian `fa`, and the word-in-example rule is
+  now checked **per example**, not per entry. One-shot batch:
+  `scripts/archive/p1_bilingual_examples.mjs` (never re-run).
 - **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–100 come
   **before** Greetings, so a complete beginner meets letters before words. Three A1 lessons
   (`a1.alphabet.lesson-01`, `a1.spelling.lesson-01`, `a1.numbers.lesson-01`, orders 1–3 with
@@ -371,7 +381,7 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 212 tests / 29 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 213 tests / 29 classes as of
   the P0 + P1-1 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription gating) + `SubscriptionRecoveryTest` (renewal

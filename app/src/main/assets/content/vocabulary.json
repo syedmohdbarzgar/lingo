@@ -1,5 +1,5 @@
 {
-  "contentVersion": 18,
+  "contentVersion": 19,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -10,7 +10,14 @@
       "level": "A1",
       "partOfSpeech": "interjection",
       "examples": [
-        "Hello, how are you?"
+        {
+          "en": "Hello, how are you?",
+          "fa": "سلام، حال شما چطور است؟"
+        },
+        {
+          "en": "Hello, it's great to see you.",
+          "fa": "سلام، دیدنت عالی است!"
+        }
       ],
       "collocations": [
         "hello there",
@@ -28,7 +35,14 @@
       "level": "A1",
       "partOfSpeech": "phrase",
       "examples": [
-        "Good morning, teacher!"
+        {
+          "en": "Good morning, teacher!",
+          "fa": "صبح بخیر، آقای معلم!"
+        },
+        {
+          "en": "I say good morning to my class every day.",
+          "fa": "هر روز به کلاسم صبح بخیر می‌گویم."
+        }
       ],
       "collocations": [
         "say good morning"
@@ -45,7 +59,14 @@
       "level": "A1",
       "partOfSpeech": "phrase",
       "examples": [
-        "Thank you for your help."
+        {
+          "en": "Thank you for your help.",
+          "fa": "از کمکت متشکرم."
+        },
+        {
+          "en": "Thank you for the lovely gift.",
+          "fa": "از هدیهٔ قشنگت ممنونم."
+        }
       ],
       "collocations": [
         "thank you very much"
@@ -62,7 +83,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "Please sit down."
+        {
+          "en": "Please sit down.",
+          "fa": "لطفاً بنشینید."
+        },
+        {
+          "en": "Please close the door on your way out.",
+          "fa": "لطفاً موقع بیرون رفتن در را ببند."
+        }
       ],
       "collocations": [
         "please help me"
@@ -79,7 +107,14 @@
       "level": "A1",
       "partOfSpeech": "interjection",
       "examples": [
-        "Goodbye, see you tomorrow."
+        {
+          "en": "Goodbye, see you tomorrow.",
+          "fa": "خداحافظ، فردا می‌بینمت."
+        },
+        {
+          "en": "She said goodbye and left the office.",
+          "fa": "او خداحافظی کرد و دفتر را ترک کرد."
+        }
       ],
       "collocations": [
         "say goodbye"
@@ -96,7 +131,14 @@
       "level": "A1",
       "partOfSpeech": "phrase",
       "examples": [
-        "Hi, I'm Sara. Nice to meet you."
+        {
+          "en": "Hi, I'm Sara. Nice to meet you.",
+          "fa": "سلام، من سارا هستم. از آشنایی‌تان خوشوقتم."
+        },
+        {
+          "en": "Nice to meet you — I'm Reza.",
+          "fa": "از آشنایی‌تان خوشوقتم — من رضا هستم."
+        }
       ],
       "collocations": [
         "nice to meet you too"
@@ -113,7 +155,14 @@
       "level": "A1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "I wake up at seven."
+        {
+          "en": "I wake up at seven.",
+          "fa": "من ساعت هفت بیدار می‌شوم."
+        },
+        {
+          "en": "Please wake me up at six tomorrow.",
+          "fa": "لطفاً فردا ساعت شش مرا بیدار کن."
+        }
       ],
       "collocations": [
         "wake up early"
@@ -130,7 +179,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "I eat breakfast with my family."
+        {
+          "en": "I eat breakfast with my family.",
+          "fa": "من صبحانه را با خانواده‌ام می‌خورم."
+        },
+        {
+          "en": "We had breakfast at a café.",
+          "fa": "ما در یک کافه صبحانه خوردیم."
+        }
       ],
       "collocations": [
         "have breakfast",
@@ -148,7 +204,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "I usually drink coffee in the morning."
+        {
+          "en": "I usually drink coffee in the morning.",
+          "fa": "من معمولاً صبح‌ها قهوه می‌خورم."
+        },
+        {
+          "en": "He usually walks to work.",
+          "fa": "او معمولاً پیاده به سر کار می‌رود."
+        }
       ],
       "collocations": [
         "usually do",
@@ -166,7 +229,14 @@
       "level": "A1",
       "partOfSpeech": "phrase",
       "examples": [
-        "I take a shower every morning."
+        {
+          "en": "I take a shower every morning.",
+          "fa": "من هر صبح دوش می‌گیرم."
+        },
+        {
+          "en": "I take a shower after the gym.",
+          "fa": "بعد از ورزش دوش می‌گیرم."
+        }
       ],
       "collocations": [
         "take a quick shower"
@@ -183,7 +253,14 @@
       "level": "A1",
       "partOfSpeech": "phrase",
       "examples": [
-        "I go to work by bus."
+        {
+          "en": "I go to work by bus.",
+          "fa": "من با اتوبوس به سر کار می‌روم."
+        },
+        {
+          "en": "It takes an hour to go to work.",
+          "fa": "به سر کار رفتن یک ساعت طول می‌کشد."
+        }
       ],
       "collocations": [
         "go to work early"
@@ -200,7 +277,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "We watch TV in the evening."
+        {
+          "en": "We watch TV in the evening.",
+          "fa": "ما عصرها تلویزیون تماشا می‌کنیم."
+        },
+        {
+          "en": "My parents arrive in the evening.",
+          "fa": "والدینم عصر می‌رسند."
+        }
       ],
       "collocations": [
         "in the evening",
@@ -218,7 +302,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My mother is a teacher."
+        {
+          "en": "My mother is a teacher.",
+          "fa": "مادرم معلم است."
+        },
+        {
+          "en": "My mother calls me every evening.",
+          "fa": "مادرم هر شب به من زنگ می‌زند."
+        }
       ],
       "collocations": [
         "my mother",
@@ -236,7 +327,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My father works at a bank."
+        {
+          "en": "My father works at a bank.",
+          "fa": "پدرم در بانک کار می‌کند."
+        },
+        {
+          "en": "My father cooks dinner on Fridays.",
+          "fa": "پدرم جمعه‌ها شام درست می‌کند."
+        }
       ],
       "collocations": [
         "my father"
@@ -253,7 +351,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "I have one sister."
+        {
+          "en": "I have one sister.",
+          "fa": "من یک خواهر دارم."
+        },
+        {
+          "en": "My sister is younger than me.",
+          "fa": "خواهرم از من کوچک‌تر است."
+        }
       ],
       "collocations": [
         "older sister",
@@ -271,7 +376,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My brother is ten years old."
+        {
+          "en": "My brother is ten years old.",
+          "fa": "برادرم ده ساله است."
+        },
+        {
+          "en": "My brother plays football well.",
+          "fa": "برادرم خوب فوتبال بازی می‌کند."
+        }
       ],
       "collocations": [
         "older brother",
@@ -289,7 +401,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "They have one son."
+        {
+          "en": "They have one son.",
+          "fa": "آن‌ها یک پسر دارند."
+        },
+        {
+          "en": "Their son studies at university.",
+          "fa": "پسرشان در دانشگاه درس می‌خواند."
+        }
       ],
       "collocations": [
         "their son"
@@ -306,7 +425,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Her daughter studies English."
+        {
+          "en": "Her daughter studies English.",
+          "fa": "دخترش انگلیسی می‌خواند."
+        },
+        {
+          "en": "Their daughter is a doctor.",
+          "fa": "دخترشان پزشک است."
+        }
       ],
       "collocations": [
         "their daughter"
@@ -323,7 +449,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Please show me your passport."
+        {
+          "en": "Please show me your passport.",
+          "fa": "لطفاً گذرنامه‌ات را نشانم بده."
+        },
+        {
+          "en": "My passport expires next month.",
+          "fa": "گذرنامه‌ام ماه بعد منقضی می‌شود."
+        }
       ],
       "collocations": [
         "passport control",
@@ -341,7 +474,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Here is my boarding pass."
+        {
+          "en": "Here is my boarding pass.",
+          "fa": "این کارت پرواز من است."
+        },
+        {
+          "en": "Please have your boarding pass ready.",
+          "fa": "لطفاً کارت پروازتان را آماده نگه دارید."
+        }
       ],
       "collocations": [
         "show your boarding pass"
@@ -358,7 +498,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "The flight to Dubai takes three hours."
+        {
+          "en": "The flight to Dubai takes three hours.",
+          "fa": "پرواز به دبی سه ساعت طول می‌کشد."
+        },
+        {
+          "en": "Our flight was delayed by two hours.",
+          "fa": "پرواز ما دو ساعت تأخیر داشت."
+        }
       ],
       "collocations": [
         "flight number",
@@ -376,7 +523,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Gate 12 is over there."
+        {
+          "en": "Gate 12 is over there.",
+          "fa": "گیت ۱۲ آن طرف است."
+        },
+        {
+          "en": "We are boarding at gate five.",
+          "fa": "ما در گیت پنج سوار می‌شویم."
+        }
       ],
       "collocations": [
         "gate number",
@@ -394,7 +548,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I lost my luggage."
+        {
+          "en": "I lost my luggage.",
+          "fa": "چمدم را گم کردم."
+        },
+        {
+          "en": "You can check your luggage at the counter.",
+          "fa": "می‌توانید چمدانتان را پیشخوان تحویل دهید."
+        }
       ],
       "collocations": [
         "luggage cart",
@@ -412,7 +573,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Departure is at 9 p.m."
+        {
+          "en": "Departure is at 9 p.m.",
+          "fa": "حرکت ساعت ۹ شب است."
+        },
+        {
+          "en": "The departure board shows a delay.",
+          "fa": "تابلوی پروازها تأخیر را نشان می‌دهد."
+        }
       ],
       "collocations": [
         "departure time",
@@ -430,7 +598,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Can I see the menu, please?"
+        {
+          "en": "Can I see the menu, please?",
+          "fa": "لطفاً منو را نشانم بدهید؟"
+        },
+        {
+          "en": "The menu has both meat and vegetable dishes.",
+          "fa": "منو هم غذای گوشتی دارد هم سبزیجات."
+        }
       ],
       "collocations": [
         "daily menu",
@@ -448,7 +623,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "The waiter brought the bill."
+        {
+          "en": "The waiter brought the bill.",
+          "fa": "گارسون صورتحساب را آورد."
+        },
+        {
+          "en": "The waiter recommended the soup.",
+          "fa": "گارسون سوپ را پیشنهاد داد."
+        }
       ],
       "collocations": [
         "call the waiter"
@@ -465,7 +647,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "I would like to order chicken."
+        {
+          "en": "I would like to order chicken.",
+          "fa": "می‌خواهم مرغ سفارش بدهم."
+        },
+        {
+          "en": "We ordered two pizzas.",
+          "fa": "ما دو پیتزا سفارش دادیم."
+        }
       ],
       "collocations": [
         "order food",
@@ -483,7 +672,14 @@
       "level": "A2",
       "partOfSpeech": "adjective",
       "examples": [
-        "This soup is delicious."
+        {
+          "en": "This soup is delicious.",
+          "fa": "این سوپ خوشمزه است."
+        },
+        {
+          "en": "The kebab was delicious.",
+          "fa": "کباب خوشمزه بود."
+        }
       ],
       "collocations": [
         "delicious meal",
@@ -501,7 +697,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Can we have the bill, please?"
+        {
+          "en": "Can we have the bill, please?",
+          "fa": "لطفاً صورتحساب را بیاورید؟"
+        },
+        {
+          "en": "I paid the bill with a card.",
+          "fa": "صورتحساب را با کارت پرداخت کردم."
+        }
       ],
       "collocations": [
         "pay the bill",
@@ -519,7 +722,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I have a reservation for two."
+        {
+          "en": "I have a reservation for two.",
+          "fa": "من یک رزرو برای دو نفر دارم."
+        },
+        {
+          "en": "I made a reservation by phone.",
+          "fa": "من با تلفن رزرو کردم."
+        }
       ],
       "collocations": [
         "make a reservation",
@@ -537,7 +747,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The price of this bag is too high."
+        {
+          "en": "The price of this bag is too high.",
+          "fa": "قیمت این کیف خیلی بالاست."
+        },
+        {
+          "en": "The price of tickets goes up every year.",
+          "fa": "قیمت بلیت هر سال بالا می‌رود."
+        }
       ],
       "collocations": [
         "price tag",
@@ -555,7 +772,14 @@
       "level": "A1",
       "partOfSpeech": "adjective",
       "examples": [
-        "These shoes are very cheap."
+        {
+          "en": "These shoes are very cheap.",
+          "fa": "این کفش‌ها خیلی ارزان‌اند."
+        },
+        {
+          "en": "We found a cheap hotel near the station.",
+          "fa": "ما هتل ارزانی نزدیک ایستگاه پیدا کردیم."
+        }
       ],
       "collocations": [
         "cheap price",
@@ -573,7 +797,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "I don't have enough money."
+        {
+          "en": "I don't have enough money.",
+          "fa": "پول کافی ندارم."
+        },
+        {
+          "en": "She saves money for a new laptop.",
+          "fa": "او برای لپ‌تاپ جدید پول پس‌انداز می‌کند."
+        }
       ],
       "collocations": [
         "make money",
@@ -591,7 +822,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Can I pay by card?"
+        {
+          "en": "Can I pay by card?",
+          "fa": "می‌توانم با کارت پرداخت کنم؟"
+        },
+        {
+          "en": "You can pay in cash or by card.",
+          "fa": "می‌توانید نقدی یا با کارت پرداخت کنید."
+        }
       ],
       "collocations": [
         "pay for",
@@ -609,7 +847,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "There is a big discount on shoes today."
+        {
+          "en": "There is a big discount on shoes today.",
+          "fa": "امروز روی کفش‌ها تخفیف بزرگی هست."
+        },
+        {
+          "en": "Students get a ten percent discount.",
+          "fa": "دانشجویان ده درصد تخفیف می‌گیرند."
+        }
       ],
       "collocations": [
         "get a discount",
@@ -627,7 +872,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "I need a kilo of apples."
+        {
+          "en": "I need a kilo of apples.",
+          "fa": "من یک کیلو سیب لازم دارم."
+        },
+        {
+          "en": "This watermelon weighs three kilos.",
+          "fa": "این هندوانه سه کیلو وزن دارد."
+        }
       ],
       "collocations": [
         "a kilo of",
@@ -645,7 +897,14 @@
       "level": "A2",
       "partOfSpeech": "adverb",
       "examples": [
-        "Go straight ahead."
+        {
+          "en": "Go straight ahead.",
+          "fa": "مستقیم بروید."
+        },
+        {
+          "en": "Walk straight and then turn left.",
+          "fa": "مستقیم بروید و بعد بپیچید چپ."
+        }
       ],
       "collocations": [
         "go straight",
@@ -663,7 +922,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "The bank is on the corner."
+        {
+          "en": "The bank is on the corner.",
+          "fa": "بانک سرِ گوشه است."
+        },
+        {
+          "en": "The pharmacy is at the next corner.",
+          "fa": "داروخانه گوشهٔ بعدی است."
+        }
       ],
       "collocations": [
         "turn the corner",
@@ -681,7 +947,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Turn right at the second traffic light."
+        {
+          "en": "Turn right at the second traffic light.",
+          "fa": "سر چراغ دوم بپیچید راست."
+        },
+        {
+          "en": "Wait until the traffic light turns green.",
+          "fa": "صبر کنید تا چراغ سبز شود."
+        }
       ],
       "collocations": [
         "at the traffic light",
@@ -699,7 +972,14 @@
       "level": "A2",
       "partOfSpeech": "preposition",
       "examples": [
-        "The bus stop is opposite the bank."
+        {
+          "en": "The bus stop is opposite the bank.",
+          "fa": "ایستگاه اتوبوس روبروی بانک است."
+        },
+        {
+          "en": "The bakery is opposite our school.",
+          "fa": "نانوایی روبروی مدرسهٔ ماست."
+        }
       ],
       "collocations": [
         "opposite the station",
@@ -717,7 +997,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "It's two blocks from here."
+        {
+          "en": "It's two blocks from here.",
+          "fa": "از اینجا دو خیابان آن‌طرف است."
+        },
+        {
+          "en": "Walk three blocks and you will see the park.",
+          "fa": "سه خیابان بروید پارک را می‌بینید."
+        }
       ],
       "collocations": [
         "around the block",
@@ -735,7 +1022,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Wait at the intersection."
+        {
+          "en": "Wait at the intersection.",
+          "fa": "سر چهارراه صبر کنید."
+        },
+        {
+          "en": "The accident happened at the main intersection.",
+          "fa": "تصادف سر چهارراه اصلی اتفاق افتاد."
+        }
       ],
       "collocations": [
         "at the intersection",
@@ -753,7 +1047,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I have a terrible headache."
+        {
+          "en": "I have a terrible headache.",
+          "fa": "سردرد شدیدی دارم."
+        },
+        {
+          "en": "A headache can be a sign of stress.",
+          "fa": "سردرد می‌تواند نشانهٔ استرس باشد."
+        }
       ],
       "collocations": [
         "have a headache",
@@ -771,7 +1072,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Take your medicine after meals."
+        {
+          "en": "Take your medicine after meals.",
+          "fa": "دارو را بعد از غذا بخور."
+        },
+        {
+          "en": "This medicine may make you sleepy.",
+          "fa": "این دارو ممکن است خواب‌آور باشد."
+        }
       ],
       "collocations": [
         "take medicine",
@@ -789,7 +1097,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "The child has a fever."
+        {
+          "en": "The child has a fever.",
+          "fa": "بچه تب دارد."
+        },
+        {
+          "en": "Stay home if you have a fever.",
+          "fa": "اگر تب داری خانه بمان."
+        }
       ],
       "collocations": [
         "have a fever",
@@ -807,7 +1122,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "You need a prescription for this."
+        {
+          "en": "You need a prescription for this.",
+          "fa": "برای این دارو نسخه لازم دارید."
+        },
+        {
+          "en": "The doctor wrote a prescription for antibiotics.",
+          "fa": "دکتر برای آنتی‌بیوتیک نسخه نوشت."
+        }
       ],
       "collocations": [
         "write a prescription",
@@ -825,7 +1147,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "It took a week to recover."
+        {
+          "en": "It took a week to recover.",
+          "fa": "یک هفته طول کشید تا خوب شوم."
+        },
+        {
+          "en": "Most patients recover within two days.",
+          "fa": "بیشتر بیماران ظرف دو روز خوب می‌شوند."
+        }
       ],
       "collocations": [
         "recover from",
@@ -843,7 +1172,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "There is pain in my back."
+        {
+          "en": "There is pain in my back.",
+          "fa": "کمرم درد می‌کند."
+        },
+        {
+          "en": "Call the doctor if the pain continues.",
+          "fa": "اگر درد ادامه یافت به دکتر زنگ بزنید."
+        }
       ],
       "collocations": [
         "in pain",
@@ -861,7 +1197,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "She built a career in engineering."
+        {
+          "en": "She built a career in engineering.",
+          "fa": "او در مهندسی شغلی برای خود ساخت."
+        },
+        {
+          "en": "Teaching has been her career for twenty years.",
+          "fa": "تدریس بیست سال است شغل اوست."
+        }
       ],
       "collocations": [
         "career change",
@@ -879,7 +1222,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "We have to meet the deadline."
+        {
+          "en": "We have to meet the deadline.",
+          "fa": "باید به مهلت مقرر برسیم."
+        },
+        {
+          "en": "The deadline for applications is Friday.",
+          "fa": "مهلت ارسال درخواست‌ها جمعه است."
+        }
       ],
       "collocations": [
         "meet a deadline",
@@ -897,7 +1247,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "My colleagues are very helpful."
+        {
+          "en": "My colleagues are very helpful.",
+          "fa": "همکارانم خیلی کمک‌کارند."
+        },
+        {
+          "en": "I had lunch with a colleague.",
+          "fa": "با یک همکار ناهار خوردم."
+        }
       ],
       "collocations": [
         "former colleague",
@@ -915,7 +1272,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "I applied for the position last week."
+        {
+          "en": "I applied for the position last week.",
+          "fa": "هفتهٔ پیش برای این موقعیت درخواست دادم."
+        },
+        {
+          "en": "They apply for a visa before travelling.",
+          "fa": "آن‌ها قبل از سفر برای ویزا درخواست می‌دهند."
+        }
       ],
       "collocations": [
         "apply for",
@@ -933,7 +1297,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The salary is paid monthly."
+        {
+          "en": "The salary is paid monthly.",
+          "fa": "حقوق ماهانه پرداخت می‌شود."
+        },
+        {
+          "en": "She asked for a higher salary.",
+          "fa": "او حقوق بالاتری خواست."
+        }
       ],
       "collocations": [
         "annual salary",
@@ -951,7 +1322,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "You need the right qualifications for this role."
+        {
+          "en": "You need the right qualifications for this role.",
+          "fa": "برای این نقش صلاحیت‌های لازم را باید داشته باشید."
+        },
+        {
+          "en": "A degree is not the only qualification.",
+          "fa": "مدرک تحصیلی تنها صلاحیت نیست."
+        }
       ],
       "collocations": [
         "gain a qualification",
@@ -969,7 +1347,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The story made headlines worldwide."
+        {
+          "en": "The story made headlines worldwide.",
+          "fa": "این خبر در سراسر جهان تیتر شد."
+        },
+        {
+          "en": "The headline oversimplified the facts.",
+          "fa": "تیتر، واقعیت‌ها را ساده‌تر از آنچه بود نشان داد."
+        }
       ],
       "collocations": [
         "front-page headline",
@@ -987,7 +1372,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The report was published this morning."
+        {
+          "en": "The report was published this morning.",
+          "fa": "گزارش امروز صبح منتشر شد."
+        },
+        {
+          "en": "The report recommends two main changes.",
+          "fa": "گزارش دو تغییر اصلی را پیشنهاد می‌کند."
+        }
       ],
       "collocations": [
         "news report",
@@ -1005,7 +1397,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The newspaper cited an anonymous source."
+        {
+          "en": "The newspaper cited an anonymous source.",
+          "fa": "روزنامه به منبعی بی‌نام استناد کرد."
+        },
+        {
+          "en": "Scientists check every source of the data.",
+          "fa": "دانشمندان هر منبع داده را بررسی می‌کنند."
+        }
       ],
       "collocations": [
         "source of information",
@@ -1023,7 +1422,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "The company announced a new product."
+        {
+          "en": "The company announced a new product.",
+          "fa": "شرکت محصول جدیدی معرفی کرد."
+        },
+        {
+          "en": "The school announced the results online.",
+          "fa": "مدرسه نتایج را آنلاین اعلام کرد."
+        }
       ],
       "collocations": [
         "announce a decision",
@@ -1041,7 +1447,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The journalist interviewed the mayor."
+        {
+          "en": "The journalist interviewed the mayor.",
+          "fa": "روزنامه‌نگار با شهردار مصاحبه کرد."
+        },
+        {
+          "en": "The journalist won a prize for her article.",
+          "fa": "روزنامه‌نگار برای مقاله‌اش جایزه گرفت."
+        }
       ],
       "collocations": [
         "investigative journalist",
@@ -1059,7 +1472,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "The match is broadcast live."
+        {
+          "en": "The match is broadcast live.",
+          "fa": "بازی به‌صورت زنده پخش می‌شود."
+        },
+        {
+          "en": "The news is broadcast at nine every night.",
+          "fa": "خبر هر شب ساعت نه پخش می‌شود."
+        }
       ],
       "collocations": [
         "broadcast live",
@@ -1077,7 +1497,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "We decided to travel by train."
+        {
+          "en": "We decided to travel by train.",
+          "fa": "تصمیم گرفتیم با قطار سفر کنیم."
+        },
+        {
+          "en": "I can't decide between the two options.",
+          "fa": "نمی‌توانم بین دو گزینه تصمیم بگیرم."
+        }
       ],
       "collocations": [
         "decide on",
@@ -1095,7 +1522,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "I intend to finish by Friday."
+        {
+          "en": "I intend to finish by Friday.",
+          "fa": "قصد دارم تا جمعه تمام کنم."
+        },
+        {
+          "en": "They intend to move abroad next year.",
+          "fa": "قصد دارند سال آینده به خارج بروند."
+        }
       ],
       "collocations": [
         "intend to",
@@ -1113,7 +1547,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The train is on schedule."
+        {
+          "en": "The train is on schedule.",
+          "fa": "قطار سرِ وقت است."
+        },
+        {
+          "en": "My schedule is full on Monday.",
+          "fa": "برنامهٔ من دوشنبه پر است."
+        }
       ],
       "collocations": [
         "behind schedule",
@@ -1131,7 +1572,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "We can't afford a new car."
+        {
+          "en": "We can't afford a new car.",
+          "fa": "ما توان خرید ماشین جدید را نداریم."
+        },
+        {
+          "en": "We cannot afford to lose this client.",
+          "fa": "نمی‌توانیم این مشتری را از دست بدهیم."
+        }
       ],
       "collocations": [
         "can't afford",
@@ -1149,7 +1597,14 @@
       "level": "B1",
       "partOfSpeech": "adverb",
       "examples": [
-        "It will probably rain tomorrow."
+        {
+          "en": "It will probably rain tomorrow.",
+          "fa": "احتمالاً فردا باران می‌آید."
+        },
+        {
+          "en": "He is probably at home by now.",
+          "fa": "احتمالاً الان خانه است."
+        }
       ],
       "collocations": [
         "probably not",
@@ -1167,7 +1622,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "We have two options: bus or train."
+        {
+          "en": "We have two options: bus or train.",
+          "fa": "دو گزینه داریم: اتوبوس یا قطار."
+        },
+        {
+          "en": "The basic option includes breakfast.",
+          "fa": "گزینهٔ پایه صبحانه دارد."
+        }
       ],
       "collocations": [
         "keep your options open",
@@ -1185,7 +1647,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "The journey took six hours."
+        {
+          "en": "The journey took six hours.",
+          "fa": "سفر شش ساعت طول کشید."
+        },
+        {
+          "en": "The journey home was quiet.",
+          "fa": "سفر برگشت آرام بود."
+        }
       ],
       "collocations": [
         "long journey",
@@ -1203,7 +1672,14 @@
       "level": "B1",
       "partOfSpeech": "adjective",
       "examples": [
-        "It was a memorable trip."
+        {
+          "en": "It was a memorable trip.",
+          "fa": "سفر به‌یادماندنی‌ای بود."
+        },
+        {
+          "en": "The wedding night was memorable for everyone.",
+          "fa": "شب عروسی برای همه به‌یادماندنی بود."
+        }
       ],
       "collocations": [
         "memorable moment",
@@ -1221,7 +1697,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "I bought a souvenir from the old town."
+        {
+          "en": "I bought a souvenir from the old town.",
+          "fa": "از شهر قدیمی یک سوغاتی خریدم."
+        },
+        {
+          "en": "She brought souvenirs for her colleagues.",
+          "fa": "او برای همکارانش سوغاتی آورد."
+        }
       ],
       "collocations": [
         "souvenir shop",
@@ -1239,7 +1722,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "We explored the old city on foot."
+        {
+          "en": "We explored the old city on foot.",
+          "fa": "شهر قدیمی را پیاده گشتیم."
+        },
+        {
+          "en": "The children explore every corner of the park.",
+          "fa": "بچه‌ها هر گوشهٔ پارک را کشف می‌کنند."
+        }
       ],
       "collocations": [
         "explore the area",
@@ -1257,7 +1747,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Hiking in the mountains was a real adventure."
+        {
+          "en": "Hiking in the mountains was a real adventure.",
+          "fa": "کوه‌نوردی ماجراجویی واقعی بود."
+        },
+        {
+          "en": "Losing our train turned into an adventure.",
+          "fa": "جا ماندن از قطار تبدیل به یک ماجرا شد."
+        }
       ],
       "collocations": [
         "go on an adventure",
@@ -1275,7 +1772,14 @@
       "level": "B1",
       "partOfSpeech": "adverb",
       "examples": [
-        "She studied abroad for a year."
+        {
+          "en": "She studied abroad for a year.",
+          "fa": "او یک سال در خارج درس خواند."
+        },
+        {
+          "en": "He works abroad for six months a year.",
+          "fa": "او شش ماه از سال در خارج کار می‌کند."
+        }
       ],
       "collocations": [
         "live abroad",
@@ -1293,7 +1797,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Digital innovation has changed banking."
+        {
+          "en": "Digital innovation has changed banking.",
+          "fa": "نوآوری دیجیتال بانکداری را تغییر داده است."
+        },
+        {
+          "en": "This company funds innovation in health care.",
+          "fa": "این شرکت در نوآوری درمانی سرمایه‌گذاری می‌کند."
+        }
       ],
       "collocations": [
         "drive innovation",
@@ -1311,7 +1822,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Old phones become obsolete quickly."
+        {
+          "en": "Old phones become obsolete quickly.",
+          "fa": "گوشی‌های قدیمی زود از رده خارج می‌شوند."
+        },
+        {
+          "en": "Many skills become obsolete within a decade.",
+          "fa": "بسیاری از مهارت‌ها ظرف یک دهه قدیمی می‌شوند."
+        }
       ],
       "collocations": [
         "become obsolete",
@@ -1329,7 +1847,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The app raises serious privacy concerns."
+        {
+          "en": "The app raises serious privacy concerns.",
+          "fa": "این برنامه نگرانی‌های جدی دربارهٔ حریم خصوصی ایجاد می‌کند."
+        },
+        {
+          "en": "The new law strengthens online privacy.",
+          "fa": "قانون جدید حریم خصوصی آنلاین را تقویت می‌کند."
+        }
       ],
       "collocations": [
         "privacy policy",
@@ -1347,7 +1872,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The algorithm recommends videos."
+        {
+          "en": "The algorithm recommends videos.",
+          "fa": "الگوریتم ویدیوها را پیشنهاد می‌کند."
+        },
+        {
+          "en": "The algorithm sorts the results by relevance.",
+          "fa": "الگوریتم نتایج را بر اساس ارتباط مرتب می‌کند."
+        }
       ],
       "collocations": [
         "search algorithm",
@@ -1365,7 +1897,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The device was invented last year."
+        {
+          "en": "The device was invented last year.",
+          "fa": "این وسیله سال پیش اختراع شد."
+        },
+        {
+          "en": "This device measures your heart rate.",
+          "fa": "این دستگاه ضربان قلبتان را اندازه می‌گیرد."
+        }
       ],
       "collocations": [
         "mobile device",
@@ -1383,7 +1922,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Artificial intelligence is everywhere now."
+        {
+          "en": "Artificial intelligence is everywhere now.",
+          "fa": "هوش مصنوعی اکنون همه‌جا هست."
+        },
+        {
+          "en": "The park has artificial flowers in winter.",
+          "fa": "پارک زمستان‌ها گل‌های مصنوعی دارد."
+        }
       ],
       "collocations": [
         "artificial intelligence",
@@ -1401,7 +1947,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Air pollution is a major health risk."
+        {
+          "en": "Air pollution is a major health risk.",
+          "fa": "آلودگی هوا خطر بزرگ سلامتی است."
+        },
+        {
+          "en": "The city fights noise pollution with new rules.",
+          "fa": "شهر با قوانین جدید علیه آلودگی صوتی می‌جنگد."
+        }
       ],
       "collocations": [
         "air pollution",
@@ -1419,7 +1972,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "We need sustainable energy sources."
+        {
+          "en": "We need sustainable energy sources.",
+          "fa": "به منابع انرژی پایدار نیاز داریم."
+        },
+        {
+          "en": "The city invests in sustainable transport.",
+          "fa": "شهر در حمل‌ونقل پایدار سرمایه‌گذاری می‌کند."
+        }
       ],
       "collocations": [
         "sustainable development",
@@ -1437,7 +1997,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The country pledged to cut carbon emissions."
+        {
+          "en": "The country pledged to cut carbon emissions.",
+          "fa": "کشور متعهد شد انتشار کربن را کاهش دهد."
+        },
+        {
+          "en": "Car emission limits are getting stricter.",
+          "fa": "محدودیت‌های انتشار خودرو سخت‌گیرانه‌تر می‌شود."
+        }
       ],
       "collocations": [
         "carbon emissions",
@@ -1455,7 +2022,14 @@
       "level": "B2",
       "partOfSpeech": "verb",
       "examples": [
-        "We must conserve water during the drought."
+        {
+          "en": "We must conserve water during the drought.",
+          "fa": "در خشکسالی باید آب را صرفه‌جویی کنیم."
+        },
+        {
+          "en": "Efforts to conserve energy lower the bill.",
+          "fa": "تلاش برای صرفه‌جویی در انرژی هزینه را پایین می‌آورد."
+        }
       ],
       "collocations": [
         "conserve energy",
@@ -1473,7 +2047,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Flooding is a hazard in this region."
+        {
+          "en": "Flooding is a hazard in this region.",
+          "fa": "سیل در این منطقه خطر است."
+        },
+        {
+          "en": "Wet floors are a hazard in kitchens.",
+          "fa": "کف خیس در آشپزخانه خطرناک است."
+        }
       ],
       "collocations": [
         "health hazard",
@@ -1491,7 +2072,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Renewable energy is growing fast."
+        {
+          "en": "Renewable energy is growing fast.",
+          "fa": "انرژی تجدیدپذیر سریع در حال رشد است."
+        },
+        {
+          "en": "Renewable sources now power the whole island.",
+          "fa": "منابع تجدیدپذیر اکنون کل جزیره را تأمین می‌کنند."
+        }
       ],
       "collocations": [
         "renewable energy",
@@ -1509,7 +2097,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Twenty candidates applied for the role."
+        {
+          "en": "Twenty candidates applied for the role.",
+          "fa": "بیست نامزد برای این موقعیت درخواست دادند."
+        },
+        {
+          "en": "Every candidate had a ten-minute interview.",
+          "fa": "هر نامزد مصاحبهٔ ده‌دقیقه‌ای داشت."
+        }
       ],
       "collocations": [
         "ideal candidate",
@@ -1527,7 +2122,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Teamwork is my greatest strength."
+        {
+          "en": "Teamwork is my greatest strength.",
+          "fa": "کار تیمی بزرگ‌ترین نقطهٔ قوت من است."
+        },
+        {
+          "en": "Patience is her main strength with children.",
+          "fa": "صبوری نقطهٔ قوت اصلی او با بچه‌هاست."
+        }
       ],
       "collocations": [
         "personal strengths",
@@ -1545,7 +2147,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "She has ten years of experience."
+        {
+          "en": "She has ten years of experience.",
+          "fa": "او ده سال تجربه دارد."
+        },
+        {
+          "en": "The job requires experience with computers.",
+          "fa": "این کار تجربه با کامپیوتر می‌خواهد."
+        }
       ],
       "collocations": [
         "work experience",
@@ -1563,7 +2172,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Getting the degree was a real achievement."
+        {
+          "en": "Getting the degree was a real achievement.",
+          "fa": "گرفتن مدرک دستاورد واقعی‌ای بود."
+        },
+        {
+          "en": "Finishing the marathon was an achievement.",
+          "fa": "تمام کردن ماراتن یک دستاورد بود."
+        }
       ],
       "collocations": [
         "sense of achievement",
@@ -1581,7 +2197,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "I was responsible for training new staff."
+        {
+          "en": "I was responsible for training new staff.",
+          "fa": "من مسئول آموزش کارکنان جدید بودم."
+        },
+        {
+          "en": "She is responsible for the budget.",
+          "fa": "او مسئول بودجه است."
+        }
       ],
       "collocations": [
         "responsible for",
@@ -1599,7 +2222,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Only experienced candidates are eligible."
+        {
+          "en": "Only experienced candidates are eligible.",
+          "fa": "فقط نامزدهای باتجربه واجد شرایط‌اند."
+        },
+        {
+          "en": "Under-sixteens are not eligible for the discount.",
+          "fa": "کمتر از شانزده سال برای تخفیف واجد شرایط نیستند."
+        }
       ],
       "collocations": [
         "eligible for",
@@ -1617,7 +2247,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Advertising influences what we buy."
+        {
+          "en": "Advertising influences what we buy.",
+          "fa": "تبلیغات بر خرید ما تأثیر می‌گذارد."
+        },
+        {
+          "en": "Advertising on television is very expensive.",
+          "fa": "تبلیغات تلویزیونی خیلی گران است."
+        }
       ],
       "collocations": [
         "advertising campaign",
@@ -1635,7 +2272,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The show has a huge audience."
+        {
+          "en": "The show has a huge audience.",
+          "fa": "این برنامه مخاطب زیادی دارد."
+        },
+        {
+          "en": "The audience clapped at the end.",
+          "fa": "تماشاگران در پایان تشویق کردند."
+        }
       ],
       "collocations": [
         "target audience",
@@ -1653,7 +2297,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The advertising campaign was a success."
+        {
+          "en": "The advertising campaign was a success.",
+          "fa": "کمپین تبلیغاتی موفق بود."
+        },
+        {
+          "en": "The health campaign reached two million people.",
+          "fa": "کمپین سلامت به دو میلیون نفر رسید."
+        }
       ],
       "collocations": [
         "marketing campaign",
@@ -1671,7 +2322,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "Readers accused the paper of bias."
+        {
+          "en": "Readers accused the paper of bias.",
+          "fa": "خوانندگان روزنامه را به جانبداری متهم کردند."
+        },
+        {
+          "en": "The newspaper shows a clear bias towards big business.",
+          "fa": "روزنامه جانبداری آشکاری از شرکت‌های بزرگ دارد."
+        }
       ],
       "collocations": [
         "political bias",
@@ -1689,7 +2347,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The brand's slogan is now famous."
+        {
+          "en": "The brand's slogan is now famous.",
+          "fa": "شعار برند اکنون معروف است."
+        },
+        {
+          "en": "Can you remember the slogan of the campaign?",
+          "fa": "می‌توانید شعار کمپین را به یاد بیاورید؟"
+        }
       ],
       "collocations": [
         "catchy slogan",
@@ -1707,7 +2372,14 @@
       "level": "B2",
       "partOfSpeech": "verb",
       "examples": [
-        "Social media influences young voters."
+        {
+          "en": "Social media influences young voters.",
+          "fa": "شبکه‌های اجتماعی بر رأی‌دهندگان جوان تأثیر می‌گذارند."
+        },
+        {
+          "en": "Her teacher influenced her career choice.",
+          "fa": "معلمش بر انتخاب شغل او تأثیر گذاشت."
+        }
       ],
       "collocations": [
         "strongly influence",
@@ -1725,7 +2397,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The data support our hypothesis."
+        {
+          "en": "The data support our hypothesis.",
+          "fa": "داده‌ها از فرضیهٔ ما حمایت می‌کنند."
+        },
+        {
+          "en": "The experiment proved the hypothesis wrong.",
+          "fa": "آزمایش نشان داد فرضیه غلط است."
+        }
       ],
       "collocations": [
         "test a hypothesis",
@@ -1743,7 +2422,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The paper explains its methodology in detail."
+        {
+          "en": "The paper explains its methodology in detail.",
+          "fa": "مقاله روش‌شناسی خود را با جزئیات شرح می‌دهد."
+        },
+        {
+          "en": "Critics questioned the methodology of the study.",
+          "fa": "منتقدان روش‌شناسی این پژوهش را زیر سؤال بردند."
+        }
       ],
       "collocations": [
         "research methodology",
@@ -1761,7 +2447,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "There is little evidence for the claim."
+        {
+          "en": "There is little evidence for the claim.",
+          "fa": "برای این ادعا شواهد اندکی هست."
+        },
+        {
+          "en": "The police found new evidence at the scene.",
+          "fa": "پلیس در صحنه شواهد جدیدی پیدا کرد."
+        }
       ],
       "collocations": [
         "compelling evidence",
@@ -1779,7 +2472,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "The study cites earlier research."
+        {
+          "en": "The study cites earlier research.",
+          "fa": "این پژوهش به تحقیقات قبلی استناد می‌کند."
+        },
+        {
+          "en": "You must cite every source you use.",
+          "fa": "باید به هر منبعی که استفاده می‌کنید استناد کنید."
+        }
       ],
       "collocations": [
         "cite a source",
@@ -1797,7 +2497,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The equation uses standard notation."
+        {
+          "en": "The equation uses standard notation.",
+          "fa": "این معادله از نمادهای استاندارد استفاده می‌کند."
+        },
+        {
+          "en": "The notation in chapter two is unfamiliar.",
+          "fa": "نمادهای فصل دو آشنا نیستند."
+        }
       ],
       "collocations": [
         "mathematical notation",
@@ -1815,7 +2522,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "The study received substantial funding."
+        {
+          "en": "The study received substantial funding.",
+          "fa": "این پژوهش بودجهٔ قابل توجهی گرفت."
+        },
+        {
+          "en": "The bridge needed substantial repairs.",
+          "fa": "پل به تعمیرات قابل توجهی نیاز داشت."
+        }
       ],
       "collocations": [
         "substantial increase",
@@ -1833,7 +2547,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "She anticipated every counterargument."
+        {
+          "en": "She anticipated every counterargument.",
+          "fa": "او هر اعتراض مخالفی را پیش‌بینی کرد."
+        },
+        {
+          "en": "A good essay answers the strongest counterargument.",
+          "fa": "مقالهٔ خوب قوی‌ترین استدلال مخالف را پاسخ می‌دهد."
+        }
       ],
       "collocations": [
         "strong counterargument",
@@ -1851,7 +2572,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "He made a persuasive case for reform."
+        {
+          "en": "He made a persuasive case for reform.",
+          "fa": "او استدلال قانع‌کننده‌ای برای اصلاحات ارائه داد."
+        },
+        {
+          "en": "Her speech was persuasive but short.",
+          "fa": "سخنرانی او قانع‌کننده اما کوتاه بود."
+        }
       ],
       "collocations": [
         "persuasive argument",
@@ -1869,7 +2597,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "His main contention is that costs will rise."
+        {
+          "en": "His main contention is that costs will rise.",
+          "fa": "استدلال اصلی او این است که هزینه‌ها بالا می‌رود."
+        },
+        {
+          "en": "That is only a contention, not a proven fact.",
+          "fa": "این فقط یک ادعاست، نه واقعیتِ اثبات‌شده."
+        }
       ],
       "collocations": [
         "central contention",
@@ -1887,7 +2622,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "The scandal undermined public trust."
+        {
+          "en": "The scandal undermined public trust.",
+          "fa": "این رسوایی اعتماد عمومی را تخریب کرد."
+        },
+        {
+          "en": "Late replies undermine your credibility.",
+          "fa": "پاسخ‌های دیر هم اعتبار شما را تضعیف می‌کند."
+        }
       ],
       "collocations": [
         "undermine confidence",
@@ -1905,7 +2647,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "He had to concede that she was right."
+        {
+          "en": "He had to concede that she was right.",
+          "fa": "ناچار قبول کرد که او درست می‌گوید."
+        },
+        {
+          "en": "The company conceded the mistake after the audit.",
+          "fa": "شرکت پس از حسابرسی اشتباه را پذیرفت."
+        }
       ],
       "collocations": [
         "concede a point",
@@ -1923,7 +2672,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "Behind the rhetoric there were few facts."
+        {
+          "en": "Behind the rhetoric there were few facts.",
+          "fa": "پشت شعارهای پرطمطراق واقعیت‌های اندکی بود."
+        },
+        {
+          "en": "The minister's rhetoric impressed the crowd.",
+          "fa": "سخنرانی پرطمطراق وزیر جمعیت را تحت تأثیر قرار داد."
+        }
       ],
       "collocations": [
         "political rhetoric",
@@ -1941,7 +2697,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "The film has a cinematic feel."
+        {
+          "en": "The film has a cinematic feel.",
+          "fa": "فیلم حس سینمایی دارد."
+        },
+        {
+          "en": "The desert scenes are truly cinematic.",
+          "fa": "صحنه‌های بیابان واقعاً سینمایی‌اند."
+        }
       ],
       "collocations": [
         "cinematic style",
@@ -1959,7 +2722,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "I watched it with English subtitles."
+        {
+          "en": "I watched it with English subtitles.",
+          "fa": "من با زیرنویس انگلیسی تماشا کردم."
+        },
+        {
+          "en": "The film needs better Persian subtitles.",
+          "fa": "این فیلم زیرنویس فارسی بهتری می‌خواهد."
+        }
       ],
       "collocations": [
         "english subtitles",
@@ -1977,7 +2747,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The film's portrayal of war is realistic."
+        {
+          "en": "The film's portrayal of war is realistic.",
+          "fa": "نحوهٔ نمایش جنگ در فیلم واقع‌گرایانه است."
+        },
+        {
+          "en": "Critics praised the portrayal of the teacher.",
+          "fa": "منتقدان نحوهٔ نشان دادن معلم را تحسین کردند."
+        }
       ],
       "collocations": [
         "realistic portrayal",
@@ -1995,7 +2772,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The characters avoid every stereotype."
+        {
+          "en": "The characters avoid every stereotype.",
+          "fa": "شخصیت‌ها از همهٔ کلیشه‌ها دوری می‌کنند."
+        },
+        {
+          "en": "The film breaks the stereotype of the villain.",
+          "fa": "فیلم کلیشهٔ شخصیت شرور را می‌شکند."
+        }
       ],
       "collocations": [
         "gender stereotype",
@@ -2013,7 +2797,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The director won an award for this film."
+        {
+          "en": "The director won an award for this film.",
+          "fa": "کارگردان برای این فیلم جایزه گرفت."
+        },
+        {
+          "en": "The director asked for a second take.",
+          "fa": "کارگردان یک برداشت دیگر خواست."
+        }
       ],
       "collocations": [
         "film director",
@@ -2031,7 +2822,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The film follows a non-linear narrative."
+        {
+          "en": "The film follows a non-linear narrative.",
+          "fa": "فیلم روایتی غیرخطی دارد."
+        },
+        {
+          "en": "The narrative shifts between two timelines.",
+          "fa": "روایت بین دو خط زمانی جابه‌جا می‌شود."
+        }
       ],
       "collocations": [
         "main narrative",
@@ -2049,7 +2847,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "She gave up smoking last year."
+        {
+          "en": "She gave up smoking last year.",
+          "fa": "او سال پیش سیگار را ترک کرد."
+        },
+        {
+          "en": "Don't give up before the finish line.",
+          "fa": "تا خط پایان تسلیم نشو."
+        }
       ],
       "collocations": [
         "give up on",
@@ -2067,7 +2872,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "They put the meeting off until Friday."
+        {
+          "en": "They put the meeting off until Friday.",
+          "fa": "آن‌ها جلسه را تا جمعه عقب انداختند."
+        },
+        {
+          "en": "Don't put off your homework until tonight.",
+          "fa": "کارهایت را به امشب موکول نکن."
+        }
       ],
       "collocations": [
         "put off until",
@@ -2085,7 +2897,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "I came across an old photo yesterday."
+        {
+          "en": "I came across an old photo yesterday.",
+          "fa": "دیروز به‌طور اتفاقی به یک عکس قدیمی برخوردم."
+        },
+        {
+          "en": "I came across a useful article this morning.",
+          "fa": "صبح اتفاقی یک مقالهٔ مفید پیدا کردم."
+        }
       ],
       "collocations": [
         "come across as",
@@ -2103,7 +2922,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "He thought he could get away with lying."
+        {
+          "en": "He thought he could get away with lying.",
+          "fa": "فکر می‌کرد می‌تواند با دروغ‌گویی فرار کند."
+        },
+        {
+          "en": "You can't get away with cheating in this class.",
+          "fa": "در این کلاس نمی‌توانی با تقلب فرار کنی."
+        }
       ],
       "collocations": [
         "get away with murder",
@@ -2121,7 +2947,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "We ran out of milk this morning."
+        {
+          "en": "We ran out of milk this morning.",
+          "fa": "صبح شیرمان تمام شد."
+        },
+        {
+          "en": "We are running out of time.",
+          "fa": "وقتمان دارد تمام می‌شود."
+        }
       ],
       "collocations": [
         "run out of time",
@@ -2139,7 +2972,14 @@
       "level": "C1",
       "partOfSpeech": "phrasal verb",
       "examples": [
-        "Don't bring up politics at dinner."
+        {
+          "en": "Don't bring up politics at dinner.",
+          "fa": "سر شام سیاست را پیش نکش."
+        },
+        {
+          "en": "He never brings up his past at parties.",
+          "fa": "او هرگز گذشته‌اش را در مهمانی‌ها پیش نمی‌کشد."
+        }
       ],
       "collocations": [
         "bring up a topic",
@@ -2157,7 +2997,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Her reply was deliberately ambiguous."
+        {
+          "en": "Her reply was deliberately ambiguous.",
+          "fa": "پاسخ او عمداً مبهم بود."
+        },
+        {
+          "en": "The wording of the contract is ambiguous.",
+          "fa": "متن قرارداد مبهم است."
+        }
       ],
       "collocations": [
         "deeply ambiguous",
@@ -2175,7 +3022,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "There is a subtle difference between the two words."
+        {
+          "en": "There is a subtle difference between the two words.",
+          "fa": "بین این دو کلمه تفاوت ظریفی هست."
+        },
+        {
+          "en": "He gave a subtle hint about the price.",
+          "fa": "او اشارهٔ ظریفی دربارهٔ قیمت کرد."
+        }
       ],
       "collocations": [
         "subtle difference",
@@ -2193,7 +3047,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The word carries a negative connotation."
+        {
+          "en": "The word carries a negative connotation.",
+          "fa": "این کلمه بار منفی دارد."
+        },
+        {
+          "en": "A lion can have a positive connotation.",
+          "fa": "واژهٔ شیر می‌تواند بار مثبت داشته باشد."
+        }
       ],
       "collocations": [
         "negative connotation",
@@ -2211,7 +3072,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The instructions were frustratingly vague."
+        {
+          "en": "The instructions were frustratingly vague.",
+          "fa": "دستورالعمل‌ها به‌طرز ناامیدکننده‌ای مبهم بودند."
+        },
+        {
+          "en": "His answer was too vague to be useful.",
+          "fa": "پاسخ او بیش از حد مبهم بود."
+        }
       ],
       "collocations": [
         "vague idea",
@@ -2229,7 +3097,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The distinction between the two proposals is significant."
+        {
+          "en": "The distinction between the two proposals is significant.",
+          "fa": "تفاوت بین دو پیشنهاد قابل توجه است."
+        },
+        {
+          "en": "The law makes a clear distinction between the two cases.",
+          "fa": "قانون بین دو حالت تمایز روشنی قائل است."
+        }
       ],
       "collocations": [
         "draw a distinction",
@@ -2247,7 +3122,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "The report implies that costs will rise."
+        {
+          "en": "The report implies that costs will rise.",
+          "fa": "گزارش دلالت بر افزایش هزینه‌ها دارد."
+        },
+        {
+          "en": "What do you imply by that comment?",
+          "fa": "با آن نظر چه منظوری داری؟"
+        }
       ],
       "collocations": [
         "strongly imply",
@@ -2265,7 +3147,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "He impressed the jury with his eloquence."
+        {
+          "en": "He impressed the jury with his eloquence.",
+          "fa": "او با فصاحت هیئت منصفه را تحت تأثیر قرار داد."
+        },
+        {
+          "en": "Her eloquence won the debate for the team.",
+          "fa": "فصاحت او مناظره را برای تیمش برد."
+        }
       ],
       "collocations": [
         "gift for eloquence",
@@ -2283,7 +3172,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "Nobody could refute her logic."
+        {
+          "en": "Nobody could refute her logic.",
+          "fa": "هیچ‌کس نتوانست منطق او را رد کند."
+        },
+        {
+          "en": "The data refute that theory.",
+          "fa": "داده‌ها آن نظریه را رد می‌کنند."
+        }
       ],
       "collocations": [
         "refute a claim",
@@ -2301,7 +3197,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The essay is praised for its concision."
+        {
+          "en": "The essay is praised for its concision.",
+          "fa": "از مقاله به خاطر ایجازش تقدیر شده است."
+        },
+        {
+          "en": "Good reports are known for their concision.",
+          "fa": "گزارش‌های خوب به ایجازشان شناخته می‌شوند."
+        }
       ],
       "collocations": [
         "elegant concision",
@@ -2319,7 +3222,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The irony of the ending escaped him."
+        {
+          "en": "The irony of the ending escaped him.",
+          "fa": "طنز تلخ پایان‌بندی از او پنهان ماند."
+        },
+        {
+          "en": "She didn't notice the irony in his reply.",
+          "fa": "او طنز پاسخ او را متوجه نشد."
+        }
       ],
       "collocations": [
         "deep irony",
@@ -2337,7 +3247,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "His arrogance annoyed the whole team."
+        {
+          "en": "His arrogance annoyed the whole team.",
+          "fa": "غرور و خودبینی او کل تیم را آزار داد."
+        },
+        {
+          "en": "The manager's arrogance cost the company its clients.",
+          "fa": "غرور مدیر باعث شد شرکت مشتریانش را از دست بدهد."
+        }
       ],
       "collocations": [
         "sheer arrogance",
@@ -2355,7 +3272,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "She persuaded the committee to change its vote."
+        {
+          "en": "She persuaded the committee to change its vote.",
+          "fa": "او کمیته را متقاعد کرد رأی‌اش را عوض کند."
+        },
+        {
+          "en": "Can you persuade your father to agree?",
+          "fa": "می‌توانی پدرت را راضی کنی موافقت کند؟"
+        }
       ],
       "collocations": [
         "persuade someone to",
@@ -2373,7 +3297,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The claim lacks empirical support."
+        {
+          "en": "The claim lacks empirical support.",
+          "fa": "این ادعا فاقد پشتوانهٔ تجربی است."
+        },
+        {
+          "en": "The theory needs empirical evidence.",
+          "fa": "این نظریه به شواهد تجربی نیاز دارد."
+        }
       ],
       "collocations": [
         "empirical evidence",
@@ -2391,7 +3322,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "The results corroborate the initial hypothesis."
+        {
+          "en": "The results corroborate the initial hypothesis.",
+          "fa": "نتایج فرضیهٔ اولیه را تأیید می‌کنند."
+        },
+        {
+          "en": "Two witnesses corroborated his story.",
+          "fa": "دو شاهد روایت او را تأیید کردند."
+        }
       ],
       "collocations": [
         "corroborate evidence",
@@ -2409,7 +3347,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "There has been much speculation about the cause."
+        {
+          "en": "There has been much speculation about the cause.",
+          "fa": "گمانه‌زنی‌های زیادی دربارهٔ علت شده است."
+        },
+        {
+          "en": "Speculation about the merger drove the shares up.",
+          "fa": "گمانه‌زنی دربارهٔ ادغام سهام را بالا برد."
+        }
       ],
       "collocations": [
         "widespread speculation",
@@ -2427,7 +3372,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Temperature was the only variable."
+        {
+          "en": "Temperature was the only variable.",
+          "fa": "دما تنها متغیر بود."
+        },
+        {
+          "en": "Repeat the experiment with one variable at a time.",
+          "fa": "آزمایش را هر بار با یک متغیر تکرار کنید."
+        }
       ],
       "collocations": [
         "control variable",
@@ -2445,7 +3397,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Give a precise measurement, please."
+        {
+          "en": "Give a precise measurement, please.",
+          "fa": "لطفاً اندازه‌گیری دقیق بدهید."
+        },
+        {
+          "en": "Be precise about the time of the meeting.",
+          "fa": "دربارهٔ ساعت جلسه دقیق باشید."
+        }
       ],
       "collocations": [
         "precise wording",
@@ -2463,7 +3422,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Northern lights are a natural phenomenon."
+        {
+          "en": "Northern lights are a natural phenomenon.",
+          "fa": "نورهای شمالی پدیدهٔ طبیعی‌اند."
+        },
+        {
+          "en": "The eclipse is a rare phenomenon.",
+          "fa": "کسوف پدیدهٔ نادری است."
+        }
       ],
       "collocations": [
         "natural phenomenon",
@@ -2481,7 +3447,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The narrator is unreliable."
+        {
+          "en": "The narrator is unreliable.",
+          "fa": "راوی غیرقابل اعتماد است."
+        },
+        {
+          "en": "The narrator tells the story in the past tense.",
+          "fa": "راوی داستان را در زمان گذشته روایت می‌کند."
+        }
       ],
       "collocations": [
         "unreliable narrator",
@@ -2499,7 +3472,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The protagonist fails in the final chapter."
+        {
+          "en": "The protagonist fails in the final chapter.",
+          "fa": "قهرمان داستان در فصل آخر شکست می‌خورد."
+        },
+        {
+          "en": "The protagonist changes between the first and last pages.",
+          "fa": "قهرمان داستان بین اولین و آخرین صفحه تغییر می‌کند."
+        }
       ],
       "collocations": [
         "main protagonist",
@@ -2517,7 +3497,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Critics saw the ending as an allegory of failure."
+        {
+          "en": "Critics saw the ending as an allegory of failure.",
+          "fa": "منتقدان پایان را تمثیلی از شکست دیدند."
+        },
+        {
+          "en": "The forest in the poem is an allegory for the mind.",
+          "fa": "جنگل در این شعر تمثیلی از ذهن است."
+        }
       ],
       "collocations": [
         "political allegory",
@@ -2535,7 +3522,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The storm is foreshadowing the hero's fall."
+        {
+          "en": "The storm is foreshadowing the hero's fall.",
+          "fa": "طوفان پیش‌درآمد سقوط قهرمان است."
+        },
+        {
+          "en": "The dark opening is a classic piece of foreshadowing.",
+          "fa": "آغاز تاریک نمونهٔ کلاسیکی از پیش‌درآمد است."
+        }
       ],
       "collocations": [
         "subtle foreshadowing",
@@ -2553,7 +3547,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The poem's imagery is vivid."
+        {
+          "en": "The poem's imagery is vivid.",
+          "fa": "تصویرسازی شعر زنده است."
+        },
+        {
+          "en": "The poem uses imagery of fire and ice.",
+          "fa": "شعر از تصویرسازی آتش و یخ استفاده می‌کند."
+        }
       ],
       "collocations": [
         "vivid imagery",
@@ -2571,7 +3572,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Life is a journey is a common metaphor."
+        {
+          "en": "Life is a journey is a common metaphor.",
+          "fa": "«زندگی سفر است» استعاره‌ای رایج است."
+        },
+        {
+          "en": "Calling the sea a hungry animal is a metaphor.",
+          "fa": "دریا را حیوان گرسنه خواندن یک استعاره است."
+        }
       ],
       "collocations": [
         "extended metaphor",
@@ -2589,7 +3597,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My name is Sara."
+        {
+          "en": "My name is Sara.",
+          "fa": "اسم من سارا است."
+        },
+        {
+          "en": "Please say your name slowly.",
+          "fa": "لطفاً اسم‌ات را آرام بگو."
+        }
       ],
       "collocations": [
         "first name",
@@ -2607,7 +3622,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "This is my friend Ali."
+        {
+          "en": "This is my friend Ali.",
+          "fa": "این دوست من علی است."
+        },
+        {
+          "en": "My friend lives next door.",
+          "fa": "دوستم همسایهٔ ماست."
+        }
       ],
       "collocations": [
         "best friend",
@@ -2625,7 +3647,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Nice to meet you."
+        {
+          "en": "Nice to meet you.",
+          "fa": "از آشنایی‌تان خوشوقتم."
+        },
+        {
+          "en": "We meet at the station at nine.",
+          "fa": "ساعت نه در ایستگاه همدیگر را می‌بینیم."
+        }
       ],
       "collocations": [
         "meet a friend",
@@ -2643,7 +3672,14 @@
       "level": "A1",
       "partOfSpeech": "adjective",
       "examples": [
-        "She is my new colleague."
+        {
+          "en": "She is my new colleague.",
+          "fa": "او همکار جدید من است."
+        },
+        {
+          "en": "I bought a new phone last week.",
+          "fa": "هفتهٔ پیش گوشی جدید خریدم."
+        }
       ],
       "collocations": [
         "brand new",
@@ -2661,7 +3697,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "I work in a hospital."
+        {
+          "en": "I work in a hospital.",
+          "fa": "من در بیمارستان کار می‌کنم."
+        },
+        {
+          "en": "Hard work pays off in the end.",
+          "fa": "کار سخت بالاخره جواب می‌دهد."
+        }
       ],
       "collocations": [
         "work as a teacher",
@@ -2679,7 +3722,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "I live in Tehran."
+        {
+          "en": "I live in Tehran.",
+          "fa": "من در تهران زندگی می‌کنم."
+        },
+        {
+          "en": "My grandparents live in a village.",
+          "fa": "پدربزرگ و مادربزرگم در روستا زندگی می‌کنند."
+        }
       ],
       "collocations": [
         "live in a city",
@@ -2697,7 +3747,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The rain stopped in the afternoon."
+        {
+          "en": "The rain stopped in the afternoon.",
+          "fa": "باران بعدازظهر بند آمد."
+        },
+        {
+          "en": "Take an umbrella — rain is expected.",
+          "fa": "چتر بردار — باران پیش‌بینی شده است."
+        }
       ],
       "collocations": [
         "heavy rain",
@@ -2715,7 +3772,14 @@
       "level": "A1",
       "partOfSpeech": "adjective",
       "examples": [
-        "It is sunny today."
+        {
+          "en": "It is sunny today.",
+          "fa": "امروز آفتابی است."
+        },
+        {
+          "en": "It will be sunny at the weekend.",
+          "fa": "آخر هفته هوا آفتابی خواهد بود."
+        }
       ],
       "collocations": [
         "a sunny day",
@@ -2733,7 +3797,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "There are dark clouds over the city."
+        {
+          "en": "There are dark clouds over the city.",
+          "fa": "ابرهای تاریک روی شهر است."
+        },
+        {
+          "en": "A grey cloud covered the sun.",
+          "fa": "ابرهای خاکستری خورشید را پوشاندند."
+        }
       ],
       "collocations": [
         "dark clouds",
@@ -2751,7 +3822,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The wind is strong today."
+        {
+          "en": "The wind is strong today.",
+          "fa": "امروز باد شدید است."
+        },
+        {
+          "en": "The wind blew the doors shut.",
+          "fa": "باد درها را بست."
+        }
       ],
       "collocations": [
         "strong wind",
@@ -2769,7 +3847,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Spring is my favourite season."
+        {
+          "en": "Spring is my favourite season.",
+          "fa": "بهار فصل مورد علاقهٔ من است."
+        },
+        {
+          "en": "Which season do you like best?",
+          "fa": "کدام فصل را بیشتر دوست داری؟"
+        }
       ],
       "collocations": [
         "the rainy season",
@@ -2787,7 +3872,14 @@
       "level": "A1",
       "partOfSpeech": "adjective",
       "examples": [
-        "It is warm in April."
+        {
+          "en": "It is warm in April.",
+          "fa": "هوای فروردین گرم است."
+        },
+        {
+          "en": "The water is warm enough to swim.",
+          "fa": "آب به اندازه کافی گرم است که بتوان شنا کرد."
+        }
       ],
       "collocations": [
         "warm weather",
@@ -2805,7 +3897,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Photography is my main hobby."
+        {
+          "en": "Photography is my main hobby.",
+          "fa": "عکاسی سرگرمی اصلی من است."
+        },
+        {
+          "en": "My hobby keeps me busy at weekends.",
+          "fa": "سرگرمی‌ام آخر هفته‌ها مرا سرگرم نگه می‌دارد."
+        }
       ],
       "collocations": [
         "take up a hobby",
@@ -2823,7 +3922,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "He collects old coins."
+        {
+          "en": "He collects old coins.",
+          "fa": "او سکه‌های قدیمی جمع می‌کند."
+        },
+        {
+          "en": "I collect postcards from every city.",
+          "fa": "من از هر شهری کارت پستال جمع می‌کنم."
+        }
       ],
       "collocations": [
         "collect stamps",
@@ -2841,7 +3947,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "She spends Sundays painting."
+        {
+          "en": "She spends Sundays painting.",
+          "fa": "او یکشنبه‌ها نقاشی می‌کند."
+        },
+        {
+          "en": "His painting hangs in the living room.",
+          "fa": "تابلوی نقاشی او در نشیمن آویزان است."
+        }
       ],
       "collocations": [
         "oil painting",
@@ -2859,7 +3972,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I took a photography class last year."
+        {
+          "en": "I took a photography class last year.",
+          "fa": "سال پیش کلاس عکاسی رفتم."
+        },
+        {
+          "en": "Good photography needs patience.",
+          "fa": "عکاسی خوب صبوری می‌خواهد."
+        }
       ],
       "collocations": [
         "wildlife photography",
@@ -2877,7 +3997,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I am a member of a chess club."
+        {
+          "en": "I am a member of a chess club.",
+          "fa": "من عضو باشگاه شطرنج هستم."
+        },
+        {
+          "en": "Every member gets a discount card.",
+          "fa": "هر عضو کارت تخفیف می‌گیرد."
+        }
       ],
       "collocations": [
         "club member",
@@ -2895,7 +4022,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "What do you do in your spare time?"
+        {
+          "en": "What do you do in your spare time?",
+          "fa": "در اوقات فراغت چه می‌کنی؟"
+        },
+        {
+          "en": "I read in my spare time.",
+          "fa": "در اوقات فراغت کتاب می‌خوانم."
+        }
       ],
       "collocations": [
         "in my spare time",
@@ -2913,7 +4047,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "Our neighbourhood is very quiet."
+        {
+          "en": "Our neighbourhood is very quiet.",
+          "fa": "محلهٔ ما خیلی آرام است."
+        },
+        {
+          "en": "The new bakery opened in our neighbourhood.",
+          "fa": "نانوایی جدید در محلهٔ ما باز شد."
+        }
       ],
       "collocations": [
         "quiet neighbourhood",
@@ -2931,7 +4072,14 @@
       "level": "A2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The market is crowded on Fridays."
+        {
+          "en": "The market is crowded on Fridays.",
+          "fa": "بازار جمعه‌ها شلوغ است."
+        },
+        {
+          "en": "The train was crowded this morning.",
+          "fa": "امروز صبح قطار شلوغ بود."
+        }
       ],
       "collocations": [
         "crowded street",
@@ -2949,7 +4097,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "There is heavy traffic in the morning."
+        {
+          "en": "There is heavy traffic in the morning.",
+          "fa": "صبح‌ها ترافیک سنگین است."
+        },
+        {
+          "en": "Avoid the centre because the traffic is terrible.",
+          "fa": "از مرکز شهر دوری کن چون ترافیک وحشتناک است."
+        }
       ],
       "collocations": [
         "heavy traffic",
@@ -2967,7 +4122,14 @@
       "level": "A2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The flat is convenient for the station."
+        {
+          "en": "The flat is convenient for the station.",
+          "fa": "این آپارتمان به ایستگاه نزدیک و راحت است."
+        },
+        {
+          "en": "It is convenient to pay by card.",
+          "fa": "با کارت پرداخت کردن راحت است."
+        }
       ],
       "collocations": [
         "convenient location",
@@ -2985,7 +4147,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "We walk in the park every evening."
+        {
+          "en": "We walk in the park every evening.",
+          "fa": "هر عصر در پارک قدم می‌زنیم."
+        },
+        {
+          "en": "The children played in the park.",
+          "fa": "بچه‌ها در پارک بازی کردند."
+        }
       ],
       "collocations": [
         "public park",
@@ -3003,7 +4172,14 @@
       "level": "A2",
       "partOfSpeech": "noun",
       "examples": [
-        "I take the subway to work."
+        {
+          "en": "I take the subway to work.",
+          "fa": "من با مترو به سر کار می‌روم."
+        },
+        {
+          "en": "The subway is faster than a bus in rush hour.",
+          "fa": "در ساعت شلوجی مترو از اتوبوس سریع‌تر است."
+        }
       ],
       "collocations": [
         "subway station",
@@ -3021,7 +4197,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "We set a monthly budget for food."
+        {
+          "en": "We set a monthly budget for food.",
+          "fa": "ما بودجهٔ ماهانه‌ای برای خوراک تعیین کردیم."
+        },
+        {
+          "en": "The project went over its budget.",
+          "fa": "پروژه از بودجه‌اش فراتر رفت."
+        }
       ],
       "collocations": [
         "monthly budget",
@@ -3039,7 +4222,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "I save a small amount every month."
+        {
+          "en": "I save a small amount every month.",
+          "fa": "من هر ماه مبلغ کمی پس‌انداز می‌کنم."
+        },
+        {
+          "en": "I saved enough for a new bike.",
+          "fa": "آن‌قدر پس‌انداز کردم که دوچرخهٔ جدید بخرم."
+        }
       ],
       "collocations": [
         "save money",
@@ -3057,7 +4247,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Rent is our biggest expense."
+        {
+          "en": "Rent is our biggest expense.",
+          "fa": "اجاره بزرگ‌ترین هزینهٔ ماست."
+        },
+        {
+          "en": "Travel is a small expense for this job.",
+          "fa": "سفر برای این کار هزینهٔ کمی است."
+        }
       ],
       "collocations": [
         "monthly expenses",
@@ -3075,7 +4272,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "We cannot afford a new car this year."
+        {
+          "en": "We cannot afford a new car this year.",
+          "fa": "امسال توان خرید ماشین جدید را نداریم."
+        },
+        {
+          "en": "He couldn't afford the repair bill.",
+          "fa": "او از پس هزینهٔ تعمیرات برنمی‌آمد."
+        }
       ],
       "collocations": [
         "can afford to",
@@ -3093,7 +4297,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "He is working hard to pay off his debt."
+        {
+          "en": "He is working hard to pay off his debt.",
+          "fa": "او سخت کار می‌کند تا قرضش را بدهد."
+        },
+        {
+          "en": "She cleared her debt in two years.",
+          "fa": "او قرضش را در دو سال تسویه کرد."
+        }
       ],
       "collocations": [
         "pay off a debt",
@@ -3111,7 +4322,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Her income increased after the promotion."
+        {
+          "en": "Her income increased after the promotion.",
+          "fa": "درآمد او بعد از ارتقا بیشتر شد."
+        },
+        {
+          "en": "A second income helps the family.",
+          "fa": "درآمد دوم به خانواده کمک می‌کند."
+        }
       ],
       "collocations": [
         "monthly income",
@@ -3129,7 +4347,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "A balanced diet includes fruit and vegetables."
+        {
+          "en": "A balanced diet includes fruit and vegetables.",
+          "fa": "رژیم غذایی متعادل میوه و سبزیجات دارد."
+        },
+        {
+          "en": "A balanced diet and enough sleep keep you healthy.",
+          "fa": "رژیم غذایی متعادل و خواب کافی شما را سالم نگه می‌دارد."
+        }
       ],
       "collocations": [
         "maintain a balanced diet",
@@ -3147,7 +4372,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Regular exercise reduces stress."
+        {
+          "en": "Regular exercise reduces stress.",
+          "fa": "ورزش منظم استرس را کم می‌کند."
+        },
+        {
+          "en": "Doctors recommend exercise three times a week.",
+          "fa": "پزشکان ورزش سه بار در هفته را توصیه می‌کنند."
+        }
       ],
       "collocations": [
         "regular exercise",
@@ -3165,7 +4397,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Too much stress affects your sleep."
+        {
+          "en": "Too much stress affects your sleep.",
+          "fa": "استرس زیاد بر خوابت تأثیر می‌گذارد."
+        },
+        {
+          "en": "Deadlines cause a lot of stress at work.",
+          "fa": "مهلت‌ها باعث استرس زیاد در کار می‌شوند."
+        }
       ],
       "collocations": [
         "reduce stress",
@@ -3183,7 +4422,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Most adults need eight hours of sleep."
+        {
+          "en": "Most adults need eight hours of sleep.",
+          "fa": "بیشتر بزرگسالان به هشت ساعت خواب نیاز دارند."
+        },
+        {
+          "en": "I sleep better without coffee in the evening.",
+          "fa": "بدون قهوهٔ عصر بهتر می‌خوابم."
+        }
       ],
       "collocations": [
         "get enough sleep",
@@ -3201,7 +4447,14 @@
       "level": "B1",
       "partOfSpeech": "noun",
       "examples": [
-        "Reading before bed is a good habit."
+        {
+          "en": "Reading before bed is a good habit.",
+          "fa": "کتاب خواندن قبل از خواب عادت خوبی است."
+        },
+        {
+          "en": "It takes three weeks to build a habit.",
+          "fa": "ساختن یک عادت سه هفته طول می‌کشد."
+        }
       ],
       "collocations": [
         "break a habit",
@@ -3219,7 +4472,14 @@
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
-        "Never skip breakfast before an exam."
+        {
+          "en": "Never skip breakfast before an exam.",
+          "fa": "هرگز قبل از امتحان صبحانه را حذف نکن."
+        },
+        {
+          "en": "We skipped the last stop and walked home.",
+          "fa": "ما از ایستگاه آخر رد شدیم و پیاده به خانه رفتیم."
+        }
       ],
       "collocations": [
         "skip a meal",
@@ -3237,7 +4497,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "We received a complaint about the delay."
+        {
+          "en": "We received a complaint about the delay.",
+          "fa": "ما شکایتی دربارهٔ تأخیر دریافت کردیم."
+        },
+        {
+          "en": "The company replied to every complaint.",
+          "fa": "شرکت به هر شکایتی پاسخ داد."
+        }
       ],
       "collocations": [
         "make a complaint",
@@ -3255,7 +4522,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The shop offered a full refund."
+        {
+          "en": "The shop offered a full refund.",
+          "fa": "مغازه بازپرداخت کامل پیشنهاد داد."
+        },
+        {
+          "en": "You can ask for a refund within thirty days.",
+          "fa": "می‌توانید ظرف سی روز بازپرداخت بخواهید."
+        }
       ],
       "collocations": [
         "full refund",
@@ -3273,7 +4547,14 @@
       "level": "B2",
       "partOfSpeech": "verb",
       "examples": [
-        "The issue was resolved within two days."
+        {
+          "en": "The issue was resolved within two days.",
+          "fa": "مشکل ظرف دو روز حل شد."
+        },
+        {
+          "en": "The two sides resolved the dispute calmly.",
+          "fa": "دو طرف اختلاف را با آرامش حل کردند."
+        }
       ],
       "collocations": [
         "resolve an issue",
@@ -3291,7 +4572,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "We are working to a tight deadline."
+        {
+          "en": "We are working to a tight deadline.",
+          "fa": "ما با مهلتی فشرده کار می‌کنیم."
+        },
+        {
+          "en": "Miss the deadline and you lose the bonus.",
+          "fa": "اگر مهلت را از دست بدهی پاداش را هم از دست می‌دهی."
+        }
       ],
       "collocations": [
         "meet a deadline",
@@ -3309,7 +4597,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "There was a two-hour delay at the airport."
+        {
+          "en": "There was a two-hour delay at the airport.",
+          "fa": "در فرودگاه دو ساعت تأخیر بود."
+        },
+        {
+          "en": "The delay cost us the connection.",
+          "fa": "تأخیر باعث شد پرواز اتصالی را از دست بدهیم."
+        }
       ],
       "collocations": [
         "long delay",
@@ -3327,7 +4622,14 @@
       "level": "B2",
       "partOfSpeech": "verb",
       "examples": [
-        "The airline agreed to compensate the passengers."
+        {
+          "en": "The airline agreed to compensate the passengers.",
+          "fa": "هواپیمایی موافقت کرد به مسافران غرامت بدهد."
+        },
+        {
+          "en": "Nothing can compensate for the lost time.",
+          "fa": "هیچ‌چی نمی‌تواند زمان از دست رفته را جبران کند."
+        }
       ],
       "collocations": [
         "compensate for",
@@ -3345,7 +4647,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "There is little evidence for this claim."
+        {
+          "en": "There is little evidence for this claim.",
+          "fa": "برای این ادعا شواهد اندکی هست."
+        },
+        {
+          "en": "The researchers published new evidence.",
+          "fa": "پژوهشگران شواهد جدیدی منتشر کردند."
+        }
       ],
       "collocations": [
         "strong evidence",
@@ -3363,7 +4672,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The data support the original hypothesis."
+        {
+          "en": "The data support the original hypothesis.",
+          "fa": "داده‌ها از فرضیهٔ اولیه حمایت می‌کنند."
+        },
+        {
+          "en": "If the hypothesis is wrong, the study fails.",
+          "fa": "اگر فرضیه غلط باشد، پژوهش شکست می‌خورد."
+        }
       ],
       "collocations": [
         "test a hypothesis",
@@ -3381,7 +4697,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The sample was too small to be reliable."
+        {
+          "en": "The sample was too small to be reliable.",
+          "fa": "نمونه برای قابل اعتماد بودن خیلی کوچک بود."
+        },
+        {
+          "en": "The survey used a sample of a thousand people.",
+          "fa": "این نظرسنجی از نمونهٔ هزار نفری استفاده کرد."
+        }
       ],
       "collocations": [
         "random sample",
@@ -3399,7 +4722,14 @@
       "level": "B2",
       "partOfSpeech": "verb",
       "examples": [
-        "The results indicate a clear trend."
+        {
+          "en": "The results indicate a clear trend.",
+          "fa": "نتایج روند روشنی نشان می‌دهند."
+        },
+        {
+          "en": "High prices indicate low demand.",
+          "fa": "قیمت‌های بالا نشانهٔ تقاضای پایین است."
+        }
       ],
       "collocations": [
         "results indicate",
@@ -3417,7 +4747,14 @@
       "level": "B2",
       "partOfSpeech": "adjective",
       "examples": [
-        "We need more reliable data."
+        {
+          "en": "We need more reliable data.",
+          "fa": "به داده‌های قابل اعتماد بیشتری نیاز داریم."
+        },
+        {
+          "en": "This bus service is reliable in winter.",
+          "fa": "این خط اتوبوس در زمستان قابل اعتماد است."
+        }
       ],
       "collocations": [
         "reliable source",
@@ -3435,7 +4772,14 @@
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
-        "The study was criticised for its bias."
+        {
+          "en": "The study was criticised for its bias.",
+          "fa": "این پژوهش به خاطر جانبداری‌اش انتقاد شد."
+        },
+        {
+          "en": "Reporters should check their bias before writing.",
+          "fa": "خبرنگاران قبل از نوشتن باید جانبداری‌شان را بررسی کنند."
+        }
       ],
       "collocations": [
         "selection bias",
@@ -3453,7 +4797,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "His silence implied agreement."
+        {
+          "en": "His silence implied agreement.",
+          "fa": "سکوت او رضایت را نشان می‌داد."
+        },
+        {
+          "en": "What do these figures imply about growth?",
+          "fa": "این ارقام دربارهٔ رشد چه چیزی را دلالت می‌کنند؟"
+        }
       ],
       "collocations": [
         "strongly imply",
@@ -3471,7 +4822,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "From her tone we inferred that she disagreed."
+        {
+          "en": "From her tone we inferred that she disagreed.",
+          "fa": "از لحن او دریافتیم که مخالف است."
+        },
+        {
+          "en": "We can infer nothing from these results.",
+          "fa": "از این نتایج نمی‌توانیم نتیجه‌گیری کنیم."
+        }
       ],
       "collocations": [
         "reasonably infer",
@@ -3489,7 +4847,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The argument rests on a questionable assumption."
+        {
+          "en": "The argument rests on a questionable assumption.",
+          "fa": "این استدلال بر فرضیه‌ای زیر سؤال استوار است."
+        },
+        {
+          "en": "The plan rests on the assumption that rents stay low.",
+          "fa": "این طرح بر این فرض استوار است که اجاره‌ها پایین بماند."
+        }
       ],
       "collocations": [
         "make an assumption",
@@ -3507,7 +4872,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The wording leaves room for ambiguity."
+        {
+          "en": "The wording leaves room for ambiguity.",
+          "fa": "این عبارت‌بندی جا برای ابهام باقی می‌گذارد."
+        },
+        {
+          "en": "The ambiguity in the rule confused everyone.",
+          "fa": "ابهام در قانون همه را گیج کرد."
+        }
       ],
       "collocations": [
         "deliberate ambiguity",
@@ -3525,7 +4897,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "It is hard to overstate the impact of the reform."
+        {
+          "en": "It is hard to overstate the impact of the reform.",
+          "fa": "تأثیر اصلاحات را نمی‌توان بیش از حد بیان کرد."
+        },
+        {
+          "en": "Ads often overstate the benefits of a product.",
+          "fa": "تبلیغات اغلب فواید محصول را بزرگ‌نمایی می‌کنند."
+        }
       ],
       "collocations": [
         "hard to overstate",
@@ -3543,7 +4922,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "There was an unspoken agreement between them."
+        {
+          "en": "There was an unspoken agreement between them.",
+          "fa": "بین آن‌ها توافقی ضمنی وجود داشت."
+        },
+        {
+          "en": "The unspoken rule of the office is to arrive early.",
+          "fa": "قانون ضمنی دفتر این است که زود برسی."
+        }
       ],
       "collocations": [
         "unspoken rule",
@@ -3561,7 +4947,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The letter uses a formal register throughout."
+        {
+          "en": "The letter uses a formal register throughout.",
+          "fa": "این نامه در تمامش از لحن رسمی استفاده می‌کند."
+        },
+        {
+          "en": "Switch to an informal register with friends.",
+          "fa": "با دوستان از لحن غیررسمی استفاده کن."
+        }
       ],
       "collocations": [
         "formal register",
@@ -3579,7 +4972,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "We would be grateful for a formal reply."
+        {
+          "en": "We would be grateful for a formal reply.",
+          "fa": "از پاسخ رسمی شما سپاسگزار می‌شویم."
+        },
+        {
+          "en": "The invitation looks very formal.",
+          "fa": "دعوت‌نامه خیلی رسمی به نظر می‌رسد."
+        }
       ],
       "collocations": [
         "formal letter",
@@ -3597,7 +4997,14 @@
       "level": "C1",
       "partOfSpeech": "adjective",
       "examples": [
-        "The dialogue is full of colloquial expressions."
+        {
+          "en": "The dialogue is full of colloquial expressions.",
+          "fa": "این دیالوگ پر از عبارت‌های عامیانه است."
+        },
+        {
+          "en": "Colloquial English differs from written English.",
+          "fa": "انگلیسی عامیانه با انگلیسی نوشتاری فرق دارد."
+        }
       ],
       "collocations": [
         "colloquial English",
@@ -3615,7 +5022,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "Academic writing relies heavily on nominalisation."
+        {
+          "en": "Academic writing relies heavily on nominalisation.",
+          "fa": "نوشتن آکادمیک زیاد به اسم‌سازی تکیه دارد."
+        },
+        {
+          "en": "Nominalisation makes a text dense and formal.",
+          "fa": "اسم‌سازی متن را فشرده و رسمی می‌کند."
+        }
       ],
       "collocations": [
         "heavy nominalisation",
@@ -3633,7 +5047,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "Writers hedge their claims with may and tends to."
+        {
+          "en": "Writers hedge their claims with may and tends to.",
+          "fa": "نویسندگان ادعاهایشان را با may و tends to محتاطانه بیان می‌کنند."
+        },
+        {
+          "en": "A good report hedges its predictions.",
+          "fa": "گزارش خوب پیش‌بینی‌هایش را محتاطانه بیان می‌کند."
+        }
       ],
       "collocations": [
         "hedge a claim",
@@ -3651,7 +5072,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "She had the courtesy to reply on the same day."
+        {
+          "en": "She had the courtesy to reply on the same day.",
+          "fa": "او لطف کرد و همان روز پاسخ داد."
+        },
+        {
+          "en": "He had the courtesy to thank every guest.",
+          "fa": "او لطف کرد و از هر مهمانی تشکر کرد."
+        }
       ],
       "collocations": [
         "common courtesy",
@@ -3669,7 +5097,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "Good cohesion makes an essay easy to follow."
+        {
+          "en": "Good cohesion makes an essay easy to follow.",
+          "fa": "پیوستگی خوب مقاله را دنبال‌کردنی می‌کند."
+        },
+        {
+          "en": "Lack of cohesion confuses the reader.",
+          "fa": "نبود پیوستگی خواننده را گیج می‌کند."
+        }
       ],
       "collocations": [
         "textual cohesion",
@@ -3687,7 +5122,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "However and therefore are common discourse markers."
+        {
+          "en": "However and therefore are common discourse markers.",
+          "fa": "با این حال و بنابراین نشانگرهای گفتاری رایجی‌اند."
+        },
+        {
+          "en": "She used a discourse marker to connect the ideas.",
+          "fa": "او از نشانگر گفتاری برای وصل کردن ایده‌ها استفاده کرد."
+        }
       ],
       "collocations": [
         "use a discourse marker",
@@ -3705,7 +5147,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The pronoun has no clear antecedent in this paragraph."
+        {
+          "en": "The pronoun has no clear antecedent in this paragraph.",
+          "fa": "این ضمیر در این بند مرجع روشنی ندارد."
+        },
+        {
+          "en": "Every pronoun needs a clear antecedent.",
+          "fa": "هر ضمیری به مرجع روشن نیاز دارد."
+        }
       ],
       "collocations": [
         "clear antecedent",
@@ -3723,7 +5172,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "Ellipsis keeps the dialogue natural and fast."
+        {
+          "en": "Ellipsis keeps the dialogue natural and fast.",
+          "fa": "حذف، دیالوگ را طبیعی و سریع نگه می‌دارد."
+        },
+        {
+          "en": "English uses ellipsis in short answers.",
+          "fa": "انگلیسی در پاسخ‌های کوتاه از حذف استفاده می‌کند."
+        }
       ],
       "collocations": [
         "use ellipsis",
@@ -3741,7 +5197,14 @@
       "level": "C1",
       "partOfSpeech": "verb",
       "examples": [
-        "You must paraphrase the source rather than copy it."
+        {
+          "en": "You must paraphrase the source rather than copy it.",
+          "fa": "باید منبع را بازنویسی کنی نه اینکه کپی کنی."
+        },
+        {
+          "en": "Paraphrase the quote in your own words.",
+          "fa": "نقل‌قول را با کلمات خودت بازنویسی کن."
+        }
       ],
       "collocations": [
         "paraphrase a source",
@@ -3759,7 +5222,14 @@
       "level": "C1",
       "partOfSpeech": "noun",
       "examples": [
-        "The transition between the two sections feels abrupt."
+        {
+          "en": "The transition between the two sections feels abrupt.",
+          "fa": "گذار بین دو بخش ناگهانی است."
+        },
+        {
+          "en": "Add a smooth transition between the paragraphs.",
+          "fa": "بین بندها یک گذار روان اضافه کن."
+        }
       ],
       "collocations": [
         "smooth transition",
@@ -3777,7 +5247,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Attacking the speaker is a classic fallacy."
+        {
+          "en": "Attacking the speaker is a classic fallacy.",
+          "fa": "حمله به گوینده مغالطهٔ کلاسیک است."
+        },
+        {
+          "en": "Confusing correlation with cause is a common fallacy.",
+          "fa": "اتحاد همبستگی با علت مغالطهٔ رایجی است."
+        }
       ],
       "collocations": [
         "logical fallacy",
@@ -3795,7 +5272,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "She conceded the point and moved on to the main issue."
+        {
+          "en": "She conceded the point and moved on to the main issue.",
+          "fa": "او این نکته را پذیرفت و به مسئلهٔ اصلی پرداخت."
+        },
+        {
+          "en": "The minister conceded that the policy had failed.",
+          "fa": "وزیر قبول کرد سیاست شکست خورده است."
+        }
       ],
       "collocations": [
         "concede a point",
@@ -3813,7 +5297,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "The data refute the earlier explanation."
+        {
+          "en": "The data refute the earlier explanation.",
+          "fa": "داده‌ها توضیح قبلی را رد می‌کنند."
+        },
+        {
+          "en": "No study has managed to refute this result.",
+          "fa": "هیچ مطالعه‌ای نتوانسته این نتیجه را رد کند."
+        }
       ],
       "collocations": [
         "refute a claim",
@@ -3831,7 +5322,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The conclusion does not follow from the premises."
+        {
+          "en": "The conclusion does not follow from the premises.",
+          "fa": "نتیجه از مقدمات استنباط نمی‌شود."
+        },
+        {
+          "en": "The argument is sound if the premise is true.",
+          "fa": "استدلال درست است اگر مقدمه درست باشد."
+        }
       ],
       "collocations": [
         "false premise",
@@ -3849,7 +5347,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The essay offers assertion where it needs evidence."
+        {
+          "en": "The essay offers assertion where it needs evidence.",
+          "fa": "مقاله به‌جای شواهد ادعا ارائه می‌دهد."
+        },
+        {
+          "en": "Bare assertion is not enough to win an argument.",
+          "fa": "ادعای خالی برای بردن بحث کافی نیست."
+        }
       ],
       "collocations": [
         "bold assertion",
@@ -3867,7 +5372,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "That is a straw man; nobody proposed such a policy."
+        {
+          "en": "That is a straw man; nobody proposed such a policy.",
+          "fa": "این یک «مرغ پوشالی» است؛ هیچ‌کس چنین سیاستی پیشنهاد نداده."
+        },
+        {
+          "en": "Your reply builds a straw man out of my argument.",
+          "fa": "پاسخ شما از استدلال من یک مرغ پوشالی می‌سازد."
+        }
       ],
       "collocations": [
         "attack a straw man",
@@ -3885,7 +5397,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Make a decision is a strong collocation; do a decision is not."
+        {
+          "en": "Make a decision is a strong collocation; do a decision is not.",
+          "fa": "«make a decision» هم‌نشینی قوی است؛ «do a decision» نیست."
+        },
+        {
+          "en": "Teachers explain why collocations matter.",
+          "fa": "معلمان توضیح می‌دهند چرا هم‌نشینی‌ها اهمیت دارند."
+        }
       ],
       "collocations": [
         "strong collocation",
@@ -3903,7 +5422,14 @@
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
-        "Heavily collocates with rain and with criticism."
+        {
+          "en": "Heavily collocates with rain and with criticism.",
+          "fa": "heavily با rain و criticism هم‌نشین می‌شود."
+        },
+        {
+          "en": "The verb make collocates with thousands of nouns.",
+          "fa": "فعل make با هزاران اسم هم‌نشین می‌شود."
+        }
       ],
       "collocations": [
         "collocate with",
@@ -3921,7 +5447,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Have, take and make are common delexical verbs."
+        {
+          "en": "Have, take and make are common delexical verbs.",
+          "fa": "have و take و make فعل‌های غیرمعنایی رایجی‌اند."
+        },
+        {
+          "en": "In take a shower, take is a delexical verb.",
+          "fa": "در take a shower، فعل take یک فعل غیرمعنایی است."
+        }
       ],
       "collocations": [
         "use a delexical verb",
@@ -3939,7 +5472,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The essay shows impressive lexical range."
+        {
+          "en": "The essay shows impressive lexical range.",
+          "fa": "مقاله دامنهٔ واژگانی تحسین‌برانگیزی نشان می‌دهد."
+        },
+        {
+          "en": "A good dictionary lists every lexical item.",
+          "fa": "فرهنگ خوب هر واحد واژگانی را فهرست می‌کند."
+        }
       ],
       "collocations": [
         "lexical resource",
@@ -3957,7 +5497,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Her English is fluent and highly idiomatic."
+        {
+          "en": "Her English is fluent and highly idiomatic.",
+          "fa": "انگلیسی او روان و بسیار اصطلاحی است."
+        },
+        {
+          "en": "Try to write more idiomatic sentences.",
+          "fa": "سعی کن جمله‌های اصطلاحی‌تری بنویسی."
+        }
       ],
       "collocations": [
         "idiomatic English",
@@ -3975,7 +5522,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The report is written with precision."
+        {
+          "en": "The report is written with precision.",
+          "fa": "این گزارش با دقت نوشته شده است."
+        },
+        {
+          "en": "The operation required surgical precision.",
+          "fa": "این عمل به دقت جراحی نیاز داشت."
+        }
       ],
       "collocations": [
         "with precision",
@@ -3993,7 +5547,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Calling the storm a little rain is a fine understatement."
+        {
+          "en": "Calling the storm a little rain is a fine understatement.",
+          "fa": "طوفان را «کمی باران» خواندن نمونهٔ خوبی از کم‌نمایی است."
+        },
+        {
+          "en": "Saying the exam was not easy is an understatement.",
+          "fa": "گفتن امتحان آسان نبود، کم‌نمایی است."
+        }
       ],
       "collocations": [
         "a classic understatement",
@@ -4011,7 +5572,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "Not uncommon is a typical litotes for fairly common."
+        {
+          "en": "Not uncommon is a typical litotes for fairly common.",
+          "fa": "«not uncommon» یک litotes معمولی است به جای «fairly common»."
+        },
+        {
+          "en": "Calling the meal not bad is a common litotes.",
+          "fa": "غذا را «نه بد» خواندن litotes رایجی است."
+        }
       ],
       "collocations": [
         "use litotes",
@@ -4029,7 +5597,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "He delivered the joke in a deadpan voice."
+        {
+          "en": "He delivered the joke in a deadpan voice.",
+          "fa": "او شوخی را با چهرهٔ بی‌تفاوت گفت."
+        },
+        {
+          "en": "Her deadpan delivery made the joke funnier.",
+          "fa": "نحوهٔ بی‌تفاوتِ او شوخی را خنده‌دارتر کرد."
+        }
       ],
       "collocations": [
         "deadpan humour",
@@ -4047,7 +5622,14 @@
       "level": "C2",
       "partOfSpeech": "noun",
       "examples": [
-        "The subtext of the scene is that he already knows."
+        {
+          "en": "The subtext of the scene is that he already knows.",
+          "fa": "زیرمتن این صحنه این است که او از قبل می‌داند."
+        },
+        {
+          "en": "The subtext of the letter is a threat.",
+          "fa": "زیرمتن نامه یک تهدید است."
+        }
       ],
       "collocations": [
         "political subtext",
@@ -4065,7 +5647,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "Her self-deprecating humour put everyone at ease."
+        {
+          "en": "Her self-deprecating humour put everyone at ease.",
+          "fa": "شوخی خودکم‌بینانهٔ او همه را راحت کرد."
+        },
+        {
+          "en": "His self-deprecating style wins the audience.",
+          "fa": "سبک خودکم‌بینانهٔ او تماشاگران را جذب می‌کند."
+        }
       ],
       "collocations": [
         "self-deprecating humour",
@@ -4083,7 +5672,14 @@
       "level": "C2",
       "partOfSpeech": "adjective",
       "examples": [
-        "The remark was facetious and badly timed."
+        {
+          "en": "The remark was facetious and badly timed.",
+          "fa": "این حرف شوخی نابجا بود و بد موقع زده شد."
+        },
+        {
+          "en": "Don't answer with a facetious remark.",
+          "fa": "با یک حرف شوخی‌مآبانه جواب نده."
+        }
       ],
       "collocations": [
         "facetious remark",
@@ -4101,7 +5697,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "It's raining — take an umbrella."
+        {
+          "en": "It's raining — take an umbrella.",
+          "fa": "داره بارون می‌اد — چتر بردار."
+        },
+        {
+          "en": "I left my umbrella at home.",
+          "fa": "چترم را خانه جا گذاشتم."
+        }
       ],
       "collocations": [
         "take an umbrella",
@@ -4119,7 +5722,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "She eats an apple every day."
+        {
+          "en": "She eats an apple every day.",
+          "fa": "او هر روز یک سیب می‌خورد."
+        },
+        {
+          "en": "This apple is too sour.",
+          "fa": "این سیب خیلی ترش است."
+        }
       ],
       "collocations": [
         "apple tree",
@@ -4137,7 +5747,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "I'd like an orange, please."
+        {
+          "en": "I'd like an orange, please.",
+          "fa": "لطفاً یک پرتقال می‌خواستم."
+        },
+        {
+          "en": "Can you peel an orange for me?",
+          "fa": "می‌توانی یک پرتقال برایم پوست بگیری؟"
+        }
       ],
       "collocations": [
         "orange juice",
@@ -4155,7 +5772,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The journey takes an hour."
+        {
+          "en": "The journey takes an hour.",
+          "fa": "سفر یک ساعت طول می‌کشد."
+        },
+        {
+          "en": "Wait an hour and call me again.",
+          "fa": "یک ساعت صبر کن و دوباره زنگ بزن."
+        }
       ],
       "collocations": [
         "half an hour",
@@ -4173,7 +5797,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The sun rises in the east."
+        {
+          "en": "The sun rises in the east.",
+          "fa": "خورشید از مشرق طلوع می‌کند."
+        },
+        {
+          "en": "Don't look straight at the sun.",
+          "fa": "مستقیم به خورشید نگاه نکن."
+        }
       ],
       "collocations": [
         "in the sun",
@@ -4191,7 +5822,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "We stayed at a hotel by the sea."
+        {
+          "en": "We stayed at a hotel by the sea.",
+          "fa": "ما در هتلی کنار دریا اقامت کردیم."
+        },
+        {
+          "en": "The hotel offers a free breakfast.",
+          "fa": "هتل صبحانهٔ رایگان دارد."
+        }
       ],
       "collocations": [
         "hotel room",
@@ -4209,7 +5847,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "There are twenty children in the class."
+        {
+          "en": "There are twenty children in the class.",
+          "fa": "کلاس بیست بچه دارد."
+        },
+        {
+          "en": "Every child in the street got a balloon.",
+          "fa": "هر بچه‌ای در خیابان بادکنکی گرفت."
+        }
       ],
       "collocations": [
         "young child",
@@ -4227,7 +5872,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The man is waiting outside."
+        {
+          "en": "The man is waiting outside.",
+          "fa": "آن مرد بیرون منتظر است."
+        },
+        {
+          "en": "A tall man opened the door.",
+          "fa": "مردی بلندقد در را باز کرد."
+        }
       ],
       "collocations": [
         "young man",
@@ -4245,7 +5897,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Two women work in this office."
+        {
+          "en": "Two women work in this office.",
+          "fa": "دو زن در این دفتر کار می‌کنند."
+        },
+        {
+          "en": "The woman next door is a doctor.",
+          "fa": "زن همسایه پزشک است."
+        }
       ],
       "collocations": [
         "young woman",
@@ -4263,7 +5922,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My left foot hurts."
+        {
+          "en": "My left foot hurts.",
+          "fa": "پای چپم درد می‌کند."
+        },
+        {
+          "en": "The stone hurt my foot.",
+          "fa": "سنگ پایم را آسیب زد."
+        }
       ],
       "collocations": [
         "on foot",
@@ -4281,7 +5947,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "A dry leaf fell from the tree."
+        {
+          "en": "A dry leaf fell from the tree.",
+          "fa": "برگ خشکی از درخت افتاد."
+        },
+        {
+          "en": "Each leaf turns yellow in autumn.",
+          "fa": "هر برگی در پاییز زرد می‌شود."
+        }
       ],
       "collocations": [
         "autumn leaf",
@@ -4299,7 +5972,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Put the books in a box."
+        {
+          "en": "Put the books in a box.",
+          "fa": "کتاب‌ها را در جعبه بگذار."
+        },
+        {
+          "en": "This box is too heavy to carry.",
+          "fa": "این جعبه برای حمل خیلی سنگین است."
+        }
       ],
       "collocations": [
         "shoe box",
@@ -4317,7 +5997,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My friend lives in Tehran."
+        {
+          "en": "My friend lives in Tehran.",
+          "fa": "دوستم در تهران زندگی می‌کند."
+        },
+        {
+          "en": "Their friend studies medicine.",
+          "fa": "دوستشان پزشکی می‌خواند."
+        }
       ],
       "collocations": [
         "best friend",
@@ -4335,7 +6022,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Our teacher speaks English slowly."
+        {
+          "en": "Our teacher speaks English slowly.",
+          "fa": "معلم ما آرام انگلیسی حرف می‌زند."
+        },
+        {
+          "en": "The teacher wrote the date on the board.",
+          "fa": "معلم تاریخ را روی تخته نوشت."
+        }
       ],
       "collocations": [
         "English teacher",
@@ -4353,7 +6047,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Her sister works at a hospital."
+        {
+          "en": "Her sister works at a hospital.",
+          "fa": "خواهرش در بیمارستان کار می‌کند."
+        },
+        {
+          "en": "My sister teaches math.",
+          "fa": "خواهرم ریاضی تدریس می‌کند."
+        }
       ],
       "collocations": [
         "younger sister",
@@ -4371,7 +6072,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "He helps his brother with homework."
+        {
+          "en": "He helps his brother with homework.",
+          "fa": "او به برادرش در تکلیف کمک می‌کند."
+        },
+        {
+          "en": "Their brother lives abroad.",
+          "fa": "برادرشان در خارج زندگی می‌کند."
+        }
       ],
       "collocations": [
         "older brother",
@@ -4389,7 +6097,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The doctor examined the patient."
+        {
+          "en": "The doctor examined the patient.",
+          "fa": "دکتر بیمار را معاینه کرد."
+        },
+        {
+          "en": "You should see a doctor about that cough.",
+          "fa": "برای آن سرفه باید به دکتر مراجعه کنی."
+        }
       ],
       "collocations": [
         "see a doctor",
@@ -4407,7 +6122,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The teacher helped the students."
+        {
+          "en": "The teacher helped the students.",
+          "fa": "معلم به دانش‌آموزان کمک کرد."
+        },
+        {
+          "en": "Every student needs a notebook.",
+          "fa": "هر دانش‌آموزی دفتر لازم دارد."
+        }
       ],
       "collocations": [
         "medical student",
@@ -4425,7 +6147,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "I can swim but I can't dive."
+        {
+          "en": "I can swim but I can't dive.",
+          "fa": "من شنا بلدم اما شیرجه نه."
+        },
+        {
+          "en": "Can you swim across the river?",
+          "fa": "می‌توانی از رودخانه شنا کنی؟"
+        }
       ],
       "collocations": [
         "swim well",
@@ -4443,7 +6172,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "She can drive a car."
+        {
+          "en": "She can drive a car.",
+          "fa": "او رانندگی بلد است."
+        },
+        {
+          "en": "I can't drive yet.",
+          "fa": "هنوز رانندگی یاد نگرفته‌ام."
+        }
       ],
       "collocations": [
         "drive a car",
@@ -4461,7 +6197,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "He can speak three languages."
+        {
+          "en": "He can speak three languages.",
+          "fa": "او سه زبان بلند است."
+        },
+        {
+          "en": "Can you speak a little slower?",
+          "fa": "می‌توانی کمی آرام‌تر حرف بزنی؟"
+        }
       ],
       "collocations": [
         "speak English",
@@ -4479,7 +6222,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "My father can cook very well."
+        {
+          "en": "My father can cook very well.",
+          "fa": "پدرم خیلی خوب آشپزی می‌کند."
+        },
+        {
+          "en": "I can cook rice but not kebab.",
+          "fa": "من برنج درست می‌کنم اما کباب نه."
+        }
       ],
       "collocations": [
         "cook dinner",
@@ -4497,7 +6247,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Can you play the guitar?"
+        {
+          "en": "Can you play the guitar?",
+          "fa": "می‌توانی گیتار بزنی؟"
+        },
+        {
+          "en": "The children can play in the garden.",
+          "fa": "بچه‌ها می‌توانند در باغ بازی کنند."
+        }
       ],
       "collocations": [
         "play football",
@@ -4515,7 +6272,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "She can run five kilometres."
+        {
+          "en": "She can run five kilometres.",
+          "fa": "او می‌تواند پنج کیلومتر بدوشد."
+        },
+        {
+          "en": "I can run faster than my brother.",
+          "fa": "می‌توانم سریع‌تر از برادرم بدوهم."
+        }
       ],
       "collocations": [
         "run fast",
@@ -4533,7 +6297,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Stop! The light is red."
+        {
+          "en": "Stop! The light is red.",
+          "fa": "ایست! چراغ قرمز است."
+        },
+        {
+          "en": "Stop talking and open your books.",
+          "fa": "حرف نزنید و کتاب‌هاتان را باز کنید."
+        }
       ],
       "collocations": [
         "stop here",
@@ -4551,7 +6322,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Wait for me at the gate."
+        {
+          "en": "Wait for me at the gate.",
+          "fa": "سر گیت منتظرم باش."
+        },
+        {
+          "en": "Please wait two minutes.",
+          "fa": "لطفاً دو دقیقه صبر کن."
+        }
       ],
       "collocations": [
         "wait a moment",
@@ -4569,7 +6347,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Please sit down."
+        {
+          "en": "Please sit down.",
+          "fa": "لطفاً بنشینید."
+        },
+        {
+          "en": "Sit next to your sister.",
+          "fa": "کنار خواهرت بنشین."
+        }
       ],
       "collocations": [
         "sit down",
@@ -4587,7 +6372,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Open your books, please."
+        {
+          "en": "Open your books, please.",
+          "fa": "لطفاً کتاب‌هاتان را باز کنید."
+        },
+        {
+          "en": "Open the window — it's hot in here.",
+          "fa": "پنجره را باز کن — اینجا گرم است."
+        }
       ],
       "collocations": [
         "open the door",
@@ -4605,7 +6397,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Close the window, please."
+        {
+          "en": "Close the window, please.",
+          "fa": "لطفاً پنجره را ببند."
+        },
+        {
+          "en": "Close your eyes and count to ten.",
+          "fa": "چشم‌هایت را ببند و تا ده بشمار."
+        }
       ],
       "collocations": [
         "close the door",
@@ -4623,7 +6422,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Listen to the instructions carefully."
+        {
+          "en": "Listen to the instructions carefully.",
+          "fa": "به دستورالعمل‌ها دقیق گوش بده."
+        },
+        {
+          "en": "Listen to the news every morning.",
+          "fa": "هر صبح به خبر گوش بده."
+        }
       ],
       "collocations": [
         "listen to",
@@ -4641,7 +6447,14 @@
       "level": "A1",
       "partOfSpeech": "pronoun",
       "examples": [
-        "What is your name?"
+        {
+          "en": "What is your name?",
+          "fa": "اسم تو چیست؟"
+        },
+        {
+          "en": "What time does the film start?",
+          "fa": "فیلم ساعت چند شروع می‌شود؟"
+        }
       ],
       "collocations": [
         "what time",
@@ -4659,7 +6472,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "Where do you live?"
+        {
+          "en": "Where do you live?",
+          "fa": "کجا زندگی می‌کنی؟"
+        },
+        {
+          "en": "Where did you buy those shoes?",
+          "fa": "این کفش‌ها را از کجا خریدی؟"
+        }
       ],
       "collocations": [
         "where to",
@@ -4677,7 +6497,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "When does the class start?"
+        {
+          "en": "When does the class start?",
+          "fa": "کلاس کی شروع می‌شود؟"
+        },
+        {
+          "en": "When is your birthday?",
+          "fa": "تولدت کی است؟"
+        }
       ],
       "collocations": [
         "since when",
@@ -4695,7 +6522,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "Why are you late?"
+        {
+          "en": "Why are you late?",
+          "fa": "چرا دیر آمدی؟"
+        },
+        {
+          "en": "Why do we have to wait?",
+          "fa": "چرا باید صبر کنیم؟"
+        }
       ],
       "collocations": [
         "why not",
@@ -4713,7 +6547,14 @@
       "level": "A1",
       "partOfSpeech": "pronoun",
       "examples": [
-        "Who is that woman?"
+        {
+          "en": "Who is that woman?",
+          "fa": "آن زن کیست؟"
+        },
+        {
+          "en": "Who taught you to drive?",
+          "fa": "چه کسی به تو رانندگی یاد داد؟"
+        }
       ],
       "collocations": [
         "who else",
@@ -4731,7 +6572,14 @@
       "level": "A1",
       "partOfSpeech": "adverb",
       "examples": [
-        "How do you pronounce this?"
+        {
+          "en": "How do you pronounce this?",
+          "fa": "این را چطور تلفظ می‌کنی؟"
+        },
+        {
+          "en": "How far is the station from here?",
+          "fa": "ایستگاه از اینجا چقدر فاصله دارد؟"
+        }
       ],
       "collocations": [
         "how about",
@@ -4749,7 +6597,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "We went to the coast last weekend."
+        {
+          "en": "We went to the coast last weekend.",
+          "fa": "آخر هفتهٔ پیش به ساحل رفتیم."
+        },
+        {
+          "en": "She went home before the rain.",
+          "fa": "او قبل از باران به خانه رفت."
+        }
       ],
       "collocations": [
         "go out",
@@ -4767,7 +6622,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "She bought a new phone yesterday."
+        {
+          "en": "She bought a new phone yesterday.",
+          "fa": "دیروز او گوشی جدیدی خرید."
+        },
+        {
+          "en": "We bought fresh bread this morning.",
+          "fa": "امروز صبح نان تازه خریدیم."
+        }
       ],
       "collocations": [
         "buy a ticket",
@@ -4785,7 +6647,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "I saw an old friend at the market."
+        {
+          "en": "I saw an old friend at the market.",
+          "fa": "در بازار یک دوست قدیمی دیدم."
+        },
+        {
+          "en": "They saw a fox near the village.",
+          "fa": "نزدیک روستا یک روباه دیدند."
+        }
       ],
       "collocations": [
         "see a film",
@@ -4803,7 +6672,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "We ate at a small restaurant."
+        {
+          "en": "We ate at a small restaurant.",
+          "fa": "در رستوران کوچکی غذا خوردیم."
+        },
+        {
+          "en": "The children ate all the cake.",
+          "fa": "بچه‌ها کل کیک را خوردند."
+        }
       ],
       "collocations": [
         "eat out",
@@ -4821,7 +6697,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "The train took two hours."
+        {
+          "en": "The train took two hours.",
+          "fa": "قطار دو ساعت طول کشید."
+        },
+        {
+          "en": "She took the early flight home.",
+          "fa": "او پرواز زودتر را گرفت و به خانه برگشت."
+        }
       ],
       "collocations": [
         "take a taxi",
@@ -4839,7 +6722,14 @@
       "level": "A2",
       "partOfSpeech": "verb",
       "examples": [
-        "He wrote an email last night."
+        {
+          "en": "He wrote an email last night.",
+          "fa": "دیروز شب یک ایمیل نوشت."
+        },
+        {
+          "en": "She wrote a long reply this morning.",
+          "fa": "امروز صبح پاسخ بلندی نوشت."
+        }
       ],
       "collocations": [
         "write down",
@@ -4857,7 +6747,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The English alphabet has twenty-six letters."
+        {
+          "en": "The English alphabet has twenty-six letters.",
+          "fa": "الفبای انگلیسی بیست و شش حرف دارد."
+        },
+        {
+          "en": "The Persian alphabet has thirty-two letters.",
+          "fa": "الفبای فارسی سی و دو حرف دارد."
+        }
       ],
       "collocations": [
         "learn the alphabet"
@@ -4874,7 +6771,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The letter A is the first one."
+        {
+          "en": "The letter A is the first one.",
+          "fa": "حرف A اولین حرف است."
+        },
+        {
+          "en": "There is a letter missing in this word.",
+          "fa": "در این کلمه یک حرف جا افتاده است."
+        }
       ],
       "collocations": [
         "capital letter",
@@ -4892,7 +6796,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Every name starts with a capital letter."
+        {
+          "en": "Every name starts with a capital letter.",
+          "fa": "هر اسمی با حرف بزرگ شروع می‌شود."
+        },
+        {
+          "en": "Write your surname with a capital letter.",
+          "fa": "نام خانوادگی‌ات را با حرف بزرگ بنویس."
+        }
       ],
       "collocations": [
         "start with a capital letter"
@@ -4909,7 +6820,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Write your email address in small letters."
+        {
+          "en": "Write your email address in small letters.",
+          "fa": "آدرس ایمیلت را با حروف کوچک بنویس."
+        },
+        {
+          "en": "Use a small letter after a full stop.",
+          "fa": "بعد از نقطه از حرف کوچک استفاده کن."
+        }
       ],
       "collocations": [
         "in small letters"
@@ -4926,7 +6844,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "The letters A, E, I, O and U are vowels."
+        {
+          "en": "The letters A, E, I, O and U are vowels.",
+          "fa": "حرف‌های A و E و I و O و U واکه‌ها هستند."
+        },
+        {
+          "en": "The word 'cat' has one vowel.",
+          "fa": "کلمهٔ cat یک واکه دارد."
+        }
       ],
       "collocations": [
         "vowel sound"
@@ -4943,7 +6868,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Every letter has its own sound."
+        {
+          "en": "Every letter has its own sound.",
+          "fa": "هر حرف صدای خودش را دارد."
+        },
+        {
+          "en": "The sound of the bell woke us up.",
+          "fa": "صدای زنگ ما را بیدار کرد."
+        }
       ],
       "collocations": [
         "letter sound",
@@ -4961,7 +6893,14 @@
       "level": "A1",
       "partOfSpeech": "verb",
       "examples": [
-        "Can you spell your name, please?"
+        {
+          "en": "Can you spell your name, please?",
+          "fa": "لطفاً اسم‌ات را هجی کنی؟"
+        },
+        {
+          "en": "I spelled my surname wrong on the form.",
+          "fa": "نام خانوادگی‌ام را در فرم اشتباه هجی کردم."
+        }
       ],
       "collocations": [
         "spell a word",
@@ -4979,7 +6918,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "My name is Sara."
+        {
+          "en": "My name is Sara.",
+          "fa": "اسم من سارا است."
+        },
+        {
+          "en": "Write your name at the top of the page.",
+          "fa": "اسم‌ات را بالای صفحه بنویس."
+        }
       ],
       "collocations": [
         "first name",
@@ -4997,7 +6943,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Her surname is Ahmadi."
+        {
+          "en": "Her surname is Ahmadi.",
+          "fa": "نام خانوادگی‌اش احمدی است."
+        },
+        {
+          "en": "Please write your surname in full.",
+          "fa": "لطفاً نام خانوادگی‌ات را کامل بنویس."
+        }
       ],
       "collocations": [
         "family surname",
@@ -5015,7 +6968,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Please write your address here."
+        {
+          "en": "Please write your address here.",
+          "fa": "لطفاً آدرس‌ات را اینجا بنویس."
+        },
+        {
+          "en": "My home address is on the form.",
+          "fa": "آدرس خانه‌ام روی فرم است."
+        }
       ],
       "collocations": [
         "email address",
@@ -5033,7 +6993,14 @@
       "level": "A1",
       "partOfSpeech": "adjective",
       "examples": [
-        "My name has a double L."
+        {
+          "en": "My name has a double L.",
+          "fa": "اسم من دو تا L دارد."
+        },
+        {
+          "en": "The word 'balloon' has a double l.",
+          "fa": "کلمهٔ balloon دو تا l پشت سر هم دارد."
+        }
       ],
       "collocations": [
         "double letter"
@@ -5050,7 +7017,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "Send me an email, please."
+        {
+          "en": "Send me an email, please.",
+          "fa": "لطفاً برایم ایمیل بزن."
+        },
+        {
+          "en": "I check my email every morning.",
+          "fa": "هر صبح ایمیلم را چک می‌کنم."
+        }
       ],
       "collocations": [
         "email address",
@@ -5068,7 +7042,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "Zero comes before one."
+        {
+          "en": "Zero comes before one.",
+          "fa": "صفر قبل از یک می‌آید."
+        },
+        {
+          "en": "The temperature fell to zero last night.",
+          "fa": "دما دیروز شب به صفر رسید."
+        }
       ],
       "collocations": [
         "below zero"
@@ -5085,7 +7066,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "I have one brother."
+        {
+          "en": "I have one brother.",
+          "fa": "من یک برادر دارم."
+        },
+        {
+          "en": "There is only one exit from the building.",
+          "fa": "از ساختمان فقط یک خروجی هست."
+        }
       ],
       "collocations": [
         "one more"
@@ -5102,7 +7090,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "Two plus two is four."
+        {
+          "en": "Two plus two is four.",
+          "fa": "دو به علاوهٔ دو می‌شود چهار."
+        },
+        {
+          "en": "Wait two minutes and try again.",
+          "fa": "دو دقیقه صبر کن و دوباره امتحان کن."
+        }
       ],
       "collocations": [
         "two of them"
@@ -5119,7 +7114,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "There are three books on the desk."
+        {
+          "en": "There are three books on the desk.",
+          "fa": "روی میز سه کتاب هست."
+        },
+        {
+          "en": "My daughter is three years old.",
+          "fa": "دخترم سه ساله است."
+        }
       ],
       "collocations": [
         "three times"
@@ -5136,7 +7138,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "A year has twelve months."
+        {
+          "en": "A year has twelve months.",
+          "fa": "یک سال دوازده ماه دارد."
+        },
+        {
+          "en": "The clock struck twelve.",
+          "fa": "ساعت دوازده را زد."
+        }
       ],
       "collocations": [
         "twelve o'clock"
@@ -5153,7 +7162,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "There are twenty students in the class."
+        {
+          "en": "There are twenty students in the class.",
+          "fa": "کلاس بیست دانش‌آموز دارد."
+        },
+        {
+          "en": "The hotel room costs twenty dollars a night.",
+          "fa": "اتاق هتل شبی بیست دلار است."
+        }
       ],
       "collocations": [
         "twenty years old"
@@ -5170,7 +7186,14 @@
       "level": "A1",
       "partOfSpeech": "number",
       "examples": [
-        "A hundred is ten times ten."
+        {
+          "en": "A hundred is ten times ten.",
+          "fa": "صد ده تا ده است."
+        },
+        {
+          "en": "The book has a hundred pages.",
+          "fa": "کتاب صد صفحه دارد."
+        }
       ],
       "collocations": [
         "a hundred percent"
@@ -5187,7 +7210,14 @@
       "level": "A1",
       "partOfSpeech": "noun",
       "examples": [
-        "What is your phone number?"
+        {
+          "en": "What is your phone number?",
+          "fa": "شمارهٔ تلفنت چیست؟"
+        },
+        {
+          "en": "Please say your student number slowly.",
+          "fa": "لطفاً شمارهٔ دانشجویی‌ات را آرام بگو."
+        }
       ],
       "collocations": [
         "phone number",

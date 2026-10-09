@@ -130,7 +130,7 @@ object ContentParser {
                 pronunciation = o.optString("pronunciation").ifBlank { null },
                 level = LearningLevel.valueOf(o.getString("level")),
                 partOfSpeech = o.optString("partOfSpeech").ifBlank { null },
-                examples = o.optJSONArraytoString("examples"),
+                examples = o.parseExamples(),
                 collocations = o.optJSONArraytoString("collocations"),
                 lessonId = o.optString("lessonId").ifBlank { null },
                 // Authored Persian usage note (A-1) — shown after a missed review card.
@@ -217,6 +217,30 @@ object ContentParser {
             )
 
             else -> null // unknown / future types never break lesson loading
+        }
+    }
+
+    /**
+     * Bilingual examples (A-10). The authored shape is
+     * `"examples": [{ "en": "…", "fa": "…" }]`.
+     *
+     * A bare string element is still accepted — an installed database written by
+     * an older bundle holds the legacy `["sentence"]` array until the version-gated
+     * re-seed rewrites it, and a content read must never crash on that. Such an
+     * element keeps the English sentence and carries an empty translation, which is
+     * exactly what `validateContent` rejects for new content.
+     */
+    private fun JSONObject.parseExamples(): List<org.token.english.domain.model.VocabularyExample> {
+        val arr = optJSONArray("examples") ?: return emptyList()
+        return (0 until arr.length()).mapNotNull { i ->
+            when (val entry = arr.opt(i)) {
+                is JSONObject -> {
+                    val en = entry.optString("en")
+                    if (en.isBlank()) null else org.token.english.domain.model.VocabularyExample(en, entry.optString("fa"))
+                }
+                is String -> if (entry.isBlank()) null else org.token.english.domain.model.VocabularyExample(entry, "")
+                else -> null
+            }
         }
     }
 

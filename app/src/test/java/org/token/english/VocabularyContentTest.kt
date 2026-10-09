@@ -9,13 +9,18 @@ import java.io.File
  * Guards the two vocabulary-content invariants the P0-9 A1/A2 audit surfaced
  * (both were broken before it, silently — nothing failed the build):
  *
- * 1. An example sentence must actually contain the word it illustrates. The
- *    check is inflection-tolerant (a token that *starts with* the head word
- *    counts, so `blocks` illustrates `block` and `children` illustrates
- *    `child`) and multi-word entries only require their parts to appear, in any
- *    order — that covers separable phrasal verbs (`put … off`). The genuinely
- *    irregular forms (went/children/women/implied …) are listed explicitly and
- *    the list may not rot.
+ * 1. An example sentence must actually contain the word it illustrates — every
+ *    example individually (A-10 gives each word two). The check is
+ *    inflection-tolerant (a token that *starts with* the head word counts, so
+ *    `blocks` illustrates `block` and `children` illustrates `child`) and
+ *    multi-word entries only require their parts to appear, in any order — that
+ *    covers separable phrasal verbs (`put … off`). The genuinely irregular
+ *    forms (went/children/women/implied …) are listed explicitly and the list
+ *    may not rot.
+ *
+ * 1b. Depth (A-10): every word carries at least two examples, each an object
+ *     `{en, fa}` whose Persian translation is really Persian. The legacy
+ *     plain-string shape is rejected here so a rolled-back bundle fails loudly.
  *
  * 2. A machine-generated "What does X mean?" choice (`scripts/archive/enrich_content.mjs`
  *    writes exactly one per lesson, always at `*.ex.07`) must draw every option
@@ -75,26 +80,73 @@ class VocabularyContentTest {
         "c1.phrasal-idioms.word.run-out-of" to "ran out of",
     )
 
-    private fun exampleUses(entry: JSONObject, word: String): Boolean {
+    /**
+     * The example sentences as plain English strings, accepting both the
+     * bilingual A-10 shape (`[{"en": …, "fa": …}]`) and the legacy
+     * plain-string shape (`["…"]`) so the word check reads either bundle.
+     */
+    private fun exampleTexts(entry: JSONObject): List<String> {
+        val examples = entry.getJSONArray("examples")
+        return (0 until examples.length()).map { i ->
+            when (val raw = examples.get(i)) {
+                is JSONObject -> raw.optString("en")
+                else -> raw.toString()
+            }
+        }
+    }
+
+    private fun exampleUses(example: String, word: String): Boolean {
         val parts = tokensOf(word)
         if (parts.isEmpty()) return false
-        val examples = entry.getJSONArray("examples")
-        val exampleTokens = (0 until examples.length()).flatMap { tokensOf(examples.getString(it)) }
+        val exampleTokens = tokensOf(example)
         return parts.all { part -> exampleTokens.any { it == part || it.startsWith(part) } }
     }
 
     @Test
     fun `every vocabulary example actually contains its word`() {
-        val offenders = vocabulary().filterNot { entry ->
-            exampleUses(entry, entry.getString("word")) ||
-                irregularForms.containsKey(entry.getString("id"))
+        val offenders = mutableListOf<String>()
+        vocabulary().forEach { entry ->
+            val id = entry.getString("id")
+            val word = entry.getString("word")
+            val irregular = irregularForms[id]
+            exampleTexts(entry).forEachIndexed { index, example ->
+                val named = exampleUses(example, word) ||
+                    (irregular != null && example.lowercase().contains(irregular))
+                if (!named) offenders += "$id[$index]: «$example»"
+            }
         }
         assertTrue(
             "vocabulary example(s) never name their word — fix the sentence " +
                 "or record the inflection in irregularForms: " +
-                offenders.joinToString { "${it.getString("id")} (${it.getString("word")})" },
+                offenders.joinToString(),
             offenders.isEmpty(),
         )
+    }
+
+    @Test
+    fun `every word carries at least two bilingual examples`() {
+        val persian = Regex("[\\u0600-\\u06FF]")
+        val problems = mutableListOf<String>()
+        vocabulary().forEach { entry ->
+            val id = entry.getString("id")
+            val examples = entry.getJSONArray("examples")
+            if (examples.length() < 2) {
+                problems += "$id: ${examples.length()} example(s) — A-10 requires 2"
+                return@forEach
+            }
+            for (i in 0 until examples.length()) {
+                val raw = examples.get(i)
+                if (raw !is JSONObject) {
+                    problems += "$id[$i]: plain-string example — must be {en, fa}"
+                    continue
+                }
+                if (raw.optString("en").isBlank()) problems += "$id[$i]: no English sentence"
+                val fa = raw.optString("fa")
+                if (fa.isBlank()) problems += "$id[$i]: no Persian translation"
+                else if (!persian.containsMatchIn(fa)) problems += "$id[$i]: translation is not Persian"
+            }
+        }
+        assertTrue("vocabulary depth problem(s): ${problems.joinToString()}", problems.isEmpty())
     }
 
     @Test
@@ -104,8 +156,7 @@ class VocabularyContentTest {
         assertTrue("irregularForms entry no longer exists — drop it: $stale", stale.isEmpty())
 
         val missing = irregularForms.filterNot { (id, form) ->
-            val examples = byId.getValue(id).getJSONArray("examples")
-            val text = (0 until examples.length()).joinToString(" ") { examples.getString(it) }.lowercase()
+            val text = exampleTexts(byId.getValue(id)).joinToString(" ").lowercase()
             text.contains(form)
         }
         assertTrue("irregularForms entry does not match its example any more: $missing", missing.isEmpty())

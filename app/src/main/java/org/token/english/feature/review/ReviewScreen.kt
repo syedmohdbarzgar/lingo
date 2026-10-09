@@ -221,13 +221,23 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center,
                         )
-                        word.examples.firstOrNull()?.let { example ->
+                        // A-10: the example is bilingual, so a missed card teaches
+                        // meaning as well as form.
+                        word.examples.forEach { example ->
                             EnglishText(
-                                text = example,
+                                text = example.en,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 textAlign = TextAlign.Center,
                             )
+                            if (example.fa.isNotBlank()) {
+                                Text(
+                                    text = example.fa,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                         // Authored Persian usage note (A-1): the same "why" the
                         // lesson screen shows after a miss.

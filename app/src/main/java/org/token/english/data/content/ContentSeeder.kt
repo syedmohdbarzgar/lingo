@@ -3,6 +3,7 @@ package org.token.english.data.content
 import android.util.Log
 import kotlinx.coroutines.flow.first
 import org.json.JSONArray
+import org.json.JSONObject
 import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
@@ -70,7 +71,11 @@ class ContentSeeder(
                     pronunciation = it.pronunciation,
                     level = it.level.name,
                     partOfSpeech = it.partOfSpeech,
-                    examplesJson = JSONArray(it.examples).toString(),
+                    examplesJson = JSONArray(
+                        it.examples.map { example ->
+                            JSONObject().put("en", example.en).put("fa", example.fa)
+                        },
+                    ).toString(),
                     collocationsJson = JSONArray(it.collocations).toString(),
                     lessonId = it.lessonId,
                     explanationFa = it.explanationFa,

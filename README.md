@@ -76,7 +76,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 18)**
+**Content bundle (JSON `contentVersion` 19)**
 
 | | Count |
 |---|---|
@@ -264,7 +264,7 @@ Source of truth: `app/src/main/assets/content/`
 | File | Defines |
 |---|---|
 | `lessons.json` | Lessons, CEFR level, order, Persian grammar tip |
-| `vocabulary.json` | Words, translation, IPA, examples, collocations |
+| `vocabulary.json` | Words, translation, IPA, two bilingual {en, fa} examples each, collocations |
 | `exercises.json` | The exercises (authored JSON payloads) |
 | `placement.json` | The banded placement questions |
 | `knowledge.json` | The curriculum graph: nodes, prerequisites, taught lessons, skills |
@@ -292,7 +292,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-212 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
+213 unit tests across 29 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

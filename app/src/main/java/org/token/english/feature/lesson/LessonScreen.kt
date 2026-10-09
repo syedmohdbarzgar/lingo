@@ -460,12 +460,21 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
-                                item.examples.firstOrNull()?.let { example ->
+                                // A-10: the example carries its own Persian gloss,
+                                // so the intro stage teaches meaning, not just form.
+                                item.examples.forEach { example ->
                                     EnglishText(
-                                        text = example,
+                                        text = example.en,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
+                                    if (example.fa.isNotBlank()) {
+                                        Text(
+                                            text = example.fa,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
                                 }
                             }
                             androidx.compose.material3.IconButton(

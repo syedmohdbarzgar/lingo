@@ -166,7 +166,10 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
                 )
 
                 else -> {
-                    val item = state.item!!
+                    // B-8: no `!!`. The loading/null branches above already cover
+                    // every case this `else` can be reached in, so a null here is
+                    // the empty state, not a crash.
+                    val item = state.item ?: return@Box
                     Column(
                         Modifier
                             .fillMaxSize()
@@ -224,11 +227,22 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
                             AppCard {
                                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                                     SectionHeader("در جمله")
+                                    // Every example ships with its Persian
+                                    // translation (A-10).
                                     item.examples.forEach { example ->
-                                        EnglishText(
-                                            text = example,
-                                            style = MaterialTheme.typography.bodyLarge,
-                                        )
+                                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                                            EnglishText(
+                                                text = example.en,
+                                                style = MaterialTheme.typography.bodyLarge,
+                                            )
+                                            if (example.fa.isNotBlank()) {
+                                                Text(
+                                                    text = example.fa,
+                                                    style = MaterialTheme.typography.bodyMedium,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }

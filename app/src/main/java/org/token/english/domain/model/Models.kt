@@ -52,6 +52,17 @@ data class LessonState(
     val completedAt: Long?,
 )
 
+/**
+ * One bilingual example sentence (A-10). The English sentence and its Persian
+ * translation are a **pair in one object**, not two parallel lists: aligned
+ * arrays drift the moment one side is edited, and a drifted pair shows the wrong
+ * translation under the right sentence.
+ */
+data class VocabularyExample(
+    val en: String,
+    val fa: String,
+)
+
 data class VocabularyItem(
     val id: String,
     val word: String,
@@ -60,7 +71,7 @@ data class VocabularyItem(
     val pronunciation: String?,
     val level: LearningLevel,
     val partOfSpeech: String?,
-    val examples: List<String>,
+    val examples: List<VocabularyExample>,
     val collocations: List<String>,
     val lessonId: String?,
     /**
