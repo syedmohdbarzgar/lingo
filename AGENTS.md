@@ -374,7 +374,9 @@ Rules:
 - Root layout is **forced RTL**; all English content goes through `EnglishText` / `AnswerField`
   (which re-assert LTR). Never put raw English in an RTL layout.
 - Feedback is never color-only: always icon + text (`CorrectBanner`/`IncorrectBanner`).
-- Touch targets ≥ 48dp (`TouchTargetMin`), primary buttons 48dp high, cards 16dp radius.
+- Touch targets ≥ 48dp (`TouchTargetMin`), primary buttons 48dp high, cards 16dp radius,
+  and **cards always span the available width** — `AppCard` fills it itself so no call site
+  has to remember (a card sized to its content reads as a chip and breaks the column edge).
 - Every feature screen needs empty/loading/error states (design.md §37–39). The learning core
   works offline, so a local failure must never be blamed on the network. Only a genuinely online
   action (e.g. a purchase) may show a connectivity error — and it must be specific about it.
