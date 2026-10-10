@@ -17,6 +17,7 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.core.billing.TrialClock
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.model.LearningLevel
@@ -244,7 +245,10 @@ class HomeViewModel(
     private fun refreshAdaptivePlan() {
         planJob?.cancel()
         planJob = viewModelScope.launch {
-            val full = runCatching { getTodayPlan(System.currentTimeMillis()) }.getOrNull()
+            // runCatchingCancellable, not runCatching (checklist B-9): the plain
+            // version also catches CancellationException, so a cancelled screen
+            // would keep querying and write state after its scope died.
+            val full = runCatchingCancellable { getTodayPlan(System.currentTimeMillis()) }.getOrNull()
                 ?: return@launch
             _state.update { current -> current.copy(plan = full) }
             // …and ask the remediation engine whether there is a specific node
@@ -254,7 +258,7 @@ class HomeViewModel(
             val weakSpot = full.actions
                 .firstOrNull { it.type == LearningActionType.REMEDIATE }
                 ?.itemId
-            val focus = runCatching { getFocusPlan(weakSpot) }.getOrNull()
+            val focus = runCatchingCancellable { getFocusPlan(weakSpot) }.getOrNull()
             _state.update { current -> current.copy(focus = focus) }
         }
     }

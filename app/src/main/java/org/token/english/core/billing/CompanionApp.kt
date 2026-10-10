@@ -21,8 +21,11 @@ import androidx.annotation.RequiresApi
  * `org.token.zaribar` would unlock the paid tier — so the install is only trusted
  * when its signing certificate matches [EXPECTED_SIGNING_SHA256]. That set is
  * **empty until the Zaribar release key digest is pasted in**, and an empty set
- * means the check cannot run; the detector then accepts the package id alone and
- * says so in the log (tracked as debt in AGENTS.md §10).
+ * means the check cannot run; debug builds then accept the package id alone and
+ * say so in the log (tracked as debt in AGENTS.md §10). **Release builds do not
+ * ship that way**: `app/build.gradle.kts` reads this constant and fails the
+ * assemble/bundle task of any release variant while the digest is empty, the same
+ * fail-closed stance as `bazaarRsaKey`.
  *
  * Everything here is local and offline: a PackageManager lookup plus a store deep
  * link. No server, no account, no network.
@@ -39,8 +42,8 @@ object CompanionApp {
      * key: `keytool -printcert -jarfile zaribar.apk`.
      *
      * Multiple entries are allowed so a key rotation does not break the grant.
-     * Empty = not configured yet (see the object KDoc): the grant then trusts the
-     * package id alone and logs a warning.
+     * Empty = not configured yet: debug builds trust the package id alone and log a
+     * warning, while release builds refuse to assemble (see the object KDoc).
      */
     val EXPECTED_SIGNING_SHA256: Set<String> = emptySet()
 

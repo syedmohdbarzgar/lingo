@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.engine.ExerciseDimension
@@ -182,7 +183,9 @@ class LessonViewModel(
             // engine's weak-spot card, the remediation engine decides which of the
             // lesson's exercises are evidence about that node and the session shows
             // only those, in the authored order. A subset, not a reshuffle.
-            val focus = focusItemId?.let { runCatching { getFocusPlan(it) }.getOrNull() }
+            // runCatchingCancellable, not runCatching (checklist B-9): a cancelled
+            // session must stop, not carry on and write state.
+            val focus = focusItemId?.let { runCatchingCancellable { getFocusPlan(it) }.getOrNull() }
             val focusedIds = focus?.exerciseIds.orEmpty()
             val sessionExercises = exercises.filter { it.id in focusedIds }.ifEmpty { exercises }
             if (lesson == null || sessionExercises.isEmpty()) {

@@ -460,5 +460,6 @@ private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
 
 /** Opens an external link in the user's browser; a no-op when no handler exists. */
 private fun Context.openLink(url: String) {
-    runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    runCatching { startActivity(intent) } // runCatching-ok: not a suspend call (B-9)
 }

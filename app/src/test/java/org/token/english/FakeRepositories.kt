@@ -1,10 +1,17 @@
 package org.token.english
 
+import android.app.Activity
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.core.billing.BillingGateway
+import org.token.english.core.billing.ProductIds
+import org.token.english.core.billing.PurchaseOutcome
+import org.token.english.core.billing.Storefront
+import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
@@ -226,13 +233,22 @@ class FakeKnowledgeRepository(
     val statesFlow = MutableStateFlow<List<KnowledgeState>>(emptyList())
     val recorded = mutableListOf<Pair<String, Boolean>>()
 
+    /**
+     * When set, [allItems] suspends on it — lets a test cancel a ViewModel while a
+     * use case is mid-lookup (checklist B-9: cancellation must not be swallowed).
+     */
+    var allItemsGate: CompletableDeferred<Unit>? = null
+
     override fun observeStates(): Flow<List<KnowledgeState>> = statesFlow
     override fun observePractisedCount(): Flow<Int> = statesFlow.map { it.size }
     override suspend fun getState(itemId: String): KnowledgeState? = statesFlow.value.firstOrNull { it.itemId == itemId }
     override suspend fun itemsForLesson(lessonId: String): List<KnowledgeItem> =
         itemsFlow.value.filter { lessonId in it.lessonIds }
 
-    override suspend fun allItems(): List<KnowledgeItem> = itemsFlow.value
+    override suspend fun allItems(): List<KnowledgeItem> {
+        allItemsGate?.await()
+        return itemsFlow.value
+    }
 
     override suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long) {
         recorded += lessonId to correct
@@ -259,6 +275,59 @@ class FakeAudioPlayer(available: Boolean? = true) : AudioPlayer {
     }
 
     override fun release() = Unit
+}
+
+/**
+ * Store double (checklist v8 item 3): the marketplace is whatever the test says
+ * it is — reachable or not, priced or not, purchase succeeding, cancelled or
+ * failing — so every paywall path is reachable without a real store account.
+ */
+class FakeBillingGateway(
+    override val storefront: Storefront = Storefront.BAZAAR,
+    /** What `initialize()` answers (a store app that is missing/unusable). */
+    var storeReachable: Boolean = true,
+    var plans: List<SubscriptionPlan> = listOf(
+        SubscriptionPlan(ProductIds.MONTHLY, "اشتراک ماهانه", "یک ماه", "۱۰۰٬۰۰۰ تومان", monthly = true),
+        SubscriptionPlan(ProductIds.YEARLY, "اشتراک سالانه", "یک سال", "۵۰۰٬۰۰۰ تومان", monthly = false),
+    ),
+    var purchaseOutcome: PurchaseOutcome = PurchaseOutcome.Success,
+    var subscriptionActive: Boolean = false,
+    /** When set, every call throws it — how a store failure reaches the UI. */
+    var throwOnCall: Throwable? = null,
+) : BillingGateway {
+
+    var initializeCalls = 0
+    var checkCalls = 0
+    val purchased = mutableListOf<SubscriptionPlan>()
+
+    private fun crashIfAsked() {
+        throwOnCall?.let { throw it }
+    }
+
+    override suspend fun initialize(): Boolean {
+        initializeCalls++
+        crashIfAsked()
+        return storeReachable
+    }
+
+    override suspend fun fetchPlans(): List<SubscriptionPlan> {
+        crashIfAsked()
+        return plans
+    }
+
+    override suspend fun purchase(activity: Activity, plan: SubscriptionPlan): PurchaseOutcome {
+        purchased += plan
+        crashIfAsked()
+        return purchaseOutcome
+    }
+
+    override suspend fun checkSubscription(): Boolean {
+        checkCalls++
+        crashIfAsked()
+        return subscriptionActive
+    }
+
+    override suspend fun subscriptionUntil(): Long = if (subscriptionActive) Long.MAX_VALUE else 0L
 }
 
 /** Records what a ViewModel asked to speak; never throws. */

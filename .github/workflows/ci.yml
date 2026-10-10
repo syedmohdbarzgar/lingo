@@ -44,6 +44,22 @@ jobs:
       - name: Validate bundled content
         run: ./gradlew validateContent --console=plain
 
+      # B-9: `runCatching` catches CancellationException too, so wrapping a suspend
+      # call in it keeps a cancelled coroutine running. feature/ and domain/ must
+      # use runCatchingCancellable; a non-suspend use is allowed when the line is
+      # marked `runCatching-ok:` with its reason.
+      - name: No runCatching around a suspend call
+        run: |
+          offenders=$(grep -rn "runCatching {" \
+            app/src/main/java/org/token/english/feature \
+            app/src/main/java/org/token/english/domain \
+            | grep -v "runCatching-ok" || true)
+          if [ -n "$offenders" ]; then
+            echo "$offenders"
+            echo "::error::runCatching wraps a suspend call — use runCatchingCancellable, or mark the line 'runCatching-ok: <reason>' when the call is not suspend (AGENTS.md §9)."
+            exit 1
+          fi
+
       - name: Unit tests (bazaar debug)
         run: ./gradlew :app:testBazaarDebugUnitTest --console=plain
 

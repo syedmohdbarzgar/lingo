@@ -50,6 +50,10 @@ Release points only:
 ./gradlew :app:assembleGooglePlayDebug  # Google Play APK (Play Billing 9)
 ```
 
+Release `assemble*`/`bundle*` tasks fail closed: they refuse to build until `keystore.properties`
+holds `bazaarRsaKey` and `CompanionApp.EXPECTED_SIGNING_SHA256` is filled in (§4a). Debug is
+unaffected, so the everyday loop never needs those values.
+
 Notes: only per-flavour unit-test tasks exist (`testDebugUnitTest` is not a task under AGP 9's
 `onlyEnableUnitTestForTheTestedBuildType`). CI lives in `.github/workflows/ci.yml` — the same two
 fast gates (content validation + unit tests) and `lintBazaarDebug` on every push/PR; the three
@@ -256,7 +260,9 @@ Rules:
   hides it. **The install is only trusted when its signing certificate matches
   `CompanionApp.EXPECTED_SIGNING_SHA256`** (N-1: the package id alone is spoofable by any APK
   that declares it); `CompanionSignature` does the normalization/matching and is unit-tested
-  because the Android lookup cannot run on the JVM. While the grant is active, the paywall
+  because the Android lookup cannot run on the JVM. **Release builds fail closed while that
+  digest is empty**: `app/build.gradle.kts` reads the constant and throws for every `assemble*`
+  /`bundle*` *Release* task, exactly like `bazaarRsaKey`; debug builds keep the runtime warning. While the grant is active, the paywall
   replaces the plans with the free state and a Cafe Bazaar download link
   (`bazaar://details?id=org.token.zaribar`, web fallback) so the learner can keep/restore
   zaribar — shown in every flavor on purpose, since the companion is published on Bazaar only.
@@ -434,8 +440,8 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 252 tests / 36 classes as of
-  the B-1 adaptive-wiring pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 277 tests / 39 classes as of
+  the paywall/settings/placement ViewModel pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
@@ -463,8 +469,14 @@ Rules:
   the engine's weak spot reaches the state), `LessonViewModelTest` (a miss is re-asked exactly once
   and the session still ends; a device without an English voice reports `audioUnavailable`; a fresh
   lesson keeps the authored order while an untested dimension is front-loaded; a focused session
-  drills only the node's evidence) and `ReviewViewModelTest` (GOOD records the schedule and finishes;
-  AGAIN re-queues the item in the same session). They need
+  drills only the node's evidence; cancelling the scope mid-`getFocusPlan` loads nothing — B-9),
+  `ReviewViewModelTest` (GOOD records the schedule and finishes; AGAIN re-queues the item in the
+  same session), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
+  cancelled/failed/succeeded, restore active/none/store-failure, the companion grant),
+  `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
+  settings write never wipes the access status) and `PlacementViewModelTest` (adaptive stop after
+  an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
+  onboarding write) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
   and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
   growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an
@@ -487,6 +499,16 @@ Rules:
    permissions, the learning core still works with no network, and this file updated if architecture
    or the suspended list changed. All three flavour builds are checked at release points and on
    hardware via `scripts/install_debug.sh` — **not** after every change.
+4. **Never `runCatching { }` around a suspend call** (B-9): it swallows `CancellationException`, so
+   a cancelled `viewModelScope` coroutine keeps running and writes state. Use
+   `runCatchingCancellable` (`core/common/SafeCatching.kt`). CI greps `feature/` and `domain/` for
+   a bare `runCatching {`; a genuinely non-suspend use must say so on the same line with
+   `runCatching-ok: <reason>`.
+5. **Build-script task actions must not read script-level `val`s.** A top-level `val` in
+   `*.gradle.kts` is a member of the generated script class, so a `doFirst`/`doLast` that reads it
+   cannot be serialized by the configuration cache ("cannot serialize Gradle script object
+   references"). Copy the value into a local inside `configureEach { }` first — see the release
+   gates in `app/build.gradle.kts`.
 
 ## 10. Known design debt (accepted, tracked here)
 
@@ -496,15 +518,17 @@ Rules:
   version needs a per-dimension column/table (Room v6 + migration) and is the natural next step.
 
 - **The companion signing digest is not configured yet** (`CompanionApp.EXPECTED_SIGNING_SHA256`
-  is empty), so the free-access grant currently trusts the `org.token.zaribar` package id alone
-  and any APK declaring it unlocks the paid tier. Paste the Zaribar release key digest from
-  `keytool -printcert -jarfile zaribar.apk` to close N-1; the check is already implemented and
-  unit-tested. (A release-time hard failure like `bazaarRsaKey`'s is a possible follow-up.)
+  is empty), so a debug build trusts the `org.token.zaribar` package id alone and any APK declaring
+  it unlocks the paid tier there. Release builds now refuse to assemble until it is set, so the
+  bypass cannot ship — but the free-access grant stays unverified until the digest lands. Paste it
+  from `keytool -printcert -jarfile zaribar.apk` to close N-1; the check is already implemented,
+  unit-tested and enforced at release.
 
 - Myket has no real subscriptions: expiry is local and lost on reinstall — re-prove purchase
   through support if a user claims a lost subscription.
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
-  `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar.
+  `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
+  Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
 - Room is at `version = 5` with exported schemas (`app/schemas`). Schema changes must ship a
   migration **and** be added to `AppContainer.database` — Room throws at open time when a path from
   the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.

@@ -307,7 +307,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-252 unit tests across 36 classes. The pure cores carry the most weight — review scheduling,
+277 unit tests across 39 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -315,7 +315,10 @@ has its own tests. `LearningPathJourneyTest` runs the whole learner journey on t
 in-memory repositories, so the pieces are proven to compose, not just to work alone. The first
 ViewModel tests (B-6) drive `Home`/`Lesson`/`Review` through in-memory fakes — companion gating, the
 requeue-once-on-a-miss rule, the TTS-unavailable fallback and the review lifecycle — with no
-Android, no Room and no device. The adaptive layer runs on real screens too (B-1): Home shows the
+Android, no Room and no device. `Paywall`, `Settings` and `Placement` are covered the same way: a
+billing double makes the unpayable paths (unpriced products, unreachable store, cancelled, failed
+and restored purchases) testable, and placement is proven to stop as soon as a band becomes
+unwinnable instead of asking a beginner all 36 questions. The adaptive layer runs on real screens too (B-1): Home shows the
 remediation engine's weak spot and its CTA opens a focused session that drills only the exercises
 which are evidence about that node, while every session orders its queue by the kind of knowing the
 learner's own answers showed to be weakest.

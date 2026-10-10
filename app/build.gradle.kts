@@ -105,11 +105,49 @@ android {
 // build instead of shipping an unverifiable build. Debug builds still fall back.
 val bazaarRsaKeyMissing = keystoreProp("bazaarRsaKey").isBlank()
 tasks.matching { it.name == "assembleBazaarRelease" || it.name == "bundleBazaarRelease" }.configureEach {
+    // Copied into a *local* on purpose: a task action that reads a script member
+    // (a top-level `val` is a member of the generated script class) cannot be
+    // serialized by the configuration cache — the build would fail with
+    // "cannot serialize Gradle script object references".
+    val rsaKeyMissing = bazaarRsaKeyMissing
     doFirst {
-        if (bazaarRsaKeyMissing) {
+        if (rsaKeyMissing) {
             throw GradleException(
                 "bazaarRsaKey is missing from keystore.properties — Cafe Bazaar release builds " +
                     "require it (get it from developers.cafebazaar.ir).",
+            )
+        }
+    }
+}
+
+// The free-access companion grant (checklist N-1) is only trustworthy when its
+// signing digest is configured: with an empty digest set the app accepts any APK
+// that merely declares `org.token.zaribar`, which is exactly the paywall bypass.
+// The digest is public (a certificate hash, not a secret), so it lives in the
+// Kotlin source and this gate reads it from there — release builds fail closed
+// until the real Zaribar key is pasted in, the same stance as bazaarRsaKey above.
+// Debug builds keep the runtime warning instead (AGENTS.md §4a / §10).
+val companionSourceFile = file("src/main/java/org/token/english/core/billing/CompanionApp.kt")
+tasks.matching {
+    (it.name.startsWith("assemble") || it.name.startsWith("bundle")) && it.name.contains("Release")
+}.configureEach {
+    // Same local-copy rule as the bazaar gate above; the file is read at execution
+    // time so pasting the digest takes effect without a clean build.
+    val sourceFile = companionSourceFile
+    doFirst {
+        // Anchored to the *declaration* line: the constant is also named in the
+        // object's KDoc, and `[^=]*` would happily run across it to the next `=`
+        // anywhere in the file (`const val PACKAGE = …`). No match = fail closed.
+        val digest = Regex("""val EXPECTED_SIGNING_SHA256[^\n]*?=\s*([^\n]*)""")
+            .find(sourceFile.readText())
+            ?.groupValues?.get(1)?.trim()
+            .orEmpty()
+        if (digest.isEmpty() || digest.startsWith("emptySet")) {
+            throw GradleException(
+                "CompanionApp.EXPECTED_SIGNING_SHA256 is empty — a release must not ship a free " +
+                    "subscription that trusts the companion's package id alone (any APK declaring " +
+                    "org.token.zaribar would unlock the paid tier). Paste the Zaribar release " +
+                    "certificate digest from `keytool -printcert -jarfile zaribar.apk`.",
             )
         }
     }

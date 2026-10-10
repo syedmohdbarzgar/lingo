@@ -1,7 +1,10 @@
 package org.token.english
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -276,5 +279,40 @@ class LessonViewModelTest {
         val h = Harness().withOneExercise()
         val vm = h.build()
         assertNull(vm.state.value.focus)
+    }
+
+    // --- checklist B-9: cancellation is never swallowed ----------------------
+
+    @Test
+    fun `cancelling the scope stops the session instead of writing state`() {
+        val h = Harness()
+        h.knowledge.itemsFlow.value = listOf(
+            KnowledgeItem(
+                id = "grammar.test",
+                type = KnowledgeType.GRAMMAR,
+                title = "Test grammar",
+                titleFa = "گرامر آزمایشی",
+                level = LearningLevel.A1,
+                prerequisites = emptyList(),
+                lessonIds = listOf(lessonId),
+                skills = listOf(Skill.GRAMMAR),
+            ),
+        )
+        h.knowledge.statesFlow.value = listOf(knowledgeState("grammar.test", 0.2f))
+        h.with(choice("$lessonId.ex.01", Skill.GRAMMAR))
+        // The focus lookup parks here, so the session is cancelled mid-use-case.
+        val gate = CompletableDeferred<Unit>()
+        h.knowledge.allItemsGate = gate
+
+        val vm = h.build(focusItemId = "grammar.test")
+        assertEquals("the session is still loading", 0, vm.state.value.exercises.size)
+
+        vm.viewModelScope.cancel()
+        gate.complete(Unit)
+
+        // With a plain runCatching the CancellationException is swallowed, the
+        // coroutine carries on and loads the lesson anyway — this is the guard.
+        assertEquals("nothing may be loaded after cancellation", 0, vm.state.value.exercises.size)
+        assertTrue("the screen stays in its loading state", vm.state.value.isLoading)
     }
 }
