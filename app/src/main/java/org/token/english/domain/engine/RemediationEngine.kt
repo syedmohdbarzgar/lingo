@@ -149,21 +149,37 @@ class RemediationEngine(
     ): Plan? {
         val item = graph.byId(itemId) ?: return null
         val exercises = item.lessonIds
-            .flatMap { lessonId -> exercisesByLesson[lessonId].orEmpty() }
-            .filter { exercise ->
-                // Keep only exercises whose grading evidence actually maps to this item.
-                evidenceCovers(exercise, item)
+            .flatMap { lessonId ->
+                val lessonItems = graph.items.filter { lessonId in it.lessonIds }
+                exercisesByLesson[lessonId].orEmpty().filter { exercise ->
+                    // Keep only exercises whose grading evidence actually maps to this
+                    // item. The lesson's *full* item list is what makes this question
+                    // answerable: asking about the item alone would hit
+                    // KnowledgeEvidence's last-resort branch and every exercise would
+                    // count for every node.
+                    evidenceCovers(exercise, item, lessonItems)
+                }
             }
             .ifEmpty { return null }
 
         // Order by dimension weakness: weakest first so the learner is asked
         // what they struggle with before what they know.
-        val ordered = exercises.sortedWith(
-            compareBy(
-                { profile.masteryOf(ExerciseDimension.dimensionOf(it)) },
-                { it.id },
-            ),
-        )
+        //
+        // A dimension the learner has never been graded on must NOT reorder the
+        // authored sequence (checklist B-1): with an empty profile every exercise
+        // is equally unknown, and falling back to the exercise id would shuffle a
+        // lesson the author ordered deliberately. So established dimensions sort
+        // first (weakest of them leads) and the unassessed keep their authored
+        // position after them.
+        val ordered = exercises.withIndex()
+            .sortedWith(
+                compareBy<IndexedValue<Exercise>>(
+                    { if (profile.isEstablished(ExerciseDimension.dimensionOf(it.value))) 0 else 1 },
+                    { profile.masteryOf(ExerciseDimension.dimensionOf(it.value)) },
+                    { it.index },
+                ),
+            )
+            .map { it.value }
 
         val weakestDim = ordered.firstOrNull()?.let { ExerciseDimension.dimensionOf(it) }
 
@@ -185,14 +201,17 @@ class RemediationEngine(
     }
 
     /**
-     * Whether one graded answer of [exercise] counts as evidence for [item].
-     * Mirrors the attribution rule in [KnowledgeEvidence] but keyed on a single
-     * exercise's skill instead of a lesson's full item list.
+     * Whether one graded answer of [exercise] counts as evidence for [item], using
+     * the same rule the learner model is written with ([KnowledgeEvidence]) so the
+     * exercises a remediation block drills are exactly the ones that move the node.
      */
-    private fun evidenceCovers(exercise: Exercise, item: KnowledgeItem): Boolean {
+    private fun evidenceCovers(
+        exercise: Exercise,
+        item: KnowledgeItem,
+        lessonItems: List<KnowledgeItem>,
+    ): Boolean {
         val exerciseSkill = exercise.skill ?: return true // unknown skill → counts for all
-        val typed = KnowledgeEvidence.itemsFor(listOf(item), exerciseSkill)
-        return typed.any { it.id == item.id }
+        return KnowledgeEvidence.itemsFor(lessonItems, exerciseSkill).any { it.id == item.id }
     }
 
     // ----------------------------------------------------------- assess

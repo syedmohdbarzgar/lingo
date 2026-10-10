@@ -32,13 +32,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.launch
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppTextButton
 import org.token.english.core.designsystem.component.PrimaryButton
-import org.token.english.di.AppContainer
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.onboardingViewModelFactory
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.repository.SettingsRepository
 
 private data class OnboardingPage(
     val icon: ImageVector,
@@ -71,12 +70,12 @@ private val pages = listOf(
 )
 
 class OnboardingViewModel(
-    private val container: AppContainer,
+    private val settingsRepository: SettingsRepository,
 ) : ViewModel() {
     fun skipWithA1(onDone: () -> Unit) {
         viewModelScope.launch {
-            container.settingsRepository.setLevel(LearningLevel.A1)
-            container.settingsRepository.completeFirstLaunch()
+            settingsRepository.setLevel(LearningLevel.A1)
+            settingsRepository.completeFirstLaunch()
             onDone()
         }
     }
@@ -87,7 +86,7 @@ fun OnboardingScreen(
     onPlacement: () -> Unit,
     onSkip: () -> Unit,
 ) {
-    val vm: OnboardingViewModel = viewModel(factory = appViewModelFactory { OnboardingViewModel(it) })
+    val vm: OnboardingViewModel = viewModel(factory = onboardingViewModelFactory())
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val scope = rememberCoroutineScope()
 

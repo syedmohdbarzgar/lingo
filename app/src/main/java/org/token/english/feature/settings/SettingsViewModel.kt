@@ -11,10 +11,14 @@ import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.EntitlementPolicy
-import org.token.english.di.AppContainer
+import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.billing.TrialClock
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
+import org.token.english.domain.repository.KnowledgeRepository
+import org.token.english.domain.repository.ProgressRepository
+import org.token.english.domain.repository.SettingsRepository
 
 data class SettingsUiState(
     val isLoading: Boolean = true,
@@ -29,43 +33,52 @@ data class SettingsUiState(
     val companionInstalled: Boolean = false,
 )
 
+/** Settings screen state (checklist B-6): narrow, testable dependencies. */
 class SettingsViewModel(
-    private val container: AppContainer,
+    private val settingsRepository: SettingsRepository,
+    private val progressRepository: ProgressRepository,
+    private val knowledgeRepository: KnowledgeRepository,
+    private val companionInstalled: StateFlow<Boolean>,
+    private val refreshCompanion: suspend () -> Boolean,
+    /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
+    private val accessTickMillis: Long = 60_000L,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsUiState())
     val state: StateFlow<SettingsUiState> = _state.asStateFlow()
 
-    private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
-    private var companionInstalled: Boolean = false
+    private var trialAndSubscription: TrialAndSubscription? = null
+    private var companionIsInstalled: Boolean = false
 
     init {
         viewModelScope.launch {
             // Free companion grant: re-read the install state, then follow changes.
-            container.refreshCompanionInstalled()
-            container.companionInstalled.collect { installed ->
-                companionInstalled = installed
+            refreshCompanion()
+            companionInstalled.collect { installed ->
+                companionIsInstalled = installed
                 recomputeAccess()
             }
         }
         viewModelScope.launch {
-            container.settingsRepository.settings.collect {
+            settingsRepository.settings.collect {
                 // Keep the entitlement fields — this collector must not wipe them.
                 _state.update { s -> s.copy(isLoading = false, settings = it) }
             }
         }
         viewModelScope.launch {
-            container.settingsRepository.observeTrialAndSubscription().collect { ts ->
+            settingsRepository.observeTrialAndSubscription().collect { ts ->
                 trialAndSubscription = ts
                 recomputeAccess()
             }
         }
-        viewModelScope.launch {
-            // Trial remaining decays with wall time while the flow stays silent —
-            // tick so the status line never shows a stale countdown.
-            while (true) {
-                delay(60_000L)
-                if (trialAndSubscription != null) recomputeAccess()
+        if (accessTickMillis > 0) {
+            viewModelScope.launch {
+                // Trial remaining decays with wall time while the flow stays silent —
+                // tick so the status line never shows a stale countdown.
+                while (true) {
+                    delay(accessTickMillis)
+                    if (trialAndSubscription != null) recomputeAccess()
+                }
             }
         }
     }
@@ -73,7 +86,7 @@ class SettingsViewModel(
     private fun recomputeAccess() {
         val ts = trialAndSubscription ?: return
         val now = System.currentTimeMillis()
-        val remaining = org.token.english.core.billing.TrialClock.remainingMs(
+        val remaining = TrialClock.remainingMs(
             ts.trialClockState(),
             now,
             android.os.SystemClock.elapsedRealtime(),
@@ -82,13 +95,13 @@ class SettingsViewModel(
             now = now,
             trialRemainingMs = remaining,
             subscriptionUntil = ts.subscriptionUntil,
-            companionAppInstalled = companionInstalled,
+            companionAppInstalled = companionIsInstalled,
         )
         _state.update {
             it.copy(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
-                companionInstalled = companionInstalled,
+                companionInstalled = companionIsInstalled,
                 trialRemainingMillis = remaining,
                 subscriptionUntil = ts.subscriptionUntil,
             )
@@ -96,15 +109,15 @@ class SettingsViewModel(
     }
 
     fun setThemeMode(mode: ThemeMode) {
-        viewModelScope.launch { container.settingsRepository.setThemeMode(mode) }
+        viewModelScope.launch { settingsRepository.setThemeMode(mode) }
     }
 
     fun setDailyGoal(minutes: Int) {
-        viewModelScope.launch { container.settingsRepository.setDailyGoalMinutes(minutes) }
+        viewModelScope.launch { settingsRepository.setDailyGoalMinutes(minutes) }
     }
 
     fun setSoundEnabled(enabled: Boolean) {
-        viewModelScope.launch { container.settingsRepository.setSoundEnabled(enabled) }
+        viewModelScope.launch { settingsRepository.setSoundEnabled(enabled) }
     }
 
     /**
@@ -112,18 +125,18 @@ class SettingsViewModel(
      * flag in EnglishApp's settings collector (single place for both, incl. boot).
      */
     fun setDailyReminderEnabled(enabled: Boolean) {
-        viewModelScope.launch { container.settingsRepository.setDailyReminderEnabled(enabled) }
+        viewModelScope.launch { settingsRepository.setDailyReminderEnabled(enabled) }
     }
 
     fun setLevel(level: LearningLevel) {
-        viewModelScope.launch { container.settingsRepository.setLevel(level) }
+        viewModelScope.launch { settingsRepository.setLevel(level) }
     }
 
     fun resetProgress(onDone: () -> Unit) {
         viewModelScope.launch {
-            container.progressRepository.reset()
+            progressRepository.reset()
             // Knowledge state is learner data and must go with the rest of it.
-            container.knowledgeRepository.reset()
+            knowledgeRepository.reset()
             onDone()
         }
     }

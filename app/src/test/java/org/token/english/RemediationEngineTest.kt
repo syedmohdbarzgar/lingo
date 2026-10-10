@@ -209,6 +209,39 @@ class RemediationEngineTest {
     }
 
     @Test
+    fun `plan keeps only the exercises that are evidence about the target node`() {
+        // One lesson, one grammar node and one vocabulary node: the vocabulary
+        // drill says nothing about the grammar node.
+        val grammar = KnowledgeItem(
+            id = "g", type = KnowledgeType.GRAMMAR, title = "g", titleFa = "g",
+            level = LearningLevel.A1, prerequisites = emptyList(),
+            lessonIds = listOf("l1"), skills = listOf(Skill.GRAMMAR),
+        )
+        val words = KnowledgeItem(
+            id = "w", type = KnowledgeType.VOCABULARY, title = "w", titleFa = "w",
+            level = LearningLevel.A1, prerequisites = emptyList(),
+            lessonIds = listOf("l1"), skills = listOf(Skill.VOCABULARY),
+        )
+        val mixed = RemediationEngine(DefaultKnowledgeGraph(listOf(grammar, words)))
+        val exercises = listOf(mc("gram", Skill.GRAMMAR), mc("word", Skill.VOCABULARY))
+
+        val plan = mixed.plan("g", exercisesFor("l1", exercises))!!
+
+        assertEquals(listOf("gram"), plan.exercises.map { it.id })
+    }
+
+    @Test
+    fun `plan keeps the authored order when no dimension has been assessed`() {
+        // A brand-new learner must not get a lesson shuffled: with no evidence at
+        // all the authored sequence is the only defensible order (checklist B-1).
+        val exercises = listOf(mc("m1"), fill("f1"), translation("t1"))
+
+        val plan = engine.plan("a", exercisesFor("l1", exercises), MasteryProfile())!!
+
+        assertEquals(listOf("m1", "f1", "t1"), plan.exercises.map { it.id })
+    }
+
+    @Test
     fun `plan returns null when no exercises provide evidence`() {
         val emptyLessons = emptyMap<String, List<Exercise>>()
         assertNull(engine.plan("a", emptyLessons, MasteryProfile()))

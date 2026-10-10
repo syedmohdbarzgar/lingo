@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
@@ -15,8 +14,10 @@ import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.PurchaseOutcome
 import org.token.english.core.billing.SubscriptionPlan
+import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.billing.TrialClock
 import org.token.english.core.common.runCatchingCancellable
-import org.token.english.di.AppContainer
+import org.token.english.domain.repository.SettingsRepository
 
 data class PaywallUiState(
     val isLoading: Boolean = true,
@@ -35,41 +36,51 @@ data class PaywallUiState(
     val companionInstalled: Boolean = false,
 )
 
+/**
+ * Paywall state (checklist B-6): the billing gateway, settings, the companion
+ * signals and an entitlement-refresh action — not the whole container.
+ */
 class PaywallViewModel(
-    private val container: AppContainer,
+    private val billing: BillingGateway,
+    private val settingsRepository: SettingsRepository,
+    private val companionInstalled: StateFlow<Boolean>,
+    private val refreshCompanion: suspend () -> Boolean,
+    private val refreshEntitlements: suspend () -> Unit,
+    /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
+    private val accessTickMillis: Long = 60_000L,
 ) : ViewModel() {
-
-    private val billing: BillingGateway get() = container.billing
 
     private val _state = MutableStateFlow(PaywallUiState())
     val state: StateFlow<PaywallUiState> = _state.asStateFlow()
 
-    private var trialAndSubscription: org.token.english.core.billing.TrialAndSubscription? = null
-    private var companionInstalled: Boolean = false
+    private var trialAndSubscription: TrialAndSubscription? = null
+    private var companionIsInstalled: Boolean = false
 
     init {
         _state.update { it.copy(storeName = STORE_NAME) }
         viewModelScope.launch {
             // Re-check the companion install when the paywall opens: a learner may
             // have installed zaribar since launch, which makes the app free.
-            container.refreshCompanionInstalled()
-            container.companionInstalled.collect { installed ->
-                companionInstalled = installed
+            refreshCompanion()
+            companionInstalled.collect { installed ->
+                companionIsInstalled = installed
                 recomputeAccess()
             }
         }
         viewModelScope.launch {
-            container.settingsRepository.observeTrialAndSubscription().collect { ts ->
+            settingsRepository.observeTrialAndSubscription().collect { ts ->
                 trialAndSubscription = ts
                 recomputeAccess()
             }
         }
-        viewModelScope.launch {
-            // The countdown decays with wall time even when nothing is written
-            // to settings — tick while the paywall is open.
-            while (true) {
-                kotlinx.coroutines.delay(60_000L)
-                if (trialAndSubscription != null) recomputeAccess()
+        if (accessTickMillis > 0) {
+            viewModelScope.launch {
+                // The countdown decays with wall time even when nothing is written
+                // to settings — tick while the paywall is open.
+                while (true) {
+                    kotlinx.coroutines.delay(accessTickMillis)
+                    if (trialAndSubscription != null) recomputeAccess()
+                }
             }
         }
         loadPlans()
@@ -79,18 +90,18 @@ class PaywallViewModel(
         val ts = trialAndSubscription ?: return
         val now = System.currentTimeMillis()
         val elapsed = android.os.SystemClock.elapsedRealtime()
-        val remaining = org.token.english.core.billing.TrialClock.remainingMs(ts.trialClockState(), now, elapsed)
+        val remaining = TrialClock.remainingMs(ts.trialClockState(), now, elapsed)
         val entitlement = EntitlementPolicy.entitlement(
             now = now,
             trialRemainingMs = remaining,
             subscriptionUntil = ts.subscriptionUntil,
-            companionAppInstalled = companionInstalled,
+            companionAppInstalled = companionIsInstalled,
         )
         _state.update {
             it.copy(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
-                companionInstalled = companionInstalled,
+                companionInstalled = companionIsInstalled,
                 trialRemainingMillis = remaining,
             )
         }
@@ -153,7 +164,7 @@ class PaywallViewModel(
                 PurchaseOutcome.Success -> {
                     // Sync store truth into local entitlement (also updates the gating flow).
                     runCatchingCancellable { billing.checkSubscription() }
-                    container.refreshEntitlements()
+                    refreshEntitlements()
                     _state.update { it.copy(isPurchasing = false, purchased = true) }
                 }
 
@@ -186,7 +197,7 @@ class PaywallViewModel(
             val active = result.getOrDefault(false)
             when {
                 active -> {
-                    container.refreshEntitlements()
+                    refreshEntitlements()
                     _state.update { it.copy(purchased = true) }
                 }
 

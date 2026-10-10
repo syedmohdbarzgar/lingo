@@ -51,7 +51,8 @@ object Routes {
     const val ONBOARDING = "onboarding"
     const val PLACEMENT = "placement"
     const val HOME = "home"
-    const val LESSON = "lesson/{lessonId}"
+    /** `focusItemId` turns the lesson into a focused practice block (checklist B-1). */
+    const val LESSON = "lesson/{lessonId}?focusItemId={focusItemId}"
     const val REVIEW = "review"
     const val VOCABULARY = "vocabulary"
     const val VOCABULARY_DETAIL = "vocabulary/{vocabId}"
@@ -60,6 +61,9 @@ object Routes {
     const val PAYWALL = "paywall"
 
     fun lesson(lessonId: String) = "lesson/$lessonId"
+
+    fun focusLesson(lessonId: String, itemId: String) =
+        "lesson/$lessonId?focusItemId=$itemId"
     fun vocabularyDetail(vocabId: String) = "vocabulary/$vocabId"
 }
 
@@ -235,6 +239,9 @@ private fun NavGraphBuilder.home(navController: NavHostController) {
             onOpenReview = { navController.navigate(Routes.REVIEW) },
             onOpenVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onOpenPaywall = { navController.navigate(Routes.PAYWALL) },
+            onOpenFocus = { lessonId, itemId ->
+                navController.navigate(Routes.focusLesson(lessonId, itemId))
+            },
         )
     }
 }
@@ -242,7 +249,14 @@ private fun NavGraphBuilder.home(navController: NavHostController) {
 private fun NavGraphBuilder.lesson(navController: NavHostController) {
     composable(
         route = Routes.LESSON,
-        arguments = listOf(navArgument("lessonId") { type = NavType.StringType }),
+        arguments = listOf(
+            navArgument("lessonId") { type = NavType.StringType },
+            navArgument("focusItemId") {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            },
+        ),
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() },
         popEnterTransition = { fadeIn() },
@@ -252,6 +266,7 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
         LessonScreen(
             lessonId = lessonId,
             onExit = { navController.popBackStack() },
+            focusItemId = entry.arguments?.getString("focusItemId"),
         )
     }
 }

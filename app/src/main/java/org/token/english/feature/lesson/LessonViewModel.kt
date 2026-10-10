@@ -8,12 +8,24 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.token.english.di.AppContainer
+import org.token.english.core.audio.AudioPlayer
+import org.token.english.core.audio.Speaker
+import org.token.english.domain.engine.AdaptiveExerciseSelector
+import org.token.english.domain.engine.DefaultMasteryProfileEngine
+import org.token.english.domain.engine.ExerciseDimension
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.MasteryDimension
+import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.model.shuffledForDisplay
+import org.token.english.domain.repository.LessonRepository
+import org.token.english.domain.repository.ProgressRepository
+import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.ExerciseOutcome
+import org.token.english.domain.usecase.FocusPlan
+import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import kotlin.random.Random
 
 enum class LessonStage { INTRO, EXERCISES }
@@ -45,6 +57,13 @@ data class LessonUiState(
     val audioUnavailable: Boolean = false,
     /** The last playback attempt failed (engine error) — show a retry hint (B-3). */
     val audioFailed: Boolean = false,
+    /** Focused practice: the engine's decision this session obeys (B-1), else null. */
+    val focus: FocusBanner? = null,
+    /**
+     * The kind of knowing this session's own answers showed to be weakest, or
+     * `null` when nothing weak has been observed yet (B-1). The UI labels it.
+     */
+    val weakestDimension: MasteryDimension? = null,
 ) {
     val currentExercise: Exercise? get() = exercises.getOrNull(currentIndex)
     val answeredCorrectly: Boolean? get() = outcome?.correct
@@ -57,6 +76,18 @@ data class LessonUiState(
         get() = if (visibleTotal <= 0) 0f else askedCount.toFloat() / visibleTotal
 }
 
+/**
+ * The engine's decision for a focused session (checklist B-1): what is being
+ * drilled, why now, and what has to be reached for it to count as fixed. The
+ * screen renders this; it never decides any of it (technical spec §19).
+ */
+data class FocusBanner(
+    val titleFa: String,
+    val reasonFa: String,
+    val masteryPercent: Int,
+    val targetPercent: Int,
+)
+
 sealed interface LessonEvent {
     data class SelectOption(val index: Int) : LessonEvent
     data class TextAnswerChanged(val value: String) : LessonEvent
@@ -67,9 +98,25 @@ sealed interface LessonEvent {
     data class SpeakText(val text: String) : LessonEvent
 }
 
+/**
+ * Lesson session state (checklist B-6): the repositories, use cases, audio seam
+ * and foreground signal it actually uses, instead of the whole container.
+ */
 class LessonViewModel(
-    private val container: AppContainer,
     private val lessonId: String,
+    private val contentSeeded: StateFlow<Boolean>,
+    private val lessonRepository: LessonRepository,
+    private val progressRepository: ProgressRepository,
+    private val submitExercise: SubmitExerciseUseCase,
+    private val completeLesson: CompleteLessonUseCase,
+    private val audioPlayer: AudioPlayer,
+    private val speaker: Speaker,
+    private val isAppInForeground: () -> Boolean,
+    /** Focused practice: the node whose block this session should run (B-1). */
+    private val getFocusPlan: GetFocusPlanUseCase,
+    private val focusItemId: String? = null,
+    /** Study-time tick; tests pass 0 to disable it. */
+    private val studyTickMillis: Long = STUDY_TICK_MILLIS,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LessonUiState())
@@ -86,19 +133,26 @@ class LessonViewModel(
     /** Exercises already re-asked once — a miss is repeated at most one time. */
     private val requeued = mutableSetOf<String>()
 
+    /** Per-dimension mastery of this session's own answers (audit §2/§6). */
+    private var profile: MasteryProfile = MasteryProfile()
+    private val profileEngine = DefaultMasteryProfileEngine()
+    private val selector = AdaptiveExerciseSelector()
+
     init {
-        viewModelScope.launch {
-            // Study time is credited in fixed ticks while the app is visible —
-            // time spent backgrounded never counts toward the daily goal (P7).
-            while (true) {
-                kotlinx.coroutines.delay(STUDY_TICK_MILLIS)
-                creditStudyTime()
+        if (studyTickMillis > 0) {
+            viewModelScope.launch {
+                // Study time is credited in fixed ticks while the app is visible —
+                // time spent backgrounded never counts toward the daily goal (P7).
+                while (true) {
+                    kotlinx.coroutines.delay(studyTickMillis)
+                    creditStudyTime()
+                }
             }
         }
         viewModelScope.launch {
             // B-3: watch the TTS engine — when no English voice is available the
             // listening card switches to its text fallback instead of hanging.
-            container.audioPlayer.isEnglishAvailable.collect { available ->
+            audioPlayer.isEnglishAvailable.collect { available ->
                 _state.update { s ->
                     when (available) {
                         false -> s.copy(audioUnavailable = true, isPlaying = false)
@@ -111,11 +165,11 @@ class LessonViewModel(
         viewModelScope.launch {
             // Hold the screen until the curriculum bundle is in Room — a fresh
             // install seeds in the background and must not show "lesson missing".
-            container.contentSeeded.first { it }
-            val lesson = container.lessonRepository.getLesson(lessonId)
+            contentSeeded.first { it }
+            val lesson = lessonRepository.getLesson(lessonId)
             // Display-time shuffles: option order and word-bank order derive from
             // the exercise id — stable per question, never gameable (P1/P4).
-            val exercises = container.lessonRepository.getExercises(lessonId).map { exercise ->
+            val exercises = lessonRepository.getExercises(lessonId).map { exercise ->
                 when {
                     exercise is Exercise.MultipleChoice -> exercise.shuffledForDisplay()
                     exercise is Exercise.Translation && exercise.bank.isNotEmpty() ->
@@ -124,32 +178,59 @@ class LessonViewModel(
                     else -> exercise
                 }
             }
-            if (lesson == null || exercises.isEmpty()) {
+            // Focused practice (checklist B-1): when the learner arrived from the
+            // engine's weak-spot card, the remediation engine decides which of the
+            // lesson's exercises are evidence about that node and the session shows
+            // only those, in the authored order. A subset, not a reshuffle.
+            val focus = focusItemId?.let { runCatching { getFocusPlan(it) }.getOrNull() }
+            val focusedIds = focus?.exerciseIds.orEmpty()
+            val sessionExercises = exercises.filter { it.id in focusedIds }.ifEmpty { exercises }
+            if (lesson == null || sessionExercises.isEmpty()) {
                 _state.update {
                     it.copy(isLoading = false, error = "درس در دسترس نیست. محتوای ذخیره‌شده را بررسی کنید.")
                 }
                 return@launch
             }
-            val vocabulary = container.lessonRepository.getVocabulary(lessonId)
-            val saved = container.lessonRepository.getLessonState(lessonId)
-            val startIndex = if (saved?.completed == true) 0 else (saved?.currentIndex ?: 0)
-            val index = startIndex.coerceIn(0, exercises.lastIndex.coerceAtLeast(0))
-            pending.addAll(index until exercises.size)
+            val vocabulary = lessonRepository.getVocabulary(lessonId)
+            val saved = lessonRepository.getLessonState(lessonId)
+            // A focused block is short and always starts at its beginning: the saved
+            // lesson cursor points into the full lesson, not into this subset.
+            val startIndex = when {
+                focus != null -> 0
+                saved?.completed == true -> 0
+                else -> (saved?.currentIndex ?: 0)
+            }
+            val index = startIndex.coerceIn(0, sessionExercises.lastIndex.coerceAtLeast(0))
+            pending.addAll(index until sessionExercises.size)
             val firstIndex = pending.removeFirstOrNull() ?: index
-            // A resumed lesson (cursor > 0) has already shown the intro.
-            val stage = if (index == 0 && vocabulary.isNotEmpty()) LessonStage.INTRO else LessonStage.EXERCISES
+            // A resumed lesson (cursor > 0) has already shown the intro, and a
+            // focused block is a drill rather than a first teach — it starts on the
+            // exercises the engine picked.
+            val stage = if (focus == null && index == 0 && vocabulary.isNotEmpty()) {
+                LessonStage.INTRO
+            } else {
+                LessonStage.EXERCISES
+            }
             _state.update {
                 it.copy(
                     isLoading = false,
                     lesson = lesson,
-                    exercises = exercises,
+                    exercises = sessionExercises,
                     vocabulary = vocabulary,
                     stage = stage,
                     currentIndex = firstIndex,
                     remainingCount = pending.size,
+                    focus = focus?.let { plan ->
+                        FocusBanner(
+                            titleFa = plan.titleFa,
+                            reasonFa = plan.reasonFa,
+                            masteryPercent = (plan.mastery * 100).toInt(),
+                            targetPercent = (plan.reassessThreshold * 100).toInt(),
+                        )
+                    },
                 )
             }
-            if (stage == LessonStage.EXERCISES && exercises[firstIndex] is Exercise.Listening) playAudio()
+            if (stage == LessonStage.EXERCISES && sessionExercises[firstIndex] is Exercise.Listening) playAudio()
         }
     }
 
@@ -167,7 +248,7 @@ class LessonViewModel(
             LessonEvent.Next -> next()
             LessonEvent.ReplayAudio -> playAudio()
             LessonEvent.StartExercises -> startExercises()
-            is LessonEvent.SpeakText -> container.speak(
+            is LessonEvent.SpeakText -> speaker.speak(
                 text = event.text,
                 onDone = { _state.update { it.copy(isPlaying = false) } },
             )
@@ -192,10 +273,20 @@ class LessonViewModel(
         submitting = true
         viewModelScope.launch {
             try {
-                val outcome = container.submitExercise(exercise, answer, System.currentTimeMillis())
+                val outcome = submitExercise(exercise, answer, System.currentTimeMillis())
+                // The answer is evidence about a *kind of knowing* too (audit §2):
+                // folding it keeps the session's own weakness visible and lets the
+                // selector steer the rest of the session with it (B-1).
+                val updatedProfile = profileEngine.apply(
+                    profile,
+                    ExerciseDimension.dimensionOf(exercise),
+                    outcome.correct,
+                )
+                profile = updatedProfile
                 _state.update {
                     it.copy(
                         outcome = outcome,
+                        weakestDimension = weakestDimensionOf(updatedProfile, it.exercises),
                         correctCount = if (outcome.correct) it.correctCount + 1 else it.correctCount,
                         // Misses are marked so the summary can point them out (P4).
                         weakAnswers = if (outcome.correct) {
@@ -224,7 +315,7 @@ class LessonViewModel(
         if (s.answeredCorrectly == false && current != null && requeued.add(current.id)) {
             pending.addLast(s.currentIndex)
         }
-        val nextIndex = pending.removeFirstOrNull()
+        val nextIndex = pickNextIndex(s)
         if (nextIndex == null) {
             finishLesson()
             return
@@ -241,17 +332,51 @@ class LessonViewModel(
             )
         }
         viewModelScope.launch {
-            container.lessonRepository.saveLessonIndex(lessonId, nextIndex)
+            lessonRepository.saveLessonIndex(lessonId, nextIndex)
         }
         // Check the NEW exercise (the update above already advanced currentIndex).
         if (s.exercises.getOrNull(nextIndex) is Exercise.Listening) playAudio()
+    }
+
+    /**
+     * Picks which queued exercise comes next (checklist B-1). The authored order
+     * stands until the learner's own answers justify a change: the
+     * [AdaptiveExerciseSelector] front-loads the dimension this session has shown
+     * to be weakest, so after shaky recognition the fill-in-the-blanks (recall)
+     * lead instead of more multiple choice. With no evidence yet the sort is
+     * stable, so a fresh lesson runs exactly as authored — and a miss still comes
+     * back later in the session, because a failed dimension ties with an untouched
+     * one (0.0 vs 0f) and the tie is broken by queue position.
+     */
+    private fun pickNextIndex(s: LessonUiState): Int? {
+        val candidates = pending.toList()
+        if (candidates.size <= 1) return pending.removeFirstOrNull()
+        val chosen = selector.order(candidates.map { s.exercises[it] }, profile).firstOrNull()
+            ?: return pending.removeFirstOrNull()
+        val index = candidates.first { s.exercises[it].id == chosen.id }
+        pending.remove(index)
+        return index
+    }
+
+    /**
+     * The kind of knowing the session has shown to be weakest, or `null`. An
+     * untouched dimension is unseen rather than weak, and a consolidated one is no
+     * weakness at all (checklist B-1) — only an observed gap is named.
+     */
+    private fun weakestDimensionOf(profile: MasteryProfile, exercises: List<Exercise>): MasteryDimension? {
+        if (profile.byDimension.isEmpty()) return null
+        val weakest = profile.weakestOf(exercises.map { ExerciseDimension.dimensionOf(it) }.distinct())
+            ?: return null
+        val observed = profile.isEstablished(weakest) &&
+            profile.masteryOf(weakest) < AdaptiveExerciseSelector.STRONG_THRESHOLD
+        return if (observed) weakest else null
     }
 
     private fun finishLesson() {
         if (finished) return
         finished = true
         viewModelScope.launch {
-            container.completeLesson(lessonId, System.currentTimeMillis())
+            completeLesson(lessonId, System.currentTimeMillis())
             _state.update { it.copy(completed = true) }
         }
     }
@@ -260,9 +385,9 @@ class LessonViewModel(
         val exercise = _state.value.currentExercise as? Exercise.Listening ?: return
         // No English voice → the card already shows the text fallback; do not
         // pretend to play (isPlaying would hang on "در حال پخش…").
-        if (container.audioPlayer.isEnglishAvailable.value == false) return
+        if (audioPlayer.isEnglishAvailable.value == false) return
         _state.update { it.copy(isPlaying = true, audioFailed = false) }
-        container.speak(
+        speaker.speak(
             text = exercise.audioText,
             onDone = { _state.update { it.copy(isPlaying = false) } },
             onError = { _state.update { it.copy(isPlaying = false, audioFailed = true) } },
@@ -270,12 +395,12 @@ class LessonViewModel(
     }
 
     private suspend fun creditStudyTime() {
-        if (!container.isAppInForeground) return
-        container.progressRepository.addStudySeconds(STUDY_TICK_MILLIS / 1000)
+        if (!isAppInForeground()) return
+        progressRepository.addStudySeconds(studyTickMillis / 1000)
     }
 
     override fun onCleared() {
-        container.audioPlayer.stop()
+        audioPlayer.stop()
     }
 
     private companion object {

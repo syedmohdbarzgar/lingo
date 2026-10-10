@@ -52,7 +52,7 @@ import org.token.english.core.designsystem.component.OutlinedActionButton
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.settingsViewModelFactory
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
 
@@ -63,7 +63,7 @@ fun SettingsScreen(
     onReTakePlacement: () -> Unit,
     onOpenPaywall: () -> Unit,
 ) {
-    val vm: SettingsViewModel = viewModel(factory = appViewModelFactory { SettingsViewModel(it) })
+    val vm: SettingsViewModel = viewModel(factory = settingsViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
     var showResetDialog by remember { mutableStateOf(false) }
     var infoPage by remember { mutableStateOf<InfoPage?>(null) }

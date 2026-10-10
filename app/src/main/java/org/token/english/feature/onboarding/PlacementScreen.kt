@@ -42,8 +42,7 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.data.content.ContentParser
-import org.token.english.di.AppContainer
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.placementViewModelFactory
 import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementSkillReport
@@ -52,6 +51,9 @@ import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.shuffledForDisplay
+import org.token.english.domain.repository.LessonRepository
+import org.token.english.domain.repository.SettingsRepository
+import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
 import org.token.english.feature.lesson.ExerciseOption
 import org.token.english.feature.lesson.OptionVisual
@@ -85,7 +87,10 @@ sealed interface PlacementEvent {
 }
 
 class PlacementViewModel(
-    private val container: AppContainer,
+    private val contentSeeded: StateFlow<Boolean>,
+    private val lessonRepository: LessonRepository,
+    private val assessPlacement: AssessPlacementUseCase,
+    private val settingsRepository: SettingsRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlacementUiState())
@@ -95,8 +100,8 @@ class PlacementViewModel(
         viewModelScope.launch {
             // Hold the spinner until seeding finished — on a fresh install the
             // placement questions do not exist in Room for a moment.
-            container.contentSeeded.first { it }
-            val questions = container.lessonRepository
+            contentSeeded.first { it }
+            val questions = lessonRepository
                 .getExercises(ContentParser.PLACEMENT_LESSON_ID)
                 .filterIsInstance<Exercise.MultipleChoice>()
                 // Display-time shuffle: order derives from the question id, so the
@@ -154,7 +159,7 @@ class PlacementViewModel(
      */
     private fun finishAssessment(answers: List<PlacementAnswer>) {
         viewModelScope.launch {
-            val assessment = container.assessPlacement(answers)
+            val assessment = assessPlacement(answers)
             _state.update {
                 it.copy(
                     finished = true,
@@ -192,8 +197,8 @@ class PlacementViewModel(
     fun finish(onDone: () -> Unit) {
         val level = _state.value.resultLevel
         viewModelScope.launch {
-            container.settingsRepository.setLevel(level)
-            container.settingsRepository.completeFirstLaunch()
+            settingsRepository.setLevel(level)
+            settingsRepository.completeFirstLaunch()
             onDone()
         }
     }
@@ -205,7 +210,7 @@ fun PlacementScreen(
     onFinished: () -> Unit,
     onBack: () -> Unit,
 ) {
-    val vm: PlacementViewModel = viewModel(factory = appViewModelFactory { PlacementViewModel(it) })
+    val vm: PlacementViewModel = viewModel(factory = placementViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(

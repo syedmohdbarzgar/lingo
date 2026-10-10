@@ -48,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
+import org.token.english.core.designsystem.labelFa
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.AppLinearProgress
@@ -56,12 +57,13 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.lessonViewModelFactory
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.GrammarSection
 import org.token.english.domain.model.GrammarSectionKind
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.Skill
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,8 +71,13 @@ import org.token.english.domain.model.Skill
 fun LessonScreen(
     lessonId: String,
     onExit: () -> Unit,
+    /**
+     * Focused practice (checklist B-1): the curriculum node the learner came here
+     * to fix. The engine — not the screen — decides what that means.
+     */
+    focusItemId: String? = null,
 ) {
-    val vm: LessonViewModel = viewModel(factory = appViewModelFactory { LessonViewModel(it, lessonId) })
+    val vm: LessonViewModel = viewModel(factory = lessonViewModelFactory(lessonId, focusItemId))
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -120,6 +127,7 @@ fun LessonScreen(
                     correct = state.correctCount,
                     total = state.askedCount,
                     weakAnswers = state.weakAnswers,
+                    weakestDimension = state.weakestDimension,
                     onDone = onExit,
                     modifier = Modifier.align(Alignment.Center),
                 )
@@ -128,6 +136,31 @@ fun LessonScreen(
 
                 else -> ExerciseContent(state = state, onEvent = vm::onEvent)
             }
+        }
+    }
+}
+
+/**
+ * "Targeted practice" (checklist B-1): the remediation engine's reason for this
+ * session, and how far the node is from being consolidated. Purely a render of the
+ * decision — the copy comes from the engine, the labels from the design system.
+ */
+@Composable
+private fun FocusCard(focus: FocusBanner) {
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            SectionHeader("تمرین هدفمند")
+            Text(text = focus.titleFa, style = MaterialTheme.typography.titleSmall)
+            Text(
+                text = focus.reasonFa,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = "تسلط فعلی ${focus.masteryPercent}٪ — هدف ${focus.targetPercent}٪",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
         }
     }
 }
@@ -167,6 +200,8 @@ private fun ExerciseContent(
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+
+        state.focus?.let { FocusCard(it) }
 
         AppCard {
             when (exercise) {
@@ -363,6 +398,7 @@ private fun LessonSummary(
     correct: Int,
     total: Int,
     weakAnswers: List<String>,
+    weakestDimension: MasteryDimension?,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -402,6 +438,24 @@ private fun LessonSummary(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+        }
+        // Naming the kind of knowing that broke (recognition vs recall vs
+        // comprehension) is what makes the miss actionable (checklist B-1, audit §2).
+        weakestDimension?.let { dimension ->
+            AppCard(Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    SectionHeader("نقطهٔ ضعف این جلسه")
+                    Text(
+                        text = dimension.labelFa(),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = "تمرین‌های بعدی روی این مهارت جلوتر می‌آیند.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
         Text(
             text = "واژه‌های این درس به صف مرور اضافه شدند. مرور فاصله‌دار باعث می‌شود یادگیری ماندگار شود.",

@@ -48,7 +48,7 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.paywallViewModelFactory
 
 /**
  * Subscription paywall: 24h trial → monthly/yearly plans, sold through the
@@ -61,7 +61,7 @@ fun PaywallScreen(
     onLockedExit: () -> Unit,
     onPurchased: () -> Unit,
 ) {
-    val vm: PaywallViewModel = viewModel(factory = appViewModelFactory { PaywallViewModel(it) })
+    val vm: PaywallViewModel = viewModel(factory = paywallViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
     val activity = LocalActivity.current
     val locked = state.access == org.token.english.core.billing.AccessLevel.LOCKED

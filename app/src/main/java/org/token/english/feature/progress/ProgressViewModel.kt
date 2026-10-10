@@ -6,11 +6,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.token.english.di.AppContainer
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
+import org.token.english.domain.repository.KnowledgeRepository
+import org.token.english.domain.repository.LessonRepository
+import org.token.english.domain.repository.ProgressRepository
+import org.token.english.domain.repository.SettingsRepository
 
 data class ProgressUiState(
     val isLoading: Boolean = true,
@@ -25,8 +28,13 @@ data class ProgressUiState(
     val weakestKnowledge: String? = null,
 )
 
+/** Progress screen state (checklist B-6): narrow, testable dependencies. */
 class ProgressViewModel(
-    private val container: AppContainer,
+    private val settingsRepository: SettingsRepository,
+    private val lessonRepository: LessonRepository,
+    private val progressRepository: ProgressRepository,
+    private val knowledgeRepository: KnowledgeRepository,
+    private val studyStats: StateFlow<StudyStats>,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProgressUiState())
@@ -40,26 +48,26 @@ class ProgressViewModel(
 
     init {
         viewModelScope.launch {
-            container.settingsRepository.settings.collect {
+            settingsRepository.settings.collect {
                 level = it.level
                 rebuild()
             }
         }
         viewModelScope.launch {
             // Shared aggregate pipeline (P7) — same stream Home shows.
-            container.studyStats.collect {
+            studyStats.collect {
                 _state.value = _state.value.copy(isLoading = false, stats = it, mastery = _state.value.mastery)
                 rebuild()
             }
         }
         viewModelScope.launch {
-            container.progressRepository.observeMastery().collect {
+            progressRepository.observeMastery().collect {
                 _state.value = _state.value.copy(mastery = it)
                 rebuild()
             }
         }
         viewModelScope.launch {
-            container.lessonRepository.observeLessons().collect {
+            lessonRepository.observeLessons().collect {
                 totalLessons = it.size
                 rebuild()
             }
@@ -67,13 +75,13 @@ class ProgressViewModel(
         // Curriculum labels are authored content, read once — the graph is 70-odd
         // rows and never changes during a session.
         viewModelScope.launch {
-            val items = container.knowledgeRepository.allItems()
+            val items = knowledgeRepository.allItems()
             knowledgeTitles = items.associate { it.id to it.titleFa }
             knowledgeTotal = items.size
             rebuild()
         }
         viewModelScope.launch {
-            container.knowledgeRepository.observeStates().collect {
+            knowledgeRepository.observeStates().collect {
                 knowledgeStates = it
                 rebuild()
             }

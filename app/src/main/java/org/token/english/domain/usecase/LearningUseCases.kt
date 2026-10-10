@@ -1,7 +1,13 @@
 package org.token.english.domain.usecase
 
 import kotlinx.coroutines.flow.first
+import org.token.english.domain.engine.AdaptiveLearningPlanner
+import org.token.english.domain.engine.DefaultKnowledgeGraph
+import org.token.english.domain.engine.ExerciseDimension
 import org.token.english.domain.engine.LearningPlanner
+import org.token.english.domain.engine.PrerequisiteEngine
+import org.token.english.domain.engine.RemediationEngine
+import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
@@ -137,7 +143,7 @@ class GetTodayPlanUseCase(
         val stats: StudyStats = progress.observeStats().first()
 
         val completedIds = states.filter { it.completed }.map { it.lessonId }.toSet()
-        val nextLesson = org.token.english.domain.engine.nextLessonFor(allLessons, completedIds, settings.level)
+        val nextLesson = nextLessonFor(allLessons, completedIds, settings.level)
 
         val base = planner.createPlan(
             dueReviewCount = due,
@@ -156,15 +162,15 @@ class GetTodayPlanUseCase(
         val focusItems = nextLesson?.let { knowledge.itemsForLesson(it.id) }.orEmpty()
         val minutesByItem = focusItems.associate { item ->
             val lesson = allLessons.firstOrNull { it.id in item.lessonIds }
-            item.id to (lesson?.estimatedMinutes ?: org.token.english.domain.engine.AdaptiveLearningPlanner.DEFAULT_ITEM_MINUTES)
+            item.id to (lesson?.estimatedMinutes ?: AdaptiveLearningPlanner.DEFAULT_ITEM_MINUTES)
         }
         val decision = if (items.isEmpty() || focusItems.isEmpty() && due == 0) {
             null
         } else {
-            val graph = org.token.english.domain.engine.DefaultKnowledgeGraph(items)
-            org.token.english.domain.engine.AdaptiveLearningPlanner(
+            val graph = DefaultKnowledgeGraph(items)
+            AdaptiveLearningPlanner(
                 graph,
-                org.token.english.domain.engine.PrerequisiteEngine(graph),
+                PrerequisiteEngine(graph),
             ).plan(
                 states = knowledge.observeStates().first(),
                 dueReviewCount = due,
@@ -176,6 +182,105 @@ class GetTodayPlanUseCase(
         }
 
         return base.copy(actions = decision?.actions.orEmpty())
+    }
+}
+
+/**
+ * The engine's decision for one focused practice block (checklist B-1): which
+ * curriculum node to work on, why it was picked, which of the lesson's exercises
+ * actually provide evidence about it, and what the block has to reach to count as
+ * fixed.
+ *
+ * The surface only renders this — the node, the subset and the reason are all
+ * decided here (technical spec §19).
+ */
+data class FocusPlan(
+    val itemId: String,
+    val titleFa: String,
+    /** The lesson that teaches the node — where the focused session runs. */
+    val lessonId: String,
+    /** Persian "why this node, why now", authored by the remediation engine. */
+    val reasonFa: String,
+    /** The node's mastery now (0..1). */
+    val mastery: Float,
+    /**
+     * Ids of the exercises in [lessonId] that give evidence about the node. A
+     * focused session shows only these, so a grammar weakness is not padded with
+     * the lesson's vocabulary drills.
+     */
+    val exerciseIds: Set<String>,
+    /** Mastery after which the node counts as consolidated. */
+    val reassessThreshold: Float,
+    /** Attempts the block is allowed before the verdict escalates. */
+    val remainingAttempts: Int,
+    /** Nodes that stay locked until this one is fixed — why it is worth doing now. */
+    val blockedCount: Int,
+)
+
+/**
+ * Asks the remediation engine for the learner's next focused block (checklist
+ * B-1). With no [itemId] the engine isolates the weakest node that has evidence
+ * (error isolation, not "the whole subject"); with an [itemId] it plans for the
+ * node the daily plan already pointed at.
+ *
+ * Pure decision: the seeded graph, the learner's knowledge states and the lessons'
+ * exercises go in; a [FocusPlan] (or `null` when there is nothing worth drilling)
+ * comes out. Nothing here knows about screens.
+ */
+class GetFocusPlanUseCase(
+    private val knowledge: KnowledgeRepository,
+    private val lessons: LessonRepository,
+    private val weaknessThreshold: Float = RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD,
+) {
+    suspend operator fun invoke(itemId: String? = null): FocusPlan? {
+        val items = knowledge.allItems()
+        if (items.isEmpty()) return null
+        val graph = DefaultKnowledgeGraph(items)
+        val engine = RemediationEngine(graph, weaknessThreshold = weaknessThreshold)
+        val states = knowledge.observeStates().first().associateBy { it.itemId }
+
+        // Each lesson's exercises are fetched at most once per call.
+        val loaded = mutableMapOf<String, List<Exercise>>()
+        suspend fun exercisesOf(lessonId: String): List<Exercise> =
+            loaded[lessonId] ?: lessons.getExercises(lessonId).also { loaded[lessonId] = it }
+
+        val targetId = itemId ?: run {
+            // The weakest node is only meaningful among nodes that could be weak.
+            val candidates = graph.items.filter { item ->
+                val state = states[item.id]
+                state == null || state.mastery < weaknessThreshold
+            }
+            if (candidates.isEmpty()) return null
+            candidates.flatMap { it.lessonIds }.distinct().forEach { exercisesOf(it) }
+            engine.findWeakness(states, loaded)?.itemId ?: return null
+        }
+        val item = graph.byId(targetId) ?: return null
+        val mastery = states[targetId]?.mastery ?: return null
+        // A node the learner has never studied is *taught*, not drilled — and one
+        // already consolidated has nothing left to fix. Only a node the engine
+        // itself calls weak gets a focused block (checklist B-1).
+        if (mastery >= weaknessThreshold) return null
+        item.lessonIds.forEach { exercisesOf(it) }
+
+        val plan = engine.plan(targetId, loaded) ?: return null
+        val plannedIds = plan.exercises.map { it.id }.toSet()
+        // The session runs in one lesson: the first of the node's lessons that the
+        // engine has evidence-bearing exercises for.
+        val lessonId = item.lessonIds.firstOrNull { lesson ->
+            loaded[lesson].orEmpty().any { it.id in plannedIds }
+        } ?: return null
+
+        return FocusPlan(
+            itemId = item.id,
+            titleFa = item.titleFa,
+            lessonId = lessonId,
+            reasonFa = plan.reasonFa,
+            mastery = mastery,
+            exerciseIds = loaded[lessonId].orEmpty().map { it.id }.filter { it in plannedIds }.toSet(),
+            reassessThreshold = plan.reassessThreshold,
+            remainingAttempts = plan.remainingAttempts,
+            blockedCount = graph.items.count { item.id in it.prerequisites },
+        )
     }
 }
 

@@ -45,7 +45,7 @@ import org.token.english.core.designsystem.component.InfoBanner
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.reviewViewModelFactory
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.ReviewState
 import org.token.english.feature.lesson.AnswerField
@@ -56,7 +56,7 @@ fun ReviewScreen(
     onBrowseVocabulary: () -> Unit,
     onGoHome: () -> Unit,
 ) {
-    val vm: ReviewViewModel = viewModel(factory = appViewModelFactory { ReviewViewModel(it) })
+    val vm: ReviewViewModel = viewModel(factory = reviewViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(

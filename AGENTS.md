@@ -30,7 +30,8 @@ and buys nothing — it is only needed at release points or when putting a build
 
 ```bash
 ./gradlew :app:testBazaarDebugUnitTest   # unit tests + typechecks main sources (the fast gate)
-./gradlew validateContent                # content gate (also runs in preBuild)
+./gradlew validateContent                # content gate (also runs in preBuild); task lives in
+                                         #   gradle/content-validation.gradle.kts, applied by :app
 ```
 
 Hardware check — builds and installs only when a device is actually attached, and exits quietly
@@ -91,7 +92,8 @@ org.token.english
 │   ├── local/                 # Room: entities, DAOs, AppDatabase (version 5, schemas exported)
 │   ├── content/               # ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/            # Repository impls + SettingsRepositoryImpl (DataStore)
-├── di/AppContainer.kt         # Manual DI container (+ appViewModelFactory helper)
+├── di/                        # Manual DI: AppContainer.kt (+ ViewModelFactories.kt,
+│                              #   the ONE place the container meets a ViewModel)
 ├── feature/<screen>/          # Screen + ViewModel (+ UiState/Event) per feature
 │                              #   … incl. paywall/ (subscription purchase & restore)
 └── src/{bazaar,myket,googlePlay}/billing/PlatformBillingGateway.kt  # ONE per flavor
@@ -103,9 +105,10 @@ its own marketplace billing SDK (see §4a).
 **Dependency rule (enforced by review, not tooling yet):**
 
 ```text
-feature → domain (models/usecases) + core/designsystem + di
+feature → domain (models/usecases) + core/designsystem + core/common + di (factory fn only)
 domain  → nothing Android (pure Kotlin only)
 data    → domain (implements interfaces) + Room/DataStore
+di      → everything (the only place that wires them together)
 ```
 
 - UI state pattern: `UiState (StateFlow) ← Event ← ViewModel ← UseCase/Repository`.
@@ -113,6 +116,15 @@ data    → domain (implements interfaces) + Room/DataStore
 - **DI is manual** (`AppContainer`): constructor injection per class, container-level wiring.
   Hilt was deliberately skipped — its plugin/KSP interaction under AGP 9 built-in Kotlin adds
   risk with no MVP value. Revisit only if the container grows past ~25 bindings.
+- **A ViewModel takes only what it uses (B-6), and `feature/` never imports `di/`.** Each
+  ViewModel's constructor lists the repositories, use cases, audio seam (`Speaker`, `AudioPlayer`),
+  foreground/companion lambdas and tick intervals it actually needs — no `AppContainer` parameter,
+  no service locator. `di/ViewModelFactories.kt` holds one factory per screen and is the single
+  place the container meets a ViewModel; screens call `viewModel(factory = homeViewModelFactory(...))`
+  and that factory function is the only `di/` symbol `feature/` is allowed to import
+  (grep `AppContainer app/src/main/java/org/token/english/feature/` must stay empty).
+  Non-zero defaults exist only for tick intervals (tests pass `0` to disable the timer loops), and
+  narrow constructors are exactly what makes the first ViewModel tests possible without Android.
 - Engines are pure and swappable: `Sm2ReviewScheduler`, `DefaultMasteryEngine`,
   `DefaultLearningPlanner`, plus the knowledge layer — `KnowledgeGraph` (prerequisite ordering and
   unlocking) and `DefaultKnowledgeEngine` (how one graded answer moves a node's mastery and review
@@ -122,12 +134,26 @@ data    → domain (implements interfaces) + Room/DataStore
   "what to study now and why"), `DefaultMasteryProfileEngine` (mastery split by dimension —
   recognition / recall / comprehension / application / production), and `AdaptiveExerciseSelector`
   (front-loads the exercise formats whose mastery dimension is still weak).
-- **`AdaptiveLearningPlanner` is now wired to the UI (checklist B-1).** `GetTodayPlanUseCase`
-  builds the graph from the seeded items, plans, and returns the ordered `LearningAction`s inside
+- **The adaptive layer is wired to the UI (checklists B-1/B-6).** `GetTodayPlanUseCase` builds the
+  graph from the seeded items, plans, and returns the ordered `LearningAction`s inside
   `TodayPlan.actions`; `HomeScreen` renders them with each action's own `reasonFa` (the "برنامهٔ
-  امروز" card). The rest of the adaptive layer (`AdaptiveExerciseSelector`, `MasteryProfileEngine`,
-  `RemediationEngine`) is still proven only by its unit tests — wire the next slice the same way:
-  decision first, then surface.
+  امروز" card). `GetFocusPlanUseCase` then asks `RemediationEngine` for the weak spot — one node,
+  why it is worth drilling now, what it blocks, and how it is verified (`FocusPlan`) — and Home
+  renders it as the "نقطهٔ ضعف" card whose CTA opens the focused session (`lesson/{lessonId}?focusItemId=`).
+- **A focused session (B-1) is the engine's decision, not a screen's.** It shows only the lesson's
+  exercises that are evidence about the node (the same `KnowledgeEvidence` rule that writes the
+  learner model), keeps their authored order, leads with the engine's reason, and reports the
+  node's mastery against `FocusPlan.reassessThreshold`. Only a node the engine itself calls weak
+  (mastery below `RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD`, with evidence) gets a block; a node
+  the learner never studied is *taught*, not drilled, so `GetFocusPlanUseCase` returns `null` for it.
+- **`AdaptiveExerciseSelector` + `DefaultMasteryProfileEngine` steer a session's queue.** Every
+  graded answer is folded into a per-dimension `MasteryProfile` (recognition / recall /
+  comprehension / application / production) and the next exercise is chosen with the selector, so
+  the kinds of knowing still untested lead the session instead of the next authored item. Two rules
+  keep it safe: with no evidence the sort is stable, so a first-teach lesson runs exactly as
+  authored, and a missed exercise still comes back later in the session (a failed dimension ties
+  with an untouched one at 0, and the tie is broken by queue position). The profile is
+  **session-scoped** — there is no per-dimension column yet (see §10).
 - **Planner time budget (checklist B-2):** review is never dropped for lack of budget — its
   estimate is capped at half the day's target and it always leads — and the remaining actions
   stop at the **first** one that does not fit instead of skipping ahead to a cheaper one. With the
@@ -253,7 +279,8 @@ Rules:
 - `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
   `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
   **inside the JSON** — there is no Kotlin constant to bump (technical spec §63).
-- **`./gradlew validateContent`** (wired into `preBuild`) is the content gate. It checks unique ids,
+- **`./gradlew validateContent`** (wired into `preBuild`, defined in
+  `gradle/content-validation.gradle.kts`) is the content gate. It checks unique ids,
   dangling `lessonId` references, valid CEFR levels and exercise types, `correctIndex` in range,
   `fill_blank` blank markers, non-empty accepted answers, duplicate words within a lesson, matching
   bundle versions, and full lesson coverage (every lesson needs vocabulary, exercises and at least
@@ -407,8 +434,8 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 232 tests / 32 classes as of
-  the reading-content pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 252 tests / 36 classes as of
+  the B-1 adaptive-wiring pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
@@ -426,8 +453,22 @@ Rules:
   calibrating mastery), plus the
   adaptive layer —
   `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest` (never exceeds the daily target),
-  `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`,
+  `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`
+  (incl. the evidence filter and "an unassessed dimension must not reorder a lesson"),
+  `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
+- **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
+  `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
+  `HomeViewModelTest` (installing/removing the companion app flips access to COMPANION_APP / LOCKED;
+  the engine's weak spot reaches the state), `LessonViewModelTest` (a miss is re-asked exactly once
+  and the session still ends; a device without an English voice reports `audioUnavailable`; a fresh
+  lesson keeps the authored order while an untested dimension is front-loaded; a focused session
+  drills only the node's evidence) and `ReviewViewModelTest` (GOOD records the schedule and finishes;
+  AGAIN re-queues the item in the same session). They need
+  `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
+  and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
+  growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an
+  option index is wrong.
 - `.github/workflows/ci.yml` runs the same two gates (validate + unit tests) plus `lintBazaarDebug`
   and the three flavor assemblies (the last only on schedule/manual dispatch/tags).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
@@ -448,6 +489,11 @@ Rules:
    hardware via `scripts/install_debug.sh` — **not** after every change.
 
 ## 10. Known design debt (accepted, tracked here)
+
+- **Mastery by dimension is session-scoped.** `MasteryProfile` is folded from the answers of the
+  session in progress; nothing persists per dimension, so the next session starts blind and the
+  selector only adapts once the learner has answered inside that session (B-1). A cross-session
+  version needs a per-dimension column/table (Room v6 + migration) and is the natural next step.
 
 - **The companion signing digest is not configured yet** (`CompanionApp.EXPECTED_SIGNING_SHA256`
   is empty), so the free-access grant currently trusts the `org.token.zaribar` package id alone

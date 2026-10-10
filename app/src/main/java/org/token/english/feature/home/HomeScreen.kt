@@ -41,9 +41,10 @@ import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.labelFa
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.homeViewModelFactory
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
+import org.token.english.domain.usecase.FocusPlan
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,8 +54,10 @@ fun HomeScreen(
     onOpenReview: () -> Unit,
     onOpenVocabulary: () -> Unit,
     onOpenPaywall: () -> Unit,
+    /** Focused practice on the engine's weak spot: (lessonId, curriculum node id). */
+    onOpenFocus: (String, String) -> Unit,
 ) {
-    val vm: HomeViewModel = viewModel(factory = appViewModelFactory { HomeViewModel(it) })
+    val vm: HomeViewModel = viewModel(factory = homeViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -124,6 +127,13 @@ fun HomeScreen(
                     plan = plan,
                     onStart = { plan.nextLesson?.let { onOpenLesson(it.id) } },
                     onOpenReview = onOpenReview,
+                )
+            }
+
+            state.focus?.let { focus ->
+                FocusSpotCard(
+                    focus = focus,
+                    onStart = { onOpenFocus(focus.lessonId, focus.itemId) },
                 )
             }
 
@@ -303,6 +313,44 @@ private fun DailyGoalCard(state: HomeUiState) {
                 )
                 AppLinearProgress(progress = progress, contentDescription = "پیشرفت هدف روزانه")
             }
+        }
+    }
+}
+
+/**
+ * The remediation engine's weak spot (checklist B-1): one specific node, why it is
+ * worth drilling now, and what it blocks. The card carries the engine's own words;
+ * the screen only renders them (technical spec §19).
+ */
+@Composable
+private fun FocusSpotCard(focus: FocusPlan, onStart: () -> Unit) {
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("نقطهٔ ضعف")
+            Text(
+                text = focus.titleFa,
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = focus.reasonFa,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = buildString {
+                    append("تسلط فعلی ${(focus.mastery * 100).toInt()}٪")
+                    if (focus.blockedCount > 0) {
+                        append(" — ${focus.blockedCount} مفهوم بعدی به آن گره خورده است")
+                    }
+                },
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            PrimaryButton(
+                text = "تمرین هدفمند",
+                onClick = onStart,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

@@ -243,6 +243,10 @@ data    → domain (implements the interfaces) + Room/DataStore
   touch Room or DataStore directly, and composables contain no business logic.
 - DI is manual (`AppContainer`). Hilt was deliberately skipped — its plugin/KSP interaction under
   AGP 9's built-in Kotlin adds risk for no MVP value.
+- A ViewModel takes only the repositories, use cases and seams it actually uses — never the whole
+  container. `di/ViewModelFactories.kt` is the single place the container meets a ViewModel, and the
+  only `di/` symbol a screen imports is its own `*ViewModelFactory()` (B-6). Narrow constructors are
+  what make ViewModel tests possible without Android.
 - Engines are pure and swappable. The UI must never learn how intervals or mastery are computed.
 
 ### How a screen gets its data
@@ -303,12 +307,18 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-232 unit tests across 32 classes. The pure cores carry the most weight — review scheduling,
+252 unit tests across 36 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
 has its own tests. `LearningPathJourneyTest` runs the whole learner journey on the real bundle with
-in-memory repositories, so the pieces are proven to compose, not just to work alone.
+in-memory repositories, so the pieces are proven to compose, not just to work alone. The first
+ViewModel tests (B-6) drive `Home`/`Lesson`/`Review` through in-memory fakes — companion gating, the
+requeue-once-on-a-miss rule, the TTS-unavailable fallback and the review lifecycle — with no
+Android, no Room and no device. The adaptive layer runs on real screens too (B-1): Home shows the
+remediation engine's weak spot and its CTA opens a focused session that drills only the exercises
+which are evidence about that node, while every session orders its queue by the kind of knowing the
+learner's own answers showed to be weakest.
 
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.

@@ -7,10 +7,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.token.english.di.AppContainer
+import org.token.english.core.audio.Speaker
+import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.repository.ReviewRepository
+import org.token.english.domain.repository.VocabularyRepository
 
 data class VocabularyUiState(
     val isLoading: Boolean = true,
@@ -19,8 +23,9 @@ data class VocabularyUiState(
     val filtered: List<VocabularyItem> = emptyList(),
 )
 
+/** Vocabulary browser state (checklist B-6): just the repository it observes. */
 class VocabularyViewModel(
-    private val container: AppContainer,
+    private val vocabularyRepository: VocabularyRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(VocabularyUiState())
@@ -28,7 +33,7 @@ class VocabularyViewModel(
 
     init {
         viewModelScope.launch {
-            container.vocabularyRepository.observeAll().collect { items ->
+            vocabularyRepository.observeAll().collect { items ->
                 _state.update { current ->
                     val filtered = filter(items, current.query)
                     current.copy(isLoading = false, all = items, filtered = filtered)
@@ -58,9 +63,12 @@ data class VocabularyDetailUiState(
     val message: String? = null,
 )
 
+/** Vocabulary detail state (checklist B-6): the two repositories and the audio seam. */
 class VocabularyDetailViewModel(
-    private val container: AppContainer,
     private val vocabId: String,
+    private val vocabularyRepository: VocabularyRepository,
+    private val reviewRepository: ReviewRepository,
+    private val speaker: Speaker,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(VocabularyDetailUiState())
@@ -68,8 +76,8 @@ class VocabularyDetailViewModel(
 
     init {
         viewModelScope.launch {
-            val item = container.vocabularyRepository.get(vocabId)
-            val review = container.reviewRepository.getItem(vocabId)
+            val item = vocabularyRepository.get(vocabId)
+            val review = reviewRepository.getItem(vocabId)
             _state.update {
                 it.copy(isLoading = false, item = item, reviewItem = review)
             }
@@ -79,21 +87,21 @@ class VocabularyDetailViewModel(
     fun playWord() {
         val word = _state.value.item ?: return
         _state.update { it.copy(isPlaying = true) }
-        container.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
+        speaker.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
     }
 
     fun addToReview() {
         val current = _state.value
         if (current.item == null || current.reviewItem != null) return
         viewModelScope.launch {
-            container.reviewRepository.schedule(
+            reviewRepository.schedule(
                 ReviewItem(
                     contentId = current.item.id,
-                    contentType = org.token.english.domain.model.ReviewContentType.VOCABULARY,
+                    contentType = ReviewContentType.VOCABULARY,
                     state = ReviewState.NEW,
                     dueAt = System.currentTimeMillis(),
                     intervalDays = 0,
-                    easeFactor = org.token.english.domain.engine.Sm2ReviewScheduler.DEFAULT_EASE,
+                    easeFactor = Sm2ReviewScheduler.DEFAULT_EASE,
                     repetitions = 0,
                     lapses = 0,
                     lastReviewedAt = null,
@@ -101,7 +109,7 @@ class VocabularyDetailViewModel(
             )
             _state.update {
                 it.copy(
-                    reviewItem = container.reviewRepository.getItem(vocabId),
+                    reviewItem = reviewRepository.getItem(vocabId),
                     message = "به صف مرور اضافه شد.",
                 )
             }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import org.token.english.core.audio.AudioPlayer
+import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.TtsAudioPlayer
 import org.token.english.data.content.ContentSeeder
 import org.token.english.data.local.AppDatabase
@@ -35,6 +36,7 @@ import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.CompleteLessonUseCase
+import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
@@ -46,7 +48,7 @@ import org.token.english.domain.usecase.SubmitReviewUseCase
  * container-level wiring here — Hilt/KSP-Hilt is deliberately avoided to keep the
  * MVP's build simple under AGP 9 built-in Kotlin (see AGENTS.md).
  */
-class AppContainer(context: Context, appScope: CoroutineScope) {
+class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
 
     private val appContext: Context = context.applicationContext
 
@@ -187,7 +189,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
      * when no sound was produced (engine unavailable or playback failed) — a
      * mute by user choice is not an error (checklist B-3).
      */
-    fun speak(text: String, onDone: (() -> Unit)? = null, onError: (() -> Unit)? = null) {
+    override fun speak(text: String, onDone: (() -> Unit)?, onError: (() -> Unit)?) {
         if (soundEnabled) {
             audioPlayer.speak(text, onDone, onError)
         } else {
@@ -233,6 +235,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) {
             knowledge = knowledgeRepository,
         )
     }
+    /**
+     * The remediation engine's weak-spot decision (checklist B-1): Home renders it
+     * as a card and the focused lesson session obeys its exercise subset.
+     */
+    val getFocusPlan: GetFocusPlanUseCase by lazy {
+        GetFocusPlanUseCase(knowledgeRepository, lessonRepository)
+    }
+
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }
 
     /** Placement as a skill assessment (P1-1): scores *and* calibrates mastery. */

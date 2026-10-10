@@ -7,11 +7,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.token.english.di.AppContainer
+import org.token.english.core.audio.AudioPlayer
+import org.token.english.core.audio.Speaker
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.repository.ProgressRepository
+import org.token.english.domain.repository.ReviewRepository
+import org.token.english.domain.repository.VocabularyRepository
+import org.token.english.domain.usecase.SubmitReviewUseCase
 
 enum class ReviewPhase { SUMMARY, SESSION, DONE }
 
@@ -58,8 +63,20 @@ sealed interface ReviewEvent {
  * Review session: due queue → reveal → grade (SRS) → next.
  * Time is epoch millis; response time feeds the attempt log.
  */
+/**
+ * Review session state (checklist B-6): the review/vocabulary/progress
+ * repositories, the SRS use case and the audio seam — not the whole container.
+ */
 class ReviewViewModel(
-    private val container: AppContainer,
+    private val reviewRepository: ReviewRepository,
+    private val vocabularyRepository: VocabularyRepository,
+    private val progressRepository: ProgressRepository,
+    private val submitReview: SubmitReviewUseCase,
+    private val audioPlayer: AudioPlayer,
+    private val speaker: Speaker,
+    private val isAppInForeground: () -> Boolean,
+    /** Study-time tick; tests pass 0 to disable it. */
+    private val studyTickMillis: Long = STUDY_TICK_MILLIS,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ReviewUiState())
@@ -75,13 +92,15 @@ class ReviewViewModel(
 
     init {
         refresh()
-        viewModelScope.launch {
-            // Study time is credited in fixed ticks while the app is visible —
-            // background time never counts toward the daily goal (P7).
-            while (true) {
-                kotlinx.coroutines.delay(STUDY_TICK_MILLIS)
-                if (container.isAppInForeground) {
-                    container.progressRepository.addStudySeconds(STUDY_TICK_MILLIS / 1000)
+        if (studyTickMillis > 0) {
+            viewModelScope.launch {
+                // Study time is credited in fixed ticks while the app is visible —
+                // background time never counts toward the daily goal (P7).
+                while (true) {
+                    kotlinx.coroutines.delay(studyTickMillis)
+                    if (isAppInForeground()) {
+                        progressRepository.addStudySeconds(studyTickMillis / 1000)
+                    }
                 }
             }
         }
@@ -90,9 +109,9 @@ class ReviewViewModel(
     fun refresh() {
         viewModelScope.launch {
             val now = System.currentTimeMillis()
-            val due = container.reviewRepository.getDue(now, limit = 100)
+            val due = reviewRepository.getDue(now, limit = 100)
             val vocab = due.mapNotNull { item ->
-                container.vocabularyRepository.get(item.contentId)?.let { item.contentId to it }
+                vocabularyRepository.get(item.contentId)?.let { item.contentId to it }
             }.toMap()
             _state.update {
                 it.copy(
@@ -133,7 +152,7 @@ class ReviewViewModel(
 
             ReviewEvent.PlayWord -> {
                 val word = _state.value.currentWord ?: return
-                container.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
+                speaker.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
             }
 
             ReviewEvent.Reset -> refresh()
@@ -173,7 +192,7 @@ class ReviewViewModel(
         grading = true
         viewModelScope.launch {
             try {
-                container.submitReview(
+                submitReview(
                     item = item,
                     result = result,
                     now = now,
@@ -184,7 +203,7 @@ class ReviewViewModel(
                 var queue = s.queue
                 if (result == ReviewResult.AGAIN && (requeueCount[item.contentId] ?: 0) < MAX_IN_SESSION_REQUEUES) {
                     requeueCount[item.contentId] = (requeueCount[item.contentId] ?: 0) + 1
-                    container.reviewRepository.getItem(item.contentId)?.let { fresh -> queue = queue + fresh }
+                    reviewRepository.getItem(item.contentId)?.let { fresh -> queue = queue + fresh }
                 }
                 val next = s.index + 1
                 _state.update {
@@ -208,7 +227,7 @@ class ReviewViewModel(
     }
 
     override fun onCleared() {
-        container.audioPlayer.stop()
+        audioPlayer.stop()
     }
 
     private companion object {

@@ -30,13 +30,13 @@ import org.token.english.core.designsystem.component.CefrBadge
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.labelFa
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.progressViewModelFactory
 import org.token.english.domain.model.Skill
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProgressScreen() {
-    val vm: ProgressViewModel = viewModel(factory = appViewModelFactory { ProgressViewModel(it) })
+    val vm: ProgressViewModel = viewModel(factory = progressViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(

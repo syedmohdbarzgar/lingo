@@ -43,7 +43,8 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.InfoBanner
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.di.appViewModelFactory
+import org.token.english.di.vocabularyDetailViewModelFactory
+import org.token.english.di.vocabularyViewModelFactory
 import org.token.english.domain.model.ReviewState
 import java.text.DateFormat
 import java.util.Date
@@ -51,7 +52,7 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
-    val vm: VocabularyViewModel = viewModel(factory = appViewModelFactory { VocabularyViewModel(it) })
+    val vm: VocabularyViewModel = viewModel(factory = vocabularyViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -133,7 +134,7 @@ fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
 @Composable
 fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
     val vm: VocabularyDetailViewModel =
-        viewModel(factory = appViewModelFactory { VocabularyDetailViewModel(it, vocabId) })
+        viewModel(factory = vocabularyDetailViewModelFactory(vocabId))
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(
