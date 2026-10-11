@@ -7,9 +7,17 @@ name: CI
 # Action majors are pinned to the versions that run on GitHub's current Node
 # runtime: the old set (checkout@v4, setup-java@v4, setup-android@v3,
 # setup-gradle@v4, upload-artifact@v4) targeted Node 20, which GitHub now forces
-# onto Node 24 — every run failed at "Set up Android SDK" because of it, which is
-# why CI had never been green. Re-check these refs when GitHub announces the next
-# runtime deprecation.
+# onto Node 24 — every run failed at "Set up Android SDK" because of it.
+# Re-check these refs when GitHub announces the next runtime deprecation.
+#
+# Two independent faults kept CI red, so fix one before concluding anything about
+# the other (run #10 was the first green one):
+#   1. the Node 20 action set above, which failed during setup, and
+#   2. `gradlew` committed as mode 100644 — Windows' core.fileMode=false meant the
+#      executable bit never reached git, so on Linux every `./gradlew` step died
+#      with exit code 126 ("found but not executable") AFTER setup had succeeded.
+# If a run fails only at the Gradle steps, check `git ls-files -s gradlew` prints
+# 100755 before touching any Gradle config — see AGENTS.md §2.
 
 on:
   push:
