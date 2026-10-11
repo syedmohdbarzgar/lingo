@@ -62,6 +62,11 @@ flavor assemblies only on schedule/manual dispatch/tags. There is no emulator or
 ### Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 
 - AGP **9.3.3** + Gradle **9.5.0**, `compileSdk 37`, `minSdk 24`, JDK toolchain 25.
+- **`gradlew` and `scripts/*.sh` must stay mode `100755` in the git index.** The dev machine is
+  Windows with `core.fileMode=false`, so the executable bit is never detected or committed — which
+  made every CI run die with **exit code 126** at the first `./gradlew` step (and at `Lint`), while
+  all the setup steps passed. Fix with `git update-index --chmod=+x gradlew scripts/install_debug.sh`,
+  then check `git ls-files -s gradlew` prints `100755`.
 - **Built-in Kotlin** (AGP 9 default): *never* apply `org.jetbrains.kotlin.android`.
 - KSP `2.2.10-2.0.2` must match the built-in KGP (2.2.10). AGP itself floors KSP to this version.
 - `android.disallowKotlinSourceSets=false` in `gradle.properties` is **required** for KSP's generated sources under built-in Kotlin.
