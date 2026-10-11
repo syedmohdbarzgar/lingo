@@ -193,6 +193,10 @@ dependencies {
     testImplementation(libs.org.json)
     // ViewModel tests drive viewModelScope through a test Main dispatcher (B-6).
     testImplementation(libs.kotlinx.coroutines.test)
+    // A real SQLite engine on the host JVM: the only way to execute the Room
+    // migration chain with actual learner rows in a unit test (no device/emulator
+    // is available here). See DatabaseUpgradeTest.
+    testImplementation(libs.sqlite.jdbc)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 }

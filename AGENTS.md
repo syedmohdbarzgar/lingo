@@ -440,8 +440,8 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 277 tests / 39 classes as of
-  the paywall/settings/placement ViewModel pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 283 tests / 41 classes as of
+  the remediation-evaluation pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
@@ -452,8 +452,11 @@ Rules:
   (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
   (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
-  `RoomMigrationTest` (migration ↔ exported schema, no gaps), `BidiTextTest` (BiDi direction rule
-  + no Persian in English exercise fields), `PlacementAssessmentTest` (per-skill read from the
+  `RoomMigrationTest` (migration ↔ exported schema, no gaps) + `DatabaseUpgradeTest` (the same
+  chain *executed* on a learner-filled v1 database: every value survives, added columns take their
+  documented defaults, the graph tables arrive empty — needs the test-only `org.xerial:sqlite-jdbc`,
+  because it upgrades with a real SQLite engine rather than inspecting the schemas),
+  `BidiTextTest` (BiDi direction rule + no Persian in English exercise fields), `PlacementAssessmentTest` (per-skill read from the
   placement answers), `LearningPathJourneyTest` (install → placement →
   lesson → miss/retry → complete → review → progress, on the real bundle, incl. placement
   calibrating mastery), plus the
@@ -462,6 +465,11 @@ Rules:
   `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`
   (incl. the evidence filter and "an unassessed dimension must not reorder a lesson"),
   `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents),
+  `RemediationJourneyTest` (that same decision evaluated on the **real bundle**: a learner who misses
+  a lesson's grammar drills gets a block for exactly that node, error isolation leaves the lesson's
+  PHONOLOGY node untouched, a foundational node reports its real dependent count, correct practice
+  closes the block, and the plan's 0.5 weakness bar is asserted to differ from the engine's 0.85
+  session-reassess bar — v8 item 6),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
@@ -540,5 +548,15 @@ Rules:
   word" (A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
   learner is still told to check the spelling. Accepted: the banner shows the correct answer
   alongside it, so the word itself is never ambiguous.
+- **The remediation layer's two bars disagree** (found evaluating v8 item 6, pinned by
+  `RemediationJourneyTest`). `GetFocusPlanUseCase` stops offering the focused block once the node's
+  stored EWMA mastery reaches `RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD` (0.5), while
+  `RemediationEngine.assess` only calls the node REMEDIATED at `DEFAULT_REASSESS_THRESHOLD` (0.85) —
+  and its verdict is built from the *session's* `MasteryProfile` alone, which never reads that stored
+  mastery. Two consequences: a node can leave the plan at 0.59 while the engine would still say
+  NEEDS_MORE for the same evidence, and because the session profile seeds an untouched dimension at
+  1.0, a session whose first answer is correct is REMEDIATED regardless of how weak the node was.
+  Accepted for now (the block is a UI affordance and the verdict is advisory); unifying them means
+  feeding the node's stored mastery into `assess` and picking one bar.
 - `studied seconds` are credited on screen close/finish (best effort), not via a foreground timer.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.

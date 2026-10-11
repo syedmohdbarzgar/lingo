@@ -3,6 +3,13 @@ name: CI
 # The fast gate on every change (tests + content validation + lint), and the slow
 # one (all three flavor APKs) weekly and on tags, because assembling every flavor
 # on every push buys nothing — see AGENTS.md §2.
+#
+# Action majors are pinned to the versions that run on GitHub's current Node
+# runtime: the old set (checkout@v4, setup-java@v4, setup-android@v3,
+# setup-gradle@v4, upload-artifact@v4) targeted Node 20, which GitHub now forces
+# onto Node 24 — every run failed at "Set up Android SDK" because of it, which is
+# why CI had never been green. Re-check these refs when GitHub announces the next
+# runtime deprecation.
 
 on:
   push:
@@ -25,19 +32,19 @@ jobs:
     name: Unit tests & content validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "25"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       # Content gate first: a dangling lessonId or an out-of-range correctIndex is a
       # data bug the Kotlin compiler cannot see, and it is the cheaper failure.
@@ -65,7 +72,7 @@ jobs:
 
       - name: Upload test reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results
           path: app/build/test-results/**
@@ -75,26 +82,26 @@ jobs:
     name: Android Lint (bazaar debug)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "25"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Lint
         run: ./gradlew :app:lintBazaarDebug --console=plain
 
       - name: Upload lint report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lint-report
           path: app/build/reports/lint-results-*.html
@@ -110,19 +117,19 @@ jobs:
       startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "25"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Assemble bazaar, myket and googlePlay debug
         run: >-
@@ -134,7 +141,7 @@ jobs:
 
       - name: Upload flavor APKs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: debug-apks
           path: app/build/outputs/apk/**/*.apk

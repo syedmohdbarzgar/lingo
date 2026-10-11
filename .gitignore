@@ -41,3 +41,7 @@ keystore.properties
 Thumbs.db
 *.log
 *.hprof
+
+# Developer scratch — a device screenshot taken during manual verification can
+# show personal data and is never part of the app. Keep it local.
+/device_screenshot.png

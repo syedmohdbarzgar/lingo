@@ -307,7 +307,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-277 unit tests across 39 classes. The pure cores carry the most weight — review scheduling,
+283 unit tests across 41 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -322,6 +322,23 @@ unwinnable instead of asking a beginner all 36 questions. The adaptive layer run
 remediation engine's weak spot and its CTA opens a focused session that drills only the exercises
 which are evidence about that node, while every session orders its queue by the kind of knowing the
 learner's own answers showed to be weakest.
+
+An upgrading install is covered as well as a fresh one: `RoomMigrationTest` checks the migration SQL
+against the exported schemas, and `DatabaseUpgradeTest` runs that same chain on a real SQLite engine
+against a v1 database already full of learner data — progress, the review schedule, skill mastery,
+study time — then proves every value survived, that the columns added since carry their documented
+defaults, and that the curriculum-graph tables arrive ready and empty. A destructive or forgotten
+migration therefore fails the build instead of wiping a learner's history on update.
+
+The remediation layer is evaluated on that same real bundle rather than on hand-built fixtures.
+`RemediationJourneyTest` misses a real lesson's grammar drills and asserts the engine offers a block
+for exactly that node and runs it in that node's own lesson; that error isolation holds (the lesson's
+pronunciation node is untouched, because it only listens for listening evidence); that a foundational
+weakness reports the real number of nodes it is holding back; and that answering the block correctly
+closes it. It also pins a real gap rather than hiding it: the daily plan's 0.5 weakness bar is *not*
+the engine's 0.85 reassess bar — the block disappears before the engine would call the node fixed —
+and the engine's verdict is built from the session's own evidence, which seeds an untouched dimension
+at 1.0 on a first correct answer. Both numbers are asserted, so unifying them is a deliberate change.
 
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.
