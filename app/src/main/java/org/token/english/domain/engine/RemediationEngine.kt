@@ -218,15 +218,24 @@ class RemediationEngine(
 
     /**
      * Decides whether remediation is complete after the learner has made
-     * [attemptsMade] attempts. The MasteryProfile is rebuilt from the attempts
-     * so the verdict reflects the remediation session, not just the pre-existing
-     * mastery score.
+     * [attemptsMade] attempts.
+     *
+     * The verdict is decided from [storedMastery] — the node's **persisted**
+     * `knowledge_state.mastery`, which every graded answer already updates through
+     * the knowledge engine — not from the session profile's mean (checklist v9 B-1).
+     * The profile seeds an untouched dimension at `1f`, so deciding from it alone
+     * would call a session REMEDIATED on its *first* correct answer no matter how
+     * weak the stored node is. The profile is still used for the one thing it is
+     * good at: telling whether any dimension has been assessed yet. [storedMastery]
+     * defaults to 0 so a caller with only session evidence gets the conservative
+     * NEEDS_MORE / ESCALATION path rather than a false "fixed".
      */
     fun assess(
         itemId: String,
         masteryProfile: MasteryProfile,
         attempts: List<DimensionAttempt>,
         attemptsMade: Int,
+        storedMastery: Float = 0f,
     ): Assessment {
         // If the learner has never been assessed on any dimension of this item,
         // we can't yet say they're remediated — give them room to try.
@@ -234,15 +243,15 @@ class RemediationEngine(
         if (!established && attemptsMade < maxAttempts / 2) {
             return Assessment(
                 outcome = Outcome.NEEDS_MORE,
-                currentMastery = masteryProfile.overall,
+                currentMastery = storedMastery,
                 attemptsMade = attemptsMade,
                 correctInRow = consecutiveCorrect(attempts),
                 reasonFa = "هنوز داده کافی نیست — ادامه دهید",
             )
         }
 
-        val currentMastery = masteryProfile.overall
-        val mastered = currentMastery >= reassessThreshold && attempts.isNotEmpty()
+        val currentMastery = storedMastery
+        val mastered = storedMastery >= reassessThreshold && attempts.isNotEmpty()
 
         return when {
             mastered -> Assessment(
@@ -277,10 +286,11 @@ class RemediationEngine(
         itemId: String,
         attempts: List<ReviewAttempt>,
         dimensionOf: (ReviewAttempt) -> MasteryDimension,
+        storedMastery: Float = 0f,
     ): Assessment {
         val dimensionAttempts = attempts.map { DimensionAttempt(dimensionOf(it), it.result != ReviewResult.AGAIN) }
         val profile = DefaultMasteryProfileEngine().profileOf(dimensionAttempts)
-        return assess(itemId, profile, dimensionAttempts, attempts.size)
+        return assess(itemId, profile, dimensionAttempts, attempts.size, storedMastery)
     }
 
     private fun consecutiveCorrect(attempts: List<DimensionAttempt>): Int {
@@ -332,8 +342,15 @@ class RemediationEngine(
     companion object {
         /** Below this, a node is considered weak and worth remediating. */
         const val DEFAULT_WEAKNESS_THRESHOLD = 0.5f
-        /** Mastery at or above this means the node is consolidated. */
-        const val DEFAULT_REASSESS_THRESHOLD = 0.85f
+        /**
+         * Mastery at or above which a node is REMEDIATED. Deliberately the **same
+         * bar** as [DEFAULT_WEAKNESS_THRESHOLD] (checklist v9 B-1): the plan offers a
+         * focused block while the node is below it and the engine declares the node
+         * fixed once it reaches it, so a learner can no longer be handed back to the
+         * curriculum at 0.59 while the engine still says NEEDS_MORE for the same
+         * evidence. The verdict is measured against the node's stored mastery.
+         */
+        const val DEFAULT_REASSESS_THRESHOLD = DEFAULT_WEAKNESS_THRESHOLD
         /** How many attempts before escalation. */
         const val DEFAULT_MAX_ATTEMPTS = 6
     }

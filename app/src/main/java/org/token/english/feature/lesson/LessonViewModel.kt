@@ -115,6 +115,10 @@ class LessonViewModel(
     private val isAppInForeground: () -> Boolean,
     /** Focused practice: the node whose block this session should run (B-1). */
     private val getFocusPlan: GetFocusPlanUseCase,
+    /** Per-dimension mastery of this session's answers (audit §2/§6) — injected, not built here (B-6). */
+    private val profileEngine: DefaultMasteryProfileEngine,
+    /** Front-loads the dimension this session showed to be weakest (B-1). */
+    private val selector: AdaptiveExerciseSelector,
     private val focusItemId: String? = null,
     /** Study-time tick; tests pass 0 to disable it. */
     private val studyTickMillis: Long = STUDY_TICK_MILLIS,
@@ -136,8 +140,6 @@ class LessonViewModel(
 
     /** Per-dimension mastery of this session's own answers (audit §2/§6). */
     private var profile: MasteryProfile = MasteryProfile()
-    private val profileEngine = DefaultMasteryProfileEngine()
-    private val selector = AdaptiveExerciseSelector()
 
     init {
         if (studyTickMillis > 0) {

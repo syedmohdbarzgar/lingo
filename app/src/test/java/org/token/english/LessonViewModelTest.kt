@@ -23,6 +23,8 @@ import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.engine.AdaptiveExerciseSelector
+import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
@@ -107,6 +109,8 @@ class LessonViewModelTest {
             speaker = speaker,
             isAppInForeground = { true },
             getFocusPlan = focusPlan,
+            profileEngine = DefaultMasteryProfileEngine(),
+            selector = AdaptiveExerciseSelector(),
             focusItemId = focusItemId,
             studyTickMillis = 0,
         )

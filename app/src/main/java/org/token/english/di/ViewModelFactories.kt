@@ -1,6 +1,8 @@
 package org.token.english.di
 
 import androidx.lifecycle.ViewModelProvider
+import org.token.english.domain.engine.AdaptiveExerciseSelector
+import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.feature.home.HomeViewModel
 import org.token.english.feature.lesson.LessonViewModel
 import org.token.english.feature.onboarding.OnboardingViewModel
@@ -52,6 +54,8 @@ fun lessonViewModelFactory(
         speaker = c,
         isAppInForeground = { c.isAppInForeground },
         getFocusPlan = c.getFocusPlan,
+        profileEngine = DefaultMasteryProfileEngine(),
+        selector = AdaptiveExerciseSelector(),
         focusItemId = focusItemId,
     )
 }

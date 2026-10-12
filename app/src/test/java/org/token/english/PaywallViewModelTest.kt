@@ -18,6 +18,7 @@ import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.ProductIds
 import org.token.english.core.billing.PurchaseOutcome
+import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.feature.paywall.PaywallViewModel
 
@@ -118,6 +119,36 @@ class PaywallViewModelTest {
             vm.state.value.errorMessage!!.contains("کارت رد شد"),
         )
         assertEquals(0, h.entitlementRefreshes)
+    }
+
+    @Test
+    fun `a store that throws during checkout surfaces the cause and stays unpurchased`() {
+        val h = Harness()
+        // Plans load while the store still answers, then checkout itself crashes —
+        // how a broken/uninstalled store app actually behaves mid-flow.
+        val vm = h.build()
+        h.billing.throwOnCall = IllegalStateException("checkout crash")
+
+        vm.purchase(activity())
+
+        assertFalse("the spinner is cleared", vm.state.value.isPurchasing)
+        assertFalse("a crash is not a purchase", vm.state.value.purchased)
+        assertTrue(
+            "the thrown cause is surfaced: ${vm.state.value.errorMessage}",
+            vm.state.value.errorMessage!!.contains("checkout crash"),
+        )
+        assertEquals("no entitlement change on a failed checkout", 0, h.entitlementRefreshes)
+    }
+
+    @Test
+    fun `the storefront reaches the state so the wording can match the marketplace`() {
+        // The screen must be able to tell Myket (no auto-renewal) apart from the
+        // subscription stores; that decision starts here.
+        assertEquals(
+            Storefront.MYKET,
+            Harness(billing = FakeBillingGateway(storefront = Storefront.MYKET)).build().state.value.storefront,
+        )
+        assertEquals(Storefront.BAZAAR, Harness().build().state.value.storefront)
     }
 
     @Test

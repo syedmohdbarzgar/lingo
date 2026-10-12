@@ -264,12 +264,25 @@ class RemediationEngineTest {
             byDimension = mapOf(MasteryDimension.RECOGNITION to 0.9f),
         )
         val attempts = listOf(DimensionAttempt(MasteryDimension.RECOGNITION, correct = true))
-        val assessment = engine.assess("a", profile, attempts, attemptsMade = 3)
+        val assessment = engine.assess("a", profile, attempts, attemptsMade = 3, storedMastery = 0.9f)
 
         assertEquals(RemediationEngine.Outcome.REMEDIATED, assessment.outcome)
         assertEquals(0.9f, assessment.currentMastery, 0.0001f)
         assertEquals(3, assessment.attemptsMade)
         assertTrue(assessment.reasonFa.contains("بازگشت به درس اصلی"))
+    }
+
+    @Test
+    fun `a first correct answer does not fix a weak node`() {
+        // Checklist v9 B-1: the verdict reads the node's **stored** mastery, not the
+        // session profile — which seeds an untouched dimension at 1f. A node at 0.2
+        // whose first answer was right is still weak, so it must not be REMEDIATED.
+        val profile = MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 1.0f))
+        val attempts = listOf(DimensionAttempt(MasteryDimension.RECOGNITION, correct = true))
+        val assessment = engine.assess("a", profile, attempts, attemptsMade = 1, storedMastery = 0.2f)
+
+        assertEquals(RemediationEngine.Outcome.NEEDS_MORE, assessment.outcome)
+        assertEquals(0.2f, assessment.currentMastery, 0.0001f)
     }
 
     @Test
@@ -339,9 +352,10 @@ class RemediationEngineTest {
         )
         val dimensionOf: (org.token.english.domain.model.ReviewAttempt) -> MasteryDimension = { MasteryDimension.RECOGNITION }
 
-        val assessment = engine.assessFromAttempts("a", attempts, dimensionOf)
-        // A single correct attempt seeds recognition mastery to 1.0f (>= 0.85 threshold),
-        // so the item is remediated — confirms the lambda inferred the dimension correctly.
+        val assessment = engine.assessFromAttempts("a", attempts, dimensionOf, storedMastery = 1.0f)
+        // The verdict reads the node's stored mastery (1.0f, at/above the unified
+        // bar), so the item is remediated — confirms the lambda inferred the
+        // dimension correctly without depending on the session profile's seeding.
         assertEquals(RemediationEngine.Outcome.REMEDIATED, assessment.outcome)
         assertEquals(1.0f, assessment.currentMastery, 0.0001f)
     }

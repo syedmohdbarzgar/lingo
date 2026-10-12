@@ -14,7 +14,7 @@ daily lessons → exercises → spaced-repetition review → progress.
 | Display name | English |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v4, exported) + DataStore Preferences |
+| Local storage | Room (schema v5, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -319,7 +319,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-317 unit tests across 45 classes. The pure cores carry the most weight — review scheduling,
+332 unit tests across 47 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -359,18 +359,21 @@ The remediation layer is evaluated on that same real bundle rather than on hand-
 for exactly that node and runs it in that node's own lesson; that error isolation holds (the lesson's
 pronunciation node is untouched, because it only listens for listening evidence); that a foundational
 weakness reports the real number of nodes it is holding back; and that answering the block correctly
-closes it. It also pins a real gap rather than hiding it: the daily plan's 0.5 weakness bar is *not*
-the engine's 0.85 reassess bar — the block disappears before the engine would call the node fixed —
-and the engine's verdict is built from the session's own evidence, which seeds an untouched dimension
-at 1.0 on a first correct answer. Both numbers are asserted, so unifying them is a deliberate change.
+closes it — at **one bar** the plan and the engine now share. Those two used to disagree: the plan
+dropped the block at 0.5 while the engine only called the node fixed at 0.85, from a session profile
+that seeded an untouched dimension at 1.0 on a first correct answer. `RemediationEngine`'s reassess
+bar now equals the weakness bar and its verdict reads the node's **stored** mastery, so a first
+correct answer no longer fixes a weak node.
 
 The two retrieval/production shapes are covered from both ends. `ProductionRecallTest` pins the
 grading rules — recall keeps the one-edit spelling hint, and production credits an original sentence
-but rejects one whose anchors are out of order or whose answer is below the word floor — while
-`ProductionRecallContentTest` checks the authored bundle: every item parses, the cue is Persian and
-the answers English, both shapes exist at all six levels, and each item's anchors are proven to
-credit its own exemplar (asserted with the accepted answers emptied, so only the structural rule can
-pass it — asking the item as authored would be vacuous, since an exemplar match short-circuits it).
+but rejects one whose anchors are out of order, below the word floor, or a filler that merely carries
+the anchors without reusing the target sentence (the structural branch also requires reusing half of
+an authored exemplar) — while `ProductionRecallContentTest` checks the authored bundle: every item
+parses, the cue is Persian and the answers English, both shapes exist at all six levels, and each
+item's anchors are proven to credit its own exemplar (asserted with the accepted answers replaced by
+a decoy the answer cannot exact-match, so only the structural rule can pass it — asking the item as
+authored would be vacuous, since an exemplar match short-circuits it).
 
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.

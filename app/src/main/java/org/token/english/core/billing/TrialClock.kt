@@ -99,4 +99,21 @@ object SubscriptionMath {
 
     /** Billing period of a store product id; unknown products are monthly. */
     fun isMonthly(productId: String): Boolean = productId != ProductIds.YEARLY
+
+    /** Length of one fixed-length plan in millis: a flat 30 or 365 days. */
+    fun periodMillis(monthly: Boolean): Long =
+        if (monthly) MONTH_MILLIS else YEAR_MILLIS
+
+    /**
+     * Reinstall-proof expiry for a store that sells **fixed-length access** instead
+     * of real subscriptions (Myket — AGENTS.md §4a). There is no renewal, so the
+     * owned purchase's time is the only receipt left after a reinstall wipes local
+     * DataStore: the period is re-derived as `purchaseTime + period`. A missing or
+     * nonsensical purchase time grants nothing rather than unlocking forever.
+     */
+    fun flatPeriodExpiry(purchaseTimeMs: Long, monthly: Boolean): Long =
+        if (purchaseTimeMs <= 0L) 0L else purchaseTimeMs + periodMillis(monthly)
+
+    private const val MONTH_MILLIS: Long = 30L * 24 * 60 * 60 * 1000
+    private const val YEAR_MILLIS: Long = 365L * 24 * 60 * 60 * 1000
 }

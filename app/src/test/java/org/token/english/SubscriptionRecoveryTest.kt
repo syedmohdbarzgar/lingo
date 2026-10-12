@@ -151,6 +151,48 @@ class SubscriptionRecoveryTest {
         )
     }
 
+    // ------------------------------------------------- fixed-length stores (Myket)
+
+    @Test
+    fun `a fixed-length plan is a flat 30 or 365 days, not a calendar period`() {
+        assertEquals("monthly is a flat 30 days", 30 * day, SubscriptionMath.periodMillis(monthly = true))
+        assertEquals("yearly is a flat 365 days", 365 * day, SubscriptionMath.periodMillis(monthly = false))
+    }
+
+    @Test
+    fun `a myket reinstall restores access from the owned purchase time`() {
+        // Myket has no subscriptions: a purchase is a fixed-length consumable, and
+        // after a reinstall wipes local DataStore the owned purchase's time is the
+        // only receipt left. Access must come back for the rest of its flat period.
+        val purchasedAt = now - 5 * day
+        val restored = SubscriptionMath.flatPeriodExpiry(purchasedAt, monthly = true)
+
+        assertEquals("restored as purchaseTime + one flat period", purchasedAt + 30 * day, restored)
+        assertEquals(
+            "an owned purchase inside its period unlocks after a reinstall",
+            AccessLevel.PREMIUM,
+            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = restored),
+        )
+    }
+
+    @Test
+    fun `a myket period that already ended does not unlock`() {
+        val restored = SubscriptionMath.flatPeriodExpiry(now - 40 * day, monthly = true)
+
+        assertTrue("the period is behind now", restored < now)
+        assertEquals(
+            "expired fixed-length access is not premium",
+            AccessLevel.LOCKED,
+            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = restored),
+        )
+    }
+
+    @Test
+    fun `a missing myket purchase time grants nothing rather than unlocking forever`() {
+        assertEquals(0L, SubscriptionMath.flatPeriodExpiry(purchaseTimeMs = 0L, monthly = true))
+        assertEquals(0L, SubscriptionMath.flatPeriodExpiry(purchaseTimeMs = -1L, monthly = false))
+    }
+
     @Test
     fun `a renewed subscription extends the mirror rather than replacing it`() {
         // Bought again while still active. The rule every gateway applies on a new

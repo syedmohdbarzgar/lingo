@@ -117,10 +117,43 @@ class ProductionRecallTest {
     fun `an original sentence is accepted when it uses the target structure`() {
         // The whole point of structural credit: the learner composed their own
         // sentence, so failing them for not matching the author's wording would
-        // punish exactly the behaviour the exercise is for.
-        val exercise = production(mustUse = listOf("usually", "breakfast"), minWords = 5)
-        assertTrue(AnswerChecker.isCorrect(exercise, "I usually eat breakfast at seven."))
+        // punish exactly the behaviour the exercise is for. It still has to reuse
+        // most of the target's words (checklist v9 B-10), which a real paraphrase of
+        // the authored exemplar does.
+        val exercise = production(
+            mustUse = listOf("usually", "breakfast"),
+            minWords = 5,
+            accepted = listOf("i usually have breakfast at seven"),
+        )
+        assertTrue(AnswerChecker.isCorrect(exercise, "We usually have breakfast at eight."))
         assertTrue(AnswerChecker.isCorrect(exercise, "They usually have breakfast together at work."))
+    }
+
+    @Test
+    fun `a filler sentence that merely carries the anchors is not credited`() {
+        // Checklist v9 B-10: anchors-in-order plus a word floor alone let this pass.
+        // It reuses almost none of the target sentence, so it is not production.
+        val exercise = production(
+            mustUse = listOf("usually", "breakfast"),
+            minWords = 5,
+            accepted = listOf("i usually have breakfast at seven"),
+        )
+        assertFalse(
+            "carrying the anchor words is not the same as producing the target",
+            AnswerChecker.isCorrect(exercise, "usually breakfast five words here"),
+        )
+    }
+
+    @Test
+    fun `a paraphrase that keeps the target's words is still credited`() {
+        // The gate must not over-reject: a sentence that keeps most of the exemplar's
+        // vocabulary and the anchors in order passes even when the wording differs.
+        val exercise = production(
+            mustUse = listOf("usually", "breakfast"),
+            minWords = 5,
+            accepted = listOf("i usually have breakfast at seven"),
+        )
+        assertTrue(AnswerChecker.isCorrect(exercise, "we usually have breakfast at eight"))
     }
 
     @Test

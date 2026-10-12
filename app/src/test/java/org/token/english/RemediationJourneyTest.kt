@@ -48,9 +48,9 @@ import java.io.File
  *    leaves the lesson's PHONOLOGY node untouched;
  *  - the block reports how much the weak node is holding back (its real dependents);
  *  - a never-studied node is taught, not drilled — no block until there is evidence;
- *  - answering the block correctly closes it, and the two thresholds involved
- *    (`GetFocusPlanUseCase`'s weakness bar vs `RemediationEngine`'s reassess bar) do
- *    not agree — see the note on the third test;
+ *  - answering the block correctly closes it at the **single** bar the plan and the
+ *    engine now share (`RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD`, v9 B-1), with
+ *    the verdict measured against the node's stored mastery;
  *  - the session verdict escalates a stuck learner and clears a fixed one.
  */
 class RemediationJourneyTest {
@@ -266,7 +266,7 @@ class RemediationJourneyTest {
     }
 
     @Test
-    fun `correct practice clears the block, but the two thresholds do not agree`() = runTest {
+    fun `correct practice closes the block at the single unified bar`() = runTest {
         val app = newApp()
         val lessonId = "a1.articles.lesson-01"
         val nodeId = "grammar.articles-a-an-the"
@@ -288,26 +288,23 @@ class RemediationJourneyTest {
         val mastery = app.knowledge.getState(nodeId)!!.mastery
         assertTrue("a handful of correct answers is enough", answered in 1..10)
         assertTrue(
-            "the node crossed the weakness threshold the plan watches ($mastery)",
+            "the node crossed the bar the plan watches ($mastery)",
             mastery >= RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD,
-        )
-        assertTrue(
-            "…yet it is still under the engine's own reassess bar ($mastery)",
-            mastery < RemediationEngine.DEFAULT_REASSESS_THRESHOLD,
         )
         assertNull("the block is gone", app.focusPlan())
         assertNull("and naming the node no longer resurrects it", app.focusPlan(nodeId))
 
-        // Evaluation note (checklist v8 item 6): the two bars are not the same bar.
-        // `GetFocusPlanUseCase` drops the block at DEFAULT_WEAKNESS_THRESHOLD (0.5,
-        // the node's EWMA mastery), while `RemediationEngine.assess` only calls the
-        // node REMEDIATED at DEFAULT_REASSESS_THRESHOLD (0.85, the *session* profile's
-        // mean — a separate model that never sees the node's stored mastery). So a
-        // learner can be handed back to the curriculum at 0.59 while the engine would
-        // still say NEEDS_MORE for the same evidence. Demonstrating that divergence on
-        // the real graph is the point of this assertion; the two numbers are asserted
-        // to differ so a future change that unifies them is caught here.
-        assertTrue(RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD < RemediationEngine.DEFAULT_REASSESS_THRESHOLD)
+        // Unified bar (checklist v9 B-1): the plan offers the block while the node is
+        // below this bar and the engine calls it REMEDIATED once it reaches it — the
+        // same number, so a learner can no longer be handed back to the curriculum at
+        // 0.59 while the engine still says NEEDS_MORE. And `assess` now measures the
+        // node's stored mastery, not the session profile's seeded mean.
+        assertEquals(
+            "the plan's bar and the engine's bar are the same bar",
+            RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD,
+            RemediationEngine.DEFAULT_REASSESS_THRESHOLD,
+            0.0001f,
+        )
     }
 
     @Test
@@ -332,8 +329,8 @@ class RemediationJourneyTest {
         assertEquals(6, stuck.attemptsMade)
         assertTrue("the escalation tells the learner what to do", stuck.reasonFa.isNotBlank())
 
-        // A half-way run keeps going: four misses then one hit is 0.2 — under the bar
-        // and under the cap.
+        // A half-way run keeps going: four misses then one hit, with the node still
+        // weak, stays under the cap.
         val halfway = engine.assessFromAttempts(
             nodeId,
             List(4) { attempt(false) } + listOf(attempt(true)),
@@ -342,12 +339,15 @@ class RemediationJourneyTest {
         assertEquals(RemediationEngine.Outcome.NEEDS_MORE, halfway.outcome)
         assertTrue(halfway.currentMastery < RemediationEngine.DEFAULT_REASSESS_THRESHOLD)
 
-        // A hit at the reassess bar clears it. Note the seeding: the session profile is
-        // built from the session's own evidence and seeds an untouched dimension at 1f
-        // on the first correct answer, so a session whose *first* answer is correct is
-        // remediated immediately regardless of how weak the stored node was — the
-        // second half of the divergence noted above.
-        val fixed = engine.assessFromAttempts(nodeId, listOf(attempt(true)), dimensionOf)
+        // A node whose stored mastery has recovered is cleared: the verdict reads the
+        // node's persisted mastery (v9 B-1), not the session profile's seeded 1f, so a
+        // weak node whose first answer is right is no longer falsely remediated.
+        val fixed = engine.assessFromAttempts(
+            nodeId,
+            listOf(attempt(true)),
+            dimensionOf,
+            storedMastery = 0.9f,
+        )
         assertEquals(RemediationEngine.Outcome.REMEDIATED, fixed.outcome)
         assertEquals(1, fixed.correctInRow)
     }

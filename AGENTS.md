@@ -296,10 +296,19 @@ Rules:
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
   and — when the companion grant is active — a "subscription is free" banner with the link.
+- The paywall's small print is **storefront-aware** (P3 honesty pass): only Bazaar/Play
+  promise auto-renewal and cancellation; Myket says what it actually is — a fixed-length
+  consumable with no auto-renew and nothing to cancel. `PaywallUiState.storefront` (from
+  `billing.storefront`) carries the choice, and `SubscriptionMath.flatPeriodExpiry` is the
+  single rule that restores Myket access after a reinstall (owned `purchaseTime` + a flat
+  30/365 days).
 - Store is source of truth; active subscriptions are mirrored locally with a 32-day grace so
   short offline spells don't lock the learner out.
 - Release signing: fill `keystore.properties` (`storeFile/storePassword/keyAlias/keyPassword`,
   plus `bazaarRsaKey`, `myketPublicKey`). The file must stay untracked — it holds secrets.
+  Run `scripts/release_check.sh` before a release: it answers the same questions as the Gradle
+  gates up front (signing key, `bazaarRsaKey`, the companion digest) and prints exactly what to
+  paste where, instead of failing 6 minutes into an `assemble*Release`.
 - Do not add any other network features while billing is the sole `INTERNET` user (§4).
 
 ## 5. Content pipeline
@@ -427,18 +436,25 @@ Rules:
 
   The production grader deliberately does **not** demand one memorised wording:
   `AnswerChecker.isCorrect` passes an answer that matches an exemplar in `accepted` **or** that uses
-  every `mustUse` anchor **in the authored order** and still reaches the author's `minWords` floor.
-  Anchors are matched whole-word and contraction-expanded (`didn't` is satisfied by `did not`), and
-  order is part of the contract — a sentence that merely contains both anchor words somewhere is a
-  different structure and must not pass. There is no model and no network in this: it checks that
-  the target form was actually attempted, and the exemplar stays the answer shown after a miss.
+  every `mustUse` anchor **in the authored order**, reaches the author's `minWords` floor, **and**
+  reuses at least half of one authored exemplar's words
+  (`PRODUCTION_MIN_EXEMPLAR_OVERLAP`, v9 B-10). Anchors are matched whole-word and
+  contraction-expanded (`didn't` is satisfied by `did not`), and order is part of the contract — a
+  sentence that merely contains both anchor words somewhere is a different structure and must not
+  pass. The overlap gate closes the hole the anchor walk left: a filler string like `usually
+  breakfast five words here` carries the anchors at the right length but shares almost none of the
+  target sentence, so it is not credited. The anchors are never adjacency-checked, because the
+  authored pairs are not adjacent in their own exemplars (`usually … have breakfast`, `if … we will`).
+  There is no model and no network in this: it checks that the target form was actually attempted,
+  and the exemplar stays the answer shown after a miss.
   `validateContent` requires the anchors, the floor (≥3 and ≥ the anchor word count) and the skill
   tag, and rejects a cue that leaks English letters (the cue is the meaning, so an English cue would
   both flip the RTL paragraph and hand over the answer). `ProductionRecallContentTest` then checks
   the authored items — including that **each item's anchors can credit its own exemplar**, asserted
-  with `accepted` emptied so only the structural branch can pass it. That is what catches an anchor
-  in the wrong order or a floor the exemplar cannot reach; asking the item as authored would be
-  vacuous, because an exemplar match short-circuits the structural rule.
+  with the item's `accepted` replaced by a decoy the answer cannot exact-match, so only the structural
+  branch can pass it (v9 B-10: emptying `accepted` would now make the overlap gate reject everything).
+  That is what catches an anchor in the wrong order or a floor the exemplar cannot reach; asking the
+  item as authored would be vacuous, because an exemplar match short-circuits the structural rule.
 - **Every `fill_blank` must carry an authored `skill` (A-2b)** — `validateContent` rejects an
   untagged one. The heuristic default (GRAMMAR) used to decide whether a near-miss was reported as
   a spelling slip, which is a pedagogical call the author has to make: word-choice blanks are
@@ -492,13 +508,14 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 317 tests / 45 classes as of
-  the P2 skill-profile pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 332 tests / 47 classes as of
+  the v9 B-10/B-1 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
   (certificate normalization/matching) + `SubscriptionRecoveryTest` (renewal
-  boundaries, reinstall restore, store-truth reconciliation), `KnowledgeGraphTest` (curriculum
+  boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
+  `flatPeriodExpiry` reinstall restore — 30/365 flat days from the owned purchase time), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
   `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ReadingContentTest`
   (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
@@ -520,16 +537,18 @@ Rules:
   `SkillProfileEngineTest` (P2: the three tracks fold curriculum + review evidence, mastery is read
   rather than recomputed, the status is evidence-gated so a single correct answer cannot read as
   consolidated, and — on the **real bundle** — all three tracks are funded while the four nodes two
-  tracks claim are asserted exhaustively), `ProductionRecallTest` (P2: the two new shapes evidence RECALL and PRODUCTION, recall keeps the
+  tracks claim are asserted exhaustively), `ProductionRecallTest` (P2 + v9 B-10: the two new shapes evidence RECALL and PRODUCTION, recall keeps the
   one-edit spelling hint, production credits an original sentence but not one whose anchors are out
-  of order or below the word floor) + `ProductionRecallContentTest` (P2 on the real bundle: every
+  of order, below the word floor, or a filler that merely carries the anchors without reusing the
+  target sentence) + `ProductionRecallContentTest` (P2 on the real bundle: every
   authored item parses, the cue is Persian and the answers English, both shapes exist at all six
-  levels, and each item's own exemplar grades correct),
+  levels, and each item's own anchors credit its own exemplar through the structural branch),
   `RemediationJourneyTest` (that same decision evaluated on the **real bundle**: a learner who misses
   a lesson's grammar drills gets a block for exactly that node, error isolation leaves the lesson's
   PHONOLOGY node untouched, a foundational node reports its real dependent count, correct practice
-  closes the block, and the plan's 0.5 weakness bar is asserted to differ from the engine's 0.85
-  session-reassess bar — v8 item 6),
+  closes the block, and the plan's bar is asserted **equal** to the engine's reassess bar — the two
+  were unified at 0.5 in v9 B-1, and `RemediationEngineTest` proves a first correct answer no longer
+  fixes a weak node),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
@@ -539,13 +558,17 @@ Rules:
   lesson keeps the authored order while an untested dimension is front-loaded; a focused session
   drills only the node's evidence; cancelling the scope mid-`getFocusPlan` loads nothing — B-9),
   `ReviewViewModelTest` (GOOD records the schedule and finishes; AGAIN re-queues the item in the
-  same session), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
-  cancelled/failed/succeeded, restore active/none/store-failure, the companion grant),
+  same session),  `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
+  cancelled/failed/succeeded, a checkout that throws, restore active/none/store-failure, the
+  companion grant, and the storefront reaching the state so the wording can match the market),
   `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
   settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
-  state and an empty bundle yields no tracks rather than empty bars) and `PlacementViewModelTest` (adaptive stop after
+  state and an empty bundle yields no tracks rather than empty bars), `PlacementViewModelTest` (adaptive stop after
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
-  onboarding write) — the billing double is `FakeBillingGateway` in the same file. They need
+  onboarding write), `VocabularyViewModelTest` (all words load; the query matches the English word
+  case-insensitively and the Persian meaning; a blank query clears the filter; no matches is an
+  empty list, not an error) and `OnboardingViewModelTest` (skipping the test pins A1 and finishes
+  onboarding) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
   and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
   growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an
@@ -609,15 +632,12 @@ Rules:
   word" (A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
   learner is still told to check the spelling. Accepted: the banner shows the correct answer
   alongside it, so the word itself is never ambiguous.
-- **The remediation layer's two bars disagree** (found evaluating v8 item 6, pinned by
-  `RemediationJourneyTest`). `GetFocusPlanUseCase` stops offering the focused block once the node's
-  stored EWMA mastery reaches `RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD` (0.5), while
-  `RemediationEngine.assess` only calls the node REMEDIATED at `DEFAULT_REASSESS_THRESHOLD` (0.85) —
-  and its verdict is built from the *session's* `MasteryProfile` alone, which never reads that stored
-  mastery. Two consequences: a node can leave the plan at 0.59 while the engine would still say
-  NEEDS_MORE for the same evidence, and because the session profile seeds an untouched dimension at
-  1.0, a session whose first answer is correct is REMEDIATED regardless of how weak the node was.
-  Accepted for now (the block is a UI affordance and the verdict is advisory); unifying them means
-  feeding the node's stored mastery into `assess` and picking one bar.
+- ~~The remediation layer's two bars disagree~~ — **resolved (v9 B-1).**
+  `RemediationEngine.DEFAULT_REASSESS_THRESHOLD` is now the *same* bar as
+  `DEFAULT_WEAKNESS_THRESHOLD` (0.5), and `assess` takes the node's **stored** mastery as its verdict
+  input instead of the session profile's seeded mean, so a node can no longer leave the plan while
+  the engine still says NEEDS_MORE, nor a first correct answer read as REMEDIATED. Pinned by
+  `RemediationEngineTest` (`a first correct answer does not fix a weak node`) and
+  `RemediationJourneyTest` (asserts the two bars are equal).
 - `studied seconds` are credited on screen close/finish (best effort), not via a foreground timer.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.

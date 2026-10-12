@@ -10,6 +10,7 @@ import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.ProductIds
 import org.token.english.core.billing.PurchaseOutcome
 import org.token.english.core.billing.Storefront
+import org.token.english.core.billing.SubscriptionMath
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.domain.repository.SettingsRepository
 import kotlin.coroutines.resume
@@ -133,9 +134,10 @@ class PlatformBillingGateway(
     private suspend fun extendExpiry(plan: SubscriptionPlan) {
         val now = System.currentTimeMillis()
         val current = settings.observeTrialAndSubscription().first().subscriptionUntil
+        // A fresh buy after expiry starts from now, so paid days are never lost
+        // and time is never double-counted (the shared rule, not a local copy).
         val base = maxOf(current, now)
-        val period = if (plan.monthly) MONTH_MILLIS else YEAR_MILLIS
-        settings.setSubscriptionUntil(base + period)
+        settings.setSubscriptionUntil(base + SubscriptionMath.periodMillis(plan.monthly))
     }
 
     override suspend fun checkSubscription(): Boolean = syncEntitlement() > System.currentTimeMillis()
@@ -164,8 +166,12 @@ class PlatformBillingGateway(
         }
         var best = local
         owned.forEach { purchase ->
-            val period = if (purchase.sku == ProductIds.YEARLY) YEAR_MILLIS else MONTH_MILLIS
-            val restored = purchase.purchaseTime + period
+            // Reinstall proof: with local DataStore gone, the owned purchase's time
+            // plus its flat period is the only evidence of paid access left.
+            val restored = SubscriptionMath.flatPeriodExpiry(
+                purchaseTimeMs = purchase.purchaseTime,
+                monthly = SubscriptionMath.isMonthly(purchase.sku),
+            )
             if (restored > best) best = restored
             if (restored <= now) {
                 // Period over: free the slot so the plan can be bought again.
@@ -180,9 +186,4 @@ class PlatformBillingGateway(
 
     override suspend fun subscriptionUntil(): Long =
         settings.observeTrialAndSubscription().first().subscriptionUntil
-
-    private companion object {
-        const val MONTH_MILLIS = 30L * 24 * 60 * 60 * 1000
-        const val YEAR_MILLIS = 365L * 24 * 60 * 60 * 1000
-    }
 }

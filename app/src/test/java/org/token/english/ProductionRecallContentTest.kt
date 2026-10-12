@@ -132,16 +132,18 @@ class ProductionRecallContentTest {
         // The invariant that makes structural credit safe: the anchors and the floor
         // must be satisfiable by the author's own sentence.
         //
-        // `accepted` is emptied on the copy on purpose. `isCorrect` short-circuits on
-        // an exemplar match, so asking the real item would pass even if the anchors
-        // were in the wrong order or named a word the exemplar never uses — the whole
-        // point of the rule would be untested. With no accepted answers, only the
-        // structural branch can credit the answer, which is exactly what is being
-        // asserted here.
+        // The answer is the author's exemplar. Its `accepted` list is replaced by a
+        // **decoy** the answer cannot exact-match (the exemplar with its last word
+        // swapped), so the exemplar shortcut cannot fire and only the structural
+        // branch can credit the answer. The decoy still shares all the other words,
+        // so it also satisfies the B-10 overlap gate — the assertions that still bite
+        // are the anchor order and the word floor.
         val broken = parsed("sentence_production").mapNotNull { (row, exercise) ->
             val typed = exercise as Exercise.SentenceProduction
-            val structuralOnly = typed.copy(accepted = emptyList())
             val exemplar = typed.accepted.first()
+            val decoy = exemplar.trimEnd('.', '!', '?').split(' ')
+                .let { ws -> (ws.dropLast(1) + "indeed").joinToString(" ") }
+            val structuralOnly = typed.copy(accepted = listOf(decoy))
             if (AnswerChecker.isCorrect(structuralOnly, exemplar)) {
                 null
             } else {

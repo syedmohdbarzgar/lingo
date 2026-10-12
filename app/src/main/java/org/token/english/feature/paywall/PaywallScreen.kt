@@ -41,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionApp
+import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppCard
@@ -118,7 +119,9 @@ fun PaywallScreen(
                     state.errorMessage?.let { ErrorText(it) }
 
                     PrimaryButton(
-                        text = "خرید اشتراک",
+                        // Myket sells fixed-length access, not a recurring
+                        // subscription, so "بخرید اشتراک" would be the wrong promise.
+                        text = if (state.storefront == Storefront.MYKET) "خرید دسترسی" else "خرید اشتراک",
                         onClick = { activity?.let { vm.purchase(it) } },
                         loading = state.isPurchasing,
                         modifier = Modifier.fillMaxWidth(),
@@ -161,7 +164,7 @@ fun PaywallScreen(
             Benefits()
 
             Text(
-                text = "پرداخت از طریق ${state.storeName} انجام می‌شود. اشتراک تمدید خودکار دارد و هر زمان قابل لغو است.",
+                text = paymentFootnote(state),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -171,6 +174,22 @@ fun PaywallScreen(
         }
     }
 }
+
+/**
+ * The small print under the plans has to match the marketplace's own rules
+ * (AGENTS.md §4a). Myket has **no subscription products**: a purchase is a
+ * fixed-length consumable (30/365 days of local access), with no auto-renewal
+ * to announce and nothing to cancel — so it must not parrot the subscription
+ * wording used for Bazaar and Google Play.
+ */
+private fun paymentFootnote(state: PaywallUiState): String =
+    if (state.storefront == Storefront.MYKET) {
+        "پرداخت از طریق ${state.storeName} انجام می‌شود. مایکت اشتراک تمدیدخودکار ندارد؛ " +
+            "هر خرید یک دورهٔ کامل را فعال می‌کند (ماهانه ۳۰ روز، سالانه ۳۶۵ روز) و پس از پایان " +
+            "دوره می‌توانید دوباره خرید کنید."
+    } else {
+        "پرداخت از طریق ${state.storeName} انجام می‌شود. اشتراک تمدید خودکار دارد و هر زمان قابل لغو است."
+    }
 
 @Composable
 private fun Hero(state: PaywallUiState) {

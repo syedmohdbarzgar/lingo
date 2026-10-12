@@ -13,6 +13,7 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.PurchaseOutcome
+import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.core.billing.TrialClock
@@ -30,6 +31,12 @@ data class PaywallUiState(
     val access: AccessLevel = AccessLevel.TRIAL,
     val trialRemainingMillis: Long = 0L,
     val storeName: String = "",
+    /**
+     * Which marketplace this build ships to. The small print must match its own
+     * rules — Myket sells fixed-length plans as consumables, not subscriptions —
+     * so the screen branches on this instead of assuming auto-renewal (§4a).
+     */
+    val storefront: Storefront = Storefront.BAZAAR,
     /** Why access is held right now — a free companion grant is not a purchase. */
     val accessReason: AccessReason = AccessReason.NONE,
     /** True while the free-access companion app (org.token.zaribar) is installed. */
@@ -57,7 +64,7 @@ class PaywallViewModel(
     private var companionIsInstalled: Boolean = false
 
     init {
-        _state.update { it.copy(storeName = STORE_NAME) }
+        _state.update { it.copy(storeName = STORE_NAME, storefront = billing.storefront) }
         viewModelScope.launch {
             // Re-check the companion install when the paywall opens: a learner may
             // have installed zaribar since launch, which makes the app free.

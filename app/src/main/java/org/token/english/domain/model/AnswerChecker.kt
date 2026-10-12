@@ -46,6 +46,16 @@ object AnswerChecker {
     /** Minimum length before a single edit counts as a near-miss (checklist A-2). */
     private const val ALMOST_MIN_LENGTH = 5
 
+    /**
+     * Share of an authored exemplar's words a structurally-matching produced
+     * sentence must reuse (checklist v9 B-10). 0.5 lets a real paraphrase through
+     * (swapping a pronoun or a synonym keeps most words) while rejecting a filler
+     * sentence that merely carries the anchors. Anchors are never adjacency-checked
+     * because the authored `mustUse` pairs are not adjacent in their own exemplars
+     * (`usually … have breakfast`, `if … we will`).
+     */
+    private const val PRODUCTION_MIN_EXEMPLAR_OVERLAP = 0.5f
+
     /** Common English contractions → their expanded form (apostrophe-normalized). */
     private val contractions = mapOf(
         "i'm" to "i am",
@@ -180,6 +190,14 @@ object AnswerChecker {
      * to judge whether the sentence is *good* English — it checks that the target
      * form was actually attempted, and the exemplar stays the reference answer
      * shown after a miss.
+     *
+     * The anchor walk alone is not enough (checklist v9 B-10): a learner can write a
+     * meaningless string that merely contains the anchors in order (`usually
+     * breakfast five words here`) and pass. So the structural shortcut additionally
+     * requires the answer to reuse at least [PRODUCTION_MIN_EXEMPLAR_OVERLAP] of one
+     * authored exemplar's words — a genuine paraphrase keeps most of the exemplar's
+     * vocabulary, while a filler sentence that only carries the anchors does not. An
+     * answer close enough to an exemplar is accepted by the exemplar branch anyway.
      */
     private fun productionMatches(exercise: Exercise.SentenceProduction, answer: String): Boolean {
         val words = expandContractions(normalize(answer)).split(' ').filter { it.isNotEmpty() }
@@ -201,7 +219,25 @@ object AnswerChecker {
             if (found < 0) return false
             cursor = found + 1
         }
-        return true
+        return reusesEnoughOfAnExemplar(words, exercise.accepted)
+    }
+
+    /**
+     * True when the typed words cover at least [PRODUCTION_MIN_EXEMPLAR_OVERLAP] of
+     * some authored exemplar's words. Words are compared after the same
+     * normalization/contraction expansion as everything else, and the share is
+     * measured against the *exemplar* (not the answer), so padding the answer with
+     * unrelated words cannot raise the score — it can only add words the exemplar
+     * does not use, which lowers the share of the target that is actually present.
+     */
+    private fun reusesEnoughOfAnExemplar(words: List<String>, accepted: List<String>): Boolean {
+        val typed = words.toSet()
+        return accepted.any { exemplar ->
+            val target = expandContractions(normalize(exemplar)).split(' ').filter { it.isNotEmpty() }
+            if (target.isEmpty()) return@any false
+            val shared = target.count { it in typed }
+            shared.toFloat() / target.size >= PRODUCTION_MIN_EXEMPLAR_OVERLAP
+        }
     }
 
     /**
