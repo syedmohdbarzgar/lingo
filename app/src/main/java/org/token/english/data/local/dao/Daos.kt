@@ -20,6 +20,13 @@ import org.token.english.data.local.entity.VocabularyEntity
 /** One-row aggregate behind [ReviewDao.observeAttemptAggregate]. */
 data class AttemptAggregate(val total: Int, val correct: Int)
 
+/**
+ * Review totals per reviewed content type (P2 skill tracks). The skill a grade
+ * exercised lives on the *item*, not the attempt row, so the count joins the two
+ * rather than guessing which track a grade belongs to.
+ */
+data class AttemptsByContentType(val contentType: String, val total: Int, val correct: Int)
+
 @Dao
 interface ContentDao {
     // Lessons
@@ -174,6 +181,19 @@ interface ReviewDao {
             "FROM review_attempt",
     )
     fun observeAttemptAggregate(): Flow<AttemptAggregate>
+
+    /**
+     * Grades per reviewed content type, using the same "correct = GOOD/EASY" rule as
+     * [observeAttemptAggregate] so the track accuracy and the review accuracy cannot
+     * disagree about what a correct answer is.
+     */
+    @Query(
+        "SELECT i.contentType AS contentType, COUNT(*) AS total, " +
+            "COALESCE(SUM(CASE WHEN a.result IN ('GOOD','EASY') THEN 1 ELSE 0 END), 0) AS correct " +
+            "FROM review_attempt a INNER JOIN review_item i ON i.contentId = a.contentId " +
+            "GROUP BY i.contentType",
+    )
+    suspend fun attemptStatsByContentType(): List<AttemptsByContentType>
 
     @Query("SELECT COUNT(*) FROM review_item WHERE lastReviewedAt IS NOT NULL")
     fun observeWordsLearnedCount(): Flow<Int>

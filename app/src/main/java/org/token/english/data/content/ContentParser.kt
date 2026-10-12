@@ -28,7 +28,14 @@ object ContentParser {
     fun bundleVersion(json: String): Int = JSONObject(json).optInt("contentVersion", 1)
 
     /** Types the app actually runs; others are parsed-but-inactive (see AGENTS.md). */
-    private val supportedTypes = setOf("multiple_choice", "fill_blank", "translation", "listening")
+    private val supportedTypes = setOf(
+        "multiple_choice",
+        "fill_blank",
+        "word_recall",
+        "translation",
+        "sentence_production",
+        "listening",
+    )
 
     data class RawExercise(
         val id: String,
@@ -190,12 +197,36 @@ object ContentParser {
                 explanation = explanation,
             )
 
+            "word_recall" -> Exercise.WordRecall(
+                id = id,
+                lessonId = lessonId,
+                prompt = o.getString("prompt"),
+                accepted = o.acceptedList(),
+                skill = skill,
+                explanation = explanation,
+            )
+
             "translation" -> Exercise.Translation(
                 id = id,
                 lessonId = lessonId,
                 prompt = o.getString("prompt"),
                 accepted = o.acceptedList(),
                 bank = o.optJSONArraytoString("bank"),
+                skill = skill,
+                explanation = explanation,
+            )
+
+            "sentence_production" -> Exercise.SentenceProduction(
+                id = id,
+                lessonId = lessonId,
+                prompt = o.getString("prompt"),
+                mustUse = o.optJSONArraytoString("mustUse"),
+                // A missing floor falls back to the anchor count so a malformed
+                // item still grades something sane instead of accepting one word.
+                minWords = o.optInt("minWords", 0).takeIf { it > 0 }
+                    ?: o.optJSONArraytoString("mustUse").size,
+                accepted = o.acceptedList(),
+                hintFa = o.optString("hintFa").ifBlank { null },
                 skill = skill,
                 explanation = explanation,
             )

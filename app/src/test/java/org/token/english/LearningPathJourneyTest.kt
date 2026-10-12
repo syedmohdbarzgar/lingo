@@ -23,6 +23,7 @@ import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.AppSettings
+import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -249,6 +250,9 @@ class LearningPathJourneyTest {
         override suspend fun getAttempts(contentId: String): List<ReviewAttempt> =
             attempts[contentId].orEmpty()
 
+        /** Review evidence for the P2 skill tracks — this journey does not read them. */
+        override suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats> = emptyMap()
+
         override suspend fun reset() {
             items.clear()
             attempts.clear()
@@ -442,7 +446,9 @@ class LearningPathJourneyTest {
             val answer = when (exercise) {
                 is Exercise.MultipleChoice -> exercise.options[exercise.correctIndex]
                 is Exercise.FillBlank -> exercise.accepted.first()
+                is Exercise.WordRecall -> exercise.accepted.first()
                 is Exercise.Translation -> exercise.accepted.first()
+                is Exercise.SentenceProduction -> exercise.accepted.first()
                 is Exercise.Listening -> exercise.accepted.first()
                 is Exercise.Speaking -> exercise.referenceAnswers.first()
             }

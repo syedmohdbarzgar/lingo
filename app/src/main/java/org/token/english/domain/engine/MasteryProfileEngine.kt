@@ -28,8 +28,14 @@ object ExerciseDimension {
     fun dimensionOf(exercise: Exercise): MasteryDimension = when (exercise) {
         is Exercise.MultipleChoice -> MasteryDimension.RECOGNITION
         is Exercise.FillBlank -> MasteryDimension.RECALL
+        // P2: recalling a word from its meaning is retrieval, not recognition —
+        // the same kind of knowing a fill-in-the-blank demands.
+        is Exercise.WordRecall -> MasteryDimension.RECALL
         is Exercise.Translation -> MasteryDimension.APPLICATION
         is Exercise.Listening -> MasteryDimension.COMPREHENSION
+        // P2: two formats now evidence production — typed sentence building and
+        // (suspended, for lack of a recognizer) speech.
+        is Exercise.SentenceProduction -> MasteryDimension.PRODUCTION
         is Exercise.Speaking -> MasteryDimension.PRODUCTION
     }
 }

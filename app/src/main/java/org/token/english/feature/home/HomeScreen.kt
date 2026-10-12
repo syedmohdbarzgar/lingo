@@ -39,10 +39,10 @@ import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.ProgressRing
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
-import org.token.english.core.designsystem.component.SkillProgressBar
-import org.token.english.core.designsystem.labelFa
+import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.homeViewModelFactory
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.FocusPlan
 
@@ -137,7 +137,7 @@ fun HomeScreen(
                 )
             }
 
-            SkillsCard(mastery = state.mastery)
+            SkillsCard(profiles = state.profiles)
 
             state.stats?.let { stats ->
                 if (stats.streakDays > 0) {
@@ -494,12 +494,14 @@ private fun TodayLessonCard(
 }
 
 @Composable
-private fun SkillsCard(mastery: Map<Skill, Float>) {
+private fun SkillsCard(profiles: List<SkillProfile>) {
     AppCard {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
             SectionHeader("مهارت‌ها")
-            val tracked = listOf(Skill.VOCABULARY, Skill.GRAMMAR, Skill.LISTENING)
-            val hasData = tracked.any { (mastery[it] ?: 0f) > 0f }
+            // The same three tracks Progress shows (P2). This card used to list
+            // Vocabulary / Grammar / Listening, which was neither the profile's axes
+            // nor the same set the Progress screen presented.
+            val hasData = profiles.any { it.evidence > 0 }
             if (!hasData) {
                 Text(
                     text = "با اولین تمرین، سطح مهارت‌هایت اینجا نمایش داده می‌شود.",
@@ -507,11 +509,8 @@ private fun SkillsCard(mastery: Map<Skill, Float>) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             } else {
-                tracked.forEach { skill ->
-                    SkillProgressBar(
-                        label = skill.labelFa(),
-                        progress = mastery[skill] ?: 0f,
-                    )
+                profiles.forEach { profile ->
+                    SkillTrackProgress(profile = profile, compact = true)
                 }
             }
         }

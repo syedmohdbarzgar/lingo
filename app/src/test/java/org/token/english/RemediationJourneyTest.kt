@@ -36,7 +36,7 @@ import java.io.File
  * [RemediationEngineTest] and [FocusPlanTest] pin the engine's rules on hand-built
  * one-lesson graphs. This file asks the different question the checklist is really
  * about: does the engine's decision stay meaningful when it runs over the 89 real
- * knowledge nodes, the 48 real lessons and the 441 real exercises — with a learner
+ * knowledge nodes, the 48 real lessons and the 465 real exercises — with a learner
  * who actually answers the shipped items wrong?
  *
  * What it establishes:
@@ -130,7 +130,9 @@ class RemediationJourneyTest {
         is Exercise.MultipleChoice -> exercise.options.withIndex()
             .first { it.index != exercise.correctIndex && it.value.isNotBlank() }.value
         is Exercise.FillBlank -> "zzz-wrong"
+        is Exercise.WordRecall -> "zzz-wrong"
         is Exercise.Translation -> "zzz-wrong"
+        is Exercise.SentenceProduction -> "zzz-wrong"
         is Exercise.Listening -> "zzz-wrong"
         is Exercise.Speaking -> "zzz-wrong"
     }
@@ -138,7 +140,9 @@ class RemediationJourneyTest {
     private fun correctAnswer(exercise: Exercise): String = when (exercise) {
         is Exercise.MultipleChoice -> exercise.options[exercise.correctIndex]
         is Exercise.FillBlank -> exercise.accepted.first()
+        is Exercise.WordRecall -> exercise.accepted.first()
         is Exercise.Translation -> exercise.accepted.first()
+        is Exercise.SentenceProduction -> exercise.accepted.first()
         is Exercise.Listening -> exercise.accepted.first()
         is Exercise.Speaking -> exercise.referenceAnswers.first()
     }

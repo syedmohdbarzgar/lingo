@@ -261,6 +261,22 @@ private fun ExerciseContent(
                     )
                 }
 
+                // P2: recall the English word from its meaning — no options to
+                // recognize, so a right answer is evidence of retrieval.
+                is Exercise.WordRecall -> {
+                    SectionHeader("واژهٔ انگلیسی را بنویسید")
+                    Text(
+                        text = exercise.prompt,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    AnswerField(
+                        value = state.textAnswer,
+                        onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
+                        enabled = state.outcome == null,
+                        label = "واژهٔ انگلیسی",
+                    )
+                }
+
                 is Exercise.Translation -> {
                     SectionHeader("ترجمه کنید")
                     Text(
@@ -299,6 +315,33 @@ private fun ExerciseContent(
                             label = "پاسخ انگلیسی",
                         )
                     }
+                }
+
+                // P2: build the whole sentence yourself. No bank, no options — the
+                // grader checks the target structure rather than one wording.
+                is Exercise.SentenceProduction -> {
+                    SectionHeader("جمله را بسازید")
+                    Text(
+                        text = exercise.prompt,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    exercise.hintFa?.let { hint ->
+                        Text(
+                            text = hint,
+                            // Authored Persian that may open with an English anchor
+                            // word: pin RTL so first-strong cannot flip it.
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    AnswerField(
+                        value = state.textAnswer,
+                        onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
+                        enabled = state.outcome == null,
+                        label = "پاسخ انگلیسی",
+                    )
                 }
 
                 is Exercise.Listening -> {

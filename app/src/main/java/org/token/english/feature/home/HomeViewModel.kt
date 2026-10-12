@@ -19,6 +19,7 @@ import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.core.billing.TrialClock
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LearningPlanner
+import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
@@ -33,6 +34,7 @@ import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.usecase.FocusPlan
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 
 data class HomeUiState(
@@ -48,6 +50,11 @@ data class HomeUiState(
     val focus: FocusPlan? = null,
     val stats: StudyStats? = null,
     val mastery: Map<Skill, Float> = emptyMap(),
+    /**
+     * The three learning tracks with their evidence (P2) — the same profile the
+     * Progress screen shows, so Home cannot describe a track differently.
+     */
+    val profiles: List<SkillProfile> = emptyList(),
     /** True once every lesson at the learner's current level is completed. */
     val levelComplete: Boolean = false,
     /** The next level above the current one that still has pending lessons. */
@@ -74,6 +81,7 @@ class HomeViewModel(
     private val planner: LearningPlanner,
     private val getTodayPlan: GetTodayPlanUseCase,
     private val getFocusPlan: GetFocusPlanUseCase,
+    private val getSkillProfiles: GetSkillProfilesUseCase,
     private val companionInstalled: StateFlow<Boolean>,
     private val refreshCompanion: suspend () -> Boolean,
     /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
@@ -90,6 +98,7 @@ class HomeViewModel(
     private var lessons: List<Lesson> = emptyList()
     private var states: List<LessonState> = emptyList()
     private var mastery: Map<Skill, Float> = emptyMap()
+    private var profiles: List<SkillProfile> = emptyList()
     private var stats: StudyStats? = null
     private var dueCount: Int = 0
     private var access: AccessLevel = AccessLevel.TRIAL
@@ -147,6 +156,7 @@ class HomeViewModel(
             progressRepository.observeMastery().collect {
                 mastery = it
                 rebuild()
+                refreshProfiles()
             }
         }
         viewModelScope.launch {
@@ -218,6 +228,7 @@ class HomeViewModel(
             greeting = greeting(),
             level = level,
             plan = plan,
+            profiles = profiles,
             // The engine-driven plan and weak spot are re-fetched below; keep the
             // previous ones visible until the new decision arrives, so a stats tick
             // does not make the cards blink out.
@@ -260,6 +271,20 @@ class HomeViewModel(
                 ?.itemId
             val focus = runCatchingCancellable { getFocusPlan(weakSpot) }.getOrNull()
             _state.update { current -> current.copy(focus = focus) }
+        }
+    }
+
+    private var profilesJob: Job? = null
+
+    /**
+     * Rebuilds the three skill tracks with their evidence (P2). The previous lookup
+     * is cancelled first, so a burst of mastery writes cannot stack queries.
+     */
+    private fun refreshProfiles() {
+        profilesJob?.cancel()
+        profilesJob = viewModelScope.launch {
+            profiles = getSkillProfiles()
+            rebuild()
         }
     }
 

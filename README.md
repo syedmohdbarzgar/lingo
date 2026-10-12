@@ -53,15 +53,21 @@ re-assert LTR, because the root layout is forced RTL.
 - **Lessons** — an intro stage (word list, short Persian grammar tip, optional audio) followed by
   exercises. A wrong answer shows a short explanation and re-asks that same item once in the same
   session, so a miss is never just a score.
-- **Exercises** — `multiple_choice`, `fill_blank`, `translation`, `listening`. Multiple-choice
-  options are shuffled deterministically per question id (fixed seed), so the answer position never
-  leaks. `speaking` parses but is not implemented.
+- **Exercises** — `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
+  `sentence_production`, `listening`. Multiple-choice options are shuffled deterministically per
+  question id (fixed seed), so the answer position never leaks. `word_recall` names the English word
+  from its Persian meaning with no options to recognize, and `sentence_production` makes the learner
+  build the whole sentence — graded on the target structure (ordered anchors plus a word floor), so
+  an original correct sentence is not failed for phrasing it differently. `speaking` parses but is
+  not implemented.
 - **Review** — SM-2-lite spaced repetition with a daily new-card cap (20) and calendar-day anchors
   instead of raw 24-hour multiples. Odd-numbered cards ask for active production: a Persian prompt,
   typed English answer. `AGAIN` re-queues inside the session (at most twice).
 - **Listening** — read aloud by the on-device Android TTS engine. No audio files, no network.
 - **Vocabulary browser** — search with escaped `LIKE` patterns.
-- **Progress** — per-skill mastery, streaks, review accuracy, and knowledge-node coverage.
+- **Progress** — three independent skill tracks (Grammar, Vocabulary, Reading), each with its
+  mastery, the evidence behind it and a status; plus streaks, review accuracy and knowledge-node
+  coverage.
 - **Daily reminder** — inexact daily alarm; asks for `POST_NOTIFICATIONS` on Android 13+.
 
 **Learner model**
@@ -70,7 +76,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 
 - per **skill** (vocabulary, grammar, listening, speaking, reading, writing) — an exponentially
   weighted average, seeded by the first observation;
-- per **knowledge item** — 72 curriculum nodes carrying prerequisites, mastery, exposure counts and
+- per **knowledge item** — 89 curriculum nodes carrying prerequisites, mastery, exposure counts and
   their own review schedule. `KnowledgeGraph` orders and unlocks the graph; every graded lesson
   answer is attributed to the nodes its lesson teaches and written with an atomic
   read-modify-write.
@@ -78,12 +84,18 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 `DefaultKnowledgeEngine` reuses the same SM-2 scheduler for intervals/ease and the same mastery
 engine as the skill meters, so "known" cannot mean two different things in two screens.
 
-**Content bundle (JSON `contentVersion` 20)**
+On the Progress screen those per-skill numbers are grouped into the three axes the app can actually
+teach and act on — Grammar, Vocabulary and Reading — each shown with the evidence behind it (how many
+answers, how accurate, how many curriculum nodes) rather than as a bare percentage. Listening,
+speaking and writing are deliberately not shown as tracks of their own: no content answers to them
+alone, so a bar there would measure nothing.
+
+**Content bundle (JSON `contentVersion` 21)**
 
 | | Count |
 |---|---|
 | Lessons | 48 — A1: 15, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 441 |
+| Exercises | 465 |
 | Vocabulary entries | 290 |
 | Knowledge items | 89 |
 | Placement questions | 36 |
@@ -307,7 +319,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-283 unit tests across 41 classes. The pure cores carry the most weight — review scheduling,
+317 unit tests across 45 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -322,6 +334,18 @@ unwinnable instead of asking a beginner all 36 questions. The adaptive layer run
 remediation engine's weak spot and its CTA opens a focused session that drills only the exercises
 which are evidence about that node, while every session orders its queue by the kind of knowing the
 learner's own answers showed to be weakest.
+
+Progress is reported as three separate skill tracks — Grammar, Vocabulary and Reading — instead of
+one blended number, because a strong vocabulary says nothing about whether the past tense landed.
+`SkillProfileEngine` (pure) reads the persisted per-skill mastery, the curriculum side (how often a
+node was practised and how often it lapsed) and the review history, one profile per axis, and never
+recomputes mastery itself — so the EWMA stays single-source. The status is deliberately
+evidence-gated: nothing answered is `NOT_STARTED`, fewer than five answers is `BUILDING`, and only
+past that does mastery separate `CONSOLIDATING` from `CONSOLIDATED`. Checking mastery first would be
+wrong, since a first correct answer seeds mastery at 1.0 and would read as consolidated. Home and
+Progress render the same composable, so the two screens can never disagree. `SkillProfileEngineTest`
+proves all of it on the real bundle, including the four curriculum nodes that genuinely belong to two
+tracks at once (asserted exhaustively, so new content cannot quietly change the split).
 
 An upgrading install is covered as well as a fresh one: `RoomMigrationTest` checks the migration SQL
 against the exported schemas, and `DatabaseUpgradeTest` runs that same chain on a real SQLite engine
@@ -339,6 +363,14 @@ closes it. It also pins a real gap rather than hiding it: the daily plan's 0.5 w
 the engine's 0.85 reassess bar — the block disappears before the engine would call the node fixed —
 and the engine's verdict is built from the session's own evidence, which seeds an untouched dimension
 at 1.0 on a first correct answer. Both numbers are asserted, so unifying them is a deliberate change.
+
+The two retrieval/production shapes are covered from both ends. `ProductionRecallTest` pins the
+grading rules — recall keeps the one-edit spelling hint, and production credits an original sentence
+but rejects one whose anchors are out of order or whose answer is below the word floor — while
+`ProductionRecallContentTest` checks the authored bundle: every item parses, the cue is Persian and
+the answers English, both shapes exist at all six levels, and each item's anchors are proven to
+credit its own exemplar (asserted with the accepted answers emptied, so only the structural rule can
+pass it — asking the item as authored would be vacuous, since an exemplar match short-circuits it).
 
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.

@@ -101,11 +101,14 @@ class BidiTextTest {
      * Fields the UI renders as English through EnglishText / AnswerField (LTR), and
      * therefore must actually be English.
      *
-     * `prompt` is deliberately excluded from translation exercises: there the prompt
-     * IS the Persian sentence to translate. The one reviewed exception below is an
-     * authored Persian gloss kept inside an English sentence, which the BiDi rule
-     * handles (the paragraph stays LTR and the gloss renders RTL within it).
+     * `prompt` is deliberately excluded from the exercises that cue FROM Persian
+     * (`translation`, and the P2 `word_recall` / `sentence_production`): there the
+     * prompt IS the Persian cue. The one reviewed exception below is an authored
+     * Persian gloss kept inside an English sentence, which the BiDi rule handles
+     * (the paragraph stays LTR and the gloss renders RTL within it).
      */
+    private val persianCueTypes = setOf("translation", "word_recall", "sentence_production")
+
     private val reviewedPersianGlosses = setOf(
         // "My ______ is a teacher. (مادر)" — the gloss names the word being tested.
         "a1.family.ex.03.sentence",
@@ -120,7 +123,7 @@ class BidiTextTest {
             val type = o.optString("type")
             val keys = buildList {
                 addAll(listOf("question", "sentence", "text"))
-                if (type != "translation") add("prompt")
+                if (type !in persianCueTypes) add("prompt")
                 // A-5: an authored reading passage is English and renders LTR.
                 add("passage")
             }
@@ -128,11 +131,11 @@ class BidiTextTest {
                 val value = o.optString(key)
                 if (value.isNotBlank()) result += "$id.$key" to value
             }
-            val accepted = o.optJSONArray("accepted")
-            if (accepted != null) {
-                for (j in 0 until accepted.length()) {
-                    result += "$id.accepted[$j]" to accepted.getString(j)
-                }
+            // P2: `mustUse` anchors grade the produced sentence, so they are as
+            // English as the accepted answers are.
+            for (key in listOf("accepted", "mustUse")) {
+                val arr = o.optJSONArray(key) ?: continue
+                for (j in 0 until arr.length()) result += "$id.$key[$j]" to arr.getString(j)
             }
             // Multiple-choice options are Persian for meaning questions and English
             // for form questions; the correct English form is covered by `question`.
@@ -172,6 +175,20 @@ class BidiTextTest {
             if (translation.isBlank() || !persian.containsMatchIn(translation)) o.getString("id") else null
         }
         assertTrue("vocabulary translations without Persian: ${offenders.joinToString(", ")}", offenders.isEmpty())
+    }
+
+    @Test
+    fun `the persian cue of every recall and production item is persian`() {
+        // These items are cued in Persian by definition; an English cue would both
+        // flip the RTL paragraph and hand the learner the answer (P2).
+        val exercises = JSONObject(contentFile("exercises.json").readText()).getJSONArray("exercises")
+        val offenders = (0 until exercises.length()).mapNotNull { i ->
+            val o = exercises.getJSONObject(i)
+            if (o.optString("type") !in persianCueTypes) return@mapNotNull null
+            val prompt = o.optString("prompt")
+            if (prompt.isBlank() || !persian.containsMatchIn(prompt)) o.getString("id") else null
+        }
+        assertTrue("cue prompts that are not Persian: ${offenders.joinToString(", ")}", offenders.isEmpty())
     }
 
     @Test

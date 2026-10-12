@@ -2,6 +2,7 @@ package org.token.english.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.token.english.domain.model.AppSettings
+import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -9,6 +10,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewAttempt
+import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
@@ -45,6 +47,15 @@ interface ReviewRepository {
     suspend fun schedule(item: ReviewItem)
     suspend fun recordAttempt(attempt: ReviewAttempt)
     suspend fun getAttempts(contentId: String): List<ReviewAttempt>
+
+    /**
+     * Review-log totals per reviewed content type (checklist v8 P2). The SRS log is
+     * the practice that never touches the curriculum graph, so a skill track has to
+     * ask for it separately — otherwise a learner whose work is mostly review shows
+     * a well-built vocabulary number with no evidence behind it.
+     */
+    suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats>
+
     suspend fun reset()
 }
 

@@ -127,6 +127,9 @@ class LessonViewModelTest {
         when (val exercise = vm.state.value.currentExercise) {
             is Exercise.MultipleChoice -> vm.onEvent(LessonEvent.SelectOption(exercise.correctIndex))
             is Exercise.FillBlank -> vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
+            is Exercise.WordRecall -> vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
+            is Exercise.SentenceProduction ->
+                vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
             else -> error("no correct answer for ${exercise?.id}")
         }
         vm.onEvent(LessonEvent.Submit)

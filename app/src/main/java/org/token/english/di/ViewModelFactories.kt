@@ -31,6 +31,7 @@ fun homeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c 
         planner = c.learningPlanner,
         getTodayPlan = c.getTodayPlan,
         getFocusPlan = c.getFocusPlan,
+        getSkillProfiles = c.getSkillProfiles,
         companionInstalled = c.companionInstalled,
         refreshCompanion = { c.refreshCompanionInstalled() },
     )
@@ -73,6 +74,7 @@ fun progressViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory 
         lessonRepository = c.lessonRepository,
         progressRepository = c.progressRepository,
         knowledgeRepository = c.knowledgeRepository,
+        getSkillProfiles = c.getSkillProfiles,
         studyStats = c.studyStats,
     )
 }

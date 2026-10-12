@@ -29,9 +29,8 @@ import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.CefrBadge
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
-import org.token.english.core.designsystem.labelFa
+import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.progressViewModelFactory
-import org.token.english.domain.model.Skill
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,22 +114,23 @@ fun ProgressScreen() {
                     }
                 }
 
-                AppCard {
-                    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
-                        SectionHeader("مهارت‌ها")
-                        Skill.entries.forEach { skill ->
-                            val mastery = state.mastery[skill] ?: 0f
-                            SkillProgressBar(
-                                label = skill.labelFa(),
-                                progress = mastery,
-                                valueText = if (mastery <= 0f) "شروع نشده" else null,
+                if (state.profiles.isNotEmpty()) {
+                    AppCard {
+                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.md)) {
+                            SectionHeader("سه محور یادگیری")
+                            // Three independent tracks — grammar, vocabulary, reading —
+                            // each with the evidence behind its number (P2). Not one
+                            // blended figure, and not six bars where a suspended skill
+                            // (speaking) could never move off "شروع نشده".
+                            state.profiles.forEach { profile ->
+                                SkillTrackProgress(profile = profile)
+                            }
+                            Text(
+                                text = "هر محور فقط با کار خودش رشد می‌کند؛ عددی که روی «تعداد پاسخ» بنا شده باشد قابل اعتمادتر است.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
-                        Text(
-                            text = "تسلط با پاسخ‌های تکراری و مرور فاصله‌دار رشد می‌کند، نه فقط با تمام کردن درس.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
                     }
                 }
 

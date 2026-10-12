@@ -33,3 +33,4 @@ Gradle treats them as up to date otherwise).
 | `p1_grammar_topup.mjs` | Grammar practice for the topics the honest blank tagging left short of the six-exercise bar (A-8) |
 | `p1_bilingual_examples.mjs` | Two bilingual {en, fa} example sentences per word; bundle 18 → 19 (A-10) |
 | `p1_reading_and_meaning.mjs` | One 3–5-sentence reading passage + three comprehension questions per level and an En→Fa "choose the meaning" item; one reading item per placement band; bundle 19 → 20 (A-5, A-6) |
+| `p2_production_recall.mjs` | The retrieval/production shapes: two `word_recall` and two `sentence_production` items per level, on lessons that already teach the word or the structure; bundle 20 → 21 (v8 P2) |

@@ -29,6 +29,7 @@ import org.token.english.domain.engine.DefaultKnowledgeEngine
 import org.token.english.domain.engine.KnowledgeEvidence
 import org.token.english.domain.engine.MasteryEngine
 import org.token.english.domain.model.AppSettings
+import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.KnowledgeItem
@@ -263,6 +264,14 @@ class ReviewRepositoryImpl(
 
     override suspend fun getAttempts(contentId: String): List<ReviewAttempt> =
         reviewDao.getAttempts(contentId).map { it.toDomain() }
+
+    override suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats> =
+        reviewDao.attemptStatsByContentType().mapNotNull { row ->
+            // An unknown legacy value counts for no track rather than a guessed one.
+            val type = ReviewContentType.entries.firstOrNull { it.name == row.contentType }
+                ?: return@mapNotNull null
+            type to AttemptStats(attempts = row.total, misses = row.total - row.correct)
+        }.toMap()
 
     override suspend fun reset() {
         reviewDao.clearItems()

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 20,
+  "contentVersion": 21,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -6900,6 +6900,380 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«rather than» = «نه اینکه»؛ حافظه بازسازی می‌شود، نه بازپخش یک ضبط ثابت."
+    },
+    {
+      "id": "a1.family.ex.09",
+      "lessonId": "a1.family.lesson-01",
+      "type": "word_recall",
+      "order": 9,
+      "prompt": "مادر",
+      "accepted": [
+        "mother"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "mother یعنی «مادر»؛ father پدر و sister خواهر است."
+    },
+    {
+      "id": "a1.family.ex.10",
+      "lessonId": "a1.family.lesson-01",
+      "type": "word_recall",
+      "order": 10,
+      "prompt": "پدر",
+      "accepted": [
+        "father"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "father یعنی «پدر»؛ mother مادر و brother برادر است."
+    },
+    {
+      "id": "a2.health.ex.12",
+      "lessonId": "a2.health.lesson-01",
+      "type": "word_recall",
+      "order": 12,
+      "prompt": "سردرد",
+      "accepted": [
+        "headache",
+        "headaches"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "headache از head و ache ساخته شده: درد سر."
+    },
+    {
+      "id": "a2.health.ex.13",
+      "lessonId": "a2.health.lesson-01",
+      "type": "word_recall",
+      "order": 13,
+      "prompt": "تب",
+      "accepted": [
+        "fever"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "fever یعنی «تب»؛ با temperature که «دما» است اشتباه نشود."
+    },
+    {
+      "id": "b1.work.ex.14",
+      "lessonId": "b1.work.lesson-01",
+      "type": "word_recall",
+      "order": 14,
+      "prompt": "همکار",
+      "accepted": [
+        "colleague",
+        "colleagues"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "colleague یعنی «همکار»؛ coworker هم رایج است اما در درس colleague آمده."
+    },
+    {
+      "id": "b1.work.ex.15",
+      "lessonId": "b1.work.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "prompt": "مهلت",
+      "accepted": [
+        "deadline",
+        "deadlines"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "deadline یعنی آخرین زمانی که کار باید تحویل شود."
+    },
+    {
+      "id": "b2.problems.ex.12",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "word_recall",
+      "order": 12,
+      "prompt": "بازپرداخت",
+      "accepted": [
+        "refund",
+        "refunds"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "refund پولی است که برای کالا یا خدمات مرجوعی برمی‌گردانند."
+    },
+    {
+      "id": "b2.problems.ex.13",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "word_recall",
+      "order": 13,
+      "prompt": "شکایت",
+      "accepted": [
+        "complaint",
+        "complaints"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "complaint اسم است؛ شکل فعلی آن complain است."
+    },
+    {
+      "id": "c1.persuasion.ex.10",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 10,
+      "prompt": "قانع‌کننده",
+      "accepted": [
+        "persuasive"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "persuasive صفت است؛ persuade فعل و persuasion اسم آن است."
+    },
+    {
+      "id": "c1.persuasion.ex.11",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 11,
+      "prompt": "استدلال متقابل",
+      "accepted": [
+        "counterargument",
+        "counter argument",
+        "counter-argument"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "counterargument یعنی استدلالی که در برابر ادعای اصلی مطرح می‌شود."
+    },
+    {
+      "id": "c2.argumentation.ex.07",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "word_recall",
+      "order": 7,
+      "prompt": "مغالطه",
+      "accepted": [
+        "fallacy",
+        "fallacies"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "fallacy استدلالی نادرست است که درست به نظر می‌رسد."
+    },
+    {
+      "id": "c2.argumentation.ex.08",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "word_recall",
+      "order": 8,
+      "prompt": "مقدمه (منطقی)",
+      "accepted": [
+        "premise",
+        "premises"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "premise گزارهٔ پایه‌ای است که نتیجه بر آن بنا می‌شود."
+    },
+    {
+      "id": "a1.daily-routine.ex.18",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "sentence_production",
+      "order": 18,
+      "prompt": "من معمولاً ساعت هفت صبحانه می‌خورم.",
+      "mustUse": [
+        "usually",
+        "breakfast"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "i usually have breakfast at seven",
+        "i usually eat breakfast at seven o'clock"
+      ],
+      "hintFa": "قید تکرار (usually) پیش از فعل اصلی می‌آید.",
+      "skill": "GRAMMAR",
+      "explanationFa": "قیدهای تکرار مثل usually پیش از فعل اصلی می‌آیند، نه پیش از فاعل."
+    },
+    {
+      "id": "a1.daily-routine.ex.19",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "sentence_production",
+      "order": 19,
+      "prompt": "او هر روز به سر کار می‌رود.",
+      "mustUse": [
+        "goes",
+        "work"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "she goes to work every day",
+        "he goes to work every day"
+      ],
+      "hintFa": "سوم‌شخص مفرد: فعل -s می‌گیرد.",
+      "skill": "GRAMMAR",
+      "explanationFa": "در سوم‌شخص مفرد فعل -s می‌گیرد؛ go به goes تبدیل می‌شود."
+    },
+    {
+      "id": "a2.past-simple.ex.09",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "دیروز یک کتاب خریدم.",        "mustUse": [
+          "bought",
+          "yesterday"
+        ],
+      "minWords": 4,
+      "accepted": [
+        "i bought a book yesterday"
+      ],
+      "hintFa": "زمان گذشته: buy → bought.",
+      "skill": "GRAMMAR",
+      "explanationFa": "buy فعل بی‌قاعده است و گذشتهٔ آن bought می‌شود، نه buyed."
+    },
+    {
+      "id": "a2.past-simple.ex.10",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "sentence_production",
+      "order": 10,
+      "prompt": "او دیروز به مدرسه نرفت.",
+      "mustUse": [
+        "didn't",
+        "go"
+      ],
+      "minWords": 4,
+      "accepted": [
+        "she didn't go to school yesterday",
+        "he didn't go to school yesterday"
+      ],
+      "hintFa": "منفی گذشته: didn't + شکل سادهٔ فعل.",
+      "skill": "GRAMMAR",
+      "explanationFa": "بعد از didn't فعل به شکل ساده می‌آید؛ went در این جمله نادرست است."
+    },
+    {
+      "id": "b1.plans.ex.11",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "sentence_production",
+      "order": 11,
+      "prompt": "اگر فردا باران بیاید، در خانه می‌مانیم.",
+      "mustUse": [
+        "if",
+        "will"
+      ],
+      "minWords": 7,
+      "accepted": [
+        "if it rains tomorrow we will stay at home"
+      ],
+      "hintFa": "شرطی نوع اول: if + حال ساده، و در جملهٔ اصلی will.",
+      "skill": "GRAMMAR",
+      "explanationFa": "در شرطی نوع اول پس از if حال ساده می‌آید و نتیجه با will ساخته می‌شود."
+    },
+    {
+      "id": "b1.plans.ex.12",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "sentence_production",
+      "order": 12,
+      "prompt": "اگر من جای تو بودم، آن پیشنهاد را قبول می‌کردم.",
+      "mustUse": [
+        "if",
+        "would"
+      ],
+      "minWords": 7,
+      "accepted": [
+        "if i were you i would accept that offer",
+        "if i were you i would take that job"
+      ],
+      "hintFa": "شرطی نوع دوم: if + گذشتهٔ ساده، would + مصدر.",
+      "skill": "GRAMMAR",
+      "explanationFa": "شرطی نوع دوم موقعیت خیالی را می‌رساند: if + گذشتهٔ ساده و would در جملهٔ اصلی."
+    },
+    {
+      "id": "b2.environment.ex.15",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "sentence_production",
+      "order": 15,
+      "prompt": "او ممکن است الان در دفتر باشد.",
+      "mustUse": [
+        "may",
+        "be"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "he may be in the office now",
+        "she may be in the office now"
+      ],
+      "hintFa": "استنباط با may: بعد از آن شکل سادهٔ فعل می‌آید.",
+      "skill": "GRAMMAR",
+      "explanationFa": "برای استنباط احتمالی از may + شکل سادهٔ فعل استفاده می‌کنیم: may be."
+    },
+    {
+      "id": "b2.environment.ex.16",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "sentence_production",
+      "order": 16,
+      "prompt": "آلودگی هوا در شهرهای بزرگ افزایش یافته است.",
+      "mustUse": [
+        "has",
+        "increased"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "air pollution has increased in large cities",
+        "air pollution has increased in big cities"
+      ],
+      "hintFa": "حال کامل: has + قسمت سوم فعل.",
+      "skill": "GRAMMAR",
+      "explanationFa": "در حال کامل پس از has قسمت سوم فعل می‌آید: increased."
+    },
+    {
+      "id": "c1.academic.ex.13",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "sentence_production",
+      "order": 13,
+      "prompt": "او نه تنها دیر آمد، بلکه مدارک را هم فراموش کرد.",
+      "mustUse": [
+        "not only",
+        "did"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "not only did he arrive late but he also forgot the documents"
+      ],
+      "hintFa": "وارونگی با not only در آغاز جمله: did + فاعل + فعل.",
+      "skill": "GRAMMAR",
+      "explanationFa": "قرار گرفتن not only در آغاز جمله وارونگی می‌سازد: did he arrive."
+    },
+    {        "id": "c1.academic.ex.14",
+        "lessonId": "c1.academic.lesson-01",
+        "type": "sentence_production",
+        "order": 14,
+        "prompt": "شواهد جدید این فرضیه را تأیید می‌کند.",
+        "mustUse": [
+          "evidence",
+          "corroborates"
+        ],
+      "minWords": 6,
+      "accepted": [
+        "the new evidence corroborates the hypothesis",
+        "recent evidence corroborates the hypothesis"
+      ],        "hintFa": "corroborate یعنی با شواهد تأیید کردن؛ با فاعل سوم‌شخص -s می‌گیرد.",
+      "skill": "WRITING",
+      "explanationFa": "corroborate یعنی چیزی را با شواهد پشتیبانی و تأیید کردن."
+    },
+    {
+      "id": "c2.rhetoric.ex.08",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "sentence_production",
+      "order": 8,
+      "prompt": "نه تنها استدلالش ضعیف بود، بلکه مقدماتش هم نادرست بود.",
+      "mustUse": [
+        "not only",
+        "but"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "not only was his argument weak but his premises were also flawed"
+      ],
+      "hintFa": "وارونگی تأکیدی با not only … but.",
+      "skill": "GRAMMAR",
+      "explanationFa": "وارونگی پس از not only در آغاز جمله، لحن را تأکیدی و رسمی می‌کند."
+    },
+    {
+      "id": "c2.rhetoric.ex.09",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "اگر او آن موقع گوش داده بود، الان اینجا نبودیم.",
+      "mustUse": [
+        "if",
+        "would"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "if she had listened we would not be here now",
+        "if he had listened we would not be here now"
+      ],
+      "hintFa": "شرطی آمیخته: if + گذشتهٔ کامل، و نتیجه در زمان حال با would.",
+      "skill": "GRAMMAR",
+      "explanationFa": "در شرطی آمیخته شرط در گذشته (had listened) و نتیجه در حال (would not be) است."
     }
   ]
 }

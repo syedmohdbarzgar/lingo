@@ -37,6 +37,7 @@ import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
@@ -241,6 +242,15 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
      */
     val getFocusPlan: GetFocusPlanUseCase by lazy {
         GetFocusPlanUseCase(knowledgeRepository, lessonRepository)
+    }
+
+    /**
+     * The three independent skill tracks (P2): mastery plus the evidence behind it,
+     * combined from the learner model and the review log. Home and Progress both read
+     * it so neither can define a track its own way.
+     */
+    val getSkillProfiles: GetSkillProfilesUseCase by lazy {
+        GetSkillProfilesUseCase(knowledgeRepository, progressRepository, reviewRepository)
     }
 
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }

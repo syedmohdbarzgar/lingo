@@ -12,6 +12,9 @@ import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
 import org.token.english.domain.engine.ReviewScheduler
+import org.token.english.domain.engine.SkillEvidence
+import org.token.english.domain.engine.SkillProfile
+import org.token.english.domain.engine.SkillProfileEngine
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
@@ -19,10 +22,10 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewAttempt
-import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.TodayPlan
 import org.token.english.domain.repository.KnowledgeRepository
@@ -119,7 +122,10 @@ class SubmitReviewUseCase(
             ),
         )
         progress.applyAttempt(
-            skill = if (item.contentType == ReviewContentType.VOCABULARY) Skill.VOCABULARY else Skill.GRAMMAR,
+            // One definition of the mapping (domain/model): the code that *counts*
+            // review evidence into a skill track reads the same helper, so the grade
+            // and the track it credits can never disagree.
+            skill = item.contentType.skill(),
             correct = result != ReviewResult.AGAIN,
             source = "review",
         )
@@ -281,6 +287,42 @@ class GetFocusPlanUseCase(
             remainingAttempts = plan.remainingAttempts,
             blockedCount = graph.items.count { item.id in it.prerequisites },
         )
+    }
+}
+
+/**
+ * The learner's independent skill tracks (checklist v8 P2): Grammar, Vocabulary and
+ * Reading, each with the mastery the rest of the app already uses **plus** the
+ * evidence behind it.
+ *
+ * Both screens need this, so it lives here rather than being re-derived in two
+ * ViewModels — and it is the only place that combines the two evidence sources: the
+ * curriculum graph (every lesson answer is attributed to the nodes it teaches) and
+ * the SRS review log (practice that never touches the graph). Mastery is read, never
+ * recomputed, so a track can never disagree with the planner about how well the
+ * learner knows it.
+ */
+class GetSkillProfilesUseCase(
+    private val knowledge: KnowledgeRepository,
+    private val progress: ProgressRepository,
+    private val reviews: ReviewRepository,
+    private val engine: SkillProfileEngine = SkillProfileEngine(),
+) {
+    suspend operator fun invoke(): List<SkillProfile> {
+        val items = knowledge.allItems()
+        // No content (before seeding finishes, or a broken install) means no tracks:
+        // three zeroed bars would claim the learner has done nothing when in fact
+        // there is nothing to do yet. The screen hides the card on an empty list.
+        if (items.isEmpty()) return emptyList()
+        val states = knowledge.observeStates().first()
+        val mastery = progress.observeMastery().first()
+        // Review grades are credited to the skill the reviewed content type exercises
+        // — the same mapping that moved the mastery (see `ReviewContentType.skill`),
+        // so a track's number and its evidence cannot tell different stories.
+        val reviewEvidence = reviews.attemptStatsByType()
+            .mapKeys { (type, _) -> type.skill() }
+            .mapValues { (_, stats) -> SkillEvidence(attempts = stats.attempts, misses = stats.misses) }
+        return engine.profiles(items, states, mastery, reviewEvidence)
     }
 }
 

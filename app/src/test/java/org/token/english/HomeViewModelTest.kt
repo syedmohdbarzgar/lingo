@@ -23,6 +23,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.feature.home.HomeViewModel
 
@@ -62,6 +63,7 @@ class HomeViewModelTest {
             planner = planner,
             getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, settings, planner, knowledge),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
+            getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionInstalled = companion,
             refreshCompanion = { companion.value },
             accessTickMillis = 0,
@@ -137,6 +139,7 @@ class HomeViewModelTest {
             planner = planner,
             getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, settings, planner, knowledge),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
+            getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionInstalled = companion,
             refreshCompanion = { companion.value },
             accessTickMillis = 0,

@@ -119,6 +119,24 @@ sealed interface Exercise {
         override val explanation: String? = null,
     ) : Exercise
 
+    /**
+     * Recall one English word from its Persian meaning, with **no options to
+     * recognize** (checklist P2). This is the cheapest exercise that demands
+     * retrieval instead of recognition, which makes it the vocabulary-side
+     * evidence for [MasteryDimension.RECALL] — multiple choice can only ever show
+     * that the learner recognises a word they may not be able to produce.
+     */
+    data class WordRecall(
+        override val id: String,
+        override val lessonId: String,
+        /** Persian cue: the meaning the learner must name in English. */
+        val prompt: String,
+        /** Accepted English forms, inflections welcome (`block`, `blocks`). */
+        val accepted: List<String>,
+        override val skill: Skill? = null,
+        override val explanation: String? = null,
+    ) : Exercise
+
     data class Translation(
         override val id: String,
         override val lessonId: String,
@@ -126,6 +144,38 @@ sealed interface Exercise {
         val accepted: List<String>,
         /** Word-bank candidates for lighter A1 production; empty = free typing. */
         val bank: List<String> = emptyList(),
+        override val skill: Skill? = null,
+        override val explanation: String? = null,
+    ) : Exercise
+
+    /**
+     * Produce a whole English sentence from a Persian cue, typing it with no bank
+     * to pick from (checklist P2). This is the written counterpart of
+     * [Speaking] and therefore the second source of [MasteryDimension.PRODUCTION]
+     * evidence — the one that works without a speech recognizer.
+     *
+     * Grading deliberately does not demand one memorised wording: an answer counts
+     * when it matches an exemplar in [accepted] **or** uses every [mustUse] anchor
+     * in order and still reaches [minWords] words, so a learner who composes their
+     * own correct sentence is not failed for phrasing it differently.
+     */
+    data class SentenceProduction(
+        override val id: String,
+        override val lessonId: String,
+        /** Persian cue: what to say. */
+        val prompt: String,
+        /**
+         * Anchor words/structures the sentence must use, **in this order** — the
+         * authored skeleton of the target form (e.g. `["didn't", "yesterday"]`).
+         * Matched whole-word and contraction-expanded against the typed answer.
+         */
+        val mustUse: List<String>,
+        /** Word floor the author sets, so a two-word fragment cannot pass. */
+        val minWords: Int,
+        /** Exemplar answers — also the sentence shown after a miss. */
+        val accepted: List<String>,
+        /** Optional Persian nudge shown under the cue (the structure to use). */
+        val hintFa: String? = null,
         override val skill: Skill? = null,
         override val explanation: String? = null,
     ) : Exercise
@@ -157,6 +207,23 @@ enum class ReviewState { NEW, LEARNING, REVIEW, RELEARNING, MASTERED }
 enum class ReviewResult { AGAIN, HARD, GOOD, EASY }
 
 enum class ReviewContentType { VOCABULARY, GRAMMAR }
+
+/**
+ * The skill a graded review exercises. One definition, shared by the code that
+ * *writes* the grade ([SubmitReviewUseCase]) and the code that *counts* it into a
+ * skill track (checklist v8 P2) — two copies of this mapping would drift and make
+ * the review log credit a different track than the one the mastery moved.
+ */
+fun ReviewContentType.skill(): Skill = when (this) {
+    ReviewContentType.VOCABULARY -> Skill.VOCABULARY
+    ReviewContentType.GRAMMAR -> Skill.GRAMMAR
+}
+
+/** Review-log totals for one content type: how many grades, how many were misses. */
+data class AttemptStats(
+    val attempts: Int,
+    val misses: Int,
+)
 
 data class ReviewItem(
     val contentId: String,

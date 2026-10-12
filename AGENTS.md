@@ -172,6 +172,25 @@ di      → everything (the only place that wires them together)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
   `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
+- **Progress is three independent skill tracks, not one blended number (P2).**
+  `SkillProfileEngine` (pure, in `domain/engine`) folds three sources into one `SkillProfile` per
+  axis: the *persisted* per-skill rows (`skill_mastery`), the curriculum side
+  (`KnowledgeState.exposureCount` as practice and `lapses` as misses) and the review side
+  (`review_attempt` joined to `review_item`, correct = GOOD/EASY — the same rule as
+  `observeAttemptAggregate`). The axes are `GRAMMAR`, `VOCABULARY`, `READING` — exactly the three
+  the placement test tags; `LISTENING`/`SPEAKING`/`WRITING` are not tracks because no learnable
+  content answers only to them. **Mastery is read from the persisted rows, never recomputed**, so
+  the EWMA stays single-source. The status is **evidence-gated**: `NOT_STARTED` at zero evidence,
+  `BUILDING` below `DEFAULT_BUILDING_EVIDENCE = 5` attempts, and only past that does mastery
+  separate `CONSOLIDATING` from `CONSOLIDATED` (0.75) — checking mastery first would call a single
+  correct answer (mastery seeded at 1.0) consolidated. `GetSkillProfilesUseCase` returns
+  `emptyList()` when no content is seeded, and Home + Progress both render the shared
+  `SkillTrackProgress` composable (Home compact), so the two screens cannot disagree. Node
+  accounting is not a clean partition and the tests say so: of the 89 nodes, GRAMMAR claims 49,
+  VOCABULARY 15 and READING 16, four nodes belong to two tracks
+  (`grammar.passive-simple`, `discourse.reason-cause`, `discourse.narrative-tenses`,
+  `vocab.idioms-and-figurative`) and 13 belong to none (a node that only trains LISTENING or
+  PHONOLOGY).
 
 ## 4. Connectivity policy — what is ACTIVE vs SUSPENDED
 
@@ -195,8 +214,11 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 
 All flavors also carry `POST_NOTIFICATIONS` (declared in the main manifest — the daily reminder
 posts a local notification on API 33+; without the declaration the Settings request is a no-op and
-`lintBazaarDebug` fails with `MissingPermission`) and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`
-(system-generated, not a real app permission).
+`lintBazaarDebug` fails with `MissingPermission`), `RECEIVE_BOOT_COMPLETED` (the reminder is re-armed
+after a reboot) and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a real app
+permission). The three-flavor release-prep pass (P3, Oct 2026) confirmed this set in each merged
+manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar/poolakey`,
+`ir/myket/billingclient`, `com/android/billingclient` — zero cross-flavor leakage).
 
 ### Active (must keep working offline)
 
@@ -298,8 +320,9 @@ Rules:
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 20):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 441 exercises (6–11/lesson + reading passages + meaning items + A1 pronunciation drills), 290
+- **CEFR bundle (contentVersion 21):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 465 exercises (6–12/lesson + reading passages + meaning items + A1 pronunciation drills +
+  P2 recall/production items), 290
   vocabulary entries (6/lesson, 8 in the numbers lesson), 89 knowledge items,
   placement = 36 questions in six graded bands of 6 (A1→C2, ordered by difficulty). Grammar points per level follow
   the British Council / EQUALS Core Inventory grammar tables (verified against examenglish.com/CEFR,
@@ -346,7 +369,7 @@ Rules:
   `GrammarCoverageTest` fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is now **every one of the 441 exercises** (grammar/fill-blank core plus vocabulary
+  Coverage is now **every one of the 465 exercises** (grammar/fill-blank core plus vocabulary
   meaning, translation and listening items). `ExplanationCoverageTest` enforces 100% on the core
   set and on the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the
   invariant); `validateContent` prints any exercise without one as a non-blocking warning. A new
@@ -355,9 +378,10 @@ Rules:
   the review session shows it after a miss, exactly as the lesson screen does. It is a vocabulary
   column (`VocabularyEntity.explanationFa`, Room v5) and a new word without one fails
   `ExplanationCoverageTest`.
-- Exercise mix is intentionally varied: `multiple_choice`, `fill_blank`, `translation`, `listening`,
-  and authored `skill` tags (VOCABULARY / GRAMMAR / READING / WRITING) so mastery is not dominated
-  by recognition questions. Correct-answer positions stay balanced —
+- Exercise mix is intentionally varied: `multiple_choice`, `fill_blank`, `word_recall`,
+  `translation`, `sentence_production`, `listening`, and authored `skill` tags (VOCABULARY / GRAMMAR /
+  READING / WRITING) so mastery is not dominated by recognition questions. Correct-answer positions
+  stay balanced —
   `scripts/balance_answer_positions.mjs` restores the invariant and `ContentDistributionTest`
   enforces it.
 - Placement scoring is **band-based** (`ScorePlacementUseCase`): walks bands bottom-up, band
@@ -390,8 +414,31 @@ Rules:
   run: `balance_answer_positions.mjs` and `install_debug.sh`. After any content edit run
   `node scripts/balance_answer_positions.mjs`, then `validateContent` + the content tests with
   `--rerun`.
-- Supported exercise types: `multiple_choice`, `fill_blank`, `translation`, `listening`
-  (`speaking` parses but is suspended).
+- Supported exercise types: `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
+  `sentence_production`, `listening` (`speaking` parses but is suspended).
+- **Retrieval and production, not just recognition (P2, bundle 20 → 21).** Two shapes close the hole
+  that every vocabulary item was multiple choice and the only "say something" item (`translation`)
+  shipped a word bank in 21 of its 41 items:
+  - `word_recall` — the Persian meaning, name the English word, **no options anywhere**. It is the
+    vocabulary-side evidence for `MasteryDimension.RECALL` (skill VOCABULARY).
+  - `sentence_production` — build the whole sentence from a Persian cue, free typing only. It is the
+    typed counterpart of the suspended `speaking` item and therefore the second source of
+    `MasteryDimension.PRODUCTION`.
+
+  The production grader deliberately does **not** demand one memorised wording:
+  `AnswerChecker.isCorrect` passes an answer that matches an exemplar in `accepted` **or** that uses
+  every `mustUse` anchor **in the authored order** and still reaches the author's `minWords` floor.
+  Anchors are matched whole-word and contraction-expanded (`didn't` is satisfied by `did not`), and
+  order is part of the contract — a sentence that merely contains both anchor words somewhere is a
+  different structure and must not pass. There is no model and no network in this: it checks that
+  the target form was actually attempted, and the exemplar stays the answer shown after a miss.
+  `validateContent` requires the anchors, the floor (≥3 and ≥ the anchor word count) and the skill
+  tag, and rejects a cue that leaks English letters (the cue is the meaning, so an English cue would
+  both flip the RTL paragraph and hand over the answer). `ProductionRecallContentTest` then checks
+  the authored items — including that **each item's anchors can credit its own exemplar**, asserted
+  with `accepted` emptied so only the structural branch can pass it. That is what catches an anchor
+  in the wrong order or a floor the exemplar cannot reach; asking the item as authored would be
+  vacuous, because an exemplar match short-circuits the structural rule.
 - **Every `fill_blank` must carry an authored `skill` (A-2b)** — `validateContent` rejects an
   untagged one. The heuristic default (GRAMMAR) used to decide whether a near-miss was reported as
   a spelling slip, which is a pedagogical call the author has to make: word-choice blanks are
@@ -445,8 +492,8 @@ Rules:
 
 ## 8. Testing
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 283 tests / 41 classes as of
-  the remediation-evaluation pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 317 tests / 45 classes as of
+  the P2 skill-profile pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
@@ -470,6 +517,14 @@ Rules:
   `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`
   (incl. the evidence filter and "an unassessed dimension must not reorder a lesson"),
   `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents),
+  `SkillProfileEngineTest` (P2: the three tracks fold curriculum + review evidence, mastery is read
+  rather than recomputed, the status is evidence-gated so a single correct answer cannot read as
+  consolidated, and — on the **real bundle** — all three tracks are funded while the four nodes two
+  tracks claim are asserted exhaustively), `ProductionRecallTest` (P2: the two new shapes evidence RECALL and PRODUCTION, recall keeps the
+  one-edit spelling hint, production credits an original sentence but not one whose anchors are out
+  of order or below the word floor) + `ProductionRecallContentTest` (P2 on the real bundle: every
+  authored item parses, the cue is Persian and the answers English, both shapes exist at all six
+  levels, and each item's own exemplar grades correct),
   `RemediationJourneyTest` (that same decision evaluated on the **real bundle**: a learner who misses
   a lesson's grammar drills gets a block for exactly that node, error isolation leaves the lesson's
   PHONOLOGY node untouched, a foundational node reports its real dependent count, correct practice
@@ -487,7 +542,8 @@ Rules:
   same session), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
   cancelled/failed/succeeded, restore active/none/store-failure, the companion grant),
   `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
-  settings write never wipes the access status) and `PlacementViewModelTest` (adaptive stop after
+  settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
+  state and an empty bundle yields no tracks rather than empty bars) and `PlacementViewModelTest` (adaptive stop after
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
   onboarding write) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)

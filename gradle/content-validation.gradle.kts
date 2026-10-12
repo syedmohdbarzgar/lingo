@@ -28,7 +28,9 @@ tasks.register("validateContent") {
     doLast {
         val levels = setOf("A1", "A2", "B1", "B2", "C1", "C2")
         // Mirrors ContentParser.supportedTypes — `speaking` parses but is suspended.
-        val exerciseTypes = setOf("multiple_choice", "fill_blank", "translation", "listening")
+        val exerciseTypes = setOf(
+            "multiple_choice", "fill_blank", "word_recall", "translation", "sentence_production", "listening",
+        )
         // Mirrors domain Skill — an authored tag must name a real skill, otherwise
         // ContentParser silently drops it and mastery falls back to the heuristic.
         val skills = setOf("VOCABULARY", "GRAMMAR", "LISTENING", "SPEAKING", "READING", "WRITING")
@@ -134,6 +136,40 @@ tasks.register("validateContent") {
                 "translation" -> {
                     if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
                     if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
+                }
+                // P2: recall with no options to recognize. The skill tag decides
+                // which mastery meter the recall feeds, so it is not optional.
+                "word_recall" -> {
+                    if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
+                    if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
+                    if (text(o, "skill").isEmpty()) report(id, "word_recall must declare skill")
+                    if (text(o, "prompt").any { it in 'A'..'Z' || it in 'a'..'z' }) {
+                        // The cue is the Persian meaning; an English cue turns the
+                        // item into a spelling task and leaks the answer.
+                        report(id, "prompt must be Persian (it is the meaning to name in English)")
+                    }
+                }
+                // P2: produce a whole sentence. Without anchors and a word floor a
+                // single token would satisfy the structural check.
+                "sentence_production" -> {
+                    if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
+                    if (array(o, "accepted").isEmpty()) {
+                        report(id, "no accepted answers (the exemplar is shown after a miss)")
+                    }
+                    if (text(o, "skill").isEmpty()) report(id, "sentence_production must declare skill")
+                    val anchors = array(o, "mustUse").map { it.toString().trim() }.filter { it.isNotEmpty() }
+                    if (anchors.isEmpty()) {
+                        report(id, "sentence_production needs mustUse anchors (the target structure)")
+                    }
+                    val anchorWords = anchors.sumOf { anchor -> anchor.split(" ").count { it.isNotBlank() } }
+                    val minWords = number(o, "minWords") ?: 0
+                    when {
+                        minWords <= 0 -> report(id, "sentence_production needs a positive minWords floor")
+                        minWords < 3 -> report(id, "minWords $minWords is too low to be a sentence (use at least 3)")
+                        minWords < anchorWords -> {
+                            report(id, "minWords $minWords is below the $anchorWords anchor word(s) — nothing to type")
+                        }
+                    }
                 }
                 "listening" -> {
                     if (text(o, "text").isEmpty()) report(id, "blank text")

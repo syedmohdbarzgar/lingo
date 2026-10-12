@@ -1,5 +1,6 @@
 package org.token.english.core.designsystem
 
+import org.token.english.domain.engine.SkillStatus
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.Skill
 
@@ -11,6 +12,17 @@ fun Skill.labelFa(): String = when (this) {
     Skill.SPEAKING -> "مکالمه"
     Skill.READING -> "خواندن"
     Skill.WRITING -> "نوشتن"
+}
+
+/**
+ * How much a skill track's number is worth (checklist v8 P2). The wording is about
+ * *progress*, not praise: a track with two answers must not read as finished.
+ */
+fun SkillStatus.labelFa(): String = when (this) {
+    SkillStatus.NOT_STARTED -> "شروع نشده"
+    SkillStatus.BUILDING -> "در حال ساخت"
+    SkillStatus.CONSOLIDATING -> "در حال تثبیت"
+    SkillStatus.CONSOLIDATED -> "تثبیت‌شده"
 }
 
 /**

@@ -14,6 +14,7 @@ import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.domain.model.AppSettings
+import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -21,6 +22,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewAttempt
+import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
@@ -171,6 +173,9 @@ class FakeReviewRepository : ReviewRepository {
     val scheduled = mutableListOf<ReviewItem>()
     val attempts = mutableListOf<ReviewAttempt>()
 
+    /** Review-log totals the skill-profile use case folds into a track (P2). */
+    var attemptStats: Map<ReviewContentType, AttemptStats> = emptyMap()
+
     override fun observeDueCount(now: Long): Flow<Int> = dueFlow.map { it.size }
 
     override suspend fun getDue(now: Long, limit: Int): List<ReviewItem> = dueFlow.value.take(limit)
@@ -191,6 +196,8 @@ class FakeReviewRepository : ReviewRepository {
 
     override suspend fun getAttempts(contentId: String): List<ReviewAttempt> =
         attempts.filter { it.contentId == contentId }
+
+    override suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats> = attemptStats
 
     override suspend fun reset() {
         dueFlow.value = emptyList()

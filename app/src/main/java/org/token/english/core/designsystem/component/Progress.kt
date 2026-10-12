@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.labelFa
+import org.token.english.domain.engine.SkillProfile
+import org.token.english.domain.engine.SkillStatus
 
 /** Plain clickable without ripple — used by chips/inline targets. */
 internal fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier = this.clickable(
@@ -103,6 +106,53 @@ fun SkillProgressBar(
         }
         AppLinearProgress(progress = progress)
     }
+}
+
+/**
+ * One learning track (P2): the mastery bar **plus the evidence behind the number**.
+ *
+ * A mastery bar alone is not a profile — mastery is seeded by the first observation,
+ * so one correct answer already reads as 100%. Showing how many answers the track
+ * rests on, and how many of them were right, is what makes the number auditable.
+ *
+ * Shared by Home and Progress so the same track can never be described two
+ * different ways on two screens.
+ */
+@Composable
+fun SkillTrackProgress(
+    profile: SkillProfile,
+    modifier: Modifier = Modifier,
+    /** Home shows the summary line; Progress adds how many nodes were practised. */
+    compact: Boolean = false,
+) {
+    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        SkillProgressBar(
+            label = profile.skill.labelFa(),
+            progress = profile.mastery,
+            // An untouched track has no percentage to report — not "۰٪".
+            valueText = if (profile.status == SkillStatus.NOT_STARTED) profile.status.labelFa() else null,
+        )
+        Text(
+            text = profile.evidenceLineFa(compact = compact),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/**
+ * The evidence sentence under a track's bar: how many answers, how accurate, how
+ * many curriculum nodes, and how far along the track is.
+ */
+private fun SkillProfile.evidenceLineFa(compact: Boolean): String = buildString {
+    if (evidence == 0) {
+        append("هنوز پاسخی در این محور ثبت نشده")
+        return@buildString
+    }
+    append("$evidence پاسخ")
+    accuracyPercent?.let { append(" · دقت $it٪") }
+    if (!compact) append(" · $nodesPractised گره")
+    append(" · ${status.labelFa()}")
 }
 
 /** Compact labeled section heading used across screens. */

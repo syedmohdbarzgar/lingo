@@ -152,11 +152,56 @@ object AnswerChecker {
             is Exercise.MultipleChoice -> return exercise.options.getOrNull(exercise.correctIndex)
                 ?.let { matchesAny(listOf(it), answer) } ?: false
             is Exercise.FillBlank -> exercise.accepted
+            is Exercise.WordRecall -> exercise.accepted
             is Exercise.Translation -> exercise.accepted
             is Exercise.Listening -> exercise.accepted
+            // P2: a produced sentence passes on an exemplar match OR on the target
+            // structure, so an original correct sentence is not graded wrong just
+            // for not matching the one the author happened to write.
+            is Exercise.SentenceProduction ->
+                return matchesAny(exercise.accepted, answer) || productionMatches(exercise, answer)
             is Exercise.Speaking -> exercise.referenceAnswers
         }
         return matchesAny(accepted, answer)
+    }
+
+    /**
+     * Structural credit for [Exercise.SentenceProduction] (checklist P2).
+     *
+     * An answer counts when it uses **every** [Exercise.SentenceProduction.mustUse]
+     * anchor in the authored order and still reaches the author's word floor. The
+     * anchors are matched whole-word and contraction-expanded on both sides, so
+     * an authored `didn't` is satisfied by a learner typing `did not`. Order is
+     * part of the contract: a sentence that merely contains both anchor words
+     * somewhere (`yesterday I didn't` for a `didn't … yesterday` target) is a
+     * different structure and must not pass.
+     *
+     * Deliberately offline and deterministic: no model, no server, and no attempt
+     * to judge whether the sentence is *good* English — it checks that the target
+     * form was actually attempted, and the exemplar stays the reference answer
+     * shown after a miss.
+     */
+    private fun productionMatches(exercise: Exercise.SentenceProduction, answer: String): Boolean {
+        val words = expandContractions(normalize(answer)).split(' ').filter { it.isNotEmpty() }
+        if (words.isEmpty() || words.size < exercise.minWords) return false
+        val anchors = exercise.mustUse
+            .flatMap { expandContractions(normalize(it)).split(' ') }
+            .filter { it.isNotEmpty() }
+        if (anchors.isEmpty()) return false
+        // Walk the typed words once, consuming anchors in order (subsequence match).
+        var cursor = 0
+        for (anchor in anchors) {
+            var found = -1
+            for (i in cursor until words.size) {
+                if (words[i] == anchor) {
+                    found = i
+                    break
+                }
+            }
+            if (found < 0) return false
+            cursor = found + 1
+        }
+        return true
     }
 
     /**
@@ -200,9 +245,13 @@ object AnswerChecker {
     fun isAlmost(exercise: Exercise, answer: String): Boolean {
         val accepted = when (exercise) {
             is Exercise.FillBlank -> exercise.accepted
+            is Exercise.WordRecall -> exercise.accepted
             is Exercise.Translation -> exercise.accepted
             is Exercise.Listening -> exercise.accepted
             is Exercise.MultipleChoice -> return false
+            // A produced sentence is not a spelling question, and in any case the
+            // near-miss rule only ever fires on a single word (P2).
+            is Exercise.SentenceProduction -> return false
             is Exercise.Speaking -> return false
         }
         return isAlmost(accepted, answer)
@@ -244,8 +293,10 @@ object AnswerChecker {
     fun correctAnswerText(exercise: Exercise): String = when (exercise) {
         is Exercise.MultipleChoice -> exercise.options.getOrElse(exercise.correctIndex) { "" }
         is Exercise.FillBlank -> exercise.accepted.firstOrNull().orEmpty()
+        is Exercise.WordRecall -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.Translation -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.Listening -> exercise.accepted.firstOrNull().orEmpty()
+        is Exercise.SentenceProduction -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.Speaking -> exercise.referenceAnswers.firstOrNull().orEmpty()
     }
 
@@ -260,7 +311,10 @@ object AnswerChecker {
     fun skillOf(exercise: Exercise): Skill = when (exercise) {
         is Exercise.MultipleChoice -> exercise.skill ?: heuristicMc(exercise)
         is Exercise.FillBlank -> exercise.skill ?: Skill.GRAMMAR
+        // Recalling a word from its meaning is vocabulary work, not form work.
+        is Exercise.WordRecall -> exercise.skill ?: Skill.VOCABULARY
         is Exercise.Translation -> exercise.skill ?: Skill.WRITING
+        is Exercise.SentenceProduction -> exercise.skill ?: Skill.WRITING
         is Exercise.Listening -> exercise.skill ?: Skill.LISTENING
         is Exercise.Speaking -> exercise.skill ?: Skill.SPEAKING
     }
