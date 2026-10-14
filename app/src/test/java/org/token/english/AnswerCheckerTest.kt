@@ -45,6 +45,32 @@ class AnswerCheckerTest {
     }
 
     @Test
+    fun `an apostrophe-ambiguous contraction accepts both readings`() {
+        // A-2c: `'s` is is/has and `'d` is would/had. The learner may type the
+        // contraction or either expansion; grading cannot know which they meant.
+        assertTrue(AnswerChecker.isCorrect(fillBlank("he has finished"), "He's finished"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("he is finished"), "He's finished"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("I had left"), "I'd left"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("I would leave"), "I'd leave"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("They had gone"), "They'd gone"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("it has broken"), "it's broken"))
+        assertTrue(AnswerChecker.isCorrect(fillBlank("who has seen it"), "who's seen it"))
+        // An unambiguous contraction still matches only its own reading.
+        assertFalse(AnswerChecker.isCorrect(fillBlank("he is here"), "he has here"))
+    }
+
+    @Test
+    fun `both expansion readings are exposed as variants`() {
+        assertEquals(setOf("he is", "he has"), AnswerChecker.expansionVariants("he's"))
+        assertEquals(setOf("hello there"), AnswerChecker.expansionVariants("hello there"))
+        // Two ambiguous contractions in one sentence cross-product their readings.
+        assertTrue(
+            AnswerChecker.expansionVariants(AnswerChecker.normalize("He's gone and I'd left"))
+                .any { "he has" in it && "i had" in it },
+        )
+    }
+
+    @Test
     fun `arabic yeh and kaf normalize to persian forms`() {
         // كتاب — kaf U+0643 instead of Persian U+06A9 (Arabic keyboard layout).
         val arabicKaf = "\u0643\u062a\u0627\u0628"

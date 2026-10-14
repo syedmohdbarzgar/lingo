@@ -1,5 +1,7 @@
 # Lingo — English Learning (A1–C2)
 
+[![CI](https://github.com/syedmohdbarzgar/lingo/actions/workflows/ci.yml/badge.svg)](https://github.com/syedmohdbarzgar/lingo/actions/workflows/ci.yml)
+
 > اپ اندروید **آفلاین‌محور** برای فارسی‌زبانانی که انگلیسی یاد می‌گیرند:
 > درس روزانه → تمرین → مرور فاصله‌دار → پیشرفت.
 > هستهٔ یادگیری کامل روی دستگاه کار می‌کند و بدون اینترنت هم باید کار کند.
@@ -319,7 +321,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-332 unit tests across 47 classes. The pure cores carry the most weight — review scheduling,
+344 unit tests across 47 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

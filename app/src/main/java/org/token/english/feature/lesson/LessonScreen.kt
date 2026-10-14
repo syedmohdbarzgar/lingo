@@ -379,6 +379,12 @@ private fun ExerciseContent(
                 if (outcome != null) {
                     if (outcome.correct) {
                         CorrectBanner(Modifier.fillMaxWidth())
+                        // A production item has many valid sentences, so passing
+                        // only means *a* valid wording — show the authored model
+                        // answer too, pass or fail (checklist B-10).
+                        if (exercise is Exercise.SentenceProduction) {
+                            ModelAnswer(outcome.correctAnswer)
+                        }
                     } else {
                         IncorrectBanner(
                             modifier = Modifier.fillMaxWidth(),
@@ -433,6 +439,34 @@ private fun ExerciseContent(
                 modifier = Modifier.fillMaxWidth(),
             )
         }
+    }
+}
+
+/**
+ * The authored model answer for a production item, shown whether the learner
+ * passed or not (checklist B-10). A passing answer only proves *one* valid
+ * wording, so the exemplar still gives the learner something to compare against.
+ * Wrapped in [EnglishText] so a raw English sentence stays LTR inside the
+ * forced-RTL layout, and paired with a Persian label so the signposting is not
+ * carried by colour alone.
+ */
+@Composable
+private fun ModelAnswer(text: String) {
+    if (text.isBlank()) return
+    Column(
+        Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+    ) {
+        Text(
+            text = "پاسخ نمونه",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        EnglishText(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 

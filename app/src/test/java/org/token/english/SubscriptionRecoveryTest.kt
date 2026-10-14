@@ -10,6 +10,7 @@ import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.ProductIds
 import org.token.english.core.billing.SubscriptionMath
 import org.token.english.core.billing.SubscriptionPlan
+import java.util.Calendar
 
 /**
  * Billing & entitlement recovery (checklist P0).
@@ -210,6 +211,55 @@ class SubscriptionRecoveryTest {
             "renewing after the mirror lapsed starts from now, not from the old expiry",
             now + 30 * day,
             maxOf(now - 5 * day, now) + 30 * day,
+        )
+    }
+
+    // ------------------------------------------------- B-5 edge cases
+
+    @Test
+    fun `a 30-day plan bought on the 31st is not shown as expired a day early`() {
+        // Checklist B-5: a fixed-length plan is a flat 30 days, not a calendar month.
+        // A purchase on 31 January would end 28 February under calendar arithmetic —
+        // two days *early*. The flat period must run the full 30 days instead.
+        val purchased = Calendar.getInstance().apply {
+            clear()
+            set(2026, Calendar.JANUARY, 31, 12, 0, 0)
+        }.timeInMillis
+        val expiry = SubscriptionMath.flatPeriodExpiry(purchased, monthly = true)
+        val calendarMonth = Calendar.getInstance().apply {
+            timeInMillis = purchased
+            add(Calendar.MONTH, 1)
+        }.timeInMillis
+
+        assertEquals("a flat 30 days from the purchase", purchased + 30 * day, expiry)
+        assertTrue(
+            "flat 30 days is never shorter than the calendar month it spans",
+            expiry > calendarMonth,
+        )
+        assertEquals(
+            "still premium on the day the calendar month would have ended",
+            AccessLevel.PREMIUM,
+            EntitlementPolicy.level(calendarMonth + 12 * hour, trialRemainingMs = 0L, subscriptionUntil = expiry),
+        )
+    }
+
+    @Test
+    fun `a revoked purchase loses access once the mirror runs out and does not renew`() {
+        // Checklist B-5: a refund/revocation happens in the store and cannot be seen
+        // offline, so it is never re-granted — access is bounded by the last
+        // reconciled expiry. This is the documented debt (docs/debt.md), pinned here
+        // so "bounded", not "permanent", cannot drift into a silent full grant.
+        val lastReconciled = now + 3 * day
+
+        assertEquals(
+            "paid time already mirrored is honoured",
+            AccessLevel.PREMIUM,
+            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = lastReconciled),
+        )
+        assertEquals(
+            "but the mirror never renews itself once the store stops reporting the purchase",
+            AccessLevel.LOCKED,
+            EntitlementPolicy.level(lastReconciled + hour, trialRemainingMs = 0L, subscriptionUntil = lastReconciled),
         )
     }
 }

@@ -171,6 +171,39 @@ class ProductionRecallTest {
     }
 
     @Test
+    fun `a scrambled sentence that reuses every exemplar word is not credited`() {
+        // Checklist B-10 negative test: the words are all present — a full overlap
+        // with the exemplar — but in the wrong order, so the target structure was
+        // never produced. Order must reject it even at 100% vocabulary overlap.
+        val exercise = production(
+            mustUse = listOf("usually", "breakfast"),
+            minWords = 5,
+            accepted = listOf("i usually have breakfast at seven"),
+        )
+        assertFalse(
+            "word order is part of the target structure",
+            AnswerChecker.isCorrect(exercise, "I breakfast usually have at seven."),
+        )
+    }
+
+    @Test
+    fun `a wrong verb form fails even when the rest of the sentence matches`() {
+        // Checklist B-10 negative test: `watch` vs the authored `watches`. The graded
+        // anchor is the verb form itself, so a sentence that keeps almost every word
+        // (4 of 5, above the overlap floor) still fails — the form was never used.
+        val exercise = production(
+            mustUse = listOf("watches", "evening"),
+            minWords = 5,
+            accepted = listOf("he watches tv every evening"),
+        )
+        assertFalse(
+            "the -es form is the target, not a synonym for `watch`",
+            AnswerChecker.isCorrect(exercise, "He watch tv every evening."),
+        )
+        assertTrue(AnswerChecker.isCorrect(exercise, "He watches tv every evening."))
+    }
+
+    @Test
     fun `a fragment below the word floor does not pass on anchors alone`() {
         val exercise = production(mustUse = listOf("didn't", "go"), minWords = 5)
         assertFalse(AnswerChecker.isCorrect(exercise, "I didn't go."))

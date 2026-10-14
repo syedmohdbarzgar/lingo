@@ -113,6 +113,42 @@ object AnswerChecker {
 
     private val contractionRegex = Regex("\\b(" + contractions.keys.joinToString("|") { Regex.escape(it) } + ")\\b")
 
+    /**
+     * Second valid reading of an apostrophe-*ambiguous* contraction (checklist
+     * A-2c). `he's` is `he is` **or** `he has`, `i'd` is `i would` **or** `i had` —
+     * `'s` is is/has and `'d` is would/had. [contractions] keeps the primary (more
+     * common) reading for structural matching; grading accepts either reading
+     * because the app cannot know which one the learner meant and both are
+     * correct English.
+     */
+    private val contractionAlternatives = mapOf(
+        "he's" to listOf("he has"),
+        "she's" to listOf("she has"),
+        "it's" to listOf("it has"),
+        "that's" to listOf("that has"),
+        "there's" to listOf("there has"),
+        "who's" to listOf("who has"),
+        "what's" to listOf("what has"),
+        "where's" to listOf("where has"),
+        "when's" to listOf("when has"),
+        "i'd" to listOf("i had"),
+        "you'd" to listOf("you had"),
+        "he'd" to listOf("he had"),
+        "she'd" to listOf("she had"),
+        "we'd" to listOf("we had"),
+        "they'd" to listOf("they had"),
+    )
+
+    /** Every accepted reading per contraction: the primary form plus the alternatives. */
+    private val contractionForms: Map<String, List<String>> =
+        contractions.mapValues { (key, form) -> listOf(form) + contractionAlternatives[key].orEmpty() }
+
+    /** Per-contraction regexes, precompiled — [expansionVariants] walks these. */
+    private val contractionVariants: List<Pair<Regex, List<String>>> =
+        contractionForms.map { (contraction, forms) ->
+            Regex("\\b" + Regex.escape(contraction) + "\\b") to forms
+        }
+
     fun normalize(raw: String): String {
         val stripped = raw
             .trim()
@@ -141,19 +177,35 @@ object AnswerChecker {
     private fun glued(c: Char?): Boolean =
         c != null && (c.isDigit() || c.isLetter() || c == '.' || c == ',' || c == ':')
 
-    /** Expands contractions so `I'm hungry` equals `I am hungry`. */
+    /** Expands contractions so `I'm hungry` equals `I am hungry` (primary reading). */
     fun expandContractions(normalized: String): String =
         contractionRegex.replace(normalized) { match -> contractions[match.value] ?: match.value }
+
+    /**
+     * Every reading of a normalized answer after expanding its contractions
+     * (checklist A-2c). Unambiguous text yields a single variant; `he's been`
+     * yields both `he is been` and `he has been`, so a learner may type either the
+     * contraction or the reading they meant. Text with no ambiguous contraction is
+     * its own single variant; the variants are cross-producted when a sentence has
+     * more than one ambiguous contraction.
+     */
+    fun expansionVariants(normalized: String): Set<String> {
+        var variants = setOf(normalized)
+        for ((regex, forms) in contractionVariants) {
+            if (variants.none { regex.containsMatchIn(it) }) continue
+            variants = variants.flatMap { text -> forms.map { regex.replace(text, it) } }.toSet()
+        }
+        return variants
+    }
 
     /** True when [answer] matches any accepted variant, contractions included. */
     fun matchesAny(accepted: List<String>, answer: String): Boolean {
         val normalized = normalize(answer)
         if (normalized.isEmpty()) return false
-        val expanded = expandContractions(normalized)
+        val answerVariants = expansionVariants(normalized)
         return accepted.any { candidate ->
             val norm = normalize(candidate)
-            norm == normalized || norm == expanded ||
-                expandContractions(norm) == normalized || expandContractions(norm) == expanded
+            norm in answerVariants || expansionVariants(norm).any { it in answerVariants }
         }
     }
 

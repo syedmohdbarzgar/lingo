@@ -48,4 +48,22 @@ class OnboardingViewModelTest {
         assertEquals("skip pins the level to A1", LearningLevel.A1, settings.settingsFlow.value.level)
         assertFalse("onboarding is not shown again", settings.settingsFlow.value.isFirstLaunch)
     }
+
+    @Test
+    fun `skipping on a fresh install reports done once and leaves A1 in place`() {
+        // The common path: a brand-new install that skips straight away. The callback
+        // fires exactly once (a second call would push the caller off onboarding
+        // twice) and A1 must not be disturbed by the pin.
+        val settings = FakeSettingsRepository(
+            initial = testSettings().copy(isFirstLaunch = true, level = LearningLevel.A1),
+        )
+        val vm = OnboardingViewModel(settings)
+
+        var completions = 0
+        vm.skipWithA1 { completions++ }
+
+        assertEquals("the caller is notified exactly once", 1, completions)
+        assertEquals(LearningLevel.A1, settings.settingsFlow.value.level)
+        assertFalse(settings.settingsFlow.value.isFirstLaunch)
+    }
 }

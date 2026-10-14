@@ -103,6 +103,26 @@ object CompanionSignature {
         if (wanted.isEmpty()) return true
         return actual.any { normalize(it) in wanted }
     }
+
+    /**
+     * RHS of the `EXPECTED_SIGNING_SHA256` declaration as written in [source], or
+     * null when the declaration is absent. Mirrors the shape
+     * `app/build.gradle.kts` reads to fail a release while the digest is empty, kept
+     * here so a unit test can prove the gate's view and the runtime constant agree
+     * (checklist N-1) instead of trusting two regexes to stay in step.
+     */
+    fun declaredValue(source: String): String? =
+        Regex("""val EXPECTED_SIGNING_SHA256[^\n]*?=\s*([^\n]*)""")
+            .find(source)
+            ?.groupValues?.get(1)?.trim()
+
+    /**
+     * True when a declared RHS is a real value the release gate accepts. `emptySet()`,
+     * blank and null are all "not configured" — the exact stance in the Gradle gate, so
+     * a valid digest cannot silently start failing the release build.
+     */
+    fun declarationIsConfigured(declared: String?): Boolean =
+        !declared.isNullOrEmpty() && !declared.startsWith("emptySet")
 }
 
 /** Whether the free-access companion is installed **and** its signature is trusted. */
