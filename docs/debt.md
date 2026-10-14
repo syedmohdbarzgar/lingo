@@ -7,13 +7,14 @@
   session in progress; nothing persists per dimension, so the next session starts blind and the
   selector only adapts once the learner has answered inside that session (B-1). A cross-session
   version needs a per-dimension column/table (Room v6 + migration) and is the natural next step.
-- **The companion signing digest is not configured yet** (`CompanionApp.EXPECTED_SIGNING_SHA256`
-  is empty), so a debug build trusts the `org.token.zaribar` package id alone and any APK declaring
-  it unlocks the paid tier there. Release builds now refuse to assemble until it is set, so the
-  bypass cannot ship — but the free-access grant stays unverified until the digest lands. Paste it
-  from `keytool -printcert -jarfile zaribar.apk` to close N-1; the check is already implemented,
-  unit-tested (including the gate's own parse of the constant) and enforced at release. Still open:
-  confirming every flavor hides/redirects the Bazaar-only install link appropriately.
+- **The companion key is pinned from a sideloaded build.** `CompanionApp.EXPECTED_SIGNING_SHA256`
+  now holds the Zaribar 3.4.10 certificate (`CN=wolfandmoon`), read from the APK installed on the
+  device — which arrived via `com.google.android.packageinstaller`, not through Cafe Bazaar. If the
+  key on the published build differs, the grant fails closed for store installs (no free access —
+  never a bypass), so compare the two before a release. Still open: **where the Bazaar link should be
+  surfaced for learners who do not have the companion.** Every download button used to live in the
+  installed state (Home, paywall, settings) and is hidden there now, so no screen offers the
+  companion at all — deliberate until this is decided, since the link is how the free funnel grows.
 - **The 7-day trial is local.** Clear-data or a reinstall restarts it; there is no server to anchor
   it. Accepted (the alternative is the store's own free-trial offer). Precedence is
   SUBSCRIPTION → COMPANION_APP → TRIAL → LOCKED in `EntitlementPolicy`.

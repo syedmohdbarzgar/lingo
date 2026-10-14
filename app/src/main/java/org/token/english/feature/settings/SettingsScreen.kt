@@ -332,21 +332,19 @@ private fun SubscriptionCard(state: SettingsUiState, onOpenPaywall: () -> Unit) 
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            val context = LocalContext.current
-            if (state.accessReason == org.token.english.core.billing.AccessReason.COMPANION_APP) {
-                SecondaryButton(
-                    text = "دانلود زریبار از کافه بازار",
-                    onClick = { org.token.english.core.billing.CompanionApp.openDownloadPage(context) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            } else if (state.access == org.token.english.core.billing.AccessLevel.PREMIUM) {
-                SecondaryButton(
+            // A free companion grant needs no action: nothing to buy and nothing to
+            // download — the companion is already on the device, so the store link
+            // stays hidden.
+            when {
+                state.accessReason == org.token.english.core.billing.AccessReason.COMPANION_APP -> Unit
+
+                state.access == org.token.english.core.billing.AccessLevel.PREMIUM -> SecondaryButton(
                     text = "مدیریت اشتراک",
                     onClick = onOpenPaywall,
                     modifier = Modifier.fillMaxWidth(),
                 )
-            } else {
-                PrimaryButton(
+
+                else -> PrimaryButton(
                     text = "خرید اشتراک",
                     onClick = onOpenPaywall,
                     modifier = Modifier.fillMaxWidth(),

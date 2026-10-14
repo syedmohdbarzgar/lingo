@@ -35,9 +35,10 @@ Rules:
   because the Android lookup cannot run on the JVM. **Release builds fail closed while that
   digest is empty**: `app/build.gradle.kts` reads the constant and throws for every `assemble*`
   /`bundle*` *Release* task, exactly like `bazaarRsaKey`; debug builds keep the runtime warning. While the grant is active, the paywall
-  replaces the plans with the free state and a Cafe Bazaar download link
-  (`bazaar://details?id=org.token.zaribar`, web fallback) so the learner can keep/restore
-  zaribar — shown in every flavor on purpose, since the companion is published on Bazaar only.
+  replaces the plans with the **free state only — no store link**: the companion is already installed,
+  so a download button would offer the learner what they already have. `CompanionApp.openDownloadPage`
+  (Bazaar deep link `bazaar://details?id=org.token.zaribar`, web fallback) stays the entry point for
+  the not-installed state, where no screen surfaces it today (see [`debt.md`](debt.md)).
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
   and — when the companion grant is active — a "subscription is free" banner with the link.

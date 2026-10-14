@@ -33,14 +33,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.billing.AccessReason
-import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
@@ -238,13 +236,12 @@ private fun Hero(state: PaywallUiState) {
 }
 
 /**
- * Free state granted by the companion app: no purchase, but the learner must be
- * able to reinstall (or update) zaribar from Cafe Bazaar — removing it ends the
- * free access.
+ * Free state granted by the companion app: no purchase, and no store link either —
+ * the companion is already installed on this device, so a download button here
+ * would only offer what the learner already has. Removing it ends the free access.
  */
 @Composable
 private fun CompanionFreeBlock(onClose: () -> Unit) {
-    val context = LocalContext.current
     AppCard(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -258,11 +255,6 @@ private fun CompanionFreeBlock(onClose: () -> Unit) {
                 text = "اگر «زریبار» را حذف کنید، این دسترسی رایگان پایان می‌یابد. با نصب دوباره از کافه بازار باز می‌گردد.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            SecondaryButton(
-                text = "دانلود زریبار از کافه بازار",
-                onClick = { CompanionApp.openDownloadPage(context) },
-                modifier = Modifier.fillMaxWidth(),
             )
             SecondaryButton(
                 text = "بستن",

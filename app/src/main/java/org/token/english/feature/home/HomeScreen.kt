@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -202,14 +201,15 @@ private fun LevelUpCard(
 
 /**
  * Free-access companion (org.token.zaribar): while it is installed the
- * subscription costs nothing. Say so plainly and keep the Cafe Bazaar download
- * link at hand — the free access ends if the companion is removed, so the link
- * is what lets the learner keep it on the device.
+ * subscription costs nothing. Say so plainly and stop there — no store link,
+ * because the companion is by definition already on the device and asking the
+ * learner to download it again reads as a mistake. The Bazaar link belongs to
+ * the not-installed state (`CompanionApp.openDownloadPage` stays the entry point
+ * for it) — the free access simply ends if the companion is removed.
  */
 @Composable
 private fun CompanionFreeBanner(state: HomeUiState) {
     if (state.accessReason != org.token.english.core.billing.AccessReason.COMPANION_APP) return
-    val context = LocalContext.current
 
     AppCard {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
@@ -222,11 +222,6 @@ private fun CompanionFreeBanner(state: HomeUiState) {
                 text = "تا زمانی که «زریبار» نصب بماند، اشتراک رایگان ادامه دارد.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            SecondaryButton(
-                text = "دانلود زریبار از کافه بازار",
-                onClick = { org.token.english.core.billing.CompanionApp.openDownloadPage(context) },
-                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

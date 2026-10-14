@@ -124,8 +124,11 @@ echo
 echo "Companion signing digest (N-1):"
 digest=""
 if [ -f "$companion_source" ]; then
-  digest="$(sed -n 's/.*val EXPECTED_SIGNING_SHA256[^=]*=[[:space:]]*\(.*\)/\1/p' "$companion_source" \
-    | head -n1 | tr -d '\r' | sed 's/[[:space:]]*$//')"
+  # The declaration may span lines (`setOf(`\n`"AA:BB:…",`\n`)`), so read from the
+  # declaration to the closing paren and pull the digests out of that — never the
+  # raw RHS, which would print as a bare `setOf(`. `emptySet()` holds no digest.
+  digest="$(awk '/val EXPECTED_SIGNING_SHA256/{f=1} f{printf "%s", $0} f&&/\)/{exit}' "$companion_source" \
+    | grep -oE '[0-9A-Fa-f:]{32,}' | tr -d ':' | paste -sd',' -)"
 fi
 
 if [ -z "$digest" ] || [ "${digest#emptySet}" != "$digest" ]; then

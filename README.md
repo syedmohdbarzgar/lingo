@@ -124,10 +124,11 @@ clock does not hand out extra trial time.
 **Free with the Zaribar app:** while the companion app `org.token.zaribar` is installed, the
 subscription is free — the grant is re-checked on every foreground and ends when the companion is
 removed. The install is trusted only when its signing certificate matches
-`CompanionApp.EXPECTED_SIGNING_SHA256` (the package id alone would be spoofable). The app shows a
-Cafe Bazaar download link (`bazaar://details?id=org.token.zaribar`) so the learner can keep it
-installed. The check is a single local `PackageManager` lookup: no server, no permission, and it is
-declared in the manifest `<queries>` block for API 30+ visibility.
+`CompanionApp.EXPECTED_SIGNING_SHA256` (the package id alone would be spoofable). While the grant is
+active the app states the free access and **shows no download button** — the companion is already on
+the device; the Cafe Bazaar link (`bazaar://details?id=org.token.zaribar`) belongs to the
+not-installed state. The check is a single local `PackageManager` lookup: no server, no permission,
+and it is declared in the manifest `<queries>` block for API 30+ visibility.
 
 ---
 

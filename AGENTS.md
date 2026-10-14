@@ -144,5 +144,5 @@ B-5/B-10/A-2c pass); the full inventory and ViewModel/fake conventions are in
 
 ## 10. Known design debt
 
-Accepted trade-offs (session-scoped mastery, the missing companion digest, the local trial, Room v5
-migration rules, and more) live in [`docs/debt.md`](docs/debt.md). Read it first.
+Accepted trade-offs (session-scoped mastery, the companion key pinned from a sideloaded build, the
+local trial, Room v5 migration rules, and more) live in [`docs/debt.md`](docs/debt.md). Read it first.

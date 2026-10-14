@@ -19,13 +19,12 @@ import androidx.annotation.RequiresApi
  *
  * Trust (checklist N-1): the package id alone is spoofable — any APK declaring
  * `org.token.zaribar` would unlock the paid tier — so the install is only trusted
- * when its signing certificate matches [EXPECTED_SIGNING_SHA256]. That set is
- * **empty until the Zaribar release key digest is pasted in**, and an empty set
- * means the check cannot run; debug builds then accept the package id alone and
- * say so in the log (tracked as debt in AGENTS.md §10). **Release builds do not
- * ship that way**: `app/build.gradle.kts` reads this constant and fails the
- * assemble/bundle task of any release variant while the digest is empty, the same
- * fail-closed stance as `bazaarRsaKey`.
+ * when its signing certificate matches [EXPECTED_SIGNING_SHA256]. That set now
+ * holds the Zaribar certificate installed on the device, so the grant is verified
+ * rather than assumed. Were it emptied again the check could not run: debug builds
+ * would accept the package id alone and say so in the log, while
+ * `app/build.gradle.kts` reads this constant and fails the assemble/bundle task of
+ * every release variant — the same fail-closed stance as `bazaarRsaKey`.
  *
  * Everything here is local and offline: a PackageManager lookup plus a store deep
  * link. No server, no account, no network.
@@ -42,10 +41,17 @@ object CompanionApp {
      * key: `keytool -printcert -jarfile zaribar.apk`.
      *
      * Multiple entries are allowed so a key rotation does not break the grant.
-     * Empty = not configured yet: debug builds trust the package id alone and log a
-     * warning, while release builds refuse to assemble (see the object KDoc).
+     * An empty set means "not configured": debug builds then trust the package id
+     * alone and log a warning, while release builds refuse to assemble (see the
+     * object KDoc). The value below came from the Zaribar 3.4.10 build installed on
+     * the device (certificate `CN=wolfandmoon`) — re-read it from the store build
+     * before a release, since a different key there fails closed for store installs
+     * instead of opening the bypass.
      */
-    val EXPECTED_SIGNING_SHA256: Set<String> = emptySet()
+    val EXPECTED_SIGNING_SHA256: Set<String> = setOf(
+        // `apksigner verify --print-certs`: "V2 Signer: certificate SHA-256 digest".
+        "cf5865350615d32e4f984f5b2e71a286426c35ef8e33a9a971b380b70b64fd6b",
+    )
 
     /**
      * Bazaar deep link that opens the companion's product page in the Bazaar app.
