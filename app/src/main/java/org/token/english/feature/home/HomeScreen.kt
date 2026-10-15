@@ -256,6 +256,22 @@ private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                // The mirror of that promise, said while the learner is deciding:
+                // without the companion installed the subscription can cost nothing
+                // (checklist N-2). The paywall this card opens carries the details.
+                val freeRouteOffered = org.token.english.core.billing.CompanionOffer.isOffered(
+                    companionInstalled = state.companionInstalled,
+                    access = state.access,
+                    reason = state.accessReason,
+                )
+                if (freeRouteOffered) {
+                    Text(
+                        text = "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها رایگان " +
+                            "می‌شود.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
             PrimaryButton(text = "اشتراک", onClick = onOpenPaywall)
         }

@@ -3,11 +3,14 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 344 tests / 47 classes as of
-  the v10 B-5/B-10/A-2c pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 349 tests / 48 classes as of
+  the v12 N-1/N-2 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
-  (companion package id + Bazaar links + digest shape) + `CompanionSignatureTest`
+  (companion package id + Bazaar links + digest shape) + `CompanionOfferTest`
+  (one case per state of the free-route offer: hidden on a device that already holds the
+  grant, hidden for a paying subscriber, shown to a learner without the companion) +
+  `CompanionSignatureTest`
   (certificate normalization/matching, and the release gate's own view of the constant:
   `declaredValue`/`declarationIsConfigured` are asserted against the real source so a
   valid digest can never silently start failing the release build) + `SubscriptionRecoveryTest` (renewal

@@ -11,10 +11,13 @@
   now holds the Zaribar 3.4.10 certificate (`CN=wolfandmoon`), read from the APK installed on the
   device — which arrived via `com.google.android.packageinstaller`, not through Cafe Bazaar. If the
   key on the published build differs, the grant fails closed for store installs (no free access —
-  never a bypass), so compare the two before a release. Still open: **where the Bazaar link should be
-  surfaced for learners who do not have the companion.** Every download button used to live in the
-  installed state (Home, paywall, settings) and is hidden there now, so no screen offers the
-  companion at all — deliberate until this is decided, since the link is how the free funnel grows.
+  never a bypass), so compare the two before a release. **Still open: that comparison itself** — the
+  constant has only been proven against the sideloaded APK, not against the build Cafe Bazaar
+  publishes. **Settled (N-2):** where the Bazaar link lives. Every download button used to sit in the
+  installed state (Home, paywall, settings), where it offered the learner what they already had; the
+  link now belongs to the not-installed state, and one pure rule — `CompanionOffer.isOffered` —
+  decides it for the paywall, the Settings subscription card and the Home trial banner, so a device
+  holding the grant can never be shown the offer again.
 - **The 7-day trial is local.** Clear-data or a reinstall restarts it; there is no server to anchor
   it. Accepted (the alternative is the store's own free-trial offer). Precedence is
   SUBSCRIPTION → COMPANION_APP → TRIAL → LOCKED in `EntitlementPolicy`.

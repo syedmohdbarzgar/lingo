@@ -33,12 +33,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionApp
+import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
@@ -63,6 +66,7 @@ fun PaywallScreen(
     val vm: PaywallViewModel = viewModel(factory = paywallViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
     val activity = LocalActivity.current
+    val context = LocalContext.current
     val locked = state.access == org.token.english.core.billing.AccessLevel.LOCKED
 
     // Purchase/restore succeeded → hand back to the app.
@@ -159,6 +163,13 @@ fun PaywallScreen(
                 }
             }
 
+            // The free route, stated next to the price (checklist N-2). A learner
+            // without the companion had no way to learn the subscription can cost
+            // nothing; the offer is dropped once it no longer applies.
+            if (CompanionOffer.isOffered(state.companionInstalled, state.access, state.accessReason)) {
+                FreeAccessOffer(onDownload = { CompanionApp.openDownloadPage(context) })
+            }
+
             Benefits()
 
             Text(
@@ -232,6 +243,36 @@ private fun Hero(state: PaywallUiState) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+/**
+ * The free route, offered only where it can actually be taken: the learner does not
+ * have the companion, so the Bazaar link is exactly what turns the paid tier free.
+ */
+@Composable
+private fun FreeAccessOffer(onDownload: () -> Unit) {
+    AppCard(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("راه رایگان: «زریبار»")
+            Text(
+                text = "اگر برنامهٔ «زریبار» را از کافه بازار نصب کنید، اشتراک این برنامه روی همین " +
+                    "دستگاه رایگان می‌شود — بدون هیچ پرداختی.",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
+                text = "این دسترسی رایگان تا وقتی «زریبار» نصب بماند ادامه دارد.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            SecondaryButton(
+                text = "دریافت زریبار از کافه بازار",
+                onClick = onDownload,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
     }
 }
 

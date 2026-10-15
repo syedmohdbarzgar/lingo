@@ -36,12 +36,19 @@ Rules:
   digest is empty**: `app/build.gradle.kts` reads the constant and throws for every `assemble*`
   /`bundle*` *Release* task, exactly like `bazaarRsaKey`; debug builds keep the runtime warning. While the grant is active, the paywall
   replaces the plans with the **free state only — no store link**: the companion is already installed,
-  so a download button would offer the learner what they already have. `CompanionApp.openDownloadPage`
-  (Bazaar deep link `bazaar://details?id=org.token.zaribar`, web fallback) stays the entry point for
-  the not-installed state, where no screen surfaces it today (see [`debt.md`](debt.md)).
+  so a download button would offer the learner what they already have.
+- **Free route, advertised only where it applies (N-2).** `CompanionApp.openDownloadPage`
+  (Bazaar deep link `bazaar://details?id=org.token.zaribar`, web fallback) is offered to the
+  learner who does **not** have the companion: the paywall carries a "راه رایگان: «زریبار»" card
+  next to the price, the Settings subscription card repeats the route with the same button, and
+  the Home trial banner names it in one line. All three read the one pure rule
+  `CompanionOffer.isOffered(companionInstalled, access, reason)` (`core/billing/Billing.kt`,
+  unit-tested): it hides the offer on a device that already holds the grant and for a paying
+  subscriber, so the link can never be shown to someone it would not help.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
-  and — when the companion grant is active — a "subscription is free" banner with the link.
+  (with the free-route line when the companion is absent) and — when the companion grant is
+  active — a "subscription is free" banner **without** a store link.
 - The paywall's small print is **storefront-aware** (P3 honesty pass): only Bazaar/Play
   promise auto-renewal and cancellation; Myket says what it actually is — a fixed-length
   consumable with no auto-renew and nothing to cancel. `PaywallUiState.storefront` (from

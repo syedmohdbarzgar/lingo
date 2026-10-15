@@ -108,6 +108,27 @@ object EntitlementPolicy {
     ): AccessLevel = entitlement(now, trialRemainingMs, subscriptionUntil, companionAppInstalled).level
 }
 
+/**
+ * Whether the *free* route may be advertised on the screen that asks for money
+ * (checklist N-2: a learner without the companion has to be told how to get free
+ * access, and the offer has to disappear the moment it no longer applies).
+ *
+ * Pure and unit tested, so the rule cannot drift from the signal that decides it:
+ * a device that already holds the grant is never offered a download (the v12 bug,
+ * where the offer hung off [AccessReason] instead of the install), and a paying
+ * learner is never upsold a free alternative to what they already bought.
+ */
+object CompanionOffer {
+
+    fun isOffered(
+        companionInstalled: Boolean,
+        access: AccessLevel,
+        reason: AccessReason = AccessReason.NONE,
+    ): Boolean = !companionInstalled &&
+        reason != AccessReason.COMPANION_APP &&
+        access != AccessLevel.PREMIUM
+}
+
 /** Reads/writes the persisted subscription state (DataStore-backed). */
 interface SubscriptionStore {
     fun observeTrialAndSubscription(): Flow<TrialAndSubscription>

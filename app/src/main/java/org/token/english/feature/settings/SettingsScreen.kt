@@ -44,6 +44,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.BuildConfig
+import org.token.english.core.billing.CompanionApp
+import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
@@ -105,7 +107,11 @@ fun SettingsScreen(
                 .padding(AppSpacing.md),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
         ) {
-            SubscriptionCard(state = state, onOpenPaywall = onOpenPaywall)
+            SubscriptionCard(
+                state = state,
+                onOpenPaywall = onOpenPaywall,
+                onDownloadCompanion = { CompanionApp.openDownloadPage(context) },
+            )
 
             AppCard(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
@@ -299,7 +305,11 @@ private const val SUPPORT_URL = "https://github.com/syedmohdbarzgar/lingo/issues
  * learner lands here from the paywall, so it must offer the buy path back.
  */
 @Composable
-private fun SubscriptionCard(state: SettingsUiState, onOpenPaywall: () -> Unit) {
+private fun SubscriptionCard(
+    state: SettingsUiState,
+    onOpenPaywall: () -> Unit,
+    onDownloadCompanion: () -> Unit,
+) {
     AppCard(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             SectionHeader("اشتراک")
@@ -347,6 +357,23 @@ private fun SubscriptionCard(state: SettingsUiState, onOpenPaywall: () -> Unit) 
                 else -> PrimaryButton(
                     text = "خرید اشتراک",
                     onClick = onOpenPaywall,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+
+            // The screen a learner opens to check their subscription is also where
+            // the free route belongs (checklist N-2) — but only while it can be
+            // taken: a device that already holds the grant gets no button back.
+            if (CompanionOffer.isOffered(state.companionInstalled, state.access, state.accessReason)) {
+                Text(
+                    text = "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها روی این " +
+                        "دستگاه رایگان می‌شود.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SecondaryButton(
+                    text = "دریافت زریبار از کافه بازار",
+                    onClick = onDownloadCompanion,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

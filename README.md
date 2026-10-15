@@ -126,8 +126,10 @@ subscription is free — the grant is re-checked on every foreground and ends wh
 removed. The install is trusted only when its signing certificate matches
 `CompanionApp.EXPECTED_SIGNING_SHA256` (the package id alone would be spoofable). While the grant is
 active the app states the free access and **shows no download button** — the companion is already on
-the device; the Cafe Bazaar link (`bazaar://details?id=org.token.zaribar`) belongs to the
-not-installed state. The check is a single local `PackageManager` lookup: no server, no permission,
+the device. The Cafe Bazaar link (`bazaar://details?id=org.token.zaribar`) belongs to the
+not-installed state, where the paywall, the Settings subscription card and the Home trial banner all
+name the free route; **one pure rule decides that** — `CompanionOffer.isOffered`, so the offer can
+never come back on a device that already has the companion. The check is a single local `PackageManager` lookup: no server, no permission,
 and it is declared in the manifest `<queries>` block for API 30+ visibility.
 
 ---
