@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -74,15 +75,14 @@ class ReviewViewModelTest {
         val audio = FakeAudioPlayer()
         val speaker = RecordingSpeaker()
 
-        fun build(): ReviewViewModel = ReviewViewModel(
+        fun build(foreground: () -> Boolean = { true }): ReviewViewModel = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = vocabulary,
             progressRepository = progress,
             submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress),
             audioPlayer = audio,
             speaker = speaker,
-            isAppInForeground = { true },
-            studyTickMillis = 0,
+            isAppInForeground = foreground,
         )
     }
 
@@ -122,5 +122,32 @@ class ReviewViewModelTest {
         assertEquals(1, vm.state.value.againCount)
         assertEquals(ReviewPhase.SESSION, vm.state.value.phase)
         assertTrue("an AGAIN grade does not credit mastery", h.progress.attempts.contains(Skill.VOCABULARY to false))
+    }
+
+    @Test
+    fun `study time follows interactions - an idle screen stops crediting`() {
+        val h = Harness().withDueCard()
+        val vm = h.build()
+        val t0 = System.currentTimeMillis()
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onStudyTick(nowMs = t0 + 5_000)
+        assertEquals("a recently active session credits a tick", StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
+
+        vm.onStudyTick(nowMs = t0 + StudyTimePolicy.IDLE_CAP_MILLIS + 60_000)
+        assertEquals("an abandoned screen credits nothing more", StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
+
+        vm.onEvent(ReviewEvent.Reveal)
+        vm.onStudyTick(nowMs = System.currentTimeMillis())
+        assertEquals("acting again reopens the window", 2 * StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
+    }
+
+    @Test
+    fun `no study time is credited while the app is backgrounded`() {
+        val h = Harness().withDueCard()
+        val vm = h.build(foreground = { false })
+
+        vm.onStudyTick(nowMs = System.currentTimeMillis())
+        assertEquals(0L, h.progress.studySeconds)
     }
 }

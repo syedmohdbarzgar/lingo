@@ -42,6 +42,13 @@
   estimate is capped at half the day's target and it always leads — and the remaining actions
   stop at the **first** one that does not fit instead of skipping ahead to a cheaper one. With the
   daily goal already met the plan collapses to the review block; it is never empty.
+- **Study time is interaction-based with an idle cap (P7 rework).** `StudyStats` — what feeds the
+  daily goal, the planner's budget and the streak — only grows while the learner is on a **resumed**
+  lesson/review screen *and* has acted within `StudyTimePolicy.IDLE_CAP_MILLIS` (4 min): the
+  screen's lifecycle ticker calls `onStudyTick()` every `TICK_MILLIS` (30 s) and each accepted tick
+  credits `TICK_SECONDS` (30). Leaving the screen, backgrounding the app, or idling past the cap
+  stops the crediting — the earlier `init` loop in both ViewModels credited time merely for the app
+  being open and could fill the 15-minute goal with no studying at all.
 - **C2 is deliberately vocabulary/discourse-focused (checklist A-8).** The graph carries GRAMMAR
   nodes at A1–C1 (13/11/8/9/4) but **none at C2** — C2's 13 nodes are 4 VOCABULARY and 9 DISCOURSE.
   The structural work at that level (inversion, the subjunctive, inversion after *never*) ships

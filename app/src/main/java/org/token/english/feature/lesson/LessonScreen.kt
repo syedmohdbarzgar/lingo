@@ -34,8 +34,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,8 +48,13 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.delay
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.labelFa
@@ -58,6 +67,7 @@ import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.lessonViewModelFactory
+import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.GrammarSection
@@ -79,6 +89,32 @@ fun LessonScreen(
 ) {
     val vm: LessonViewModel = viewModel(factory = lessonViewModelFactory(lessonId, focusItemId))
     val state by vm.state.collectAsStateWithLifecycle()
+
+    // Study time is sampled only while THIS screen is resumed (P7): a lesson
+    // left on the back stack never credits a second, and ticking stops the
+    // moment the app goes to the background.
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var isResumed by remember {
+        mutableStateOf(lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
+    }
+    DisposableEffect(lifecycleOwner) {
+        val observer = object : LifecycleEventObserver {
+            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                isResumed = source.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            isResumed = false
+        }
+    }
+    LaunchedEffect(isResumed) {
+        while (isResumed) {
+            delay(StudyTimePolicy.TICK_MILLIS)
+            vm.onStudyTick()
+        }
+    }
 
     Scaffold(
         topBar = {

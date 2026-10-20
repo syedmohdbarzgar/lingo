@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
@@ -75,8 +76,6 @@ class ReviewViewModel(
     private val audioPlayer: AudioPlayer,
     private val speaker: Speaker,
     private val isAppInForeground: () -> Boolean,
-    /** Study-time tick; tests pass 0 to disable it. */
-    private val studyTickMillis: Long = STUDY_TICK_MILLIS,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ReviewUiState())
@@ -90,23 +89,15 @@ class ReviewViewModel(
     /** contentId → times already re-shown after AGAIN in this session. */
     private val requeueCount = mutableMapOf<String, Int>()
 
+    /** Last time the learner acted here — study time stops crediting when this goes stale (P7). */
+    private var lastInteractionAtMs: Long = System.currentTimeMillis()
+
     init {
         refresh()
-        if (studyTickMillis > 0) {
-            viewModelScope.launch {
-                // Study time is credited in fixed ticks while the app is visible —
-                // background time never counts toward the daily goal (P7).
-                while (true) {
-                    kotlinx.coroutines.delay(studyTickMillis)
-                    if (isAppInForeground()) {
-                        progressRepository.addStudySeconds(studyTickMillis / 1000)
-                    }
-                }
-            }
-        }
     }
 
     fun refresh() {
+        lastInteractionAtMs = System.currentTimeMillis()
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val due = reviewRepository.getDue(now, limit = 100)
@@ -131,7 +122,23 @@ class ReviewViewModel(
         }
     }
 
+    /**
+     * One study-time sample from the screen's lifecycle ticker (P7): a tick is
+     * credited only while the app is in the foreground AND the learner has acted
+     * within [StudyTimePolicy.IDLE_CAP_MILLIS]. Merely sitting on an open screen
+     * stops filling the daily goal; the screen drives the ticking, so a tab on
+     * the back stack ticks at all only while it is the resumed screen.
+     */
+    fun onStudyTick(nowMs: Long = System.currentTimeMillis()) {
+        if (!isAppInForeground()) return
+        if (!StudyTimePolicy.credits(lastInteractionAtMs, nowMs)) return
+        viewModelScope.launch {
+            progressRepository.addStudySeconds(StudyTimePolicy.TICK_SECONDS)
+        }
+    }
+
     fun onEvent(event: ReviewEvent) {
+        lastInteractionAtMs = System.currentTimeMillis()
         when (event) {
             ReviewEvent.Start -> _state.update {
                 it.copy(
@@ -233,6 +240,5 @@ class ReviewViewModel(
     private companion object {
         /** Max times one card is re-shown per session after AGAIN. */
         const val MAX_IN_SESSION_REQUEUES = 2
-        const val STUDY_TICK_MILLIS = 30_000L
     }
 }

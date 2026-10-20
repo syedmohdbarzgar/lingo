@@ -3,9 +3,11 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 349 tests / 48 classes as of
-  the v12 N-1/N-2 pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 357 tests / 49 classes as of
+  the P7 study-time rework): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
+  `StudyTimePolicyTest` (study time is interaction-based: a tick inside the idle cap credits, past
+  it — and on a backwards clock — credits nothing),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionOfferTest`
   (one case per state of the free-route offer: hidden on a device that already holds the
@@ -54,12 +56,14 @@
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
   `HomeViewModelTest` (installing/removing the companion app flips access to COMPANION_APP / LOCKED;
-  the engine's weak spot reaches the state), `LessonViewModelTest` (a miss is re-asked exactly once
+  the engine's weak spot reaches the state),  `LessonViewModelTest` (a miss is re-asked exactly once
   and the session still ends; a device without an English voice reports `audioUnavailable`; a fresh
   lesson keeps the authored order while an untested dimension is front-loaded; a focused session
-  drills only the node's evidence; cancelling the scope mid-`getFocusPlan` loads nothing — B-9),
+  drills only the node's evidence; cancelling the scope mid-`getFocusPlan` loads nothing — B-9;
+  study time follows interactions, so an idle lesson stops crediting — P7),
   `ReviewViewModelTest` (GOOD records the schedule and finishes; AGAIN re-queues the item in the
-  same session), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
+  same session; study ticks credit only while the learner is recently active and never while the
+  app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
   cancelled/failed/succeeded, a checkout that throws, restore active/none/store-failure, the
   companion grant, and the storefront reaching the state so the wording can match the market),
   `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a

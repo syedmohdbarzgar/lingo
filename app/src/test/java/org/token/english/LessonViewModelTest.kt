@@ -25,6 +25,7 @@ import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
+import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
@@ -112,7 +113,6 @@ class LessonViewModelTest {
             profileEngine = DefaultMasteryProfileEngine(),
             selector = AdaptiveExerciseSelector(),
             focusItemId = focusItemId,
-            studyTickMillis = 0,
         )
     }
 
@@ -124,6 +124,20 @@ class LessonViewModelTest {
     private fun Harness.with(vararg exercises: Exercise): Harness {
         lessonRepo.exercises[lessonId] = exercises.toList()
         return this
+    }
+
+    @Test
+    fun `study time follows interactions - an idle lesson stops crediting`() {
+        val h = Harness().withOneExercise()
+        val vm = h.build()
+        val t0 = System.currentTimeMillis()
+
+        vm.onStudyTick(nowMs = t0 + StudyTimePolicy.IDLE_CAP_MILLIS + 60_000)
+        assertEquals("an abandoned lesson credits nothing", 0L, h.progress.studySeconds)
+
+        vm.onEvent(LessonEvent.StartExercises)
+        vm.onStudyTick(nowMs = System.currentTimeMillis())
+        assertEquals("acting again reopens the window", StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
     }
 
     /** Answers the current exercise correctly, whatever option the shuffle put first. */

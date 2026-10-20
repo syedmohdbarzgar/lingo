@@ -120,8 +120,8 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (349 tests / 48 classes as of the v12
-N-1/N-2 pass); the full inventory and ViewModel/fake conventions are in
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (357 tests / 49 classes as of the P7
+study-time rework); the full inventory and ViewModel/fake conventions are in
 [`docs/testing.md`](docs/testing.md). Content tests read assets through `File`, so run them with
 `--rerun`. There is no instrumented suite (the template was removed, not kept as a false signal).
 

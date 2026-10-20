@@ -14,6 +14,7 @@ import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.engine.ExerciseDimension
+import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.MasteryDimension
@@ -120,8 +121,6 @@ class LessonViewModel(
     /** Front-loads the dimension this session showed to be weakest (B-1). */
     private val selector: AdaptiveExerciseSelector,
     private val focusItemId: String? = null,
-    /** Study-time tick; tests pass 0 to disable it. */
-    private val studyTickMillis: Long = STUDY_TICK_MILLIS,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LessonUiState())
@@ -141,17 +140,10 @@ class LessonViewModel(
     /** Per-dimension mastery of this session's own answers (audit §2/§6). */
     private var profile: MasteryProfile = MasteryProfile()
 
+    /** Last time the learner acted here — study time stops crediting when this goes stale (P7). */
+    private var lastInteractionAtMs: Long = System.currentTimeMillis()
+
     init {
-        if (studyTickMillis > 0) {
-            viewModelScope.launch {
-                // Study time is credited in fixed ticks while the app is visible —
-                // time spent backgrounded never counts toward the daily goal (P7).
-                while (true) {
-                    kotlinx.coroutines.delay(studyTickMillis)
-                    creditStudyTime()
-                }
-            }
-        }
         viewModelScope.launch {
             // B-3: watch the TTS engine — when no English voice is available the
             // listening card switches to its text fallback instead of hanging.
@@ -240,6 +232,7 @@ class LessonViewModel(
     }
 
     fun onEvent(event: LessonEvent) {
+        lastInteractionAtMs = System.currentTimeMillis()
         when (event) {
             is LessonEvent.SelectOption -> _state.update {
                 if (it.outcome != null) it else it.copy(selectedOption = event.index)
@@ -399,16 +392,22 @@ class LessonViewModel(
         )
     }
 
-    private suspend fun creditStudyTime() {
+    /**
+     * One study-time sample from the screen's lifecycle ticker (P7): a tick is
+     * credited only while the app is in the foreground AND the learner has acted
+     * within [StudyTimePolicy.IDLE_CAP_MILLIS]. Merely sitting on an open lesson
+     * stops filling the daily goal; the screen drives the ticking, so a lesson
+     * on the back stack ticks at all only while it is the resumed screen.
+     */
+    fun onStudyTick(nowMs: Long = System.currentTimeMillis()) {
         if (!isAppInForeground()) return
-        progressRepository.addStudySeconds(studyTickMillis / 1000)
+        if (!StudyTimePolicy.credits(lastInteractionAtMs, nowMs)) return
+        viewModelScope.launch {
+            progressRepository.addStudySeconds(StudyTimePolicy.TICK_SECONDS)
+        }
     }
 
     override fun onCleared() {
         audioPlayer.stop()
-    }
-
-    private companion object {
-        const val STUDY_TICK_MILLIS = 30_000L
     }
 }
