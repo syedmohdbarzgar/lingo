@@ -42,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
@@ -166,8 +167,11 @@ fun PaywallScreen(
             // The free route, stated next to the price (checklist N-2). A learner
             // without the companion had no way to learn the subscription can cost
             // nothing; the offer is dropped once it no longer applies.
-            if (CompanionOffer.isOffered(state.companionInstalled, state.access, state.accessReason)) {
-                FreeAccessOffer(onDownload = { CompanionApp.openDownloadPage(context) })
+            if (CompanionOffer.isOffered(state.companionStatus, state.access, state.accessReason)) {
+                FreeAccessOffer(
+                    untrusted = state.companionStatus == CompanionStatus.UNTRUSTED,
+                    onDownload = { CompanionApp.openDownloadPage(context) },
+                )
             }
 
             Benefits()
@@ -251,15 +255,22 @@ private fun Hero(state: PaywallUiState) {
  * have the companion, so the Bazaar link is exactly what turns the paid tier free.
  */
 @Composable
-private fun FreeAccessOffer(onDownload: () -> Unit) {
+private fun FreeAccessOffer(untrusted: Boolean, onDownload: () -> Unit) {
     AppCard(
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-            SectionHeader("راه رایگان: «زریبار»")
+            // Installed-but-untrusted (N-3) is an update, not an install.
+            SectionHeader(if (untrusted) "به‌روزرسانی «زریبار»" else "راه رایگان: «زریبار»")
             Text(
-                text = "اگر برنامهٔ «زریبار» را از کافه بازار نصب کنید، اشتراک این برنامه روی همین " +
-                    "دستگاه رایگان می‌شود — بدون هیچ پرداختی.",
+                text = if (untrusted) {
+                    "«زریبار» روی این دستگاه نصب است، اما نسخه‌اش با کلیدی امضا شده که " +
+                        "تأیید نمی‌شود. آن را از کافه بازار به‌روزرسانی کنید تا اشتراک رایگان " +
+                        "فعال شود."
+                } else {
+                    "اگر برنامهٔ «زریبار» را از کافه بازار نصب کنید، اشتراک این برنامه روی همین " +
+                        "دستگاه رایگان می‌شود — بدون هیچ پرداختی."
+                },
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
@@ -268,7 +279,11 @@ private fun FreeAccessOffer(onDownload: () -> Unit) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SecondaryButton(
-                text = "دریافت زریبار از کافه بازار",
+                text = if (untrusted) {
+                    "به‌روزرسانی زریبار از کافه بازار"
+                } else {
+                    "دریافت زریبار از کافه بازار"
+                },
                 onClick = onDownload,
                 modifier = Modifier.fillMaxWidth(),
             )

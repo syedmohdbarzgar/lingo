@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.core.billing.TrialClock
@@ -29,8 +30,8 @@ data class SettingsUiState(
     val subscriptionUntil: Long = 0L,
     /** Why access is held — a free companion grant is not a purchase. */
     val accessReason: AccessReason = AccessReason.NONE,
-    /** True while the free-access companion app (org.token.zaribar) is installed. */
-    val companionInstalled: Boolean = false,
+    /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
+    val companionStatus: CompanionStatus = CompanionStatus.ABSENT,
 )
 
 /** Settings screen state (checklist B-6): narrow, testable dependencies. */
@@ -38,7 +39,7 @@ class SettingsViewModel(
     private val settingsRepository: SettingsRepository,
     private val progressRepository: ProgressRepository,
     private val knowledgeRepository: KnowledgeRepository,
-    private val companionInstalled: StateFlow<Boolean>,
+    private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
     /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
     private val accessTickMillis: Long = 60_000L,
@@ -48,14 +49,14 @@ class SettingsViewModel(
     val state: StateFlow<SettingsUiState> = _state.asStateFlow()
 
     private var trialAndSubscription: TrialAndSubscription? = null
-    private var companionIsInstalled: Boolean = false
+    private var companion: CompanionStatus = CompanionStatus.ABSENT
 
     init {
         viewModelScope.launch {
             // Free companion grant: re-read the install state, then follow changes.
             refreshCompanion()
-            companionInstalled.collect { installed ->
-                companionIsInstalled = installed
+            companionStatus.collect { status ->
+                companion = status
                 recomputeAccess()
             }
         }
@@ -95,13 +96,13 @@ class SettingsViewModel(
             now = now,
             trialRemainingMs = remaining,
             subscriptionUntil = ts.subscriptionUntil,
-            companionAppInstalled = companionIsInstalled,
+            companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
         _state.update {
             it.copy(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
-                companionInstalled = companionIsInstalled,
+                companionStatus = companion,
                 trialRemainingMillis = remaining,
                 subscriptionUntil = ts.subscriptionUntil,
             )

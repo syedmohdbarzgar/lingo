@@ -3,15 +3,16 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 357 tests / 49 classes as of
-  the P7 study-time rework): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 361 tests / 49 classes as of
+  the v14 N-1/N-3 pass): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `StudyTimePolicyTest` (study time is interaction-based: a tick inside the idle cap credits, past
   it — and on a backwards clock — credits nothing),
   `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionOfferTest`
   (one case per state of the free-route offer: hidden on a device that already holds the
-  grant, hidden for a paying subscriber, shown to a learner without the companion) +
+  grant, hidden for a paying subscriber, shown to a learner without the companion, and — N-3 —
+  still shown as an *update* for a device holding an untrusted build) +
   `CompanionSignatureTest`
   (certificate normalization/matching, and the release gate's own view of the constant:
   `declaredValue`/`declarationIsConfigured` are asserted against the real source so a
@@ -32,7 +33,8 @@
   lesson → miss/retry → complete → review → progress, on the real bundle, incl. placement
   calibrating mastery), plus the
   adaptive layer —
-  `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest` (never exceeds the daily target),
+  `PrerequisiteEngineTest`, `AdaptiveLearningPlannerTest` (never exceeds the daily target; a met
+  goal collapses the plan to the review block and invents no work when nothing is due),
   `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`
   (incl. the evidence filter, "an unassessed dimension must not reorder a lesson", and "a first
   correct answer does not fix a weak node"),

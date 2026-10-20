@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.PurchaseOutcome
@@ -39,8 +40,8 @@ data class PaywallUiState(
     val storefront: Storefront = Storefront.BAZAAR,
     /** Why access is held right now — a free companion grant is not a purchase. */
     val accessReason: AccessReason = AccessReason.NONE,
-    /** True while the free-access companion app (org.token.zaribar) is installed. */
-    val companionInstalled: Boolean = false,
+    /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
+    val companionStatus: CompanionStatus = CompanionStatus.ABSENT,
 )
 
 /**
@@ -50,7 +51,7 @@ data class PaywallUiState(
 class PaywallViewModel(
     private val billing: BillingGateway,
     private val settingsRepository: SettingsRepository,
-    private val companionInstalled: StateFlow<Boolean>,
+    private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
     private val refreshEntitlements: suspend () -> Unit,
     /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
@@ -61,7 +62,7 @@ class PaywallViewModel(
     val state: StateFlow<PaywallUiState> = _state.asStateFlow()
 
     private var trialAndSubscription: TrialAndSubscription? = null
-    private var companionIsInstalled: Boolean = false
+    private var companion: CompanionStatus = CompanionStatus.ABSENT
 
     init {
         _state.update { it.copy(storeName = STORE_NAME, storefront = billing.storefront) }
@@ -69,8 +70,8 @@ class PaywallViewModel(
             // Re-check the companion install when the paywall opens: a learner may
             // have installed zaribar since launch, which makes the app free.
             refreshCompanion()
-            companionInstalled.collect { installed ->
-                companionIsInstalled = installed
+            companionStatus.collect { status ->
+                companion = status
                 recomputeAccess()
             }
         }
@@ -102,13 +103,13 @@ class PaywallViewModel(
             now = now,
             trialRemainingMs = remaining,
             subscriptionUntil = ts.subscriptionUntil,
-            companionAppInstalled = companionIsInstalled,
+            companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
         _state.update {
             it.copy(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
-                companionInstalled = companionIsInstalled,
+                companionStatus = companion,
                 trialRemainingMillis = remaining,
             )
         }

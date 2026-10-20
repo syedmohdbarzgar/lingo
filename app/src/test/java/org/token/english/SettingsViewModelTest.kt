@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
@@ -38,7 +39,7 @@ class SettingsViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private class Harness(companion: Boolean = false) {
+    private class Harness(companion: CompanionStatus = CompanionStatus.ABSENT) {
         val settings = FakeSettingsRepository()
         val progress = FakeProgressRepository()
         val knowledge = FakeKnowledgeRepository()
@@ -48,8 +49,8 @@ class SettingsViewModelTest {
             settingsRepository = settings,
             progressRepository = progress,
             knowledgeRepository = knowledge,
-            companionInstalled = companionFlow,
-            refreshCompanion = { companionFlow.value },
+            companionStatus = companionFlow,
+            refreshCompanion = { companionFlow.value == CompanionStatus.TRUSTED },
             accessTickMillis = 0,
         )
     }
@@ -107,19 +108,19 @@ class SettingsViewModelTest {
 
     @Test
     fun `the companion install is reported as a free grant, not a purchase`() {
-        val h = Harness(companion = true)
+        val h = Harness(companion = CompanionStatus.TRUSTED)
         val vm = h.build()
 
         assertEquals(AccessLevel.PREMIUM, vm.state.value.access)
         assertEquals(AccessReason.COMPANION_APP, vm.state.value.accessReason)
-        assertTrue(vm.state.value.companionInstalled)
+        assertEquals(CompanionStatus.TRUSTED, vm.state.value.companionStatus)
     }
 
     @Test
     fun `a settings change does not wipe the access status`() {
         // The settings collector must update the settings fields only: a regression
         // here would make the subscription card flip back to "trial" on any toggle.
-        val h = Harness(companion = true)
+        val h = Harness(companion = CompanionStatus.TRUSTED)
         val vm = h.build()
         assertEquals(AccessLevel.PREMIUM, vm.state.value.access)
 
@@ -128,6 +129,6 @@ class SettingsViewModelTest {
 
         assertEquals("access survives a settings write", AccessLevel.PREMIUM, vm.state.value.access)
         assertEquals(AccessReason.COMPANION_APP, vm.state.value.accessReason)
-        assertTrue(vm.state.value.companionInstalled)
+        assertEquals(CompanionStatus.TRUSTED, vm.state.value.companionStatus)
     }
 }

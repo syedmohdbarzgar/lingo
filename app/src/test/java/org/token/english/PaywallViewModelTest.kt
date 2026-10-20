@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.ProductIds
 import org.token.english.core.billing.PurchaseOutcome
 import org.token.english.core.billing.Storefront
@@ -42,7 +43,7 @@ class PaywallViewModelTest {
     }
 
     private class Harness(
-        companion: Boolean = false,
+        companion: CompanionStatus = CompanionStatus.ABSENT,
         val billing: FakeBillingGateway = FakeBillingGateway(),
     ) {
         val companionFlow = MutableStateFlow(companion)
@@ -51,8 +52,8 @@ class PaywallViewModelTest {
         fun build(): PaywallViewModel = PaywallViewModel(
             billing = billing,
             settingsRepository = FakeSettingsRepository(),
-            companionInstalled = companionFlow,
-            refreshCompanion = { companionFlow.value },
+            companionStatus = companionFlow,
+            refreshCompanion = { companionFlow.value == CompanionStatus.TRUSTED },
             refreshEntitlements = { entitlementRefreshes++ },
             accessTickMillis = 0,
         )
@@ -239,12 +240,12 @@ class PaywallViewModelTest {
 
     @Test
     fun `the companion install is reported as a free grant, not a purchase`() {
-        val h = Harness(companion = true)
+        val h = Harness(companion = CompanionStatus.TRUSTED)
         val vm = h.build()
 
         assertEquals(AccessLevel.PREMIUM, vm.state.value.access)
         assertEquals(AccessReason.COMPANION_APP, vm.state.value.accessReason)
-        assertTrue(vm.state.value.companionInstalled)
+        assertEquals(CompanionStatus.TRUSTED, vm.state.value.companionStatus)
         assertFalse("a free grant is not a purchase", vm.state.value.purchased)
     }
 

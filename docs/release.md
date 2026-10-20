@@ -24,6 +24,35 @@ scripts/release_check.sh            # checks the signing key, bazaarRsaKey, the 
 scripts/release_check.sh --print-template   # prints a keystore.properties template
 ```
 
+**Companion digest re-read (N-1 — before every release).** `CompanionApp.EXPECTED_SIGNING_SHA256`
+must match the certificate of the Zaribar build **the store publishes** (verified in Oct 2026
+against the Cafe Bazaar build — same V2 digest as the sideloaded one; a changed key would fail
+closed for every store install). To re-read it:
+
+```bash
+# 1. Ask Bazaar for the published artifact of the companion:
+curl -sS -H 'Content-Type: application/json' --data-binary @- \
+  'https://api.cafebazaar.ir/rest-v1/process/AppDownloadInfoRequest' <<'JSON'
+{"properties":{"language":2,"clientVersionCode":1100301,"androidClientInfo":{"sdkVersion":33,"cpu":"x86,armeabi-v7a,armeabi"},"clientVersion":"11.3.1","isKidsEnabled":false},"singleRequest":{"appDownloadInfoRequest":{"downloadStatus":1,"packageName":"org.token.zaribar","referrers":[]}}}
+JSON
+# 2. Download the first URL of singleReply.appDownloadInfoReply.fullPathUrls, then:
+$ANDROID_HOME/build-tools/<ver>/apksigner verify --print-certs zaribar.apk   # read the V2 digest
+```
+
+A Myket/Play copy of Zaribar (if one exists) can only be read from a device that installed it
+there (`adb shell pm path org.token.zaribar` + `adb pull` every listed path).
+
+**Known item for the next release notes (B-11, decided v14).** Study time became interaction-based
+(P7): a lesson or review screen only credits time while the learner has acted within the last
+4 minutes — the cap stands as a confirmed product decision. Daily totals and streaks earned under
+the old auto-counting were left untouched, not corrected; the release notes should say so once.
+
+**Before the first Google Play release (N-4, decided v14).** The free-route offer opens Cafe
+Bazaar in **every flavor** today — confirmed to stay that way while `googlePlay` is not published
+on Play. Shipping it on Play requires either complying with Google's external-content-links
+program (US-only links, enrollment, destination disclosure) or gating the offer out of the
+`googlePlay` flavor — re-decide at that point ([`billing.md`](billing.md)).
+
 ## CI
 
 `.github/workflows/ci.yml` runs the same two fast gates (content validation + unit tests) and

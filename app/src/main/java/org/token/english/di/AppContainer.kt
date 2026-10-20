@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import org.token.english.core.audio.AudioPlayer
@@ -122,16 +123,41 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     val companionDetector: org.token.english.core.billing.CompanionDetector by lazy {
         org.token.english.core.billing.PackageManagerCompanionDetector(appContext)
     }
-    private val _companionInstalled = MutableStateFlow(false)
+    private val _companionStatus =
+        MutableStateFlow(org.token.english.core.billing.CompanionStatus.ABSENT)
 
-    /** Latest result of the companion lookup (false until the first check). */
-    val companionInstalled: StateFlow<Boolean> = _companionInstalled.asStateFlow()
+    /** Latest companion lookup (N-3): absent, installed-but-untrusted, or trusted. */
+    val companionStatus: StateFlow<org.token.english.core.billing.CompanionStatus> =
+        _companionStatus.asStateFlow()
+
+    /**
+     * True once the companion is installed **and** trusted — the entitlement
+     * check reads this, never the raw install (N-1/N-3: a Zaribar under a
+     * foreign key earns nothing).
+     */
+    val companionInstalled: StateFlow<Boolean> = _companionStatus
+        .map { it == org.token.english.core.billing.CompanionStatus.TRUSTED }
+        .stateIn(
+            scope = appScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     /** PackageManager lookup; never throws. Cheap enough to re-run on resume. */
     suspend fun refreshCompanionInstalled(): Boolean = withContext(Dispatchers.IO) {
-        val installed = runCatching { companionDetector.isTrusted() }.getOrDefault(false)
-        _companionInstalled.value = installed
-        installed
+        val status = runCatching {
+            when {
+                !companionDetector.isInstalled() ->
+                    org.token.english.core.billing.CompanionStatus.ABSENT
+
+                companionDetector.isTrusted() ->
+                    org.token.english.core.billing.CompanionStatus.TRUSTED
+
+                else -> org.token.english.core.billing.CompanionStatus.UNTRUSTED
+            }
+        }.getOrDefault(org.token.english.core.billing.CompanionStatus.ABSENT)
+        _companionStatus.value = status
+        status == org.token.english.core.billing.CompanionStatus.TRUSTED
     }
 
     // Store billing — implementation comes from the active product flavor

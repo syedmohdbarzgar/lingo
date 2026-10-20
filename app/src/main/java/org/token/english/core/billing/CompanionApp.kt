@@ -44,9 +44,11 @@ object CompanionApp {
      * An empty set means "not configured": debug builds then trust the package id
      * alone and log a warning, while release builds refuse to assemble (see the
      * object KDoc). The value below came from the Zaribar 3.4.10 build installed on
-     * the device (certificate `CN=wolfandmoon`) — re-read it from the store build
-     * before a release, since a different key there fails closed for store installs
-     * instead of opening the bypass.
+     * the device (certificate `CN=wolfandmoon`) and was **verified against the APK
+     * Cafe Bazaar publishes** (versionCode 16, pulled via the store's download-info
+     * API in Oct 2026 — same V2 digest, so store installs pass; N-1). Still re-read
+     * it from the store build before each release (`docs/release.md`): a different
+     * key there fails closed for store installs instead of opening the bypass.
      */
     val EXPECTED_SIGNING_SHA256: Set<String> = setOf(
         // `apksigner verify --print-certs`: "V2 Signer: certificate SHA-256 digest".
@@ -131,8 +133,13 @@ object CompanionSignature {
         !declared.isNullOrEmpty() && !declared.startsWith("emptySet")
 }
 
-/** Whether the free-access companion is installed **and** its signature is trusted. */
-fun interface CompanionDetector {
+/** Whether the free-access companion is installed, and whether we trust it. */
+interface CompanionDetector {
+
+    /** True when the companion package is present, whoever signed it (N-3). */
+    fun isInstalled(): Boolean
+
+    /** True when it is installed **and** its signature is trusted (N-1). */
     fun isTrusted(): Boolean
 }
 
@@ -152,6 +159,15 @@ class PackageManagerCompanionDetector(
     /** The unconfigured-digest warning is worth saying once, not on every resume. */
     @Volatile
     private var warnedUnconfigured = false
+
+    /** Presence alone (N-3): a Zaribar under a foreign key still counts as installed. */
+    override fun isInstalled(): Boolean = try {
+        @Suppress("DEPRECATION")
+        context.packageManager.getPackageInfo(CompanionApp.PACKAGE, 0)
+        true
+    } catch (_: PackageManager.NameNotFoundException) {
+        false
+    }
 
     override fun isTrusted(): Boolean {
         val digests = try {

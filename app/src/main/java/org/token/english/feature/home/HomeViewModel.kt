@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.core.billing.TrialClock
@@ -63,8 +64,8 @@ data class HomeUiState(
     val trialRemainingMillis: Long = 0L,
     /** Why access is held — a free companion grant is not a paid subscription. */
     val accessReason: AccessReason = AccessReason.NONE,
-    /** True while the free-access companion app (org.token.zaribar) is installed. */
-    val companionInstalled: Boolean = false,
+    /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
+    val companionStatus: CompanionStatus = CompanionStatus.ABSENT,
 )
 
 /**
@@ -82,7 +83,7 @@ class HomeViewModel(
     private val getTodayPlan: GetTodayPlanUseCase,
     private val getFocusPlan: GetFocusPlanUseCase,
     private val getSkillProfiles: GetSkillProfilesUseCase,
-    private val companionInstalled: StateFlow<Boolean>,
+    private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
     /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
     private val accessTickMillis: Long = ACCESS_TICK_MS,
@@ -103,7 +104,7 @@ class HomeViewModel(
     private var dueCount: Int = 0
     private var access: AccessLevel = AccessLevel.TRIAL
     private var accessReason: AccessReason = AccessReason.NONE
-    private var companionIsInstalled: Boolean = false
+    private var companion: CompanionStatus = CompanionStatus.ABSENT
     private var trialRemainingMillis: Long = 0L
     private var trialAndSubscription: TrialAndSubscription? = null
 
@@ -118,8 +119,8 @@ class HomeViewModel(
             // Free companion grant: re-read the install state (the user may have
             // installed/removed zaribar since the process started) and follow it.
             refreshCompanion()
-            companionInstalled.collect { installed ->
-                companionIsInstalled = installed
+            companionStatus.collect { status ->
+                companion = status
                 recomputeAccess()
             }
         }
@@ -196,7 +197,7 @@ class HomeViewModel(
             now = now,
             trialRemainingMs = trialRemainingMillis,
             subscriptionUntil = ts.subscriptionUntil,
-            companionAppInstalled = companionIsInstalled,
+            companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
         access = entitlement.level
         accessReason = entitlement.reason
@@ -237,7 +238,7 @@ class HomeViewModel(
             mastery = mastery,
             access = access,
             accessReason = accessReason,
-            companionInstalled = companionIsInstalled,
+            companionStatus = companion,
             trialRemainingMillis = trialRemainingMillis,
             levelComplete = levelComplete,
             nextLevel = nextLevel,

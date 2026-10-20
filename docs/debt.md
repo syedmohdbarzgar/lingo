@@ -7,13 +7,15 @@
   session in progress; nothing persists per dimension, so the next session starts blind and the
   selector only adapts once the learner has answered inside that session (B-1). A cross-session
   version needs a per-dimension column/table (Room v6 + migration) and is the natural next step.
-- **The companion key is pinned from a sideloaded build.** `CompanionApp.EXPECTED_SIGNING_SHA256`
-  now holds the Zaribar 3.4.10 certificate (`CN=wolfandmoon`), read from the APK installed on the
-  device — which arrived via `com.google.android.packageinstaller`, not through Cafe Bazaar. If the
-  key on the published build differs, the grant fails closed for store installs (no free access —
-  never a bypass), so compare the two before a release. **Still open: that comparison itself** — the
-  constant has only been proven against the sideloaded APK, not against the build Cafe Bazaar
-  publishes. **Settled (N-2):** where the Bazaar link lives. Every download button used to sit in the
+- **The companion key was pinned from a sideloaded build — since verified against the store
+  build (N-1, Oct 2026).** `CompanionApp.EXPECTED_SIGNING_SHA256` holds the Zaribar 3.4.10
+  certificate (`CN=wolfandmoon`), read from the sideloaded APK on the device. The comparison
+  itself is done: the APK Cafe Bazaar publishes for `org.token.zaribar` (versionCode 16, pulled
+  through the store's download-info API) carries the **same** V2 digest, so store installs pass
+  the check. A future key change would still fail closed (no free access — never a bypass), so
+  re-read the digest from the store build before each release — the procedure is in
+  [`release.md`](release.md). The Myket/Play builds of Zaribar (if any) remain unverified: both
+  stores' copies can only be pulled from a device that installed them there. **Settled (N-2):** where the Bazaar link lives. Every download button used to sit in the
   installed state (Home, paywall, settings), where it offered the learner what they already had; the
   link now belongs to the not-installed state, and one pure rule — `CompanionOffer.isOffered` —
   decides it for the paywall, the Settings subscription card and the Home trial banner, so a device
@@ -37,10 +39,24 @@
 - The daily reminder is pinned to 19:00 local (`DailyReminder.REMINDER_HOUR`); the time is not
   learner-configurable yet (checklist B-4).
 - The ALMOST hint is suppressed for GRAMMAR items but cannot tell "one edit away from a *different*
-  word" (A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
+  word" (A-2c/A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
   learner is still told to check the spelling. Accepted: the banner shows the correct answer
   alongside it, so the word itself is never ambiguous.
-- `studied seconds` are credited on screen close/finish (best effort), not via a foreground timer.
+- **Production grading is structural, not grammatical (B-10 residual).** A typed sentence passes
+  when it carries every anchor in order and reuses ≥ 60% of one exemplar's words; a scramble that
+  keeps the *anchors* in order, or a wrong **non-anchor** form (`goed`), can still pass, and a
+  valid variant far from both authored exemplars is failed. The two named negatives (scramble at
+  full overlap, wrong graded verb form) are already pinned in `ProductionRecallTest`; closing the
+  rest needs more accepted variants per item (content) or a grammar judge (out of scope offline).
+  Accepted for now.
+- **Study time is credited by an interaction-based ticker (P7 rework, see
+  [`learner-model.md`](learner-model.md)).** Each resumed lesson/review screen samples a tick every
+  30 s and writes it only while the learner acted within the 4-minute idle cap
+  (`StudyTimePolicy`); the old "credited on close, best effort" rule is gone. Residual trade-offs,
+  **both accepted at v14 B-11 (user-confirmed)**: an unattended screen keeps earning for up to the
+  4-minute cap before stopping (the cap stands as a product decision), and history earned under
+  the old counting is left untouched — noted once in the next release
+  ([`release.md`](release.md)).
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

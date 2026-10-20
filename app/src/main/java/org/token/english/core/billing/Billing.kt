@@ -109,6 +109,14 @@ object EntitlementPolicy {
 }
 
 /**
+ * What the companion lookup found (checklist N-3). TRUSTED is the only state
+ * that earns the free grant; UNTRUSTED is a real device state — Zaribar is
+ * installed under a key we do not recognize — and the learner needs the store
+ * page to *update* it, never an "install it" message and never the grant.
+ */
+enum class CompanionStatus { ABSENT, UNTRUSTED, TRUSTED }
+
+/**
  * Whether the *free* route may be advertised on the screen that asks for money
  * (checklist N-2: a learner without the companion has to be told how to get free
  * access, and the offer has to disappear the moment it no longer applies).
@@ -120,11 +128,18 @@ object EntitlementPolicy {
  */
 object CompanionOffer {
 
+    /**
+     * Offered whenever the *trusted* route is not already on the device — and
+     * that includes an install we do not trust ([CompanionStatus.UNTRUSTED],
+     * N-3): the learner still needs the store page, to update the build they
+     * have. The screens say "update" for that state; only TRUSTED hides the
+     * offer (and earns the grant).
+     */
     fun isOffered(
-        companionInstalled: Boolean,
+        companionStatus: CompanionStatus,
         access: AccessLevel,
         reason: AccessReason = AccessReason.NONE,
-    ): Boolean = !companionInstalled &&
+    ): Boolean = companionStatus != CompanionStatus.TRUSTED &&
         reason != AccessReason.COMPANION_APP &&
         access != AccessLevel.PREMIUM
 }

@@ -37,14 +37,28 @@ Rules:
   /`bundle*` *Release* task, exactly like `bazaarRsaKey`; debug builds keep the runtime warning. While the grant is active, the paywall
   replaces the plans with the **free state only — no store link**: the companion is already installed,
   so a download button would offer the learner what they already have.
-- **Free route, advertised only where it applies (N-2).** `CompanionApp.openDownloadPage`
+- **Free route, advertised only where it applies (N-2/N-3).** `CompanionApp.openDownloadPage`
   (Bazaar deep link `bazaar://details?id=org.token.zaribar`, web fallback) is offered to the
-  learner who does **not** have the companion: the paywall carries a "راه رایگان: «زریبار»" card
+  learner who does **not** hold the trusted grant: the paywall carries a "راه رایگان: «زریبار»" card
   next to the price, the Settings subscription card repeats the route with the same button, and
   the Home trial banner names it in one line. All three read the one pure rule
-  `CompanionOffer.isOffered(companionInstalled, access, reason)` (`core/billing/Billing.kt`,
+  `CompanionOffer.isOffered(companionStatus, access, reason)` (`core/billing/Billing.kt`,
   unit-tested): it hides the offer on a device that already holds the grant and for a paying
-  subscriber, so the link can never be shown to someone it would not help.
+  subscriber, so the link can never be shown to someone it would not help. The lookup reports a
+  three-way `CompanionStatus` (N-3): a device holding a Zaribar signed by an **untrusted** key is
+  told to *update* it from the store — never granted, and never told to install what it already
+  has.
+- **Store policy on the Bazaar link (N-4, checked Oct 2026).** The offer opens Cafe Bazaar in every
+  flavor today. Google Play: for US users, linking out to another store's app download is allowed
+  under the external-content-links program (enrollment, US-only links, destination disclosure —
+  support.google.com/googleplay/android-developer/answer/16470497); outside the US no blanket
+  permission is established, so a `googlePlay` build must not ship the offer until that program is
+  met or the link is restricted. Myket: no published rule was found that prohibits pointing at a
+  competitor store (its clause 6.9 concerns paid-service payment routing) — keep the offer, and
+  get written confirmation before a Myket release if the risk matters. **Decision (v14,
+  user-confirmed): keep the offer in all three flavors for now** — `googlePlay` is not published
+  on Play yet; the compliance question is re-opened in [`release.md`](release.md) before the first
+  Play release.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
   (with the free-route line when the companion is absent) and — when the companion grant is

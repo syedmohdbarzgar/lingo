@@ -46,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.BuildConfig
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
@@ -364,15 +365,26 @@ private fun SubscriptionCard(
             // The screen a learner opens to check their subscription is also where
             // the free route belongs (checklist N-2) — but only while it can be
             // taken: a device that already holds the grant gets no button back.
-            if (CompanionOffer.isOffered(state.companionInstalled, state.access, state.accessReason)) {
+            if (CompanionOffer.isOffered(state.companionStatus, state.access, state.accessReason)) {
+                // Installed-but-untrusted (N-3): the learner needs an update, not an install.
+                val untrusted = state.companionStatus == CompanionStatus.UNTRUSTED
                 Text(
-                    text = "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها روی این " +
-                        "دستگاه رایگان می‌شود.",
+                    text = if (untrusted) {
+                        "«زریبار» روی این دستگاه نصب است اما نسخه‌اش تأییدنشده است؛ آن را " +
+                            "از کافه بازار به‌روزرسانی کنید تا رایگان فعال شود."
+                    } else {
+                        "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها روی این " +
+                            "دستگاه رایگان می‌شود."
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 SecondaryButton(
-                    text = "دریافت زریبار از کافه بازار",
+                    text = if (untrusted) {
+                        "به‌روزرسانی زریبار از کافه بازار"
+                    } else {
+                        "دریافت زریبار از کافه بازار"
+                    },
                     onClick = onDownloadCompanion,
                     modifier = Modifier.fillMaxWidth(),
                 )

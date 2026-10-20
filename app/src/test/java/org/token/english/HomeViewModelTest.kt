@@ -15,6 +15,8 @@ import org.junit.Before
 import org.junit.Test
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
+import org.token.english.core.billing.CompanionOffer
+import org.token.english.core.billing.CompanionStatus
 import org.token.english.domain.engine.DefaultLearningPlanner
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
@@ -64,7 +66,7 @@ class HomeViewModelTest {
         val progress: FakeProgressRepository,
         val reviews: FakeReviewRepository,
         val knowledge: FakeKnowledgeRepository,
-        val companion: MutableStateFlow<Boolean>,
+        val companion: MutableStateFlow<CompanionStatus>,
     ) {
         val planner = DefaultLearningPlanner()
         val vm = HomeViewModel(
@@ -77,8 +79,8 @@ class HomeViewModelTest {
             getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, settings, planner, knowledge),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
-            companionInstalled = companion,
-            refreshCompanion = { companion.value },
+            companionStatus = companion,
+            refreshCompanion = { companion.value == CompanionStatus.TRUSTED },
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
@@ -90,7 +92,7 @@ class HomeViewModelTest {
         progress: FakeProgressRepository = FakeProgressRepository(),
         reviews: FakeReviewRepository = FakeReviewRepository(),
         knowledge: FakeKnowledgeRepository = FakeKnowledgeRepository(),
-        companion: MutableStateFlow<Boolean> = MutableStateFlow(false),
+        companion: MutableStateFlow<CompanionStatus> = MutableStateFlow(CompanionStatus.ABSENT),
     ): Harness = Harness(settings, lessons, progress, reviews, knowledge, companion)
 
     private fun lesson(id: String, level: LearningLevel) =
@@ -110,19 +112,36 @@ class HomeViewModelTest {
 
     @Test
     fun `installing the companion grants access and removing it locks the app`() {
-        val companion = MutableStateFlow(true)
+        val companion = MutableStateFlow(CompanionStatus.TRUSTED)
         val vm = harness(companion = companion).vm
 
         assertFalse("state finished loading", vm.state.value.isLoading)
         assertEquals(AccessLevel.PREMIUM, vm.state.value.access)
         assertEquals("a free companion grant is not a purchase", AccessReason.COMPANION_APP, vm.state.value.accessReason)
-        assertTrue(vm.state.value.companionInstalled)
+        assertEquals(CompanionStatus.TRUSTED, vm.state.value.companionStatus)
 
         // The user uninstalls zaribar: the grant must not outlive the install.
-        companion.value = false
+        companion.value = CompanionStatus.ABSENT
         assertEquals(AccessLevel.LOCKED, vm.state.value.access)
         assertEquals(AccessReason.NONE, vm.state.value.accessReason)
-        assertFalse(vm.state.value.companionInstalled)
+        assertEquals(CompanionStatus.ABSENT, vm.state.value.companionStatus)
+    }
+
+    @Test
+    fun `an untrusted zaribar earns no grant and asks to be updated`() {
+        val vm = harness(companion = MutableStateFlow(CompanionStatus.UNTRUSTED)).vm
+
+        assertEquals("a foreign key earns nothing", AccessLevel.LOCKED, vm.state.value.access)
+        assertEquals(AccessReason.NONE, vm.state.value.accessReason)
+        assertEquals(CompanionStatus.UNTRUSTED, vm.state.value.companionStatus)
+        assertTrue(
+            "the route is still offered — as an update, never hidden",
+            CompanionOffer.isOffered(
+                vm.state.value.companionStatus,
+                vm.state.value.access,
+                vm.state.value.accessReason,
+            ),
+        )
     }
 
     @Test

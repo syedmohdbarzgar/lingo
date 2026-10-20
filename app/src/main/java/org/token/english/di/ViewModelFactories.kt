@@ -34,7 +34,7 @@ fun homeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c 
         getTodayPlan = c.getTodayPlan,
         getFocusPlan = c.getFocusPlan,
         getSkillProfiles = c.getSkillProfiles,
-        companionInstalled = c.companionInstalled,
+        companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
     )
 }
@@ -101,7 +101,7 @@ fun settingsViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory 
         settingsRepository = c.settingsRepository,
         progressRepository = c.progressRepository,
         knowledgeRepository = c.knowledgeRepository,
-        companionInstalled = c.companionInstalled,
+        companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
     )
 }
@@ -110,7 +110,7 @@ fun paywallViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory {
     PaywallViewModel(
         billing = c.billing,
         settingsRepository = c.settingsRepository,
-        companionInstalled = c.companionInstalled,
+        companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
         refreshEntitlements = { c.refreshEntitlements() },
     )

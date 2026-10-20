@@ -260,14 +260,23 @@ private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
                 // without the companion installed the subscription can cost nothing
                 // (checklist N-2). The paywall this card opens carries the details.
                 val freeRouteOffered = org.token.english.core.billing.CompanionOffer.isOffered(
-                    companionInstalled = state.companionInstalled,
+                    companionStatus = state.companionStatus,
                     access = state.access,
                     reason = state.accessReason,
                 )
                 if (freeRouteOffered) {
+                    // Installed but untrusted (N-3): the build on the device is not
+                    // one we can grant for — say "update", never "install again".
+                    val untrusted = state.companionStatus ==
+                        org.token.english.core.billing.CompanionStatus.UNTRUSTED
                     Text(
-                        text = "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها رایگان " +
-                            "می‌شود.",
+                        text = if (untrusted) {
+                            "زریبار روی این دستگاه هست اما نسخه‌اش تأییدنشده است؛ آن را از " +
+                                "کافه بازار به‌روزرسانی کنید تا رایگان فعال شود."
+                        } else {
+                            "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها رایگان " +
+                                "می‌شود."
+                        },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                     )

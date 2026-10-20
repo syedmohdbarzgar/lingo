@@ -56,12 +56,13 @@ class AdaptiveLearningPlannerTest {
         states: List<KnowledgeState> = emptyList(),
         due: Int = 0,
         focus: List<KnowledgeItem> = emptyList(),
+        todayStudySeconds: Long = 0L,
     ) = planner.plan(
         states = states,
         dueReviewCount = due,
         focusItems = focus,
         targetMinutes = 15,
-        todayStudySeconds = 0L,
+        todayStudySeconds = todayStudySeconds,
     )
 
     // --- scenario 4: good knowledge, long absence ------------------------------
@@ -82,6 +83,29 @@ class AdaptiveLearningPlannerTest {
     fun `no due cards means no review block`() {
         val decision = plan(due = 0, focus = listOf(item("a")))
         assertTrue(decision.actions.none { it.type == LearningActionType.REVIEW })
+    }
+
+    // --- budget: a spent day ---------------------------------------------------
+
+    @Test
+    fun `a met daily goal collapses the plan to the review block alone`() {
+        // Checklist B-2: once today's target is spent, nothing else fits the budget —
+        // the plan is the review block (retention is never dropped for budget) and
+        // nothing more, even with a weak node in the focus lesson.
+        val decision = plan(
+            states = listOf(state("a", 0.2f), state("b", 0.9f)),
+            due = 3,
+            focus = listOf(item("a")),
+            todayStudySeconds = 15 * 60L,
+        )
+        assertEquals(listOf(LearningActionType.REVIEW), decision.actions.map { it.type })
+        assertEquals("no budget is left to spend", 0, decision.remainingMinutes)
+    }
+
+    @Test
+    fun `a met goal with nothing due leaves the plan empty rather than inventing work`() {
+        val decision = plan(todayStudySeconds = 15 * 60L)
+        assertTrue(decision.actions.isEmpty())
     }
 
     // --- scenario 1: always correct -------------------------------------------
