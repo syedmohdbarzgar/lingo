@@ -3,8 +3,8 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 361 tests / 49 classes as of
-  the v14 N-1/N-3 pass): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 371 tests / 52 classes as of
+  the v15 pass — B-12/N-4/N-5/B-1/B-6): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `StudyTimePolicyTest` (study time is interaction-based: a tick inside the idle cap credits, past
   it — and on a backwards clock — credits nothing),
@@ -16,7 +16,12 @@
   `CompanionSignatureTest`
   (certificate normalization/matching, and the release gate's own view of the constant:
   `declaredValue`/`declarationIsConfigured` are asserted against the real source so a
-  valid digest can never silently start failing the release build) + `SubscriptionRecoveryTest` (renewal
+  valid digest can never silently start failing the release build) + `PlayStoreLinkGateTest`
+  (v15 N-4: the `EXTERNAL_COMPANION_OFFER` flag is declared by all three flavors, every offer
+  surface and `CompanionApp.openDownloadPage` read it, and `docs/release.md` names it — so
+  flipping the Play gate reaches the screens and cannot be forgotten) + `DocCodeConsistencyTest`
+  (v15 B-12: `docs/debt.md` states the production overlap floor the code actually grades with;
+  the doc had drifted to "60%" while the constant said 0.5) + `SubscriptionRecoveryTest` (renewal
   boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
   `flatPeriodExpiry` reinstall restore — 30/365 flat days from the owned purchase time), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
@@ -38,7 +43,9 @@
   `MasteryProfileEngineTest`, `AdaptiveExerciseSelectorTest`, `RemediationEngineTest`
   (incl. the evidence filter, "an unassessed dimension must not reorder a lesson", and "a first
   correct answer does not fix a weak node"),
-  `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents),
+  `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents —
+  and, v15 B-1, that a node with a single matching exercise still yields a short honest block:
+  exactly that exercise, a real reassess bar, stated attempts),
   `SkillProfileEngineTest` (P2: the three tracks fold curriculum + review evidence, mastery is read
   rather than recomputed, the status is evidence-gated so a single correct answer cannot read as
   consolidated, and — on the **real bundle** — all three tracks are funded while the four nodes two
@@ -74,18 +81,27 @@
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
   onboarding write), `VocabularyViewModelTest` (all words load; the query matches the English word
   case-insensitively and the Persian meaning; a blank query clears the filter; no matches is an
-  empty list, not an error) and `OnboardingViewModelTest` (skipping the test pins A1 and finishes
+  empty list, not an error) and  `OnboardingViewModelTest` (skipping the test pins A1 and finishes
   onboarding) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
   and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
   growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an
   option index is wrong.
+- **Screen smoke tests (v15 B-6)** — `ScreenSmokeTest`, one Compose assertion per main screen
+  (Home, Lesson, Review, Paywall), running on the **host JVM through Robolectric 4.17** (no emulator
+  exists in this environment). Each screen takes its ViewModel through the `vm` parameter seam added
+  in v15 (production omits it and gets the container-wired one, exactly as before), built from the
+  same `FakeRepositories.kt` layer, so the tests reach what the ViewModel tests cannot: the screen
+  renders its state, Home shows the N-3 "update from Bazaar" copy for an untrusted companion, and
+  the paywall really renders the free-route card next to the price. They need
+  `unitTests.isIncludeAndroidResources = true`, `ui-test-junit4` (v2 rule) + `ui-test-manifest`
+  (debugImplementation) and `@Config(sdk = [35])`.
 - `.github/workflows/ci.yml` runs the same two gates (validate + unit tests) plus `lintBazaarDebug`
   and the three flavor assemblies (the last only on schedule/manual dispatch/tags).
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
   content edit run them with `--rerun` or they silently report UP-TO-DATE.
 - There is **no instrumented suite**: the Android Studio template was removed rather than kept
-  as a false signal (it asserted nothing and ran in no CI). UI changes rely on manual device
-  verification, as above.
+  as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
+  Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.
 - When you change engine logic, extend these tests first; UI changes rely on manual verification
   (no emulator CI in this environment).

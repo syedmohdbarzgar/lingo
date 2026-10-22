@@ -103,6 +103,34 @@ class FocusPlanTest {
     }
 
     @Test
+    fun `a node with only one matching exercise still gets a short honest block`() = runTest {
+        // Checklist v15 B-1: a focused session on a node with fewer than ~4
+        // matching exercises. The engine has no minimum floor — one exercise is
+        // still evidence — so the block must come back non-null and *short*:
+        // exactly the matching exercises (never padded with the lesson's other
+        // drills), plus the reassessment numbers the Home card shows beside it.
+        // The UI side is honest by construction: FocusSpotCard prints title,
+        // reason, mastery and blockers — never a promised exercise count.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(state("grammar.test", 0.2f)),
+        )
+        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test")!!
+
+        assertEquals(
+            "a short block holds exactly the matching exercises — never padded, never dropped",
+            setOf("$lessonId.ex.01"),
+            plan.exerciseIds,
+        )
+        assertTrue("the block still has somewhere to get to", plan.reassessThreshold > plan.mastery)
+        assertTrue("attempts are promised, not zero", plan.remainingAttempts > 0)
+        assertTrue(
+            "the reason is stated even for a one-exercise block",
+            plan.reasonFa.contains("«grammar.test»"),
+        )
+    }
+
+    @Test
     fun `a node the learner never studied is taught, not drilled`() = runTest {
         val (knowledge, lessons) = repositories(listOf(grammar, vocabulary))
         assertNull(GetFocusPlanUseCase(knowledge, lessons)("grammar.test"))

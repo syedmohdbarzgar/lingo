@@ -134,12 +134,20 @@ object CompanionOffer {
      * N-3): the learner still needs the store page, to update the build they
      * have. The screens say "update" for that state; only TRUSTED hides the
      * offer (and earns the grant).
+     *
+     * [storeLinkAllowed] is the flavor's build-time permission to link out to
+     * Cafe Bazaar (N-4: `BuildConfig.EXTERNAL_COMPANION_OFFER`). When it is off
+     * — the `googlePlay` build, once Play publication is at stake — nothing may
+     * offer the route, whatever the device state says; the flag is decided in
+     * `app/build.gradle.kts` and enforced here so a screen cannot ignore it.
      */
     fun isOffered(
         companionStatus: CompanionStatus,
         access: AccessLevel,
         reason: AccessReason = AccessReason.NONE,
-    ): Boolean = companionStatus != CompanionStatus.TRUSTED &&
+        storeLinkAllowed: Boolean = true,
+    ): Boolean = storeLinkAllowed &&
+        companionStatus != CompanionStatus.TRUSTED &&
         reason != AccessReason.COMPANION_APP &&
         access != AccessLevel.PREMIUM
 }

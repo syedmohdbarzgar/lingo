@@ -15,6 +15,10 @@
 #   4. CompanionApp.EXPECTED_SIGNING_SHA256 is not empty — the Zaribar digest.
 #      Empty means the free-access grant trusts the package id alone (N-1), and a
 #      release must not ship that.
+#   5. A reminder (not a gate — it cannot be checked from here) to re-read that
+#      digest from the build the STORE publishes before releasing (N-1/N-5): a
+#      changed Zaribar key fails closed for every store install. Procedure and
+#      its manual fallback: docs/release.md.
 #
 # Usage:
 #   scripts/release_check.sh [bazaar|myket|googlePlay]   # default: check all
@@ -36,6 +40,9 @@ warnings=0
 fail() { problems=$((problems + 1)); echo "  [MISSING] $*"; }
 warn() { warnings=$((warnings + 1)); echo "  [WARN]    $*"; }
 ok()   { echo "  [ OK ]    $*"; }
+# Informational only: never counted, never blocking, but printed on every run so
+# the re-read cannot be forgotten (checklist v15 N-5).
+note() { echo "  [NOTE]    $*"; }
 
 print_template() {
   cat <<'EOF'
@@ -143,6 +150,11 @@ if [ -z "$digest" ] || [ "${digest#emptySet}" != "$digest" ]; then
   echo "              val EXPECTED_SIGNING_SHA256: Set<String> = setOf(\"AA:BB:CC:…\")"
 else
   ok "EXPECTED_SIGNING_SHA256 is configured ($digest)."
+  note "Before releasing, re-read that digest from the build the STORE publishes:"
+  note "  a changed Zaribar key fails closed for every store install (free access lost)."
+  note "  Procedure + manual fallback: docs/release.md (N-1). The Bazaar API call there is"
+  note "  undocumented — if it stops answering, download the APK in the Bazaar app and run"
+  note "      apksigner verify --print-certs zaribar.apk"
 fi
 
 # --- summary -----------------------------------------------------------------

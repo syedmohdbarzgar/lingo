@@ -43,7 +43,9 @@
   learner is still told to check the spelling. Accepted: the banner shows the correct answer
   alongside it, so the word itself is never ambiguous.
 - **Production grading is structural, not grammatical (B-10 residual).** A typed sentence passes
-  when it carries every anchor in order and reuses ≥ 60% of one exemplar's words; a scramble that
+  when it carries every anchor in order and reuses ≥ 50% of one exemplar's words
+  (`AnswerChecker.PRODUCTION_MIN_EXEMPLAR_OVERLAP`; `DocCodeConsistencyTest` pins this number to
+  the code, checklist v15 B-12 — the doc had drifted to "60%"); a scramble that
   keeps the *anchors* in order, or a wrong **non-anchor** form (`goed`), can still pass, and a
   valid variant far from both authored exemplars is failed. The two named negatives (scramble at
   full overlap, wrong graded verb form) are already pinned in `ProductionRecallTest`; closing the

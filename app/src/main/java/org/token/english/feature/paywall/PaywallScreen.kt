@@ -63,8 +63,12 @@ fun PaywallScreen(
     onClose: () -> Unit,
     onLockedExit: () -> Unit,
     onPurchased: () -> Unit,
+    /**
+     * Screen-level seam (checklist v15 B-6): the smoke tests inject a ViewModel
+     * built from fakes; production omits this and gets the container-wired one.
+     */
+    vm: PaywallViewModel = viewModel(factory = paywallViewModelFactory()),
 ) {
-    val vm: PaywallViewModel = viewModel(factory = paywallViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
     val activity = LocalActivity.current
     val context = LocalContext.current
@@ -167,7 +171,13 @@ fun PaywallScreen(
             // The free route, stated next to the price (checklist N-2). A learner
             // without the companion had no way to learn the subscription can cost
             // nothing; the offer is dropped once it no longer applies.
-            if (CompanionOffer.isOffered(state.companionStatus, state.access, state.accessReason)) {
+            if (CompanionOffer.isOffered(
+                    state.companionStatus,
+                    state.access,
+                    state.accessReason,
+                    storeLinkAllowed = org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER,
+                )
+            ) {
                 FreeAccessOffer(
                     untrusted = state.companionStatus == CompanionStatus.UNTRUSTED,
                     onDownload = { CompanionApp.openDownloadPage(context) },

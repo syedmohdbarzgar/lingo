@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import org.token.english.BuildConfig
 
 /**
  * Free-access companion app (product decision, Oct 2026).
@@ -71,9 +72,13 @@ object CompanionApp {
      * beyond nothing happening.
      *
      * Shown in every flavor on purpose: the companion is published on Cafe Bazaar
-     * only, so even a Google Play install has no other way to get it.
+     * only, so even a Google Play install has no other way to get it — while N-4
+     * allows it (the `googlePlay` flag is on until that build is published on
+     * Play). The [BuildConfig.EXTERNAL_COMPANION_OFFER] gate lives here too, so a
+     * caller can never route around the flavor decision by invoking this directly.
      */
     fun openDownloadPage(context: Context) {
+        if (!BuildConfig.EXTERNAL_COMPANION_OFFER) return
         val deepLink = Intent(Intent.ACTION_VIEW, Uri.parse(bazaarDeepLink()))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (runCatching { context.startActivity(deepLink) }.isSuccess) return

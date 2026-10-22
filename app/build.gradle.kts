@@ -41,6 +41,8 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"bazaar\"")
             buildConfigField("String", "STORE_NAME", "\"کافه بازار\"")
+            // The free-route offer may open Cafe Bazaar from this build (N-4).
+            buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
             // Public RSA key from developers.cafebazaar.ir (required before release!)
             buildConfigField("String", "BAZAAR_RSA_KEY", "\"${keystoreProp("bazaarRsaKey")}\"")
         }
@@ -48,6 +50,8 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"myket\"")
             buildConfigField("String", "STORE_NAME", "\"مایکت\"")
+            // The free-route offer may open Cafe Bazaar from this build (N-4).
+            buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
             // Public key from developer.myket.ir (optional but recommended)
             buildConfigField("String", "MYKET_PUBLIC_KEY", "\"${keystoreProp("myketPublicKey")}\"")
             // Required by myket-billing-client's bundled manifest (official sample values)
@@ -59,6 +63,13 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"googlePlay\"")
             buildConfigField("String", "STORE_NAME", "\"Google Play\"")
+            // N-4 (decided v14): the free-route offer opens Cafe Bazaar in every
+            // flavor while `googlePlay` is not published on Play. BEFORE THE FIRST
+            // PLAY RELEASE flip this to false — unless the external-content-links
+            // program is complied with. `PlayStoreLinkGateTest` proves every screen
+            // and `CompanionApp.openDownloadPage` honor the flag, and
+            // `docs/release.md` carries the re-decision point.
+            buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
         }
     }
 
@@ -97,6 +108,9 @@ android {
     // throwing "not mocked" (checklist B-6).
     testOptions {
         unitTests.isReturnDefaultValues = true
+        // Compose screen smoke tests on the host JVM (checklist v15 B-6): Robolectric
+        // needs the merged resources/manifest of the variant under test.
+        unitTests.isIncludeAndroidResources = true
     }
 }
 
@@ -193,6 +207,14 @@ dependencies {
     testImplementation(libs.org.json)
     // ViewModel tests drive viewModelScope through a test Main dispatcher (B-6).
     testImplementation(libs.kotlinx.coroutines.test)
+    // Screen smoke tests (checklist v15 B-6): one Compose assertion per main screen,
+    // running on the host JVM via Robolectric — no emulator exists here, and a
+    // dead androidTest suite would be a false signal. ui-test-manifest supplies the
+    // host activity `createComposeRule` launches.
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(libs.robolectric)
     // A real SQLite engine on the host JVM: the only way to execute the Room
     // migration chain with actual learner rows in a unit test (no device/emulator
     // is available here). See DatabaseUpgradeTest.

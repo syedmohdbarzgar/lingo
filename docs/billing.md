@@ -53,7 +53,9 @@ Rules:
   under the external-content-links program (enrollment, US-only links, destination disclosure —
   support.google.com/googleplay/android-developer/answer/16470497); outside the US no blanket
   permission is established, so a `googlePlay` build must not ship the offer until that program is
-  met or the link is restricted. Myket: no published rule was found that prohibits pointing at a
+  met or the link is restricted — the switch is the flavor's `EXTERNAL_COMPANION_OFFER` build flag
+  (wired through `CompanionOffer.isOffered(storeLinkAllowed = …)` and `CompanionApp.openDownloadPage`,
+  proved by `PlayStoreLinkGateTest`; checklist v15 N-4). Myket: no published rule was found that prohibits pointing at a
   competitor store (its clause 6.9 concerns paid-service payment routing) — keep the offer, and
   get written confirmation before a Myket release if the risk matters. **Decision (v14,
   user-confirmed): keep the offer in all three flavors for now** — `googlePlay` is not published

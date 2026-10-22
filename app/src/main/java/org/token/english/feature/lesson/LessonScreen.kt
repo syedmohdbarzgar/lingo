@@ -86,8 +86,12 @@ fun LessonScreen(
      * to fix. The engine — not the screen — decides what that means.
      */
     focusItemId: String? = null,
+    /**
+     * Screen-level seam (checklist v15 B-6): the smoke tests inject a ViewModel
+     * built from fakes; production omits this and gets the container-wired one.
+     */
+    vm: LessonViewModel = viewModel(factory = lessonViewModelFactory(lessonId, focusItemId)),
 ) {
-    val vm: LessonViewModel = viewModel(factory = lessonViewModelFactory(lessonId, focusItemId))
     val state by vm.state.collectAsStateWithLifecycle()
 
     // Study time is sampled only while THIS screen is resumed (P7): a lesson

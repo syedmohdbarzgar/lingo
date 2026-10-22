@@ -48,6 +48,12 @@ import org.token.english.domain.usecase.FocusPlan
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    /**
+     * Screen-level seam (checklist v15 B-6): the screen smoke tests inject a
+     * ViewModel built from fakes; production omits this and gets the
+     * container-wired one, exactly as before.
+     */
+    vm: HomeViewModel = viewModel(factory = homeViewModelFactory()),
     onOpenLesson: (String) -> Unit,
     onOpenSettings: () -> Unit,
     onOpenReview: () -> Unit,
@@ -56,7 +62,6 @@ fun HomeScreen(
     /** Focused practice on the engine's weak spot: (lessonId, curriculum node id). */
     onOpenFocus: (String, String) -> Unit,
 ) {
-    val vm: HomeViewModel = viewModel(factory = homeViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -263,6 +268,7 @@ private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
                     companionStatus = state.companionStatus,
                     access = state.access,
                     reason = state.accessReason,
+                    storeLinkAllowed = org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER,
                 )
                 if (freeRouteOffered) {
                     // Installed but untrusted (N-3): the build on the device is not

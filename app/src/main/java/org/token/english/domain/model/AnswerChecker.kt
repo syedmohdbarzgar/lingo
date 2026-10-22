@@ -48,13 +48,16 @@ object AnswerChecker {
 
     /**
      * Share of an authored exemplar's words a structurally-matching produced
-     * sentence must reuse (checklist v9 B-10). 0.5 lets a real paraphrase through
+     * sentence must reuse (checklist v9 B-10). `internal` so `DocCodeConsistencyTest`
+     * can pin `docs/debt.md` to the value the app actually grades with (checklist
+     * v15 B-12 — the doc drifted to "60%" while the code said 0.5).
+     * 0.5 lets a real paraphrase through
      * (swapping a pronoun or a synonym keeps most words) while rejecting a filler
      * sentence that merely carries the anchors. Anchors are never adjacency-checked
      * because the authored `mustUse` pairs are not adjacent in their own exemplars
      * (`usually … have breakfast`, `if … we will`).
      */
-    private const val PRODUCTION_MIN_EXEMPLAR_OVERLAP = 0.5f
+    internal const val PRODUCTION_MIN_EXEMPLAR_OVERLAP = 0.5f
 
     /** Common English contractions → their expanded form (apostrophe-normalized). */
     private val contractions = mapOf(

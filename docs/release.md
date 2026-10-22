@@ -39,8 +39,13 @@ JSON
 $ANDROID_HOME/build-tools/<ver>/apksigner verify --print-certs zaribar.apk   # read the V2 digest
 ```
 
-A Myket/Play copy of Zaribar (if one exists) can only be read from a device that installed it
-there (`adb shell pm path org.token.zaribar` + `adb pull` every listed path).
+**Fallback when the API breaks (N-5).** The call above is undocumented and hard-codes
+`clientVersionCode 1100301`, so it may stop answering without notice. It is not the only way:
+open the Zaribar page in the Bazaar app on a device and download it there, or pull the APK from
+any device that already installed it (`adb shell pm path org.token.zaribar` + `adb pull` every
+listed path — this is also the only way to read a Myket/Play copy, if one exists), then run the
+same `apksigner verify --print-certs` and compare the V2 digest. `scripts/release_check.sh`
+prints this reminder (with the fallback) on every pre-flight, so the re-read cannot be skipped.
 
 **Known item for the next release notes (B-11, decided v14).** Study time became interaction-based
 (P7): a lesson or review screen only credits time while the learner has acted within the last
@@ -51,7 +56,11 @@ the old auto-counting were left untouched, not corrected; the release notes shou
 Bazaar in **every flavor** today — confirmed to stay that way while `googlePlay` is not published
 on Play. Shipping it on Play requires either complying with Google's external-content-links
 program (US-only links, enrollment, destination disclosure) or gating the offer out of the
-`googlePlay` flavor — re-decide at that point ([`billing.md`](billing.md)).
+`googlePlay` flavor — the gate is one value: flip `EXTERNAL_COMPANION_OFFER` to `false` in the
+`googlePlay` flavor of `app/build.gradle.kts`. Every offer surface and
+`CompanionApp.openDownloadPage` read that flag, and `PlayStoreLinkGateTest` proves it (it fails
+if a surface stops reading it, or if this paragraph stops naming it). Re-decide at that point
+([`billing.md`](billing.md)).
 
 ## CI
 

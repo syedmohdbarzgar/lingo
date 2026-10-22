@@ -365,7 +365,13 @@ private fun SubscriptionCard(
             // The screen a learner opens to check their subscription is also where
             // the free route belongs (checklist N-2) — but only while it can be
             // taken: a device that already holds the grant gets no button back.
-            if (CompanionOffer.isOffered(state.companionStatus, state.access, state.accessReason)) {
+            if (CompanionOffer.isOffered(
+                    state.companionStatus,
+                    state.access,
+                    state.accessReason,
+                    storeLinkAllowed = org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER,
+                )
+            ) {
                 // Installed-but-untrusted (N-3): the learner needs an update, not an install.
                 val untrusted = state.companionStatus == CompanionStatus.UNTRUSTED
                 Text(

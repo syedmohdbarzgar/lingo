@@ -75,4 +75,36 @@ class CompanionOfferTest {
         assertTrue(CompanionOffer.isOffered(companionStatus = CompanionStatus.ABSENT, access = AccessLevel.LOCKED))
         assertFalse(CompanionOffer.isOffered(companionStatus = CompanionStatus.TRUSTED, access = AccessLevel.LOCKED))
     }
+
+    @Test
+    fun `when the store link is gated off by the flavor, no state may offer it`() {
+        // N-4: before the first Play release the `googlePlay` flavor flips
+        // EXTERNAL_COMPANION_OFFER to false. Every device state then has to come
+        // out false here, or the flag would be decorative and the Play build would
+        // still route learners to Cafe Bazaar.
+        for (status in CompanionStatus.entries) {
+            for (access in AccessLevel.entries) {
+                for (reason in AccessReason.entries) {
+                    assertFalse(
+                        "gated-off link leaked for $status/$access/$reason",
+                        CompanionOffer.isOffered(
+                            companionStatus = status,
+                            access = access,
+                            reason = reason,
+                            storeLinkAllowed = false,
+                        ),
+                    )
+                }
+            }
+        }
+        // …while the very same states keep their behaviour when the link is allowed.
+        assertTrue(
+            CompanionOffer.isOffered(
+                companionStatus = CompanionStatus.ABSENT,
+                access = AccessLevel.LOCKED,
+                reason = AccessReason.NONE,
+                storeLinkAllowed = true,
+            ),
+        )
+    }
 }
