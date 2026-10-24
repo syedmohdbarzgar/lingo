@@ -122,6 +122,22 @@ data class SkillMasteryEntity(
     val mastery: Float,
 )
 
+/**
+ * Learner state per mastery **dimension** (checklist B-1, Room v6): the fold of
+ * graded answers *across* sessions, so a returning learner's session seeds its
+ * `MasteryProfile` from observed evidence instead of starting every kind of
+ * knowing as unseen ("the selector only adapts once the learner has answered
+ * inside that session" was the debt). One row per `MasteryDimension`; the
+ * presence of a row is what makes a dimension established
+ * (`MasteryProfile.isEstablished`). Learner state like `knowledge_state`:
+ * survives re-seeding, cleared only by an explicit reset.
+ */
+@Entity(tableName = "dimension_mastery")
+data class DimensionMasteryEntity(
+    @PrimaryKey val dimension: String,
+    val mastery: Float,
+)
+
 /** One row per study day (streaks + daily goal). */
 @Entity(tableName = "study_session")
 data class StudySessionEntity(

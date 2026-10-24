@@ -45,7 +45,8 @@ re-assert LTR, because the root layout is forced RTL.
 **Learning flow**
 
 - **Placement test** — 36 questions in six graded bands of six (A1→C2), including one reading
-  comprehension item per band so the test measures reading alongside grammar and vocabulary (A-6).
+  comprehension item per band so the test measures reading alongside grammar and vocabulary (A-6)
+  and one typed fill-in-the-blank in the A1 band, so production is sampled alongside recognition.
   Scoring is band-based: a
   band passes at ≥ 2/3 with ≥ 60 % cumulative accuracy, scoring stops at the first failed band, and
   the result floors at A1. It doubles as a per-skill assessment (P1-1): each question carries an authored skill, so the result screen shows a per-skill read and the placement answers calibrate the learner's skill profile from day one.

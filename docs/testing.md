@@ -3,8 +3,8 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 371 tests / 52 classes as of
-  the v15 pass — B-12/N-4/N-5/B-1/B-6): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 387 tests / 54 classes as of
+  the v16 pass — shared content gate / Room v6 cross-session mastery / typed placement item): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `StudyTimePolicyTest` (study time is interaction-based: a tick inside the idle cap credits, past
   it — and on a backwards clock — credits nothing),
@@ -25,7 +25,9 @@
   boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
   `flatPeriodExpiry` reinstall restore — 30/365 flat days from the owned purchase time), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
-  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ReadingContentTest`
+  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ContentValidationTest`
+  (the content gate itself: the shared buildSrc `ContentValidator` on the real bundle, plus
+  mutation fixtures proving each rule fails), `ReadingContentTest`
   (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
   (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
@@ -34,7 +36,8 @@
   documented defaults, the graph tables arrive empty — needs the test-only `org.xerial:sqlite-jdbc`,
   because it upgrades with a real SQLite engine rather than inspecting the schemas),
   `BidiTextTest` (BiDi direction rule + no Persian in English exercise fields), `PlacementAssessmentTest` (per-skill read from the
-  placement answers), `LearningPathJourneyTest` (install → placement →
+  placement answers) + `PlacementTypedItemTest` (the typed placement item: parses as the 36th
+  question, sits in the A1 band, grades through AnswerChecker, and the screen records it), `LearningPathJourneyTest` (install → placement →
   lesson → miss/retry → complete → review → progress, on the real bundle, incl. placement
   calibrating mastery), plus the
   adaptive layer —

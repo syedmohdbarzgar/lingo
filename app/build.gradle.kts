@@ -1,4 +1,5 @@
 import java.util.Properties
+import org.token.english.content.ValidateContentTask
 
 plugins {
     alias(libs.plugins.android.application)
@@ -167,10 +168,21 @@ tasks.matching {
     }
 }
 
-// The content gate (`validateContent`) and its preBuild hook live in their own
-// script — 300 lines of JSON rules that have nothing to do with packaging the
-// APK (checklist B-6).
-apply(from = rootProject.file("gradle/content-validation.gradle.kts"))
+// The content gate (`validateContent`, wired into preBuild) — the rules live in
+// buildSrc's ContentValidator, ONE Kotlin implementation shared with
+// ContentValidationTest (see that test for why buildSrc: compiling :app runs
+// preBuild, so a gate that needed :app compilation would cycle).
+val validateContent = tasks.register<ValidateContentTask>("validateContent") {
+    group = "verification"
+    description = "Validates the bundled content JSON in src/main/assets/content."
+    contentDir.set(layout.projectDirectory.dir("src/main/assets/content"))
+}
+// Gate every build on content validity: a dangling lessonId or an out-of-range
+// correctIndex is a data bug the Kotlin compiler cannot see, and it would ship
+// silently. Costs a few seconds, so it is always worth it.
+tasks.named("preBuild") {
+    dependsOn(validateContent)
+}
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
@@ -205,6 +217,10 @@ dependencies {
     testImplementation(libs.junit)
     // Real org.json on the unit-test classpath (android.jar only has stubs).
     testImplementation(libs.org.json)
+    // The shared content gate (buildSrc): ContentValidationTest runs the exact
+    // rules `validateContent` enforces. buildSrc is fully built before this
+    // script is evaluated, so its jar is already on disk — no task cycle.
+    testImplementation(files(rootProject.file("buildSrc/build/libs/buildSrc.jar")))
     // ViewModel tests drive viewModelScope through a test Main dispatcher (B-6).
     testImplementation(libs.kotlinx.coroutines.test)
     // Screen smoke tests (checklist v15 B-6): one Compose assertion per main screen,

@@ -13,19 +13,21 @@
 - `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
   `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
   **inside the JSON** — there is no Kotlin constant to bump (technical spec §63).
-- **`./gradlew validateContent`** (wired into `preBuild`, defined in
-  `gradle/content-validation.gradle.kts`) is the content gate. It checks unique ids,
-  dangling `lessonId` references, valid CEFR levels and exercise types, `correctIndex` in range,
+- **`./gradlew validateContent`** (wired into `preBuild`; rules in `buildSrc/…/content/ContentValidator.kt`,
+  task shell `ValidateContentTask`) is the content gate. It checks unique ids,
+  dangling `lessonId` references, valid CEFR levels and exercise types (placement allows choice
+  or typed — never audio or speaking), `correctIndex` in range,
   `fill_blank` blank markers, non-empty accepted answers, duplicate words within a lesson, matching
   bundle versions, and full lesson coverage (every lesson needs vocabulary, exercises and at least
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 21):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+- **CEFR bundle (contentVersion 22):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
   each), 465 exercises (6–12/lesson + reading passages + meaning items + A1 pronunciation drills +
   P2 recall/production items), 290 vocabulary entries (6/lesson, 8 in the numbers lesson),
   89 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
-  difficulty). Grammar points per level follow the British Council / EQUALS Core Inventory grammar
+  difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
+  test samples production and not recognition alone. Grammar points per level follow the British Council / EQUALS Core Inventory grammar
   tables (verified against examenglish.com/CEFR, Oct 2026): e.g. B1 = 2nd/3rd conditional + reported
   speech + simple passive; C1 = inversion + mixed conditionals + modals in the past; C2 =
   nuance/precision vocabulary.

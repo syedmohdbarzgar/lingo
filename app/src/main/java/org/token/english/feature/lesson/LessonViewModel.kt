@@ -161,6 +161,15 @@ class LessonViewModel(
             // Hold the screen until the curriculum bundle is in Room — a fresh
             // install seeds in the background and must not show "lesson missing".
             contentSeeded.first { it }
+            // Cross-session mastery (checklist B-1, Room v6): a returning learner's
+            // session starts from the persisted per-dimension fold, so the selector
+            // and the weakest-dimension read work from the FIRST exercise instead
+            // of only after an in-session answer. An empty table (fresh install or
+            // reset) leaves the profile exactly as before: no evidence, no steering.
+            val persistedDimensions = progressRepository.getDimensionMastery()
+            if (persistedDimensions.isNotEmpty()) {
+                profile = MasteryProfile(byDimension = persistedDimensions)
+            }
             val lesson = lessonRepository.getLesson(lessonId)
             // Display-time shuffles: option order and word-bank order derive from
             // the exercise id — stable per question, never gameable (P1/P4).
@@ -275,12 +284,14 @@ class LessonViewModel(
                 // The answer is evidence about a *kind of knowing* too (audit §2):
                 // folding it keeps the session's own weakness visible and lets the
                 // selector steer the rest of the session with it (B-1).
-                val updatedProfile = profileEngine.apply(
-                    profile,
-                    ExerciseDimension.dimensionOf(exercise),
-                    outcome.correct,
-                )
+                val moved = ExerciseDimension.dimensionOf(exercise)
+                val updatedProfile = profileEngine.apply(profile, moved, outcome.correct)
                 profile = updatedProfile
+                // Cross-session (B-1, Room v6): persist the dimension this answer
+                // moved so the NEXT session seeds from it instead of starting blind.
+                updatedProfile.byDimension[moved]?.let { mastery ->
+                    progressRepository.setDimensionMastery(moved, mastery)
+                }
                 _state.update {
                     it.copy(
                         outcome = outcome,

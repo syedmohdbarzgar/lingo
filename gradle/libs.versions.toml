@@ -1,5 +1,8 @@
 [versions]
 agp = "9.3.3"
+# buildSrc compiles the shared content gate (ContentValidator); keep it on the same
+# Kotlin line the app's KSP/compose-compiler plugins pin (KGP 2.2.10 under AGP 9).
+kotlin = "2.2.10"
 coreKtx = "1.19.0"
 coreSplashscreen = "1.0.1"
 junit = "4.13.2"
@@ -66,5 +69,7 @@ myket-billing = { group = "com.github.myketstore", name = "myket-billing-client"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+# buildSrc only (the content gate runs on the host JVM, no Android plugin there)
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composeCompiler" }

@@ -35,9 +35,12 @@
   comprehension / application / production) and the next exercise is chosen with the selector, so
   the kinds of knowing still untested lead the session instead of the next authored item. Two rules
   keep it safe: with no evidence the sort is stable, so a first-teach lesson runs exactly as
-  authored, and a missed exercise still comes back later in the session (a failed dimension ties
-  with an untouched one at 0, and the tie is broken by queue position). The profile is
-  **session-scoped** — there is no per-dimension column yet (see [`docs/debt.md`](debt.md)).
+  authored, and a missed exercise still comes back later in the session  (a failed dimension ties with an untouched one at 0, and the tie is broken by queue position). The profile is
+  **cross-session** (checklist B-1, Room v6): every answer also writes its dimension to
+  `dimension_mastery`, and the next session seeds `MasteryProfile` from those rows before the first
+  exercise, so the selector can steer immediately instead of waiting for an in-session answer —
+  while an untouched dimension stays *absent* rather than 0, keeping "no evidence" distinct from
+  "failed" (see [`docs/debt.md`](debt.md)).
 - **Planner time budget (checklist B-2):** review is never dropped for lack of budget — its
   estimate is capped at half the day's target and it always leads — and the remaining actions
   stop at the **first** one that does not fit instead of skipping ahead to a cheaper one. With the

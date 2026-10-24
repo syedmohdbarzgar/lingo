@@ -17,6 +17,7 @@ import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.dao.KnowledgeDao
 import org.token.english.data.local.dao.ProgressDao
 import org.token.english.data.local.dao.ReviewDao
+import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.KnowledgeStateEntity
@@ -37,6 +38,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -345,6 +347,18 @@ class ProgressRepositoryImpl(
         }
     }
 
+    override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
+        progressDao.upsertDimension(DimensionMasteryEntity(dimension.name, mastery))
+    }
+
+    override suspend fun getDimensionMastery(): Map<MasteryDimension, Float> =
+        progressDao.getDimensions().mapNotNull { row ->
+            // A row naming a dimension this build does not know (a downgrade, or a
+            // future enum constant) must not crash the seed — same guard style as
+            // observeMastery's skill valueOf.
+            runCatching { MasteryDimension.valueOf(row.dimension) to row.mastery }.getOrNull()
+        }.toMap()
+
     override suspend fun addStudySeconds(seconds: Long) {
         if (seconds <= 0) return
         val key = TimeUtil.dateKey(System.currentTimeMillis())
@@ -356,6 +370,7 @@ class ProgressRepositoryImpl(
 
     override suspend fun reset() {
         progressDao.clearMastery()
+        progressDao.clearDimensions()
         progressDao.clearSessions()
         reviewDao.clearItems()
         reviewDao.clearAttempts()

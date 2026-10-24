@@ -31,6 +31,7 @@ import org.token.english.domain.model.LearningActionType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -121,6 +122,15 @@ class LearningPathJourneyTest {
         override suspend fun addStudySeconds(seconds: Long) {
             studySeconds += seconds
             statsFlow.value = statsFlow.value.copy(todayStudySeconds = studySeconds)
+        }
+
+        // Cross-session dimension rows (checklist B-1, Room v6) — in-memory here.
+        private val dimensions = MutableStateFlow<Map<MasteryDimension, Float>>(emptyMap())
+
+        override suspend fun getDimensionMastery(): Map<MasteryDimension, Float> = dimensions.value
+
+        override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
+            dimensions.value = dimensions.value + (dimension to mastery)
         }
 
         fun noteLessonCompleted() {
@@ -349,7 +359,8 @@ class LearningPathJourneyTest {
     fun `placement is a skill assessment that calibrates mastery`() = runBlocking {
         val app = harness()
         val questions = ContentParser.parsePlacementQuestions(contentFile("placement.json").readText())
-            .filterIsInstance<Exercise.MultipleChoice>()
+        // No filterIsInstance: the bundle's typed item (A-5/A-6 round) is a real
+        // question too — six bands of six must hold across every format.
         assertEquals("the bundle ships six bands of six", 36, questions.size)
 
         // Run it as a learner who is solid on grammar and shaky on vocabulary.

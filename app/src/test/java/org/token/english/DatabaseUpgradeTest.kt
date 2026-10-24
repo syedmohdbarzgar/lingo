@@ -222,13 +222,14 @@ class DatabaseUpgradeTest {
             }
             assertNull("a pre-existing word has no usage note yet", explanation)
 
-            // 3. Tables introduced by the graph steps exist and arrive empty — the
-            //    seeder fills content, the learner fills state.
+            // 3. Tables introduced by later steps exist and arrive empty — the
+            //    seeder fills content, the learner fills state (v6 adds the
+            //    cross-session dimension rows, which arrive with no evidence).
             val after = entities(DATABASE_VERSION)
             val added = after.keys - tables.keys
             assertEquals(
-                "the graph steps introduce exactly the item and state tables",
-                setOf("knowledge_item", "knowledge_state"),
+                "the graph and cross-session steps introduce exactly the known tables",
+                setOf("knowledge_item", "knowledge_state", "dimension_mastery"),
                 added,
             )
             added.forEach { table ->

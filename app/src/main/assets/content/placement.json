@@ -1,5 +1,5 @@
 {
-  "contentVersion": 21,
+  "contentVersion": 22,
   "questions": [
     {
       "id": "placement.q01",
@@ -62,19 +62,15 @@
       "skill": "VOCABULARY"
     },
     {
-      "id": "placement.q20",
-      "type": "multiple_choice",
+      "id": "placement.t01",
+      "type": "fill_blank",
       "level": "A1",
-      "question": "Which sentence is correct?",
-      "questionFa": "کدام جمله درست است؟",
-      "options": [
-        "She likes coffee.",
-        "She like coffee.",
-        "She liking coffee.",
-        "She is like coffee."
+      "sentence": "Sara ___ tea every morning.",
+      "accepted": [
+        "drinks"
       ],
-      "correctIndex": 0,
-      "skill": "GRAMMAR"
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعِل «Sara» سوم‌شخصِ مفرد است و فعل در زمانِ حالِ ساده s می‌گیرد؛ پس صحیح «drinks» است نه «drink»."
     },
     {
       "id": "placement.r01",
@@ -84,12 +80,12 @@
       "question": "Where does Tom take his dog every morning?",
       "questionFa": "تام هر صبح سگش را کجا می‌برد؟",
       "options": [
-        "To school",
         "To the park",
+        "To school",
         "To the market",
         "To the station"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "READING"
     },
     {
@@ -100,11 +96,11 @@
       "questionFa": "او دیروز تکالیفش را ______.",
       "options": [
         "finishing",
-        "has finish",
         "finished",
+        "has finish",
         "finishes"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -116,10 +112,10 @@
       "options": [
         "would",
         "mustn't",
-        "mightn't",
-        "should"
+        "should",
+        "mightn't"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -129,12 +125,12 @@
       "question": "This film is much ______ than the last one.",
       "questionFa": "این فیلم خیلی ______ از فیلم قبلی است.",
       "options": [
-        "better",
+        "good",
         "more good",
         "best",
-        "good"
+        "better"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -144,12 +140,12 @@
       "question": "What is the opposite of \"cheap\"?",
       "questionFa": "متضاد «cheap» چیست؟",
       "options": [
-        "luxurious",
         "expensive",
+        "luxurious",
         "costly",
         "valuable"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY"
     },
     {
@@ -160,11 +156,11 @@
       "questionFa": "برای پاسخ «جلسه ساعت نه است» پرسش درست را انتخاب کنید:",
       "options": [
         "Where is the meeting?",
-        "Who is at the meeting?",
         "What time is the meeting?",
+        "Who is at the meeting?",
         "Why is the meeting?"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -177,10 +173,10 @@
       "options": [
         "A pair of shoes",
         "A red hat",
-        "A book",
-        "A blue scarf"
+        "A blue scarf",
+        "A book"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "READING"
     },
     {
@@ -190,12 +186,12 @@
       "question": "I ______ in Tehran since 2018.",
       "questionFa": "من از سال ۲۰۱۸ در تهران ______.",
       "options": [
-        "have lived",
+        "live",
         "lived",
         "am living",
-        "live"
+        "have lived"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -205,12 +201,12 @@
       "question": "The letter ______ yesterday.",
       "questionFa": "نامه دیروز ______ شد.",
       "options": [
-        "was send",
         "was sent",
+        "was send",
         "is sending",
         "sent"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -221,11 +217,11 @@
       "questionFa": "او گفت که در آن لحظه ______ است.",
       "options": [
         "has been",
-        "is",
         "was",
+        "is",
         "will be"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -237,10 +233,10 @@
       "options": [
         "flexible",
         "curious",
-        "expensive",
-        "dependable"
+        "dependable",
+        "expensive"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -250,12 +246,12 @@
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
-        "I've never tried sushi.",
+        "I've never tried sushi nor.",
         "I have never try sushi.",
         "I never have tried sushi.",
-        "I've never tried sushi nor."
+        "I've never tried sushi."
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -266,12 +262,12 @@
       "question": "Why was the train delayed?",
       "questionFa": "چرا قطار تأخیر داشت؟",
       "options": [
-        "Because of a strike",
         "Because of heavy snow",
+        "Because of a strike",
         "Because of an accident",
         "Because of a broken engine"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "READING"
     },
     {
@@ -282,11 +278,11 @@
       "questionFa": "اگر ده دقیقه زودتر ______، قطار را از دست نمی‌دادم.",
       "options": [
         "left",
-        "have left",
         "had left",
+        "have left",
         "would leave"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -298,10 +294,10 @@
       "options": [
         "that's",
         "who's",
-        "which",
-        "whose"
+        "whose",
+        "which"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -311,12 +307,12 @@
       "question": "I wish I ______ more time to relax this week.",
       "questionFa": "کاش این هفته وقت بیشتری برای استراحت ______.",
       "options": [
-        "had",
+        "have",
         "am having",
         "would have",
-        "have"
+        "had"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -326,12 +322,12 @@
       "question": "By the time we arrived, the movie ______.",
       "questionFa": "وقتی رسیدیم، فیلم از قبل ______ بود.",
       "options": [
-        "already starts",
         "had already started",
+        "already starts",
         "has already started",
         "was starting"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -342,11 +338,11 @@
       "questionFa": "هیئت تصمیم را تا دوشنبه ______ کرد.",
       "options": [
         "pretend",
-        "precede",
         "postpone",
+        "precede",
         "predict"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -359,10 +355,10 @@
       "options": [
         "Working only in the office",
         "Working from home every day",
-        "Working longer hours",
-        "Working from home two days a week"
+        "Working from home two days a week",
+        "Working longer hours"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "READING"
     },
     {
@@ -372,12 +368,12 @@
       "question": "Never ______ such a complete mess in my life!",
       "questionFa": "هرگز در زندگی‌ام چنین آشفتگی‌ای ______!",
       "options": [
-        "have I seen",
+        "did I saw",
         "I have seen",
         "I saw",
-        "did I saw"
+        "have I seen"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "GRAMMAR"
     },
     {
@@ -387,12 +383,12 @@
       "question": "You ______ have told me you were coming — I waited an hour!",
       "questionFa": "باید به من می‌گفتی می‌آیی — یک ساعت منتظر ماندم!",
       "options": [
-        "must",
         "should",
+        "must",
         "can",
         "need"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "GRAMMAR"
     },
     {
@@ -403,11 +399,11 @@
       "questionFa": "اگر آن شغل را قبول کرده بود، الان در دبی ______.",
       "options": [
         "would have lived",
-        "will live",
         "would be living",
+        "will live",
         "lived"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "GRAMMAR"
     },
     {
@@ -419,10 +415,10 @@
       "options": [
         "I put down",
         "I had put down",
-        "did I put down",
-        "had I put down"
+        "had I put down",
+        "did I put down"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "GRAMMAR"
     },
     {
@@ -432,12 +428,12 @@
       "question": "Which word is closest in meaning to \"ambiguous\"?",
       "questionFa": "کدام واژه به «ambiguous» نزدیک‌تر است؟",
       "options": [
-        "unclear",
+        "ancient",
         "ambitious",
         "amusing",
-        "ancient"
+        "unclear"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -448,12 +444,12 @@
       "question": "What do critics of the new policy argue?",
       "questionFa": "منتقدان سیاست جدید چه استدلالی دارند؟",
       "options": [
-        "Test scores are too low",
         "Schools may neglect creativity and critical thinking",
+        "Test scores are too low",
         "Policies should change every year",
         "Creativity is easy to measure"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "READING"
     },
     {
@@ -464,11 +460,11 @@
       "questionFa": "توضیحش مختصر بود اما تا حدی ______.",
       "options": [
         "lucid",
-        "detailed",
         "vague",
+        "detailed",
         "precise"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -480,10 +476,10 @@
       "options": [
         "clarity",
         "honesty",
-        "sincerity",
-        "irony"
+        "irony",
+        "sincerity"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY"
     },
     {
@@ -493,12 +489,12 @@
       "question": "Independent sources ______ the initial hypothesis.",
       "questionFa": "منابع مستقل فرضیه اولیه را ______ کردند.",
       "options": [
-        "corroborated",
+        "contradicted",
         "understated",
         "ignored",
-        "contradicted"
+        "corroborated"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY"
     },
     {
@@ -508,12 +504,12 @@
       "question": "The politician's answer was deliberately ______, avoiding any firm commitment.",
       "questionFa": "پاسخ سیاستمدار عمداً ______ بود و از هر تعهد مشخصی طفره می‌رفت.",
       "options": [
-        "eloquent",
         "equivocal",
+        "eloquent",
         "eminent",
         "exemplary"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY"
     },
     {
@@ -524,11 +520,11 @@
       "questionFa": "مدارک برای محکومیت خیلی ______ بودند.",
       "options": [
         "tenacious",
-        "tantamount",
         "tenuous",
+        "tantamount",
         "transient"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY"
     },
     {
@@ -541,10 +537,10 @@
       "options": [
         "That the text is sincere",
         "That irony is never used",
-        "That readers ignore tone",
-        "That readers share her understanding of irony"
+        "That readers share her understanding of irony",
+        "That readers ignore tone"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "READING"
     }
   ]

@@ -9,6 +9,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -94,6 +95,18 @@ interface ProgressRepository {
     fun observeMastery(): Flow<Map<Skill, Float>>
     fun observeStats(): Flow<StudyStats>
     suspend fun applyAttempt(skill: Skill, correct: Boolean, source: String)
+
+    /**
+     * Per-dimension mastery folded across sessions (checklist B-1, Room v6) —
+     * what a new lesson session seeds its `MasteryProfile` from, so the exercise
+     * selector can steer the FIRST exercise instead of waiting for an in-session
+     * answer. Dimensions a learner has never answered are absent, never 0.
+     */
+    suspend fun getDimensionMastery(): Map<MasteryDimension, Float>
+
+    /** Persists one dimension's folded value right after the answer that moved it. */
+    suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float)
+
     suspend fun addStudySeconds(seconds: Long)
     suspend fun reset()
 }

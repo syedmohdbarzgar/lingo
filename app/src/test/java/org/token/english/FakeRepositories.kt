@@ -21,6 +21,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -211,6 +212,10 @@ class FakeProgressRepository : ProgressRepository {
     val attempts = mutableListOf<Pair<Skill, Boolean>>()
     var studySeconds: Long = 0L
 
+    /** Cross-session dimension rows (checklist B-1, Room v6): seed + write log. */
+    val dimensionFlow = MutableStateFlow<Map<MasteryDimension, Float>>(emptyMap())
+    val dimensionWrites = mutableListOf<Pair<MasteryDimension, Float>>()
+
     override fun observeMastery(): Flow<Map<Skill, Float>> = masteryFlow
     override fun observeStats(): Flow<StudyStats> = statsFlow
 
@@ -223,12 +228,21 @@ class FakeProgressRepository : ProgressRepository {
         masteryFlow.value = current
     }
 
+    override suspend fun getDimensionMastery(): Map<MasteryDimension, Float> = dimensionFlow.value
+
+    override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
+        dimensionWrites += dimension to mastery
+        dimensionFlow.value = dimensionFlow.value + (dimension to mastery)
+    }
+
     override suspend fun addStudySeconds(seconds: Long) {
         studySeconds += seconds
     }
 
     override suspend fun reset() {
         masteryFlow.value = emptyMap()
+        dimensionFlow.value = emptyMap()
+        dimensionWrites.clear()
     }
 }
 

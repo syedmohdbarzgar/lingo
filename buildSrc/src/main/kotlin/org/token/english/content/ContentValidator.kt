@@ -1,84 +1,118 @@
-import groovy.json.JsonSlurper
+package org.token.english.content
+
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
 
-// Content validation — `./gradlew validateContent`, applied by app/build.gradle.kts.
-// Extracted from the app build script (checklist B-6): the gate is 300 lines of
-// JSON rules that have nothing to do with how the APK is assembled.
+/**
+ * The content gate (AGENTS.md §5 / `docs/content-pipeline.md`), the single Kotlin
+ * implementation behind BOTH consumers:
+ *
+ *  - [ValidateContentTask] — `./gradlew validateContent`, wired into `preBuild`,
+ *  - `ContentValidationTest` — the same rules on the unit-test classpath,
+ *
+ * so the check that blocks a build and the check that guards the suite cannot drift
+ * apart. The curriculum is plain JSON, so the Kotlin compiler sees none of it:
+ * a dangling `lessonId` orphans a lesson silently, an out-of-range `correctIndex`
+ * throws mid-lesson, a duplicate id is dropped by Room (the id is the primary key),
+ * and a wrong-typed `type` is skipped by ContentParser so the exercise never shows.
+ *
+ * Every problem is collected — not just the first — and the port from the original
+ * Groovy task is 1:1: same rules, same message text, same non-blocking
+ * `explanationFa` backlog warning.
+ */
+data class ContentValidationReport(
+    /** Blocking problems, each already formatted as `  - where: what`. */
+    val errors: List<String>,
+    /** Non-blocking nudges for content authors (the explanationFa backlog). */
+    val warnings: List<String>,
+    /** One-line "what was checked" message for a passing run. */
+    val summary: String,
+) {
+    val isValid: Boolean get() = errors.isEmpty()
+}
 
-// Content validation — `./gradlew validateContent`
-//
-// The curriculum is plain JSON (AGENTS.md §5), so the Kotlin compiler cannot
-// catch content mistakes. Without a gate these fail silently in production:
-//   * a dangling `lessonId` orphans a lesson with no error at all,
-//   * `correctIndex` outside the options array only throws while the learner
-//     is mid-lesson,
-//   * a duplicate id is dropped by Room (the id is the primary key), quietly
-//     losing an exercise,
-//   * a wrong-typed `type` is skipped by ContentParser, so the exercise just
-//     never appears.
-// The task collects every problem instead of stopping at the first one, and
-// runs before a build so bad content never reaches a device.
-// ---------------------------------------------------------------------------
-tasks.register("validateContent") {
-    group = "verification"
-    description = "Validates the bundled content JSON in src/main/assets/content."
-    val contentDir = layout.projectDirectory.dir("src/main/assets/content")
-    inputs.dir(contentDir)
+object ContentValidator {
 
-    doLast {
-        val levels = setOf("A1", "A2", "B1", "B2", "C1", "C2")
-        // Mirrors ContentParser.supportedTypes — `speaking` parses but is suspended.
-        val exerciseTypes = setOf(
-            "multiple_choice", "fill_blank", "word_recall", "translation", "sentence_production", "listening",
-        )
-        // Mirrors domain Skill — an authored tag must name a real skill, otherwise
-        // ContentParser silently drops it and mastery falls back to the heuristic.
-        val skills = setOf("VOCABULARY", "GRAMMAR", "LISTENING", "SPEAKING", "READING", "WRITING")
+    private val LEVELS = setOf("A1", "A2", "B1", "B2", "C1", "C2")
+
+    /** Mirrors ContentParser.supportedTypes — `speaking` parses but is suspended. */
+    private val EXERCISE_TYPES = setOf(
+        "multiple_choice", "fill_blank", "word_recall", "translation",
+        "sentence_production", "listening",
+    )
+
+    /** Mirrors domain Skill — an authored tag must name a real skill, otherwise ContentParser drops it. */
+    private val SKILLS = setOf("VOCABULARY", "GRAMMAR", "LISTENING", "SPEAKING", "READING", "WRITING")
+
+    private val KNOWLEDGE_TYPES = setOf("GRAMMAR", "VOCABULARY", "DISCOURSE", "PHONOLOGY")
+
+    /**
+     * What placement accepts besides choice: typed shapes the screen can ask and
+     * grade without audio or a recognizer (see PlacementScreen). Mirrors the
+     * lessons' formats minus `translation`'s word bank and the audio/speech pair.
+     */
+    private val TYPED_PLACEMENT_TYPES = setOf(
+        "multiple_choice", "fill_blank", "word_recall", "sentence_production",
+    )
+
+    private val FILES = listOf(
+        "lessons.json", "vocabulary.json", "exercises.json", "placement.json", "knowledge.json",
+    )
+
+    /** Validates the five bundle files in [dir] (`app/src/main/assets/content`). */
+    fun validate(dir: File): ContentValidationReport {
         val errors = mutableListOf<String>()
-        val dir = contentDir.asFile
+        val warnings = mutableListOf<String>()
 
         fun report(where: String, what: String) {
             errors += "  - $where: $what"
         }
 
-        fun load(name: String): Map<*, *>? {
+        fun load(name: String): JSONObject? {
             val file = File(dir, name)
             if (!file.exists()) {
                 report(name, "file is missing")
                 return null
             }
             return try {
-                JsonSlurper().parse(file) as Map<*, *>
+                JSONObject(file.readText())
             } catch (e: Exception) {
                 report(name, "not valid JSON (${e.message})")
                 null
             }
         }
 
-        fun items(root: Map<*, *>?, key: String, file: String): List<Map<*, *>> {
-            val raw = root?.get(key)
-            if (raw == null) {
+        fun items(root: JSONObject?, key: String, file: String): List<JSONObject> {
+            if (root == null) {
                 report(file, "missing top-level \"$key\" array")
                 return emptyList()
             }
-            val array = raw as? List<*>
+            val array = root.opt(key) as? JSONArray
             if (array == null) {
                 report(file, "\"$key\" is not an array")
                 return emptyList()
             }
-            return array.mapIndexedNotNull { index, entry ->
-                entry as? Map<*, *> ?: run {
-                    report("$file/$key[$index]", "entry is not an object")
-                    null
-                }
+            val result = mutableListOf<JSONObject>()
+            for (index in 0 until array.length()) {
+                val entry = array.opt(index)
+                if (entry is JSONObject) result += entry
+                else report("$file/$key[$index]", "entry is not an object")
             }
+            return result
         }
 
-        fun text(o: Map<*, *>, key: String): String = (o[key] as? String)?.trim().orEmpty()
-        fun number(o: Map<*, *>, key: String): Int? = (o[key] as? Number)?.toInt()
-        fun array(o: Map<*, *>, key: String): List<*> = o[key] as? List<*> ?: emptyList<Any?>()
+        fun text(o: JSONObject, key: String): String =
+            (o.opt(key) as? String)?.trim().orEmpty()
 
-        fun collectIds(rows: List<Map<*, *>>, where: String): Set<String> {
+        fun number(o: JSONObject, key: String): Int? = (o.opt(key) as? Number)?.toInt()
+
+        fun array(o: JSONObject, key: String): List<Any?> {
+            val json = o.opt(key) as? JSONArray ?: return emptyList()
+            return (0 until json.length()).map { json.get(it) }
+        }
+
+        fun collectIds(rows: List<JSONObject>, where: String): Set<String> {
             val ids = mutableListOf<String>()
             rows.forEachIndexed { index, row ->
                 val id = text(row, "id")
@@ -89,7 +123,7 @@ tasks.register("validateContent") {
             return ids.toSet()
         }
 
-        fun checkChoiceAnswer(id: String, o: Map<*, *>) {
+        fun checkChoiceAnswer(id: String, o: JSONObject) {
             val options = array(o, "options").map { it.toString() }
             if (options.size != 4) report(id, "expected 4 options, found ${options.size}")
             options.forEachIndexed { index, option ->
@@ -105,20 +139,20 @@ tasks.register("validateContent") {
             }
         }
 
-        fun checkSkill(id: String, o: Map<*, *>) {
+        fun checkSkill(id: String, o: JSONObject) {
             val skill = text(o, "skill")
-            if (skill.isNotEmpty() && skill.uppercase() !in skills) {
+            if (skill.isNotEmpty() && skill.uppercase() !in SKILLS) {
                 report(id, "invalid skill \"$skill\"")
             }
         }
 
-        fun checkExercise(id: String, type: String, o: Map<*, *>) {
+        fun checkExercise(id: String, type: String, o: JSONObject) {
             checkSkill(id, o)
             when (type) {
                 "multiple_choice" -> {
                     if (text(o, "question").isEmpty()) report(id, "blank question")
                     // A-5: an authored reading passage (optional) must not be empty.
-                    if (o.containsKey("passage") && text(o, "passage").isEmpty()) report(id, "blank passage")
+                    if (o.has("passage") && text(o, "passage").isEmpty()) report(id, "blank passage")
                     checkChoiceAnswer(id, o)
                 }
                 "fill_blank" -> {
@@ -178,11 +212,10 @@ tasks.register("validateContent") {
             }
         }
 
-        val files = listOf("lessons.json", "vocabulary.json", "exercises.json", "placement.json", "knowledge.json")
-        val roots = files.associateWith { load(it) }
+        val roots = FILES.associateWith { load(it) }
 
         // --- bundle version -------------------------------------------------
-        val versions = files.associateWith { file ->
+        val versions = FILES.associateWith { file ->
             val root = roots[file]
             val version = root?.let { number(it, "contentVersion") }
             if (version == null) report(file, "missing top-level contentVersion")
@@ -197,7 +230,7 @@ tasks.register("validateContent") {
         val lessonIds = collectIds(lessons, "lessons")
         lessons.forEach { lesson ->
             val id = text(lesson, "id").ifEmpty { "<lesson without id>" }
-            if (text(lesson, "level") !in levels) report(id, "invalid level \"${text(lesson, "level")}\"")
+            if (text(lesson, "level") !in LEVELS) report(id, "invalid level \"${text(lesson, "level")}\"")
             listOf("title", "titleFa", "topic").forEach { key ->
                 if (text(lesson, key).isEmpty()) report(id, "blank $key")
             }
@@ -216,11 +249,11 @@ tasks.register("validateContent") {
             val id = text(word, "id").ifEmpty { "vocabulary[$index]" }
             if (text(word, "word").isEmpty()) report(id, "blank word")
             if (text(word, "translation").isEmpty()) report(id, "blank translation")
-            if (text(word, "level") !in levels) report(id, "invalid level \"${text(word, "level")}\"")
+            if (text(word, "level") !in LEVELS) report(id, "invalid level \"${text(word, "level")}\"")
             val examples = array(word, "examples")
             if (examples.size < 2) report(id, "needs at least 2 examples (has ${examples.size})")
             examples.forEachIndexed { ei, raw ->
-                val example = raw as? Map<*, *>
+                val example = raw as? JSONObject
                 if (example == null) {
                     report(id, "example[$ei] must be an object {en, fa} — plain strings are the legacy format")
                     return@forEachIndexed
@@ -246,7 +279,7 @@ tasks.register("validateContent") {
             val lessonId = text(exercise, "lessonId")
             if (lessonId !in lessonIds) report(id, "lessonId \"$lessonId\" is not a lesson")
             val type = text(exercise, "type")
-            if (type !in exerciseTypes) report(id, "unsupported type \"$type\"")
+            if (type !in EXERCISE_TYPES) report(id, "unsupported type \"$type\"")
             val order = number(exercise, "order") ?: 0
             if (order <= 0) report(id, "order must be a positive integer")
             else ordersPerLesson.getOrPut(lessonId) { mutableListOf() } += order
@@ -263,23 +296,34 @@ tasks.register("validateContent") {
         placement.forEachIndexed { index, question ->
             val id = text(question, "id").ifEmpty { "placement[$index]" }
             if (id in exerciseIds) report(id, "id already used by an exercise")
-            if (text(question, "level") !in levels) report(id, "invalid level \"${text(question, "level")}\"")
-            if (text(question, "question").isEmpty()) report(id, "blank question")
+            if (text(question, "level") !in LEVELS) report(id, "invalid level \"${text(question, "level")}\"")
+            // The test is no longer choice-only: one typed item per bundle lets it
+            // sample production instead of recognition alone (A-5/A-6 round).
+            // Listening/speaking stay out — placement has no audio or recognizer UI.
+            val type = text(question, "type").ifEmpty { "multiple_choice" }
+            if (type !in TYPED_PLACEMENT_TYPES) {
+                report(id, "placement type \"$type\" is not answerable here (choice or typed only)")
+            }
             checkSkill(id, question)
-            checkChoiceAnswer(id, question)
+            if (type == "multiple_choice") {
+                if (text(question, "question").isEmpty()) report(id, "blank question")
+                checkChoiceAnswer(id, question)
+            } else {
+                // Typed placement items are held to the same rules as lesson exercises.
+                checkExercise(id, type, question)
+            }
         }
 
         // --- knowledge graph -------------------------------------------------
         val knowledge = items(roots["knowledge.json"], "knowledge", "knowledge.json")
         val knowledgeIds = collectIds(knowledge, "knowledge")
-        val knowledgeTypes = setOf("GRAMMAR", "VOCABULARY", "DISCOURSE", "PHONOLOGY")
         val prerequisiteOf = mutableMapOf<String, List<String>>()
         knowledge.forEachIndexed { index, item ->
             val id = text(item, "id").ifEmpty { "knowledge[$index]" }
-            if (text(item, "type").uppercase() !in knowledgeTypes) {
+            if (text(item, "type").uppercase() !in KNOWLEDGE_TYPES) {
                 report(id, "invalid knowledge type \"${text(item, "type")}\"")
             }
-            if (text(item, "level") !in levels) report(id, "invalid level \"${text(item, "level")}\"")
+            if (text(item, "level") !in LEVELS) report(id, "invalid level \"${text(item, "level")}\"")
             listOf("title", "titleFa").forEach { key ->
                 if (text(item, key).isEmpty()) report(id, "blank $key")
             }
@@ -323,12 +367,6 @@ tasks.register("validateContent") {
             if (lessonId !in taughtLessonIds) report(lessonId, "no knowledge item teaches this lesson")
         }
 
-        if (errors.isNotEmpty()) {
-            throw GradleException(
-                "Content validation failed (${errors.size} problem(s)):\n" + errors.joinToString("\n"),
-            )
-        }
-
         // --- non-blocking nudge (checklist A-1): an exercise without
         // `explanationFa` teaches nothing after a miss. The hard bar lives in
         // ExplanationCoverageTest; here we only surface the backlog so content
@@ -336,22 +374,14 @@ tasks.register("validateContent") {
         val unexplained = exercises.filter { text(it, "explanationFa").isEmpty() }
         if (unexplained.isNotEmpty()) {
             val ids = unexplained.map { text(it, "id") }.sorted()
-            logger.warn(
-                "Content warning: ${ids.size} of ${exercises.size} exercises have no explanationFa " +
-                    "(shown after a wrong answer). Missing: ${ids.joinToString(", ")}",
-            )
+            warnings += "Content warning: ${ids.size} of ${exercises.size} exercises have no explanationFa " +
+                "(shown after a wrong answer). Missing: ${ids.joinToString(", ")}"
         }
-        logger.lifecycle(
-            "Content validation passed: ${lessons.size} lessons, ${vocabulary.size} words, " +
-                "${exercises.size} exercises, ${placement.size} placement questions, " +
-                "${knowledge.size} knowledge items (bundle v${versions["lessons.json"]}).",
-        )
-    }
-}
 
-// Gate every build on content validity: a dangling lessonId or an out-of-range
-// correctIndex is a data bug the Kotlin compiler cannot see, and it would ship
-// silently. Costs a few seconds, so it is always worth it.
-tasks.named("preBuild") {
-    dependsOn("validateContent")
+        val summary = "Content validation passed: ${lessons.size} lessons, ${vocabulary.size} words, " +
+            "${exercises.size} exercises, ${placement.size} placement questions, " +
+            "${knowledge.size} knowledge items (bundle v${versions["lessons.json"]})."
+
+        return ContentValidationReport(errors = errors, warnings = warnings, summary = summary)
+    }
 }

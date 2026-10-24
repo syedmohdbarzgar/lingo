@@ -22,6 +22,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.MasteryDimension
+import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
@@ -191,6 +192,62 @@ class LessonViewModelTest {
         vm.onEvent(LessonEvent.Next)
         assertTrue("the lesson is completed", vm.state.value.completed)
         assertTrue("completion is persisted", lessonId in h.lessonRepo.completed)
+    }
+
+    @Test
+    fun `an answered dimension is persisted for the next session (Room v6)`() {
+        val h = Harness().withOneExercise()
+        val vm = h.build()
+        assertTrue("nothing observed yet, nothing to persist", h.progress.dimensionWrites.isEmpty())
+
+        // A multiple choice answers RECOGNITION; the first evidence seeds it at 1f
+        // (the same rule the engine and the skill rows use) and writes it down.
+        answerCorrectly(vm)
+        val write = h.progress.dimensionWrites.single()
+        assertEquals(MasteryDimension.RECOGNITION, write.first)
+        assertEquals("first correct answer seeds the dimension at 1f", 1f, write.second, 0f)
+        assertEquals(
+            "the row is what the next session will seed from",
+            1f,
+            h.progress.dimensionFlow.value[MasteryDimension.RECOGNITION] ?: 0f,
+            0f,
+        )
+        assertNull(
+            "an unobserved dimension stays absent — absent means no evidence, not 0",
+            h.progress.dimensionFlow.value[MasteryDimension.PRODUCTION],
+        )
+    }
+
+    @Test
+    fun `a returning learner seeds the session from persisted dimensions and folds on top (Room v6)`() {
+        val h = Harness().withOneExercise()
+        // Last session's evidence: recognition was shaky, production once seen.
+        h.progress.dimensionFlow.value = mapOf(
+            MasteryDimension.RECOGNITION to 0.4f,
+            MasteryDimension.PRODUCTION to 0.9f,
+        )
+        val vm = h.build()
+
+        answerCorrectly(vm)
+
+        // The fold started FROM the stored 0.4 — an unseeded fold would have
+        // written the fresh-install seed (1f) instead.
+        val expected = DefaultMasteryProfileEngine().apply(
+            MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            MasteryDimension.RECOGNITION,
+            correct = true,
+        ).masteryOf(MasteryDimension.RECOGNITION)
+        val write = h.progress.dimensionWrites.single()
+        assertEquals(MasteryDimension.RECOGNITION, write.first)
+        assertEquals("the session continued the cross-session fold", expected, write.second, 0.001f)
+        assertTrue("a seeded value must not collapse to the fresh-install seed", write.second < 1f)
+
+        // Dimensions this session did not answer survive the write-back untouched.
+        assertEquals(
+            0.9f,
+            h.progress.dimensionFlow.value[MasteryDimension.PRODUCTION] ?: 0f,
+            0.001f,
+        )
     }
 
     @Test

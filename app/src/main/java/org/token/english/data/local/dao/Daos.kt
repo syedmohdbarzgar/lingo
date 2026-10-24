@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.KnowledgeStateEntity
@@ -233,6 +234,17 @@ interface ProgressDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertSession(item: StudySessionEntity)
+
+    // Cross-session mastery per dimension (checklist B-1, Room v6): the rows a
+    // new session seeds its MasteryProfile from.
+    @Query("SELECT * FROM dimension_mastery")
+    suspend fun getDimensions(): List<DimensionMasteryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertDimension(item: DimensionMasteryEntity)
+
+    @Query("DELETE FROM dimension_mastery")
+    suspend fun clearDimensions()
 
     @Query("SELECT * FROM study_session WHERE dateKey = :dateKey")
     suspend fun getSession(dateKey: Int): StudySessionEntity?

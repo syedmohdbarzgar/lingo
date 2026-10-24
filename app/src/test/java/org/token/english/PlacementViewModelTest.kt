@@ -82,13 +82,15 @@ class PlacementViewModelTest {
     private fun build(): PlacementViewModel = Harness(questions()).build()
 
     private fun answerCorrectly(vm: PlacementViewModel) {
-        val question = vm.state.value.current!!
+        // This harness feeds only choice questions (the typed flow lives in
+        // PlacementTypedItemTest) — `current` is any Exercise since the A-5/A-6 round.
+        val question = vm.state.value.current as Exercise.MultipleChoice
         vm.onEvent(PlacementEvent.Select(question.correctIndex))
         vm.onEvent(PlacementEvent.Next)
     }
 
     private fun answerWrong(vm: PlacementViewModel) {
-        val question = vm.state.value.current!!
+        val question = vm.state.value.current as Exercise.MultipleChoice
         vm.onEvent(PlacementEvent.Select((question.correctIndex + 1) % question.options.size))
         vm.onEvent(PlacementEvent.Next)
     }

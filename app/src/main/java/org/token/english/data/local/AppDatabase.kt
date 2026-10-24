@@ -8,6 +8,7 @@ import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.dao.KnowledgeDao
 import org.token.english.data.local.dao.ProgressDao
 import org.token.english.data.local.dao.ReviewDao
+import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.KnowledgeStateEntity
@@ -25,7 +26,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 5
+internal const val DATABASE_VERSION = 6
 
 @Database(
     entities = [
@@ -38,6 +39,7 @@ internal const val DATABASE_VERSION = 5
         ReviewItemEntity::class,
         ReviewAttemptEntity::class,
         SkillMasteryEntity::class,
+        DimensionMasteryEntity::class,
         StudySessionEntity::class,
     ],
     version = DATABASE_VERSION,
@@ -108,16 +110,27 @@ abstract class AppDatabase : RoomDatabase() {
             "4->5" to listOf(
                 "ALTER TABLE vocabulary ADD COLUMN explanationFa TEXT",
             ),
+            // v5 → v6: per-dimension mastery across sessions (checklist B-1). A new
+            // learner-state table — additive, empty on arrival: it fills up as the
+            // learner answers, and no existing progress row is touched. Its rows are
+            // the seed the next session's MasteryProfile starts from.
+            "5->6" to listOf(
+                "CREATE TABLE IF NOT EXISTS dimension_mastery (" +
+                    "dimension TEXT NOT NULL, " +
+                    "mastery REAL NOT NULL, " +
+                    "PRIMARY KEY(dimension))",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
         val MIGRATION_2_3 = migration(2, 3)
         val MIGRATION_3_4 = migration(3, 4)
         val MIGRATION_4_5 = migration(4, 5)
+        val MIGRATION_5_6 = migration(5, 6)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
-            get() = listOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            get() = listOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {
             override fun migrate(db: SupportSQLiteDatabase) {

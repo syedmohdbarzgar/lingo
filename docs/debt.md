@@ -3,10 +3,14 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
-- **Mastery by dimension is session-scoped.** `MasteryProfile` is folded from the answers of the
-  session in progress; nothing persists per dimension, so the next session starts blind and the
-  selector only adapts once the learner has answered inside that session (B-1). A cross-session
-  version needs a per-dimension column/table (Room v6 + migration) and is the natural next step.
+- **Settled (B-1): mastery by dimension now crosses sessions (Room v6).** `dimension_mastery`
+  stores the per-dimension fold as answers arrive, and a lesson session seeds its `MasteryProfile`
+  from those rows before the first exercise — so the selector and the weakest-dimension read work
+  from observed evidence instead of only after an in-session answer. The table arrives empty via
+  `5->6` (learner state: survives re-seeding, cleared only by reset), rows naming a dimension this
+  build does not know are ignored on read, and `DatabaseUpgradeTest` executes the step against a
+  real SQLite engine. An untouched dimension is still *absent*, never 0 — "no evidence" keeps its
+  meaning.
 - **The companion key was pinned from a sideloaded build — since verified against the store
   build (N-1, Oct 2026).** `CompanionApp.EXPECTED_SIGNING_SHA256` holds the Zaribar 3.4.10
   certificate (`CN=wolfandmoon`), read from the sideloaded APK on the device. The comparison
@@ -31,7 +35,7 @@
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
   Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
-- Room is at `version = 5` with exported schemas (`app/schemas`). Schema changes must ship a
+- Room is at `version = 6` with exported schemas (`app/schemas`). Schema changes must ship a
   migration **and** be added to `AppContainer.database` — Room throws at open time when a path from
   the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items

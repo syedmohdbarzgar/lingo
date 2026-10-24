@@ -55,14 +55,21 @@ import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
+import org.token.english.feature.lesson.AnswerField
 import org.token.english.feature.lesson.ExerciseOption
 import org.token.english.feature.lesson.OptionVisual
 
 data class PlacementUiState(
     val isLoading: Boolean = true,
-    val questions: List<Exercise.MultipleChoice> = emptyList(),
+    /**
+     * Every parsed placement question — choice **or typed** (the A-5/A-6 round
+     * added one `fill_blank` so the test samples production, not recognition only).
+     */
+    val questions: List<Exercise> = emptyList(),
     val index: Int = 0,
     val selected: Int? = null,
+    /** Typed answer for the current question (mirrors the lesson screen's field). */
+    val textAnswer: String = "",
     /**
      * Per-question answers in order, each tagged with its CEFR band and skill
      * (P1-1). Order feeds the band scorer; the skill tag feeds the profile.
@@ -76,13 +83,14 @@ data class PlacementUiState(
 ) {
     val correctCount: Int get() = answers.count { it.correct }
     val total: Int get() = questions.size
-    val current: Exercise.MultipleChoice? get() = questions.getOrNull(index)
+    val current: Exercise? get() = questions.getOrNull(index)
     /** Back-compat convenience: the boolean results in order (scorer input). */
     val results: List<Boolean> get() = answers.map { it.correct }
 }
 
 sealed interface PlacementEvent {
     data class Select(val optionIndex: Int) : PlacementEvent
+    data class TextAnswerChanged(val value: String) : PlacementEvent
     data object Next : PlacementEvent
 }
 
@@ -103,10 +111,12 @@ class PlacementViewModel(
             contentSeeded.first { it }
             val questions = lessonRepository
                 .getExercises(ContentParser.PLACEMENT_LESSON_ID)
-                .filterIsInstance<Exercise.MultipleChoice>()
-                // Display-time shuffle: order derives from the question id, so the
-                // authored answer position can never be guessed (P1).
-                .map { it.shuffledForDisplay() }
+                // Display-time shuffle: option order derives from the question id,
+                // so the authored answer position can never be guessed (P1). A
+                // typed item carries no options and passes through unchanged.
+                .map { question ->
+                    if (question is Exercise.MultipleChoice) question.shuffledForDisplay() else question
+                }
             _state.update { it.copy(isLoading = false, questions = questions) }
         }
     }
@@ -117,6 +127,10 @@ class PlacementViewModel(
                 if (it.finished) it else it.copy(selected = event.optionIndex)
             }
 
+            is PlacementEvent.TextAnswerChanged -> _state.update {
+                if (it.finished) it else it.copy(textAnswer = event.value)
+            }
+
             PlacementEvent.Next -> next()
         }
     }
@@ -124,8 +138,17 @@ class PlacementViewModel(
     private fun next() {
         val s = _state.value
         val question = s.current ?: return
-        val selectedIndex = s.selected ?: return
-        val wasCorrect = selectedIndex == question.correctIndex
+        // Choice: the selected slot decides. Typed: the SAME AnswerChecker the
+        // lesson screen grades with — placement measures the skill the way the
+        // lessons practice it, so the two can never disagree about correctness.
+        val wasCorrect = when (question) {
+            is Exercise.MultipleChoice -> (s.selected ?: return) == question.correctIndex
+            else -> {
+                val typed = s.textAnswer.trim()
+                if (typed.isEmpty()) return
+                AnswerChecker.isCorrect(question, typed)
+            }
+        }
         val answer = PlacementAnswer(
             level = levelOfQuestion(s.questions, s.index),
             skill = AnswerChecker.skillOf(question),
@@ -138,13 +161,14 @@ class PlacementViewModel(
         // pass threshold (or the questions run out). The scorer stops walking at
         // the first failed band, so a partial final band never inflates the level.
         if (nextIndex >= s.questions.size || bandIsUnwinnable(answers.map { it.correct })) {
-            _state.update { it.copy(index = nextIndex, selected = null, answers = answers) }
+            _state.update { it.copy(index = nextIndex, selected = null, textAnswer = "", answers = answers) }
             finishAssessment(answers)
         } else {
             _state.update {
                 it.copy(
                     index = nextIndex,
                     selected = null,
+                    textAnswer = "",
                     answers = answers,
                 )
             }
@@ -176,7 +200,7 @@ class PlacementViewModel(
      * the scorer already relies on, so the band is derivable from the index and
      * needs no schema change (P1-1).
      */
-    private fun levelOfQuestion(questions: List<Exercise.MultipleChoice>, index: Int): LearningLevel {
+    private fun levelOfQuestion(questions: List<Exercise>, index: Int): LearningLevel {
         val band = index / ScorePlacementUseCase.DEFAULT_BAND_SIZE
         return LearningLevel.entries.getOrElse(band) { LearningLevel.C2 }
     }
@@ -275,32 +299,68 @@ private fun QuestionContent(state: PlacementUiState, onEvent: (PlacementEvent) -
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-            // A-6: reading items carry a short passage; render it above the question.
-            question.passage?.let { passage ->
-                SectionHeader("متن را بخوانید")
-                EnglishText(text = passage, style = MaterialTheme.typography.bodyLarge)
+        when (question) {
+            is Exercise.MultipleChoice -> {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    // A-6: reading items carry a short passage; render it above the question.
+                    question.passage?.let { passage ->
+                        SectionHeader("متن را بخوانید")
+                        EnglishText(text = passage, style = MaterialTheme.typography.bodyLarge)
+                    }
+                    EnglishText(text = question.question, style = MaterialTheme.typography.titleMedium)
+                    question.questionFa?.let {
+                        Text(
+                            text = it,
+                            // May open with English («Not uncommon» …) — pin the
+                            // paragraph to RTL so first-strong can't reverse the Persian.
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    question.options.forEachIndexed { index, option ->
+                        ExerciseOption(
+                            text = option,
+                            visual = if (index == state.selected) OptionVisual.SELECTED else OptionVisual.DEFAULT,
+                            onClick = { onEvent(PlacementEvent.Select(index)) },
+                        )
+                    }
+                }
             }
-            EnglishText(text = question.question, style = MaterialTheme.typography.titleMedium)
-            question.questionFa?.let {
-                Text(
-                    text = it,
-                    // May open with English («Not uncommon» …) — pin the
-                    // paragraph to RTL so first-strong can't reverse the Persian.
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                    ),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+
+            // The typed item (A-5/A-6 round): same fields and the same LTR answer
+            // field the lesson screen uses, so a learner who just did a lesson
+            // meets the same affordance here.
+            is Exercise.FillBlank -> {
+                SectionHeader("جمله را کامل کنید")
+                EnglishText(text = question.sentence, style = MaterialTheme.typography.titleLarge)
+                AnswerField(
+                    value = state.textAnswer,
+                    onValueChange = { onEvent(PlacementEvent.TextAnswerChanged(it)) },
                 )
             }
-        }
 
-        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-            question.options.forEachIndexed { index, option ->
-                ExerciseOption(
-                    text = option,
-                    visual = if (index == state.selected) OptionVisual.SELECTED else OptionVisual.DEFAULT,
-                    onClick = { onEvent(PlacementEvent.Select(index)) },
+            // Any other typed shape the gate allows (word_recall /
+            // sentence_production): Persian cue in, English typed out.
+            else -> {
+                val cue = when (question) {
+                    is Exercise.WordRecall -> question.prompt
+                    is Exercise.Translation -> question.prompt
+                    is Exercise.SentenceProduction -> question.prompt
+                    else -> ""
+                }
+                SectionHeader("پاسخ را بنویسید")
+                if (cue.isNotBlank()) {
+                    Text(text = cue, style = MaterialTheme.typography.titleMedium)
+                }
+                AnswerField(
+                    value = state.textAnswer,
+                    onValueChange = { onEvent(PlacementEvent.TextAnswerChanged(it)) },
+                    label = "پاسخ انگلیسی",
                 )
             }
         }
@@ -308,7 +368,10 @@ private fun QuestionContent(state: PlacementUiState, onEvent: (PlacementEvent) -
         PrimaryButton(
             text = if (state.index + 1 >= state.total) "پایان آزمون" else "سؤال بعدی",
             onClick = { onEvent(PlacementEvent.Next) },
-            enabled = state.selected != null,
+            enabled = when (question) {
+                is Exercise.MultipleChoice -> state.selected != null
+                else -> state.textAnswer.isNotBlank()
+            },
             modifier = Modifier.fillMaxWidth(),
         )
 
