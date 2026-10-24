@@ -10,10 +10,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/night_background</item>
     </style>
 
-    <!-- Blank system splash in dark mode too; the custom SplashActivity draws the brand. -->
+    <!-- Same branded launch as light mode: the launcher icon is blue in dark
+         mode too (no night override), so the splash field stays continuous with
+         the tapped icon instead of flashing a different background first. -->
     <style name="Theme.English.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/night_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="windowSplashScreenAnimationDuration">0</item>
         <item name="postSplashScreenTheme">@style/Theme.English</item>
     </style>

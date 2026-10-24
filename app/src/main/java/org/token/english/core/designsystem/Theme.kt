@@ -26,6 +26,14 @@ data class AppExtendedColors(
     val infoContainer: Color,
     val onInfo: Color,
     val brandTint: Color,
+    // The two CEFR-badge hues Material 3 does not model (see CefrBadge: one
+    // color per level, B2 = violet and C2 = rose).
+    val violet: Color,
+    val violetContainer: Color,
+    val onViolet: Color,
+    val rose: Color,
+    val roseContainer: Color,
+    val onRose: Color,
 )
 
 private val LightExtended = AppExtendedColors(
@@ -39,6 +47,12 @@ private val LightExtended = AppExtendedColors(
     infoContainer = Brand.Info100,
     onInfo = Brand.Info700,
     brandTint = Brand.Primary100,
+    violet = Brand.Violet500,
+    violetContainer = Brand.Violet100,
+    onViolet = Brand.Violet700,
+    rose = Brand.Rose500,
+    roseContainer = Brand.Rose100,
+    onRose = Brand.Rose700,
 )
 
 private val DarkExtended = AppExtendedColors(
@@ -52,6 +66,12 @@ private val DarkExtended = AppExtendedColors(
     infoContainer = Color(0xFF0B2E42),
     onInfo = Color(0xFFBAE6FD),
     brandTint = Brand.NightPrimaryContainer,
+    violet = Color(0xFFA78BFA),
+    violetContainer = Color(0xFF241553),
+    onViolet = Color(0xFFDDD6FE),
+    rose = Color(0xFFFB7185),
+    roseContainer = Color(0xFF4C0E21),
+    onRose = Color(0xFFFECDD3),
 )
 
 private val LightColors = lightColorScheme(

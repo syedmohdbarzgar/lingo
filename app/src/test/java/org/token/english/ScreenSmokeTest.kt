@@ -206,7 +206,13 @@ class ScreenSmokeTest {
 
         compose.setContent {
             AppTheme {
-                PaywallScreen(onClose = {}, onLockedExit = {}, onPurchased = {}, vm = vm)
+                PaywallScreen(
+                    onClose = {},
+                    onLockedExit = {},
+                    onLockedSettings = {},
+                    onPurchased = {},
+                    vm = vm,
+                )
             }
         }
 

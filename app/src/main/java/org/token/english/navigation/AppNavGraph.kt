@@ -22,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -122,8 +124,16 @@ fun AppNavGraph(startDestination: String) {
     val locked = accessLevel == org.token.english.core.billing.AccessLevel.LOCKED
     val paywallOpen = currentRoute == Routes.PAYWALL
     val lockExempt = currentRoute == null || currentRoute in LOCK_EXEMPT
-    LaunchedEffect(locked, currentRoute) {
-        if (locked && !paywallOpen && !lockExempt) {
+    // A locked learner who deliberately closed the paywall rests on Home instead
+    // of being bounced straight back into it. The app-start redirect still fires
+    // (the flag starts false and dies with the process), and only Home is quieted
+    // by it — every learning route still redirects, so the gate stays honest.
+    // Before this, "خروج" rooted Settings on the stack (popUpTo(0)) and the next
+    // back gesture closed the app instead of reaching Home.
+    var paywallDismissed by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(locked, currentRoute, paywallDismissed) {
+        val restsOnHome = paywallDismissed && currentRoute == Routes.HOME
+        if (locked && !paywallOpen && !lockExempt && !restsOnHome) {
             navController.navigate(Routes.PAYWALL) { launchSingleTop = true }
         }
     }
@@ -170,7 +180,9 @@ fun AppNavGraph(startDestination: String) {
         ) {
             onboarding(navController)
             placement(navController)
-            paywall(navController)
+            // The dismissal flag lives in AppNavGraph's scope (the gate reads it);
+            // the route extension only receives the setter it needs.
+            paywall(navController) { paywallDismissed = true }
             home(navController)
             lesson(navController)
             review(navController)
@@ -184,16 +196,27 @@ fun AppNavGraph(startDestination: String) {
 /** Routes reachable even when the subscription is locked. */
 private val LOCK_EXEMPT = setOf(Routes.ONBOARDING, Routes.PLACEMENT, Routes.SETTINGS)
 
-private fun NavGraphBuilder.paywall(navController: NavHostController) {
+private fun NavGraphBuilder.paywall(
+    navController: NavHostController,
+    onDismissLocked: () -> Unit,
+) {
     composable(Routes.PAYWALL, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
         PaywallScreen(
             onClose = { navController.popBackStack() },
             onLockedExit = {
-                // A locked learner would be redirected straight back to the
-                // paywall from any learning screen; settings is the one
-                // always-reachable place (restore purchases, manage account).
-                navController.navigate(Routes.SETTINGS) {
+                // Closing the paywall while locked lands on Home — never on
+                // Settings as the root, whose back gesture then killed the app.
+                onDismissLocked()
+                navController.navigate(Routes.HOME) {
                     popUpTo(0) { inclusive = true }
+                }
+            },
+            onLockedSettings = {
+                // A deliberate trip to settings (restore purchases, account);
+                // back from there returns to Home, not out of the app.
+                onDismissLocked()
+                navController.navigate(Routes.SETTINGS) {
+                    popUpTo(Routes.HOME)
                 }
             },
             onPurchased = {

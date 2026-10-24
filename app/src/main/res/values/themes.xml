@@ -10,12 +10,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/primary_600</item>
     </style>
 
-    <!-- Launch theme: the system splash is deliberately blank — transparent icon
-         and a 0ms animation — and the custom SplashActivity draws the brand.
+    <!-- Launch theme: the system splash already speaks the new brand — the
+         launcher's own blue field and mark (Lingo), 0ms icon animation — and
+         SplashActivity continues that same field while the offline bundle seeds,
+         so the tapped icon appears to grow into the app with no white flash.
          postSplashScreenTheme swaps the window back to Theme.English. -->
     <style name="Theme.English.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="windowSplashScreenAnimationDuration">0</item>
         <item name="postSplashScreenTheme">@style/Theme.English</item>
     </style>

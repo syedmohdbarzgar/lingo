@@ -51,6 +51,7 @@ import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
+import org.token.english.core.designsystem.component.levelTint
 import org.token.english.core.designsystem.component.OutlinedActionButton
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
@@ -212,10 +213,16 @@ fun SettingsScreen(
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                         LearningLevel.entries.forEach { lvl ->
+                            // One color per level (design.md §30): the label is
+                            // always in the level's own hue; the selected chip
+                            // fills with it instead of the generic primary blue.
+                            val tint = levelTint(lvl)
                             AppChip(
                                 label = lvl.name,
                                 selected = settings?.level == lvl,
                                 onClick = { vm.setLevel(lvl) },
+                                containerColor = tint.container,
+                                contentColor = tint.content,
                             )
                         }
                     }

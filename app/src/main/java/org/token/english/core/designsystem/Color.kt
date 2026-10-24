@@ -34,6 +34,32 @@ object Brand {
     val Info500 = Color(0xFF0EA5E9)
     val Info700 = Color(0xFF0369A1)
 
+    // Violet scale — the B2 CEFR badge (CefrBadge needs one hue per level;
+    // added alongside the semantic scales, same ramp shape).
+    val Violet50 = Color(0xFFF5F3FF)
+    val Violet100 = Color(0xFFEDE9FE)
+    val Violet200 = Color(0xFFDDD6FE)
+    val Violet300 = Color(0xFFC4B5FD)
+    val Violet400 = Color(0xFFA78BFA)
+    val Violet500 = Color(0xFF8B5CF6)
+    val Violet600 = Color(0xFF7C3AED)
+    val Violet700 = Color(0xFF6D28D9)
+    val Violet800 = Color(0xFF5B21B6)
+    val Violet900 = Color(0xFF4C1D95)
+
+    // Rose scale — the C2 CEFR badge (the far end of the level ramp; deliberately
+    // not the Error scale, which stays reserved for failures).
+    val Rose50 = Color(0xFFFFF1F2)
+    val Rose100 = Color(0xFFFFE4E6)
+    val Rose200 = Color(0xFFFECDD3)
+    val Rose300 = Color(0xFFFDA4AF)
+    val Rose400 = Color(0xFFFB7185)
+    val Rose500 = Color(0xFFF43F5E)
+    val Rose600 = Color(0xFFE11D48)
+    val Rose700 = Color(0xFFBE123C)
+    val Rose800 = Color(0xFF9F1239)
+    val Rose900 = Color(0xFF881337)
+
     // Neutral
     val Neutral50 = Color(0xFFF8FAFC)
     val Neutral100 = Color(0xFFF1F5F9)

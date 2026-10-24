@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.AppEmptyState
+import org.token.english.core.designsystem.component.CefrBadge
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
@@ -410,6 +411,9 @@ private fun ResultContent(
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center,
         )
+        // The level's own color (design.md §30) — the same badge every other
+        // screen shows, so "A1" looks like A1 everywhere in the app.
+        CefrBadge(level = level)
         Text(
             text = "درس‌های این سطح برایت آماده می‌شود. با پیشرفت، سطح خودت هم به‌روز می‌شود.",
             style = MaterialTheme.typography.bodyMedium,

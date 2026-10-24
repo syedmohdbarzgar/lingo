@@ -62,6 +62,8 @@ import org.token.english.di.paywallViewModelFactory
 fun PaywallScreen(
     onClose: () -> Unit,
     onLockedExit: () -> Unit,
+    /** Locked state: the "تنظیمات" button — a deliberate trip to settings, not a dismissal. */
+    onLockedSettings: () -> Unit,
     onPurchased: () -> Unit,
     /**
      * Screen-level seam (checklist v15 B-6): the smoke tests inject a ViewModel
@@ -153,7 +155,7 @@ fun PaywallScreen(
                     )
                     SecondaryButton(
                         text = "تنظیمات",
-                        onClick = onLockedExit,
+                        onClick = onLockedSettings,
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }

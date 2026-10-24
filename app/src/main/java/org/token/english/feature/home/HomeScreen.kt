@@ -182,19 +182,30 @@ private fun LevelUpCard(
     currentLevel: LearningLevel,
     nextLevel: LearningLevel,
     onAdvance: () -> Unit,
-) {
-    AppCard {
-        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-            SectionHeader("سطح بعدی")
-            Text(
-                text = "سطح ${currentLevel.name} را کامل کردید.",
-                style = MaterialTheme.typography.titleSmall,
-            )
-            Text(
-                text = "برای ادامه مسیر، به سطح ${nextLevel.name} بروید.",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+) {        AppCard {
+            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                SectionHeader("سطح بعدی")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                ) {
+                    CefrBadge(currentLevel)
+                    Text(
+                        text = "این سطح را کامل کردید.",
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                ) {
+                    CefrBadge(nextLevel)
+                    Text(
+                        text = "برای ادامه مسیر، به این سطح بروید.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             PrimaryButton(
                 text = "ادامه در سطح ${nextLevel.name}",
                 onClick = onAdvance,

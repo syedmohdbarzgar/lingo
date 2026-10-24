@@ -1,4 +1,4 @@
-# AGENTS.md — Freebuff English Learning App (org.token.english)
+# AGENTS.md — Lingo English Learning App (org.token.english)
 
 > این سند «حقیقت مرجع» و نقطهٔ ورود است. هستهٔ یادگیری **آفلاین-محور** است و باید همیشه بدون
 > اینترنت کار کند؛ فقط چیزهایی که به **زیرساخت بک‌اند/سرور** نیاز دارند معلق می‌مانند.

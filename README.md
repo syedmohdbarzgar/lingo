@@ -11,9 +11,9 @@ daily lessons → exercises → spaced-repetition review → progress.
 
 | | |
 |---|---|
-| Gradle project | `English` |
+| Gradle project | `Lingo` |
 | Application id | `org.token.english` |
-| Display name | English |
+| Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
 | Local storage | Room (schema v5, exported) + DataStore Preferences |

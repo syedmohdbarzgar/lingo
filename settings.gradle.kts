@@ -24,5 +24,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "English"
+rootProject.name = "Lingo"
 include(":app")
