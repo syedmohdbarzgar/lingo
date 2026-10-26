@@ -301,17 +301,35 @@ class LessonViewModel(
             // Speaking practice stays ungraded on purpose: there is no recogniser
             // offline, so the learner compares against the model and moves on.
             LessonEvent.StartRecording -> if (_state.value.outcome == null) {
+                silenceModel()
                 voiceNote.startRecording()
             }
 
             LessonEvent.StopRecording -> voiceNote.stopRecording()
-            LessonEvent.PlayRecording -> voiceNote.playTake()
+            LessonEvent.PlayRecording -> {
+                silenceModel()
+                voiceNote.playTake()
+            }
             LessonEvent.StopRecordingPlayback -> voiceNote.stopPlayback()
             LessonEvent.FinishSpeaking -> finishSpeaking()
-            is LessonEvent.SpeakText -> speaker.speak(
-                text = event.text,
-                onDone = { _state.update { it.copy(isPlaying = false) } },
-            )
+            // One voice at a time: the model and the learner's take never overlap.
+            is LessonEvent.SpeakText -> {
+                voiceNote.stopPlayback()
+                if (audioPlayer.isEnglishAvailable.value == false) {
+                    // No English voice on this device — say so instead of hanging
+                    // on "در حال پخش…" (the sentence is already on screen).
+                    _state.update { it.copy(isPlaying = false, audioFailed = true) }
+                } else {
+                    _state.update { it.copy(isPlaying = true, audioFailed = false) }
+                    speaker.speak(
+                        text = event.text,
+                        onDone = { _state.update { it.copy(isPlaying = false) } },
+                        onError = {
+                            _state.update { it.copy(isPlaying = false, audioFailed = true) }
+                        },
+                    )
+                }
+            }
         }
     }
 
@@ -504,7 +522,28 @@ class LessonViewModel(
         }
     }
 
-    override fun onCleared() {
+    /**
+     * The model must not talk over the learner's own take (or the other way
+     * round): every start silences whatever was playing.
+     */
+    private fun silenceModel() {
         audioPlayer.stop()
+        _state.update { it.copy(isPlaying = false) }
+    }
+
+    /**
+     * The microphone and the speakers are hardware someone else may be using:
+     * when the app goes to the background or the lesson screen closes, both stop
+     * (no recording left running behind a home screen).
+     */
+    fun onAudioInterrupted() {
+        if (_state.value.isRecording) voiceNote.stopRecording()
+        voiceNote.stopPlayback()
+        audioPlayer.stop()
+        _state.update { it.copy(isPlaying = false, isPlayingRecording = false) }
+    }
+
+    override fun onCleared() {
+        onAudioInterrupted()
     }
 }

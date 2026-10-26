@@ -110,13 +110,19 @@ fun LessonScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                isResumed = source.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+                val resumed = source.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+                isResumed = resumed
+                // Leaving the foreground closes the mic and silences both voices:
+                // a recording must never keep running behind the home screen.
+                if (!resumed) vm.onAudioInterrupted()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
             isResumed = false
+            // Closing the lesson releases the same hardware the background does.
+            vm.onAudioInterrupted()
         }
     }
     LaunchedEffect(isResumed) {

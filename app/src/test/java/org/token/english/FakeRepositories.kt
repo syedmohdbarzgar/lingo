@@ -358,8 +358,14 @@ class FakeBillingGateway(
  * No file, no microphone — the speaking flow is tested without any device audio.
  */
 class FakeVoiceNote(
-    private var permission: Boolean = true,
+    var permission: Boolean = true,
 ) : org.token.english.core.audio.VoiceNote {
+
+    /** How many times each action was asked for — the silence rules are asserted on it. */
+    var stopPlaybackCalls = 0
+        private set
+    var stopRecordingCalls = 0
+        private set
 
     private val _isRecording = MutableStateFlow(false)
     override val isRecording: StateFlow<Boolean> = _isRecording
@@ -391,6 +397,7 @@ class FakeVoiceNote(
     }
 
     override fun stopRecording() {
+        stopRecordingCalls += 1
         if (_isRecording.value) {
             _isRecording.value = false
             _hasTake.value = true
@@ -398,10 +405,11 @@ class FakeVoiceNote(
     }
 
     override fun playTake() {
-        if (_hasTake.value) _isPlaying.value = true
+        if (_hasTake.value && !_isRecording.value) _isPlaying.value = true
     }
 
     override fun stopPlayback() {
+        stopPlaybackCalls += 1
         _isPlaying.value = false
     }
 
