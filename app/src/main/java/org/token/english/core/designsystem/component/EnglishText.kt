@@ -81,3 +81,87 @@ internal fun firstStrongIsLtr(text: String): Boolean {
     // No letter at all (digits/punct only) — safe default is LTR.
     return false
 }
+
+/** U+2066 LEFT-TO-RIGHT ISOLATE / U+2069 POP DIRECTIONAL ISOLATE. */
+private const val LRI = '\u2066'
+private const val PDI = '\u2069'
+
+/**
+ * Wraps every embedded Latin run of [text] in directional isolates (LRI … PDI)
+ * so mixed Persian/English prose cannot scramble under the BiDi algorithm.
+ *
+ * A plain RTL paragraph reorders neutral characters (`.`, `—`, `«»`, the Persian
+ * comma) against neighbouring Latin runs: a period drifts to the wrong end of a
+ * phrase and quoted English flips with its sentence — exactly the garbled
+ * «قائده» / «خطاهای رایج» lesson cards the device run reproduced. Inside an
+ * isolate each run resolves on its own, so it keeps its authored order and its
+ * trailing punctuation while the surrounding Persian still flows right-to-left.
+ *
+ * Rules: a run starts at an ASCII letter or digit and keeps letters, digits,
+ * internal spaces and intra-run punctuation (including `،` inside an English
+ * sequence); a candidate with no letter (a bare number) is left plain. A
+ * BRACKET PAIR that straddles the run is pulled inside the isolate with it
+ * (`(capital)`, `«go straight»`): with the opener outside, the RTL paragraph
+ * mirrors only that half and the text reads `(capital))` on screen.
+ * Idempotent: text that already carries an isolate is returned unchanged.
+ *
+ * Pure Kotlin, pinned by `BidiTextTest` — the same convention as
+ * [firstStrongIsLtr]. Nothing Android-specific is involved.
+ */
+internal fun isolateEmbeddedLtr(text: String): String {
+    if (text.isEmpty() || text.contains(LRI)) return text
+    val out = StringBuilder(text.length + 8)
+    var i = 0
+    while (i < text.length) {
+        val ch = text[i]
+        if (!isRunStart(ch)) {
+            out.append(ch)
+            i++
+            continue
+        }
+        var j = i
+        while (j < text.length && isRunChar(text[j])) j++
+        // Internal spaces belong to the run; trailing ones stay in the Persian.
+        var end = j
+        while (end > i && text[end - 1] == ' ') end--
+        var run = text.substring(i, end)
+        if (run.any { it in 'A'..'Z' || it in 'a'..'z' }) {
+            // A bracket pair that straddles the isolate would be split by it:
+            // the half left in the RTL text mirrors, the half inside does not,
+            // and `(capital)` renders as `(capital))`. Take the opener back out
+            // of the output and keep the whole pair inside the isolate.
+            val opener = if (out.isEmpty()) null else out[out.length - 1]
+            val closer = when (opener) {
+                '(' -> ')'
+                '[' -> ']'
+                '«' -> '»'
+                '“' -> '”'
+                '"' -> '"'
+                else -> null
+            }
+            var closes = false
+            if (closer != null && opener != null) {
+                if (run.contains(closer)) {
+                    out.setLength(out.length - 1)
+                    run = "$opener$run"
+                } else if (end < text.length && text[end] == closer) {
+                    out.setLength(out.length - 1)
+                    run = "$opener$run$closer"
+                    closes = true
+                }
+            }
+            out.append(LRI).append(run).append(PDI)
+            if (closes) end++
+        } else {
+            out.append(run)
+        }
+        i = end
+    }
+    return out.toString()
+}
+
+private fun isRunStart(ch: Char): Boolean =
+    ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9'
+
+private fun isRunChar(ch: Char): Boolean =
+    isRunStart(ch) || ch in " .,'-/:?!()&+=…،؛\u201c\u201d\u2018\u2019\""

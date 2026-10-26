@@ -1,5 +1,5 @@
 {
-  "contentVersion": 22,
+  "contentVersion": 23,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -7274,6 +7274,30 @@
       "hintFa": "شرطی آمیخته: if + گذشتهٔ کامل، و نتیجه در زمان حال با would.",
       "skill": "GRAMMAR",
       "explanationFa": "در شرطی آمیخته شرط در گذشته (had listened) و نتیجه در حال (would not be) است."
+    },
+    {
+      "id": "a2.directions.ex.10",
+      "lessonId": "a2.directions.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "مسیر را به یک توریست توضیح بده: بشنو، بعد خودت بگو.",
+      "accepted": [
+        "Go straight and turn left at the traffic light."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "at برای نقطهٔ مشخص (چراغ راهنما) به کار می‌رود؛ go straight بدون to می‌آید."
+    },
+    {
+      "id": "a2.directions.ex.11",
+      "lessonId": "a2.directions.lesson-01",
+      "order": 11,
+      "type": "speaking",
+      "prompt": "بگو بانک کجاست و با یک جملهٔ کامل مسیر را بگو.",
+      "accepted": [
+        "The bank is on the left, next to the pharmacy."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای سطح و سمت از on استفاده کن (on the left)، نه in."
     }
   ]
 }

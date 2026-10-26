@@ -51,6 +51,7 @@ fun lessonViewModelFactory(
         submitExercise = c.submitExercise,
         completeLesson = c.completeLesson,
         audioPlayer = c.audioPlayer,
+        voiceNote = c.voiceNote,
         speaker = c,
         isAppInForeground = { c.isAppInForeground },
         getFocusPlan = c.getFocusPlan,

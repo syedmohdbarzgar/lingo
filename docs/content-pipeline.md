@@ -108,7 +108,11 @@
   edit run `node scripts/balance_answer_positions.mjs`, then `validateContent` + the content tests
   with `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
-  `sentence_production`, `listening` (`speaking` parses but is suspended).
+  `sentence_production`, `listening`, `speaking`.
+  - `speaking` is **self-assessed practice**, not a graded item: the first `accepted` sentence is the
+    model the on-device TTS speaks, the learner records their own take and compares (local only — no
+    recogniser, no upload). The validator therefore requires a Persian `prompt`, at least one
+    English `accepted` model and a declared `skill`, and the app never moves mastery from it.
 - **Retrieval and production, not just recognition (P2).** Two shapes close the hole that every
   vocabulary item was multiple choice and the only "say something" item (`translation`) shipped a
   word bank in 21 of its 41 items:

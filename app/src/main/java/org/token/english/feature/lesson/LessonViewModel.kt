@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.core.audio.VoiceNote
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
@@ -19,6 +20,7 @@ import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.MasteryProfile
+import org.token.english.domain.model.Skill
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.model.shuffledForDisplay
 import org.token.english.domain.repository.LessonRepository
@@ -59,6 +61,14 @@ data class LessonUiState(
     val audioUnavailable: Boolean = false,
     /** The last playback attempt failed (engine error) — show a retry hint (B-3). */
     val audioFailed: Boolean = false,
+    /** Speaking practice: the mic is open right now. */
+    val isRecording: Boolean = false,
+    /** Speaking practice: a take exists, so it can be played back and compared. */
+    val hasRecording: Boolean = false,
+    /** Speaking practice: the learner's own take is playing. */
+    val isPlayingRecording: Boolean = false,
+    /** The mic could not be opened (permission denied or recorder unavailable). */
+    val recordingFailed: Boolean = false,
     /** Focused practice: the engine's decision this session obeys (B-1), else null. */
     val focus: FocusBanner? = null,
     /**
@@ -98,6 +108,15 @@ sealed interface LessonEvent {
     data object ReplayAudio : LessonEvent
     data object StartExercises : LessonEvent
     data class SpeakText(val text: String) : LessonEvent
+
+    // Speaking practice (the `speaking` item): listen, record, compare. No grading.
+    data object StartRecording : LessonEvent
+    data object StopRecording : LessonEvent
+    data object PlayRecording : LessonEvent
+    data object StopRecordingPlayback : LessonEvent
+
+    /** The learner finished comparing — advance without grading the utterance. */
+    data object FinishSpeaking : LessonEvent
 }
 
 /**
@@ -112,6 +131,7 @@ class LessonViewModel(
     private val submitExercise: SubmitExerciseUseCase,
     private val completeLesson: CompleteLessonUseCase,
     private val audioPlayer: AudioPlayer,
+    private val voiceNote: VoiceNote,
     private val speaker: Speaker,
     private val isAppInForeground: () -> Boolean,
     /** Focused practice: the node whose block this session should run (B-1). */
@@ -155,6 +175,28 @@ class LessonViewModel(
                         null -> s
                     }
                 }
+            }
+        }
+        viewModelScope.launch {
+            // Speaking practice mirrors the recorder's own state instead of
+            // guessing it: mic open, take on disk, take playing, last failure.
+            voiceNote.isRecording.collect { recording ->
+                _state.update { it.copy(isRecording = recording) }
+            }
+        }
+        viewModelScope.launch {
+            voiceNote.hasTake.collect { has ->
+                _state.update { if (has) it.copy(hasRecording = true, recordingFailed = false) else it }
+            }
+        }
+        viewModelScope.launch {
+            voiceNote.isPlaying.collect { playing ->
+                _state.update { it.copy(isPlayingRecording = playing) }
+            }
+        }
+        viewModelScope.launch {
+            voiceNote.error.collect { failed ->
+                if (failed) _state.update { it.copy(recordingFailed = true, isRecording = false) }
             }
         }
         viewModelScope.launch {
@@ -255,9 +297,46 @@ class LessonViewModel(
             LessonEvent.Next -> next()
             LessonEvent.ReplayAudio -> playAudio()
             LessonEvent.StartExercises -> startExercises()
+
+            // Speaking practice stays ungraded on purpose: there is no recogniser
+            // offline, so the learner compares against the model and moves on.
+            LessonEvent.StartRecording -> if (_state.value.outcome == null) {
+                voiceNote.startRecording()
+            }
+
+            LessonEvent.StopRecording -> voiceNote.stopRecording()
+            LessonEvent.PlayRecording -> voiceNote.playTake()
+            LessonEvent.StopRecordingPlayback -> voiceNote.stopPlayback()
+            LessonEvent.FinishSpeaking -> finishSpeaking()
             is LessonEvent.SpeakText -> speaker.speak(
                 text = event.text,
                 onDone = { _state.update { it.copy(isPlaying = false) } },
+            )
+        }
+    }
+
+    /**
+     * Closes out a `speaking` item. It is deliberately NOT graded: with no
+     * recogniser the app cannot judge pronunciation, so the exercise is
+     * "hear the model, say it, hear yourself, compare" — self-assessed. The
+     * outcome exists only to unlock the shared «ادامه» button; mastery and the
+     * correct count are left untouched, because no evidence was produced.
+     */
+    private fun finishSpeaking() {
+        val s = _state.value
+        if (s.outcome != null) return
+        val speaking = s.currentExercise as? Exercise.Speaking ?: return
+        voiceNote.stopRecording()
+        voiceNote.stopPlayback()
+        _state.update {
+            it.copy(
+                outcome = ExerciseOutcome(
+                    correct = true,
+                    correctAnswer = speaking.referenceAnswers.firstOrNull().orEmpty(),
+                    skill = speaking.skill ?: Skill.SPEAKING,
+                ),
+                askedCount = it.askedCount + 1,
+                repeatsCurrent = false,
             )
         }
     }
@@ -329,6 +408,10 @@ class LessonViewModel(
             finishLesson()
             return
         }
+        // A take belongs to the sentence it was recorded against, so the next
+        // item starts with playback closed (the recorder keeps its own state).
+        voiceNote.stopRecording()
+        voiceNote.stopPlayback()
         _state.update {
             it.copy(
                 currentIndex = nextIndex,
@@ -338,6 +421,9 @@ class LessonViewModel(
                 remainingCount = pending.size,
                 repeatsCurrent = false,
                 audioFailed = false,
+                hasRecording = false,
+                isPlayingRecording = false,
+                recordingFailed = false,
             )
         }
         viewModelScope.launch {

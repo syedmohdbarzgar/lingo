@@ -40,7 +40,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LearningTargetStyle
+import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.EnglishText
+import org.token.english.core.designsystem.component.PrimaryButton
+import org.token.english.core.designsystem.component.SecondaryButton
 
 enum class OptionVisual { DEFAULT, SELECTED, CORRECT, INCORRECT }
 
@@ -136,6 +139,108 @@ fun AnswerField(
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             ),
         )
+    }
+}
+
+/**
+ * Speaking practice (the `speaking` item): hear the model from the on-device TTS,
+ * record your own take, hear it back and compare. Nothing is graded and nothing
+ * is uploaded — there is no recogniser offline, and the take lives in the app
+ * cache (AGENTS §7: no network, no cloud speech).
+ *
+ * Every action is a labelled button, so the states carry themselves without
+ * leaning on colour alone (design.md §50).
+ */
+@Composable
+fun SpeakingCard(
+    modelSentence: String,
+    promptFa: String,
+    isPlayingModel: Boolean,
+    isRecording: Boolean,
+    hasRecording: Boolean,
+    isPlayingRecording: Boolean,
+    recordingFailed: Boolean,
+    onPlayModel: () -> Unit,
+    onStartRecording: () -> Unit,
+    onStopRecording: () -> Unit,
+    onPlayRecording: () -> Unit,
+    onStopPlayback: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+    ) {
+        if (promptFa.isNotBlank()) {
+            Text(
+                text = promptFa,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                ),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
+        }
+
+        // The model sentence is English: EnglishText re-asserts LTR inside the
+        // forced-RTL root and pins the paragraph direction.
+        AppCard {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+            ) {
+                EnglishText(
+                    text = modelSentence,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                )
+                TextButton(onClick = onPlayModel, enabled = !isPlayingModel) {
+                    Text(if (isPlayingModel) "در حال پخش…" else "پخش نمونه")
+                }
+            }
+        }
+
+        PrimaryButton(
+            text = if (isRecording) "پایان ضبط" else "ضبط صدای من",
+            onClick = if (isRecording) onStopRecording else onStartRecording,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        SecondaryButton(
+            text = when {
+                isPlayingRecording -> "توقف پخش"
+                else -> "پخش صدای من"
+            },
+            onClick = if (isPlayingRecording) onStopPlayback else onPlayRecording,
+            enabled = hasRecording,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Text(
+            text = when {
+                isRecording -> "در حال ضبط — جمله را واضح بگو و بعد ضبط را ببند."
+                hasRecording -> "صدای خودت را با نمونه مقایسه کن و بعد ادامه بده."
+                else -> "اول نمونه را گوش کن، بعد جمله را خودت بگو و ضبط کن."
+            },
+            style = MaterialTheme.typography.bodySmall.copy(
+                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+            ),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
+
+        if (recordingFailed) {
+            Text(
+                text = "ضبط صدا ممکن نشد — اجازه‌ی میکروفون را بررسی کن و دوباره تلاش کن.",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                ),
+                color = MaterialTheme.colorScheme.error,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
+        }
     }
 }
 

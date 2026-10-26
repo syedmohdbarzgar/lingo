@@ -4,6 +4,7 @@ import android.app.Activity
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
@@ -349,6 +350,64 @@ class FakeBillingGateway(
     }
 
     override suspend fun subscriptionUntil(): Long = if (subscriptionActive) Long.MAX_VALUE else 0L
+}
+
+/**
+ * In-memory [VoiceNote]: records which actions the ViewModel asked for and keeps
+ * the same state contract as the real recorder (mic open, take on disk, playing).
+ * No file, no microphone — the speaking flow is tested without any device audio.
+ */
+class FakeVoiceNote(
+    private var permission: Boolean = true,
+) : org.token.english.core.audio.VoiceNote {
+
+    private val _isRecording = MutableStateFlow(false)
+    override val isRecording: StateFlow<Boolean> = _isRecording
+
+    private val _hasTake = MutableStateFlow(false)
+    override val hasTake: StateFlow<Boolean> = _hasTake
+
+    private val _isPlaying = MutableStateFlow(false)
+    override val isPlaying: StateFlow<Boolean> = _isPlaying
+
+    private val _error = MutableStateFlow(false)
+    override val error: StateFlow<Boolean> = _error
+
+    val started = mutableListOf<Int>()
+    var released = false
+        private set
+
+    override fun hasMicrophonePermission(): Boolean = permission
+
+    override fun startRecording(): Boolean {
+        if (!permission) {
+            _error.value = true
+            return false
+        }
+        started += 1
+        _error.value = false
+        _isRecording.value = true
+        return true
+    }
+
+    override fun stopRecording() {
+        if (_isRecording.value) {
+            _isRecording.value = false
+            _hasTake.value = true
+        }
+    }
+
+    override fun playTake() {
+        if (_hasTake.value) _isPlaying.value = true
+    }
+
+    override fun stopPlayback() {
+        _isPlaying.value = false
+    }
+
+    override fun release() {
+        released = true
+    }
 }
 
 /** Records what a ViewModel asked to speak; never throws. */

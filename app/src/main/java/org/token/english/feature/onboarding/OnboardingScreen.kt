@@ -26,14 +26,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import org.token.english.R
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppTextButton
+import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.di.onboardingViewModelFactory
 import org.token.english.domain.model.LearningLevel
@@ -43,13 +46,16 @@ private data class OnboardingPage(
     val icon: ImageVector,
     val title: String,
     val subtitle: String,
+    /** Only the welcome page carries the wordmark — one brand moment, not four. */
+    val brand: Boolean = false,
 )
 
 private val pages = listOf(
     OnboardingPage(
         icon = Icons.Outlined.MenuBook,
-        title = "انگلیسی یاد بگیر،\nقدم به قدم.",
-        subtitle = "مسیر یادگیری بر اساس سطح CEFR، با درس‌های کوتاه و روزمره.",
+        brand = true,
+        title = "انگلیسی را قدم به قدم یاد بگیر.",
+        subtitle = "مسیر یادگیری بر اساس سطح CEFR، با درس‌های کوتاه و روزانه — همه روی دستگاه خودت.",
     ),
     OnboardingPage(
         icon = Icons.Outlined.Grade,
@@ -128,11 +134,27 @@ fun OnboardingScreen(
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
-                Text(
-                    text = page.title,
-                    style = MaterialTheme.typography.headlineMedium,
-                    textAlign = TextAlign.Center,
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                ) {
+                    if (page.brand) {
+                        // The Latin name never sits inside a Persian sentence: it is
+                        // its own EnglishText line (AGENTS §6), styled as the lockup
+                        // above the welcome promise.
+                        EnglishText(
+                            text = stringResource(R.string.app_name),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    Text(
+                        text = page.title,
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                }
                 Text(
                     text = page.subtitle,
                     style = MaterialTheme.typography.bodyLarge,

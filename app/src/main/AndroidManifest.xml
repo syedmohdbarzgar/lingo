@@ -15,6 +15,12 @@
          notification never appears. Requested in Settings when the toggle turns on. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Speaking practice records the learner's own voice and plays it back for
+         comparison. LOCAL ONLY: nothing is uploaded, no speech recogniser runs,
+         and the take lives in the app cache dir. Requested from the card itself,
+         so the rest of the app never asks (docs/connectivity.md). -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <!-- myket-billing-client drags in play-services-ads-identifier; we never read
          the advertising id (the SDK guards its own call), so deny the permission. -->
     <uses-permission

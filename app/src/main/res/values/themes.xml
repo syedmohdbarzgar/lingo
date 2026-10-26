@@ -10,15 +10,34 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/primary_600</item>
     </style>
 
-    <!-- Launch theme: the system splash already speaks the new brand — the
-         launcher's own blue field and mark (Lingo), 0ms icon animation — and
-         SplashActivity continues that same field while the offline bundle seeds,
-         so the tapped icon appears to grow into the app with no white flash.
-         postSplashScreenTheme swaps the window back to Theme.English. -->
+    <!-- Launch theme: the system splash is a bare brand field — brand color
+         background, NO logo (transparent 1dp icon), 0ms animation, nothing
+         else. SplashActivity then owns the whole launch moment (mark in the
+         center, name and promise at the bottom), so the tapped icon is never
+         painted twice and there is no white flash.
+         postSplashScreenTheme hands the window to the brand-colored host below. -->
     <style name="Theme.English.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon_empty</item>
         <item name="windowSplashScreenAnimationDuration">0</item>
-        <item name="postSplashScreenTheme">@style/Theme.English</item>
+        <!-- The platform starting window is built by the SYSTEM from the
+             android-namespaced form, not from the library attrs above: API 31+
+             reads the three splash attrs, every release reads windowBackground.
+             Same brand blue, same empty icon, same 0ms. -->
+        <item name="android:windowBackground" tools:targetApi="l">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/splash_icon_empty</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">0</item>
+        <!-- The activity window after installSplashScreen(): the same brand field,
+             so the frame between the starting window and Compose's first frame is
+             never the theme's colorBackground (black in night mode — the black
+             gap the device run caught). -->
+        <item name="postSplashScreenTheme">@style/Theme.English.SplashHost</item>
+    </style>
+
+    <!-- SplashActivity's own window background: the brand blue unconditionally,
+         day and night, so the launch is one continuous field. -->
+    <style name="Theme.English.SplashHost" parent="Theme.English">
+        <item name="android:windowBackground" tools:targetApi="l">@color/ic_launcher_background</item>
     </style>
 </resources>

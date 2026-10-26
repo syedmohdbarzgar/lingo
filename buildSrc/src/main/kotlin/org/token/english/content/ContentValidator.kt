@@ -36,10 +36,10 @@ object ContentValidator {
 
     private val LEVELS = setOf("A1", "A2", "B1", "B2", "C1", "C2")
 
-    /** Mirrors ContentParser.supportedTypes — `speaking` parses but is suspended. */
+    /** Mirrors ContentParser.supportedTypes. */
     private val EXERCISE_TYPES = setOf(
         "multiple_choice", "fill_blank", "word_recall", "translation",
-        "sentence_production", "listening",
+        "sentence_production", "listening", "speaking",
     )
 
     /** Mirrors domain Skill — an authored tag must name a real skill, otherwise ContentParser drops it. */
@@ -208,6 +208,18 @@ object ContentValidator {
                 "listening" -> {
                     if (text(o, "text").isEmpty()) report(id, "blank text")
                     if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
+                }
+                // Speaking practice is self-assessed: the first accepted answer is
+                // the model the learner hears and repeats, so it must exist and be
+                // English (a Persian model cannot be spoken back through TTS).
+                "speaking" -> {
+                    if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
+                    val models = array(o, "accepted").map { it.toString().trim() }.filter { it.isNotEmpty() }
+                    if (models.isEmpty()) report(id, "speaking needs at least one accepted model sentence")
+                    if (models.any { it.any { ch -> ch in '\u0600'..'\u06FF' } }) {
+                        report(id, "speaking model must be English (it is spoken by TTS)")
+                    }
+                    if (text(o, "skill").isEmpty()) report(id, "speaking must declare skill")
                 }
             }
         }

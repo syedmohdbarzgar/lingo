@@ -10,6 +10,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.token.english.core.designsystem.AppSpacing
 
@@ -22,21 +23,32 @@ import org.token.english.core.designsystem.AppSpacing
  * filled here (not left to each caller) so no new card can forget it; a caller that
  * passes an explicit width still wins, because `fillMaxWidth()` is appended after
  * its modifier.
+ *
+ * [containerColor] / [contentColor] say what KIND of content the card holds — a
+ * teaching rule, a reference table, a set of examples — so a page of cards is not
+ * a wall of identical white boxes. Both default to the plain surface, so existing
+ * callers are unchanged, and the values come from the theme (never a raw color).
  */
 @Composable
 fun AppCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+    val colors = CardDefaults.cardColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+    )
     val fullWidth = modifier.fillMaxWidth()
     if (onClick != null) {
         Card(
             onClick = onClick,
             modifier = fullWidth,
             shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = colors,
             border = border,
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) { Column(Modifier.padding(AppSpacing.md), content = content) }
@@ -44,7 +56,7 @@ fun AppCard(
         Card(
             modifier = fullWidth,
             shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = colors,
             border = border,
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) { Column(Modifier.padding(AppSpacing.md), content = content) }

@@ -7,6 +7,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.core.designsystem.component.firstStrongIsLtr
+import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.textDirectionFor
 import java.io.File
 
@@ -85,6 +86,68 @@ class BidiTextTest {
         assertFalse(firstStrongIsLtr("étude"))
     }
 
+    // ------------------------------------- 1b. mixed Persian/English isolation
+
+    @Test
+    fun `embedded english runs are isolated inside persian prose`() {
+        // The garbled lesson-card glitch: without isolation the period and the
+        // Persian comma reorder against the two Latin runs ("go" drifts).
+        val source = "می‌آیند: turn left، go straight. حرف اضافه را انتخاب کن."
+        val expected = "می‌آیند: \u2066turn left، go straight.\u2069 حرف اضافه را انتخاب کن."
+        assertEquals(expected, isolateEmbeddedLtr(source))
+    }
+
+    @Test
+    fun `a quoted english run keeps its guillemets inside the isolate`() {
+        // The pair must not straddle the isolate: the half left in the RTL text
+        // mirrors while the half inside does not, and the quotes come out doubled.
+        val source = "«in the left» غلط است — «on the left» درست."
+        val expected = "\u2066«in the left»\u2069 غلط است — \u2066«on the left»\u2069 درست."
+        assertEquals(expected, isolateEmbeddedLtr(source))
+    }
+
+    @Test
+    fun `parentheses around english stay a pair`() {
+        // Device run: «(capital)» rendered as «(capital))» before this rule.
+        val source = "حرف بزرگ (capital) در آغاز نام‌ها."
+        val expected = "حرف بزرگ \u2066(capital)\u2069 در آغاز نام‌ها."
+        assertEquals(expected, isolateEmbeddedLtr(source))
+    }
+
+    @Test
+    fun `a bracket pair followed by a comma stays balanced`() {
+        val source = "پنج حرف صدادار (vowel)، بقیه بی‌صدا."
+        val expected = "پنج حرف صدادار \u2066(vowel)،\u2069 بقیه بی‌صدا."
+        assertEquals(expected, isolateEmbeddedLtr(source))
+    }
+
+    @Test
+    fun `a colon stays persian while its english run is isolated`() {
+        val source = "بعد از go، جهت بدون to می‌آید: «go to straight» غلط."
+        val expected =
+            "بعد از \u2066go،\u2069 جهت بدون \u2066to\u2069 می‌آید: \u2066«go to straight»\u2069 غلط."
+        assertEquals(expected, isolateEmbeddedLtr(source))
+    }
+
+    @Test
+    fun `isolation is idempotent and skips persian-only text`() {
+        val persian = "سلام دنیا، حالت خوب است؟"
+        assertEquals(persian, isolateEmbeddedLtr(persian))
+        val once = isolateEmbeddedLtr("پاسخ درست: passport")
+        assertEquals(once, isolateEmbeddedLtr(once))
+    }
+
+    @Test
+    fun `bare numbers and trailing spaces stay outside`() {
+        // Persian digits are not a Latin run; a Latin word+number group is one
+        // run and only its internal spaces ride along.
+        assertEquals("حدود ۲۰ دانش آموز", isolateEmbeddedLtr("حدود ۲۰ دانش آموز"))
+        assertEquals(
+            "\u206620 students\u2069  بهتر است",
+            isolateEmbeddedLtr("20 students  بهتر است"),
+        )
+    }
+
     // ------------------------------------------------------------ 2. content contract
 
     private fun contentFile(name: String): File {
@@ -107,7 +170,8 @@ class BidiTextTest {
      * Persian gloss kept inside an English sentence, which the BiDi rule handles
      * (the paragraph stays LTR and the gloss renders RTL within it).
      */
-    private val persianCueTypes = setOf("translation", "word_recall", "sentence_production")
+    private val persianCueTypes =
+        setOf("translation", "word_recall", "sentence_production", "speaking")
 
     private val reviewedPersianGlosses = setOf(
         // "My ______ is a teacher. (مادر)" — the gloss names the word being tested.

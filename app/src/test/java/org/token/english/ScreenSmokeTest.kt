@@ -154,6 +154,7 @@ class ScreenSmokeTest {
             submitExercise = SubmitExerciseUseCase(progress, knowledge),
             completeLesson = CompleteLessonUseCase(lessonRepo, progress),
             audioPlayer = FakeAudioPlayer(),
+            voiceNote = FakeVoiceNote(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessonRepo),

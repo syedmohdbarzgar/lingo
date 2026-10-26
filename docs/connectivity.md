@@ -24,8 +24,14 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 All flavors also carry `POST_NOTIFICATIONS` (declared in the main manifest — the daily reminder
 posts a local notification on API 33+; without the declaration the Settings request is a no-op and
 `lintBazaarDebug` fails with `MissingPermission`), `RECEIVE_BOOT_COMPLETED` (the reminder is re-armed
-after a reboot) and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a real app
-permission). The three-flavor release-prep pass (P3, Oct 2026) confirmed this set in each merged
+after a reboot), `RECORD_AUDIO` and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated,
+not a real app permission).
+
+`RECORD_AUDIO` is **local-only speaking practice**: the learner's take is written to the app cache
+dir, played back for comparison against the on-device TTS model, and never uploaded (no recogniser,
+no network; see `docs/content-pipeline.md` for the `speaking` item). The card asks for the mic
+itself, so no other screen can trigger the prompt, and a refusal downgrades the item to
+listen-and-compare instead of breaking the lesson. The three-flavor release-prep pass (P3, Oct 2026) confirmed this set in each merged
 manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar/poolakey`,
 `ir/myket/billingclient`, `com/android/billingclient` — zero cross-flavor leakage).
 

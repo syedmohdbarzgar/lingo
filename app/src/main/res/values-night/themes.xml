@@ -10,13 +10,22 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/night_background</item>
     </style>
 
-    <!-- Same branded launch as light mode: the launcher icon is blue in dark
-         mode too (no night override), so the splash field stays continuous with
-         the tapped icon instead of flashing a different background first. -->
+    <!-- Same bare brand launch as light mode: the brand color has no night
+         override, so dark mode gets the identical blue field (no logo, 0ms)
+         — no flash between the icon tap and the app. -->
     <style name="Theme.English.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon_empty</item>
         <item name="windowSplashScreenAnimationDuration">0</item>
-        <item name="postSplashScreenTheme">@style/Theme.English</item>
+        <!-- Same android-namespaced fallback as light mode: the starting window
+             must be the brand blue in dark mode too (night colorBackground is
+             black), with the same empty icon and 0ms. -->
+        <item name="android:windowBackground" tools:targetApi="l">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/splash_icon_empty</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">0</item>
+        <!-- Shared with light mode: after installSplashScreen() the activity window
+             keeps the brand field instead of the night colorBackground (black). -->
+        <item name="postSplashScreenTheme">@style/Theme.English.SplashHost</item>
     </style>
 </resources>

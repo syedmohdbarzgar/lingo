@@ -61,8 +61,9 @@ re-assert LTR, because the root layout is forced RTL.
   question id (fixed seed), so the answer position never leaks. `word_recall` names the English word
   from its Persian meaning with no options to recognize, and `sentence_production` makes the learner
   build the whole sentence — graded on the target structure (ordered anchors plus a word floor), so
-  an original correct sentence is not failed for phrasing it differently. `speaking` parses but is
-  not implemented.
+  an original correct sentence is not failed for phrasing it differently. `speaking` is real
+  self-assessed practice: the on-device TTS speaks the model, the learner records a take, plays it
+  back and compares, then moves on — nothing is graded, uploaded or recognised.
 - **Review** — SM-2-lite spaced repetition with a daily new-card cap (20) and calendar-day anchors
   instead of raw 24-hour multiples. Odd-numbered cards ask for active production: a Persian prompt,
   typed English answer. `AGAIN` re-queues inside the session (at most twice).
@@ -439,7 +440,8 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 - An error taxonomy so each miss is classified (vocabulary gap vs grammar vs comprehension) and
   drives what comes next — then adaptive difficulty on top of it.
 - `writing` and `conversation` exercise types (the exercise model already has room for them).
-- On-device speech evaluation for the `speaking` exercise, which currently renders as inactive.
+- On-device pronunciation scoring for the `speaking` exercise (today it is record-and-compare, with
+  no judgement of the utterance).
 - Remote crash reporting — a deliberate provider and privacy decision, not a default.
 
 **Suspended until a backend exists**

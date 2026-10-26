@@ -117,6 +117,11 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     // Audio (on-device TTS — no network needed)
     val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }
 
+    // Speaking practice (record + play back the learner's own take — local only)
+    val voiceNote: org.token.english.core.audio.VoiceNote by lazy {
+        org.token.english.core.audio.AndroidVoiceNote(appContext)
+    }
+
     // Free-access companion app (org.token.zaribar): while it is installed *and
     // signed by the expected key* the subscription is free — see CompanionApp.
     // Re-checked on every foreground and whenever a paywall/home surface opens, so

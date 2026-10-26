@@ -100,6 +100,8 @@ class LessonViewModelTest {
         val complete = CompleteLessonUseCase(lessonRepo, progress)
         val focusPlan = GetFocusPlanUseCase(knowledge, lessonRepo)
 
+        val voiceNote = FakeVoiceNote()
+
         fun build(focusItemId: String? = null): LessonViewModel = LessonViewModel(
             lessonId = lessonId,
             contentSeeded = contentSeeded,
@@ -108,6 +110,7 @@ class LessonViewModelTest {
             submitExercise = submit,
             completeLesson = complete,
             audioPlayer = audio,
+            voiceNote = voiceNote,
             speaker = speaker,
             isAppInForeground = { true },
             getFocusPlan = focusPlan,
@@ -139,6 +142,42 @@ class LessonViewModelTest {
         vm.onEvent(LessonEvent.StartExercises)
         vm.onStudyTick(nowMs = System.currentTimeMillis())
         assertEquals("acting again reopens the window", StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
+    }
+
+    @Test
+    fun `a speaking item practices without grading or moving mastery`() {
+        val h = Harness().with(
+            Exercise.Speaking(
+                id = "a1.test.sp.01",
+                lessonId = lessonId,
+                prompt = "جمله را بگو",
+                referenceAnswers = listOf("Go straight and turn left."),
+                skill = Skill.SPEAKING,
+            ),
+        )
+        val vm = h.build()
+
+        // Record, then close the mic: the take is now available for playback.
+        vm.onEvent(LessonEvent.StartRecording)
+        assertTrue("the mic is open", vm.state.value.isRecording)
+        vm.onEvent(LessonEvent.StopRecording)
+        assertTrue("a take exists", vm.state.value.hasRecording)
+        assertFalse(vm.state.value.isRecording)
+
+        vm.onEvent(LessonEvent.PlayRecording)
+        assertTrue("the take plays back", vm.state.value.isPlayingRecording)
+
+        vm.onEvent(LessonEvent.FinishSpeaking)
+        val outcome = vm.state.value.outcome
+        assertTrue("finishing unlocks the next step", outcome != null)
+        assertEquals(
+            "the model sentence is what the learner compared against",
+            "Go straight and turn left.",
+            outcome?.correctAnswer,
+        )
+        // No recogniser ran, so nothing was scored and no dimension was written.
+        assertEquals(0, vm.state.value.correctCount)
+        assertTrue("self-practice is not mastery evidence", h.progress.dimensionWrites.isEmpty())
     }
 
     /** Answers the current exercise correctly, whatever option the shuffle put first. */

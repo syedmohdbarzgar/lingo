@@ -40,10 +40,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.BuildConfig
+import org.token.english.R
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
@@ -51,6 +53,7 @@ import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
+import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.levelTint
 import org.token.english.core.designsystem.component.OutlinedActionButton
 import org.token.english.core.designsystem.component.PrimaryButton
@@ -436,6 +439,17 @@ private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
     ) {
         when (page) {
             InfoPage.ABOUT -> {
+                // Wordmark first: the dialog title stays Persian, the brand is the
+                // one Latin line and gets EnglishText's LTR re-assertion (AGENTS §6).
+                EnglishText(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = "برنامهٔ یادگیری انگلیسی برای فارسی‌زبانان: از سطح مبتدی تا پیشرفته، با درس روزانه و مرور فاصله‌دار.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
                 Text(
                     text = "درس‌ها، واژگان و مرور فاصله‌دار کامل روی دستگاه ذخیره شده‌اند و بدون اینترنت هم کار می‌کنند.",
                     style = MaterialTheme.typography.bodyMedium,

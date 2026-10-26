@@ -17,6 +17,7 @@ Every content change bumps `contentVersion` **identically in all five** JSON fil
 | **18 → 19** | Bilingual vocabulary examples (A-10): two `{en, fa}` sentences per word | `p1_bilingual_examples.mjs` |
 | **19 → 20** | Reading comprehension + En→Fa meaning items (A-5) and one reading item per placement band (A-6) | `p1_reading_and_meaning.mjs` |
 | **20 → 21** | Retrieval/production shapes (P2): two `word_recall` and two `sentence_production` items per level, plus the overlap gate is a later code change | `p2_production_recall.mjs` |
+| **22 → 23** | Speaking practice goes live: two `speaking` items on the A2 Directions lesson (listen to the TTS model, record, compare) — self-assessed, no recogniser | hand edit (`speaking` items appended; option balance re-run) |
 | **21 → 22** | The typed placement item (A-5/A-6 round): the A1-band MCQ `placement.q20` became a `fill_blank` (`placement.t01`) in the same slot — six bands of six and the 11/19/6 skill counts unchanged; option-slot balance re-run | `p3_typed_placement.mjs` |
 
 Also worth remembering: the A1/A2 grammar-gap lessons (A-9) added lessons with no placement change,

@@ -52,6 +52,7 @@ import org.token.english.core.designsystem.component.CorrectBanner
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.InfoBanner
+import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
@@ -273,7 +274,7 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                             )
                             if (example.fa.isNotBlank()) {
                                 Text(
-                                    text = example.fa,
+                                    text = isolateEmbeddedLtr(example.fa),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = TextAlign.Center,
@@ -284,7 +285,7 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                         // lesson screen shows after a miss.
                         word.explanationFa?.let { note ->
                             Text(
-                                text = note,
+                                text = isolateEmbeddedLtr(note),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 textAlign = TextAlign.Center,
@@ -318,7 +319,7 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                             // Explain the miss (A-1), as the lesson screen does.
                             word.explanationFa?.let { note ->
                                 Text(
-                                    text = note,
+                                    text = isolateEmbeddedLtr(note),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = TextAlign.Center,

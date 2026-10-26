@@ -1,7 +1,12 @@
 package org.token.english.feature.lesson
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.speech.tts.TextToSpeech
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -64,6 +69,7 @@ import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.CorrectBanner
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.IncorrectBanner
+import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.lessonViewModelFactory
@@ -404,12 +410,42 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.Speaking -> {
-                    // Speech evaluation is not implemented yet — AGENTS.md
+                    // Offline speaking practice: model from TTS, own take recorded
+                    // and played back for comparison. Nothing is graded or uploaded.
                     SectionHeader("تمرین مکالمه")
-                    Text(
-                        text = "این تمرین به ارزیابی گفتار نیاز دارد و هنوز فعال نشده است.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    val context = LocalContext.current
+                    var permissionRefused by remember { mutableStateOf(false) }
+                    val micPermission = rememberLauncherForActivityResult(
+                        ActivityResultContracts.RequestPermission(),
+                    ) { granted ->
+                        permissionRefused = !granted
+                        if (granted) onEvent(LessonEvent.StartRecording)
+                    }
+                    SpeakingCard(
+                        modelSentence = exercise.referenceAnswers.firstOrNull().orEmpty(),
+                        promptFa = exercise.prompt,
+                        isPlayingModel = state.isPlaying,
+                        isRecording = state.isRecording,
+                        hasRecording = state.hasRecording,
+                        isPlayingRecording = state.isPlayingRecording,
+                        recordingFailed = permissionRefused || state.recordingFailed,
+                        onPlayModel = { onEvent(LessonEvent.SpeakText(exercise.referenceAnswers.firstOrNull().orEmpty())) },
+                        onStartRecording = {
+                            val granted = ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.RECORD_AUDIO,
+                            ) == PackageManager.PERMISSION_GRANTED
+                            if (granted) {
+                                onEvent(LessonEvent.StartRecording)
+                            } else {
+                                // Asked from the card itself: nothing else in the app
+                                // touches the microphone, so no global prompt.
+                                micPermission.launch(Manifest.permission.RECORD_AUDIO)
+                            }
+                        },
+                        onStopRecording = { onEvent(LessonEvent.StopRecording) },
+                        onPlayRecording = { onEvent(LessonEvent.PlayRecording) },
+                        onStopPlayback = { onEvent(LessonEvent.StopRecordingPlayback) },
                     )
                 }
             }
@@ -417,7 +453,9 @@ private fun ExerciseContent(
             if (state.outcome != null) {
                 val outcome = state.outcome
                 if (outcome != null) {
-                    if (outcome.correct) {
+                    // Speaking is self-assessed: no recogniser ran, so a green
+                    // "correct" banner would claim evidence the app does not have.
+                    if (outcome.correct && exercise !is Exercise.Speaking) {
                         CorrectBanner(Modifier.fillMaxWidth())
                         // A production item has many valid sentences, so passing
                         // only means *a* valid wording — show the authored model
@@ -425,6 +463,9 @@ private fun ExerciseContent(
                         if (exercise is Exercise.SentenceProduction) {
                             ModelAnswer(outcome.correctAnswer)
                         }
+                    } else if (outcome.correct) {
+                        // Speaking: nothing to show — the card already holds the
+                        // model sentence and the compare hint.
                     } else {
                         IncorrectBanner(
                             modifier = Modifier.fillMaxWidth(),
@@ -461,17 +502,24 @@ private fun ExerciseContent(
         }
 
         if (state.outcome == null) {
-            val canSubmit = when (exercise) {
-                is Exercise.MultipleChoice -> state.selectedOption != null
-                is Exercise.Speaking -> true
-                else -> state.textAnswer.isNotBlank()
+            if (exercise is Exercise.Speaking) {
+                PrimaryButton(
+                    text = "ادامه",
+                    onClick = { onEvent(LessonEvent.FinishSpeaking) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else {
+                val canSubmit = when (exercise) {
+                    is Exercise.MultipleChoice -> state.selectedOption != null
+                    else -> state.textAnswer.isNotBlank()
+                }
+                PrimaryButton(
+                    text = "بررسی پاسخ",
+                    onClick = { onEvent(LessonEvent.Submit) },
+                    enabled = canSubmit,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
-            PrimaryButton(
-                text = "بررسی پاسخ",
-                onClick = { onEvent(LessonEvent.Submit) },
-                enabled = canSubmit,
-                modifier = Modifier.fillMaxWidth(),
-            )
         } else {
             PrimaryButton(
                 text = if (state.remainingCount == 0 && !state.repeatsCurrent) "پایان درس" else "ادامه",
@@ -650,7 +698,7 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
                                     )
                                     if (example.fa.isNotBlank()) {
                                         Text(
-                                            text = example.fa,
+                                            text = isolateEmbeddedLtr(example.fa),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -689,18 +737,28 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
  */
 @Composable
 private fun GrammarTeachingCards(lesson: Lesson) {
+    // One tint per kind of content, all from the theme: the rule is the teaching
+    // point (brand tint), the table is reference data (info tint), examples are
+    // models (elevated surface) and mistakes keep the warning tint. Same layout,
+    // different field — a page of identical white boxes gives the eye no map.
+    val extended = LocalAppExtendedColors.current
     lesson.grammarSections.forEach { section ->
         when (section.kind) {
             GrammarSectionKind.EXAMPLES -> GrammarExamplesCard(section)
             GrammarSectionKind.TABLE -> GrammarTableCard(section)
             GrammarSectionKind.MISTAKES -> GrammarMistakesCard(section)
-            else -> AppCard {
+            else -> AppCard(
+                containerColor = extended.brandTint,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            ) {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                     SectionHeader(section.title)
                     Text(
-                        text = section.lines.joinToString("\n"),
-                        // Persian prose with embedded English words: pin RTL so a
-                        // leading Latin run can't flip the paragraph (first-strong).
+                        // Persian prose with embedded English: isolate every
+                        // Latin run so periods and quotes can't reorder against
+                        // the Persian, and pin RTL so a leading Latin run can't
+                        // flip the paragraph (first-strong).
+                        text = isolateEmbeddedLtr(section.lines.joinToString("\n")),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
                         ),
@@ -714,7 +772,10 @@ private fun GrammarTeachingCards(lesson: Lesson) {
 /** Rule / table / example cards are content, not decoration — one coherent block each. */
 @Composable
 private fun GrammarExamplesCard(section: GrammarSection) {
-    AppCard {
+    AppCard(
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             SectionHeader(section.title)
             section.lines.forEach { line ->
@@ -741,7 +802,10 @@ private fun GrammarExamplesCard(section: GrammarSection) {
 /** The forms table is English-only — lay it out LTR inside the forced-RTL root. */
 @Composable
 private fun GrammarTableCard(section: GrammarSection) {
-    AppCard {
+    AppCard(
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             SectionHeader(section.title)
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -752,7 +816,7 @@ private fun GrammarTableCard(section: GrammarSection) {
                             BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                             MaterialTheme.shapes.small,
                         )
-                        .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.small)
+                        .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.small)
                         .padding(AppSpacing.sm),
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
                 ) {
@@ -798,7 +862,7 @@ private fun GrammarMistakesCard(section: GrammarSection) {
         }
         section.lines.forEach { line ->
             Text(
-                text = line,
+                text = isolateEmbeddedLtr(line),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
                 ),
