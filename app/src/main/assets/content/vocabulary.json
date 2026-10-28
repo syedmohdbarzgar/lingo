@@ -1,5 +1,5 @@
 {
-  "contentVersion": 23,
+  "contentVersion": 25,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -1564,29 +1564,29 @@
       "explanationFa": "برنامهٔ زمانی؛ behind schedule یعنی عقب از برنامه."
     },
     {
-      "id": "b1.plans.word.afford",
-      "word": "afford",
-      "translation": "توانایی مالی داشتن",
-      "definition": "To have enough money for something",
-      "pronunciation": "/əˈfɔːrd/",
+      "id": "b1.plans.word.arrange",
+      "word": "arrange",
+      "translation": "ترتیب دادن، هماهنگ کردن",
+      "definition": "To plan or organize something",
+      "pronunciation": "/əˈreɪndʒ/",
       "level": "B1",
       "partOfSpeech": "verb",
       "examples": [
         {
-          "en": "We can't afford a new car.",
-          "fa": "ما توان خرید ماشین جدید را نداریم."
+          "en": "We arranged the meeting for Monday.",
+          "fa": "جلسه را برای دوشنبه هماهنگ کردیم."
         },
         {
-          "en": "We cannot afford to lose this client.",
-          "fa": "نمی‌توانیم این مشتری را از دست بدهیم."
+          "en": "She arranged a taxi to the airport.",
+          "fa": "او یک تاکسی تا فرودگاه هماهنگ کرد."
         }
       ],
       "collocations": [
-        "can't afford",
-        "afford to do"
+        "arrange a meeting",
+        "arrange for someone to do"
       ],
-      "lessonId": "b1.plans.lesson-01",
-      "explanationFa": "توان مالی داشتن؛ با can/can't afford to + فعل می‌آید."
+      "explanationFa": "arrange یعنی «هماهنگ کردن و ترتیب دادن» — تصمیم گرفتن بههمراه مشخص کردن جزئیات. با intend (قصد داشتن) و afford (توان مالی داشتن) اشتباه نشود.",
+      "lessonId": "b1.plans.lesson-01"
     },
     {
       "id": "b1.plans.word.probably",
@@ -2314,29 +2314,29 @@
       "explanationFa": "کمپین؛ با launch a campaign می‌آید."
     },
     {
-      "id": "b2.media.word.bias",
-      "word": "bias",
-      "translation": "سوگیری",
-      "definition": "An unfair preference for or against something",
-      "pronunciation": "/ˈbaɪəs/",
+      "id": "b2.media.word.coverage",
+      "word": "coverage",
+      "translation": "پوشش خبری",
+      "definition": "The way newspapers, TV or radio report an event",
+      "pronunciation": "/ˈkʌvərɪdʒ/",
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
         {
-          "en": "Readers accused the paper of bias.",
-          "fa": "خوانندگان روزنامه را به جانبداری متهم کردند."
+          "en": "The election received wide media coverage.",
+          "fa": "انتخابات پوشش خبری گسترده‌ای داشت."
         },
         {
-          "en": "The newspaper shows a clear bias towards big business.",
-          "fa": "روزنامه جانبداری آشکاری از شرکت‌های بزرگ دارد."
+          "en": "Live coverage of the match starts at seven.",
+          "fa": "پوشش زندهٔ مسابقه ساعت هفت شروع می‌شود."
         }
       ],
       "collocations": [
-        "political bias",
-        "show a bias"
+        "media coverage",
+        "live coverage"
       ],
-      "lessonId": "b2.media.lesson-01",
-      "explanationFa": "سوگیری؛ با political bias."
+      "explanationFa": "coverage یعنی «پوشش خبری» یک رویداد؛ bias (سوگیری) دربارهٔ جهتگیری خبر است و در درس پژوهش میآید. این دو با هم اشتباه نشوند.",
+      "lessonId": "b2.media.lesson-01"
     },
     {
       "id": "b2.media.word.slogan",
@@ -2991,7 +2991,7 @@
     {
       "id": "c2.nuance.word.ambiguous",
       "word": "ambiguous",
-      "translation": "مبهم",
+      "translation": "دوپهلو، دارای دو معنا",
       "definition": "Open to more than one interpretation",
       "pronunciation": "/æmˈbɪɡjuəs/",
       "level": "C2",
@@ -3011,7 +3011,7 @@
         "ambiguous statement"
       ],
       "lessonId": "c2.nuance.lesson-01",
-      "explanationFa": "مبهم و دوپهلو؛ از آن دو معنا برداشت می‌شود."
+      "explanationFa": "ambiguous یعنی «دوپهلو»: جمله دو تفسیر معتبر دارد. با vague (مبهم و نامشخص) یکی نیست — vague یعنی دقت ندارد، ambiguous یعنی بیش از یک معنا دارد."
     },
     {
       "id": "c2.nuance.word.subtle",
@@ -4564,29 +4564,29 @@
       "explanationFa": "حل کردن مشکل؛ با resolve an issue."
     },
     {
-      "id": "b2.problems.word.deadline",
-      "word": "deadline",
-      "translation": "مهلت",
-      "definition": "The time by which something must be finished",
-      "pronunciation": "/ˈdedlaɪn/",
+      "id": "b2.problems.word.warranty",
+      "word": "warranty",
+      "translation": "ضمانت، گارانتی",
+      "definition": "A written promise to repair or replace a faulty product",
+      "pronunciation": "/ˈwɒrənti/",
       "level": "B2",
       "partOfSpeech": "noun",
       "examples": [
         {
-          "en": "We are working to a tight deadline.",
-          "fa": "ما با مهلتی فشرده کار می‌کنیم."
+          "en": "The phone is still under warranty.",
+          "fa": "این گوشی هنوز گارانتی دارد."
         },
         {
-          "en": "Miss the deadline and you lose the bonus.",
-          "fa": "اگر مهلت را از دست بدهی پاداش را هم از دست می‌دهی."
+          "en": "The warranty covers parts but not labour.",
+          "fa": "گارانتی قطعات را پوشش می‌دهد، اما هزینهٔ کار را نه."
         }
       ],
       "collocations": [
-        "meet a deadline",
-        "miss a deadline"
+        "under warranty",
+        "warranty period"
       ],
-      "lessonId": "b2.problems.lesson-01",
-      "explanationFa": "مهلت؛ با meet a deadline."
+      "explanationFa": "warranty یعنی ضمانتِ کالا و معمولاً با under warranty میآید؛ guarantee عمومیتر است و برای هر وعدهٔ قطعی به کار میرود.",
+      "lessonId": "b2.problems.lesson-01"
     },
     {
       "id": "b2.problems.word.delay",
@@ -5289,29 +5289,29 @@
       "explanationFa": "امتیاز دادن در بحث؛ پذیرفتن جزئی از حرف مخالف."
     },
     {
-      "id": "c2.argumentation.word.refute",
-      "word": "refute",
-      "translation": "رد کردن (با دلیل)",
-      "definition": "To prove that a statement or theory is wrong",
-      "pronunciation": "/rɪˈfjuːt/",
+      "id": "c2.argumentation.word.rebut",
+      "word": "rebut",
+      "translation": "رد کردن با استدلال",
+      "definition": "To answer an argument by showing why it is wrong",
+      "pronunciation": "/rɪˈbʌt/",
       "level": "C2",
       "partOfSpeech": "verb",
       "examples": [
         {
-          "en": "The data refute the earlier explanation.",
-          "fa": "داده‌ها توضیح قبلی را رد می‌کنند."
+          "en": "She rebutted every point in the report.",
+          "fa": "او به همهٔ نکات گزارش پاسخ داد و آنها را رد کرد."
         },
         {
-          "en": "No study has managed to refute this result.",
-          "fa": "هیچ مطالعه‌ای نتوانسته این نتیجه را رد کند."
+          "en": "The lawyer rebutted the accusation in court.",
+          "fa": "وکیل در دادگاه این اتهام را رد کرد."
         }
       ],
       "collocations": [
-        "refute a claim",
-        "flatly refute"
+        "rebut an argument",
+        "rebut a claim"
       ],
-      "lessonId": "c2.argumentation.lesson-01",
-      "explanationFa": "رد کردن با دلیل."
+      "explanationFa": "rebut یعنی «با استدلال رد کردن» — پاسخ دادن به یک استدلال و نشان دادن خطای آن؛ از deny (انکار کردن) دقیقتر است و refute که در درس فن بیان آمده، بار اثباتی بیشتری دارد.",
+      "lessonId": "c2.argumentation.lesson-01"
     },
     {
       "id": "c2.argumentation.word.premise",

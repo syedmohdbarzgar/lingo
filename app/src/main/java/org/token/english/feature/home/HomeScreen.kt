@@ -59,6 +59,8 @@ fun HomeScreen(
     onOpenReview: () -> Unit,
     onOpenVocabulary: () -> Unit,
     onOpenPaywall: () -> Unit,
+    /** Speaking practice: say the lesson's target sentences back, graded on-device. */
+    onOpenConversation: () -> Unit,
     /** Focused practice on the engine's weak spot: (lessonId, curriculum node id). */
     onOpenFocus: (String, String) -> Unit,
 ) {
@@ -117,7 +119,7 @@ fun HomeScreen(
                 )
             }
 
-            TrialBanner(state, onOpenPaywall = onOpenPaywall)
+            CompanionOfferBanner(state, onOpenPaywall = onOpenPaywall)
 
             CompanionFreeBanner(state)
 
@@ -163,6 +165,12 @@ fun HomeScreen(
                     }
                 }
             }
+
+            SecondaryButton(
+                text = "تمرین مکالمه",
+                onClick = onOpenConversation,
+                modifier = Modifier.fillMaxWidth(),
+            )
 
             SecondaryButton(
                 text = "مرور واژه‌ها",
@@ -243,14 +251,25 @@ private fun CompanionFreeBanner(state: HomeUiState) {
     }
 }
 
+/**
+ * The free route, on Home (checklist N-2): with no trial there is exactly one
+ * zero-cost way in — the companion app — so that is the only "free" Home talks
+ * about. It renders only while the offer can be taken ([CompanionOffer.isOffered]):
+ * a paying learner is never upsold a free alternative, and a device that already
+ * holds the grant gets no download prompt back.
+ */
 @Composable
-private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
-    // Premium subscribers see nothing; trial learners always see how much free
-    // time is left — the subscription requirement has to be visible from day one,
-    // not only in the last two days of the trial.
-    if (state.access != org.token.english.core.billing.AccessLevel.TRIAL) return
-    val hours = state.trialRemainingMillis / (60 * 60 * 1000)
-    val days = state.trialRemainingMillis / (24 * 60 * 60 * 1000)
+private fun CompanionOfferBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
+    val offered = org.token.english.core.billing.CompanionOffer.isOffered(
+        companionStatus = state.companionStatus,
+        access = state.access,
+        reason = state.accessReason,
+        storeLinkAllowed = org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER,
+    )
+    if (!offered) return
+    // Installed but untrusted (N-3): the build on the device is not one we can
+    // grant for — say "update", never "install it again".
+    val untrusted = state.companionStatus == org.token.english.core.billing.CompanionStatus.UNTRUSTED
 
     AppCard(onClick = onOpenPaywall) {
         Row(
@@ -260,44 +279,19 @@ private fun TrialBanner(state: HomeUiState, onOpenPaywall: () -> Unit) {
         ) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                 Text(
-                    text = when {
-                        days >= 1 -> "دوره رایگان شما $days روز و ${hours % 24} ساعت دیگر ادامه دارد"
-                        hours >= 1 -> "دوره رایگان شما $hours ساعت دیگر ادامه دارد"
-                        else -> "دوره رایگان رو به پایان است"
-                    },
+                    text = if (untrusted) "نسخهٔ «زریبار» تأییدنشده است" else "راه رایگان: «زریبار»",
                     style = MaterialTheme.typography.titleSmall,
                 )
                 Text(
-                    text = "با اشتراک، دسترسی به همه درس‌ها قطع نمی‌شود.",
+                    text = if (untrusted) {
+                        "«زریبار» روی این دستگاه هست اما نسخه‌اش تأیید نمی‌شود؛ آن را از کافه " +
+                            "بازار به‌روزرسانی کنید تا همهٔ درس‌ها رایگان شود."
+                    } else {
+                        "با نصب «زریبار» از کافه بازار، همهٔ درس‌ها روی این دستگاه رایگان می‌شود."
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                // The mirror of that promise, said while the learner is deciding:
-                // without the companion installed the subscription can cost nothing
-                // (checklist N-2). The paywall this card opens carries the details.
-                val freeRouteOffered = org.token.english.core.billing.CompanionOffer.isOffered(
-                    companionStatus = state.companionStatus,
-                    access = state.access,
-                    reason = state.accessReason,
-                    storeLinkAllowed = org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER,
-                )
-                if (freeRouteOffered) {
-                    // Installed but untrusted (N-3): the build on the device is not
-                    // one we can grant for — say "update", never "install again".
-                    val untrusted = state.companionStatus ==
-                        org.token.english.core.billing.CompanionStatus.UNTRUSTED
-                    Text(
-                        text = if (untrusted) {
-                            "زریبار روی این دستگاه هست اما نسخه‌اش تأییدنشده است؛ آن را از " +
-                                "کافه بازار به‌روزرسانی کنید تا رایگان فعال شود."
-                        } else {
-                            "راه رایگان: با نصب «زریبار» از کافه بازار، همهٔ درس‌ها رایگان " +
-                                "می‌شود."
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
             }
             PrimaryButton(text = "اشتراک", onClick = onOpenPaywall)
         }

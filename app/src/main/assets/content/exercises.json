@@ -1,5 +1,5 @@
 {
-  "contentVersion": 23,
+  "contentVersion": 25,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -358,16 +358,16 @@
       "lessonId": "a2.airport.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "question": "The flight to Dubai ______ at 9 p.m.",
-      "questionFa": "پرواز دبی ساعت ۹ شب ______ می‌شود.",
+      "question": "The flight to Dubai ______ at 9 p.m. tomorrow.",
+      "questionFa": "پرواز دبی فردا ساعت ۹ شب حرکت میکند.",
       "options": [
         "departing",
         "depart",
         "departs",
-        "departed the"
+        "departed"
       ],
       "correctIndex": 2,
-      "explanationFa": "برای برنامهٔ زمان‌بندی‌شده حال ساده به کار می‌رود و فاعل مفرد the flight فعل s می‌گیرد: departs."
+      "explanationFa": "برنامهٔ حرکت (timetable) با حال ساده بیان میشود و فاعل مفرد است: the flight departs. departed گذشته است و با tomorrow نمیخواند."
     },
     {
       "id": "a2.restaurant.ex.01",
@@ -755,10 +755,10 @@
       "sentence": "I have never ___ to Turkey before.",
       "accepted": [
         "been",
-        "visited"
+        "gone"
       ],
       "skill": "GRAMMAR",
-      "explanationFa": "در تجربهٔ زندگی با never از حال کامل استفاده می‌شود: have never been to Turkey."
+      "explanationFa": "با never و تجربهٔ زندگی حال کامل میآید: have never been to Turkey یعنی «تا حالا ترکیه نرفتهام» (رفته و برگشتهام). have gone to یعنی «رفته و الان آنجاست»، پس اینجا been طبیعیتر است؛ visited هم هرگز با to نمیآید."
     },
     {
       "id": "b1.work.ex.04",
@@ -914,10 +914,11 @@
       "order": 3,
       "sentence": "If she studied harder, she ___ pass the exam.",
       "accepted": [
-        "would"
+        "would",
+        "could"
       ],
       "skill": "GRAMMAR",
-      "explanationFa": "شرطی نوع دوم در جملهٔ نتیجه would + فعل ساده می‌آید: would pass."
+      "explanationFa": "شرطی نوع دوم: در جملهٔ نتیجه would + فعل ساده میآید (would pass)؛ could هم درست است چون توانایی فرضی را میرساند (میتوانست قبول شود)."
     },
     {
       "id": "b1.plans.ex.04",
@@ -1229,7 +1230,7 @@
       "options": [
         "off",
         "along",
-        "on",
+        "over",
         "up"
       ],
       "correctIndex": 1,
@@ -1743,13 +1744,12 @@
       "order": 4,
       "sentence": "The evidence is too ___ to support such a strong claim.",
       "accepted": [
-        "slight",
         "thin",
         "flimsy",
         "weak"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "شاهد ناکافی برای ادعای قوی: too slight/flimsy."
+      "explanationFa": "شاهد ناکافی برای ادعای قوی: thin / flimsy / weak evidence؛ «slight» با evidence همنشین طبیعی نیست."
     },
     {
       "id": "c2.nuance.ex.05",
@@ -1801,7 +1801,7 @@
       "options": [
         "concisely",
         "conciliatory",
-        "concierge",
+        "concession",
         "concision"
       ],
       "correctIndex": 3,
@@ -2207,11 +2207,11 @@
         "قصد داشتن",
         "برنامه زمانی",
         "تصمیم گرفتن",
-        "توانایی مالی داشتن"
+        "ترتیب دادن، هماهنگ کردن"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY",
-      "explanationFa": "decide یعنی تصمیم گرفتن."
+      "explanationFa": "decide یعنی «تصمیم گرفتن»؛ intend قصد داشتن، schedule برنامهٔ زمانی و arrange ترتیب دادن است."
     },
     {
       "id": "b1.experiences.ex.07",
@@ -2291,12 +2291,12 @@
       "options": [
         "مخاطب، تماشاگر",
         "کمپین",
-        "سوگیری",
+        "پوشش خبری",
         "تبلیغات"
       ],
       "correctIndex": 3,
       "skill": "VOCABULARY",
-      "explanationFa": "advertising یعنی تبلیغات."
+      "explanationFa": "advertising یعنی «تبلیغات»؛ coverage پوشش خبری، audience مخاطب و campaign کمپین است."
     },
     {
       "id": "c1.academic.ex.07",
@@ -2374,14 +2374,14 @@
       "question": "What does \"ambiguous\" mean?",
       "questionFa": "معنی «ambiguous» چیست؟",
       "options": [
-        "مبهم",
+        "دوپهلو، دارای دو معنا",
         "ظریف، پنهان",
         "بار معنایی، تلویح",
-        "مبهم، نامشخص"
+        "تمایز، تفاوت"
       ],
       "correctIndex": 0,
       "skill": "VOCABULARY",
-      "explanationFa": "ambiguous یعنی مبهم و دوپهلو."
+      "explanationFa": "ambiguous یعنی «دوپهلو»: جمله بیش از یک تفسیر معتبر دارد. vague یعنی «نامشخص و بیدقت» و subtle یعنی «ظریف»؛ این سه با هم اشتباه نشوند."
     },
     {
       "id": "c2.rhetoric.ex.07",
@@ -3676,11 +3676,11 @@
       "order": 3,
       "sentence": "The new data ______ the earlier explanation.",
       "accepted": [
-        "refute",
-        "refuted"
+        "rebut",
+        "rebutted"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "refute یعنی «رد کردن»؛ دادهٔ تازه توضیح قبلی را رد می‌کند."
+      "explanationFa": "rebut یعنی با استدلال رد کردن: the new data rebut the earlier explanation (دادهٔ جمع با فعل بدون s)."
     },
     {
       "id": "c2.argumentation.ex.04",
@@ -4447,17 +4447,17 @@
       "lessonId": "a1.can.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "question": "Which sentence is correct?",
-      "questionFa": "کدام جمله درست است؟",
+      "question": "______ you play the piano? — Yes, a little.",
+      "questionFa": "میتوانی پیانو بزنی؟ — بله، کمی.",
       "options": [
-        "I cans run fast when I was young.",
-        "I can run fast when I was young.",
-        "I could to run fast when I was young.",
-        "I could run fast when I was young."
+        "Is",
+        "Do",
+        "Are",
+        "Can"
       ],
       "correctIndex": 3,
       "skill": "GRAMMAR",
-      "explanationFa": "توانایی در گذشته با could + فعل ساده: could run."
+      "explanationFa": "توانایی را با can میپرسیم: Can you …? و پاسخ کوتاه Yes, I can. با Do/Are سؤال دربارهٔ عادت یا حالت است، نه توانایی."
     },
     {
       "id": "a1.can.ex.07",
@@ -7097,10 +7097,11 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "prompt": "دیروز یک کتاب خریدم.",        "mustUse": [
-          "bought",
-          "yesterday"
-        ],
+      "prompt": "دیروز یک کتاب خریدم.",
+      "mustUse": [
+        "bought",
+        "yesterday"
+      ],
       "minWords": 4,
       "accepted": [
         "i bought a book yesterday"
@@ -7221,20 +7222,22 @@
       "skill": "GRAMMAR",
       "explanationFa": "قرار گرفتن not only در آغاز جمله وارونگی می‌سازد: did he arrive."
     },
-    {        "id": "c1.academic.ex.14",
-        "lessonId": "c1.academic.lesson-01",
-        "type": "sentence_production",
-        "order": 14,
-        "prompt": "شواهد جدید این فرضیه را تأیید می‌کند.",
-        "mustUse": [
-          "evidence",
-          "corroborates"
-        ],
+    {
+      "id": "c1.academic.ex.14",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "sentence_production",
+      "order": 14,
+      "prompt": "شواهد جدید این فرضیه را تأیید می‌کند.",
+      "mustUse": [
+        "evidence",
+        "corroborates"
+      ],
       "minWords": 6,
       "accepted": [
         "the new evidence corroborates the hypothesis",
         "recent evidence corroborates the hypothesis"
-      ],        "hintFa": "corroborate یعنی با شواهد تأیید کردن؛ با فاعل سوم‌شخص -s می‌گیرد.",
+      ],
+      "hintFa": "corroborate یعنی با شواهد تأیید کردن؛ با فاعل سوم‌شخص -s می‌گیرد.",
       "skill": "WRITING",
       "explanationFa": "corroborate یعنی چیزی را با شواهد پشتیبانی و تأیید کردن."
     },
@@ -7298,6 +7301,253 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "برای سطح و سمت از on استفاده کن (on the left)، نه in."
+    },
+    {
+      "id": "c1.register.ex.07",
+      "lessonId": "c1.register.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "Which sentence belongs in an academic essay?",
+      "questionFa": "کدام جمله به یک مقالهٔ دانشگاهی میآید؟",
+      "options": [
+        "Kids these days just don't get it.",
+        "It is generally accepted that the policy has failed.",
+        "I reckon it's a disaster, honestly.",
+        "Sounds bad, doesn't it?"
+      ],
+      "correctIndex": 1,
+      "skill": "WRITING",
+      "explanationFa": "register یعنی سبکِ متناسب با موقعیت؛ در مقالهٔ دانشگاهی لحن غیرشخصی و رسمی است: It is generally accepted that … . سه گزینهٔ دیگر محاورهایاند."
+    },
+    {
+      "id": "c1.register.ex.08",
+      "lessonId": "c1.register.lesson-01",
+      "type": "fill_blank",
+      "order": 8,
+      "sentence": "The results ______ suggest a link, although further work is needed.",
+      "accepted": [
+        "may",
+        "might"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "hedging یا «تسویهٔ زبانی»: با may/might ادعا محتاطانه بیان میشود و جمله جای اصلاح دارد — همان کاری که نویسندهٔ دانشگاهی میکند."
+    },
+    {
+      "id": "c1.cohesion.ex.07",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "The plan was rejected; ______, the committee agreed to review it.",
+      "questionFa": "این طرح رد شد؛ با این حال، کمیته پذیرفت که آن را بازبینی کند.",
+      "options": [
+        "therefore",
+        "moreover",
+        "nevertheless",
+        "for instance"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "nevertheless تضاد را نشان میدهد: با وجود رد شدن، بازبینی پذیرفته شد. therefore نتیجه میسازد و moreover چیزی به همان جهت اضافه میکند."
+    },
+    {
+      "id": "c1.cohesion.ex.08",
+      "lessonId": "c1.cohesion.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "In \"Ana met Sara because she needed help\", the pronoun is a cohesion problem because ______.",
+      "questionFa": "در «Ana met Sara because she needed help» ضمیر مشکل انسجامی دارد، چون ______.",
+      "options": [
+        "the sentence has no subject",
+        "needed is in the past tense",
+        "because is a conjunction",
+        "it could refer to either woman"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "انسجام به مرجع روشنِ ضمیر تکیه دارد؛ وقتی «she» میتواند به هر دو زن برگردد خواننده باید حدس بزند — راهحل تکرار نام یا بازنویسی جمله است."
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.08",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "The deal fell ______ at the last minute, so nobody signed.",
+      "questionFa": "قرارداد در آخرین لحظه بینتیجه ماند، پس هیچکس امضا نکرد.",
+      "options": [
+        "through",
+        "off",
+        "out",
+        "over"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "fall through یعنی «بینتیجه ماندن» (برای قرارداد و نقشه)؛ fell off یعنی از چیزی افتاد و fell out یعنی با کسی قهر کرد."
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.09",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 9,
+      "question": "\"Run out of\" means ______.",
+      "questionFa": "«run out of» یعنی ______.",
+      "options": [
+        "to escape from a place",
+        "to have no more of something",
+        "to meet someone by chance",
+        "to postpone something"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "run out of یعنی «تمام کردن ذخیره»: We ran out of milk. دیدنِ اتفاقی کسی come across است و به تعویق انداختن put off."
+    },
+    {
+      "id": "c1.culture.ex.08",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "What does \"portrayal\" mean?",
+      "questionFa": "معنی «portrayal» چیست؟",
+      "options": [
+        "کارگردان",
+        "زیرنویس",
+        "شیوهٔ به تصویر کشیدن",
+        "کلیشه"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "portrayal از portray (به تصویر کشیدن) میآید: شیوهٔ نمایشِ یک شخصیت یا موقعیت در فیلم و داستان."
+    },
+    {
+      "id": "c1.culture.ex.09",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 9,
+      "question": "Choose the correct sentence:",
+      "questionFa": "جملهٔ درست را انتخاب کن:",
+      "options": [
+        "I wish I would have known earlier.",
+        "I wish I knew known earlier.",
+        "I wish I have known earlier.",
+        "I wish I had known earlier."
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای پشیمانی از گذشته wish + گذشتهٔ کامل است: I wish I had known. ترکیب would have بعد از wish در انگلیسی معیار نادرست است."
+    },
+    {
+      "id": "c2.nuance.ex.08",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "In political contexts the word carries a negative ______, although its dictionary meaning is neutral.",
+      "questionFa": "در بافت سیاسی، واژه بار معنایی منفی دارد، هرچند معنای فرهنگنامهایاش خنثی است.",
+      "options": [
+        "connotation",
+        "notation",
+        "collocation",
+        "inflection"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "connotation یعنی «بار معنایی ضمنی» در برابر denotation (معنای واژگانی). notation نشانهگذاری است و collocation همنشینی واژهها."
+    },
+    {
+      "id": "c2.nuance.ex.09",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "fill_blank",
+      "order": 9,
+      "sentence": "Her tone was ______: it could be read as either sympathy or mockery.",
+      "accepted": [
+        "equivocal",
+        "ambiguous"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "equivocal یعنی «دوپهلو و قابل تفسیر دوگانه» — همان ابهامی که نیمهٔ دوم جمله توضیحش میدهد."
+    },
+    {
+      "id": "c2.collocation.ex.07",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "The government ______ a ban on smoking in public places.",
+      "questionFa": "دولت ممنوعیت استعمال دخانیات در مکانهای عمومی را اعمال کرد.",
+      "options": [
+        "did",
+        "imposed",
+        "placed",
+        "committed"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "impose a ban / impose a tax / impose sanctions همنشینی ثابت انگلیسی است؛ make و do با ban نمیآیند."
+    },
+    {
+      "id": "c2.collocation.ex.08",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "The findings are at ______ with the earlier hypothesis.",
+      "questionFa": "یافتهها با فرضیهٔ قبلی در تضادند.",
+      "options": [
+        "difference",
+        "conflict",
+        "odds",
+        "contrast"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "at odds with یعنی «در تضاد با». با conflict و contrast حرف اضافه in است (in conflict with) و at difference / at contrast اصلاً وجود ندارد."
+    },
+    {
+      "id": "c2.irony.ex.07",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "multiple_choice",
+      "order": 7,
+      "question": "\"What a fantastic idea,\" she said, rolling her eyes. Her tone is ______.",
+      "questionFa": "«چه ایدهٔ فوقالعادهای»، در حالی که چشمهایش را چرخاند. لحنش ______ است.",
+      "options": [
+        "sincere",
+        "literal",
+        "formal",
+        "sarcastic"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "sarcasm کنایهای است که ظاهرِ تعریف دارد و معنایش نکوهش؛ چرخاندن چشم نشانهٔ همین تضاد میان ظاهر و مقصود است."
+    },
+    {
+      "id": "c2.irony.ex.08",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "Which sentence is an example of hyperbole?",
+      "questionFa": "کدام جمله نمونهٔ اغراق (hyperbole) است؟",
+      "options": [
+        "I've told you a million times.",
+        "It's a bit cold today.",
+        "Not bad at all.",
+        "I might be late."
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "hyperbole یعنی اغراق برای تأکید: «یک میلیون بار» ادعایی غیرواقعی است. «Not bad» در معنای «خیلی خوب» کمگویی (understatement) است."
+    },
+    {
+      "id": "b1.money.ex.08",
+      "lessonId": "b1.money.lesson-01",
+      "type": "multiple_choice",
+      "order": 8,
+      "question": "We need to cut ______ on our spending this month.",
+      "questionFa": "این ماه باید از هزینههایمان کم کنیم.",
+      "options": [
+        "off",
+        "down",
+        "in",
+        "up"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "cut down on یعنی «کاستن از» هزینه یا مصرف؛ cut off یعنی قطع کردن و cut up یعنی تکه کردن."
     }
   ]
 }

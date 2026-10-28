@@ -22,8 +22,8 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 22):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 465 exercises (6–12/lesson + reading passages + meaning items + A1 pronunciation drills +
+- **CEFR bundle (contentVersion 24):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
+  each), 482 exercises (8–19/lesson + reading passages + meaning items + A1 pronunciation drills +
   P2 recall/production items), 290 vocabulary entries (6/lesson, 8 in the numbers lesson),
   89 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
   difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
@@ -65,7 +65,7 @@
   fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 465 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 482 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

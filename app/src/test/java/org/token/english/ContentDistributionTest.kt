@@ -138,7 +138,6 @@ class ContentDistributionTest {
         "b1.work.ex.04" to "past-simple target — 'do' is a different tense the lesson does not teach",
         "b1.news.ex.03" to "past-simple passive target — 'had been' needs context the sentence lacks",
         "b1.news.ex.04" to "be-passive agreement on 'news' — 'gets' is a different passive structure",
-        "b1.plans.ex.03" to "unique second-conditional modal",
         "b1.experiences.ex.03" to "unique past-perfect auxiliary",
         "b1.experiences.ex.04" to "past-continuous target — 'up to' dodges the -ing structure",
         "b2.media.ex.03" to "unique future-perfect auxiliary",

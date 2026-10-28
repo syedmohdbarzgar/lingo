@@ -13,7 +13,6 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
-import org.token.english.core.billing.TrialClock
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
@@ -25,8 +24,7 @@ data class SettingsUiState(
     val isLoading: Boolean = true,
     val settings: AppSettings? = null,
     /** Current entitlement so the subscription card can state it plainly. */
-    val access: AccessLevel = AccessLevel.TRIAL,
-    val trialRemainingMillis: Long = 0L,
+    val access: AccessLevel = AccessLevel.LOCKED,
     val subscriptionUntil: Long = 0L,
     /** Why access is held — a free companion grant is not a purchase. */
     val accessReason: AccessReason = AccessReason.NONE,
@@ -41,7 +39,7 @@ class SettingsViewModel(
     private val knowledgeRepository: KnowledgeRepository,
     private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
-    /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
+    /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
     private val accessTickMillis: Long = 60_000L,
 ) : ViewModel() {
 
@@ -74,8 +72,8 @@ class SettingsViewModel(
         }
         if (accessTickMillis > 0) {
             viewModelScope.launch {
-                // Trial remaining decays with wall time while the flow stays silent —
-                // tick so the status line never shows a stale countdown.
+                // The flow only emits on writes, so an expired subscription would
+                // otherwise keep the status line saying "active" until a restart.
                 while (true) {
                     delay(accessTickMillis)
                     if (trialAndSubscription != null) recomputeAccess()
@@ -86,15 +84,8 @@ class SettingsViewModel(
 
     private fun recomputeAccess() {
         val ts = trialAndSubscription ?: return
-        val now = System.currentTimeMillis()
-        val remaining = TrialClock.remainingMs(
-            ts.trialClockState(),
-            now,
-            android.os.SystemClock.elapsedRealtime(),
-        )
         val entitlement = EntitlementPolicy.entitlement(
-            now = now,
-            trialRemainingMs = remaining,
+            now = System.currentTimeMillis(),
             subscriptionUntil = ts.subscriptionUntil,
             companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
@@ -103,7 +94,6 @@ class SettingsViewModel(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
                 companionStatus = companion,
-                trialRemainingMillis = remaining,
                 subscriptionUntil = ts.subscriptionUntil,
             )
         }

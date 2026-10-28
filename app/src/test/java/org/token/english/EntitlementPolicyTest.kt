@@ -6,6 +6,11 @@ import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.EntitlementPolicy
 
+/**
+ * The gating rule. There is no free trial any more (product decision): a device
+ * opens on LOCKED unless it holds a live subscription or the companion grant, and
+ * the reason travels with the level so no screen calls a grant a purchase.
+ */
 class EntitlementPolicyTest {
 
     private val now = 1_759_300_000_000L
@@ -15,48 +20,23 @@ class EntitlementPolicyTest {
     fun `subscription wins over everything while active`() {
         val level = EntitlementPolicy.level(
             now = now,
-            trialRemainingMs = 0L, // trial long used up
             subscriptionUntil = now + 60_000,
         )
         assertEquals(AccessLevel.PREMIUM, level)
     }
 
     @Test
-    fun `expired subscription falls back to trial while trial lasts`() {
+    fun `a fresh install with nothing active is locked`() {
+        val entitlement = EntitlementPolicy.entitlement(now = now, subscriptionUntil = 0L)
+        assertEquals(AccessLevel.LOCKED, entitlement.level)
+        assertEquals(AccessReason.NONE, entitlement.reason)
+    }
+
+    @Test
+    fun `an expired subscription is locked - there is no trial to fall back to`() {
         val level = EntitlementPolicy.level(
             now = now,
-            trialRemainingMs = 3 * day,
             subscriptionUntil = now - day,
-        )
-        assertEquals(AccessLevel.TRIAL, level)
-    }
-
-    @Test
-    fun `active subscription outranks a running trial`() {
-        val level = EntitlementPolicy.level(
-            now = now,
-            trialRemainingMs = day,
-            subscriptionUntil = now + day,
-        )
-        assertEquals(AccessLevel.PREMIUM, level)
-    }
-
-    @Test
-    fun `trial over and no subscription means locked`() {
-        val level = EntitlementPolicy.level(
-            now = now,
-            trialRemainingMs = 0L,
-            subscriptionUntil = 0L,
-        )
-        assertEquals(AccessLevel.LOCKED, level)
-    }
-
-    @Test
-    fun `trial never started and no subscription means locked`() {
-        val level = EntitlementPolicy.level(
-            now = now,
-            trialRemainingMs = 0L,
-            subscriptionUntil = 0L,
         )
         assertEquals(AccessLevel.LOCKED, level)
     }
@@ -65,7 +45,6 @@ class EntitlementPolicyTest {
     fun `subscription that ended exactly now is no longer premium`() {
         val level = EntitlementPolicy.level(
             now = now,
-            trialRemainingMs = 0L,
             subscriptionUntil = now,
         )
         assertEquals(AccessLevel.LOCKED, level)
@@ -74,10 +53,9 @@ class EntitlementPolicyTest {
     // ---------------------------------------------- companion app (org.token.zaribar)
 
     @Test
-    fun `installed companion app grants free premium after the trial and without a purchase`() {
+    fun `installed companion app grants free premium without a purchase`() {
         val entitlement = EntitlementPolicy.entitlement(
             now = now,
-            trialRemainingMs = 0L,
             subscriptionUntil = 0L,
             companionAppInstalled = true,
         )
@@ -90,7 +68,6 @@ class EntitlementPolicyTest {
     fun `removing the companion app takes the free access away again`() {
         val entitlement = EntitlementPolicy.entitlement(
             now = now,
-            trialRemainingMs = 0L,
             subscriptionUntil = 0L,
             companionAppInstalled = false,
         )
@@ -99,11 +76,10 @@ class EntitlementPolicyTest {
     }
 
     @Test
-    fun `the companion grant outranks a running trial`() {
+    fun `the companion grant outranks an expired subscription`() {
         val entitlement = EntitlementPolicy.entitlement(
             now = now,
-            trialRemainingMs = 3 * day,
-            subscriptionUntil = 0L,
+            subscriptionUntil = now - day,
             companionAppInstalled = true,
         )
         assertEquals(AccessLevel.PREMIUM, entitlement.level)
@@ -114,7 +90,6 @@ class EntitlementPolicyTest {
     fun `a paid subscription is still reported as a subscription with the companion installed`() {
         val entitlement = EntitlementPolicy.entitlement(
             now = now,
-            trialRemainingMs = 0L,
             subscriptionUntil = now + day,
             companionAppInstalled = true,
         )
@@ -124,10 +99,10 @@ class EntitlementPolicyTest {
 
     @Test
     fun `the level shortcut keeps working and honours the companion flag`() {
-        assertEquals(AccessLevel.LOCKED, EntitlementPolicy.level(now, 0L, 0L))
+        assertEquals(AccessLevel.LOCKED, EntitlementPolicy.level(now, 0L))
         assertEquals(
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(now, 0L, 0L, companionAppInstalled = true),
+            EntitlementPolicy.level(now, 0L, companionAppInstalled = true),
         )
     }
 }

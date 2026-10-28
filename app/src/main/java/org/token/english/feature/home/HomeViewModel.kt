@@ -17,7 +17,6 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
-import org.token.english.core.billing.TrialClock
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.SkillProfile
@@ -60,8 +59,7 @@ data class HomeUiState(
     val levelComplete: Boolean = false,
     /** The next level above the current one that still has pending lessons. */
     val nextLevel: LearningLevel? = null,
-    val access: AccessLevel = AccessLevel.TRIAL,
-    val trialRemainingMillis: Long = 0L,
+    val access: AccessLevel = AccessLevel.LOCKED,
     /** Why access is held — a free companion grant is not a paid subscription. */
     val accessReason: AccessReason = AccessReason.NONE,
     /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
@@ -85,7 +83,7 @@ class HomeViewModel(
     private val getSkillProfiles: GetSkillProfilesUseCase,
     private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
-    /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
+    /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
     private val accessTickMillis: Long = ACCESS_TICK_MS,
     /** Re-check of the due count; tests pass 0 to read it once. */
     private val dueTickMillis: Long = DUE_TICK_MS,
@@ -102,10 +100,9 @@ class HomeViewModel(
     private var profiles: List<SkillProfile> = emptyList()
     private var stats: StudyStats? = null
     private var dueCount: Int = 0
-    private var access: AccessLevel = AccessLevel.TRIAL
+    private var access: AccessLevel = AccessLevel.LOCKED
     private var accessReason: AccessReason = AccessReason.NONE
     private var companion: CompanionStatus = CompanionStatus.ABSENT
-    private var trialRemainingMillis: Long = 0L
     private var trialAndSubscription: TrialAndSubscription? = null
 
     init {
@@ -126,8 +123,8 @@ class HomeViewModel(
         }
         if (accessTickMillis > 0) {
             viewModelScope.launch {
-                // Trial remaining decays with wall time, but the flow only emits on
-                // data changes — tick so the banner and lock state stay honest.
+                // The stored flow only emits on data changes, so an expired
+                // subscription would otherwise keep the app unlocked until a write.
                 while (true) {
                     delay(accessTickMillis)
                     if (trialAndSubscription != null) recomputeAccess()
@@ -189,13 +186,8 @@ class HomeViewModel(
 
     private fun recomputeAccess() {
         val ts = trialAndSubscription ?: return
-        val now = System.currentTimeMillis()
-        val state = ts.trialClockState()
-        val elapsed = android.os.SystemClock.elapsedRealtime()
-        trialRemainingMillis = TrialClock.remainingMs(state, now, elapsed)
         val entitlement = EntitlementPolicy.entitlement(
-            now = now,
-            trialRemainingMs = trialRemainingMillis,
+            now = System.currentTimeMillis(),
             subscriptionUntil = ts.subscriptionUntil,
             companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
@@ -239,7 +231,6 @@ class HomeViewModel(
             access = access,
             accessReason = accessReason,
             companionStatus = companion,
-            trialRemainingMillis = trialRemainingMillis,
             levelComplete = levelComplete,
             nextLevel = nextLevel,
         )

@@ -428,44 +428,6 @@ class SettingsRepositoryImpl(
             )
         }
 
-    override suspend fun ensureTrialStarted(now: Long, elapsedRealtime: Long) {
-        context.dataStore.edit { prefs ->
-            if (prefs[Keys.TRIAL_STARTED] == null) {
-                prefs[Keys.TRIAL_STARTED] = now
-                prefs[Keys.TRIAL_CONSUMED] = 0L
-                prefs[Keys.TRIAL_LAST_WALL] = now
-                prefs[Keys.TRIAL_LAST_ELAPSED] = elapsedRealtime
-            } else {
-                val state = org.token.english.core.billing.TrialClockState(
-                    startedAt = prefs[Keys.TRIAL_STARTED] ?: 0L,
-                    consumedMs = prefs[Keys.TRIAL_CONSUMED] ?: 0L,
-                    lastWallMs = prefs[Keys.TRIAL_LAST_WALL] ?: 0L,
-                    lastElapsedMs = prefs[Keys.TRIAL_LAST_ELAPSED] ?: 0L,
-                )
-                // Pre-checkpoint installs (or fresh data) get a baseline now, so
-                // consumption starts being verified from this run onwards.
-                val advanced = if (state.lastWallMs <= 0L) {
-                    state.copy(lastWallMs = now, lastElapsedMs = elapsedRealtime)
-                } else {
-                    org.token.english.core.billing.TrialClock.advance(state, now, elapsedRealtime)
-                }
-                prefs[Keys.TRIAL_CONSUMED] = advanced.consumedMs
-                prefs[Keys.TRIAL_LAST_WALL] = advanced.lastWallMs
-                prefs[Keys.TRIAL_LAST_ELAPSED] = advanced.lastElapsedMs
-            }
-        }
-    }
-
-    override suspend fun saveTrialCheckpoint(consumedMs: Long, lastWallMs: Long, lastElapsedMs: Long) {
-        context.dataStore.edit { prefs ->
-            if (prefs[Keys.TRIAL_STARTED] != null) {
-                prefs[Keys.TRIAL_CONSUMED] = consumedMs
-                prefs[Keys.TRIAL_LAST_WALL] = lastWallMs
-                prefs[Keys.TRIAL_LAST_ELAPSED] = lastElapsedMs
-            }
-        }
-    }
-
     override suspend fun setSubscriptionUntil(epochMillis: Long) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SUBSCRIPTION_UNTIL] = epochMillis

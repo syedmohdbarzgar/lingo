@@ -22,11 +22,15 @@
   stores' copies can only be pulled from a device that installed them there. **Settled (N-2):** where the Bazaar link lives. Every download button used to sit in the
   installed state (Home, paywall, settings), where it offered the learner what they already had; the
   link now belongs to the not-installed state, and one pure rule — `CompanionOffer.isOffered` —
-  decides it for the paywall, the Settings subscription card and the Home trial banner, so a device
+  decides it for the paywall, the Settings subscription card and Home's free-route card, so a device
   holding the grant can never be shown the offer again.
-- **The 7-day trial is local.** Clear-data or a reinstall restarts it; there is no server to anchor
-  it. Accepted (the alternative is the store's own free-trial offer). Precedence is
-  SUBSCRIPTION → COMPANION_APP → TRIAL → LOCKED in `EntitlementPolicy`.
+- **The free trial was removed, but its DataStore keys remain.** The 7-day trial needed a local
+  elapsed-time clock (`TrialClock`, its checkpoint fields and the once-a-minute write); removing the
+  feature deleted the clock, the tick and the countdown UI, while `trialStartedAt` and the three
+  `trial_*` preference keys stay in the persisted record untouched. That is deliberate: dropping the
+  keys would mean a DataStore migration for a value no code reads any more, and an existing install
+  must open exactly as before. **Nothing grants access from them** — precedence is
+  SUBSCRIPTION → COMPANION_APP → LOCKED in `EntitlementPolicy`, and a fresh install is locked.
 - Myket has no real subscriptions: expiry is local and re-derived from the owned purchase time —
   re-prove purchase through support if a user claims a lost subscription. A refund or revocation
   happens in the store and cannot be observed offline, so it is neither granted nor renewed: access
@@ -63,6 +67,14 @@
   4-minute cap before stopping (the cap stands as a product decision), and history earned under
   the old counting is left untouched — noted once in the next release
   ([`release.md`](release.md)).
+- **Conversation practice ships its recogniser inside the APK.** The Vosk model is ~40 MB of
+  assets (`scripts/fetch_vosk_model.sh`; not committed, but packaged), so the APK grows to roughly
+  70 MB and every install pays for a recogniser whether or not the learner ever opens the screen.
+  Accepted for now because a downloadable model (Play Asset Delivery, a content package) needs the
+  server infrastructure the connectivity policy keeps suspended. Alternatives when the size starts
+  to hurt: split the model into (small) and (large) flavors, or ship it as a Play Asset Pack on the
+  `googlePlay` flavor only. The recognition itself is speech-to-text on the model's vocabulary —
+  it grades a whole sentence, not per-word pronunciation (see [`connectivity.md`](connectivity.md)).
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

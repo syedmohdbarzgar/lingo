@@ -113,7 +113,7 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "a purchase inside its paid period must unlock after a reinstall",
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = restored),
+            EntitlementPolicy.level(now, subscriptionUntil = restored),
         )
     }
 
@@ -123,7 +123,7 @@ class SubscriptionRecoveryTest {
         val cleared = 0L
         assertEquals(
             AccessLevel.LOCKED,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = cleared),
+            EntitlementPolicy.level(now, subscriptionUntil = cleared),
         )
     }
 
@@ -143,12 +143,12 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "still premium while the mirror is in the future",
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = mirror),
+            EntitlementPolicy.level(now, subscriptionUntil = mirror),
         )
         assertEquals(
             "…and locked an hour after it lapses",
             AccessLevel.LOCKED,
-            EntitlementPolicy.level(now + 3 * day + hour, trialRemainingMs = 0L, subscriptionUntil = mirror),
+            EntitlementPolicy.level(now + 3 * day + hour, subscriptionUntil = mirror),
         )
     }
 
@@ -172,7 +172,7 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "an owned purchase inside its period unlocks after a reinstall",
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = restored),
+            EntitlementPolicy.level(now, subscriptionUntil = restored),
         )
     }
 
@@ -184,7 +184,7 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "expired fixed-length access is not premium",
             AccessLevel.LOCKED,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = restored),
+            EntitlementPolicy.level(now, subscriptionUntil = restored),
         )
     }
 
@@ -239,7 +239,7 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "still premium on the day the calendar month would have ended",
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(calendarMonth + 12 * hour, trialRemainingMs = 0L, subscriptionUntil = expiry),
+            EntitlementPolicy.level(calendarMonth + 12 * hour, subscriptionUntil = expiry),
         )
     }
 
@@ -254,12 +254,12 @@ class SubscriptionRecoveryTest {
         assertEquals(
             "paid time already mirrored is honoured",
             AccessLevel.PREMIUM,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = lastReconciled),
+            EntitlementPolicy.level(now, subscriptionUntil = lastReconciled),
         )
         assertEquals(
             "but the mirror never renews itself once the store stops reporting the purchase",
             AccessLevel.LOCKED,
-            EntitlementPolicy.level(lastReconciled + hour, trialRemainingMs = 0L, subscriptionUntil = lastReconciled),
+            EntitlementPolicy.level(lastReconciled + hour, subscriptionUntil = lastReconciled),
         )
     }
 }

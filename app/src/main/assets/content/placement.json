@@ -1,5 +1,5 @@
 {
-  "contentVersion": 23,
+  "contentVersion": 25,
   "questions": [
     {
       "id": "placement.q01",
@@ -456,13 +456,13 @@
       "id": "placement.q16",
       "type": "multiple_choice",
       "level": "C2",
-      "question": "His explanation was concise but rather ______.",
-      "questionFa": "توضیحش مختصر بود اما تا حدی ______.",
+      "question": "The minister's reply was a masterclass in ______: it answered nothing while sounding helpful.",
+      "questionFa": "پاسخ وزیر نمونهٔ کامل ______ بود: هیچ پاسخی نمیداد، اما کمککننده به نظر میرسید.",
       "options": [
-        "lucid",
-        "vague",
-        "detailed",
-        "precise"
+        "candour",
+        "obfuscation",
+        "brevity",
+        "clarity"
       ],
       "correctIndex": 1,
       "skill": "VOCABULARY"
@@ -471,13 +471,13 @@
       "id": "placement.q17",
       "type": "multiple_choice",
       "level": "C2",
-      "question": "The senator's remarks were heavy with ______.",
-      "questionFa": "اظهارات سناتور سرشار از ______ بود.",
+      "question": "The report's conclusions are ______ by its own data: the figures point the other way.",
+      "questionFa": "نتیجه‌گیری‌های گزارش با داده‌های خودش ______ می‌شود: اعداد خلاف آن را نشان می‌دهند.",
       "options": [
-        "clarity",
-        "honesty",
-        "irony",
-        "sincerity"
+        "corroborated",
+        "summarised",
+        "undermined",
+        "duplicated"
       ],
       "correctIndex": 2,
       "skill": "VOCABULARY"

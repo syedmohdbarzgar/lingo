@@ -42,6 +42,14 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"bazaar\"")
             buildConfigField("String", "STORE_NAME", "\"کافه بازار\"")
+            // The app's own store page, used by Settings → «ارتباط با ناشر».
+            // One value per flavor so the intent is the store's own documented one
+            // instead of a guessed scheme: Cafe Bazaar's official intent guide gives
+            // `bazaar://details?id=…` (and `setPackage("com.farsitel.bazaar")`),
+            // with the public page at `cafebazaar.ir/app/<package>`.
+            buildConfigField("String", "STORE_DEEP_LINK", "\"bazaar://details?id=\"")
+            buildConfigField("String", "STORE_WEB_BASE", "\"https://cafebazaar.ir/app/\"")
+            buildConfigField("String", "STORE_PACKAGE", "\"com.farsitel.bazaar\"")
             // The free-route offer may open Cafe Bazaar from this build (N-4).
             buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
             // Public RSA key from developers.cafebazaar.ir (required before release!)
@@ -51,6 +59,16 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"myket\"")
             buildConfigField("String", "STORE_NAME", "\"مایکت\"")
+            // Myket documents its own scheme for opening an app page
+            // (`myket://details?id=…`, myket.ir knowledge base) with the public page
+            // at `myket.ir/app/<package>`. STORE_PACKAGE stays EMPTY on purpose:
+            // pinning this intent to `ir.mservices.market` is not documented (that
+            // package id is documented for the billing service only), and the
+            // `myket://` scheme already resolves to Myket alone — pinning would only
+            // risk sending the user nowhere on a device where Myket is absent.
+            buildConfigField("String", "STORE_DEEP_LINK", "\"myket://details?id=\"")
+            buildConfigField("String", "STORE_WEB_BASE", "\"https://myket.ir/app/\"")
+            buildConfigField("String", "STORE_PACKAGE", "\"\"")
             // The free-route offer may open Cafe Bazaar from this build (N-4).
             buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
             // Public key from developer.myket.ir (optional but recommended)
@@ -64,6 +82,22 @@ android {
             dimension = "store"
             buildConfigField("String", "STORE", "\"googlePlay\"")
             buildConfigField("String", "STORE_NAME", "\"Google Play\"")
+            // Play is the exception: Google's "Linking to Google Play" guide documents
+            // the HTTPS listing URL plus `setPackage("com.android.vending")` to open it
+            // in the Play app — the `market://` details form is not what that guide
+            // documents, so it is not used here. The same URL is both the deep link
+            // and the browser fallback.
+            buildConfigField(
+                "String",
+                "STORE_DEEP_LINK",
+                "\"https://play.google.com/store/apps/details?id=\"",
+            )
+            buildConfigField(
+                "String",
+                "STORE_WEB_BASE",
+                "\"https://play.google.com/store/apps/details?id=\"",
+            )
+            buildConfigField("String", "STORE_PACKAGE", "\"com.android.vending\"")
             // N-4 (decided v14): the free-route offer opens Cafe Bazaar in every
             // flavor while `googlePlay` is not published on Play. BEFORE THE FIRST
             // PLAY RELEASE flip this to false — unless the external-content-links
@@ -208,6 +242,15 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.datastore.preferences)
+
+    // Conversation practice: fully offline speech recognition (Vosk runs on-device
+    // from a model bundled in assets — no network, no cloud recognizer; see
+    // docs/connectivity.md). JNA is a hard requirement of vosk-android and must be
+    // the @aar artifact, or the native library loader fails at runtime. The `@aar`
+    // suffix is written here because version catalogs cannot carry a packaging
+    // classifier (declared as `libs.jna` it resolves to the jar and breaks).
+    implementation(libs.vosk.android)
+    implementation("net.java.dev.jna:jna:${libs.versions.jna.get()}@aar")
 
     // Per-store billing — only the selected marketplace's SDK is packaged
     add("googlePlayImplementation", libs.androidx.billing)

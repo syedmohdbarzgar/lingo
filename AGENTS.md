@@ -22,7 +22,7 @@ The root file is deliberately short; the deep material is in `docs/`:
   route English through `EnglishText`/`AnswerField`; add a test with engine logic changes; bump
   `contentVersion` in all five JSON files together on a content change.
 - **Ask first:** anything on the *suspended* list, a new network feature/permission, a schema
-  migration, or a product decision (trial length, gating).
+  migration, or a product decision (gating, pricing).
 - **Never:** commit secrets (`keystore.properties`, `*.jks`); hardcode design tokens; put raw English
   in the RTL layout; `runCatching { }` around a suspend call; apply `org.jetbrains.kotlin.android`;
   re-run a `scripts/archive/` batch; add a backend-dependent feature unconfirmed.
@@ -120,8 +120,10 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (387 tests / 54 classes as of the v16
-content-gate / Room v6 / typed-placement pass); the full inventory and ViewModel/fake conventions are in
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (426 tests / 56 classes as of the
+conversation-practice pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page,
+and the Vosk verdict engine, whose recogniser half is device-only by nature); the full inventory and
+ViewModel/fake conventions are in
 [`docs/testing.md`](docs/testing.md). Content tests read assets through `File`, so run them with
 `--rerun`. There is no instrumented suite (the template was removed, not kept as a false signal).
 
@@ -145,4 +147,5 @@ content-gate / Room v6 / typed-placement pass); the full inventory and ViewModel
 ## 10. Known design debt
 
 Accepted trade-offs (session-scoped mastery, the companion key pinned from a sideloaded build, the
-local trial, Room v5 migration rules, and more) live in [`docs/debt.md`](docs/debt.md). Read it first.
+removed trial's legacy preference keys, Room migration rules, and more) live in
+[`docs/debt.md`](docs/debt.md). Read it first.

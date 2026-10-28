@@ -1,7 +1,6 @@
 package org.token.english.di
 
 import android.content.Context
-import android.os.SystemClock
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -122,6 +121,25 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         org.token.english.core.audio.AndroidVoiceNote(appContext)
     }
 
+    // Conversation practice: on-device Vosk model + recogniser. One instance for
+    // the process (a second copy would hold a second native model), released when
+    // the practice screen goes away. See feature/conversation/VoskManager.kt.
+    val voskManager: org.token.english.feature.conversation.VoskManager by lazy {
+        org.token.english.feature.conversation.VoskManager(appContext)
+    }
+
+    /** Live recognition state for the practice screen; published by the service. */
+    val conversationSpeech: StateFlow<org.token.english.feature.conversation.SpeechState> =
+        org.token.english.feature.conversation.SpeechBus.state
+
+    /** Starts the mic foreground service — the container is where the Context lives. */
+    fun startConversationRecognition() =
+        org.token.english.feature.conversation.SpeechRecognitionService.start(appContext)
+
+    /** Stops the take and dismisses its notification. Safe when nothing is running. */
+    fun stopConversationRecognition() =
+        org.token.english.feature.conversation.SpeechRecognitionService.stop(appContext)
+
     // Free-access companion app (org.token.zaribar): while it is installed *and
     // signed by the expected key* the subscription is free — see CompanionApp.
     // Re-checked on every foreground and whenever a paywall/home surface opens, so
@@ -172,43 +190,12 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         org.token.english.billing.PlatformBillingGateway(appContext, settingsRepository)
     }
 
-    /** Starts the trial if needed, then asks the store about the subscription. */
+    /** Asks the store about the subscription (payment is the only online surface). */
     suspend fun refreshEntitlements() {
         org.token.english.core.common.runCatchingCancellable {
-            settingsRepository.ensureTrialStarted(
-                now = System.currentTimeMillis(),
-                elapsedRealtime = SystemClock.elapsedRealtime(),
-            )
             if (billing.initialize()) billing.checkSubscription()
         }.onFailure { e ->
             android.util.Log.w("AppContainer", "entitlement refresh failed", e)
-        }
-    }
-
-    /**
-     * Advances the persisted trial checkpoint using real elapsed time (P3):
-     * called once a minute while the process lives, so a reboot or a moved wall
-     * clock can steal at most a minute of trial time.
-     */
-    suspend fun persistTrialProgress() {
-        org.token.english.core.common.runCatchingCancellable {
-            val ts = settingsRepository.observeTrialAndSubscription().first()
-            val state = ts.trialClockState()
-            if (!org.token.english.core.billing.TrialClock.isStarted(state)) {
-                return@runCatchingCancellable
-            }
-            val advanced = org.token.english.core.billing.TrialClock.advance(
-                state,
-                System.currentTimeMillis(),
-                SystemClock.elapsedRealtime(),
-            )
-            if (advanced != state) {
-                settingsRepository.saveTrialCheckpoint(
-                    consumedMs = advanced.consumedMs,
-                    lastWallMs = advanced.lastWallMs,
-                    lastElapsedMs = advanced.lastElapsedMs,
-                )
-            }
         }
     }
 

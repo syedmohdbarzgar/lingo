@@ -1,6 +1,7 @@
 package org.token.english.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -94,13 +95,30 @@ fun AppChip(
         selected -> contentColor ?: MaterialTheme.colorScheme.onPrimaryContainer
         else -> contentColor ?: MaterialTheme.colorScheme.onSurfaceVariant
     }
+    // The selected *fill* is nearly the same tone as the unselected one (light theme:
+    // primaryContainer #E8F2FF vs surfaceContainerLow #F8FAFC = 1.08:1), so the fill
+    // alone does not identify the state — and WCAG 1.4.11 wants 3:1 for exactly that
+    // information (phase-2 contrast audit). A 1dp outline carries it with the smallest
+    // change: a caller that supplies its own content colour gets that colour as the
+    // outline (every level tint measures ≥4.79:1 on the neutral fill), otherwise the
+    // theme's `primary` (4.85:1 light / 6.98:1 dark against the card behind it).
+    val shape = MaterialTheme.shapes.extraLarge
+    val selectionOutline =
+        if (selected) contentColor ?: MaterialTheme.colorScheme.primary else null
     Text(
         text = label,
         style = MaterialTheme.typography.labelMedium,
         color = fg,
         modifier = modifier
-            .clip(MaterialTheme.shapes.extraLarge)
+            .clip(shape)
             .background(bg)
+            .then(
+                if (selectionOutline != null) {
+                    Modifier.border(1.dp, selectionOutline, shape)
+                } else {
+                    Modifier
+                },
+            )
             .then(if (onClick != null) Modifier.clickableNoRipple(onClick) else Modifier)
             .padding(horizontal = AppSpacing.compact, vertical = 6.dp),
     )

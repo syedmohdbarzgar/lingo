@@ -10,6 +10,11 @@ orgJson = "20240303"   # real org.json for JVM unit tests (android.jar stubs are
 coroutinesTest = "1.10.2"  # ViewModel tests: test Main dispatcher (checklist B-6)
 sqliteJdbc = "3.49.1.0"    # host-JVM SQLite, so the migration chain can be executed with real data
 robolectric = "4.17"       # Compose screen smoke tests on the host JVM (checklist v15 B-6)
+# On-device speech recognition for conversation practice (docs/connectivity.md:
+# "an on-device recognizer needs no server"). Vosk ships its own native libs per ABI;
+# JNA is required by vosk-android and must be the @aar artifact.
+vosk = "0.3.47"
+jna = "5.13.0"
 
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -38,6 +43,10 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 org-json = { group = "org.json", name = "json", version.ref = "orgJson" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 sqlite-jdbc = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJdbc" }
+# Conversation practice — fully offline ASR (no network, no cloud recognizer).
+vosk-android = { group = "com.alphacephei", name = "vosk-android", version.ref = "vosk" }
+# JNA is declared in app/build.gradle.kts with the `@aar` suffix — version catalogs
+# cannot express a packaging classifier, and vosk-android needs the AAR (not the jar).
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }

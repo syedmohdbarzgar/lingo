@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Lingo</string>
+
+    <!-- Conversation practice — foreground-service notification (a Service cannot
+         use inline Compose strings; resources are the Android-native home for
+         notification text, and they are the only strings in the app not inline). -->
+    <string name="notif_channel_speech">تمرین مکالمه</string>
+    <string name="notif_speech_title">تمرین مکالمه روشن است</string>
+    <string name="notif_speech_text">در حال گوش دادن به صدای شماست. برای پایان، توقف را بزنید.</string>
+    <string name="notif_speech_stop">توقف</string>
 </resources>

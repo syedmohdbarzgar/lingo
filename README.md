@@ -94,12 +94,12 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 21)**
+**Content bundle (JSON `contentVersion` 24)**
 
 | | Count |
 |---|---|
 | Lessons | 48 — A1: 15, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 465 |
+| Exercises | 482 |
 | Vocabulary entries | 290 |
 | Knowledge items | 89 |
 | Placement questions | 36 |
@@ -109,10 +109,10 @@ The bundle is authored data only: extending it needs **no Kotlin change**, just 
 
 **Subscription**
 
-All content is subscription-gated with a **7-day free trial**; plans are `sub_monthly` and
-`sub_yearly`. Access is decided by a pure, unit-tested `EntitlementPolicy` (SUBSCRIPTION →
-COMPANION_APP → TRIAL → LOCKED). Each release build targets one market and embeds only that
-market's billing SDK:
+All content is subscription-gated from the first launch — there is **no free trial**; plans are
+`sub_monthly` and `sub_yearly`. Access is decided by a pure, unit-tested `EntitlementPolicy`
+(SUBSCRIPTION → COMPANION_APP → LOCKED). Each release build targets one market and embeds only
+that market's billing SDK:
 
 | Flavour | Store | SDK |
 |---|---|---|
@@ -120,8 +120,8 @@ market's billing SDK:
 | `myket` | مایکت | myket-billing-client 1.19 (Myket has no subscriptions — plans are consumables with a local expiry) |
 | `googlePlay` | Google Play | Play Billing 9.1.0 |
 
-The trial is measured with wall-clock time plus `elapsedRealtime` checkpoints, so moving the device
-clock does not hand out extra trial time.
+A subscription's validity is mirrored locally from the store's answer with a 32-day grace, so a
+short offline spell never locks a paying learner out; the store stays the source of truth.
 
 **Free with the Zaribar app:** while the companion app `org.token.zaribar` is installed, the
 subscription is free — the grant is re-checked on every foreground and ends when the companion is
@@ -129,7 +129,7 @@ removed. The install is trusted only when its signing certificate matches
 `CompanionApp.EXPECTED_SIGNING_SHA256` (the package id alone would be spoofable). While the grant is
 active the app states the free access and **shows no download button** — the companion is already on
 the device. The Cafe Bazaar link (`bazaar://details?id=org.token.zaribar`) belongs to the
-not-installed state, where the paywall, the Settings subscription card and the Home trial banner all
+not-installed state, where the paywall, the Settings subscription card and Home's free-route card all
 name the free route; **one pure rule decides that** — `CompanionOffer.isOffered`, so the offer can
 never come back on a device that already has the companion. The check is a single local `PackageManager` lookup: no server, no permission,
 and it is declared in the manifest `<queries>` block for API 30+ visibility.
@@ -177,6 +177,11 @@ and buys nothing — do it at release points or when putting a build on a device
 
 # Content gate: validates every bundled JSON file (also runs in preBuild).
 ./gradlew validateContent
+
+# Offline speech model for conversation practice — not committed (~40 MB), fetched once.
+# Re-runnable; `--force` re-downloads. Without it the app still builds, but the
+# practice screen can only report the missing model.
+bash scripts/fetch_vosk_model.sh
 ```
 
 Only per-flavour unit-test tasks exist (`testDebugUnitTest` is not a task under AGP 9's
@@ -228,11 +233,11 @@ because Poolakey would otherwise silently run with signature verification disabl
 ```
 app/src/main/java/org/token/english
 ├── MainActivity.kt              Compose host: theme gate + forced RTL root
-├── EnglishApp.kt                Application → AppContainer, seeding, reminder and trial ticks
+├── EnglishApp.kt                Application → AppContainer, seeding and reminder ticks
 ├── navigation/                  Routes + NavHost + bottom bar
 ├── core/
 │   ├── designsystem/            Colour/type/shape/spacing tokens + shared components
-│   ├── billing/                 BillingGateway, EntitlementPolicy (pure), TrialClock
+│   ├── billing/                 BillingGateway, EntitlementPolicy (pure), SubscriptionMath
 │   ├── audio/                   AudioPlayer interface + on-device TTS implementation
 │   └── common/                  TimeUtil (day keys, streaks), SafeCatching
 ├── domain/                      PURE KOTLIN — no Android, no Room, no Compose
@@ -327,7 +332,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ```
 
 344 unit tests across 47 classes. The pure cores carry the most weight — review scheduling,
-mastery and answer checking, streak day keys, entitlement policy and trial clock, placement scoring
+mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
 has its own tests. `LearningPathJourneyTest` runs the whole learner journey on the real bundle with

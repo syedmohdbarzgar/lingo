@@ -54,7 +54,7 @@ import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.paywallViewModelFactory
 
 /**
- * Subscription paywall: 24h trial → monthly/yearly plans, sold through the
+ * Subscription paywall: monthly/yearly plans, sold through the
  * hosting marketplace's own billing (bazaar / myket / googlePlay flavor).
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -145,7 +145,7 @@ fun PaywallScreen(
                 }
 
                 locked -> {
-                    // No plans yet and trial is over: explain + offer retry and a
+                    // No plans yet and nothing is active: explain + offer retry and a
                     // way out (settings) instead of a dead end.
                     state.errorMessage?.let { ErrorText(it) }
                     PrimaryButton(
@@ -240,16 +240,6 @@ private fun Hero(state: PaywallUiState) {
                     "اشتراک شما رایگان است: برنامهٔ «زریبار» روی این دستگاه نصب است."
 
                 else -> when (state.access) {
-                org.token.english.core.billing.AccessLevel.TRIAL -> {
-                    val hours = state.trialRemainingMillis / (60 * 60 * 1000)
-                    val days = state.trialRemainingMillis / (24 * 60 * 60 * 1000)
-                    when {
-                        days >= 1 -> "دوره رایگان شما $days روز و ${hours % 24} ساعت دیگر تمام می‌شود."
-                        hours >= 1 -> "دوره رایگان شما $hours ساعت دیگر تمام می‌شود."
-                        else -> "دوره رایگان شما رو به پایان است."
-                    }
-                }
-
                 org.token.english.core.billing.AccessLevel.PREMIUM -> "اشتراک شما فعال است. ممنونیم!"
                 org.token.english.core.billing.AccessLevel.LOCKED ->
                     "برای ادامه یادگیری، اشتراک فعال کنید. برای اعضا: خرید یا بازیابی اشتراک از همین صفحه انجام می‌شود."

@@ -45,3 +45,21 @@ Thumbs.db
 # Developer scratch — a device screenshot taken during manual verification can
 # show personal data and is never part of the app. Keep it local.
 /device_screenshot.png
+/shots/
+
+# ---------------------------------------------------------------------------
+# Push-notification / backend keys — NEVER commit these
+# The app itself only ever carries a public google-services.json (which is fine to
+# commit: it ships inside the APK). The credentials that must never land in the
+# repo are the ones that can *send* messages: a Firebase service-account key, or
+# any server key file used to call FCM. See docs/connectivity.md.
+# ---------------------------------------------------------------------------
+google-services.json.bak
+google-services.json
+*-service-account*.json
+*firebase-adminsdk*.json
+firebase-service-account*.json
+
+# Offline Vosk model for conversation practice (~40 MB) — fetched by
+# scripts/fetch_vosk_model.sh, packaged into the APK as an asset, never committed.
+app/src/main/assets/vosk/

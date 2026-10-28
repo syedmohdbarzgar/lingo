@@ -17,7 +17,6 @@ import org.token.english.core.billing.PurchaseOutcome
 import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.billing.TrialAndSubscription
-import org.token.english.core.billing.TrialClock
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.repository.SettingsRepository
 
@@ -29,8 +28,7 @@ data class PaywallUiState(
     val errorMessage: String? = null,
     /** True right after a successful purchase — used to close the sheet. */
     val purchased: Boolean = false,
-    val access: AccessLevel = AccessLevel.TRIAL,
-    val trialRemainingMillis: Long = 0L,
+    val access: AccessLevel = AccessLevel.LOCKED,
     val storeName: String = "",
     /**
      * Which marketplace this build ships to. The small print must match its own
@@ -54,7 +52,7 @@ class PaywallViewModel(
     private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
     private val refreshEntitlements: suspend () -> Unit,
-    /** Wall-clock tick for the trial countdown; tests pass 0 to keep it still. */
+    /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
     private val accessTickMillis: Long = 60_000L,
 ) : ViewModel() {
 
@@ -83,8 +81,8 @@ class PaywallViewModel(
         }
         if (accessTickMillis > 0) {
             viewModelScope.launch {
-                // The countdown decays with wall time even when nothing is written
-                // to settings — tick while the paywall is open.
+                // A subscription can lapse while the paywall is open — keep the
+                // status line honest without waiting for a settings write.
                 while (true) {
                     kotlinx.coroutines.delay(accessTickMillis)
                     if (trialAndSubscription != null) recomputeAccess()
@@ -96,12 +94,8 @@ class PaywallViewModel(
 
     private fun recomputeAccess() {
         val ts = trialAndSubscription ?: return
-        val now = System.currentTimeMillis()
-        val elapsed = android.os.SystemClock.elapsedRealtime()
-        val remaining = TrialClock.remainingMs(ts.trialClockState(), now, elapsed)
         val entitlement = EntitlementPolicy.entitlement(
-            now = now,
-            trialRemainingMs = remaining,
+            now = System.currentTimeMillis(),
             subscriptionUntil = ts.subscriptionUntil,
             companionAppInstalled = companion == CompanionStatus.TRUSTED,
         )
@@ -110,7 +104,6 @@ class PaywallViewModel(
                 access = entitlement.level,
                 accessReason = entitlement.reason,
                 companionStatus = companion,
-                trialRemainingMillis = remaining,
             )
         }
     }

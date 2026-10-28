@@ -301,8 +301,6 @@ class LearningPathJourneyTest {
         // SubscriptionRecoveryTest and EntitlementPolicyTest.
         override fun observeTrialAndSubscription(): Flow<TrialAndSubscription> =
             flow.map { TrialAndSubscription(it.trialStartedAt, it.subscriptionUntil, 0L, 0L, 0L) }
-        override suspend fun ensureTrialStarted(now: Long, elapsedRealtime: Long) {}
-        override suspend fun saveTrialCheckpoint(consumedMs: Long, lastWallMs: Long, lastElapsedMs: Long) {}
         override suspend fun setSubscriptionUntil(epochMillis: Long) {
             flow.value = flow.value.copy(subscriptionUntil = epochMillis)
         }
@@ -533,11 +531,11 @@ class LearningPathJourneyTest {
     fun `a locked entitlement does not touch local learning progress`() = runBlocking {
         val app = harness()
 
-        // Trial over, no subscription: the paywall gates the UI, but nothing about
-        // the offline learning core changes.
+        // No subscription: the paywall gates the UI, but nothing about the offline
+        // learning core changes.
         assertEquals(
             AccessLevel.LOCKED,
-            EntitlementPolicy.level(now, trialRemainingMs = 0L, subscriptionUntil = 0L),
+            EntitlementPolicy.level(now, subscriptionUntil = 0L),
         )
 
         app.completeLesson(firstLesson.id, now)

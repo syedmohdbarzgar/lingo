@@ -19,6 +19,9 @@
 #      digest from the build the STORE publishes before releasing (N-1/N-5): a
 #      changed Zaribar key fails closed for every store install. Procedure and
 #      its manual fallback: docs/release.md.
+#   6. The offline Vosk model is unpacked into assets — it is not committed (it is
+#      ~40 MB), so a clone that skipped scripts/fetch_vosk_model.sh would otherwise
+#      ship an APK whose conversation-practice screen can only say "model missing".
 #
 # Usage:
 #   scripts/release_check.sh [bazaar|myket|googlePlay]   # default: check all
@@ -155,6 +158,25 @@ else
   note "  Procedure + manual fallback: docs/release.md (N-1). The Bazaar API call there is"
   note "  undocumented — if it stops answering, download the APK in the Bazaar app and run"
   note "      apksigner verify --print-certs zaribar.apk"
+fi
+
+# --- 5. offline speech model ---------------------------------------------------
+#
+# Conversation practice ships without a recogniser if this is missing: the asset
+# is not committed (it is ~40 MB), so a fresh clone assembles an APK whose
+# practice screen can only report "model missing". The app degrades cleanly, but a
+# *release* must not ship a dead feature.
+
+echo
+echo "Offline speech model:"
+vosk_model="app/src/main/assets/vosk/vosk-model-small-en-us-0.15"
+if [ -f "$vosk_model/uuid" ] && [ -d "$vosk_model/am" ] && [ -d "$vosk_model/graph" ]; then
+  ok "Vosk model is bundled ($(find "$vosk_model" -type f | wc -l | tr -d ' ') files)."
+else
+  fail "$vosk_model is missing or incomplete — conversation practice would ship dead."
+  echo "          Fetch it before assembling a release:"
+  echo
+  echo "              bash scripts/fetch_vosk_model.sh"
 fi
 
 # --- summary -----------------------------------------------------------------

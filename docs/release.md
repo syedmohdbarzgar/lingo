@@ -20,7 +20,8 @@ Before a release, run the pre-flight so a missing value does not surface six min
 `assemble*Release`:
 
 ```bash
-scripts/release_check.sh            # checks the signing key, bazaarRsaKey, the companion digest
+scripts/release_check.sh            # checks the signing key, bazaarRsaKey, the companion digest,
+                                    # and that the offline Vosk model is in assets
 scripts/release_check.sh --print-template   # prints a keystore.properties template
 ```
 

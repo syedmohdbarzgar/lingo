@@ -35,6 +35,11 @@ object ContentParser {
         "translation",
         "sentence_production",
         "listening",
+        // Conversation practice reads these out of Room; a type missing here is
+        // dropped at seed time and the practice screen has nothing to ask for
+        // (v25: the two `a2.directions` speaking items were invisible for that
+        // reason). `parseExercise` below must know the type too.
+        "speaking",
     )
 
     data class RawExercise(

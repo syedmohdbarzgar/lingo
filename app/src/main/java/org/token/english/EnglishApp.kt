@@ -7,7 +7,6 @@ import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.token.english.di.AppContainer
 import org.token.english.reminder.DailyReminder
@@ -70,19 +69,10 @@ class EnglishApp : Application() {
                 }
             }
         }
-        // Trial + store subscription check (payment is the only online surface),
-        // then keep the trial checkpoint advancing with real elapsed time.
+        // Store subscription check (payment is the only online surface).
         appScope.launch {
             container.refreshCompanionInstalled()
             container.refreshEntitlements()
-            while (true) {
-                delay(TRIAL_CHECKPOINT_MS)
-                container.persistTrialProgress()
-            }
         }
-    }
-
-    private companion object {
-        const val TRIAL_CHECKPOINT_MS = 60_000L
     }
 }

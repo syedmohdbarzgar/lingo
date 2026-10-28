@@ -24,14 +24,25 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 All flavors also carry `POST_NOTIFICATIONS` (declared in the main manifest — the daily reminder
 posts a local notification on API 33+; without the declaration the Settings request is a no-op and
 `lintBazaarDebug` fails with `MissingPermission`), `RECEIVE_BOOT_COMPLETED` (the reminder is re-armed
-after a reboot), `RECORD_AUDIO` and `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated,
-not a real app permission).
+after a reboot), `RECORD_AUDIO`, `FOREGROUND_SERVICE` + `FOREGROUND_SERVICE_MICROPHONE` (the practice
+service's `microphone` type — targetSdk 37 requires both the declaration and the type passed to
+`startForeground`, and drops the type silently if only one is present) and
+`DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a real app permission).
 
-`RECORD_AUDIO` is **local-only speaking practice**: the learner's take is written to the app cache
-dir, played back for comparison against the on-device TTS model, and never uploaded (no recogniser,
-no network; see `docs/content-pipeline.md` for the `speaking` item). The card asks for the mic
-itself, so no other screen can trigger the prompt, and a refusal downgrades the item to
-listen-and-compare instead of breaking the lesson. The three-flavor release-prep pass (P3, Oct 2026) confirmed this set in each merged
+`RECORD_AUDIO` serves **two local-only** features, and neither ever uploads audio:
+
+1. **A voice note inside a lesson speaking item** (see `docs/content-pipeline.md`): the take is
+   written to the app cache dir and played back against the on-device TTS model. The card asks for
+   the mic itself, so no other screen triggers the prompt, and a refusal downgrades the item to
+   listen-and-compare instead of breaking the lesson.
+2. **Conversation practice** (`feature/conversation/`): an on-device Vosk recogniser transcribes the
+   learner's take and a pure engine (`domain/engine/ConversationScorer.kt`) grades it. The model is
+   the only bundled binary — `assets/vosk/vosk-model-small-en-us-0.15`, fetched by
+   `scripts/fetch_vosk_model.sh` and copied to internal storage on first use (a `uuid` marker
+   certifies the copy). No recogniser service, no network call: with the phone in airplane mode the
+   feature works exactly the same, and a device without the asset reports «مدل تشخیص گفتار روی این
+   نسخه نصب نیست» instead of failing silently. Recording runs in a `microphone`-typed foreground
+   service so a whole sentence survives a screen-off take. The three-flavor release-prep pass (P3, Oct 2026) confirmed this set in each merged
 manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar/poolakey`,
 `ir/myket/billingclient`, `com/android/billingclient` — zero cross-flavor leakage).
 
@@ -42,9 +53,15 @@ manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar
 - Spaced-repetition review queue (SM-2-lite)
 - Daily plan, daily goal, streaks, progress stats
 - Listening via **on-device Android TTS** (no audio files, no network)
+- Conversation practice: say lesson sentences back, graded by the **on-device Vosk recogniser**
+  (`feature/conversation/`, model bundled as an asset — no server, no recogniser API)
 - Vocabulary browser + search
 - Theme (system/light/dark), sound toggle, daily goal, reset
 - Subscription purchase/restore via the store (the only online surface today)
+- Opening the app's own page in that store — Settings → «درباره و قوانین» → «ارتباط با ناشر»
+  (`core/support/StorePage.kt`). A plain `ACTION_VIEW` to the flavor's documented deep link with the
+  public store page as fallback: the app itself makes no request, needs no permission, and nothing
+  in the learning core depends on it.
 
 ## Suspended — needs backend/server infrastructure (do NOT implement yet)
 
@@ -66,7 +83,7 @@ These do **not** need a backend, so they may be built whenever they are prioriti
 
 | Feature | State | Where the app hooks in |
 |---|---|---|
-| Speaking / pronunciation evaluation | Domain type exists, UI shows a placeholder | `Exercise.Speaking` + the "غیرفعال" branch in `LessonScreen`; an on-device recognizer needs no server |
+| Pronunciation evaluation (per-word scoring) | Recogniser built; scoring is still sentence-level | `ConversationScorer` grades a whole take — per-word feedback needs a phoneme/duration signal Vosk does not give |
 | Remote crash reporting | Not implemented | Pick a provider deliberately — it is a network + privacy decision, not a default |
 
 Completed and removed from this list: B1–C2 content (shipped in the **v5 bundle** — 6 lessons per

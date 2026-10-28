@@ -1,10 +1,7 @@
 package org.token.english.feature.settings
 
 import android.Manifest
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -28,7 +25,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -49,10 +45,12 @@ import org.token.english.R
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
+import org.token.english.core.billing.StorePage
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
+import org.token.english.core.designsystem.component.AppSwitch
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.levelTint
 import org.token.english.core.designsystem.component.OutlinedActionButton
@@ -165,7 +163,7 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    Switch(
+                    AppSwitch(
                         checked = settings?.soundEnabled ?: true,
                         onCheckedChange = vm::setSoundEnabled,
                     )
@@ -185,7 +183,7 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    Switch(
+                    AppSwitch(
                         checked = settings?.dailyReminderEnabled ?: false,
                         onCheckedChange = { enable ->
                             when {
@@ -270,7 +268,7 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { infoPage = null },
             title = { Text(page.title) },
-            text = { InfoPageBody(page, onOpenLink = context::openLink) },
+            text = { InfoPageBody(page, onOpenStorePage = { StorePage.open(context) }) },
             confirmButton = {
                 TextButton(onClick = { infoPage = null }) { Text("بستن") }
             },
@@ -307,12 +305,9 @@ private enum class InfoPage(val title: String) {
     CONTACT("ارتباط با ناشر"),
 }
 
-/** The publisher's public support channel (the project issue tracker). */
-private const val SUPPORT_URL = "https://github.com/syedmohdbarzgar/lingo/issues"
-
 /**
- * States the learner's access in plain words (trial countdown / active
- * subscription / locked) and is always a doorway to the paywall — a locked
+ * States the learner's access in plain words (active subscription / companion
+ * grant / locked) and is always a doorway to the paywall — a locked
  * learner lands here from the paywall, so it must offer the buy path back.
  */
 @Composable
@@ -324,8 +319,6 @@ private fun SubscriptionCard(
     AppCard(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             SectionHeader("اشتراک")
-            val hours = state.trialRemainingMillis / (60 * 60 * 1000)
-            val days = state.trialRemainingMillis / (24 * 60 * 60 * 1000)
             val subDays =
                 (state.subscriptionUntil - System.currentTimeMillis()) / (24 * 60 * 60 * 1000)
             Text(
@@ -336,12 +329,6 @@ private fun SubscriptionCard(
                         "اشتراک رایگان — برنامهٔ «زریبار» روی این دستگاه نصب است؛ تا وقتی نصب بماند نیازی به خرید نیست."
 
                     else -> when (state.access) {
-                        org.token.english.core.billing.AccessLevel.TRIAL -> when {
-                            days >= 1 -> "دوره آزمایشی رایگان — $days روز و ${hours % 24} ساعت باقی‌مانده."
-                            hours >= 1 -> "دوره آزمایشی رایگان — کمتر از $hours ساعت دیگر."
-                            else -> "دوره آزمایشی رو به پایان است."
-                        }
-
                         org.token.english.core.billing.AccessLevel.PREMIUM ->
                             if (subDays >= 1) "اشتراک فعال — $subDays روز دیگر تمدید می‌شود."
                             else "اشتراک شما فعال است."
@@ -432,7 +419,7 @@ private fun InfoRow(label: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
+private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
@@ -451,7 +438,11 @@ private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "درس‌ها، واژگان و مرور فاصله‌دار کامل روی دستگاه ذخیره شده‌اند و بدون اینترنت هم کار می‌کنند.",
+                    text = "محتوای هر شش سطح CEFR — از A1 تا C2 — همراه برنامه نصب می‌شود: درس‌ها، واژگان، تمرین‌ها و آزمون تعیین سطح.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    text = "نیازی به حساب کاربری نیست. پیشرفت، واژه‌های در حال مرور و آمار فقط روی همین دستگاه ذخیره می‌شوند و درس‌ها، واژگان و مرور فاصله‌دار بدون اینترنت هم کار می‌کنند.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
@@ -475,6 +466,11 @@ private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+                Text(
+                    text = "برای گزارش خطا، پیشنهاد یا پیگیری نسخه‌های بعدی، از صفحهٔ برنامه در ${BuildConfig.STORE_NAME} استفاده کنید.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
 
             InfoPage.PRIVACY -> {
@@ -487,43 +483,53 @@ private fun InfoPageBody(page: InfoPage, onOpenLink: (String) -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
+                    text = "میکروفون فقط در تمرین گفتاری و با اجازهٔ خودتان به کار می‌رود؛ صدای شما روی همان دستگاه ضبط و برای مقایسه پخش می‌شود و جایی فرستاده نمی‌شود.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
                     text = "پرداخت اشتراک از طریق فروشگاه ${BuildConfig.STORE_NAME} انجام می‌شود؛ اطلاعات پرداخت هرگز در اختیار برنامه نیست.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    text = "برای حذف کامل دادهٔ یادگیری، از گزینهٔ «پاک‌سازی پیشرفت و شروع دوباره» در همین صفحه استفاده کنید.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
 
             InfoPage.TERMS -> {
                 Text(
-                    text = "این برنامه برای تمرین شخصی زبان انگلیسی ارائه شده است.",
+                    text = "این برنامه برای تمرین شخصی زبان انگلیسی ارائه شده است؛ محتوای آموزشی آن در اختیار شماست و بازنشر یا فروش آن مجاز نیست.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "دسترسی به محتوا با دوره آزمایشی رایگان یا اشتراک فعال می‌شود. اشتراک به حساب فروشگاه شما گره خورده و مدیریت آن از همان‌جا انجام می‌شود.",
+                    text = "دسترسی به محتوا با اشتراک فعال می‌شود. خرید، تمدید و لغو اشتراک از طریق فروشگاه ${BuildConfig.STORE_NAME} انجام می‌شود و بازپرداخت تابع قوانین همان فروشگاه است.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
                     text = "محتوای آموزشی بدون تضمین نتیجه ارائه می‌شود و ممکن است در نسخه‌های بعدی بهبود یابد.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
+                Text(
+                    text = "برنامه بدون اینترنت هم کار می‌کند؛ بخش‌های نیازمند سرویس ابری در «درباره برنامه» فهرست شده‌اند.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
             }
 
             InfoPage.CONTACT -> {
                 Text(
-                    text = "برای گزارش خطا، پیشنهاد یا درخواست پشتیبانی با ناشر در تماس باشید.",
+                    text = "ارتباط با ناشر از طریق صفحهٔ برنامه در فروشگاه ${BuildConfig.STORE_NAME} انجام می‌شود: در همان صفحه می‌توانید امتیاز بدهید، نظر بنویسید و خطا یا پیشنهاد خود را گزارش کنید.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    text = "برنامه صندوق پستی و حساب کاربری ندارد، پس پیام‌های شما از همان صفحهٔ فروشگاه خوانده می‌شود.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 OutlinedActionButton(
-                    text = "صفحه پشتیبانی",
-                    onClick = { onOpenLink(SUPPORT_URL) },
+                    text = "صفحهٔ برنامه در ${BuildConfig.STORE_NAME}",
+                    onClick = onOpenStorePage,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
     }
-}
-
-/** Opens an external link in the user's browser; a no-op when no handler exists. */
-private fun Context.openLink(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    runCatching { startActivity(intent) } // runCatching-ok: not a suspend call (B-9)
 }

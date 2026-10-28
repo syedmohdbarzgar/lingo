@@ -4,11 +4,10 @@
 > connectivity policy; the offline/online rules themselves live in
 > [`docs/connectivity.md`](connectivity.md).
 
-Product decision (user-confirmed): **all content is subscription-gated with a 7-day free trial**
-(`TrialClock.TRIAL_MILLIS` = `7 * 24h`, consumed against elapsed real time so it survives app
-restarts; it lives in local DataStore only, so clearing app data restarts the trial);
-two plans — `sub_monthly` (monthly) and `sub_yearly` (yearly). Each release build targets one
-market and embeds only that market's billing SDK:
+Product decision (user-confirmed): **all content is subscription-gated from the first launch — there
+is no free trial** (the earlier 7-day trial was removed; a fresh install opens on LOCKED). Two plans
+— `sub_monthly` (monthly) and `sub_yearly` (yearly); the only zero-cost route is the companion grant
+below. Each release build targets one market and embeds only that market's billing SDK:
 
 | Flavor | Store | SDK (verified via javap/docs Oct 2026) | Notes |
 |---|---|---|---|
@@ -21,7 +20,7 @@ Rules:
 - UI/domain only see `core/billing/BillingGateway` — store specifics live in the flavor's
   `PlatformBillingGateway`. Adding a 4th market = new flavor + one file, zero UI changes.
 - Access rules are pure & unit-tested: `EntitlementPolicy` (SUBSCRIPTION → COMPANION_APP →
-  TRIAL → LOCKED, with an `AccessReason` so the UI never calls a free grant a purchase) in
+  LOCKED, with an `AccessReason` so the UI never calls a free grant a purchase) in
   `core/billing/Billing.kt`.
 - **Free-access companion (product decision, Oct 2026, user-confirmed): while the Zaribar app
   (`org.token.zaribar`) is installed the subscription is free.** The grant follows the install
@@ -41,7 +40,7 @@ Rules:
   (Bazaar deep link `bazaar://details?id=org.token.zaribar`, web fallback) is offered to the
   learner who does **not** hold the trusted grant: the paywall carries a "راه رایگان: «زریبار»" card
   next to the price, the Settings subscription card repeats the route with the same button, and
-  the Home trial banner names it in one line. All three read the one pure rule
+  Home's free-route card names it in one line. All three read the one pure rule
   `CompanionOffer.isOffered(companionStatus, access, reason)` (`core/billing/Billing.kt`,
   unit-tested): it hides the offer on a device that already holds the grant and for a paying
   subscriber, so the link can never be shown to someone it would not help. The lookup reports a
@@ -62,9 +61,10 @@ Rules:
   on Play yet; the compliance question is re-opened in [`release.md`](release.md) before the first
   Play release.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
-  exempt routes are onboarding/placement/settings. Home shows a calm trial-countdown banner
-  (with the free-route line when the companion is absent) and — when the companion grant is
-  active — a "subscription is free" banner **without** a store link.
+  exempt routes are onboarding/placement/settings. Home carries one small free-route card
+  (shown only while `CompanionOffer.isOffered`, so a paying learner never sees it) and — when the
+  companion grant is active — a "subscription is free" banner **without** a store link. There is
+  no trial countdown anywhere: the countdown UI went with the trial.
 - The paywall's small print is **storefront-aware** (P3 honesty pass): only Bazaar/Play
   promise auto-renewal and cancellation; Myket says what it actually is — a fixed-length
   consumable with no auto-renew and nothing to cancel. `PaywallUiState.storefront` (from

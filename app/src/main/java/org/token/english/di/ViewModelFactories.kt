@@ -3,6 +3,7 @@ package org.token.english.di
 import androidx.lifecycle.ViewModelProvider
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
+import org.token.english.feature.conversation.ConversationPracticeViewModel
 import org.token.english.feature.home.HomeViewModel
 import org.token.english.feature.lesson.LessonViewModel
 import org.token.english.feature.onboarding.OnboardingViewModel
@@ -128,4 +129,15 @@ fun placementViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory
 
 fun onboardingViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c ->
     OnboardingViewModel(settingsRepository = c.settingsRepository)
+}
+
+fun conversationPracticeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c ->
+    ConversationPracticeViewModel(
+        lessonRepository = c.lessonRepository,
+        speaker = c,
+        contentSeeded = c.contentSeeded,
+        speechState = c.conversationSpeech,
+        startRecognition = { c.startConversationRecognition() },
+        stopRecognition = { c.stopConversationRecognition() },
+    )
 }

@@ -118,8 +118,6 @@ class ContentSeederTest {
             TrialAndSubscription(0L, 0L, 0L, 0L, 0L),
         )
 
-        override suspend fun ensureTrialStarted(now: Long, elapsedRealtime: Long) = Unit
-        override suspend fun saveTrialCheckpoint(consumedMs: Long, lastWallMs: Long, lastElapsedMs: Long) = Unit
         override suspend fun setSubscriptionUntil(epochMillis: Long) = Unit
         override suspend fun completeFirstLaunch() = Unit
         override suspend fun setLevel(level: LearningLevel) = Unit

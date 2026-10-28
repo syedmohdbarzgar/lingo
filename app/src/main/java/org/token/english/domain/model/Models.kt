@@ -441,7 +441,7 @@ data class AppSettings(
     val dailyGoalMinutes: Int,
     val soundEnabled: Boolean,
     val contentVersion: Int,
-    /** Trial start (epoch millis), 0 = not started — see core/billing/TrialClock. */
+    /** Legacy trial start (epoch millis); the trial was removed and nothing grants access from it. */
     val trialStartedAt: Long,
     /** Subscription validity end (epoch millis), 0 = none. */
     val subscriptionUntil: Long,

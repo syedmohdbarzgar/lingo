@@ -98,7 +98,13 @@ private val LightColors = lightColorScheme(
     surfaceContainerHighest = Brand.Neutral200,
     outline = Brand.Neutral300,
     outlineVariant = Brand.Neutral200,
-    error = Brand.Error500,
+    // Error700, not Error500: this role is the *text* colour on surface (the two
+    // inline failure sentences in the lesson exercise are its only consumers), and
+    // #EF4444 on white measures 3.76:1 — under the 4.5:1 that bodySmall needs
+    // (phase-2 contrast audit). #B91C1C reads 6.47:1 there, and white on it is
+    // 6.47:1 too, so the onError role stays safe. It is also the M3 baseline shape
+    // for a light error role: a dark red rather than a 500-level one.
+    error = Brand.Error700,
     onError = Color.White,
     errorContainer = Brand.Error100,
     onErrorContainer = Brand.Error700,

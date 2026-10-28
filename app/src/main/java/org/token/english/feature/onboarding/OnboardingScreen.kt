@@ -69,9 +69,19 @@ private val pages = listOf(
     ),
     OnboardingPage(
         icon = Icons.Outlined.WorkspacePremium,
-        title = "۷ روز رایگان، بعد اشتراک.",
-        subtitle = "کل محتوا ۷ روز به‌صورت رایگان در دسترس است. بعد از آن، برای ادامه یادگیری " +
-            "اشتراک ماهانه یا سالانه از فروشگاه فعال می‌شود و هر زمان می‌توانی لغو کنی.",
+        title = "دسترسی کامل، با اشتراک.",
+        // There is no free trial to announce any more. The companion route is named
+        // only on builds allowed to link out to it (N-4), the same build flag the
+        // paywall and settings use.
+        subtitle = buildString {
+            append(
+                "کل محتوا با اشتراک ماهانه یا سالانه از فروشگاه باز می‌شود و هر زمان " +
+                    "می‌توانی لغو کنی.",
+            )
+            if (org.token.english.BuildConfig.EXTERNAL_COMPANION_OFFER) {
+                append(" اگر برنامهٔ «زریبار» را نصب داری، همه‌چیز بدون پرداخت باز است.")
+            }
+        },
     ),
 )
 

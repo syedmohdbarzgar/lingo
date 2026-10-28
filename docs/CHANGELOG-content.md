@@ -6,7 +6,7 @@
 > catalogued in [`scripts/archive/README.md`](../scripts/archive/README.md) — **never re-run one.**
 
 Every content change bumps `contentVersion` **identically in all five** JSON files
-(`lessons`, `vocabulary`, `exercises`, `placement`, `knowledge`); the current bundle is **22**.
+(`lessons`, `vocabulary`, `exercises`, `placement`, `knowledge`); the current bundle is **25**.
 
 | Bundle | Change | Batch |
 |---|---|---|
@@ -18,6 +18,8 @@ Every content change bumps `contentVersion` **identically in all five** JSON fil
 | **19 → 20** | Reading comprehension + En→Fa meaning items (A-5) and one reading item per placement band (A-6) | `p1_reading_and_meaning.mjs` |
 | **20 → 21** | Retrieval/production shapes (P2): two `word_recall` and two `sentence_production` items per level, plus the overlap gate is a later code change | `p2_production_recall.mjs` |
 | **22 → 23** | Speaking practice goes live: two `speaking` items on the A2 Directions lesson (listen to the TTS model, record, compare) — self-assessed, no recogniser | hand edit (`speaking` items appended; option balance re-run) |
+| **24 → 25** | Seeding fix, not a content edit: `speaking` was absent from `ContentParser.supportedTypes`, so the two `a2.directions` speaking items (and the conversation-practice targets built on them) were dropped before they ever reached Room. The version is bumped anyway, because re-seeding is keyed by it — without the bump every existing install would keep the incomplete table. JSON is unchanged apart from the version field | (none — no JSON edited) |
+| **23 → 24** | Content quality pass: seven misleading answers fixed (a distractor that was also correct, two options glossed the same, an invalid `visited to`, a `could` accepted only as `would`, a nonsensical distractor, a malformed option, an unnatural collocation), the A1 `can` lesson stopped testing `could` (A2), four words that were taught twice became new level-appropriate words (`arrange`, `warranty`, `coverage`, `rebut`), `ambiguous`/`vague` got distinct glosses, and the eight lessons under eight exercises gained two items each (467 → 482) | `v24_content_quality.mjs` |
 | **21 → 22** | The typed placement item (A-5/A-6 round): the A1-band MCQ `placement.q20` became a `fill_blank` (`placement.t01`) in the same slot — six bands of six and the 11/19/6 skill counts unchanged; option-slot balance re-run | `p3_typed_placement.mjs` |
 
 Also worth remembering: the A1/A2 grammar-gap lessons (A-9) added lessons with no placement change,

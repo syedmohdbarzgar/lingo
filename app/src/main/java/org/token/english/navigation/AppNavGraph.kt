@@ -38,6 +38,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import org.token.english.EnglishApp
+import org.token.english.feature.conversation.ConversationPracticeScreen
 import org.token.english.feature.home.HomeScreen
 import org.token.english.feature.lesson.LessonScreen
 import org.token.english.feature.onboarding.OnboardingScreen
@@ -57,6 +58,7 @@ object Routes {
     const val LESSON = "lesson/{lessonId}?focusItemId={focusItemId}"
     const val REVIEW = "review"
     const val VOCABULARY = "vocabulary"
+    const val CONVERSATION = "conversation"
     const val VOCABULARY_DETAIL = "vocabulary/{vocabId}"
     const val PROGRESS = "progress"
     const val SETTINGS = "settings"
@@ -89,9 +91,9 @@ fun AppNavGraph(startDestination: String) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    // Subscription gating: once the 24h trial is over and no subscription is
-    // active, every learning screen redirects to the paywall (settings stay open
-    // so the learner can always manage the app).
+    // Subscription gating: with no active subscription (and no companion grant)
+    // every learning screen redirects to the paywall; settings stay open so the
+    // learner can always manage the app.
     val app = LocalContext.current.applicationContext as EnglishApp
     val access by remember { app.container.settingsRepository.observeTrialAndSubscription() }
         .collectAsStateWithLifecycle(initialValue = null)
@@ -100,7 +102,7 @@ fun AppNavGraph(startDestination: String) {
     val companionInstalled by remember { app.container.companionInstalled }
         .collectAsStateWithLifecycle(initialValue = false)
     // Entitlement depends on wall-clock time, but the flow only emits when the
-    // stored values change — tick `now` so a trial that expires mid-session
+    // stored values change — tick `now` so a subscription that lapses mid-session
     // locks the app without waiting for a restart.
     var nowMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
     LaunchedEffect(Unit) {
@@ -112,11 +114,6 @@ fun AppNavGraph(startDestination: String) {
     val accessLevel = access?.let {
         org.token.english.core.billing.EntitlementPolicy.level(
             now = nowMillis,
-            trialRemainingMs = org.token.english.core.billing.TrialClock.remainingMs(
-                state = it.trialClockState(),
-                now = nowMillis,
-                elapsedRealtime = android.os.SystemClock.elapsedRealtime(),
-            ),
             subscriptionUntil = it.subscriptionUntil,
             companionAppInstalled = companionInstalled,
         )
@@ -187,6 +184,7 @@ fun AppNavGraph(startDestination: String) {
             lesson(navController)
             review(navController)
             vocabulary(navController)
+            conversation(navController)
             progress(navController)
             settings(navController)
         }
@@ -262,6 +260,7 @@ private fun NavGraphBuilder.home(navController: NavHostController) {
             onOpenReview = { navController.navigate(Routes.REVIEW) },
             onOpenVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onOpenPaywall = { navController.navigate(Routes.PAYWALL) },
+            onOpenConversation = { navController.navigate(Routes.CONVERSATION) },
             onOpenFocus = { lessonId, itemId ->
                 navController.navigate(Routes.focusLesson(lessonId, itemId))
             },
@@ -322,6 +321,18 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
             vocabId = vocabId,
             onBack = { navController.popBackStack() },
         )
+    }
+}
+
+private fun NavGraphBuilder.conversation(navController: NavHostController) {
+    composable(
+        route = Routes.CONVERSATION,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
+    ) {
+        ConversationPracticeScreen(onBack = { navController.popBackStack() })
     }
 }
 

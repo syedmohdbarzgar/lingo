@@ -16,10 +16,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Speaking practice records the learner's own voice and plays it back for
-         comparison. LOCAL ONLY: nothing is uploaded, no speech recogniser runs,
-         and the take lives in the app cache dir. Requested from the card itself,
-         so the rest of the app never asks (docs/connectivity.md). -->
+         comparison. LOCAL ONLY: nothing is uploaded and the take lives in the app
+         cache dir. RECORD_AUDIO is now also the gate for conversation practice,
+         where an ON-DEVICE Vosk recogniser transcribes the take (docs/connectivity.md). -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Conversation practice keeps the mic alive while the screen is off, so the
+         recogniser runs in a foreground service. targetSdk 34+ requires the type-
+         specific permission below alongside the base one, or the service crashes
+         with MissingForegroundServiceTypeException. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
     <!-- myket-billing-client drags in play-services-ads-identifier; we never read
          the advertising id (the SDK guards its own call), so deny the permission. -->
@@ -68,6 +75,14 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.English" />
+
+        <!-- Conversation practice: owns the mic + on-device recogniser so a
+             screen-off take is not cut short. microphone type is declared in the
+             manifest AND passed to startForeground(), or API 34+ ignores it. -->
+        <service
+            android:name=".feature.conversation.SpeechRecognitionService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
 
         <!-- Daily review reminder (inexact daily alarm → local notification).
              exported=false: only the system's BOOT_COMPLETED reaches it. -->

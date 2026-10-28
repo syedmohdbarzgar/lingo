@@ -96,20 +96,6 @@ class FakeSettingsRepository(
         settingsFlow.value = settingsFlow.value.copy(contentVersion = version)
     }
 
-    override suspend fun ensureTrialStarted(now: Long, elapsedRealtime: Long) {
-        if (trialFlow.value.trialStartedAt == 0L) {
-            trialFlow.value = trialFlow.value.copy(trialStartedAt = now, trialLastWallMs = now, trialLastElapsedMs = elapsedRealtime)
-        }
-    }
-
-    override suspend fun saveTrialCheckpoint(consumedMs: Long, lastWallMs: Long, lastElapsedMs: Long) {
-        trialFlow.value = trialFlow.value.copy(
-            trialConsumedMs = consumedMs,
-            trialLastWallMs = lastWallMs,
-            trialLastElapsedMs = lastElapsedMs,
-        )
-    }
-
     override suspend fun setSubscriptionUntil(epochMillis: Long) {
         trialFlow.value = trialFlow.value.copy(subscriptionUntil = epochMillis)
     }

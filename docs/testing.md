@@ -3,12 +3,15 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 387 tests / 54 classes as of
-  the v16 pass — shared content gate / Room v6 cross-session mastery / typed placement item): `ReviewSchedulerTest`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 426 tests / 56 classes as of
+  the conversation-practice pass — a fresh install is locked with no trial (`TrialClockTest` went
+  with the clock; `StorePageTest` guards the per-flavor «ارتباط با ناشر» store link;
+  `ConversationScorerTest` pins the «درست / نزدیک / تلاش دوباره» verdicts): `ReviewSchedulerTest`,
   `DomainEngineTest` (mastery/answer checking/planner), `TimeUtilTest` (streaks),
   `StudyTimePolicyTest` (study time is interaction-based: a tick inside the idle cap credits, past
   it — and on a backwards clock — credits nothing),
-  `EntitlementPolicyTest` (trial/subscription/companion gating) + `CompanionAppTest`
+  `EntitlementPolicyTest` (subscription/companion gating; a fresh install is locked — no trial) +
+  `CompanionAppTest`
   (companion package id + Bazaar links + digest shape) + `CompanionOfferTest`
   (one case per state of the free-route offer: hidden on a device that already holds the
   grant, hidden for a paying subscriber, shown to a learner without the companion, and — N-3 —
@@ -64,6 +67,10 @@
   closes the block, and the plan's bar is asserted **equal** to the engine's reassess bar — the two
   were unified at 0.5 in v9 B-1, and `RemediationEngineTest` proves a first correct answer no longer
   fixes a weak node),
+  `ConversationScorerTest` (conversation practice grading: an identical sentence and one with added
+  filler are CORRECT, dropping an article stays CORRECT while dropping or swapping a content word is
+  NEAR, a reorder is NEAR not CORRECT, an unrelated sentence and a silent take are RETRY, and the
+  substring trap — "the" inside "other" — never counts as a keyword hit),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
@@ -78,7 +85,12 @@
   app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
   cancelled/failed/succeeded, a checkout that throws, restore active/none/store-failure, the
   companion grant, and the storefront reaching the state so the wording can match the market),
-  `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
+  `ConversationPracticeViewModelTest` (targets wait for the content seeder instead of reading an
+  empty table; only speaking items become targets, in lesson order; a
+  partial shows while speaking and the final take is graded once; a repeated emission is not
+  re-graded while a blank take clears the old verdict; retry wipes the previous feedback; next
+  advances and then reports the session finished; the model sentence is spoken on request; leaving
+  stops the microphone), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
   settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
   state and an empty bundle yields no tracks rather than empty bars), `PlacementViewModelTest` (adaptive stop after
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
@@ -106,5 +118,41 @@
 - There is **no instrumented suite**: the Android Studio template was removed rather than kept
   as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
   Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.
+- **Conversation practice is engine-tested, transport-untested.** `ConversationScorer` (the verdict)
+  and `ConversationPracticeViewModel` (when a take is graded, when it is cleared, what an empty
+  bundle shows) run as normal unit tests with a fake `SpeechState` flow. Everything below the
+  ViewModel — `AudioRecord`, `Recognizer`, the `microphone` foreground service, and whether a given
+  phone actually ships the model — is verified **only on a real device**, because none of it exists
+  on the host JVM. `ConversationScorerTest` is the whole automated net for the feature; do not read a
+  green suite as "recognition works".
 - When you change engine logic, extend these tests first; UI changes rely on manual verification
   (no emulator CI in this environment).
+
+## Manual device pass — conversation practice
+
+Everything here needs a phone, a voice and a microphone; none of it is reachable from the JVM. Run it
+before calling a conversation-practice change done:
+
+1. **Model install.** Fresh install (`adb uninstall org.token.english` first), open the practice
+   screen, tap the mic. First take shows the preparing spinner, not an error; the model appears under
+   `/data/data/org.token.english/files/vosk/<model>/` with a `uuid` file
+   (`adb shell run-as org.token.english ls files/vosk`). A second take does **not** re-copy or
+   re-load it (watch logcat for a second `Model(...)` construction — there must not be one).
+2. **Permission.** Deny `RECORD_AUDIO` at the prompt → the screen says the mic is blocked and offers
+   the settings route; nothing crashes. Grant it from Settings and the take works without a restart.
+3. **Live text.** Say a target sentence at normal speed: partial text appears while speaking (not
+   only at the end), the final line lands at the sentence's end, and each partial replaces the last
+   instead of accumulating.
+4. **Verdicts.** Say the sentence exactly (CORRECT / «درست»), say it with one content word missing or
+   wrong (NEAR / «نزدیک»), say something unrelated or go silent (RETRY / «تلاش دوباره»). Each verdict
+   shows icon **and** text, and «ضبط دوباره» clears the previous verdict before the next take.
+5. **Screen-off take.** Start a take, turn the screen off, say the sentence, turn it back on: the
+   notification is present while recording, the take is graded, and stopping from the notification
+   ends it without leaving the mic open (the status-bar mic indicator must disappear).
+6. **Backgrounding.** Leave the app mid-take (Home button): recording continues only while the
+   foreground notification is up; swiping the task away or leaving the screen stops it.
+7. **Missing model.** Temporarily remove the assets directory, rebuild, tap the mic: the screen
+   reports the model is missing («مدل تشخیص گفتار روی این نسخه نصب نیست») and stays usable — the rest
+   of the app is unaffected.
+8. **No network.** Airplane mode on: 1–7 behave identically. If anything differs, an online call
+   crept into the feature and the offline rule is broken.

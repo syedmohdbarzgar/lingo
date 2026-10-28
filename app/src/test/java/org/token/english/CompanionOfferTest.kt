@@ -23,8 +23,8 @@ class CompanionOfferTest {
         assertTrue(
             CompanionOffer.isOffered(
                 companionStatus = CompanionStatus.ABSENT,
-                access = AccessLevel.TRIAL,
-                reason = AccessReason.TRIAL,
+                access = AccessLevel.LOCKED,
+                reason = AccessReason.NONE,
             ),
         )
         assertTrue(
@@ -39,7 +39,7 @@ class CompanionOfferTest {
             CompanionOffer.isOffered(CompanionStatus.TRUSTED, AccessLevel.PREMIUM, AccessReason.COMPANION_APP),
         )
         // Stale-state guard: the trusted status alone decides, never the side signals.
-        assertFalse(CompanionOffer.isOffered(CompanionStatus.TRUSTED, AccessLevel.TRIAL, AccessReason.TRIAL))
+        assertFalse(CompanionOffer.isOffered(CompanionStatus.TRUSTED, AccessLevel.LOCKED, AccessReason.NONE))
     }
 
     @Test
@@ -51,8 +51,8 @@ class CompanionOfferTest {
             CompanionOffer.isOffered(CompanionStatus.UNTRUSTED, AccessLevel.LOCKED, AccessReason.NONE),
         )
         assertTrue(
-            "even a trial learner with an untrusted build can update it",
-            CompanionOffer.isOffered(CompanionStatus.UNTRUSTED, AccessLevel.TRIAL, AccessReason.TRIAL),
+            "an untrusted build is offered as an update, never hidden",
+            CompanionOffer.isOffered(CompanionStatus.UNTRUSTED, AccessLevel.LOCKED, AccessReason.NONE),
         )
     }
 
@@ -66,7 +66,7 @@ class CompanionOfferTest {
     @Test
     fun `the companion reason without a trusted install never advertises the offer`() {
         assertFalse(
-            CompanionOffer.isOffered(CompanionStatus.ABSENT, AccessLevel.TRIAL, AccessReason.COMPANION_APP),
+            CompanionOffer.isOffered(CompanionStatus.ABSENT, AccessLevel.LOCKED, AccessReason.COMPANION_APP),
         )
     }
 
