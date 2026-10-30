@@ -3,8 +3,8 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 444 tests / 57 classes as of
-  the dialogue pass — a fresh install is locked with no trial (`TrialClockTest` went
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 457 tests / 57 classes as of
+  the recognition-fairness pass — a fresh install is locked with no trial (`TrialClockTest` went
   with the clock; `StorePageTest` guards the per-flavor «ارتباط با ناشر» store link;
   `ConversationScorerTest` pins the «درست / نزدیک / تلاش دوباره» verdicts;
   `DialogueContentTest` holds the authored dialogue turns to their authoring rules): `ReviewSchedulerTest`,
@@ -76,7 +76,13 @@
   NEAR, a reorder is NEAR not CORRECT, an unrelated sentence and a silent take are RETRY, the
   substring trap — "the" inside "other" — never counts as a keyword hit, a contraction is compared
   against its expanded form so "I'm going" matches an authored "I am going", and a false start that
-  repeats a word ("go straight … go straight and turn left") is still the target said back),
+  repeats a word ("go straight … go straight and turn left") is still the target said back; plus the
+  recognition-fairness rules of the audit: the **best of the authored answers** decides (a reply the
+  bundle lists is never a miss), `please` / `thank you` is stripped so "just water" answers "Just
+  water, thank you", recogniser homophones (to/too/two, four/for) are folded on both sides, a single
+  edit on a long word is forgiven while short words must match exactly, a take that repeats the
+  partner's question is not an answer — and the speech grammar lists every accepted phrase plus
+  `[unk]`),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
@@ -100,7 +106,9 @@
   recognised words is `unheard`, not a wrong answer; a take broken by the recogniser is not graded
   at all; retry wipes the previous feedback and restarts the mic; next records the exchange, speaks
   the following question, and a NEAR answer can still move on so one hard sentence is never a dead
-  end; leaving stops the microphone), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
+  end; an authored alternative reply grades CORRECT rather than NEAR; the recogniser's grammar holds
+  the current turn's own sentences and `[unk]`; a repeated question is REJECTED as an answer; leaving
+  stops the microphone), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
   settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
   state and an empty bundle yields no tracks rather than empty bars), `PlacementViewModelTest` (adaptive stop after
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
@@ -129,8 +137,10 @@
   as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
   Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.
 - **Conversation practice is engine-tested, transport-untested.** `ConversationScorer` (the verdict),
-  `ConversationPracticeViewModel` (the turns, when a take is graded, what an unheard take means) and
-  `DialogueContentTest` (the authored turns) run as normal unit tests with a fake `SpeechState` flow.
+  `ConversationPracticeViewModel` (the turns, when a take is graded, what an unheard take means, the
+  grammar it hands the recogniser) and `DialogueContentTest` (the authored turns) run as normal unit
+  tests with a fake `SpeechState` flow. The grammar string is asserted here; whether Vosk *honours*
+  it, and how much it actually improves recognition, is device-only.
   Everything below the ViewModel — `AudioRecord`, `Recognizer`, the per-take segment accumulation
   that makes a pause survivable, the `microphone` foreground service, and whether a given phone
   actually ships the model — is verified **only on a real device**, because none of it exists on the

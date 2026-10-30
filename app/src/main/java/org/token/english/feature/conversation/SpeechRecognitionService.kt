@@ -110,8 +110,20 @@ class SpeechRecognitionService : Service() {
             }
             // A Recognizer holds per-utterance state, so it is built per take and
             // released with it; the heavy Model stays cached in VoskManager.
+            //
+            // The grammar is the turn's own accepted answers: the small English
+            // model is open-vocabulary, and on a Persian accent it turns "for" into
+            // "four" and "pharmacy" into "farmers see". Constraining the search to
+            // the sentences the turn can accept removes most of that, and `[unk]`
+            // (added by ConversationScorer.speechGrammar) keeps a genuinely
+            // different take from being forced into one of them.
+            val grammar = SpeechBus.grammar
             val rec = try {
-                Recognizer(model, VoskManager.SAMPLE_RATE)
+                if (grammar.isNullOrBlank()) {
+                    Recognizer(model, VoskManager.SAMPLE_RATE)
+                } else {
+                    Recognizer(model, VoskManager.SAMPLE_RATE, grammar)
+                }
             } catch (t: Throwable) {
                 SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.INTERRUPTED) }
                 stopForegroundAndSelf()

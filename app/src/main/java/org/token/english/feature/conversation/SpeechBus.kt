@@ -3,6 +3,7 @@ package org.token.english.feature.conversation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 /** Why a take could not be produced. Every case has Persian copy on the screen. */
 enum class SpeechError {
@@ -34,14 +35,29 @@ object SpeechBus {
     private val _state = MutableStateFlow(SpeechState())
     val state: StateFlow<SpeechState> = _state.asStateFlow()
 
-    /** Called from the service's capture thread — StateFlow is thread-safe. */
+    /**
+     * The allowed phrases of the turn being practised, as the JSON array Vosk
+     * wants — or null for an open vocabulary. Set by the ViewModel before a take
+     * starts, read by the service when it builds its recogniser: the service
+     * outlives the screen and must not reach into the lesson itself.
+     */
+    @Volatile
+    var grammar: String? = null
+
+    /**
+     * Called from the service's capture thread, the main thread and coroutines.
+     * `update` retries against the latest value; assigning `value` from several
+     * threads dropped updates (a lost `isListening = false` left a take ungraded
+     * and the mic looking live).
+     */
     internal fun publish(update: (SpeechState) -> SpeechState) {
-        _state.value = update(_state.value)
+        _state.update(update)
     }
 
     /** Screen left the feature: never leave a mic button looking live. */
     internal fun reset() {
         _state.value = SpeechState()
+        grammar = null
     }
 }
 

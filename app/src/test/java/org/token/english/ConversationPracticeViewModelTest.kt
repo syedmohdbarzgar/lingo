@@ -20,6 +20,7 @@ import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
 import org.token.english.feature.conversation.ConversationEvent
 import org.token.english.feature.conversation.ConversationPracticeViewModel
+import org.token.english.feature.conversation.SpeechBus
 import org.token.english.feature.conversation.SpeechError
 import org.token.english.feature.conversation.SpeechState
 
@@ -45,6 +46,9 @@ class ConversationPracticeViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
+        // The recogniser's allowed phrases live on the process-wide bus; a leak
+        // between tests would make the grammar assertions pass for the wrong turn.
+        SpeechBus.reset()
     }
 
     @After
@@ -70,11 +74,12 @@ class ConversationPracticeViewModelTest {
         answer: String,
         questionFa: String = "پرسش پارتنر",
         tip: String? = null,
+        moreAnswers: List<String> = emptyList(),
     ) = Exercise.Speaking(
         id = id,
         lessonId = lessonId,
         prompt = "پاسخ بده",
-        referenceAnswers = listOf(answer),
+        referenceAnswers = listOf(answer) + moreAnswers,
         question = question,
         questionFa = questionFa,
         skill = Skill.SPEAKING,
@@ -563,6 +568,71 @@ class ConversationPracticeViewModelTest {
         clearCallsOf(vm)
 
         assertEquals(1, stops)
+    }
+
+    // ---- grading against everything the turn accepts --------------------------
+
+    @Test
+    fun `an authored alternative reply is graded correct`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue(
+                        "a1.one",
+                        "s1",
+                        "How are you?",
+                        "I'm fine, thank you.",
+                        moreAnswers = listOf("Fine thanks."),
+                    ),
+                ),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true, finalText = "fine thanks")
+        speech.value = SpeechState(isListening = false, finalText = "fine thanks")
+
+        // Grading only the first accepted answer made this NEAR: "you" is missing
+        // from a reply the bundle itself lists.
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+    }
+
+    @Test
+    fun `the recogniser is constrained to the turn's own sentences`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+        // Nothing is recorded until the learner asks to answer.
+        assertNull(SpeechBus.grammar)
+
+        vm.onEvent(ConversationEvent.StartTake)
+
+        val grammar = SpeechBus.grammar.orEmpty()
+        assertTrue(
+            "recogniser grammar does not list the accepted answer: $grammar",
+            grammar.contains("\"i am fine thank you\""),
+        )
+        assertTrue("unknown token missing: $grammar", grammar.contains("\"[unk]\""))
+    }
+
+    @Test
+    fun `an echo of the partner's line is not accepted as the answer`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "Nice to meet you.", "Nice to meet you too."),
+                ),
+            ),
+        )
+
+        // The recogniser picked the device up through the speaker; before the echo
+        // rule this take was "near" — almost an answer — which it never was.
+        speech.value = SpeechState(isListening = true, finalText = "nice to meet you")
+        speech.value = SpeechState(isListening = false, finalText = "nice to meet you")
+
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
     }
 
     /** `onCleared` is protected; a subclass is how a test reaches it. */

@@ -221,4 +221,123 @@ class ConversationScorerTest {
     fun `content words of a stop word only target is empty not a crash`() {
         assertTrue(ConversationScorer.contentWords("the and or").isEmpty())
     }
+
+    // ---- the bundle's other accepted answers ---------------------------------
+
+    @Test
+    fun `the best of the authored answers decides the verdict`() {
+        // Only the first answer used to be graded, so a learner who said an answer
+        // the bundle itself lists was told they were wrong.
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assessBest(
+                spoken = "just water",
+                targets = listOf("A table for two, please.", "Just water, thank you."),
+            ),
+        )
+    }
+
+    @Test
+    fun `a short authored answer is correct on its own`() {
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assessBest(
+                spoken = "yes please",
+                targets = listOf("Yes, please. A table for two.", "Yes, please."),
+            ),
+        )
+    }
+
+    @Test
+    fun `a turn with no accepted answer is a retry, not a crash`() {
+        assertEquals(SpeakingVerdict.RETRY, ConversationScorer.assessBest("anything", emptyList()))
+    }
+
+    // ---- what the recogniser is allowed to get wrong -------------------------
+
+    @Test
+    fun `a homophone from the recogniser does not lose a correct take`() {
+        // The model writes "to" for "two"; both sides are folded before comparing.
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess("a table for to", "A table for two, please."),
+        )
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess("nice to meet you to", "Nice to meet you too."),
+        )
+    }
+
+    @Test
+    fun `a one-letter recognition slip is forgiven on a long word`() {
+        // "pharmcy" for "pharmacy": one missing letter on a long word. (Two
+        // edits — "farmacy" — is a different word as far as this rule goes.)
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess(
+                "the bank is on the left next to the pharmcy",
+                "The bank is on the left, next to the pharmacy.",
+            ),
+        )
+    }
+
+    @Test
+    fun `politeness is not content - just water answers just water thank you`() {
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assessBest(
+                spoken = "just water",
+                targets = listOf("A table for two, please.", "Just water, thank you."),
+            ),
+        )
+    }
+
+    @Test
+    fun `a short word must match exactly - fuzzy matching cannot invent it`() {
+        assertTrue(ConversationScorer.sameWord("left", "left"))
+        assertTrue(!ConversationScorer.sameWord("left", "right"))
+        assertTrue(!ConversationScorer.sameWord("to", "too"))
+    }
+
+    // ---- the partner's own line is not an answer ------------------------------
+
+    @Test
+    fun `a take that repeats the partner's question is not graded as an answer`() {
+        // The recogniser can pick the device up through the speaker; the echo used
+        // to land on "near", which told the learner they had almost answered.
+        assertEquals(
+            SpeakingVerdict.RETRY,
+            ConversationScorer.assessBest(
+                spoken = "nice to meet you",
+                targets = listOf("Nice to meet you too."),
+                partnerLine = "Nice to meet you.",
+            ),
+        )
+    }
+
+    @Test
+    fun `the real answer survives the echo rule even when it shares the question's words`() {
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assessBest(
+                spoken = "nice to meet you too",
+                targets = listOf("Nice to meet you too."),
+                partnerLine = "Nice to meet you.",
+            ),
+        )
+    }
+
+    // ---- the recogniser's allowed phrases ------------------------------------
+
+    @Test
+    fun `the speech grammar lists every accepted answer and keeps unknown open`() {
+        val grammar = ConversationScorer.speechGrammar(
+            listOf("I'm fine, thank you.", "Fine thanks.", "I'm fine, thank you."),
+        )
+        assertTrue("grammar is not a JSON array: $grammar", grammar.startsWith("[") && grammar.endsWith("]"))
+        assertTrue("contractions are not expanded for the recogniser: $grammar", grammar.contains("\"i am fine thank you\""))
+        assertTrue("second answer missing: $grammar", grammar.contains("\"fine thanks\""))
+        assertTrue("duplicate answer not removed: $grammar", grammar.split("fine thanks").size == 2)
+        assertTrue("unknown token missing: $grammar", grammar.contains("\"[unk]\""))
+    }
 }

@@ -10,8 +10,12 @@
 <data-extraction-rules>
     <cloud-backup>
         <exclude domain="file" path="datastore/" />
+        <!-- Extracted Vosk model: a copy of an APK asset, ~67 MB, and over the
+             Auto Backup cap — excluded so the database is still backed up. -->
+        <exclude domain="file" path="vosk/" />
     </cloud-backup>
     <device-transfer>
         <exclude domain="file" path="datastore/" />
+        <exclude domain="file" path="vosk/" />
     </device-transfer>
 </data-extraction-rules>

@@ -5,4 +5,8 @@
 -->
 <full-backup-content>
     <exclude domain="file" path="datastore/" />
+    <!-- The extracted Vosk model (~67 MB) is a copy of the APK asset, not user
+         data. Including it pushes the app past Auto Backup's 25 MB cap, which
+         silently cancels the whole backup — taking the learner's progress with it. -->
+    <exclude domain="file" path="vosk/" />
 </full-backup-content>

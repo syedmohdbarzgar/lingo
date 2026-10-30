@@ -309,6 +309,24 @@ private fun PartnerTurn(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = AppSpacing.sm),
         )
+        // A dialogue turn is graded against one authored sentence, so the learner
+        // must see that sentence *before* speaking. Hiding it and calling the take
+        // wrong punished a correct answer in the learner's own words — the content
+        // has one target, and this is it.
+        if (turn.partnerLine != null) {
+            Text(
+                text = "پاسخ این نوبت:",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = AppSpacing.sm),
+            )
+            EnglishText(
+                text = turn.answer,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = AppSpacing.xs),
+            )
+        }
     }
 }
 
@@ -377,8 +395,12 @@ private fun Outcome(
             message = "نزدیک بود! بیشترِ کلمه‌های کلیدی را گفتی.",
         )
 
-        verdict == SpeakingVerdict.RETRY -> IncorrectBanner(
-            message = "این جواب با جملهٔ هدف فرق داشت.",
+        // Neutral on purpose. The app cannot tell a wrong answer from a recogniser
+        // error, and accusing a learner who said the sentence correctly is the
+        // single most damaging thing this screen can do. What was heard stays in
+        // the take card above, and moving on is always one tap away.
+        verdict == SpeakingVerdict.RETRY -> InfoBanner(
+            message = "آنچه شنیدم با پاسخ این نوبت هم‌خوان نبود. اگر مطمئنی درست گفتی، ادامه بده؛ وگرنه یک بار دیگر بگو.",
         )
     }
 

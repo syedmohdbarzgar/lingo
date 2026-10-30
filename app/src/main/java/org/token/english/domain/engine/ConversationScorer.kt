@@ -28,6 +28,62 @@ object ConversationScorer {
      *  rather than "retry". Below this, it is a different sentence. */
     const val NEAR_MIN_KEYWORD_RATIO = 0.60
 
+    /**
+     * Grades a take against **every** accepted answer of the turn and keeps the
+     * best one. A dialogue item is authored with several equivalent replies
+     * ("yes please" / "a table for two, please"), and grading only the first one
+     * failed a learner who said an answer the bundle itself lists.
+     *
+     * [partnerLine] is the device's own question. A take that repeats the question
+     * back is not an answer — the recogniser can pick the partner up through the
+     * speaker — so the echo is rejected before a near-miss is reported. Only a
+     * verdict that would otherwise be [SpeakingVerdict.CORRECT] survives it.
+     */
+    fun assessBest(
+        spoken: String,
+        targets: List<String>,
+        partnerLine: String? = null,
+    ): SpeakingVerdict {
+        val best = targets
+            .map { assess(spoken, it) }
+            .minByOrNull { it.ordinal }
+            ?: return SpeakingVerdict.RETRY
+        if (best == SpeakingVerdict.CORRECT) return SpeakingVerdict.CORRECT
+        if (partnerLine != null && echoesPartner(spoken, partnerLine)) return SpeakingVerdict.RETRY
+        return best
+    }
+
+    /**
+     * True when the take is mostly the partner's own line: at least
+     * [ECHO_MIN_RATIO] of the question's content words, matched with the same
+     * homophone fold and fuzzy rule the grader uses.
+     */
+    internal fun echoesPartner(spoken: String, partnerLine: String): Boolean {
+        val question = contentWords(partnerLine)
+        if (question.size < 2) return false
+        val spokenWords = wordsOf(normalize(spoken)).map(::foldHomophone)
+        val hits = question.count { want -> spokenWords.any { sameWord(it, want) } }
+        return hits.toDouble() / question.size >= ECHO_MIN_RATIO
+    }
+
+    /**
+     * The on-device recogniser's allowed-phrase list for one turn, as the JSON
+     * array Vosk expects. A small open-vocabulary model mishears heavily-accented
+     * English ("for" → "four", "pharmacy" → "farmers see"); constraining the
+     * search to the turn's own accepted answers fixes most of that, and `[unk]`
+     * keeps a genuinely different take from being forced into one of them.
+     */
+    fun speechGrammar(targets: List<String>): String =
+        targets
+            .mapNotNull { target ->
+                // The politeness strip is a grading rule, not a recognition one:
+                // the recogniser must still be allowed to hear the thank you.
+                cleanTokens(target).joinToString(" ").takeIf { it.isNotBlank() }
+            }
+            .distinct()
+            .plus("[unk]")
+            .joinToString(prefix = "[", postfix = "]") { "\"$it\"" }
+
     fun assess(spoken: String, target: String): SpeakingVerdict {
         val normalizedSpoken = normalize(spoken)
         val normalizedTarget = normalize(target)
@@ -36,10 +92,12 @@ object ConversationScorer {
 
         val similarity = similarity(normalizedSpoken, normalizedTarget)
         val keywords = contentWords(normalizedTarget)
-        // Whole-word membership, not substring: `contains("the")` would also hit
-        // "other", quietly inflating the coverage of an unrelated take.
-        val spokenWords = normalizedSpoken.split(' ').toSet()
-        val hits = keywords.count { it in spokenWords }
+        // Whole-word (or one-edit) membership, not substring: `contains("the")`
+        // would also hit "other", quietly inflating an unrelated take. The fuzzy
+        // arm is what forgives a recogniser's single-letter slip ("tabel"), and
+        // homophones are folded first ("to" / "too" / "two").
+        val spokenWords = wordsOf(normalizedSpoken).map(::foldHomophone)
+        val hits = keywords.count { want -> spokenWords.any { sameWord(it, want) } }
         val keywordRatio = if (keywords.isEmpty()) 1.0 else hits.toDouble() / keywords.size
 
         // Two-stage verdict, content words first. Levenshtein is order-sensitive,
@@ -78,12 +136,33 @@ object ConversationScorer {
      */
     internal fun contentWordsInOrder(spoken: String, keywords: List<String>): Boolean {
         if (keywords.isEmpty()) return false
-        val wanted = keywords.toSet()
         var next = 0
-        for (word in spoken.split(' ')) {
-            if (word in wanted && next < keywords.size && word == keywords[next]) next++
+        for (raw in wordsOf(spoken)) {
+            val word = foldHomophone(raw)
+            if (next < keywords.size && sameWord(word, keywords[next])) next++
         }
         return next == keywords.size
+    }
+
+    /** Words of an already-normalised text. */
+    private fun wordsOf(text: String): List<String> = text.split(' ').filter { it.isNotEmpty() }
+
+    /**
+     * Every spelling of a sound the recogniser is free to choose, folded onto one
+     * form. Applied to both sides, so "yes, a table for to" reaches the learner's
+     * "a table for two" instead of failing on the recogniser's spelling.
+     */
+    internal fun foldHomophone(word: String): String = HOMOPHONES[word] ?: word
+
+    /**
+     * Equal, or a one-letter slip on a word long enough for that to be a slip and
+     * not a different word. Short words (`a`, `to`, `is`) must match exactly.
+     */
+    internal fun sameWord(spoken: String, wanted: String): Boolean {
+        if (spoken == wanted) return true
+        if (wanted.length < FUZZY_MIN_LENGTH && spoken.length < FUZZY_MIN_LENGTH) return false
+        if (kotlin.math.abs(spoken.length - wanted.length) > 1) return false
+        return levenshtein(spoken, wanted) <= 1
     }
 
     /** 1.0 = identical, 0.0 = unrelated. Symmetric, so word order still matters. */
@@ -108,13 +187,42 @@ object ConversationScorer {
      * ASCII one, so they are unified first.
      */
     internal fun normalize(text: String): String =
+        cleanTokens(text).let(::stripPoliteness).joinToString(" ")
+
+    /** Lowercased words, contractions expanded, punctuation dropped. */
+    private fun cleanTokens(text: String): List<String> =
         text.lowercase()
             .replace(Regex("[\u2018\u2019`\u00b4]"), "'")
             .split(Regex("\\s+"))
             .map { word -> word.replace(Regex("[^a-z0-9']"), "") }
             .filter { it.isNotEmpty() }
             .flatMap { word -> CONTRACTIONS[word]?.split(' ') ?: listOf(word) }
-            .joinToString(" ")
+
+    /**
+     * Dropped before any comparison: `please` and `thank you` are courtesies, not
+     * content. A learner who says "just water" has answered "Just water, thank
+     * you." — but as content words the tail made that ratio 2/3 and the take came
+     * back "near". A turn that is *only* courtesy keeps its words rather than
+     * becoming an empty target every take would pass.
+     */
+    private fun stripPoliteness(words: List<String>): List<String> {
+        val kept = mutableListOf<String>()
+        var i = 0
+        while (i < words.size) {
+            val word = words[i]
+            when {
+                word == "please" || word == "thanks" -> i += 1
+                word == "thank" -> {
+                    i += if (words.getOrNull(i + 1) == "you") 2 else 1
+                }
+                else -> {
+                    kept += word
+                    i += 1
+                }
+            }
+        }
+        return kept.ifEmpty { words }
+    }
 
     /** Expanded forms, both sides of the comparison. */
     private val CONTRACTIONS = mapOf(
@@ -139,9 +247,11 @@ object ConversationScorer {
      * the keyword signal. A bare function so a test can pin it directly.
      */
     internal fun contentWords(target: String): List<String> =
-        normalize(target)
-            .split(' ')
-            .filter { it.isNotEmpty() && it !in STOP_WORDS }
+        wordsOf(normalize(target))
+            // The stop check runs on the written form: folding first would turn
+            // "for" into "four" and quietly make a function word a keyword.
+            .filter { it !in STOP_WORDS }
+            .map(::foldHomophone)
 
     private fun levenshtein(a: String, b: String): Int {
         if (a.isEmpty()) return b.length
@@ -167,9 +277,40 @@ object ConversationScorer {
         return previous[b.length]
     }
 
+    /** A take must share this much of the question before it counts as an echo. */
+    private const val ECHO_MIN_RATIO = 0.6
+
+    /** Below this length a one-edit difference is a different word, not a slip. */
+    private const val FUZZY_MIN_LENGTH = 5
+
+    /**
+     * Polite filler is never a reason to fail a learner: the answer is the content
+     * words, not the please. They are stop words instead of keywords for the same
+     * reason articles are.
+     */
     private val STOP_WORDS = setOf(
         "a", "an", "the", "and", "or", "to", "of", "in", "on", "at", "is", "are",
         "was", "were", "be", "it", "that", "this", "with", "for", "as", "by", "near",
+        "please", "thanks", "thank", "okay", "ok", "well", "um", "uh",
+    )
+
+    /**
+     * Sound-alike spellings, folded on both sides before any comparison. `to` is a
+     * stop word, so folding it to `two` never promotes it to a keyword — it only
+     * lets a spoken "two" satisfy a target's "two" written differently.
+     */
+    private val HOMOPHONES = mapOf(
+        "too" to "two", "to" to "two",
+        "four" to "for",
+        "their" to "there", "they're" to "there",
+        "write" to "right",
+        "know" to "no",
+        "eye" to "i",
+        "buy" to "by",
+        "hear" to "here",
+        "won" to "one",
+        "whether" to "weather",
+        "you're" to "your",
     )
 }
 

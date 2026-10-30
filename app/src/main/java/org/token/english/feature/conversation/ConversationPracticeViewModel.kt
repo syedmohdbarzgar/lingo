@@ -36,11 +36,19 @@ data class DialogueTurn(
     val partnerLineFa: String?,
     /** Persian description of what the learner should reply. */
     val taskFa: String,
-    /** The English reply this turn is graded against. */
-    val answer: String,
+    /**
+     * Every English reply this turn accepts, the model one first. The bundle
+     * authors equivalents ("yes please" / "a table for two, please") and the take
+     * is graded against all of them — grading only the first failed a learner who
+     * said a sentence the content itself lists.
+     */
+    val answers: List<String>,
     /** Persian note on the structure (the exercise's own explanation), shown after a miss. */
     val tipFa: String?,
-)
+) {
+    /** The authored reply, shown to the learner as the sentence to say. */
+    val answer: String get() = answers.first()
+}
 
 /** A finished exchange, kept on screen as the conversation's transcript. */
 data class AnsweredTurn(
@@ -196,7 +204,10 @@ class ConversationPracticeViewModel(
             return
         }
         _state.update {
-            it.copy(verdict = ConversationScorer.assess(said, turn.answer), unheard = false)
+            it.copy(
+                verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine),
+                unheard = false,
+            )
         }
     }
 
@@ -218,8 +229,11 @@ class ConversationPracticeViewModel(
                         .filterIsInstance<Exercise.Speaking>()
                         .sortedBy { it.id }
                         .forEach { ex ->
-                            val answer = ex.referenceAnswers.firstOrNull()
-                                ?.takeIf { it.isNotBlank() } ?: return@forEach
+                            val answers = ex.referenceAnswers
+                                .map { it.trim() }
+                                .filter { it.isNotEmpty() }
+                                .distinct()
+                            if (answers.isEmpty()) return@forEach
                             add(
                                 DialogueTurn(
                                     exerciseId = ex.id,
@@ -228,7 +242,7 @@ class ConversationPracticeViewModel(
                                     partnerLine = ex.question?.takeIf { it.isNotBlank() },
                                     partnerLineFa = ex.questionFa?.takeIf { it.isNotBlank() },
                                     taskFa = ex.prompt,
-                                    answer = answer,
+                                    answers = answers,
                                     tipFa = ex.explanation?.takeIf { it.isNotBlank() },
                                 ),
                             )
@@ -293,6 +307,10 @@ class ConversationPracticeViewModel(
         // Recording over the partner's own line would capture the device, not the
         // learner — the take would be graded against the question it just heard.
         if (_state.value.isPartnerSpeaking) return
+        // Constrain the recogniser to this turn's own sentences before the service
+        // opens the microphone; an open vocabulary is what misheard accented
+        // English and made a correct answer look like a miss.
+        _state.value.current?.let { SpeechBus.grammar = ConversationScorer.speechGrammar(it.answers) }
         // Deliberately NOT `clearTake()`: that stops the recogniser, and a stop
         // racing the start is what tore the foreground service down before it
         // could call startForeground() (process crash, Android 12). A new take

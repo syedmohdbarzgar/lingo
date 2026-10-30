@@ -89,6 +89,18 @@
   learner setting: a slower/faster control needs a preference, a settings row and a copy pass, and a
   half-done speed setting is worse than one predictable pace. Revisit when the settings screen gets a
   «سرعت صدا» row for both TTS and partner lines.
+- **Recognition fairness: the engine half shipped, three device-level items did not (Oct 2026
+  audit).** The scorer now grades every accepted answer, folds recogniser homophones, forgives one
+  edit on a long word, strips `please`/`thank you`, rejects a take that repeats the partner, and the
+  recogniser is constrained to the turn's own sentences (`ConversationScorer.speechGrammar` via
+  `SpeechBus.grammar`). Deliberately **not** done, because each one needs a phone to verify and a
+  longer change than the fairness pass: automatic endpointing (a take still ends on the button, so
+  trailing room noise can still be transcribed), a take-generation guard for a START racing the
+  first model load (two rapid starts can still open two recorders), and `VoskManager.release()` on
+  screen exit (~300 MB of native model memory lives until process death; releasing it pays a reload
+  on the next visit). The backup rule now excludes `filesDir/vosk/` — that one was data loss, not a
+  trade-off: the extracted model alone exceeded Auto Backup's 25 MB cap and cancelled the whole
+  backup.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.
