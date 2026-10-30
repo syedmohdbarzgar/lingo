@@ -209,9 +209,9 @@ object ContentValidator {
                     if (text(o, "text").isEmpty()) report(id, "blank text")
                     if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
                 }
-                // Speaking practice is self-assessed: the first accepted answer is
-                // the model the learner hears and repeats, so it must exist and be
-                // English (a Persian model cannot be spoken back through TTS).
+                // Speaking practice is graded on-device against the first accepted
+                // answer, so it must exist and be English (a Persian sentence cannot
+                // be recognised from English speech).
                 "speaking" -> {
                     if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
                     val models = array(o, "accepted").map { it.toString().trim() }.filter { it.isNotEmpty() }
@@ -220,6 +220,31 @@ object ContentValidator {
                         report(id, "speaking model must be English (it is spoken by TTS)")
                     }
                     if (text(o, "skill").isEmpty()) report(id, "speaking must declare skill")
+
+                    // Optional dialogue turn: the apparatus asks `question` and the
+                    // learner answers with the model. Authoring rules, in the two
+                    // ways this pair can go wrong:
+                    //  - a Persian gloss without an English line leaves a turn with
+                    //    nothing to say, so the learner only ever hears the answer;
+                    //  - a question the learner is also supposed to answer verbatim
+                    //    is not a conversation, it is an echo (the scorer would pass
+                    //    the partner's own line back as the learner's answer).
+                    val question = text(o, "question")
+                    val questionFa = text(o, "questionFa")
+                    if (question.isEmpty() && questionFa.isNotEmpty()) {
+                        report(id, "questionFa without question (nothing to ask)")
+                    }
+                    if (question.isNotEmpty()) {
+                        if (question.any { ch -> ch in '\u0600'..'\u06FF' }) {
+                            report(id, "question must be English (the partner speaks it)")
+                        }
+                        if (questionFa.isEmpty()) {
+                            report(id, "question needs questionFa — the learner must know what was asked")
+                        }
+                        if (models.any { it.equals(question, ignoreCase = true) }) {
+                            report(id, "question repeats the accepted answer — write a real reply")
+                        }
+                    }
                 }
             }
         }

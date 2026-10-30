@@ -1,5 +1,5 @@
 {
-  "contentVersion": 25,
+  "contentVersion": 28,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -1195,7 +1195,17 @@
       "lessons": [
         "a1.introductions.lesson-01",
         "a1.weather.lesson-01",
-        "a1.articles.lesson-01"
+        "a1.articles.lesson-01",
+        "a1.countries.lesson-01",
+        "a1.age-birthday.lesson-01",
+        "a1.days-months.lesson-01",
+        "a1.time.lesson-01",
+        "a1.colors.lesson-01",
+        "a1.classroom.lesson-01",
+        "a1.home-rooms.lesson-01",
+        "a1.food-drinks.lesson-01",
+        "a1.animals.lesson-01",
+        "a1.cafe-restaurant.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1212,7 +1222,12 @@
         "a1.daily-routine.lesson-01",
         "a1.family.lesson-01",
         "a1.pronouns.lesson-01",
-        "a1.can.lesson-01"
+        "a1.can.lesson-01",
+        "a1.jobs.lesson-01",
+        "a1.fruits-vegetables.lesson-01",
+        "a1.hobbies.lesson-01",
+        "a1.places-town.lesson-01",
+        "a1.describing-people.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1227,7 +1242,8 @@
       "prerequisites": [],
       "lessons": [
         "a1.greetings.lesson-01",
-        "a1.shopping.lesson-01"
+        "a1.shopping.lesson-01",
+        "a1.body.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1334,7 +1350,11 @@
       "prerequisites": [],
       "lessons": [
         "a1.plurals.lesson-01",
-        "a1.imperatives.lesson-01"
+        "a1.imperatives.lesson-01",
+        "a1.belongings.lesson-01",
+        "a1.house-objects.lesson-01",
+        "a1.clothes.lesson-01",
+        "a1.transport.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1348,7 +1368,9 @@
       "level": "A1",
       "prerequisites": [],
       "lessons": [
-        "a1.question-words.lesson-01"
+        "a1.question-words.lesson-01",
+        "a1.directions.lesson-01",
+        "a1.where-i-live.lesson-01"
       ],
       "skills": [
         "LISTENING"
@@ -1440,6 +1462,380 @@
         "a1.numbers.lesson-01"
       ],
       "skills": [
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.countries",
+      "type": "VOCABULARY",
+      "title": "Countries and nationalities",
+      "titleFa": "کشورها و ملیت‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.countries.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.age-birthday",
+      "type": "VOCABULARY",
+      "title": "Age and birthdays",
+      "titleFa": "سن و تولد",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.numbers"
+      ],
+      "lessons": [
+        "a1.age-birthday.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.days-months",
+      "type": "VOCABULARY",
+      "title": "Days, weeks and months",
+      "titleFa": "روزها و ماه‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.numbers"
+      ],
+      "lessons": [
+        "a1.days-months.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.time",
+      "type": "VOCABULARY",
+      "title": "Telling the time",
+      "titleFa": "گفتن ساعت",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.numbers"
+      ],
+      "lessons": [
+        "a1.time.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.colors",
+      "type": "VOCABULARY",
+      "title": "Colors",
+      "titleFa": "رنگ‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.colors.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.classroom-objects",
+      "type": "VOCABULARY",
+      "title": "Classroom objects",
+      "titleFa": "اشیای کلاس",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.classroom.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.jobs",
+      "type": "VOCABULARY",
+      "title": "Jobs and Occupations",
+      "titleFa": "شغل‌ها و حرفه‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.jobs.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.belongings",
+      "type": "VOCABULARY",
+      "title": "Personal Belongings",
+      "titleFa": "وسایل شخصی",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.belongings.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.home-rooms",
+      "type": "VOCABULARY",
+      "title": "Home and Rooms",
+      "titleFa": "خانه و اتاق‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.home-rooms.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.house-objects",
+      "type": "VOCABULARY",
+      "title": "Household Objects",
+      "titleFa": "وسایل خانه",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.house-objects.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.food-drinks",
+      "type": "VOCABULARY",
+      "title": "Food and Drinks",
+      "titleFa": "غذاها و نوشیدنی‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.food-drinks.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.fruits-vegetables",
+      "type": "VOCABULARY",
+      "title": "Fruits and Vegetables",
+      "titleFa": "میوه‌ها و سبزیجات",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.fruits-vegetables.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.clothes",
+      "type": "VOCABULARY",
+      "title": "Clothes",
+      "titleFa": "لباس‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.clothes.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.body",
+      "type": "VOCABULARY",
+      "title": "Parts of the Body",
+      "titleFa": "اعضای بدن",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.body.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.animals",
+      "type": "VOCABULARY",
+      "title": "Animals",
+      "titleFa": "حیوانات",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.animals.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.hobbies",
+      "type": "VOCABULARY",
+      "title": "Likes and Hobbies",
+      "titleFa": "علایق و سرگرمی‌ها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.hobbies.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.places-town",
+      "type": "VOCABULARY",
+      "title": "Places in Town",
+      "titleFa": "مکان‌های شهر",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.places-town.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.directions",
+      "type": "VOCABULARY",
+      "title": "Asking for Directions",
+      "titleFa": "آدرس پرسیدن و مسیرها",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.directions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.transport",
+      "type": "VOCABULARY",
+      "title": "Public Transportation",
+      "titleFa": "حمل‌ونقل عمومی",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.transport.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.cafe-restaurant",
+      "type": "VOCABULARY",
+      "title": "At a Café and Restaurant",
+      "titleFa": "در کافه و رستوران",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.cafe-restaurant.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.describing-people",
+      "type": "VOCABULARY",
+      "title": "Describing People",
+      "titleFa": "معرفی دوستان و توصیف افراد",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.describing-people.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.where-i-live",
+      "type": "VOCABULARY",
+      "title": "Where I Live",
+      "titleFa": "معرفی محل زندگی",
+      "level": "A1",
+      "prerequisites": [
+        "vocab.alphabet"
+      ],
+      "lessons": [
+        "a1.where-i-live.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
         "LISTENING"
       ]
     }

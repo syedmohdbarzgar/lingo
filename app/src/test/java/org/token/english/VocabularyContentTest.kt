@@ -70,6 +70,9 @@ class VocabularyContentTest {
         "a2.past-simple.word.write" to "wrote",
         // Irregular plural (the A1 lesson teaches exactly this contrast).
         "a1.plurals.word.woman" to "women",
+        // teeth is the plural the body lesson's own teaching page drills
+        // (tooth → teeth), so the second example has to use it.
+        "a1.body.word.tooth" to "teeth",
         // Consonant doubling / y→ied stems the prefix rule cannot see.
         "b1.work.word.apply" to "applied",
         "c2.nuance.word.imply" to "implies",

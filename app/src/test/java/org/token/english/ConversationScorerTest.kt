@@ -171,6 +171,37 @@ class ConversationScorerTest {
     // ---- normalize / contentWords -------------------------------------------
 
     @Test
+    fun `a restarted phrase is still the target said back`() {
+        // Speaking practice is where false starts happen: the learner begins again
+        // after the first "go straight". The keywords are all there, in the
+        // authored order — the repetition is not a different sentence.
+        val verdict = ConversationScorer.assess(
+            spoken = "go straight go straight and turn left at the traffic light",
+            target = "go straight and turn left at the traffic light",
+        )
+        assertEquals(SpeakingVerdict.CORRECT, verdict)
+    }
+
+    @Test
+    fun `a contraction in the take matches the expanded target`() {
+        // Both are the same sentence said the same way; only the writing differs.
+        // Comparing them literally docked a correct answer for style (and the
+        // recogniser is free to return either form).
+        val verdict = ConversationScorer.assess(
+            spoken = "I'm going to visit my family",
+            target = "I am going to visit my family.",
+        )
+        assertEquals(SpeakingVerdict.CORRECT, verdict)
+    }
+
+    @Test
+    fun `normalize expands contractions and unifies apostrophes`() {
+        // Curly apostrophes arrive from the speech model as often as the ASCII one.
+        assertEquals("i am fine", ConversationScorer.normalize("I\u2019m fine!"))
+        assertEquals("do not worry", ConversationScorer.normalize("Don't worry."))
+    }
+
+    @Test
     fun `normalize strips punctuation and collapses whitespace`() {
         assertEquals(
             "bank is on the left next to the pharmacy",

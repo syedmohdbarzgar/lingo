@@ -250,6 +250,11 @@ object ContentParser {
                 lessonId = lessonId,
                 prompt = o.getString("prompt"),
                 referenceAnswers = o.acceptedList(),
+                // Optional dialogue turn: absent on a repeat-the-model item, and a
+                // blank authored value is treated as absent rather than as a
+                // question the learner gets asked with nothing in it.
+                question = o.optString("question").trim().ifBlank { null },
+                questionFa = o.optString("questionFa").trim().ifBlank { null },
                 skill = skill,
                 explanation = explanation,
             )

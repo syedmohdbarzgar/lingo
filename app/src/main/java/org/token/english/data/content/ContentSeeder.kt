@@ -1,6 +1,9 @@
 package org.token.english.data.content
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import org.json.JSONArray
 import org.json.JSONObject
@@ -43,68 +46,79 @@ class ContentSeeder(
         warnOnVersionMismatch("placement.json", placementJson, bundleVersion)
         warnOnVersionMismatch("knowledge.json", knowledgeJson, bundleVersion)
 
-        val lessons = ContentParser.parseLessons(lessonsJson)
-        val vocabulary = ContentParser.parseVocabulary(vocabularyJson)
-        val knowledge = ContentParser.parseKnowledge(knowledgeJson)
-        val exercises = ContentParser.parseRawExercises(exercisesJson) +
-            ContentParser.parseRawPlacement(placementJson)
+        // The bundle is parsed concurrently, one file per core: the five assets are
+        // independent documents, and the decode (not the insert) is what dominates
+        // a cold seed now that the bundle is ~1.5× its v27 size. The insert below
+        // stays a single transaction, so the ordering guarantees are unchanged.
+        val startedAt = System.currentTimeMillis()
+        coroutineScope {
+            val lessons = async(Dispatchers.Default) { ContentParser.parseLessons(lessonsJson) }
+            val vocabulary = async(Dispatchers.Default) { ContentParser.parseVocabulary(vocabularyJson) }
+            val knowledge = async(Dispatchers.Default) { ContentParser.parseKnowledge(knowledgeJson) }
+            val exercises = async(Dispatchers.Default) {
+                ContentParser.parseRawExercises(exercisesJson) +
+                    ContentParser.parseRawPlacement(placementJson)
+            }
 
-        dao.replaceContent(
-            lessons = lessons.map {
-                LessonEntity(
-                    id = it.id,
-                    level = it.level.name,
-                    title = it.title,
-                    titleFa = it.titleFa,
-                    topic = it.topic,
-                    estimatedMinutes = it.estimatedMinutes,
-                    orderIndex = it.order,
-                    grammarTipFa = it.grammarTipFa,
-                )
-            },
-            vocabulary = vocabulary.map {
-                VocabularyEntity(
-                    id = it.id,
-                    word = it.word,
-                    translation = it.translation,
-                    definition = it.definition,
-                    pronunciation = it.pronunciation,
-                    level = it.level.name,
-                    partOfSpeech = it.partOfSpeech,
-                    examplesJson = JSONArray(
-                        it.examples.map { example ->
-                            JSONObject().put("en", example.en).put("fa", example.fa)
-                        },
-                    ).toString(),
-                    collocationsJson = JSONArray(it.collocations).toString(),
-                    lessonId = it.lessonId,
-                    explanationFa = it.explanationFa,
-                )
-            },
-            exercises = exercises.map {
-                ExerciseEntity(
-                    id = it.id,
-                    lessonId = it.lessonId,
-                    type = it.type,
-                    orderIndex = it.orderIndex,
-                    payloadJson = it.payloadJson,
-                )
-            },
-            knowledge = knowledge.map {
-                KnowledgeItemEntity(
-                    id = it.id,
-                    type = it.type.name,
-                    title = it.title,
-                    titleFa = it.titleFa,
-                    level = it.level.name,
-                    prerequisitesJson = JSONArray(it.prerequisites).toString(),
-                    lessonIdsJson = JSONArray(it.lessonIds).toString(),
-                    skillsJson = JSONArray(it.skills.map { skill -> skill.name }).toString(),
-                )
-            },
-        )
+            dao.replaceContent(
+                lessons = lessons.await().map {
+                    LessonEntity(
+                        id = it.id,
+                        level = it.level.name,
+                        title = it.title,
+                        titleFa = it.titleFa,
+                        topic = it.topic,
+                        estimatedMinutes = it.estimatedMinutes,
+                        orderIndex = it.order,
+                        grammarTipFa = it.grammarTipFa,
+                    )
+                },
+                vocabulary = vocabulary.await().map {
+                    VocabularyEntity(
+                        id = it.id,
+                        word = it.word,
+                        translation = it.translation,
+                        definition = it.definition,
+                        pronunciation = it.pronunciation,
+                        level = it.level.name,
+                        partOfSpeech = it.partOfSpeech,
+                        examplesJson = JSONArray(
+                            it.examples.map { example ->
+                                JSONObject().put("en", example.en).put("fa", example.fa)
+                            },
+                        ).toString(),
+                        collocationsJson = JSONArray(it.collocations).toString(),
+                        lessonId = it.lessonId,
+                        explanationFa = it.explanationFa,
+                    )
+                },
+                exercises = exercises.await().map {
+                    ExerciseEntity(
+                        id = it.id,
+                        lessonId = it.lessonId,
+                        type = it.type,
+                        orderIndex = it.orderIndex,
+                        payloadJson = it.payloadJson,
+                    )
+                },
+                knowledge = knowledge.await().map {
+                    KnowledgeItemEntity(
+                        id = it.id,
+                        type = it.type.name,
+                        title = it.title,
+                        titleFa = it.titleFa,
+                        level = it.level.name,
+                        prerequisitesJson = JSONArray(it.prerequisites).toString(),
+                        lessonIdsJson = JSONArray(it.lessonIds).toString(),
+                        skillsJson = JSONArray(it.skills.map { skill -> skill.name }).toString(),
+                    )
+                },
+            )
+        }
 
         settingsRepository.setContentVersion(bundleVersion)
+        // One line per seed, so growth in the bundle is visible instead of felt.
+        Log.i(TAG, "seeded v$bundleVersion in ${System.currentTimeMillis() - startedAt} ms")
     }
 
     private fun warnOnVersionMismatch(file: String, json: String, bundleVersion: Int) {

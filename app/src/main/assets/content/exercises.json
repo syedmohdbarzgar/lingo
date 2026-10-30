@@ -1,5 +1,5 @@
 {
-  "contentVersion": 25,
+  "contentVersion": 28,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -3945,6 +3945,48 @@
       "explanationFa": "به کشش واکهٔ /iː/ در meet و /aɪ/ در nice گوش کن."
     },
     {
+      "id": "a1.greetings.ex.10",
+      "lessonId": "a1.greetings.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "پارتنر احوال‌پرسی می‌کند؛ کوتاه و مؤدبانه جواب بده.",
+      "question": "Hi! How are you?",
+      "questionFa": "سلام! حال شما چطور است؟",
+      "accepted": [
+        "I'm fine, thank you."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "«I'm fine, thank you.» جواب کامل و مؤدبانه است؛ شکل کوتاه‌ترش «Fine, thanks» است."
+    },
+    {
+      "id": "a1.greetings.ex.11",
+      "lessonId": "a1.greetings.lesson-01",
+      "order": 11,
+      "type": "speaking",
+      "prompt": "همان تعارف را با too جواب بده.",
+      "question": "Good morning. Nice to meet you.",
+      "questionFa": "صبح بخیر. از آشنایی با شما خوشوقتم.",
+      "accepted": [
+        "Nice to meet you too."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای برگرداندن این تعارف، too را آخر جمله بیاور: Nice to meet you too."
+    },
+    {
+      "id": "a1.greetings.ex.12",
+      "lessonId": "a1.greetings.lesson-01",
+      "order": 12,
+      "type": "speaking",
+      "prompt": "کوتاه جواب بده: کمی انگلیسی بلدی.",
+      "question": "Excuse me, do you speak English?",
+      "questionFa": "ببخشید، انگلیسی صحبت می‌کنید؟",
+      "accepted": [
+        "Yes, a little."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "«a little» یعنی «کمی»؛ برای مقدار قابل‌شمارش a few می‌آید و برای غیرقابل‌شمارش a little."
+    },
+    {
       "id": "a1.daily-routine.ex.08",
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "listening",
@@ -6453,6 +6495,34 @@
       "explanationFa": "در نقل قول یک پرسش بله/خیر از whether (یا if) استفاده می‌کنیم و جمله به ترتیب خبری می‌آید: whether I had any questions."
     },
     {
+      "id": "b2.interview.ex.11",
+      "lessonId": "b2.interview.lesson-01",
+      "order": 11,
+      "type": "speaking",
+      "prompt": "دلیلت را با because در یک جملهٔ کامل بگو.",
+      "question": "Thanks for coming. Why do you want to work here?",
+      "questionFa": "ممنون که آمدید. چرا می‌خواهید اینجا کار کنید؟",
+      "accepted": [
+        "I want to work here because your team builds products I admire."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "because دلیل را به جملهٔ قبل وصل می‌کند؛ در مصاحبه یک جملهٔ روشن از چند جملهٔ کلی بهتر است."
+    },
+    {
+      "id": "b2.interview.ex.12",
+      "lessonId": "b2.interview.lesson-01",
+      "order": 12,
+      "type": "speaking",
+      "prompt": "با شرطی نوع دوم جواب بده: اول دامنه را دوباره مذاکره می‌کنی.",
+      "question": "What would you do if a deadline moved up by a week?",
+      "questionFa": "اگر مهلت یک کار یک هفته جلو بیفتد چه می‌کنید؟",
+      "accepted": [
+        "I would renegotiate the scope with the team before promising a new date."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "شرطی نوع دوم فرضی است: گذشتهٔ ساده در جملهٔ if و would + فعل ساده در جملهٔ اصلی."
+    },
+    {
       "id": "b2.media.ex.10",
       "lessonId": "b2.media.lesson-01",
       "type": "multiple_choice",
@@ -6612,6 +6682,48 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«delicious» = خوشمزه و «slow» = کند؛ «but» تضاد این دو را نشان می‌دهد."
+    },
+    {
+      "id": "a2.restaurant.ex.17",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 17,
+      "type": "speaking",
+      "prompt": "میز بخواه و تعداد نفرات را بگو.",
+      "question": "Good evening. A table for two?",
+      "questionFa": "عصر بخیر. میز برای دو نفر؟",
+      "accepted": [
+        "Yes, please. A table for two."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "«Yes, please» جواب مؤدبانهٔ یک پیشنهاد است؛ please را جدا و آخر جمله نگه دار."
+    },
+    {
+      "id": "a2.restaurant.ex.18",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 18,
+      "type": "speaking",
+      "prompt": "سوپ مرغ سفارش بده.",
+      "question": "Are you ready to order?",
+      "questionFa": "برای سفارش آماده‌اید؟",
+      "accepted": [
+        "I'd like the chicken soup, please."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "«I'd like …» مؤدبانه‌ترین شکل سفارش است؛ بعد از would like فعل با to می‌آید."
+    },
+    {
+      "id": "a2.restaurant.ex.19",
+      "lessonId": "a2.restaurant.lesson-01",
+      "order": 19,
+      "type": "speaking",
+      "prompt": "نوشیدنی سفارش بده.",
+      "question": "Would you like anything to drink?",
+      "questionFa": "نوشیدنی هم میل دارید؟",
+      "accepted": [
+        "Just water, thank you."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "«Just water» یعنی «فقط آب»؛ just اینجا یعنی «همین و بس»."
     },
     {
       "id": "b1.work.ex.10",
@@ -7167,6 +7279,34 @@
       "explanationFa": "شرطی نوع دوم موقعیت خیالی را می‌رساند: if + گذشتهٔ ساده و would در جملهٔ اصلی."
     },
     {
+      "id": "b1.plans.ex.13",
+      "lessonId": "b1.plans.lesson-01",
+      "order": 13,
+      "type": "speaking",
+      "prompt": "برنامهٔ آخر هفته‌ات را با going to بگو: به دیدن خانواده می‌روی.",
+      "question": "What are you doing this weekend?",
+      "questionFa": "آخر هفته چه کار می‌کنی؟",
+      "accepted": [
+        "I'm going to visit my family."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای برنامهٔ تصمیم‌گرفته‌شده am/is/are going to + فعل ساده می‌آید؛ will برای تصمیم لحظه‌ای است."
+    },
+    {
+      "id": "b1.plans.ex.14",
+      "lessonId": "b1.plans.lesson-01",
+      "order": 14,
+      "type": "speaking",
+      "prompt": "با شرطی نوع اول جواب بده: اگر باران بیاید خانه می‌مانی.",
+      "question": "If it rains on Saturday, what will you do?",
+      "questionFa": "اگر شنبه باران بیاید چه می‌کنی؟",
+      "accepted": [
+        "If it rains, I'll stay at home."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "در شرطی نوع اول، جملهٔ if حال ساده و جملهٔ اصلی will دارد: If it rains, I'll stay at home."
+    },
+    {
       "id": "b2.environment.ex.15",
       "lessonId": "b2.environment.lesson-01",
       "type": "sentence_production",
@@ -7283,24 +7423,28 @@
       "lessonId": "a2.directions.lesson-01",
       "order": 10,
       "type": "speaking",
-      "prompt": "مسیر را به یک توریست توضیح بده: بشنو، بعد خودت بگو.",
+      "prompt": "مسیر را به یک توریست توضیح بده: بشنو، بعد خودت جواب بده.",
       "accepted": [
         "Go straight and turn left at the traffic light."
       ],
       "skill": "SPEAKING",
-      "explanationFa": "at برای نقطهٔ مشخص (چراغ راهنما) به کار می‌رود؛ go straight بدون to می‌آید."
+      "explanationFa": "at برای نقطهٔ مشخص (چراغ راهنما) به کار می‌رود؛ go straight بدون to می‌آید.",
+      "question": "Excuse me, how do I get to the station?",
+      "questionFa": "ببخشید، چطور به ایستگاه بروم؟"
     },
     {
       "id": "a2.directions.ex.11",
       "lessonId": "a2.directions.lesson-01",
       "order": 11,
       "type": "speaking",
-      "prompt": "بگو بانک کجاست و با یک جملهٔ کامل مسیر را بگو.",
+      "prompt": "مسیر بانک را با یک جملهٔ کامل بگو.",
       "accepted": [
         "The bank is on the left, next to the pharmacy."
       ],
       "skill": "SPEAKING",
-      "explanationFa": "برای سطح و سمت از on استفاده کن (on the left)، نه in."
+      "explanationFa": "برای سطح و سمت از on استفاده کن (on the left)، نه in.",
+      "question": "Where is the bank, please?",
+      "questionFa": "ببخشید، بانک کجاست؟"
     },
     {
       "id": "c1.register.ex.07",
@@ -7548,6 +7692,2984 @@
       "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "cut down on یعنی «کاستن از» هزینه یا مصرف؛ cut off یعنی قطع کردن و cut up یعنی تکه کردن."
+    },
+    {
+      "id": "a1.countries.ex.01",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"country\" mean?",
+      "questionFa": "معنی «country» چیست؟",
+      "options": [
+        "زبان",
+        "ملیت",
+        "کشور",
+        "پایتخت"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "«country» یعنی «کشور»؛ country برای سرزمین و کشور است؛ city برای شهر و capital برای پایتخت به کار می‌رود."
+    },
+    {
+      "id": "a1.countries.ex.02",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"nationality\" mean?",
+      "questionFa": "معنی «nationality» چیست؟",
+      "options": [
+        "پایتخت",
+        "کشور",
+        "زبان",
+        "ملیت"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "«nationality» یعنی «ملیت»؛ ملیت را با to be می‌گوییم: My nationality is Iranian — نه «I have Iranian nationality» در مکالمهٔ سادهٔ A1."
+    },
+    {
+      "id": "a1.countries.ex.03",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "Tehran is a very big ______ in Iran.",
+      "accepted": [
+        "city",
+        "town"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "«شهر بزرگ» در این جمله city (یا town) است؛ country کشور و capital پایتخت است."
+    },
+    {
+      "id": "a1.countries.ex.04",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "زبان",
+      "accepted": [
+        "language"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "زبان را با فعل speak می‌آوریم: speak English؛ و «به انگلیسی» می‌شود in English."
+    },
+    {
+      "id": "a1.countries.ex.05",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "She ______ from Japan.",
+      "accepted": [
+        "is",
+        "comes"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "با from هم فعل be می‌آید (she is from) و هم come: she comes from Japan."
+    },
+    {
+      "id": "a1.countries.ex.06",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"capital\" mean?",
+      "questionFa": "معنی «capital» چیست؟",
+      "options": [
+        "پایتخت",
+        "کشور",
+        "ملیت",
+        "زبان"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "«capital» یعنی «پایتخت»؛ capital همیشه با the می‌آید: the capital of Iran."
+    },
+    {
+      "id": "a1.countries.ex.07",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "او اهل ژاپن است.",
+      "accepted": [
+        "she is from japan",
+        "he is from japan",
+        "she comes from japan"
+      ],
+      "bank": [
+        "she",
+        "he",
+        "is",
+        "from",
+        "japan",
+        "iran",
+        "are",
+        "in"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای ملیت از be + from استفاده می‌کنیم: She is from Japan."
+    },
+    {
+      "id": "a1.countries.ex.08",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My country is Iran and my nationality is Iranian.",
+      "accepted": [
+        "my country is iran and my nationality is iranian"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به تکیهٔ na-tion-AL-i-ty در nationality و /ʌ/ کوتاه در country گوش کن."
+    },
+    {
+      "id": "a1.countries.ex.09",
+      "lessonId": "a1.countries.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من اهل ایران هستم و به فارسی و انگلیسی صحبت می‌کنم.",
+      "accepted": [
+        "I am from Iran and I speak Persian and English."
+      ],
+      "mustUse": [
+        "from",
+        "speak"
+      ],
+      "minWords": 6,
+      "hintFa": "برای مبدأ از from و برای زبان از speak استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله را با and وصل می‌کنیم: I am from Iran and I speak Persian and English."
+    },
+    {
+      "id": "a1.age-birthday.ex.01",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"age\" mean?",
+      "questionFa": "معنی «age» چیست؟",
+      "options": [
+        "تولد",
+        "سن",
+        "متولد شدن",
+        "سال"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "«age» یعنی «سن»؛ age در گفت‌وگوی روزمره کم می‌آید؛ معمولاً می‌پرسیم How old are you?"
+    },
+    {
+      "id": "a1.age-birthday.ex.02",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"birthday\" mean?",
+      "questionFa": "معنی «birthday» چیست؟",
+      "options": [
+        "متولد شدن",
+        "سن",
+        "تولد",
+        "سال"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "«birthday» یعنی «تولد»؛ birthday با th نوشته می‌شود؛ /θ/ را با نوک زبان بین دندان‌ها بگویید."
+    },
+    {
+      "id": "a1.age-birthday.ex.03",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "My ______ is on Friday. I am having a small party.",
+      "accepted": [
+        "birthday",
+        "birthday party"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "جملهٔ بعد از مهمانی می‌گوید؛ پس واژهٔ تولد (birthday) درست است."
+    },
+    {
+      "id": "a1.age-birthday.ex.04",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "متولد شدن",
+      "accepted": [
+        "born"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "born همیشه با was/were می‌آید: I was born — نه I born."
+    },
+    {
+      "id": "a1.age-birthday.ex.05",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I ______ born in Tehran.",
+      "accepted": [
+        "was"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "born همیشه با گذشتهٔ be می‌آید و برای I به was نیاز دارد: I was born."
+    },
+    {
+      "id": "a1.age-birthday.ex.06",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"year\" mean?",
+      "questionFa": "معنی «year» چیست؟",
+      "options": [
+        "متولد شدن",
+        "سن",
+        "تولد",
+        "سال"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "«year» یعنی «سال»؛ year در «years old» جمع می‌شود: ten years old."
+    },
+    {
+      "id": "a1.age-birthday.ex.07",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من بیست سال دارم.",
+      "accepted": [
+        "i am twenty years old",
+        "i'm twenty years old"
+      ],
+      "bank": [
+        "i",
+        "am",
+        "twenty",
+        "years",
+        "old",
+        "have",
+        "is",
+        "year"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "سن با be گفته می‌شود: I am twenty years old — not I have twenty years."
+    },
+    {
+      "id": "a1.age-birthday.ex.08",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My sister is twelve years old and her birthday is in June.",
+      "accepted": [
+        "my sister is twelve years old and her birthday is in june"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به /ɜːr/ در birthday و /jɪr/ در years گوش کن؛ هر دو کشیده خوانده می‌شوند."
+    },
+    {
+      "id": "a1.age-birthday.ex.09",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "تولد من در ماه مه است و من در تهران متولد شدم.",
+      "accepted": [
+        "My birthday is in May and I was born in Tehran."
+      ],
+      "mustUse": [
+        "birthday",
+        "born"
+      ],
+      "minWords": 7,
+      "hintFa": "برای ماه از in و برای تولد از was born استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله با and: My birthday is in May and I was born in Tehran."
+    },
+    {
+      "id": "a1.days-months.ex.01",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"day\" mean?",
+      "questionFa": "معنی «day» چیست؟",
+      "options": [
+        "روز",
+        "هفته",
+        "ماه",
+        "آخر هفته"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "«day» یعنی «روز»؛ every day یعنی «هر روز»؛ everyday (یک کلمه) صفت است: everyday English."
+    },
+    {
+      "id": "a1.days-months.ex.02",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"week\" mean?",
+      "questionFa": "معنی «week» چیست؟",
+      "options": [
+        "روز",
+        "هفته",
+        "ماه",
+        "آخر هفته"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "«week» یعنی «هفته»؛ week با /iː/ بلند خوانده می‌شود؛ weak («ضعیف») هم همین تلفظ را دارد."
+    },
+    {
+      "id": "a1.days-months.ex.03",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "I play football ______ Friday.",
+      "accepted": [
+        "on"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "برای روزهای هفته از on استفاده می‌کنیم: on Friday."
+    },
+    {
+      "id": "a1.days-months.ex.04",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "ماه",
+      "accepted": [
+        "month"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "month با /ʌ/ کوتاه است، نه /aʊ/؛ و th پایانی /θ/ خوانده می‌شود."
+    },
+    {
+      "id": "a1.days-months.ex.05",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "My favourite ______ is May.",
+      "accepted": [
+        "month",
+        "month of the year"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "May نام ماه است، پس واژهٔ month درست است."
+    },
+    {
+      "id": "a1.days-months.ex.06",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"weekend\" mean?",
+      "questionFa": "معنی «weekend» چیست؟",
+      "options": [
+        "هفته",
+        "روز",
+        "آخر هفته",
+        "ماه"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "«weekend» یعنی «آخر هفته»؛ در انگلیسی بریتانیایی «at the weekend» و در آمریکایی «on the weekend» رایج است."
+    },
+    {
+      "id": "a1.days-months.ex.07",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من دوشنبه‌ها کار می‌کنم.",
+      "accepted": [
+        "i work on monday",
+        "i work on mondays"
+      ],
+      "bank": [
+        "i",
+        "work",
+        "on",
+        "monday",
+        "in",
+        "works",
+        "mondays",
+        "am"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای روز هفته on و برای کار روزمره حال ساده به کار می‌رود: I work on Monday."
+    },
+    {
+      "id": "a1.days-months.ex.08",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "I work from Monday to Friday and I rest at the weekend.",
+      "accepted": [
+        "i work from monday to friday and i rest at the weekend"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به /deɪ/ در Monday و Friday و /iː/ در weekend گوش کن."
+    },
+    {
+      "id": "a1.days-months.ex.09",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "تولد من در ماه مه است و فردا مهمانی دارم.",
+      "accepted": [
+        "My birthday is in May and I have a party tomorrow."
+      ],
+      "mustUse": [
+        "in",
+        "tomorrow"
+      ],
+      "minWords": 8,
+      "hintFa": "برای ماه in و برای فردا tomorrow را در جمله بگذار.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله با and: My birthday is in May and I have a party tomorrow."
+    },
+    {
+      "id": "a1.time.ex.01",
+      "lessonId": "a1.time.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"time\" mean?",
+      "questionFa": "معنی «time» چیست؟",
+      "options": [
+        "دقیقه",
+        "ساعت دیواری",
+        "ساعت (واحد زمان)",
+        "زمان / ساعت"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "«time» یعنی «زمان / ساعت»؛ time هم «زمان» است و هم «ساعت» در پرسش ساعت: What time is it?"
+    },
+    {
+      "id": "a1.time.ex.02",
+      "lessonId": "a1.time.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"clock\" mean?",
+      "questionFa": "معنی «clock» چیست؟",
+      "options": [
+        "ساعت دیواری",
+        "زمان / ساعت",
+        "ساعت (واحد زمان)",
+        "دقیقه"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "«clock» یعنی «ساعت دیواری»؛ clock برای ساعت دیواری و رومیزی است؛ برای ساعت مچی watch می‌گوییم."
+    },
+    {
+      "id": "a1.time.ex.03",
+      "lessonId": "a1.time.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The class starts ______ nine o'clock.",
+      "accepted": [
+        "at"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "برای ساعت دقیق از at استفاده می‌کنیم: at nine o'clock."
+    },
+    {
+      "id": "a1.time.ex.04",
+      "lessonId": "a1.time.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "ساعت (واحد زمان)",
+      "accepted": [
+        "hour"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "hour با h بی‌صدا شروع می‌شود، پس an hour درست است، نه a hour."
+    },
+    {
+      "id": "a1.time.ex.05",
+      "lessonId": "a1.time.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I waited for two ______.",
+      "accepted": [
+        "hours",
+        "hours long"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "واحد زمان برای دو ساعت hour است و جمع می‌شود: two hours."
+    },
+    {
+      "id": "a1.time.ex.06",
+      "lessonId": "a1.time.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"minute\" mean?",
+      "questionFa": "معنی «minute» چیست؟",
+      "options": [
+        "زمان / ساعت",
+        "دقیقه",
+        "ساعت دیواری",
+        "ساعت (واحد زمان)"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "«minute» یعنی «دقیقه»؛ minute به معنی «دقیقه» /ˈmɪnɪt/ است؛ «کوچک» صفت دیگری است."
+    },
+    {
+      "id": "a1.time.ex.07",
+      "lessonId": "a1.time.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "ساعت هفت است و من دیر کرده‌ام.",
+      "accepted": [
+        "it is seven o'clock and i am late",
+        "it's seven o'clock and i'm late"
+      ],
+      "bank": [
+        "it",
+        "is",
+        "seven",
+        "o'clock",
+        "and",
+        "i",
+        "am",
+        "late",
+        "at",
+        "hour"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای ساعت از It is … o'clock و برای تأخیر از am late استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.time.ex.08",
+      "lessonId": "a1.time.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The clock says half past seven and the bus is late.",
+      "accepted": [
+        "the clock says half past seven and the bus is late"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به /klɒk/ در clock و /leɪt/ در late گوش کن؛ واکهٔ late کشیده است."
+    },
+    {
+      "id": "a1.time.ex.09",
+      "lessonId": "a1.time.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من هر روز ساعت شش بیدار می‌شوم و ساعت هشت کلاس دارم.",
+      "accepted": [
+        "I get up at six every day and I have a class at eight."
+      ],
+      "mustUse": [
+        "at",
+        "every day"
+      ],
+      "minWords": 9,
+      "hintFa": "ساعت را با at و تکرار روزانه را با every day بیان کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله با and: I get up at six every day and I have a class at eight."
+    },
+    {
+      "id": "a1.colors.ex.01",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"color\" mean?",
+      "questionFa": "معنی «color» چیست؟",
+      "options": [
+        "آبی",
+        "قرمز",
+        "رنگ",
+        "سبز"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "«color» یعنی «رنگ»؛ در انگلیسی بریتانیایی colour نوشته می‌شود؛ تلفظ یکی است."
+    },
+    {
+      "id": "a1.colors.ex.02",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"red\" mean?",
+      "questionFa": "معنی «red» چیست؟",
+      "options": [
+        "سبز",
+        "رنگ",
+        "آبی",
+        "قرمز"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "«red» یعنی «قرمز»؛ red و read (گذشتهٔ read) هم‌آوا هستند: /red/."
+    },
+    {
+      "id": "a1.colors.ex.03",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "The sky is ______ on a clear day.",
+      "accepted": [
+        "blue"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "آسمان صاف آبی است: the sky is blue."
+    },
+    {
+      "id": "a1.colors.ex.04",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "آبی",
+      "accepted": [
+        "blue"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "blue با /uː/ بلند خوانده می‌شود؛ کوتاه کردنش معنا را عوض نمی‌کند اما طبیعی نیست."
+    },
+    {
+      "id": "a1.colors.ex.05",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "She has a ______ coat and black shoes.",
+      "accepted": [
+        "red",
+        "blue",
+        "green",
+        "white"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هر رنگی این جا درست است؛ صفت رنگ پیش از اسم می‌آید: a red coat."
+    },
+    {
+      "id": "a1.colors.ex.06",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"green\" mean?",
+      "questionFa": "معنی «green» چیست؟",
+      "options": [
+        "سبز",
+        "رنگ",
+        "قرمز",
+        "آبی"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "«green» یعنی «سبز»؛ green در چراغ راهنما یعنی «اجازهٔ حرکت»."
+    },
+    {
+      "id": "a1.colors.ex.07",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "کیف من سیاه است.",
+      "accepted": [
+        "my bag is black",
+        "my bag is black."
+      ],
+      "bank": [
+        "my",
+        "bag",
+        "is",
+        "black",
+        "are",
+        "white",
+        "the",
+        "color"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "رنگ پس از فعل be می‌آید: My bag is black."
+    },
+    {
+      "id": "a1.colors.ex.08",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My new bag is black and my old bag is white.",
+      "accepted": [
+        "my new bag is black and my old bag is white"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به /æ/ کوتاه در black و /waɪt/ در white گوش کن؛ طول واکه آن‌ها را جدا می‌کند."
+    },
+    {
+      "id": "a1.colors.ex.09",
+      "lessonId": "a1.colors.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من یک کیف سبز دارم و رنگ مورد علاقه‌ام آبی است.",
+      "accepted": [
+        "I have a green bag and my favorite color is blue."
+      ],
+      "mustUse": [
+        "green",
+        "color"
+      ],
+      "minWords": 8,
+      "hintFa": "صفت رنگ را پیش از اسم بگذار و رنگ محبوب را با color بگو.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله با and: I have a green bag and my favorite color is blue."
+    },
+    {
+      "id": "a1.classroom.ex.01",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"book\" mean?",
+      "questionFa": "معنی «book» چیست؟",
+      "options": [
+        "خودکار",
+        "کتاب",
+        "مداد",
+        "تخته"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "«book» یعنی «کتاب»؛ book هم اسم است و هم فعل (رزرو کردن): book a table."
+    },
+    {
+      "id": "a1.classroom.ex.02",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"pen\" mean?",
+      "questionFa": "معنی «pen» چیست؟",
+      "options": [
+        "مداد",
+        "کتاب",
+        "خودکار",
+        "تخته"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "«pen» یعنی «خودکار»؛ pen خودکار است و pencil مداد؛ این دو را با هم اشتباه نگیرید."
+    },
+    {
+      "id": "a1.classroom.ex.03",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "fill_blank",
+      "order": 3,
+      "sentence": "______ is my English book.",
+      "accepted": [
+        "this",
+        "that"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "برای اشاره به یک چیز مفرد this (نزدیک) یا that (دور) با is می‌آید."
+    },
+    {
+      "id": "a1.classroom.ex.04",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "word_recall",
+      "order": 4,
+      "prompt": "مداد",
+      "accepted": [
+        "pencil"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "pencil با c نوشته می‌شود ولی /s/ خوانده می‌شود."
+    },
+    {
+      "id": "a1.classroom.ex.05",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "My pens are in my ______.",
+      "accepted": [
+        "bag",
+        "pencil case",
+        "school bag"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خودکارها را در کیف می‌گذاریم: in my bag."
+    },
+    {
+      "id": "a1.classroom.ex.06",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "multiple_choice",
+      "order": 6,
+      "question": "What does \"board\" mean?",
+      "questionFa": "معنی «board» چیست؟",
+      "options": [
+        "مداد",
+        "کتاب",
+        "خودکار",
+        "تخته"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "«board» یعنی «تخته»؛ board در کلاس معمولاً با the می‌آید: look at the board."
+    },
+    {
+      "id": "a1.classroom.ex.07",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "این کتاب من است.",
+      "accepted": [
+        "this is my book",
+        "this is my book."
+      ],
+      "bank": [
+        "this",
+        "is",
+        "my",
+        "book",
+        "are",
+        "these",
+        "mine",
+        "the"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ساختار معرفی: This is my book — this با is می‌آید."
+    },
+    {
+      "id": "a1.classroom.ex.08",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "Open your book and write your name on the board.",
+      "accepted": [
+        "open your book and write your name on the board"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "به /bʊk/ کوتاه در book و /bɔːrd/ بلند در board گوش کن."
+    },
+    {
+      "id": "a1.classroom.ex.09",
+      "lessonId": "a1.classroom.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "این مداد من است و آن کیف توست.",
+      "accepted": [
+        "This is my pencil and that is your bag."
+      ],
+      "mustUse": [
+        "this",
+        "that"
+      ],
+      "minWords": 7,
+      "hintFa": "برای چیز نزدیک this و برای دور that را به کار ببر.",
+      "skill": "VOCABULARY",
+      "explanationFa": "دو جمله با and: This is my pencil and that is your bag."
+    },
+    {
+      "id": "a1.jobs.ex.01",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"doctor\" mean?",
+      "questionFa": "معنی «doctor» چیست؟",
+      "options": [
+        "پزشک",
+        "پرستار",
+        "راننده",
+        "آشپز"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "doctor یعنی «پزشک». گزینه‌های دیگر معنی nurse، driver، cook هستند."
+    },
+    {
+      "id": "a1.jobs.ex.02",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"driver\" mean?",
+      "questionFa": "معنی «driver» چیست؟",
+      "options": [
+        "آشپز",
+        "راننده",
+        "کشاورز",
+        "معلم"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "driver یعنی «راننده». گزینه‌های دیگر معنی cook، farmer، teacher هستند."
+    },
+    {
+      "id": "a1.jobs.ex.03",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"farmer\" mean?",
+      "questionFa": "معنی «farmer» چیست؟",
+      "options": [
+        "پزشک",
+        "معلم",
+        "کشاورز",
+        "پرستار"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "farmer یعنی «کشاورز». گزینه‌های دیگر معنی teacher، doctor، nurse هستند."
+    },
+    {
+      "id": "a1.jobs.ex.04",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "My mother is a ___ at the hospital.",
+      "accepted": [
+        "doctor",
+        "nurse"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم doctor و هم nurse در بیمارستان کار می‌کنند؛ هر دو پیش از خود a می‌گیرند."
+    },
+    {
+      "id": "a1.jobs.ex.05",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "A ___ works in a kitchen.",
+      "accepted": [
+        "cook",
+        "chef"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "cook و chef هر دو آشپز هستند؛ واژهٔ دیگری با این معنا در این درس نیست."
+    },
+    {
+      "id": "a1.jobs.ex.06",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "پزشک",
+      "accepted": [
+        "doctor"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "doctor یعنی «پزشک»؛ go to the doctor یعنی به پزشک مراجعه کردن."
+    },
+    {
+      "id": "a1.jobs.ex.07",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "پدر من رانندهٔ تاکسی است.",
+      "accepted": [
+        "my father is a taxi driver",
+        "my dad is a taxi driver"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای گفتن شغل از am/is/are + a + نام شغل استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.jobs.ex.08",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The nurse helps the doctor.",
+      "accepted": [
+        "the nurse helps the doctor"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The nurse helps the doctor. — nurse با /nɜːrs/ کشیده شروع می‌شود و helps با /s/ پایانی می‌آید"
+    },
+    {
+      "id": "a1.jobs.ex.09",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "پدربزرگ من کشاورزی است که ده گاو دارد.",
+      "mustUse": [
+        "farmer",
+        "gets"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "the farmer gets up early"
+      ],
+      "hintFa": "برای توصیف شغل: is a + نام شغل.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The farmer gets up early. — work as a farmer و farmer را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.belongings.ex.01",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"bag\" mean?",
+      "questionFa": "معنی «bag» چیست؟",
+      "options": [
+        "کیف پول",
+        "کلید",
+        "تلفن همراه",
+        "کیف"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "bag یعنی «کیف». گزینه‌های دیگر معنی key، phone، wallet هستند."
+    },
+    {
+      "id": "a1.belongings.ex.02",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"phone\" mean?",
+      "questionFa": "معنی «phone» چیست؟",
+      "options": [
+        "تلفن همراه",
+        "کیف پول",
+        "ساعت مچی",
+        "چتر"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "phone یعنی «تلفن همراه». گزینه‌های دیگر معنی wallet، watch، umbrella هستند."
+    },
+    {
+      "id": "a1.belongings.ex.03",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"watch\" mean?",
+      "questionFa": "معنی «watch» چیست؟",
+      "options": [
+        "چتر",
+        "ساعت مچی",
+        "کیف",
+        "کلید"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "watch یعنی «ساعت مچی». گزینه‌های دیگر معنی umbrella، bag، key هستند."
+    },
+    {
+      "id": "a1.belongings.ex.04",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I put my ___ in my bag.",
+      "accepted": [
+        "phone",
+        "key",
+        "wallet",
+        "watch"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هر چهار واژه از وسایل شخصی این درس‌اند و در کیف جا می‌شوند."
+    },
+    {
+      "id": "a1.belongings.ex.05",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I look at my ___ to see the time.",
+      "accepted": [
+        "watch",
+        "phone"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای دیدن ساعت، هم watch و هم phone را می‌توان نگاه کرد."
+    },
+    {
+      "id": "a1.belongings.ex.06",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "کیف پول",
+      "accepted": [
+        "wallet"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "wallet یعنی «کیف پول»؛ wallet برای پول و کارت است و از bag کوچک‌تر."
+    },
+    {
+      "id": "a1.belongings.ex.07",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "کلید من در کیفم است.",
+      "accepted": [
+        "my key is in my bag",
+        "my keys are in my bag"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای مالکیت my و برای مکان in می‌آید: in my bag."
+    },
+    {
+      "id": "a1.belongings.ex.08",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "This key opens the front door.",
+      "accepted": [
+        "this key opens the front door"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: This key opens the front door. — key با /iː/ بلند است و opens با /z/ پایانی خوانده می‌شود"
+    },
+    {
+      "id": "a1.belongings.ex.09",
+      "lessonId": "a1.belongings.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "ساعت مچی من پنج دقیقه جلوست.",
+      "mustUse": [
+        "watch",
+        "five"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "my watch is five minutes fast"
+      ],
+      "hintFa": "برای مالکیت از my استفاده کنید و is را جا نیندازید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: My watch is five minutes fast. — a new watch و watch را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.home-rooms.ex.01",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"house\" mean?",
+      "questionFa": "معنی «house» چیست؟",
+      "options": [
+        "آشپزخانه",
+        "اتاق",
+        "خانه",
+        "اتاق خواب"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "house یعنی «خانه». گزینه‌های دیگر معنی room، kitchen، bedroom هستند."
+    },
+    {
+      "id": "a1.home-rooms.ex.02",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"kitchen\" mean?",
+      "questionFa": "معنی «kitchen» چیست؟",
+      "options": [
+        "حیاط و باغ",
+        "اتاق خواب",
+        "حمام",
+        "آشپزخانه"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "kitchen یعنی «آشپزخانه». گزینه‌های دیگر معنی bedroom، bathroom، garden هستند."
+    },
+    {
+      "id": "a1.home-rooms.ex.03",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"bathroom\" mean?",
+      "questionFa": "معنی «bathroom» چیست؟",
+      "options": [
+        "حمام",
+        "حیاط و باغ",
+        "خانه",
+        "اتاق"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "bathroom یعنی «حمام». گزینه‌های دیگر معنی garden، house، room هستند."
+    },
+    {
+      "id": "a1.home-rooms.ex.04",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Our flat has two ___.",
+      "accepted": [
+        "rooms",
+        "bedrooms"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم rooms و هم bedrooms با two و به‌صورت جمع می‌آیند."
+    },
+    {
+      "id": "a1.home-rooms.ex.05",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "We eat dinner in the ___.",
+      "accepted": [
+        "kitchen",
+        "garden"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "شام را هم در آشپزخانه و هم در حیاط می‌شود خورد."
+    },
+    {
+      "id": "a1.home-rooms.ex.06",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "حمام",
+      "accepted": [
+        "bathroom"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "bathroom یعنی «حمام»؛ bathroom جای شست‌وشو است؛ toilet فقط دستشویی."
+    },
+    {
+      "id": "a1.home-rooms.ex.07",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "خانهٔ ما نزدیک پارک است.",
+      "accepted": [
+        "our house is near the park",
+        "our house is next to the park"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "for توصیف مکان near یا next to به کار می‌رود و house با our می‌آید."
+    },
+    {
+      "id": "a1.home-rooms.ex.08",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "We have a small garden.",
+      "accepted": [
+        "we have a small garden"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: We have a small garden. — have با /h/ و /æ/ کوتاه می‌آید و garden تکیه روی هجای اول دارد"
+    },
+    {
+      "id": "a1.home-rooms.ex.09",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "ما در آشپزخانه غذا می‌پزیم.",
+      "mustUse": [
+        "cook",
+        "kitchen"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "we cook in the kitchen"
+      ],
+      "hintFa": "برای گفتن «در» یک مکان از in + the + مکان استفاده کنید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: We cook in the kitchen. — a small kitchen و kitchen را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.house-objects.ex.01",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"table\" mean?",
+      "questionFa": "معنی «table» چیست؟",
+      "options": [
+        "صندلی",
+        "میز",
+        "پنجره",
+        "در"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "table یعنی «میز». گزینه‌های دیگر معنی chair، window، door هستند."
+    },
+    {
+      "id": "a1.house-objects.ex.02",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"window\" mean?",
+      "questionFa": "معنی «window» چیست؟",
+      "options": [
+        "تخت",
+        "در",
+        "پنجره",
+        "چراغ"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "window یعنی «پنجره». گزینه‌های دیگر معنی door، bed، lamp هستند."
+    },
+    {
+      "id": "a1.house-objects.ex.03",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"bed\" mean?",
+      "questionFa": "معنی «bed» چیست؟",
+      "options": [
+        "صندلی",
+        "چراغ",
+        "میز",
+        "تخت"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "bed یعنی «تخت». گزینه‌های دیگر معنی lamp، table، chair هستند."
+    },
+    {
+      "id": "a1.house-objects.ex.04",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Please open the ___.",
+      "accepted": [
+        "door",
+        "window"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم door و هم window را می‌شود باز کرد؛ هر دو با open می‌آیند."
+    },
+    {
+      "id": "a1.house-objects.ex.05",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Please sit on the ___.",
+      "accepted": [
+        "chair",
+        "bed"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "نشستن روی chair و bed هر دو ممکن است."
+    },
+    {
+      "id": "a1.house-objects.ex.06",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "تخت",
+      "accepted": [
+        "bed"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "bed یعنی «تخت»؛ in bed یعنی در رختخواب؛ go to bed یعنی رفتن برای خواب."
+    },
+    {
+      "id": "a1.house-objects.ex.07",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "چراغ روی میز است.",
+      "accepted": [
+        "the lamp is on the table",
+        "there is a lamp on the table"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای گفتن «روی» از on استفاده می‌کنیم و چیز مشخص با the می‌آید."
+    },
+    {
+      "id": "a1.house-objects.ex.08",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "Please close the door.",
+      "accepted": [
+        "please close the door"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: Please close the door. — close با /z/ خوانده می‌شود نه /s/ و door واکهٔ بلند /ɔːr/ دارد"
+    },
+    {
+      "id": "a1.house-objects.ex.09",
+      "lessonId": "a1.house-objects.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "لطفاً پنجره را باز کن.",
+      "mustUse": [
+        "please",
+        "open"
+      ],
+      "minWords": 4,
+      "accepted": [
+        "please open the window"
+      ],
+      "hintFa": "برای درخواست مؤدبانه: Please + فعل ساده.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Please open the window. — a big window و window را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.food-drinks.ex.01",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"bread\" mean?",
+      "questionFa": "معنی «bread» چیست؟",
+      "options": [
+        "نان",
+        "برنج",
+        "آب",
+        "چای"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "bread یعنی «نان». گزینه‌های دیگر معنی rice، water، tea هستند."
+    },
+    {
+      "id": "a1.food-drinks.ex.02",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"water\" mean?",
+      "questionFa": "معنی «water» چیست؟",
+      "options": [
+        "چای",
+        "آب",
+        "شیر",
+        "تخم‌مرغ"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "water یعنی «آب». گزینه‌های دیگر معنی tea، milk، egg هستند."
+    },
+    {
+      "id": "a1.food-drinks.ex.03",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"milk\" mean?",
+      "questionFa": "معنی «milk» چیست؟",
+      "options": [
+        "نان",
+        "تخم‌مرغ",
+        "شیر",
+        "برنج"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "milk یعنی «شیر». گزینه‌های دیگر معنی egg، bread، rice هستند."
+    },
+    {
+      "id": "a1.food-drinks.ex.04",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I would like a glass of ___.",
+      "accepted": [
+        "water",
+        "milk"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم water و هم milk با a glass of می‌آیند."
+    },
+    {
+      "id": "a1.food-drinks.ex.05",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I eat ___ for breakfast.",
+      "accepted": [
+        "bread",
+        "rice",
+        "egg"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "نان، برنج و تخم‌مرغ هر سه صبحانهٔ رایج‌اند و با eat می‌آیند."
+    },
+    {
+      "id": "a1.food-drinks.ex.06",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "چای",
+      "accepted": [
+        "tea"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "tea یعنی «چای»؛ tea با /iː/ کشیده خوانده می‌شود."
+    },
+    {
+      "id": "a1.food-drinks.ex.07",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من هر روز آب می‌نوشم.",
+      "accepted": [
+        "i drink water every day",
+        "i drink water everyday"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای عادت روزانه از every day با فعل سادهٔ drink استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.food-drinks.ex.08",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My son drinks milk at night.",
+      "accepted": [
+        "my son drinks milk at night"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: My son drinks milk at night. — milk با /m/ شروع و با /k/ تمام می‌شود و drinks سوم‌شخص با s می‌آید"
+    },
+    {
+      "id": "a1.food-drinks.ex.09",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من برای صبحانه یک تخم‌مرغ می‌خورم.",
+      "mustUse": [
+        "eat",
+        "egg"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "i eat an egg for breakfast"
+      ],
+      "hintFa": "پیش از صدای صدادار a به an تبدیل می‌شود: an egg.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: I eat an egg for breakfast. — two eggs و egg را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.01",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"apple\" mean?",
+      "questionFa": "معنی «apple» چیست؟",
+      "options": [
+        "گوجه‌فرنگی",
+        "پرتقال",
+        "موز",
+        "سیب"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "apple یعنی «سیب». گزینه‌های دیگر معنی orange، banana، tomato هستند."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.02",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"banana\" mean?",
+      "questionFa": "معنی «banana» چیست؟",
+      "options": [
+        "موز",
+        "گوجه‌فرنگی",
+        "سیب‌زمینی",
+        "پیاز"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "banana یعنی «موز». گزینه‌های دیگر معنی tomato، potato، onion هستند."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.03",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"potato\" mean?",
+      "questionFa": "معنی «potato» چیست؟",
+      "options": [
+        "پیاز",
+        "سیب‌زمینی",
+        "سیب",
+        "پرتقال"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "potato یعنی «سیب‌زمینی». گزینه‌های دیگر معنی onion، apple، orange هستند."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.04",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I eat an ___ every day.",
+      "accepted": [
+        "apple",
+        "orange"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هر دو واژه با صدای صدادار شروع می‌شوند و پس از an می‌آیند."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.05",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "We put ___ in the salad.",
+      "accepted": [
+        "tomato",
+        "onion",
+        "potato"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "این سه سبزی همه در سالاد می‌آیند."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.06",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "پرتقال",
+      "accepted": [
+        "orange"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "orange یعنی «پرتقال»؛ orange هم میوه است هم رنگ؛ معنی را از جمله بفهمید."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.07",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من هر روز یک سیب می‌خورم.",
+      "accepted": [
+        "i eat an apple every day",
+        "i eat one apple every day"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای کار روزانه every day و برای یک عدد a/an به کار می‌رود."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.08",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "We put tomatoes in the salad.",
+      "accepted": [
+        "we put tomatoes in the salad"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: We put tomatoes in the salad. — tomato تکیه روی هجای دوم دارد و a پیش از آن کوتاه خوانده می‌شود"
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.09",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من بعد از ناهار یک موز می‌خورم.",
+      "mustUse": [
+        "eat",
+        "banana"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "i eat a banana after lunch"
+      ],
+      "hintFa": "برای گفتن «بعد از» از after + وعدهٔ غذایی استفاده کنید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: I eat a banana after lunch. — banana bread و banana را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.clothes.ex.01",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"shirt\" mean?",
+      "questionFa": "معنی «shirt» چیست؟",
+      "options": [
+        "کفش",
+        "شلوار",
+        "پیراهن",
+        "پالتو"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "shirt یعنی «پیراهن». گزینه‌های دیگر معنی trousers، shoes، coat هستند."
+    },
+    {
+      "id": "a1.clothes.ex.02",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"shoes\" mean?",
+      "questionFa": "معنی «shoes» چیست؟",
+      "options": [
+        "پیراهن زنانه",
+        "پالتو",
+        "کلاه",
+        "کفش"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "shoes یعنی «کفش». گزینه‌های دیگر معنی coat، hat، dress هستند."
+    },
+    {
+      "id": "a1.clothes.ex.03",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"hat\" mean?",
+      "questionFa": "معنی «hat» چیست؟",
+      "options": [
+        "کلاه",
+        "پیراهن زنانه",
+        "پیراهن",
+        "شلوار"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "hat یعنی «کلاه». گزینه‌های دیگر معنی dress، shirt، trousers هستند."
+    },
+    {
+      "id": "a1.clothes.ex.04",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I wear a ___ when it is cold.",
+      "accepted": [
+        "coat",
+        "hat"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم coat و هم hat در هوای سرد پوشیده می‌شوند."
+    },
+    {
+      "id": "a1.clothes.ex.05",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "She is wearing a red ___.",
+      "accepted": [
+        "dress",
+        "shirt",
+        "coat",
+        "hat"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "همهٔ این‌ها را می‌شود پوشید و صفت red پیش از آن‌ها می‌آید."
+    },
+    {
+      "id": "a1.clothes.ex.06",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "کلاه",
+      "accepted": [
+        "hat"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "hat یعنی «کلاه»؛ hat کلاه لبه‌دار است؛ cap کلاه بی‌لبه."
+    },
+    {
+      "id": "a1.clothes.ex.07",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "کفش‌های من نو هستند.",
+      "accepted": [
+        "my shoes are new",
+        "my shoes are new ones"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "shoes جمع است، پس فعل are می‌آید."
+    },
+    {
+      "id": "a1.clothes.ex.08",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "He is wearing a white shirt.",
+      "accepted": [
+        "he is wearing a white shirt"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: He is wearing a white shirt. — shirt با /ʃ/ شروع می‌شود و /ɜːr/ دارد؛ wearing با /w/"
+    },
+    {
+      "id": "a1.clothes.ex.09",
+      "lessonId": "a1.clothes.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "این شلوار خیلی بلند است.",
+      "mustUse": [
+        "trousers",
+        "too"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "these trousers are too long"
+      ],
+      "hintFa": "برای اشاره به جمع از these + are استفاده کنید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: These trousers are too long. — black trousers و trousers را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.body.ex.01",
+      "lessonId": "a1.body.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"head\" mean?",
+      "questionFa": "معنی «head» چیست؟",
+      "options": [
+        "دست",
+        "سر",
+        "چشم",
+        "گوش"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "head یعنی «سر». گزینه‌های دیگر معنی hand، eye، ear هستند."
+    },
+    {
+      "id": "a1.body.ex.02",
+      "lessonId": "a1.body.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"eye\" mean?",
+      "questionFa": "معنی «eye» چیست؟",
+      "options": [
+        "پا",
+        "گوش",
+        "چشم",
+        "دندان"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "eye یعنی «چشم». گزینه‌های دیگر معنی ear، foot، tooth هستند."
+    },
+    {
+      "id": "a1.body.ex.03",
+      "lessonId": "a1.body.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"foot\" mean?",
+      "questionFa": "معنی «foot» چیست؟",
+      "options": [
+        "دست",
+        "دندان",
+        "سر",
+        "پا"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "foot یعنی «پا». گزینه‌های دیگر معنی tooth، head، hand هستند."
+    },
+    {
+      "id": "a1.body.ex.04",
+      "lessonId": "a1.body.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I see with my ___.",
+      "accepted": [
+        "eyes",
+        "eye"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "با چشم دیده می‌شود؛ هم شکل مفرد و هم جمع درست است."
+    },
+    {
+      "id": "a1.body.ex.05",
+      "lessonId": "a1.body.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I hear with my ___.",
+      "accepted": [
+        "ears",
+        "ear"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "شنیدن با گوش است؛ هم ear و هم ears پذیرفته می‌شود."
+    },
+    {
+      "id": "a1.body.ex.06",
+      "lessonId": "a1.body.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "دندان",
+      "accepted": [
+        "tooth"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "tooth یعنی «دندان»؛ جمع tooth می‌شود teeth، نه tooths."
+    },
+    {
+      "id": "a1.body.ex.07",
+      "lessonId": "a1.body.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "دندان من درد می‌کند.",
+      "accepted": [
+        "my tooth hurts",
+        "i have got a toothache",
+        "i have a toothache"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای درد دندان هم hurt و هم toothache به کار می‌رود."
+    },
+    {
+      "id": "a1.body.ex.08",
+      "lessonId": "a1.body.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My foot hurts.",
+      "accepted": [
+        "my foot hurts"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: My foot hurts. — foot با /ʊ/ کوتاه است و hurts با /ɜːr/ و s سوم‌شخص می‌آید"
+    },
+    {
+      "id": "a1.body.ex.09",
+      "lessonId": "a1.body.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "دست‌هایت را پیش از شام بشور.",
+      "mustUse": [
+        "wash",
+        "hands"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "wash your hands before dinner"
+      ],
+      "hintFa": "جملهٔ امری با فعل ساده می‌آید و فاعل نمی‌خواهد.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Wash your hands before dinner. — raise your hand و hand را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.animals.ex.01",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"dog\" mean?",
+      "questionFa": "معنی «dog» چیست؟",
+      "options": [
+        "سگ",
+        "گربه",
+        "پرنده",
+        "اسب"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "dog یعنی «سگ». گزینه‌های دیگر معنی cat، bird، horse هستند."
+    },
+    {
+      "id": "a1.animals.ex.02",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"bird\" mean?",
+      "questionFa": "معنی «bird» چیست؟",
+      "options": [
+        "اسب",
+        "پرنده",
+        "گاو",
+        "ماهی"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "bird یعنی «پرنده». گزینه‌های دیگر معنی horse، cow، fish هستند."
+    },
+    {
+      "id": "a1.animals.ex.03",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"cow\" mean?",
+      "questionFa": "معنی «cow» چیست؟",
+      "options": [
+        "سگ",
+        "ماهی",
+        "گاو",
+        "گربه"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "cow یعنی «گاو». گزینه‌های دیگر معنی fish، dog، cat هستند."
+    },
+    {
+      "id": "a1.animals.ex.04",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The ___ is sleeping on the bed.",
+      "accepted": [
+        "cat",
+        "dog"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "گربه و سگ هر دو روی تخت می‌خوابند."
+    },
+    {
+      "id": "a1.animals.ex.05",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "The ___ can swim.",
+      "accepted": [
+        "fish",
+        "dog"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ماهی و سگ هر دو شنا می‌کنند."
+    },
+    {
+      "id": "a1.animals.ex.06",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "ماهی",
+      "accepted": [
+        "fish"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "fish یعنی «ماهی»؛ جمع fish همان fish است؛ fishes برای گونه‌های مختلف."
+    },
+    {
+      "id": "a1.animals.ex.07",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "گربه روی صندلی است.",
+      "accepted": [
+        "the cat is on the chair",
+        "a cat is on the chair"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای گفتن «روی» از on استفاده می‌کنیم و فاعل مفرد با is می‌آید."
+    },
+    {
+      "id": "a1.animals.ex.08",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The cat is on the chair.",
+      "accepted": [
+        "the cat is on the chair"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The cat is on the chair. — cat با /æ/ کوتاه است و drinks با /dr/ شروع می‌شود و s سوم‌شخص دارد"
+    },
+    {
+      "id": "a1.animals.ex.09",
+      "lessonId": "a1.animals.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "اسب خیلی تند می‌دود.",
+      "mustUse": [
+        "horse",
+        "runs"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "the horse runs very fast"
+      ],
+      "hintFa": "برای توصیف با قید: فعل + very + قید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The horse runs very fast. — a brown horse و horse را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.hobbies.ex.01",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"music\" mean?",
+      "questionFa": "معنی «music» چیست؟",
+      "options": [
+        "کتاب",
+        "ورزش",
+        "فیلم",
+        "موسیقی"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "music یعنی «موسیقی». گزینه‌های دیگر معنی sport، film، book هستند."
+    },
+    {
+      "id": "a1.hobbies.ex.02",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"film\" mean?",
+      "questionFa": "معنی «film» چیست؟",
+      "options": [
+        "فیلم",
+        "کتاب",
+        "بازی",
+        "سرگرمی"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "film یعنی «فیلم». گزینه‌های دیگر معنی book، game، hobby هستند."
+    },
+    {
+      "id": "a1.hobbies.ex.03",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"game\" mean?",
+      "questionFa": "معنی «game» چیست؟",
+      "options": [
+        "سرگرمی",
+        "بازی",
+        "موسیقی",
+        "ورزش"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "game یعنی «بازی». گزینه‌های دیگر معنی hobby، music، sport هستند."
+    },
+    {
+      "id": "a1.hobbies.ex.04",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "In my free time I play a ___ with my friends.",
+      "accepted": [
+        "game",
+        "sport"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم game و هم sport را با play می‌آوریم."
+    },
+    {
+      "id": "a1.hobbies.ex.05",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I watch a ___ on TV.",
+      "accepted": [
+        "film",
+        "game"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "فیلم و مسابقه هر دو روی تلویزیون دیده می‌شوند."
+    },
+    {
+      "id": "a1.hobbies.ex.06",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "سرگرمی",
+      "accepted": [
+        "hobby"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "hobby یعنی «سرگرمی»؛ hobby کاری است که در اوقات فراغت برای لذت انجام می‌دهیم."
+    },
+    {
+      "id": "a1.hobbies.ex.07",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من هر روز موسیقی گوش می‌دهم.",
+      "accepted": [
+        "i listen to music every day",
+        "i listen to music everyday"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "با music حرف تعریف نمی‌آید و listen به to نیاز دارد: listen to music."
+    },
+    {
+      "id": "a1.hobbies.ex.08",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "We watch a film every Friday.",
+      "accepted": [
+        "we watch a film every friday"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: We watch a film every Friday. — film با /f/ شروع می‌شود و /lm/ پایانی دارد؛ funny تکیه روی اول"
+    },
+    {
+      "id": "a1.hobbies.ex.09",
+      "lessonId": "a1.hobbies.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "من پیش از خواب یک کتاب می‌خوانم.",
+      "mustUse": [
+        "read",
+        "book"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "i read a book before bed"
+      ],
+      "hintFa": "برای گفتن «پیش از» از before + اسم استفاده کنید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: I read a book before bed. — a good book و book را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.places-town.ex.01",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"shop\" mean?",
+      "questionFa": "معنی «shop» چیست؟",
+      "options": [
+        "پارک",
+        "مدرسه",
+        "مغازه",
+        "بیمارستان"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "shop یعنی «مغازه». گزینه‌های دیگر معنی school، park، hospital هستند."
+    },
+    {
+      "id": "a1.places-town.ex.02",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"park\" mean?",
+      "questionFa": "معنی «park» چیست؟",
+      "options": [
+        "بازار",
+        "بیمارستان",
+        "بانک",
+        "پارک"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "park یعنی «پارک». گزینه‌های دیگر معنی hospital، bank، market هستند."
+    },
+    {
+      "id": "a1.places-town.ex.03",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"bank\" mean?",
+      "questionFa": "معنی «bank» چیست؟",
+      "options": [
+        "بانک",
+        "بازار",
+        "مغازه",
+        "مدرسه"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "bank یعنی «بانک». گزینه‌های دیگر معنی market، shop، school هستند."
+    },
+    {
+      "id": "a1.places-town.ex.04",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I buy food at the ___.",
+      "accepted": [
+        "shop",
+        "market"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خرید غذا در shop و market هر دو رایج است."
+    },
+    {
+      "id": "a1.places-town.ex.05",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "The ___ is closed on Sunday.",
+      "accepted": [
+        "shop",
+        "bank",
+        "market"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "این مکان‌ها می‌توانند یکشنبه تعطیل باشند."
+    },
+    {
+      "id": "a1.places-town.ex.06",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "بانک",
+      "accepted": [
+        "bank"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "bank یعنی «بانک»؛ bank هم بانک است هم کنارهٔ رود."
+    },
+    {
+      "id": "a1.places-town.ex.07",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "مدرسهٔ ما نزدیک خانه است.",
+      "accepted": [
+        "our school is near our house",
+        "our school is near the house"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای نزدیکی near می‌آید و مالکیت با our بیان می‌شود."
+    },
+    {
+      "id": "a1.places-town.ex.08",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "Children play in the park.",
+      "accepted": [
+        "children play in the park"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: Children play in the park. — park با /ɑːr/ بلند است؛ next با /kst/ پایانی و hospital تکیه روی اول"
+    },
+    {
+      "id": "a1.places-town.ex.09",
+      "lessonId": "a1.places-town.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "پزشک در بیمارستان کار می‌کند.",
+      "mustUse": [
+        "doctor",
+        "works"
+      ],
+      "minWords": 6,
+      "accepted": [
+        "the doctor works in a hospital"
+      ],
+      "hintFa": "برای گفتن محل کار: works in + a + مکان.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The doctor works in a hospital. — go to the hospital و hospital را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.directions.ex.01",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"left\" mean?",
+      "questionFa": "معنی «left» چیست؟",
+      "options": [
+        "راست",
+        "چپ",
+        "مستقیم",
+        "نزدیک"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "left یعنی «چپ». گزینه‌های دیگر معنی right، straight، near هستند."
+    },
+    {
+      "id": "a1.directions.ex.02",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"right\" mean?",
+      "questionFa": "معنی «right» چیست؟",
+      "options": [
+        "نزدیک",
+        "مستقیم",
+        "راست",
+        "دور"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "right یعنی «راست». گزینه‌های دیگر معنی straight، near، far هستند."
+    },
+    {
+      "id": "a1.directions.ex.03",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"far\" mean?",
+      "questionFa": "معنی «far» چیست؟",
+      "options": [
+        "راست",
+        "گوشه و چهارراه",
+        "چپ",
+        "دور"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "far یعنی «دور». گزینه‌های دیگر معنی corner، left، right هستند."
+    },
+    {
+      "id": "a1.directions.ex.04",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "Turn ___ at the corner.",
+      "accepted": [
+        "left",
+        "right"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "در چهارراه هم به چپ و هم به راست می‌شود پیچید."
+    },
+    {
+      "id": "a1.directions.ex.05",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Go ___ for two hundred metres.",
+      "accepted": [
+        "straight",
+        "ahead"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "straight و ahead هر دو به معنای «مستقیم» هستند."
+    },
+    {
+      "id": "a1.directions.ex.06",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "گوشه و چهارراه",
+      "accepted": [
+        "corner"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "corner یعنی «گوشه و چهارراه»؛ corner یعنی گوشهٔ خیابان یا چهارراه."
+    },
+    {
+      "id": "a1.directions.ex.07",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "بانک در سمت چپ است.",
+      "accepted": [
+        "the bank is on the left",
+        "the bank is on the left side"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای گفتن سمت از on the left استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.directions.ex.08",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The station is far from here.",
+      "accepted": [
+        "the station is far from here"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The station is far from here. — far با /ɑːr/ بلند است و station با /steɪʃn/ خوانده می‌شود"
+    },
+    {
+      "id": "a1.directions.ex.09",
+      "lessonId": "a1.directions.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "مغازه اینجا نزدیک است.",
+      "mustUse": [
+        "shop",
+        "near"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "the shop is near here"
+      ],
+      "hintFa": "near بدون حرف اضافهٔ to می‌آید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The shop is near here. — near the school و near را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.transport.ex.01",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"bus\" mean?",
+      "questionFa": "معنی «bus» چیست؟",
+      "options": [
+        "اتوبوس",
+        "قطار",
+        "تاکسی",
+        "ایستگاه قطار"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "bus یعنی «اتوبوس». گزینه‌های دیگر معنی train، taxi، station هستند."
+    },
+    {
+      "id": "a1.transport.ex.02",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"taxi\" mean?",
+      "questionFa": "معنی «taxi» چیست؟",
+      "options": [
+        "ایستگاه قطار",
+        "تاکسی",
+        "بلیت",
+        "ایستگاه اتوبوس"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "taxi یعنی «تاکسی». گزینه‌های دیگر معنی station، ticket، stop هستند."
+    },
+    {
+      "id": "a1.transport.ex.03",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"ticket\" mean?",
+      "questionFa": "معنی «ticket» چیست؟",
+      "options": [
+        "اتوبوس",
+        "ایستگاه اتوبوس",
+        "بلیت",
+        "قطار"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "ticket یعنی «بلیت». گزینه‌های دیگر معنی stop، bus، train هستند."
+    },
+    {
+      "id": "a1.transport.ex.04",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I take the ___ to work.",
+      "accepted": [
+        "bus",
+        "train",
+        "taxi"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای رفتن به سر کار هر سه وسیله ممکن است."
+    },
+    {
+      "id": "a1.transport.ex.05",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I wait for the bus at the bus ___.",
+      "accepted": [
+        "station",
+        "stop"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ایستگاه اتوبوس را هم stop و هم station می‌گویند."
+    },
+    {
+      "id": "a1.transport.ex.06",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "ایستگاه اتوبوس",
+      "accepted": [
+        "stop"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "stop یعنی «ایستگاه اتوبوس»؛ stop ایستگاه اتوبوس است و station ایستگاه قطار."
+    },
+    {
+      "id": "a1.transport.ex.07",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من با اتوبوس به کار می‌روم.",
+      "accepted": [
+        "i go to work by bus",
+        "i take the bus to work"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای وسیلهٔ سفر هم by + وسیله و هم take + the + وسیله درست است."
+    },
+    {
+      "id": "a1.transport.ex.08",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The train station is very big.",
+      "accepted": [
+        "the train station is very big"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The train station is very big. — train با /tr/ و station با /steɪʃn/ خوانده می‌شود"
+    },
+    {
+      "id": "a1.transport.ex.09",
+      "lessonId": "a1.transport.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "قطار ساعت هشت حرکت می‌کند.",
+      "mustUse": [
+        "train",
+        "leaves"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "the train leaves at eight"
+      ],
+      "hintFa": "برای برنامهٔ زمانی از at + ساعت استفاده کنید.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The train leaves at eight. — catch a train و train را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.01",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"menu\" mean?",
+      "questionFa": "معنی «menu» چیست؟",
+      "options": [
+        "ساندویچ",
+        "پیشخدمت",
+        "قهوه",
+        "منو"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "menu یعنی «منو». گزینه‌های دیگر معنی waiter، coffee، sandwich هستند."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.02",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"coffee\" mean?",
+      "questionFa": "معنی «coffee» چیست؟",
+      "options": [
+        "قهوه",
+        "ساندویچ",
+        "صورت‌حساب",
+        "سفارش"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "coffee یعنی «قهوه». گزینه‌های دیگر معنی sandwich، bill، order هستند."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.03",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"bill\" mean?",
+      "questionFa": "معنی «bill» چیست؟",
+      "options": [
+        "سفارش",
+        "صورت‌حساب",
+        "منو",
+        "پیشخدمت"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "bill یعنی «صورت‌حساب». گزینه‌های دیگر معنی order، menu، waiter هستند."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.04",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I would like a ___ and a sandwich.",
+      "accepted": [
+        "coffee",
+        "water",
+        "tea"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "همهٔ این نوشیدنی‌ها با a و در کنار sandwich می‌آیند."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.05",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Could we have the ___, please?",
+      "accepted": [
+        "menu",
+        "bill"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "در آغاز منو و در پایان صورت‌حساب خواسته می‌شود."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.06",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "صورت‌حساب",
+      "accepted": [
+        "bill"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "bill یعنی «صورت‌حساب»؛ bill در بریتانیا و check در آمریکا رایج است."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.07",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "می‌توانم منو را ببینم؟",
+      "accepted": [
+        "can i see the menu",
+        "can i see the menu please",
+        "may i see the menu please"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای درخواست مؤدبانه از Can I ...? با please استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.08",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "Can I take your order?",
+      "accepted": [
+        "can i take your order"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: Can I take your order? — order با /ɔːr/ بلند و take your در گفتار روان /teɪkjər/ شنیده می‌شود"
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.09",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "پیشخدمت قهوهٔ ما را می‌آورد.",
+      "mustUse": [
+        "waiter",
+        "brings"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "the waiter brings our coffee"
+      ],
+      "hintFa": "برای سوم‌شخص مفرد به فعل s اضافه می‌کنیم: brings.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The waiter brings our coffee. — a friendly waiter و waiter را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.describing-people.ex.01",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"tall\" mean?",
+      "questionFa": "معنی «tall» چیست؟",
+      "options": [
+        "جوان",
+        "کوتاه‌قد",
+        "قدبلند",
+        "پیر"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "tall یعنی «قدبلند». گزینه‌های دیگر معنی short، young، old هستند."
+    },
+    {
+      "id": "a1.describing-people.ex.02",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"young\" mean?",
+      "questionFa": "معنی «young» چیست؟",
+      "options": [
+        "مهربان",
+        "پیر",
+        "خوش‌برخورد",
+        "جوان"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "young یعنی «جوان». گزینه‌های دیگر معنی old، friendly، kind هستند."
+    },
+    {
+      "id": "a1.describing-people.ex.03",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"friendly\" mean?",
+      "questionFa": "معنی «friendly» چیست؟",
+      "options": [
+        "خوش‌برخورد",
+        "مهربان",
+        "قدبلند",
+        "کوتاه‌قد"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "friendly یعنی «خوش‌برخورد». گزینه‌های دیگر معنی kind، tall، short هستند."
+    },
+    {
+      "id": "a1.describing-people.ex.04",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "My grandfather is very ___.",
+      "accepted": [
+        "old",
+        "kind"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پدربزرگ هم پیر است و هم می‌تواند مهربان باشد."
+    },
+    {
+      "id": "a1.describing-people.ex.05",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "My little sister is very ___.",
+      "accepted": [
+        "young",
+        "kind"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خواهر کوچک هم جوان است و هم مهربان."
+    },
+    {
+      "id": "a1.describing-people.ex.06",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "مهربان",
+      "accepted": [
+        "kind"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "kind یعنی «مهربان»؛ kind مهربان است؛ kind of یعنی «نوعی»."
+    },
+    {
+      "id": "a1.describing-people.ex.07",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "خواهرم خیلی قدبلند است.",
+      "accepted": [
+        "my sister is very tall",
+        "my sister is tall"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "صفت پس از is می‌آید و very شدت آن را بیشتر می‌کند."
+    },
+    {
+      "id": "a1.describing-people.ex.08",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "My grandfather is old.",
+      "accepted": [
+        "my grandfather is old"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: My grandfather is old. — grandfather تکیه روی هجای اول دارد و old با /oʊld/ خوانده می‌شود"
+    },
+    {
+      "id": "a1.describing-people.ex.09",
+      "lessonId": "a1.describing-people.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "همسایهٔ ما خیلی خوش‌برخورد است.",
+      "mustUse": [
+        "neighbour",
+        "friendly"
+      ],
+      "minWords": 5,
+      "accepted": [
+        "our neighbour is very friendly"
+      ],
+      "hintFa": "صفت پس از is می‌آید و s نمی‌گیرد.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Our neighbour is very friendly. — very friendly و friendly را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a1.where-i-live.ex.01",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"city\" mean?",
+      "questionFa": "معنی «city» چیست؟",
+      "options": [
+        "روستا",
+        "شهر",
+        "خیابان",
+        "همسایه"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "city یعنی «شهر». گزینه‌های دیگر معنی village، street، neighbour هستند."
+    },
+    {
+      "id": "a1.where-i-live.ex.02",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"street\" mean?",
+      "questionFa": "معنی «street» چیست؟",
+      "options": [
+        "ساکت",
+        "همسایه",
+        "خیابان",
+        "شلوغ"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "street یعنی «خیابان». گزینه‌های دیگر معنی neighbour، quiet، busy هستند."
+    },
+    {
+      "id": "a1.where-i-live.ex.03",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"quiet\" mean?",
+      "questionFa": "معنی «quiet» چیست؟",
+      "options": [
+        "روستا",
+        "شلوغ",
+        "شهر",
+        "ساکت"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "quiet یعنی «ساکت». گزینه‌های دیگر معنی busy، city، village هستند."
+    },
+    {
+      "id": "a1.where-i-live.ex.04",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I live in a small ___ near the sea.",
+      "accepted": [
+        "city",
+        "village"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم شهر کوچک و هم روستا می‌تواند کنار دریا باشد."
+    },
+    {
+      "id": "a1.where-i-live.ex.05",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Our ___ is very quiet at night.",
+      "accepted": [
+        "street",
+        "village",
+        "city"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خیابان، روستا و شهر می‌توانند شب‌ها ساکت باشند."
+    },
+    {
+      "id": "a1.where-i-live.ex.06",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "همسایه",
+      "accepted": [
+        "neighbour"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "neighbour یعنی «همسایه»؛ در انگلیسی آمریکایی neighbor نوشته می‌شود."
+    },
+    {
+      "id": "a1.where-i-live.ex.07",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "من در یک شهر بزرگ زندگی می‌کنم.",
+      "accepted": [
+        "i live in a big city",
+        "i live in a large city"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای محل زندگی live in می‌آید و صفت پیش از اسم قرار می‌گیرد."
+    },
+    {
+      "id": "a1.where-i-live.ex.08",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The city is busy in the morning.",
+      "accepted": [
+        "the city is busy in the morning"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The city is busy in the morning. — busy با /z/ خوانده می‌شود و s آن شنیده نمی‌شود"
+    },
+    {
+      "id": "a1.where-i-live.ex.09",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "مادربزرگ من در یک روستای کوچک زندگی می‌کند.",
+      "mustUse": [
+        "grandmother",
+        "lives"
+      ],
+      "minWords": 7,
+      "accepted": [
+        "my grandmother lives in a small village"
+      ],
+      "hintFa": "برای سوم‌شخص مفرد به فعل s اضافه کنید: lives.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: My grandmother lives in a small village. — village life و village را با هم در یک جمله بیاورید."
     }
   ]
 }

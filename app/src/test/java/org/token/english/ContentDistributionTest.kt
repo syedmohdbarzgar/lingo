@@ -149,6 +149,10 @@ class ContentDistributionTest {
         "a1.pronouns.ex.02" to "object-pronoun target — the following 'our' can only follow 'us'",
         "a1.can.ex.05" to "ability modal with a deadline frame — 'must' would turn ability into obligation",
         "a1.question-words.ex.05" to "interrogative target — only 'where' asks for a place",
+        "a1.age-birthday.ex.05" to "passive 'be born' past form — 'was' is the only auxiliary that agrees with 'I'",
+        "a1.days-months.ex.03" to "preposition for a day — only 'on' collocates with Friday in this frame",
+        "a1.time.ex.03" to "clock-time preposition — only 'at' precedes a time on the clock",
+        "a1.colors.ex.03" to "sky colour is fixed by the facts — only 'blue' is true here",
     )
 
     @Test

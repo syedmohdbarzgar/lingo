@@ -1,5 +1,5 @@
 {
-  "contentVersion": 25,
+  "contentVersion": 28,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -480,6 +480,226 @@
       "estimatedMinutes": 6,
       "order": 48,
       "grammarTipFa": "## قاعده\nبرای رویداد تمام‌شده در گذشته از شکل گذشتهٔ فعل استفاده می‌کنیم: افعال مرتب ed می‌گیرند (work → worked) و افعال نامنظم شکل ویژه دارند (go → went، see → saw). با he/she/it هم فعل لخت می‌ماند: He worked. در پرسش و منفی از did کمکی می‌گیریم و فعل به شکل لخت برمی‌گردد: Did you see it? I didn't go.\n## جدول\nI / you / he worked — They didn't work.\ngo → went / see → saw / buy → bought / write → wrote\nDid she leave? — Yes, she did. / No, she didn't.\nyesterday / last night / two days ago / in 2019\n## مثال‌ها\nWe went to the coast last weekend. — آخر هفته به ساحل رفتیم.\nShe bought a new phone yesterday. — دیروز یک گوشی نو خرید.\nI didn't see your message. — پیامت را ندیدم.\n## خطاهای رایج\n«I didn't went» غلط است — بعد از didn't فعل لخت می‌آید: I didn't go.\n«He didn't had breakfast» غلط است — He didn't have breakfast.\n«Yesterday I go to work» غلط است — Yesterday I went to work.\n## تلفظ\nدر didn't، t اغلب حذف می‌شود و تکیه روی فعل اصلی می‌افتد: I DIDN'T GO.\nشکل‌های گذشته کوتاه‌اند: went /went/ و bought /bɔːt/؛ کشیدن بیش از حدشان غیرطبیعی است.\nyesterday روی هجای اول تکیه دارد: YES-ter-day و هجای میانی /t/ نرم است."
+    },
+    {
+      "id": "a1.countries.lesson-01",
+      "level": "A1",
+      "title": "Countries and Nationalities",
+      "titleFa": "کشورها و ملیت‌ها",
+      "topic": "People",
+      "estimatedMinutes": 6,
+      "order": 49,
+      "grammarTipFa": "## قاعده\nبرای پرسیدن ملیت از «Where are you from?» استفاده می‌کنیم و پاسخ با am/is/are + from می‌آید: I am from Iran.\nنام کشور، ملیت و زبان همیشه با حرف بزرگ نوشته می‌شود: Iran, Iranian, Persian.\n## جدول\ncountry — کشور\nnationality — ملیت\nlanguage — زبان\ncapital — پایتخت\ncity — شهر\nmap — نقشه\n## مثال‌ها\nWhere are you from? — اهل کجایی؟\nShe is from Japan. — او اهل ژاپن است.\nParis is the capital of France. — پاریس پایتخت فرانسه است.\n## خطاهای رایج\n«I am from Iranian» غلط است؛ بعد از from نام کشور می‌آید، نه ملیت: I am from Iran.\nحرف بزرگ را فراموش نکنید: English نه english.\n## تلفظ\nواکهٔ country کوتاه /ʌ/ است، نه /aʊ/: /ˈkʌntri/.\nnationality پنج هجا دارد و تکیه روی هجای سوم است: na-tion-AL-i-ty."
+    },
+    {
+      "id": "a1.age-birthday.lesson-01",
+      "level": "A1",
+      "title": "Age and Birthday",
+      "titleFa": "سن و تاریخ تولد",
+      "topic": "People",
+      "estimatedMinutes": 6,
+      "order": 50,
+      "grammarTipFa": "## قاعده\nسن را با «How old are you?» می‌پرسیم و با be + عدد + years old پاسخ می‌دهیم: I am twenty years old.\nتاریخ تولد را با «When is your birthday?» می‌پرسیم: My birthday is in May.\nبرای «متولد شدن» همیشه گذشته به کار می‌رود: I was born in 2010.\n## جدول\nage — سن\nbirthday — تولد\nborn — متولد شدن\nyear — سال\nold — سال‌دار / پیر\nparty — مهمانی\n## مثال‌ها\nHow old is your brother? — برادرت چند سال دارد؟\nMy birthday is on Friday. — تولدم جمعه است.\nWe had a small party. — ما مهمانی کوچکی داشتیم.\n## خطاهای رایج\n«I have 20 years» غلط است؛ در انگلیسی سن با be گفته می‌شود: I am 20 years old.\nborn فعل است، نه صفت: I was born، نه «I am born».\n## تلفظ\nage مثل «اِیج» با /eɪ/ خوانده می‌شود، نه /æ/.\nbirthday تکیه روی بخش اول دارد: BIRTH-day."
+    },
+    {
+      "id": "a1.days-months.lesson-01",
+      "level": "A1",
+      "title": "Days and Months",
+      "titleFa": "روزهای هفته و ماه‌ها",
+      "topic": "Time",
+      "estimatedMinutes": 6,
+      "order": 51,
+      "grammarTipFa": "## قاعده\nروزهای هفته و ماه‌ها همیشه با حرف بزرگ نوشته می‌شوند: Monday, May.\nبرای روز از on استفاده می‌کنیم (on Monday) و برای ماه از in (in May).\ntoday و tomorrow حرف اضافه نمی‌گیرند: I am busy today.\n## جدول\nday — روز\nweek — هفته\nmonth — ماه\nweekend — آخر هفته\ntoday — امروز\ntomorrow — فردا\n## مثال‌ها\nI work from Monday to Friday. — از دوشنبه تا جمعه کار می‌کنم.\nMy birthday is in May. — تولدم در ماه مه است.\nSee you tomorrow. — فردا می‌بینمت.\n## خطاهای رایج\n«in Monday» غلط است؛ برای روز on می‌آید: on Monday.\n«tomorrow day» وجود ندارد؛ همین tomorrow کافی است.\n## تلفظ\nواکهٔ day و today کشیده /eɪ/ است: /deɪ/.\nmonth با /ʌ/ کوتاه خوانده می‌شود و th پایانش /θ/ است: /mʌnθ/."
+    },
+    {
+      "id": "a1.time.lesson-01",
+      "level": "A1",
+      "title": "Time and Clock",
+      "titleFa": "ساعت و زمان",
+      "topic": "Time",
+      "estimatedMinutes": 6,
+      "order": 52,
+      "grammarTipFa": "## قاعده\nبرای پرسیدن ساعت می‌گوییم «What time is it?» و پاسخ با It is می‌آید: It is seven o'clock.\nبرای ساعت دقیق از at استفاده می‌کنیم: The class starts at eight.\nhalf past seven یعنی ۷:۳۰ و quarter past seven یعنی ۷:۱۵.\n## جدول\ntime — زمان / ساعت\nclock — ساعت دیواری\nhour — ساعت (واحد زمان)\nminute — دقیقه\nearly — زود\nlate — دیر\n## مثال‌ها\nWhat time is it? — ساعت چند است؟\nI get up at six o'clock. — ساعت شش بیدار می‌شوم.\nYou are five minutes late. — پنج دقیقه دیر کرده‌ای.\n## خطاهای رایج\n«It is 7 hours» غلط است؛ ساعت با o'clock گفته می‌شود: It is seven o'clock.\nat + ساعت، نه in: at nine o'clock.\n## تلفظ\nhour با h بی‌صدا شروع می‌شود: /ˈaʊər/ — مثل our.\nminute دو هجا دارد و تکیه روی اول است: MIN-ute /ˈmɪnɪt/."
+    },
+    {
+      "id": "a1.colors.lesson-01",
+      "level": "A1",
+      "title": "Colors",
+      "titleFa": "رنگ‌ها",
+      "topic": "Description",
+      "estimatedMinutes": 5,
+      "order": 53,
+      "grammarTipFa": "## قاعده\nرنگ صفت است و پیش از اسم می‌آید: a red car، نه «a car red».\nرنگ‌ها جمع بسته نمی‌شوند: two red bags، نه «two reds bags».\nبرای پرسیدن رنگ می‌گوییم «What color is …?»: What color is your bag?\n## جدول\ncolor — رنگ\nred — قرمز\nblue — آبی\ngreen — سبز\nblack — سیاه\nwhite — سفید\n## مثال‌ها\nMy bag is black. — کیف من سیاه است.\nShe has a red pen. — او یک خودکار قرمز دارد.\nWhat color is your car? — ماشینت چه رنگی است؟\n## خطاهای رایج\nجای صفت را عوض نکنید: a blue shirt درست است، نه «a shirt blue».\nدر انگلیسی بریتانیایی colour و در آمریکایی color نوشته می‌شود؛ هر دو درست‌اند.\n## تلفظ\nblue واکهٔ بلند /uː/ دارد؛ black واکهٔ کوتاه /æ/.\nwhite با /waɪt/ خوانده می‌شود؛ h در آن شنیده نمی‌شود."
+    },
+    {
+      "id": "a1.classroom.lesson-01",
+      "level": "A1",
+      "title": "Classroom Objects",
+      "titleFa": "اشیای کلاس",
+      "topic": "School",
+      "estimatedMinutes": 5,
+      "order": 54,
+      "grammarTipFa": "## قاعده\nبرای اشاره به یک چیز نزدیک از this و برای دور از that استفاده می‌کنیم: This is my book.\nبرای چند چیز these و those می‌آید: These are my pens.\nحرف تعریف a پیش از صدای بی‌صدا و an پیش از صدای صدادار می‌آید: a book, an eraser.\n## جدول\nbook — کتاب\npen — خودکار\npencil — مداد\nboard — تخته\ndesk — میز\nbag — کیف\n## مثال‌ها\nThis is my English book. — این کتاب انگلیسی من است.\nThe teacher writes on the board. — معلم روی تخته می‌نویسد.\nMy pencils are in my bag. — مدادهای من در کیفم هستند.\n## خطاهای رایج\n«a pens» غلط است؛ a فقط با اسم مفرد می‌آید: a pen / pens.\n«This are my books» غلط است؛ this با is و these با are می‌آید.\n## تلفظ\npencil دو هجا دارد و تکیه روی اول است: PEN-cil /ˈpensl/.\nboard واکهٔ بلند /ɔː/ دارد و با /d/ تمام می‌شود: /bɔːrd/."
+    },
+    {
+      "id": "a1.jobs.lesson-01",
+      "level": "A1",
+      "title": "Jobs and Occupations",
+      "titleFa": "شغل‌ها و حرفه‌ها",
+      "topic": "Work",
+      "estimatedMinutes": 6,
+      "order": 55,
+      "grammarTipFa": "## قاعده\nبرای پرسیدن شغل از What do you do? یا What is your job? استفاده می‌کنیم.\nبرای گفتن شغل، a یا an پیش از نام شغل می‌آید: I am a teacher.\nنام شغل در انگلیسی با حرف کوچک نوشته می‌شود، مگر در آغاز جمله.\n## جدول\na teacher — معلم\na doctor — پزشک\na nurse — پرستار\na driver — راننده\na cook — آشپز\na farmer — کشاورز\n## مثال‌ها\nMy sister is a nurse. — خواهرم پرستار است.\nHe works in a school. — او در مدرسه کار می‌کند.\nWhat do you do? — شغل شما چیست؟\n## خطاهای رایج\nحرف تعریف را جا نیندازید: I am teacher غلط است؛ I am a teacher درست است.\nنام شغل را با حرف بزرگ ننویسید؛ فقط در آغاز جمله بزرگ می‌شود.\n## تلفظ\nدر teacher تکیه روی هجای اول است: /ˈtiːtʃər/.\nدر doctor پایانهٔ -or کوتاه و بی‌تکیه است: /ˈdɒktər/.\nدر nurse واکهٔ /ɜː/ کشیده است: /nɜːrs/."
+    },
+    {
+      "id": "a1.belongings.lesson-01",
+      "level": "A1",
+      "title": "Personal Belongings",
+      "titleFa": "وسایل شخصی",
+      "topic": "Everyday objects",
+      "estimatedMinutes": 5,
+      "order": 56,
+      "grammarTipFa": "## قاعده\nبرای گفتن اینکه چیزی مال ماست از my استفاده می‌کنیم: my bag.\nبرای پرسیدن مالکیت می‌گوییم Is this your bag? و پاسخ کوتاه Yes, it is. یا No, it isn't.\nپیش از واژه‌ای که با صدای صدادار شروع می‌شود an می‌آید: an umbrella.\n## جدول\na bag — کیف\na key — کلید\na phone — تلفن همراه\na wallet — کیف پول\na watch — ساعت مچی\nan umbrella — چتر\n## مثال‌ها\nThis is my bag. — این کیف من است.\nIs this your key? — این کلید توست؟\nMy phone is in my bag. — تلفن من در کیفم است.\n## خطاهای رایج\n«a umbrella» غلط است؛ چون umbrella با صدای صدادار شروع می‌شود: an umbrella.\nwatch ساعت مچی است؛ clock ساعت دیواری است.\n## تلفظ\nkey یک هجاست و /kiː/ خوانده می‌شود؛ حرف e صدای /iː/ می‌دهد.\nwatch با /w/ شروع می‌شود و t آن شنیده نمی‌شود: /wɒtʃ/.\nwallet تکیه روی هجای اول دارد: /ˈwɒlɪt/."
+    },
+    {
+      "id": "a1.home-rooms.lesson-01",
+      "level": "A1",
+      "title": "Home and Rooms",
+      "titleFa": "خانه و اتاق‌ها",
+      "topic": "Home",
+      "estimatedMinutes": 6,
+      "order": 57,
+      "grammarTipFa": "## قاعده\nخانهٔ خودمان را با my house یا our flat می‌گوییم و پیش از آن a می‌آید: a house, a flat.\nبرای گفتن اینکه چیزی کجاست از in, on, next to استفاده می‌کنیم: in the kitchen, next to the bedroom.\nThere is برای یک چیز و There are برای چند چیز می‌آید: There are three rooms.\n## جدول\na house — خانه\na room — اتاق\na kitchen — آشپزخانه\na bedroom — اتاق خواب\na bathroom — حمام\na garden — حیاط و باغ\n## مثال‌ها\nWe live in a small house. — ما در خانهٔ کوچکی زندگی می‌کنیم.\nMy bedroom is next to the bathroom. — اتاق خواب من کنار حمام است.\nThe children play in the garden. — بچه‌ها در حیاط بازی می‌کنند.\n## خطاهای رایج\n«We live in house» غلط است؛ a house درست است.\nبعد از next حرف to می‌آید: next to the door، نه next the door.\n## تلفظ\nhouse با /haʊ/ خوانده می‌شود و جمع آن houses پایانهٔ /zɪz/ می‌گیرد: /ˈhaʊzɪz/.\nkitchen با /tʃ/ در میان است: /ˈkɪtʃɪn/.\ngarden تکیه روی هجای اول دارد: /ˈɡɑːrdn/."
+    },
+    {
+      "id": "a1.house-objects.lesson-01",
+      "level": "A1",
+      "title": "Household Objects",
+      "titleFa": "وسایل خانه",
+      "topic": "Home",
+      "estimatedMinutes": 5,
+      "order": 58,
+      "grammarTipFa": "## قاعده\nبرای اشاره به چیز مشخص از the استفاده می‌کنیم: the door, the window.\nبرای گفتن اینکه چیزی روی چیزی است on و برای داخل در چیزی in می‌آید: on the table, in the box.\nThere is / There are برای معرفی چیز موجود به کار می‌رود: There is a lamp on the table.\n## جدول\na table — میز\na chair — صندلی\na window — پنجره\na door — در\na bed — تخت\na lamp — چراغ\n## مثال‌ها\nThere is a lamp on the table. — یک چراغ روی میز است.\nPlease close the door. — لطفاً در را ببند.\nMy bed is next to the window. — تختم کنار پنجره است.\n## خطاهای رایج\n«There is two chairs» غلط است؛ با جمع باید There are بیاید.\nlamp چراغ روشنایی است؛ light هم به کار می‌رود ولی برای نور طبیعی هم می‌آید.\n## تلفظ\nwindow با /w/ شروع می‌شود و تکیه روی اول دارد: /ˈwɪndoʊ/.\ndoor واکهٔ بلند /ɔːr/ دارد: /dɔːr/.\nlamp با /æ/ کوتاه و /mp/ پایانی: /læmp/."
+    },
+    {
+      "id": "a1.food-drinks.lesson-01",
+      "level": "A1",
+      "title": "Food and Drinks",
+      "titleFa": "غذاها و نوشیدنی‌ها",
+      "topic": "Food",
+      "estimatedMinutes": 6,
+      "order": 59,
+      "grammarTipFa": "## قاعده\nبرای گفتن چیزی که می‌خوریم یا می‌نوشیم از I eat / I drink استفاده می‌کنیم.\nغذاهای غیرقابل‌شمارش (bread, rice, water, milk) با some می‌آیند: some rice, some water.\nبرای شمردن آن‌ها از پیمانه استفاده می‌کنیم: a glass of water, a cup of tea.\n## جدول\nbread — نان\nrice — برنج\nwater — آب\ntea — چای\nmilk — شیر\nan egg — تخم‌مرغ\n## مثال‌ها\nI eat bread for breakfast. — من برای صبحانه نان می‌خورم.\nCan I have a glass of water? — می‌توانم یک لیوان آب داشته باشم؟\nShe drinks tea with milk. — او چای را با شیر می‌نوشد.\n## خطاهای رایج\n«I want breads» غلط است؛ bread غیرقابل‌شمارش است: some bread یا a piece of bread.\n«eat water» غلط است؛ آب را می‌نوشند: drink water.\n## تلفظ\nbread با /e/ کوتاه خوانده می‌شود: /bred/.\nrice با /aɪ/ است: /raɪs/.\nmilk با /ɪ/ کوتاه و /lk/ پایانی: /mɪlk/."
+    },
+    {
+      "id": "a1.fruits-vegetables.lesson-01",
+      "level": "A1",
+      "title": "Fruits and Vegetables",
+      "titleFa": "میوه‌ها و سبزیجات",
+      "topic": "Food",
+      "estimatedMinutes": 5,
+      "order": 60,
+      "grammarTipFa": "## قاعده\nمیوه‌ها و سبزیجات قابل‌شمارش‌اند: an apple, two apples.\nجمع آن‌ها با s یا es ساخته می‌شود: potatoes, tomatoes, onions.\nبرای گفتن دوست داشتن از I like + جمع استفاده می‌کنیم: I like bananas.\n## جدول\nan apple — سیب\nan orange — پرتقال\na banana — موز\na tomato — گوجه‌فرنگی\na potato — سیب‌زمینی\nan onion — پیاز\n## مثال‌ها\nI eat an apple every day. — من هر روز یک سیب می‌خورم.\nWe put tomatoes in the salad. — ما در سالاد گوجه‌فرنگی می‌ریزیم.\nMy mother buys onions at the market. — مادرم از بازار پیاز می‌خرد.\n## خطاهای رایج\n«two tomato» غلط است؛ جمع آن tomatoes با es است.\nپیش از apple و orange و onion حرف تعریف an می‌آید، نه a.\n## تلفظ\ntomato سه هجا دارد و تکیه روی دوم است: /təˈmeɪtoʊ/.\npotato تکیه روی هجای دوم دارد: /pəˈteɪtoʊ/.\norange با /ˈɔːr/ شروع می‌شود و /ɪndʒ/ تمام می‌شود."
+    },
+    {
+      "id": "a1.clothes.lesson-01",
+      "level": "A1",
+      "title": "Clothes",
+      "titleFa": "لباس‌ها",
+      "topic": "Everyday objects",
+      "estimatedMinutes": 5,
+      "order": 61,
+      "grammarTipFa": "## قاعده\nبرای گفتن اینکه چیزی را پوشیده‌ایم از wear یا have on استفاده می‌کنیم: I am wearing a blue shirt.\nبعضی واژه‌های لباس همیشه جمع‌اند: trousers, shoes. برای یک عدد می‌گوییم a pair of trousers.\nبرای پوشیدن در یک لحظه put on به کار می‌رود: Put on your coat.\n## جدول\na shirt — پیراهن\ntrousers — شلوار\nshoes — کفش\na coat — پالتو\na hat — کلاه\na dress — پیراهن زنانه\n## مثال‌ها\nHe is wearing a white shirt. — او یک پیراهن سفید پوشیده است.\nMy shoes are new. — کفش‌های من نو هستند.\nPut on your coat; it is cold. — پالتویت را بپوش؛ هوا سرد است.\n## خطاهای رایج\n«a trousers» غلط است؛ می‌گوییم a pair of trousers یا trousers.\nshoes جمع است؛ برای یک کفش a shoe می‌گوییم.\n## تلفظ\nshoes با /ʃ/ شروع می‌شود: /ʃuːz/.\nclothes صدای th آن تقریباً حذف می‌شود: /kloʊðz/.\ntrousers با /traʊ/ و تکیه روی اول: /ˈtraʊzərz/."
+    },
+    {
+      "id": "a1.body.lesson-01",
+      "level": "A1",
+      "title": "Parts of the Body",
+      "titleFa": "اعضای بدن",
+      "topic": "Health",
+      "estimatedMinutes": 5,
+      "order": 62,
+      "grammarTipFa": "## قاعده\nاعضای زوج بدن جمع می‌آیند: eyes, ears, hands, feet.\nبرای گفتن درد از have got a + اسم استفاده می‌کنیم: I have got a headache.\nچند جمع بی‌قاعده را حفظ کنید: foot → feet و tooth → teeth.\n## جدول\na head — سر\na hand — دست\nan eye — چشم\nan ear — گوش\na foot — پا\na tooth — دندان\n## مثال‌ها\nWash your hands before dinner. — پیش از شام دست‌هایت را بشور.\nMy eyes are blue. — چشم‌های من آبی هستند.\nI have got a toothache. — دندانم درد می‌کند.\n## خطاهای رایج\n«two foots» غلط است؛ جمع foot می‌شود feet.\n«a ear» غلط است؛ an ear درست است.\n## تلفظ\ntooth واکهٔ /uː/ دارد: /tuːθ/ و جمع آن teeth با /iː/ است.\nfoot /fʊt/ با /ʊ/ کوتاه و feet /fiːt/ با /iː/ بلند.\near با /ɪr/ شروع می‌شود و ر با زبان انگلیسی خوانده نمی‌شود."
+    },
+    {
+      "id": "a1.animals.lesson-01",
+      "level": "A1",
+      "title": "Animals",
+      "titleFa": "حیوانات",
+      "topic": "Animals",
+      "estimatedMinutes": 5,
+      "order": 63,
+      "grammarTipFa": "## قاعده\nبرای گفتن توانایی از can استفاده می‌کنیم: A bird can fly.\nپس از can همیشه فعل ساده می‌آید، بدون s و to.\nبرای توصیف حیوان از is/are + صفت استفاده می‌کنیم: The dog is big.\n## جدول\na dog — سگ\na cat — گربه\na bird — پرنده\na horse — اسب\na cow — گاو\na fish — ماهی\n## مثال‌ها\nThe dog is in the garden. — سگ در حیاط است.\nA bird can fly. — پرنده می‌تواند پرواز کند.\nWe have two cats and one dog. — ما دو گربه و یک سگ داریم.\n## خطاهای رایج\n«A bird can flies» غلط است؛ پس از can فعل ساده می‌آید.\nجمع fish همان fish است: two fish.\n## تلفظ\ncow با /aʊ/ خوانده می‌شود: /kaʊ/.\nhorse واکهٔ بلند /ɔːr/ دارد: /hɔːrs/.\nbird با /ɜːr/ است: /bɜːrd/ و r آن شنیده می‌شود."
+    },
+    {
+      "id": "a1.hobbies.lesson-01",
+      "level": "A1",
+      "title": "Likes and Hobbies",
+      "titleFa": "علایق و سرگرمی‌ها",
+      "topic": "Free time",
+      "estimatedMinutes": 6,
+      "order": 64,
+      "grammarTipFa": "## قاعده\nبرای گفتن علاقه از like, love و enjoy استفاده می‌کنیم.\nپس از این فعل‌ها فعل با -ing می‌آید: I like reading. I enjoy cooking.\nبرای پرسیدن علاقه می‌گوییم What do you like doing? و پاسخ کوتاه می‌دهیم.\n## جدول\na hobby — سرگرمی\nmusic — موسیقی\na sport — ورزش\na film — فیلم\na book — کتاب\na game — بازی\n## مثال‌ها\nMy hobby is reading. — سرگرمی من کتاب خواندن است.\nI like listening to music. — من دوست دارم موسیقی گوش کنم.\nWe watch a film every Friday. — ما هر جمعه یک فیلم می‌بینیم.\n## خطاهای رایج\n«I like read» غلط است؛ I like reading درست است.\nmusic را با the نیاورید: I like music، نه I like the music.\n## تلفظ\nhobby تکیه روی هجای اول دارد: /ˈhɒbi/.\nmusic با /ˈmjuː/ شروع می‌شود: /ˈmjuːzɪk/.\nfilm با /f/ شروع و /lm/ تمام می‌شود."
+    },
+    {
+      "id": "a1.places-town.lesson-01",
+      "level": "A1",
+      "title": "Places in Town",
+      "titleFa": "مکان‌های شهر",
+      "topic": "City",
+      "estimatedMinutes": 6,
+      "order": 65,
+      "grammarTipFa": "## قاعده\nبرای گفتن «رفتن به جایی» از go to استفاده می‌کنیم: go to school, go to the bank.\nبا نام مکان‌های عمومی the می‌آید: the bank, the hospital, the market.\nبرای گفتن نزدیکی از next to یا near استفاده می‌کنیم: The bank is next to the shop.\n## جدول\na shop — مغازه\na school — مدرسه\na park — پارک\na hospital — بیمارستان\na bank — بانک\na market — بازار\n## مثال‌ها\nI go to school every morning. — من هر صبح به مدرسه می‌روم.\nThe bank is next to the shop. — بانک کنار مغازه است.\nChildren play in the park. — بچه‌ها در پارک بازی می‌کنند.\n## خطاهای رایج\n«go to home» غلط است؛ go home درست است.\nدر انگلیسی بریتانیایی shop و در آمریکایی store رایج است.\n## تلفظ\nhospital تکیه روی هجای اول دارد: /ˈhɒspɪtl/.\nbank با /æ/ کوتاه و /ŋk/: /bæŋk/.\npark واکهٔ بلند /ɑːr/ دارد: /pɑːrk/."
+    },
+    {
+      "id": "a1.directions.lesson-01",
+      "level": "A1",
+      "title": "Asking for Directions",
+      "titleFa": "آدرس پرسیدن و مسیرها",
+      "topic": "City",
+      "estimatedMinutes": 6,
+      "order": 66,
+      "grammarTipFa": "## قاعده\nبرای پرسیدن مسیر از Where is ...? یا How do I get to ...? استفاده می‌کنیم.\nپاسخ کوتاه و امری است: Go straight, then turn left.\nبرای فاصله: It is near here. / It is far from here.\n## جدول\nleft — چپ\nright — راست\nstraight — مستقیم\nnear — نزدیک\nfar — دور\na corner — گوشه و چهارراه\n## مثال‌ها\nExcuse me, where is the bank? — ببخشید، بانک کجاست؟\nGo straight and turn left. — مستقیم برو و به چپ بپیچ.\nThe shop is on the corner. — مغازه سر گوشه است.\n## خطاهای رایج\n«turn to left» غلط است؛ turn left درست است.\nnear به to نیاز ندارد: near the school، نه near to the school.\n## تلفظ\nleft با /e/ کوتاه: /left/.\nright با /aɪ/: /raɪt/.\nstraight با /str/ شروع می‌شود: /streɪt/."
+    },
+    {
+      "id": "a1.transport.lesson-01",
+      "level": "A1",
+      "title": "Public Transportation",
+      "titleFa": "حمل‌ونقل عمومی",
+      "topic": "Travel",
+      "estimatedMinutes": 5,
+      "order": 67,
+      "grammarTipFa": "## قاعده\nبرای گفتن وسیلهٔ سفر از by یا take استفاده می‌کنیم: I go to work by bus. / I take the bus.\nبا by حرف تعریف نمی‌آید: by bus, by train.\nبا take حرف تعریف می‌آید: take the bus, take the train.\n## جدول\na bus — اتوبوس\na train — قطار\na taxi — تاکسی\na station — ایستگاه قطار\na ticket — بلیت\na bus stop — ایستگاه اتوبوس\n## مثال‌ها\nI take the bus to work. — من با اتوبوس به سر کار می‌روم.\nThe train leaves at eight. — قطار ساعت هشت حرکت می‌کند.\nYou can buy a ticket at the station. — می‌توانی از ایستگاه بلیت بخری.\n## خطاهای رایج\n«I go by the bus» غلط است؛ by bus بدون the می‌آید.\nایستگاه اتوبوس stop است و ایستگاه قطار station.\n## تلفظ\nbus با /ʌ/ کوتاه: /bʌs/.\ntrain با /treɪn/ و /tr/.\nticket تکیه روی هجای اول: /ˈtɪkɪt/."
+    },
+    {
+      "id": "a1.cafe-restaurant.lesson-01",
+      "level": "A1",
+      "title": "At a Café and Restaurant",
+      "titleFa": "در کافه و رستوران",
+      "topic": "Food",
+      "estimatedMinutes": 6,
+      "order": 68,
+      "grammarTipFa": "## قاعده\nبرای سفارش مؤدبانه از I would like یا Can I have ...? استفاده می‌کنیم.\nبرای دیدن منو: Can I see the menu, please?\nدر پایان می‌گوییم: Can we have the bill, please?\n## جدول\na menu — منو\na waiter — پیشخدمت\ncoffee — قهوه\na sandwich — ساندویچ\nthe bill — صورت‌حساب\nan order — سفارش\n## مثال‌ها\nCan I see the menu, please? — می‌توانم منو را ببینم؟\nThe waiter brings our coffee. — پیشخدمت قهوهٔ ما را می‌آورد.\nCan we have the bill, please? — می‌توانیم صورت‌حساب را بگیریم؟\n## خطاهای رایج\n«I want a coffee please» بی‌ادب به نظر می‌رسد؛ I would like a coffee, please بهتر است.\nbill در انگلیسی بریتانیایی و check در آمریکایی رایج است.\n## تلفظ\ncoffee تکیه روی هجای اول: /ˈkɒfi/.\nmenu با /ˈmenjuː/ خوانده می‌شود.\norder با /ˈɔːrdər/ و /d/ میان دو واکه آغاز می‌شود."
+    },
+    {
+      "id": "a1.describing-people.lesson-01",
+      "level": "A1",
+      "title": "Describing People",
+      "titleFa": "معرفی دوستان و توصیف افراد",
+      "topic": "People",
+      "estimatedMinutes": 6,
+      "order": 69,
+      "grammarTipFa": "## قاعده\nصفت پیش از اسم یا پس از is/are می‌آید: a tall woman / She is tall.\nصفت در انگلیسی هرگز s جمع نمی‌گیرد: They are tall.\nبرای توصیف ظاهر از has got استفاده می‌کنیم: He has got short hair.\n## جدول\ntall — قدبلند\nshort — کوتاه‌قد\nyoung — جوان\nold — پیر\nfriendly — خوش‌برخورد\nkind — مهربان\n## مثال‌ها\nMy brother is very tall. — برادرم خیلی قدبلند است.\nShe is a kind teacher. — او معلم مهربانی است.\nHe has got short hair. — او موهای کوتاه دارد.\n## خطاهای رایج\n«She is talls» غلط است؛ صفت هرگز s نمی‌گیرد.\nfriendly با -ly تمام می‌شود ولی صفت است، نه قید: a friendly man.\n## تلفظ\ntall با /ɔːl/: /tɔːl/.\nyoung با /j/ و /ʌŋ/: /jʌŋ/.\nkind با /aɪ/: /kaɪnd/."
+    },
+    {
+      "id": "a1.where-i-live.lesson-01",
+      "level": "A1",
+      "title": "Where I Live",
+      "titleFa": "معرفی محل زندگی",
+      "topic": "Home",
+      "estimatedMinutes": 6,
+      "order": 70,
+      "grammarTipFa": "## قاعده\nبرای گفتن محل زندگی از I live in استفاده می‌کنیم: I live in a big city.\nبا خیابان in نمی‌آید؛ on می‌آید: I live on this street.\nبرای توصیف محل صفت پس از is می‌آید: Our street is quiet.\n## جدول\na city — شهر\na village — روستا\na street — خیابان\na neighbour — همسایه\nquiet — ساکت\nbusy — شلوغ\n## مثال‌ها\nI live in a small city. — من در شهر کوچکی زندگی می‌کنم.\nWe live on a quiet street. — ما در خیابانی ساکت زندگی می‌کنیم.\nMy neighbour is a teacher. — همسایهٔ من معلم است.\n## خطاهای رایج\n«I live in this street» با نشانی غلط است؛ I live on this street درست است.\ncity شهری بزرگ است و town شهر کوچک‌تر.\n## تلفظ\ncity با /s/ شروع می‌شود، نه /k/: /ˈsɪti/.\nvillage با /v/ و /ɪlɪdʒ/: /ˈvɪlɪdʒ/.\nquiet دو هجا دارد: /ˈkwaɪət/."
     }
   ]
 }

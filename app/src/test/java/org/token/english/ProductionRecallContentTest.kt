@@ -1,7 +1,6 @@
 package org.token.english
 
 import org.json.JSONObject
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.data.content.ContentParser
@@ -188,9 +187,19 @@ class ProductionRecallContentTest {
 
     @Test
     fun `the new shapes are a real part of the bundle, not a token sample`() {
-        // A couple of items per level is the floor; the checklist asks for the shapes
-        // to be *developed*, so the count is asserted rather than left to drift.
-        assertEquals("two word_recall items per level", 12, parsed("word_recall").size)
-        assertEquals("two sentence_production items per level", 12, parsed("sentence_production").size)
+        // Two items per level is the FLOOR, not the target: the checklist asks for the
+        // shapes to be *developed*, so the count is asserted rather than left to drift.
+        // It is a lower bound because every syllabus batch legitimately adds items —
+        // an equality would fail the moment a level gains its third production item,
+        // and lowering that would be dropping the bar rather than raising content.
+        assertTrue(
+            "word_recall items dropped below the two-per-level floor: ${parsed("word_recall").size}",
+            parsed("word_recall").size >= 12,
+        )
+        assertTrue(
+            "sentence_production items dropped below the two-per-level floor: " +
+                "${parsed("sentence_production").size}",
+            parsed("sentence_production").size >= 12,
+        )
     }
 }

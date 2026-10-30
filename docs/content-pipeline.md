@@ -5,6 +5,11 @@
 > and the one-shot batches that applied each change are catalogued in
 > [`scripts/archive/README.md`](../scripts/archive/README.md).
 
+- **The plan and the bundle are separate things.** [`curriculum.md`](curriculum.md) is the product
+  curriculum — 30 topics per CEFR band, 180 in total — and records which topics actually ship; the
+  JSON bundle is what the app can teach today. A topic ships only as a complete lesson (teaching
+  page, six words with two bilingual examples, recall/listening/production items, a knowledge node),
+  never as a stub, and the bundle is never padded to match the plan.
 - Source of truth: `app/src/main/assets/content/{lessons,vocabulary,exercises,placement,knowledge}.json`.
   `knowledge.json` is the **curriculum graph**: one node per learnable unit, with
   `prerequisites` (ids of nodes to learn first), the `lessons` that teach it, its CEFR `level` and
@@ -13,6 +18,11 @@
 - `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
   `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
   **inside the JSON** — there is no Kotlin constant to bump (technical spec §63).
+  The five assets are **parsed concurrently** (one coroutine per file on `Dispatchers.Default`) and
+  inserted in the same single transaction; the bundle keeps growing (1.5× from v27 to v28), so the
+  decode — not the insert — is the stage that grows with it. Measured on the JVM: 87 ms → 41 ms for
+  the parse stage at v28. The seeder logs `seeded v<version> in <n> ms` on every seed so growth stays
+  visible: a fresh install of v28 seeds in ~1.4 s on a POCO X3.
 - **`./gradlew validateContent`** (wired into `preBuild`; rules in `buildSrc/…/content/ContentValidator.kt`,
   task shell `ValidateContentTask`) is the content gate. It checks unique ids,
   dangling `lessonId` references, valid CEFR levels and exercise types (placement allows choice
@@ -22,17 +32,18 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 24):** 48 lessons (A1 = 15, A2 = 7, B1/B2 = 6 each, C1/C2 = 7
-  each), 482 exercises (8–19/lesson + reading passages + meaning items + A1 pronunciation drills +
-  P2 recall/production items), 290 vocabulary entries (6/lesson, 8 in the numbers lesson),
-  89 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
+- **CEFR bundle (contentVersion 28):** 70 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  seven A1 grammar supplements**, A2 = 7, B1/B2 = 6 each, C1/C2 = 7 each), 690 exercises
+  (8–19/lesson + reading passages + meaning items + A1 pronunciation drills + P2 recall/production
+  items + the 12 dialogue turns), 422 vocabulary entries (6/lesson, 8 in the numbers lesson),
+  111 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
   difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
   test samples production and not recognition alone. Grammar points per level follow the British Council / EQUALS Core Inventory grammar
   tables (verified against examenglish.com/CEFR, Oct 2026): e.g. B1 = 2nd/3rd conditional + reported
   speech + simple passive; C1 = inversion + mixed conditionals + modals in the past; C2 =
   nuance/precision vocabulary.
 - **Vocabulary depth (A-10):** every word carries **two** example sentences, each a bilingual object
-  `{"en": …, "fa": …}` authored in `vocabulary.json` (290 words × 2 = 580 English sentences, all
+  `{"en": …, "fa": …}` authored in `vocabulary.json` (326 words × 2 = 652 English sentences, all
   with Persian). The shape lives inside the existing `VocabularyEntity.examplesJson` TEXT column —
   the column type never changed, `ContentParser`/`RepositoriesImpl` accept the legacy plain-string
   shape, and `ContentSeeder` clear+inserts every row on the version bump — so **no Room schema
@@ -65,7 +76,7 @@
   fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 482 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 690 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any
@@ -109,10 +120,17 @@
   with `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
   `sentence_production`, `listening`, `speaking`.
-  - `speaking` is **self-assessed practice**, not a graded item: the first `accepted` sentence is the
-    model the on-device TTS speaks, the learner records their own take and compares (local only — no
-    recogniser, no upload). The validator therefore requires a Persian `prompt`, at least one
-    English `accepted` model and a declared `skill`, and the app never moves mastery from it.
+  - `speaking` feeds **conversation practice** (the lesson screen's own card still records and
+    compares, self-assessed). The first `accepted` sentence is the reply the learner is graded
+    against by the on-device recogniser (`ConversationScorer`), so it must be English. Two optional
+    fields turn the item into a dialogue turn instead of an echo:
+    - `question` — the partner's line in English, spoken by the device before the learner answers.
+      English only (TTS speaks it) and never identical to the answer (that would be an echo).
+    - `questionFa` — the Persian gloss of `question`. Required **whenever** `question` is present:
+      the learner must know what was asked; a gloss without a question is rejected too.
+    Without `question` the item stays a repeat-the-model turn. `validateContent` enforces all of
+    this, the validator also requires a Persian `prompt`, at least one English `accepted` answer and
+    a declared `skill`, and the app never moves mastery from speaking practice.
 - **Retrieval and production, not just recognition (P2).** Two shapes close the hole that every
   vocabulary item was multiple choice and the only "say something" item (`translation`) shipped a
   word bank in 21 of its 41 items:

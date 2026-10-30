@@ -1,5 +1,5 @@
 {
-  "contentVersion": 25,
+  "contentVersion": 28,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -7225,6 +7225,3306 @@
       ],
       "lessonId": "a1.numbers.lesson-01",
       "explanationFa": "عدد یا شماره؛ حرف d در تلفظ خوانده نمی‌شود (/ˈnʌmbər/)."
+    },
+    {
+      "id": "a1.countries.word.country",
+      "word": "country",
+      "translation": "کشور",
+      "definition": "A land with its own people and government",
+      "pronunciation": "/ˈkʌntri/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Iran is a large country.",
+          "fa": "ایران کشوری بزرگ است."
+        },
+        {
+          "en": "Which country are you from?",
+          "fa": "اهل کدام کشور هستی؟"
+        }
+      ],
+      "collocations": [
+        "a large country",
+        "my country"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "country برای سرزمین و کشور است؛ city برای شهر و capital برای پایتخت به کار می‌رود."
+    },
+    {
+      "id": "a1.countries.word.nationality",
+      "word": "nationality",
+      "translation": "ملیت",
+      "definition": "The country a person legally belongs to",
+      "pronunciation": "/ˌnæʃəˈnæləti/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My nationality is Iranian.",
+          "fa": "ملیت من ایرانی است."
+        },
+        {
+          "en": "The form asks for your nationality.",
+          "fa": "فرم، ملیت شما را می‌پرسد."
+        }
+      ],
+      "collocations": [
+        "ask about nationality",
+        "dual nationality"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "ملیت را با to be می‌گوییم: My nationality is Iranian — نه «I have Iranian nationality» در مکالمهٔ سادهٔ A1."
+    },
+    {
+      "id": "a1.countries.word.language",
+      "word": "language",
+      "translation": "زبان",
+      "definition": "The words people use to speak and write",
+      "pronunciation": "/ˈlæŋɡwɪdʒ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Persian is my first language.",
+          "fa": "فارسی زبان اول من است."
+        },
+        {
+          "en": "She speaks three languages.",
+          "fa": "او سه زبان صحبت می‌کند."
+        }
+      ],
+      "collocations": [
+        "first language",
+        "speak a language"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "زبان را با فعل speak می‌آوریم: speak English؛ و «به انگلیسی» می‌شود in English."
+    },
+    {
+      "id": "a1.countries.word.capital",
+      "word": "capital",
+      "translation": "پایتخت",
+      "definition": "The main city of a country",
+      "pronunciation": "/ˈkæpɪtl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Tehran is the capital of Iran.",
+          "fa": "تهران پایتخت ایران است."
+        },
+        {
+          "en": "What is the capital of Japan?",
+          "fa": "پایتخت ژاپن چیست؟"
+        }
+      ],
+      "collocations": [
+        "the capital city",
+        "the capital of"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "capital همیشه با the می‌آید: the capital of Iran."
+    },
+    {
+      "id": "a1.countries.word.city",
+      "word": "city",
+      "translation": "شهر",
+      "definition": "A large town",
+      "pronunciation": "/ˈsɪti/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Tehran is a busy city.",
+          "fa": "تهران شهری شلوغ است."
+        },
+        {
+          "en": "I live in a small city.",
+          "fa": "من در شهری کوچک زندگی می‌کنم."
+        }
+      ],
+      "collocations": [
+        "a big city",
+        "live in a city"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "city با c نوشته می‌شود ولی /s/ خوانده می‌شود: /ˈsɪti/."
+    },
+    {
+      "id": "a1.countries.word.map",
+      "word": "map",
+      "translation": "نقشه",
+      "definition": "A drawing of a place seen from above",
+      "pronunciation": "/mæp/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Look at the map of Asia.",
+          "fa": "به نقشهٔ آسیا نگاه کن."
+        },
+        {
+          "en": "I need a map of this city.",
+          "fa": "به نقشهٔ این شهر نیاز دارم."
+        }
+      ],
+      "collocations": [
+        "a world map",
+        "look at the map"
+      ],
+      "lessonId": "a1.countries.lesson-01",
+      "explanationFa": "map نقشهٔ جغرافیایی است؛ برای نقشهٔ ساختمان یا مسیر شهری معمولاً map هم کافی است."
+    },
+    {
+      "id": "a1.age-birthday.word.age",
+      "word": "age",
+      "translation": "سن",
+      "definition": "How old a person is",
+      "pronunciation": "/eɪdʒ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "What is your age?",
+          "fa": "سنت چند است؟"
+        },
+        {
+          "en": "Children start school at the age of six.",
+          "fa": "کودکان در سن شش سالگی به مدرسه می‌روند."
+        }
+      ],
+      "collocations": [
+        "at the age of",
+        "your age"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "age در گفت‌وگوی روزمره کم می‌آید؛ معمولاً می‌پرسیم How old are you?"
+    },
+    {
+      "id": "a1.age-birthday.word.birthday",
+      "word": "birthday",
+      "translation": "تولد",
+      "definition": "The day you were born",
+      "pronunciation": "/ˈbɜːrθdeɪ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My birthday is in May.",
+          "fa": "تولد من در ماه مه است."
+        },
+        {
+          "en": "Happy birthday to you!",
+          "fa": "تولدت مبارک!"
+        }
+      ],
+      "collocations": [
+        "happy birthday",
+        "birthday party"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "birthday با th نوشته می‌شود؛ /θ/ را با نوک زبان بین دندان‌ها بگویید."
+    },
+    {
+      "id": "a1.age-birthday.word.born",
+      "word": "born",
+      "translation": "متولد شدن",
+      "definition": "Came into life",
+      "pronunciation": "/bɔːrn/",
+      "level": "A1",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I was born in Tehran.",
+          "fa": "من در تهران به دنیا آمدم."
+        },
+        {
+          "en": "She was born in 2012.",
+          "fa": "او در سال ۲۰۱۲ متولد شد."
+        }
+      ],
+      "collocations": [
+        "be born",
+        "born in"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "born همیشه با was/were می‌آید: I was born — نه I born."
+    },
+    {
+      "id": "a1.age-birthday.word.year",
+      "word": "year",
+      "translation": "سال",
+      "definition": "Twelve months",
+      "pronunciation": "/jɪr/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "This year is very busy.",
+          "fa": "امسال خیلی شلوغ است."
+        },
+        {
+          "en": "He is ten years old.",
+          "fa": "او ده سال دارد."
+        }
+      ],
+      "collocations": [
+        "last year",
+        "every year"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "year در «years old» جمع می‌شود: ten years old."
+    },
+    {
+      "id": "a1.age-birthday.word.old",
+      "word": "old",
+      "translation": "سال‌دار / پیر",
+      "definition": "Having lived for many years",
+      "pronunciation": "/oʊld/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "How old is your sister?",
+          "fa": "خواهرت چند سال دارد؟"
+        },
+        {
+          "en": "My grandfather is old but strong.",
+          "fa": "پدربزرگم پیر است اما قوی."
+        }
+      ],
+      "collocations": [
+        "how old",
+        "years old"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "old در پرسش سن فقط نشانهٔ ساختار است: How old are you? یعنی «چند سال داری؟»."
+    },
+    {
+      "id": "a1.age-birthday.word.party",
+      "word": "party",
+      "translation": "مهمانی",
+      "definition": "A happy meeting with friends or family",
+      "pronunciation": "/ˈpɑːrti/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We had a birthday party.",
+          "fa": "ما مهمانی تولد داشتیم."
+        },
+        {
+          "en": "Come to my party on Friday.",
+          "fa": "جمعه به مهمانی من بیا."
+        }
+      ],
+      "collocations": [
+        "birthday party",
+        "have a party"
+      ],
+      "lessonId": "a1.age-birthday.lesson-01",
+      "explanationFa": "party برای مهمانی شاد است؛ برای جلسهٔ کاری meeting می‌گوییم."
+    },
+    {
+      "id": "a1.days-months.word.day",
+      "word": "day",
+      "translation": "روز",
+      "definition": "Twenty-four hours",
+      "pronunciation": "/deɪ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Have a nice day!",
+          "fa": "روز خوبی داشته باشی!"
+        },
+        {
+          "en": "Monday is my busiest day.",
+          "fa": "دوشنبه شلوغ‌ترین روز من است."
+        }
+      ],
+      "collocations": [
+        "every day",
+        "a nice day"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "every day یعنی «هر روز»؛ everyday (یک کلمه) صفت است: everyday English."
+    },
+    {
+      "id": "a1.days-months.word.week",
+      "word": "week",
+      "translation": "هفته",
+      "definition": "Seven days",
+      "pronunciation": "/wiːk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I study English twice a week.",
+          "fa": "هفته‌ای دو بار انگلیسی می‌خوانم."
+        },
+        {
+          "en": "Next week we have a test.",
+          "fa": "هفتهٔ بعد آزمون داریم."
+        }
+      ],
+      "collocations": [
+        "next week",
+        "twice a week"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "week با /iː/ بلند خوانده می‌شود؛ weak («ضعیف») هم همین تلفظ را دارد."
+    },
+    {
+      "id": "a1.days-months.word.month",
+      "word": "month",
+      "translation": "ماه",
+      "definition": "One of the twelve parts of a year",
+      "pronunciation": "/mʌnθ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "May is my favourite month.",
+          "fa": "مه ماه مورد علاقهٔ من است."
+        },
+        {
+          "en": "I see her every month.",
+          "fa": "هر ماه او را می‌بینم."
+        }
+      ],
+      "collocations": [
+        "last month",
+        "this month"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "month با /ʌ/ کوتاه است، نه /aʊ/؛ و th پایانی /θ/ خوانده می‌شود."
+    },
+    {
+      "id": "a1.days-months.word.weekend",
+      "word": "weekend",
+      "translation": "آخر هفته",
+      "definition": "Saturday and Sunday",
+      "pronunciation": "/ˈwiːkend/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We go to the park at the weekend.",
+          "fa": "آخر هفته به پارک می‌رویم."
+        },
+        {
+          "en": "My weekend was quiet.",
+          "fa": "آخر هفتهٔ من آرام بود."
+        }
+      ],
+      "collocations": [
+        "at the weekend",
+        "a long weekend"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "در انگلیسی بریتانیایی «at the weekend» و در آمریکایی «on the weekend» رایج است."
+    },
+    {
+      "id": "a1.days-months.word.today",
+      "word": "today",
+      "translation": "امروز",
+      "definition": "This day",
+      "pronunciation": "/təˈdeɪ/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "Today is Monday.",
+          "fa": "امروز دوشنبه است."
+        },
+        {
+          "en": "I am very tired today.",
+          "fa": "امروز خیلی خسته‌ام."
+        }
+      ],
+      "collocations": [
+        "today is",
+        "later today"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "today بدون at می‌آید: today، نه «in today»."
+    },
+    {
+      "id": "a1.days-months.word.tomorrow",
+      "word": "tomorrow",
+      "translation": "فردا",
+      "definition": "The day after today",
+      "pronunciation": "/təˈmɑːroʊ/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "See you tomorrow!",
+          "fa": "فردا می‌بینمت!"
+        },
+        {
+          "en": "Tomorrow is a holiday.",
+          "fa": "فردا تعطیل است."
+        }
+      ],
+      "collocations": [
+        "see you tomorrow",
+        "tomorrow morning"
+      ],
+      "lessonId": "a1.days-months.lesson-01",
+      "explanationFa": "تکیه روی هجای آخر است: to-MOR-row."
+    },
+    {
+      "id": "a1.time.word.time",
+      "word": "time",
+      "translation": "زمان / ساعت",
+      "definition": "The hours and minutes of the day",
+      "pronunciation": "/taɪm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "What time is it now?",
+          "fa": "الان ساعت چند است؟"
+        },
+        {
+          "en": "I do not have time today.",
+          "fa": "امروز وقت ندارم."
+        }
+      ],
+      "collocations": [
+        "what time",
+        "have time"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "time هم «زمان» است و هم «ساعت» در پرسش ساعت: What time is it?"
+    },
+    {
+      "id": "a1.time.word.clock",
+      "word": "clock",
+      "translation": "ساعت دیواری",
+      "definition": "A machine that shows the time",
+      "pronunciation": "/klɒk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The clock on the wall is slow.",
+          "fa": "ساعت روی دیوار عقب است."
+        },
+        {
+          "en": "There is a clock in every classroom.",
+          "fa": "در هر کلاس یک ساعت هست."
+        }
+      ],
+      "collocations": [
+        "alarm clock",
+        "the clock on the wall"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "clock برای ساعت دیواری و رومیزی است؛ برای ساعت مچی watch می‌گوییم."
+    },
+    {
+      "id": "a1.time.word.hour",
+      "word": "hour",
+      "translation": "ساعت (واحد زمان)",
+      "definition": "Sixty minutes",
+      "pronunciation": "/ˈaʊər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The lesson is one hour long.",
+          "fa": "درس یک ساعت طول می‌کشد."
+        },
+        {
+          "en": "I waited for two hours.",
+          "fa": "دو ساعت صبر کردم."
+        }
+      ],
+      "collocations": [
+        "an hour",
+        "half an hour"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "hour با h بی‌صدا شروع می‌شود، پس an hour درست است، نه a hour."
+    },
+    {
+      "id": "a1.time.word.minute",
+      "word": "minute",
+      "translation": "دقیقه",
+      "definition": "Sixty seconds",
+      "pronunciation": "/ˈmɪnɪt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Wait five minutes, please.",
+          "fa": "لطفاً پنج دقیقه صبر کنید."
+        },
+        {
+          "en": "The train leaves in ten minutes.",
+          "fa": "قطار ده دقیقهٔ دیگر حرکت می‌کند."
+        }
+      ],
+      "collocations": [
+        "five minutes",
+        "in a minute"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "minute به معنی «دقیقه» /ˈmɪnɪt/ است؛ «کوچک» صفت دیگری است."
+    },
+    {
+      "id": "a1.time.word.early",
+      "word": "early",
+      "translation": "زود",
+      "definition": "Before the usual time",
+      "pronunciation": "/ˈɜːrli/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "I get up early every day.",
+          "fa": "هر روز زود بیدار می‌شوم."
+        },
+        {
+          "en": "She arrived early for the class.",
+          "fa": "او برای کلاس زود رسید."
+        }
+      ],
+      "collocations": [
+        "get up early",
+        "early morning"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "early هم صفت است و هم قید: an early train / get up early."
+    },
+    {
+      "id": "a1.time.word.late",
+      "word": "late",
+      "translation": "دیر",
+      "definition": "After the usual time",
+      "pronunciation": "/leɪt/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Sorry, I am late.",
+          "fa": "ببخشید، دیر کردم."
+        },
+        {
+          "en": "The bus is ten minutes late.",
+          "fa": "اتوبوس ده دقیقه تأخیر دارد."
+        }
+      ],
+      "collocations": [
+        "be late",
+        "late at night"
+      ],
+      "lessonId": "a1.time.lesson-01",
+      "explanationFa": "برای تأخیر از be late استفاده می‌کنیم: I am late — نه I have late."
+    },
+    {
+      "id": "a1.colors.word.color",
+      "word": "color",
+      "translation": "رنگ",
+      "definition": "Red, blue, green and so on",
+      "pronunciation": "/ˈkʌlər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "What is your favorite color?",
+          "fa": "رنگ مورد علاقه‌ات چیست؟"
+        },
+        {
+          "en": "Blue is a calm color.",
+          "fa": "آبی رنگی آرام است."
+        }
+      ],
+      "collocations": [
+        "favorite color",
+        "a bright color"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "در انگلیسی بریتانیایی colour نوشته می‌شود؛ تلفظ یکی است."
+    },
+    {
+      "id": "a1.colors.word.red",
+      "word": "red",
+      "translation": "قرمز",
+      "definition": "The color of blood",
+      "pronunciation": "/red/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "She has a red coat.",
+          "fa": "او پالتوی قرمز دارد."
+        },
+        {
+          "en": "The apple is red.",
+          "fa": "سیب قرمز است."
+        }
+      ],
+      "collocations": [
+        "dark red",
+        "a red light"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "red و read (گذشتهٔ read) هم‌آوا هستند: /red/."
+    },
+    {
+      "id": "a1.colors.word.blue",
+      "word": "blue",
+      "translation": "آبی",
+      "definition": "The color of the sky",
+      "pronunciation": "/bluː/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The sky is blue today.",
+          "fa": "امروز آسمان آبی است."
+        },
+        {
+          "en": "I like blue shoes.",
+          "fa": "کفش آبی دوست دارم."
+        }
+      ],
+      "collocations": [
+        "light blue",
+        "dark blue"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "blue با /uː/ بلند خوانده می‌شود؛ کوتاه کردنش معنا را عوض نمی‌کند اما طبیعی نیست."
+    },
+    {
+      "id": "a1.colors.word.green",
+      "word": "green",
+      "translation": "سبز",
+      "definition": "The color of grass",
+      "pronunciation": "/ɡriːn/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The trees are green in spring.",
+          "fa": "درخت‌ها در بهار سبز هستند."
+        },
+        {
+          "en": "She painted the door green.",
+          "fa": "او در را سبز رنگ کرد."
+        }
+      ],
+      "collocations": [
+        "light green",
+        "a green light"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "green در چراغ راهنما یعنی «اجازهٔ حرکت»."
+    },
+    {
+      "id": "a1.colors.word.black",
+      "word": "black",
+      "translation": "سیاه",
+      "definition": "The darkest color",
+      "pronunciation": "/blæk/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "He wears black shoes.",
+          "fa": "او کفش سیاه می‌پوشد."
+        },
+        {
+          "en": "My phone is black.",
+          "fa": "گوشی من سیاه است."
+        }
+      ],
+      "collocations": [
+        "black coffee",
+        "black and white"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "black coffee یعنی قهوهٔ بدون شیر."
+    },
+    {
+      "id": "a1.colors.word.white",
+      "word": "white",
+      "translation": "سفید",
+      "definition": "The color of snow",
+      "pronunciation": "/waɪt/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The wall is white.",
+          "fa": "دیوار سفید است."
+        },
+        {
+          "en": "She has a white bag.",
+          "fa": "او کیف سفید دارد."
+        }
+      ],
+      "collocations": [
+        "snow white",
+        "black and white"
+      ],
+      "lessonId": "a1.colors.lesson-01",
+      "explanationFa": "white با /w/ شروع می‌شود؛ h در تلفظ نمی‌آید."
+    },
+    {
+      "id": "a1.classroom.word.book",
+      "word": "book",
+      "translation": "کتاب",
+      "definition": "Pages with words, bound together",
+      "pronunciation": "/bʊk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "This is my English book.",
+          "fa": "این کتاب انگلیسی من است."
+        },
+        {
+          "en": "I read a book every night.",
+          "fa": "هر شب یک کتاب می‌خوانم."
+        }
+      ],
+      "collocations": [
+        "read a book",
+        "an English book"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "book هم اسم است و هم فعل (رزرو کردن): book a table."
+    },
+    {
+      "id": "a1.classroom.word.pen",
+      "word": "pen",
+      "translation": "خودکار",
+      "definition": "A tool for writing with ink",
+      "pronunciation": "/pen/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can I borrow your pen?",
+          "fa": "می‌توانم خودکارت را قرض بگیرم؟"
+        },
+        {
+          "en": "This pen is blue.",
+          "fa": "این خودکار آبی است."
+        }
+      ],
+      "collocations": [
+        "a blue pen",
+        "borrow a pen"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "pen خودکار است و pencil مداد؛ این دو را با هم اشتباه نگیرید."
+    },
+    {
+      "id": "a1.classroom.word.pencil",
+      "word": "pencil",
+      "translation": "مداد",
+      "definition": "A wooden tool for writing, with graphite inside",
+      "pronunciation": "/ˈpensl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Write your name with a pencil.",
+          "fa": "نامت را با مداد بنویس."
+        },
+        {
+          "en": "My pencil is on the desk.",
+          "fa": "مداد من روی میز است."
+        }
+      ],
+      "collocations": [
+        "a sharp pencil",
+        "pencil case"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "pencil با c نوشته می‌شود ولی /s/ خوانده می‌شود."
+    },
+    {
+      "id": "a1.classroom.word.board",
+      "word": "board",
+      "translation": "تخته",
+      "definition": "The surface a teacher writes on",
+      "pronunciation": "/bɔːrd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Look at the board, please.",
+          "fa": "لطفاً به تخته نگاه کنید."
+        },
+        {
+          "en": "The answer is on the board.",
+          "fa": "پاسخ روی تخته است."
+        }
+      ],
+      "collocations": [
+        "on the board",
+        "the whiteboard"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "board در کلاس معمولاً با the می‌آید: look at the board."
+    },
+    {
+      "id": "a1.classroom.word.desk",
+      "word": "desk",
+      "translation": "میز",
+      "definition": "A table for writing or studying",
+      "pronunciation": "/desk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My books are on the desk.",
+          "fa": "کتاب‌های من روی میز هستند."
+        },
+        {
+          "en": "There is a lamp on my desk.",
+          "fa": "روی میزم یک چراغ است."
+        }
+      ],
+      "collocations": [
+        "on the desk",
+        "a school desk"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "desk میز تحریر است؛ table میز غذاخوری یا عمومی."
+    },
+    {
+      "id": "a1.classroom.word.bag",
+      "word": "bag",
+      "translation": "کیف",
+      "definition": "Something you carry things in",
+      "pronunciation": "/bæɡ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My bag is very heavy today.",
+          "fa": "کیفم امروز خیلی سنگین است."
+        },
+        {
+          "en": "Put your books in your bag.",
+          "fa": "کتاب‌هایت را در کیفت بگذار."
+        }
+      ],
+      "collocations": [
+        "a school bag",
+        "in my bag"
+      ],
+      "lessonId": "a1.classroom.lesson-01",
+      "explanationFa": "bag در انگلیسی بریتانیایی «کیف» است و در آمریکایی برای کیف دستی purse هم می‌گویند."
+    },
+    {
+      "id": "a1.jobs.word.teacher",
+      "word": "teacher",
+      "translation": "معلم",
+      "definition": "a person who teaches in a school",
+      "pronunciation": "/ˈtiːtʃər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My mother is a teacher.",
+          "fa": "مادرم معلم است."
+        },
+        {
+          "en": "The teacher writes on the board.",
+          "fa": "معلم روی تخته می‌نویسد."
+        }
+      ],
+      "collocations": [
+        "an English teacher",
+        "a good teacher"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "teacher از teach ساخته شده؛ پسوند -er یعنی «کسی که ... می‌کند»."
+    },
+    {
+      "id": "a1.jobs.word.doctor",
+      "word": "doctor",
+      "translation": "پزشک",
+      "definition": "a person who helps sick people",
+      "pronunciation": "/ˈdɒktər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The doctor works in a hospital.",
+          "fa": "پزشک در بیمارستان کار می‌کند."
+        },
+        {
+          "en": "My doctor is very kind.",
+          "fa": "پزشک من خیلی مهربان است."
+        }
+      ],
+      "collocations": [
+        "see a doctor",
+        "a family doctor"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "go to the doctor یعنی به پزشک مراجعه کردن."
+    },
+    {
+      "id": "a1.jobs.word.nurse",
+      "word": "nurse",
+      "translation": "پرستار",
+      "definition": "a person who cares for sick people",
+      "pronunciation": "/nɜːrs/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The nurse helps the doctor.",
+          "fa": "پرستار به پزشک کمک می‌کند."
+        },
+        {
+          "en": "My aunt is a nurse in a big hospital.",
+          "fa": "خالهٔ من در یک بیمارستان بزرگ پرستار است."
+        }
+      ],
+      "collocations": [
+        "a nurse in a hospital",
+        "a kind nurse"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "nurse هم اسم است هم فعل: to nurse یعنی پرستاری کردن."
+    },
+    {
+      "id": "a1.jobs.word.driver",
+      "word": "driver",
+      "translation": "راننده",
+      "definition": "a person who drives a car or bus",
+      "pronunciation": "/ˈdraɪvər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The bus driver starts work at six.",
+          "fa": "رانندهٔ اتوبوس ساعت شش کار را شروع می‌کند."
+        },
+        {
+          "en": "My father is a taxi driver.",
+          "fa": "پدرم رانندهٔ تاکسی است."
+        }
+      ],
+      "collocations": [
+        "a bus driver",
+        "a taxi driver"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "driver از drive (راندن) ساخته شده است."
+    },
+    {
+      "id": "a1.jobs.word.cook",
+      "word": "cook",
+      "translation": "آشپز",
+      "definition": "a person who makes food",
+      "pronunciation": "/kʊk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The cook makes soup every day.",
+          "fa": "آشپز هر روز سوپ درست می‌کند."
+        },
+        {
+          "en": "My uncle is a cook in a restaurant.",
+          "fa": "عموی من در یک رستوران آشپز است."
+        }
+      ],
+      "collocations": [
+        "a good cook",
+        "work as a cook"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "cook هم فعل است (پختن) هم اسم (آشپز)."
+    },
+    {
+      "id": "a1.jobs.word.farmer",
+      "word": "farmer",
+      "translation": "کشاورز",
+      "definition": "a person who works on a farm",
+      "pronunciation": "/ˈfɑːrmər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The farmer gets up early.",
+          "fa": "کشاورز زود بیدار می‌شود."
+        },
+        {
+          "en": "My grandfather is a farmer with ten cows.",
+          "fa": "پدربزرگ من کشاورزی با ده گاو است."
+        }
+      ],
+      "collocations": [
+        "a young farmer",
+        "work as a farmer"
+      ],
+      "lessonId": "a1.jobs.lesson-01",
+      "explanationFa": "farmer از farm (مزرعه) می‌آید."
+    },
+    {
+      "id": "a1.belongings.word.bag",
+      "word": "bag",
+      "translation": "کیف",
+      "definition": "something you carry things in",
+      "pronunciation": "/bæɡ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My bag is on the chair.",
+          "fa": "کیف من روی صندلی است."
+        },
+        {
+          "en": "I put my books in my bag.",
+          "fa": "کتاب‌هایم را در کیفم می‌گذارم."
+        }
+      ],
+      "collocations": [
+        "a school bag",
+        "in my bag"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "bag هم کیف دستی است هم کیف مدرسه."
+    },
+    {
+      "id": "a1.belongings.word.key",
+      "word": "key",
+      "translation": "کلید",
+      "definition": "a small metal thing that opens a door",
+      "pronunciation": "/kiː/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "This key opens the front door.",
+          "fa": "این کلید درِ ورودی را باز می‌کند."
+        },
+        {
+          "en": "I keep my key in my pocket.",
+          "fa": "کلیدم را در جیبم نگه می‌دارم."
+        }
+      ],
+      "collocations": [
+        "my house key",
+        "a small key"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "key یک هجا دارد و با /iː/ کشیده خوانده می‌شود."
+    },
+    {
+      "id": "a1.belongings.word.phone",
+      "word": "phone",
+      "translation": "تلفن همراه",
+      "definition": "a thing you use to call people",
+      "pronunciation": "/foʊn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My phone is in my bag.",
+          "fa": "تلفن من در کیفم است."
+        },
+        {
+          "en": "I call my mother on my phone.",
+          "fa": "با تلفنم به مادرم زنگ می‌زنم."
+        }
+      ],
+      "collocations": [
+        "a mobile phone",
+        "answer the phone"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "phone کوتاه‌شدهٔ telephone است."
+    },
+    {
+      "id": "a1.belongings.word.wallet",
+      "word": "wallet",
+      "translation": "کیف پول",
+      "definition": "a small bag for money and cards",
+      "pronunciation": "/ˈwɒlɪt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My wallet is in my jacket.",
+          "fa": "کیف پولم در کاپشنم است."
+        },
+        {
+          "en": "There is no money in my wallet.",
+          "fa": "پولی در کیف پولم نیست."
+        }
+      ],
+      "collocations": [
+        "open my wallet",
+        "a brown wallet"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "wallet برای پول و کارت است و از bag کوچک‌تر."
+    },
+    {
+      "id": "a1.belongings.word.watch",
+      "word": "watch",
+      "translation": "ساعت مچی",
+      "definition": "a small clock you wear on your arm",
+      "pronunciation": "/wɒtʃ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My watch is five minutes fast.",
+          "fa": "ساعت مچی من پنج دقیقه جلوست."
+        },
+        {
+          "en": "He looks at his watch.",
+          "fa": "او به ساعت مچی‌اش نگاه می‌کند."
+        }
+      ],
+      "collocations": [
+        "wear a watch",
+        "a new watch"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "watch هم اسم است (ساعت مچی) هم فعل (تماشا کردن)."
+    },
+    {
+      "id": "a1.belongings.word.umbrella",
+      "word": "umbrella",
+      "translation": "چتر",
+      "definition": "a thing you open in the rain",
+      "pronunciation": "/ʌmˈbrelə/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Take an umbrella with you.",
+          "fa": "چتری با خودت ببر."
+        },
+        {
+          "en": "My umbrella is next to the door.",
+          "fa": "چتر من کنار در است."
+        }
+      ],
+      "collocations": [
+        "an umbrella",
+        "open an umbrella"
+      ],
+      "lessonId": "a1.belongings.lesson-01",
+      "explanationFa": "پیش از umbrella حرف تعریف an می‌آید، چون با صدای صدادار شروع می‌شود."
+    },
+    {
+      "id": "a1.home-rooms.word.house",
+      "word": "house",
+      "translation": "خانه",
+      "definition": "a building where people live",
+      "pronunciation": "/haʊs/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Our house is near the park.",
+          "fa": "خانهٔ ما نزدیک پارک است."
+        },
+        {
+          "en": "The house has three rooms.",
+          "fa": "این خانه سه اتاق دارد."
+        }
+      ],
+      "collocations": [
+        "a big house",
+        "my house"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "house ساختمان مسکونی است؛ home یعنی محل زندگی."
+    },
+    {
+      "id": "a1.home-rooms.word.room",
+      "word": "room",
+      "translation": "اتاق",
+      "definition": "a part of a house with walls",
+      "pronunciation": "/ruːm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My room is small but clean.",
+          "fa": "اتاق من کوچک اما تمیز است."
+        },
+        {
+          "en": "There is a bed in my room.",
+          "fa": "در اتاقم یک تخت هست."
+        }
+      ],
+      "collocations": [
+        "a big room",
+        "my room"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "room هم اتاق است هم «فضا»: no room in the bag."
+    },
+    {
+      "id": "a1.home-rooms.word.kitchen",
+      "word": "kitchen",
+      "translation": "آشپزخانه",
+      "definition": "the room where you cook",
+      "pronunciation": "/ˈkɪtʃɪn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We cook in the kitchen.",
+          "fa": "ما در آشپزخانه غذا می‌پزیم."
+        },
+        {
+          "en": "My mother is in the kitchen.",
+          "fa": "مادرم در آشپزخانه است."
+        }
+      ],
+      "collocations": [
+        "in the kitchen",
+        "a small kitchen"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "kitchen آشپزخانه است؛ chicken مرغ."
+    },
+    {
+      "id": "a1.home-rooms.word.bedroom",
+      "word": "bedroom",
+      "translation": "اتاق خواب",
+      "definition": "the room where you sleep",
+      "pronunciation": "/ˈbedruːm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My bedroom is upstairs.",
+          "fa": "اتاق خواب من در طبقهٔ بالا است."
+        },
+        {
+          "en": "The bedroom has a big window.",
+          "fa": "اتاق خواب یک پنجرهٔ بزرگ دارد."
+        }
+      ],
+      "collocations": [
+        "my bedroom",
+        "a small bedroom"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "bedroom از bed + room ساخته شده است."
+    },
+    {
+      "id": "a1.home-rooms.word.bathroom",
+      "word": "bathroom",
+      "translation": "حمام",
+      "definition": "the room where you wash",
+      "pronunciation": "/ˈbɑːθruːm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The bathroom is next to my bedroom.",
+          "fa": "حمام کنار اتاق خواب من است."
+        },
+        {
+          "en": "There is a towel in the bathroom.",
+          "fa": "حوله‌ای در حمام است."
+        }
+      ],
+      "collocations": [
+        "in the bathroom",
+        "a clean bathroom"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "bathroom جای شست‌وشو است؛ toilet فقط دستشویی."
+    },
+    {
+      "id": "a1.home-rooms.word.garden",
+      "word": "garden",
+      "translation": "حیاط و باغ",
+      "definition": "the land behind or around a house",
+      "pronunciation": "/ˈɡɑːrdn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We have a small garden.",
+          "fa": "ما یک حیاط کوچک داریم."
+        },
+        {
+          "en": "The children play in the garden.",
+          "fa": "بچه‌ها در حیاط بازی می‌کنند."
+        }
+      ],
+      "collocations": [
+        "in the garden",
+        "a small garden"
+      ],
+      "lessonId": "a1.home-rooms.lesson-01",
+      "explanationFa": "garden در انگلیسی بریتانیایی یعنی حیاط پشت خانه."
+    },
+    {
+      "id": "a1.house-objects.word.table",
+      "word": "table",
+      "translation": "میز",
+      "definition": "furniture you eat or work at",
+      "pronunciation": "/ˈteɪbl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There is a lamp on the table.",
+          "fa": "چراغی روی میز است."
+        },
+        {
+          "en": "We eat at the table.",
+          "fa": "ما سر میز غذا می‌خوریم."
+        }
+      ],
+      "collocations": [
+        "on the table",
+        "a small table"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "table میز است؛ desk میز کار و مطالعه."
+    },
+    {
+      "id": "a1.house-objects.word.chair",
+      "word": "chair",
+      "translation": "صندلی",
+      "definition": "furniture you sit on",
+      "pronunciation": "/tʃer/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The chair is next to the door.",
+          "fa": "صندلی کنار در است."
+        },
+        {
+          "en": "Please sit on the chair.",
+          "fa": "لطفاً روی صندلی بنشین."
+        }
+      ],
+      "collocations": [
+        "on the chair",
+        "a wooden chair"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "chair یک صندلی است؛ جمع آن chairs."
+    },
+    {
+      "id": "a1.house-objects.word.window",
+      "word": "window",
+      "translation": "پنجره",
+      "definition": "the glass part of a wall",
+      "pronunciation": "/ˈwɪndoʊ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Please open the window.",
+          "fa": "لطفاً پنجره را باز کن."
+        },
+        {
+          "en": "The window is next to my bed.",
+          "fa": "پنجره کنار تختم است."
+        }
+      ],
+      "collocations": [
+        "open the window",
+        "a big window"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "window پنجره است؛ door در."
+    },
+    {
+      "id": "a1.house-objects.word.door",
+      "word": "door",
+      "translation": "در",
+      "definition": "the thing you open to enter a room",
+      "pronunciation": "/dɔːr/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Please close the door.",
+          "fa": "لطفاً در را ببند."
+        },
+        {
+          "en": "The door is open.",
+          "fa": "در باز است."
+        }
+      ],
+      "collocations": [
+        "open the door",
+        "the front door"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "door با واکهٔ بلند /ɔː/ خوانده می‌شود."
+    },
+    {
+      "id": "a1.house-objects.word.bed",
+      "word": "bed",
+      "translation": "تخت",
+      "definition": "furniture you sleep on",
+      "pronunciation": "/bed/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My bed is next to the window.",
+          "fa": "تختم کنار پنجره است."
+        },
+        {
+          "en": "There is a cat on the bed.",
+          "fa": "گربه‌ای روی تخت است."
+        }
+      ],
+      "collocations": [
+        "in bed",
+        "go to bed"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "in bed یعنی در رختخواب؛ go to bed یعنی رفتن برای خواب."
+    },
+    {
+      "id": "a1.house-objects.word.lamp",
+      "word": "lamp",
+      "translation": "چراغ",
+      "definition": "a thing that gives light",
+      "pronunciation": "/læmp/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There is a lamp next to the bed.",
+          "fa": "چراغی کنار تخت است."
+        },
+        {
+          "en": "Turn on the lamp, please.",
+          "fa": "لطفاً چراغ را روشن کن."
+        }
+      ],
+      "collocations": [
+        "turn on the lamp",
+        "a small lamp"
+      ],
+      "lessonId": "a1.house-objects.lesson-01",
+      "explanationFa": "lamp چراغ روشنایی است؛ chandelier لوستر."
+    },
+    {
+      "id": "a1.food-drinks.word.bread",
+      "word": "bread",
+      "translation": "نان",
+      "definition": "food made from flour",
+      "pronunciation": "/bred/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I eat bread for breakfast.",
+          "fa": "من برای صبحانه نان می‌خورم."
+        },
+        {
+          "en": "Can I have some bread, please?",
+          "fa": "می‌شود کمی نان بدید؟"
+        }
+      ],
+      "collocations": [
+        "some bread",
+        "fresh bread"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "bread غیرقابل‌شمارش است؛ «یک نان» می‌شود a loaf of bread."
+    },
+    {
+      "id": "a1.food-drinks.word.rice",
+      "word": "rice",
+      "translation": "برنج",
+      "definition": "small white grains you cook",
+      "pronunciation": "/raɪs/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We eat rice with chicken.",
+          "fa": "ما برنج را با مرغ می‌خوریم."
+        },
+        {
+          "en": "Please cook some rice.",
+          "fa": "لطفاً کمی برنج بپز."
+        }
+      ],
+      "collocations": [
+        "some rice",
+        "rice and chicken"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "rice غیرقابل‌شمارش است؛ برای یک دانه می‌گوییم a grain of rice."
+    },
+    {
+      "id": "a1.food-drinks.word.water",
+      "word": "water",
+      "translation": "آب",
+      "definition": "the clear drink people need every day",
+      "pronunciation": "/ˈwɔːtər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I drink water every day.",
+          "fa": "من هر روز آب می‌نوشم."
+        },
+        {
+          "en": "Can I have a glass of water?",
+          "fa": "می‌توانم یک لیوان آب داشته باشم؟"
+        }
+      ],
+      "collocations": [
+        "a glass of water",
+        "cold water"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "water غیرقابل‌شمارش است؛ a glass of water درست است."
+    },
+    {
+      "id": "a1.food-drinks.word.tea",
+      "word": "tea",
+      "translation": "چای",
+      "definition": "a hot drink made from leaves",
+      "pronunciation": "/tiː/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My father drinks tea in the morning.",
+          "fa": "پدرم صبح‌ها چای می‌نوشد."
+        },
+        {
+          "en": "Would you like some tea?",
+          "fa": "کمی چای میل داری؟"
+        }
+      ],
+      "collocations": [
+        "a cup of tea",
+        "hot tea"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "tea با /iː/ کشیده خوانده می‌شود."
+    },
+    {
+      "id": "a1.food-drinks.word.milk",
+      "word": "milk",
+      "translation": "شیر",
+      "definition": "a white drink from cows",
+      "pronunciation": "/mɪlk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My son drinks milk at night.",
+          "fa": "پسرم شب‌ها شیر می‌نوشد."
+        },
+        {
+          "en": "There is milk in the fridge.",
+          "fa": "شیر در یخچال هست."
+        }
+      ],
+      "collocations": [
+        "a glass of milk",
+        "hot milk"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "milk نوشیدنی است و با tea هم می‌آید: tea with milk."
+    },
+    {
+      "id": "a1.food-drinks.word.egg",
+      "word": "egg",
+      "translation": "تخم‌مرغ",
+      "definition": "food that comes from a chicken",
+      "pronunciation": "/eɡ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I eat an egg for breakfast.",
+          "fa": "من برای صبحانه یک تخم‌مرغ می‌خورم."
+        },
+        {
+          "en": "There are six eggs in the box.",
+          "fa": "شش تخم‌مرغ در جعبه است."
+        }
+      ],
+      "collocations": [
+        "a boiled egg",
+        "two eggs"
+      ],
+      "lessonId": "a1.food-drinks.lesson-01",
+      "explanationFa": "پیش از egg حرف تعریف an می‌آید، چون با صدای صدادار شروع می‌شود."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.apple",
+      "word": "apple",
+      "translation": "سیب",
+      "definition": "a round red or green fruit",
+      "pronunciation": "/ˈæpl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I eat an apple every day.",
+          "fa": "من هر روز یک سیب می‌خورم."
+        },
+        {
+          "en": "This apple is very sweet.",
+          "fa": "این سیب خیلی شیرین است."
+        }
+      ],
+      "collocations": [
+        "a red apple",
+        "an apple a day"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "پیش از apple حرف تعریف an می‌آید."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.orange",
+      "word": "orange",
+      "translation": "پرتقال",
+      "definition": "a round orange fruit",
+      "pronunciation": "/ˈɔːrɪndʒ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Would you like an orange?",
+          "fa": "یک پرتقال میل داری؟"
+        },
+        {
+          "en": "I drink orange juice in the morning.",
+          "fa": "صبح‌ها آب‌پرتقال می‌نوشم."
+        }
+      ],
+      "collocations": [
+        "orange juice",
+        "a sweet orange"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "orange هم میوه است هم رنگ؛ معنی را از جمله بفهمید."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.banana",
+      "word": "banana",
+      "translation": "موز",
+      "definition": "a long yellow fruit",
+      "pronunciation": "/bəˈnɑːnə/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I eat a banana after lunch.",
+          "fa": "من بعد از ناهار یک موز می‌خورم."
+        },
+        {
+          "en": "Bananas are yellow.",
+          "fa": "موزها زرد هستند."
+        }
+      ],
+      "collocations": [
+        "a ripe banana",
+        "banana bread"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "banana سه هجا دارد و تکیه روی دوم است."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.tomato",
+      "word": "tomato",
+      "translation": "گوجه‌فرنگی",
+      "definition": "a soft red fruit used in salad",
+      "pronunciation": "/təˈmeɪtoʊ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We put tomatoes in the salad.",
+          "fa": "ما در سالاد گوجه‌فرنگی می‌ریزیم."
+        },
+        {
+          "en": "A tomato is red.",
+          "fa": "گوجه‌فرنگی قرمز است."
+        }
+      ],
+      "collocations": [
+        "a red tomato",
+        "tomato salad"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "جمع آن tomatoes است، با es."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.potato",
+      "word": "potato",
+      "translation": "سیب‌زمینی",
+      "definition": "a round vegetable that grows underground",
+      "pronunciation": "/pəˈteɪtoʊ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My mother cooks potatoes for dinner.",
+          "fa": "مادرم برای شام سیب‌زمینی می‌پزد."
+        },
+        {
+          "en": "A potato grows under the ground.",
+          "fa": "سیب‌زمینی زیر خاک رشد می‌کند."
+        }
+      ],
+      "collocations": [
+        "boiled potatoes",
+        "a big potato"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "جمع آن potatoes است، با es."
+    },
+    {
+      "id": "a1.fruits-vegetables.word.onion",
+      "word": "onion",
+      "translation": "پیاز",
+      "definition": "a round vegetable with a strong taste",
+      "pronunciation": "/ˈʌnjən/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The onion makes me cry.",
+          "fa": "پیاز مرا به گریه می‌اندازد."
+        },
+        {
+          "en": "We cut the onion into small pieces.",
+          "fa": "پیاز را به تکه‌های کوچک می‌بریم."
+        }
+      ],
+      "collocations": [
+        "a red onion",
+        "cut the onion"
+      ],
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "explanationFa": "onion با صدای صدادار شروع می‌شود: an onion."
+    },
+    {
+      "id": "a1.clothes.word.shirt",
+      "word": "shirt",
+      "translation": "پیراهن",
+      "definition": "clothes for the top of your body",
+      "pronunciation": "/ʃɜːrt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "He is wearing a white shirt.",
+          "fa": "او یک پیراهن سفید پوشیده است."
+        },
+        {
+          "en": "My shirt is on the chair.",
+          "fa": "پیراهنم روی صندلی است."
+        }
+      ],
+      "collocations": [
+        "a white shirt",
+        "wear a shirt"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "shirt پیراهن است؛ T-shirt تی‌شرت."
+    },
+    {
+      "id": "a1.clothes.word.trousers",
+      "word": "trousers",
+      "translation": "شلوار",
+      "definition": "clothes for your legs",
+      "pronunciation": "/ˈtraʊzərz/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "These trousers are too long.",
+          "fa": "این شلوار خیلی بلند است."
+        },
+        {
+          "en": "I wear trousers to work.",
+          "fa": "من سر کار شلوار می‌پوشم."
+        }
+      ],
+      "collocations": [
+        "a pair of trousers",
+        "black trousers"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "trousers همیشه جمع است؛ برای یک عدد a pair of trousers می‌گوییم."
+    },
+    {
+      "id": "a1.clothes.word.shoes",
+      "word": "shoes",
+      "translation": "کفش",
+      "definition": "things you wear on your feet",
+      "pronunciation": "/ʃuːz/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My shoes are new.",
+          "fa": "کفش‌های من نو هستند."
+        },
+        {
+          "en": "Take off your shoes at the door.",
+          "fa": "کنار در کفش‌هایت را دربیاور."
+        }
+      ],
+      "collocations": [
+        "a pair of shoes",
+        "new shoes"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "shoes جمع است؛ یک کفش را a shoe می‌گوییم."
+    },
+    {
+      "id": "a1.clothes.word.coat",
+      "word": "coat",
+      "translation": "پالتو",
+      "definition": "a warm thing you wear outside",
+      "pronunciation": "/koʊt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Put on your coat; it is cold.",
+          "fa": "پالتویت را بپوش؛ هوا سرد است."
+        },
+        {
+          "en": "My coat is black.",
+          "fa": "پالتوی من مشکی است."
+        }
+      ],
+      "collocations": [
+        "a warm coat",
+        "put on a coat"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "coat لباس بیرونی است."
+    },
+    {
+      "id": "a1.clothes.word.hat",
+      "word": "hat",
+      "translation": "کلاه",
+      "definition": "something you wear on your head",
+      "pronunciation": "/hæt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "He wears a hat in the sun.",
+          "fa": "او زیر آفتاب کلاه می‌گذارد."
+        },
+        {
+          "en": "My hat is on the table.",
+          "fa": "کلاهم روی میز است."
+        }
+      ],
+      "collocations": [
+        "wear a hat",
+        "a big hat"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "hat کلاه لبه‌دار است؛ cap کلاه بی‌لبه."
+    },
+    {
+      "id": "a1.clothes.word.dress",
+      "word": "dress",
+      "translation": "پیراهن زنانه",
+      "definition": "clothes a woman wears",
+      "pronunciation": "/dres/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "She is wearing a red dress.",
+          "fa": "او یک پیراهن قرمز پوشیده است."
+        },
+        {
+          "en": "Her dress is very long.",
+          "fa": "پیراهنش خیلی بلند است."
+        }
+      ],
+      "collocations": [
+        "a red dress",
+        "a long dress"
+      ],
+      "lessonId": "a1.clothes.lesson-01",
+      "explanationFa": "dress لباس زنانه است؛ لباس رسمی مردانه suit است."
+    },
+    {
+      "id": "a1.body.word.head",
+      "word": "head",
+      "translation": "سر",
+      "definition": "the top part of your body",
+      "pronunciation": "/hed/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My head hurts.",
+          "fa": "سرم درد می‌کند."
+        },
+        {
+          "en": "Put your hat on your head.",
+          "fa": "کلاهت را روی سرت بگذار."
+        }
+      ],
+      "collocations": [
+        "shake your head",
+        "a headache"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "headache یعنی سردرد و با a می‌آید."
+    },
+    {
+      "id": "a1.body.word.hand",
+      "word": "hand",
+      "translation": "دست",
+      "definition": "the part you use to hold things",
+      "pronunciation": "/hænd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Wash your hands before dinner.",
+          "fa": "پیش از شام دست‌هایت را بشور."
+        },
+        {
+          "en": "My left hand is cold.",
+          "fa": "دست چپم سرد است."
+        }
+      ],
+      "collocations": [
+        "shake hands",
+        "raise your hand"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "hand هم دست است هم کمک کردن: give me a hand."
+    },
+    {
+      "id": "a1.body.word.eye",
+      "word": "eye",
+      "translation": "چشم",
+      "definition": "the part you see with",
+      "pronunciation": "/aɪ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My eyes are blue.",
+          "fa": "چشم‌های من آبی هستند."
+        },
+        {
+          "en": "Close your eyes, please.",
+          "fa": "لطفاً چشمانت را ببند."
+        }
+      ],
+      "collocations": [
+        "open your eyes",
+        "blue eyes"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "جمع eye می‌شود eyes؛ پیش از آن an می‌آید."
+    },
+    {
+      "id": "a1.body.word.ear",
+      "word": "ear",
+      "translation": "گوش",
+      "definition": "the part you hear with",
+      "pronunciation": "/ɪr/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My ear hurts.",
+          "fa": "گوشم درد می‌کند."
+        },
+        {
+          "en": "He has small ears.",
+          "fa": "او گوش‌های کوچکی دارد."
+        }
+      ],
+      "collocations": [
+        "my left ear",
+        "big ears"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "پیش از ear حرف تعریف an می‌آید."
+    },
+    {
+      "id": "a1.body.word.foot",
+      "word": "foot",
+      "translation": "پا",
+      "definition": "the part at the end of your leg",
+      "pronunciation": "/fʊt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My foot hurts.",
+          "fa": "پایم درد می‌کند."
+        },
+        {
+          "en": "I stand on one foot.",
+          "fa": "روی یک پا می‌ایستم."
+        }
+      ],
+      "collocations": [
+        "on foot",
+        "my right foot"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "جمع foot می‌شود feet؛ on foot یعنی پیاده."
+    },
+    {
+      "id": "a1.body.word.tooth",
+      "word": "tooth",
+      "translation": "دندان",
+      "definition": "the white part in your mouth",
+      "pronunciation": "/tuːθ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My tooth hurts.",
+          "fa": "دندانم درد می‌کند."
+        },
+        {
+          "en": "Brush your teeth at night.",
+          "fa": "شب‌ها دندان‌هایت را مسواک بزن."
+        }
+      ],
+      "collocations": [
+        "brush your teeth",
+        "a white tooth"
+      ],
+      "lessonId": "a1.body.lesson-01",
+      "explanationFa": "جمع tooth می‌شود teeth، نه tooths."
+    },
+    {
+      "id": "a1.animals.word.dog",
+      "word": "dog",
+      "translation": "سگ",
+      "definition": "an animal that often lives with people",
+      "pronunciation": "/dɔːɡ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The dog is in the garden.",
+          "fa": "سگ در حیاط است."
+        },
+        {
+          "en": "My dog sleeps next to my bed.",
+          "fa": "سگم کنار تختم می‌خوابد."
+        }
+      ],
+      "collocations": [
+        "a big dog",
+        "walk the dog"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "dog سگ است؛ puppy توله‌سگ."
+    },
+    {
+      "id": "a1.animals.word.cat",
+      "word": "cat",
+      "translation": "گربه",
+      "definition": "a small animal that says meow",
+      "pronunciation": "/kæt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The cat is on the chair.",
+          "fa": "گربه روی صندلی است."
+        },
+        {
+          "en": "My cat drinks milk.",
+          "fa": "گربهٔ من شیر می‌نوشد."
+        }
+      ],
+      "collocations": [
+        "a black cat",
+        "feed the cat"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "cat گربه است؛ kitten بچه‌گربه."
+    },
+    {
+      "id": "a1.animals.word.bird",
+      "word": "bird",
+      "translation": "پرنده",
+      "definition": "an animal with wings",
+      "pronunciation": "/bɜːrd/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "A bird can fly.",
+          "fa": "پرنده می‌تواند پرواز کند."
+        },
+        {
+          "en": "The bird is in the tree.",
+          "fa": "پرنده در درخت است."
+        }
+      ],
+      "collocations": [
+        "a small bird",
+        "birds sing"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "bird پرنده است؛ جمع آن birds."
+    },
+    {
+      "id": "a1.animals.word.horse",
+      "word": "horse",
+      "translation": "اسب",
+      "definition": "a big animal people ride",
+      "pronunciation": "/hɔːrs/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The horse runs very fast.",
+          "fa": "اسب خیلی تند می‌دود."
+        },
+        {
+          "en": "My uncle has a big horse.",
+          "fa": "عمویم یک اسب بزرگ دارد."
+        }
+      ],
+      "collocations": [
+        "ride a horse",
+        "a brown horse"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "horse اسب است؛ donkey خر."
+    },
+    {
+      "id": "a1.animals.word.cow",
+      "word": "cow",
+      "translation": "گاو",
+      "definition": "a big farm animal that gives milk",
+      "pronunciation": "/kaʊ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The cow gives us milk.",
+          "fa": "گاو به ما شیر می‌دهد."
+        },
+        {
+          "en": "There are ten cows on the farm.",
+          "fa": "ده گاو در مزرعه است."
+        }
+      ],
+      "collocations": [
+        "a big cow",
+        "milk a cow"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "cow گاو ماده است؛ bull گاو نر."
+    },
+    {
+      "id": "a1.animals.word.fish",
+      "word": "fish",
+      "translation": "ماهی",
+      "definition": "an animal that lives in water",
+      "pronunciation": "/fɪʃ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The fish is in the water.",
+          "fa": "ماهی در آب است."
+        },
+        {
+          "en": "We eat fish on Friday.",
+          "fa": "ما جمعه‌ها ماهی می‌خوریم."
+        }
+      ],
+      "collocations": [
+        "a small fish",
+        "fish and rice"
+      ],
+      "lessonId": "a1.animals.lesson-01",
+      "explanationFa": "جمع fish همان fish است؛ fishes برای گونه‌های مختلف."
+    },
+    {
+      "id": "a1.hobbies.word.hobby",
+      "word": "hobby",
+      "translation": "سرگرمی",
+      "definition": "something you do for fun in your free time",
+      "pronunciation": "/ˈhɒbi/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My hobby is reading.",
+          "fa": "سرگرمی من کتاب خواندن است."
+        },
+        {
+          "en": "What is your hobby?",
+          "fa": "سرگرمی تو چیست؟"
+        }
+      ],
+      "collocations": [
+        "my favourite hobby",
+        "a new hobby"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "hobby کاری است که در اوقات فراغت برای لذت انجام می‌دهیم."
+    },
+    {
+      "id": "a1.hobbies.word.music",
+      "word": "music",
+      "translation": "موسیقی",
+      "definition": "sounds made by instruments or voices",
+      "pronunciation": "/ˈmjuːzɪk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I listen to music every day.",
+          "fa": "من هر روز موسیقی گوش می‌دهم."
+        },
+        {
+          "en": "The music is very loud.",
+          "fa": "موسیقی خیلی بلند است."
+        }
+      ],
+      "collocations": [
+        "listen to music",
+        "live music"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "پیش از music حرف تعریف نمی‌آید: I like music."
+    },
+    {
+      "id": "a1.hobbies.word.sport",
+      "word": "sport",
+      "translation": "ورزش",
+      "definition": "a game with physical activity",
+      "pronunciation": "/spɔːrt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My favourite sport is football.",
+          "fa": "ورزش موردعلاقهٔ من فوتبال است."
+        },
+        {
+          "en": "He plays a sport every weekend.",
+          "fa": "او هر آخر هفته یک ورزش انجام می‌دهد."
+        }
+      ],
+      "collocations": [
+        "play a sport",
+        "a popular sport"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "sport در انگلیسی بریتانیایی هم مفرد هم جمع می‌آید."
+    },
+    {
+      "id": "a1.hobbies.word.film",
+      "word": "film",
+      "translation": "فیلم",
+      "definition": "a story you watch on a screen",
+      "pronunciation": "/fɪlm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We watch a film every Friday.",
+          "fa": "ما هر جمعه یک فیلم می‌بینیم."
+        },
+        {
+          "en": "This film is very funny.",
+          "fa": "این فیلم خیلی خنده‌دار است."
+        }
+      ],
+      "collocations": [
+        "watch a film",
+        "a good film"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "film در انگلیسی بریتانیایی و movie در آمریکایی رایج است."
+    },
+    {
+      "id": "a1.hobbies.word.book",
+      "word": "book",
+      "translation": "کتاب",
+      "definition": "pages with words you read",
+      "pronunciation": "/bʊk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I read a book before bed.",
+          "fa": "من پیش از خواب یک کتاب می‌خوانم."
+        },
+        {
+          "en": "This book is about animals.",
+          "fa": "این کتاب دربارهٔ حیوانات است."
+        }
+      ],
+      "collocations": [
+        "read a book",
+        "a good book"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "book هم اسم است هم فعل (رزرو کردن): book a table."
+    },
+    {
+      "id": "a1.hobbies.word.game",
+      "word": "game",
+      "translation": "بازی",
+      "definition": "something you play with rules",
+      "pronunciation": "/ɡeɪm/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We play a game after dinner.",
+          "fa": "ما بعد از شام یک بازی می‌کنیم."
+        },
+        {
+          "en": "My favourite game is chess.",
+          "fa": "بازی موردعلاقهٔ من شطرنج است."
+        }
+      ],
+      "collocations": [
+        "play a game",
+        "a computer game"
+      ],
+      "lessonId": "a1.hobbies.lesson-01",
+      "explanationFa": "game با g سخت خوانده می‌شود: /ɡeɪm/."
+    },
+    {
+      "id": "a1.places-town.word.shop",
+      "word": "shop",
+      "translation": "مغازه",
+      "definition": "a place where you buy things",
+      "pronunciation": "/ʃɒp/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The shop opens at nine.",
+          "fa": "مغازه ساعت نه باز می‌شود."
+        },
+        {
+          "en": "I buy bread at the shop.",
+          "fa": "نان را از مغازه می‌خرم."
+        }
+      ],
+      "collocations": [
+        "a small shop",
+        "go to the shop"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "shop در انگلیسی بریتانیایی مغازه است؛ در آمریکایی store."
+    },
+    {
+      "id": "a1.places-town.word.school",
+      "word": "school",
+      "translation": "مدرسه",
+      "definition": "a place where children learn",
+      "pronunciation": "/skuːl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My children go to school at eight.",
+          "fa": "بچه‌های من ساعت هشت به مدرسه می‌روند."
+        },
+        {
+          "en": "The school is near our house.",
+          "fa": "مدرسه نزدیک خانهٔ ما است."
+        }
+      ],
+      "collocations": [
+        "go to school",
+        "a big school"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "go to school یعنی رفتن برای درس خواندن."
+    },
+    {
+      "id": "a1.places-town.word.park",
+      "word": "park",
+      "translation": "پارک",
+      "definition": "a green place with trees for walking",
+      "pronunciation": "/pɑːrk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Children play in the park.",
+          "fa": "بچه‌ها در پارک بازی می‌کنند."
+        },
+        {
+          "en": "The park is next to the hospital.",
+          "fa": "پارک کنار بیمارستان است."
+        }
+      ],
+      "collocations": [
+        "in the park",
+        "a small park"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "park هم اسم است هم فعل (پارک کردن)."
+    },
+    {
+      "id": "a1.places-town.word.hospital",
+      "word": "hospital",
+      "translation": "بیمارستان",
+      "definition": "a place where doctors help sick people",
+      "pronunciation": "/ˈhɒspɪtl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The doctor works in a hospital.",
+          "fa": "پزشک در بیمارستان کار می‌کند."
+        },
+        {
+          "en": "The hospital is very big.",
+          "fa": "بیمارستان خیلی بزرگ است."
+        }
+      ],
+      "collocations": [
+        "in hospital",
+        "go to the hospital"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "in hospital یعنی بستری بودن؛ in the hospital یعنی داخل ساختمان."
+    },
+    {
+      "id": "a1.places-town.word.bank",
+      "word": "bank",
+      "translation": "بانک",
+      "definition": "a place that keeps your money",
+      "pronunciation": "/bæŋk/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The bank is next to the shop.",
+          "fa": "بانک کنار مغازه است."
+        },
+        {
+          "en": "I go to the bank on Monday.",
+          "fa": "دوشنبه‌ها به بانک می‌روم."
+        }
+      ],
+      "collocations": [
+        "go to the bank",
+        "a bank account"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "bank هم بانک است هم کنارهٔ رود."
+    },
+    {
+      "id": "a1.places-town.word.market",
+      "word": "market",
+      "translation": "بازار",
+      "definition": "a place with many small shops",
+      "pronunciation": "/ˈmɑːrkɪt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We buy fruit at the market.",
+          "fa": "میوه را از بازار می‌خریم."
+        },
+        {
+          "en": "The market is open on Friday.",
+          "fa": "بازار جمعه‌ها باز است."
+        }
+      ],
+      "collocations": [
+        "at the market",
+        "a busy market"
+      ],
+      "lessonId": "a1.places-town.lesson-01",
+      "explanationFa": "market بازار است؛ supermarket فروشگاه بزرگ."
+    },
+    {
+      "id": "a1.directions.word.left",
+      "word": "left",
+      "translation": "چپ",
+      "definition": "the side opposite right",
+      "pronunciation": "/left/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "Turn left at the corner.",
+          "fa": "سر چهارراه به چپ بپیچ."
+        },
+        {
+          "en": "The bank is on the left.",
+          "fa": "بانک در سمت چپ است."
+        }
+      ],
+      "collocations": [
+        "turn left",
+        "on the left"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "on the left یعنی در سمت چپ؛ turn left یعنی به چپ بپیچ."
+    },
+    {
+      "id": "a1.directions.word.right",
+      "word": "right",
+      "translation": "راست",
+      "definition": "the side opposite left",
+      "pronunciation": "/raɪt/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "Turn right after the school.",
+          "fa": "بعد از مدرسه به راست بپیچ."
+        },
+        {
+          "en": "The park is on the right.",
+          "fa": "پارک در سمت راست است."
+        }
+      ],
+      "collocations": [
+        "turn right",
+        "on the right"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "right هم «راست» است هم «درست»: the right answer."
+    },
+    {
+      "id": "a1.directions.word.straight",
+      "word": "straight",
+      "translation": "مستقیم",
+      "definition": "in a line, not turning",
+      "pronunciation": "/streɪt/",
+      "level": "A1",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "Go straight for two hundred metres.",
+          "fa": "دویست متر مستقیم برو."
+        },
+        {
+          "en": "The road is straight.",
+          "fa": "جاده مستقیم است."
+        }
+      ],
+      "collocations": [
+        "go straight",
+        "straight ahead"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "straight با /str/ شروع می‌شود و به معنای «مستقیم» است."
+    },
+    {
+      "id": "a1.directions.word.near",
+      "word": "near",
+      "translation": "نزدیک",
+      "definition": "not far",
+      "pronunciation": "/nɪr/",
+      "level": "A1",
+      "partOfSpeech": "preposition",
+      "examples": [
+        {
+          "en": "The shop is near here.",
+          "fa": "مغازه اینجا نزدیک است."
+        },
+        {
+          "en": "My house is near the park.",
+          "fa": "خانهٔ من نزدیک پارک است."
+        }
+      ],
+      "collocations": [
+        "near here",
+        "near the school"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "near بدون to می‌آید: near the bank."
+    },
+    {
+      "id": "a1.directions.word.far",
+      "word": "far",
+      "translation": "دور",
+      "definition": "a long way away",
+      "pronunciation": "/fɑːr/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The station is far from here.",
+          "fa": "ایستگاه از اینجا دور است."
+        },
+        {
+          "en": "Is it far?",
+          "fa": "دور است؟"
+        }
+      ],
+      "collocations": [
+        "far from",
+        "not far"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "far با from می‌آید: far from the city."
+    },
+    {
+      "id": "a1.directions.word.corner",
+      "word": "corner",
+      "translation": "گوشه و چهارراه",
+      "definition": "the place where two streets meet",
+      "pronunciation": "/ˈkɔːrnər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The shop is on the corner.",
+          "fa": "مغازه سر گوشه است."
+        },
+        {
+          "en": "Turn left at the corner.",
+          "fa": "سر چهارراه به چپ بپیچ."
+        }
+      ],
+      "collocations": [
+        "on the corner",
+        "around the corner"
+      ],
+      "lessonId": "a1.directions.lesson-01",
+      "explanationFa": "corner یعنی گوشهٔ خیابان یا چهارراه."
+    },
+    {
+      "id": "a1.transport.word.bus",
+      "word": "bus",
+      "translation": "اتوبوس",
+      "definition": "a big vehicle many people use",
+      "pronunciation": "/bʌs/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I take the bus to work.",
+          "fa": "من با اتوبوس به سر کار می‌روم."
+        },
+        {
+          "en": "The bus stops near my house.",
+          "fa": "اتوبوس نزدیک خانهٔ من می‌ایستد."
+        }
+      ],
+      "collocations": [
+        "take the bus",
+        "by bus"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "by bus بدون the می‌آید؛ take the bus با the."
+    },
+    {
+      "id": "a1.transport.word.train",
+      "word": "train",
+      "translation": "قطار",
+      "definition": "a long vehicle that runs on rails",
+      "pronunciation": "/treɪn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The train leaves at eight.",
+          "fa": "قطار ساعت هشت حرکت می‌کند."
+        },
+        {
+          "en": "We go to the city by train.",
+          "fa": "ما با قطار به شهر می‌رویم."
+        }
+      ],
+      "collocations": [
+        "by train",
+        "catch a train"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "train قطار است؛ metro مترو."
+    },
+    {
+      "id": "a1.transport.word.taxi",
+      "word": "taxi",
+      "translation": "تاکسی",
+      "definition": "a car you pay to travel in",
+      "pronunciation": "/ˈtæksi/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I take a taxi when I am late.",
+          "fa": "وقتی دیرم با تاکسی می‌روم."
+        },
+        {
+          "en": "The taxi is in front of the station.",
+          "fa": "تاکسی جلوی ایستگاه است."
+        }
+      ],
+      "collocations": [
+        "take a taxi",
+        "a taxi driver"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "taxi را در انگلیسی آمریکایی cab هم می‌گویند."
+    },
+    {
+      "id": "a1.transport.word.station",
+      "word": "station",
+      "translation": "ایستگاه قطار",
+      "definition": "the place where trains stop",
+      "pronunciation": "/ˈsteɪʃn/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The train station is very big.",
+          "fa": "ایستگاه قطار خیلی بزرگ است."
+        },
+        {
+          "en": "I wait for my friend at the station.",
+          "fa": "در ایستگاه منتظر دوستم می‌مانم."
+        }
+      ],
+      "collocations": [
+        "at the station",
+        "a train station"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "station ایستگاه قطار یا مترو است."
+    },
+    {
+      "id": "a1.transport.word.ticket",
+      "word": "ticket",
+      "translation": "بلیت",
+      "definition": "a paper that lets you travel",
+      "pronunciation": "/ˈtɪkɪt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I buy a ticket for the train.",
+          "fa": "برای قطار بلیت می‌خرم."
+        },
+        {
+          "en": "Where is my ticket?",
+          "fa": "بلیتم کجاست؟"
+        }
+      ],
+      "collocations": [
+        "buy a ticket",
+        "a bus ticket"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "ticket بلیت است؛ در انگلیسی آمریکایی جریمه هم معنی می‌دهد."
+    },
+    {
+      "id": "a1.transport.word.stop",
+      "word": "stop",
+      "translation": "ایستگاه اتوبوس",
+      "definition": "the place where a bus stops",
+      "pronunciation": "/stɒp/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The bus stop is next to the shop.",
+          "fa": "ایستگاه اتوبوس کنار مغازه است."
+        },
+        {
+          "en": "I get off at the next stop.",
+          "fa": "در ایستگاه بعدی پیاده می‌شوم."
+        }
+      ],
+      "collocations": [
+        "a bus stop",
+        "get off at the stop"
+      ],
+      "lessonId": "a1.transport.lesson-01",
+      "explanationFa": "stop ایستگاه اتوبوس است و station ایستگاه قطار."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.menu",
+      "word": "menu",
+      "translation": "منو",
+      "definition": "the list of food and drinks",
+      "pronunciation": "/ˈmenjuː/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can I see the menu, please?",
+          "fa": "می‌توانم منو را ببینم؟"
+        },
+        {
+          "en": "The menu is on the table.",
+          "fa": "منو روی میز است."
+        }
+      ],
+      "collocations": [
+        "see the menu",
+        "a lunch menu"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "menu صورت غذاست؛ در فارسی «منو» گفته می‌شود."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.waiter",
+      "word": "waiter",
+      "translation": "پیشخدمت",
+      "definition": "a person who brings your food",
+      "pronunciation": "/ˈweɪtər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The waiter brings our coffee.",
+          "fa": "پیشخدمت قهوهٔ ما را می‌آورد."
+        },
+        {
+          "en": "The waiter is very friendly.",
+          "fa": "پیشخدمت خیلی خوش‌برخورد است."
+        }
+      ],
+      "collocations": [
+        "ask the waiter",
+        "a friendly waiter"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "waiter برای مرد و waitress برای زن است؛ واژهٔ خنثی server هم هست."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.coffee",
+      "word": "coffee",
+      "translation": "قهوه",
+      "definition": "a hot drink made from beans",
+      "pronunciation": "/ˈkɒfi/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I drink coffee in the morning.",
+          "fa": "من صبح‌ها قهوه می‌نوشم."
+        },
+        {
+          "en": "Two coffees, please.",
+          "fa": "دو قهوه، لطفاً."
+        }
+      ],
+      "collocations": [
+        "a cup of coffee",
+        "black coffee"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "coffee غیرقابل‌شمارش است، ولی در کافه two coffees می‌گویند."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.sandwich",
+      "word": "sandwich",
+      "translation": "ساندویچ",
+      "definition": "two pieces of bread with food inside",
+      "pronunciation": "/ˈsænwɪtʃ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I would like a cheese sandwich.",
+          "fa": "یک ساندویچ پنیر می‌خواهم."
+        },
+        {
+          "en": "My sandwich is very big.",
+          "fa": "ساندویچ من خیلی بزرگ است."
+        }
+      ],
+      "collocations": [
+        "a cheese sandwich",
+        "a chicken sandwich"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "sandwich با /sæn/ شروع می‌شود."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.bill",
+      "word": "bill",
+      "translation": "صورت‌حساب",
+      "definition": "the paper that says what you must pay",
+      "pronunciation": "/bɪl/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can we have the bill, please?",
+          "fa": "می‌توانیم صورت‌حساب را بگیریم؟"
+        },
+        {
+          "en": "The bill is on the table.",
+          "fa": "صورت‌حساب روی میز است."
+        }
+      ],
+      "collocations": [
+        "pay the bill",
+        "the bill, please"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "bill در بریتانیا و check در آمریکا رایج است."
+    },
+    {
+      "id": "a1.cafe-restaurant.word.order",
+      "word": "order",
+      "translation": "سفارش",
+      "definition": "the food you ask for in a restaurant",
+      "pronunciation": "/ˈɔːrdər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can I take your order?",
+          "fa": "سفارش شما را بگیرم؟"
+        },
+        {
+          "en": "My order is a coffee and a sandwich.",
+          "fa": "سفارش من یک قهوه و یک ساندویچ است."
+        }
+      ],
+      "collocations": [
+        "take an order",
+        "place an order"
+      ],
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "explanationFa": "order هم اسم است هم فعل: order a coffee."
+    },
+    {
+      "id": "a1.describing-people.word.tall",
+      "word": "tall",
+      "translation": "قدبلند",
+      "definition": "having a long body",
+      "pronunciation": "/tɔːl/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My brother is very tall.",
+          "fa": "برادرم خیلی قدبلند است."
+        },
+        {
+          "en": "The tall man is my teacher.",
+          "fa": "مرد قدبلند معلم من است."
+        }
+      ],
+      "collocations": [
+        "very tall",
+        "a tall building"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "tall برای انسان و ساختمان است؛ high برای کوه و قیمت."
+    },
+    {
+      "id": "a1.describing-people.word.short",
+      "word": "short",
+      "translation": "کوتاه‌قد",
+      "definition": "not tall; not long",
+      "pronunciation": "/ʃɔːrt/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My sister is short.",
+          "fa": "خواهرم کوتاه‌قد است."
+        },
+        {
+          "en": "He has got short hair.",
+          "fa": "او موهای کوتاه دارد."
+        }
+      ],
+      "collocations": [
+        "short hair",
+        "a short walk"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "short هم «کوتاه» است هم «کوتاه‌قد»."
+    },
+    {
+      "id": "a1.describing-people.word.young",
+      "word": "young",
+      "translation": "جوان",
+      "definition": "not old",
+      "pronunciation": "/jʌŋ/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My brother is young.",
+          "fa": "برادرم جوان است."
+        },
+        {
+          "en": "The young man works in a shop.",
+          "fa": "مرد جوان در مغازه کار می‌کند."
+        }
+      ],
+      "collocations": [
+        "very young",
+        "a young man"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "young با /j/ شروع می‌شود، مثل «ی» فارسی."
+    },
+    {
+      "id": "a1.describing-people.word.old",
+      "word": "old",
+      "translation": "پیر",
+      "definition": "having lived a long time",
+      "pronunciation": "/oʊld/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My grandfather is old.",
+          "fa": "پدربزرگ من پیر است."
+        },
+        {
+          "en": "This is an old house.",
+          "fa": "این خانهٔ قدیمی است."
+        }
+      ],
+      "collocations": [
+        "an old man",
+        "old friends"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "old هم برای سن است هم برای قدمت چیزها."
+    },
+    {
+      "id": "a1.describing-people.word.friendly",
+      "word": "friendly",
+      "translation": "خوش‌برخورد",
+      "definition": "kind and easy to talk to",
+      "pronunciation": "/ˈfrendli/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Our neighbour is very friendly.",
+          "fa": "همسایهٔ ما خیلی خوش‌برخورد است."
+        },
+        {
+          "en": "She has a friendly smile.",
+          "fa": "او لبخندی مهربان دارد."
+        }
+      ],
+      "collocations": [
+        "a friendly person",
+        "very friendly"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "friendly صفت است: She is friendly، نه She is friendlyly."
+    },
+    {
+      "id": "a1.describing-people.word.kind",
+      "word": "kind",
+      "translation": "مهربان",
+      "definition": "caring about other people",
+      "pronunciation": "/kaɪnd/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My teacher is very kind.",
+          "fa": "معلم من خیلی مهربان است."
+        },
+        {
+          "en": "It is kind of you to help.",
+          "fa": "از کمکت ممنون، خیلی مهربانی."
+        }
+      ],
+      "collocations": [
+        "a kind person",
+        "be kind to"
+      ],
+      "lessonId": "a1.describing-people.lesson-01",
+      "explanationFa": "kind مهربان است؛ kind of یعنی «نوعی»."
+    },
+    {
+      "id": "a1.where-i-live.word.city",
+      "word": "city",
+      "translation": "شهر",
+      "definition": "a big town with many people",
+      "pronunciation": "/ˈsɪti/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I live in a big city.",
+          "fa": "من در شهر بزرگی زندگی می‌کنم."
+        },
+        {
+          "en": "The city is very busy at night.",
+          "fa": "شهر شب‌ها خیلی شلوغ است."
+        }
+      ],
+      "collocations": [
+        "a big city",
+        "city life"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "city شهری بزرگ است؛ town کوچک‌تر."
+    },
+    {
+      "id": "a1.where-i-live.word.village",
+      "word": "village",
+      "translation": "روستا",
+      "definition": "a very small town in the country",
+      "pronunciation": "/ˈvɪlɪdʒ/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My grandmother lives in a small village.",
+          "fa": "مادربزرگ من در روستای کوچکی زندگی می‌کند."
+        },
+        {
+          "en": "The village is near the river.",
+          "fa": "روستا نزدیک رودخانه است."
+        }
+      ],
+      "collocations": [
+        "a small village",
+        "village life"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "village از town کوچک‌تر است."
+    },
+    {
+      "id": "a1.where-i-live.word.street",
+      "word": "street",
+      "translation": "خیابان",
+      "definition": "a road with houses or shops",
+      "pronunciation": "/striːt/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We live on a quiet street.",
+          "fa": "ما در خیابانی ساکت زندگی می‌کنیم."
+        },
+        {
+          "en": "The street is full of shops.",
+          "fa": "خیابان پر از مغازه است."
+        }
+      ],
+      "collocations": [
+        "on a street",
+        "a quiet street"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "با street حرف اضافهٔ on می‌آید: on this street."
+    },
+    {
+      "id": "a1.where-i-live.word.neighbour",
+      "word": "neighbour",
+      "translation": "همسایه",
+      "definition": "a person who lives near you",
+      "pronunciation": "/ˈneɪbər/",
+      "level": "A1",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My neighbour is a teacher.",
+          "fa": "همسایهٔ من معلم است."
+        },
+        {
+          "en": "Our neighbours are very friendly.",
+          "fa": "همسایه‌های ما خیلی خوش‌برخورد هستند."
+        }
+      ],
+      "collocations": [
+        "my next-door neighbour",
+        "a good neighbour"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "در انگلیسی آمریکایی neighbor نوشته می‌شود."
+    },
+    {
+      "id": "a1.where-i-live.word.quiet",
+      "word": "quiet",
+      "translation": "ساکت",
+      "definition": "with little noise",
+      "pronunciation": "/ˈkwaɪət/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Our street is very quiet at night.",
+          "fa": "خیابان ما شب‌ها خیلی ساکت است."
+        },
+        {
+          "en": "Please be quiet.",
+          "fa": "لطفاً ساکت باش."
+        }
+      ],
+      "collocations": [
+        "very quiet",
+        "a quiet street"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "quiet را با quite اشتباه نگیرید؛ quite یعنی «کاملاً»."
+    },
+    {
+      "id": "a1.where-i-live.word.busy",
+      "word": "busy",
+      "translation": "شلوغ",
+      "definition": "full of people or work",
+      "pronunciation": "/ˈbɪzi/",
+      "level": "A1",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The city is busy in the morning.",
+          "fa": "شهر صبح‌ها شلوغ است."
+        },
+        {
+          "en": "I am very busy today.",
+          "fa": "من امروز خیلی سرم شلوغ است."
+        }
+      ],
+      "collocations": [
+        "a busy street",
+        "very busy"
+      ],
+      "lessonId": "a1.where-i-live.lesson-01",
+      "explanationFa": "busy هم برای مکان است هم برای شخص."
     }
   ]
 }

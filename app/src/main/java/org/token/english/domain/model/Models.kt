@@ -189,12 +189,26 @@ sealed interface Exercise {
         override val explanation: String? = null,
     ) : Exercise
 
-    /** Requires speech evaluation (on-device or cloud recognizer) — not implemented yet. */
+    /** Speaking practice, graded on-device by `ConversationScorer` (Vosk + the
+     *  offline model). */
     data class Speaking(
         override val id: String,
         override val lessonId: String,
         val prompt: String,
         val referenceAnswers: List<String>,
+        /**
+         * The partner's turn, in English: the question the device asks before the
+         * learner answers, spoken by TTS. Present on a dialogue item; absent on a
+         * plain "say this sentence back" item, where the reference answer is what
+         * the learner repeats.
+         *
+         * It lives in content, not in Kotlin, because what a conversation is about
+         * is a lesson decision: the exchange has to practise the lesson's own
+         * structure (book a table / ask directions / disagree politely).
+         */
+        val question: String? = null,
+        /** Persian gloss of [question] — the learner must understand what was asked. */
+        val questionFa: String? = null,
         override val skill: Skill? = null,
         override val explanation: String? = null,
     ) : Exercise

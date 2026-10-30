@@ -67,15 +67,23 @@ object ConversationScorer {
     }
 
     /**
-     * True when [keywords] appear in the take in the target's order, ignoring
-     * every other word. Hesitations ("um"), fillers ("okay") and dropped articles
-     * cannot move the needle; swapping two content words can.
+     * True when [keywords] can be found **in the target's order** inside the take,
+     * ignoring every other word. Hesitations ("um"), fillers ("okay") and dropped
+     * articles cannot move the needle; swapping two content words can.
+     *
+     * The test is subsequence, not equality: speech repeats itself — a false start
+     * ("go straight … go straight and turn left") or a recogniser re-emission puts
+     * a word in twice, and that learner is saying the target, not a different one.
+     * A reorder still fails, because the authored order cannot be found at all.
      */
     internal fun contentWordsInOrder(spoken: String, keywords: List<String>): Boolean {
         if (keywords.isEmpty()) return false
         val wanted = keywords.toSet()
-        val saidInOrder = spoken.split(' ').filter { it in wanted }
-        return saidInOrder == keywords
+        var next = 0
+        for (word in spoken.split(' ')) {
+            if (word in wanted && next < keywords.size && word == keywords[next]) next++
+        }
+        return next == keywords.size
     }
 
     /** 1.0 = identical, 0.0 = unrelated. Symmetric, so word order still matters. */
@@ -87,16 +95,44 @@ object ConversationScorer {
     }
 
     /**
-     * Lowercased, punctuation stripped, whitespace collapsed — so "Bank is on
-     * the left, next to the pharmacy." and "bank is on the left next to the
-     * pharmacy" compare as the same sentence. Latin only: the take is English and
-     * a Persian character slipping in should count as noise, not as content.
+     * Lowercased, contractions expanded, punctuation stripped, whitespace
+     * collapsed — so "I'm going to visit my family." and "i am going to visit my
+     * family" compare as the same sentence. Latin only: the take is English and a
+     * Persian character slipping in should count as noise, not as content.
+     *
+     * Contraction expansion is a fairness rule, not a nicety. A recogniser is free
+     * to return either form ("I'm" / "I am"), and a learner is *supposed* to speak
+     * the contracted one — comparing them literally docked a correct answer for
+     * writing style. Both sides go through this function, so the two forms meet in
+     * the middle. Curly apostrophes arrive from the speech model as often as the
+     * ASCII one, so they are unified first.
      */
     internal fun normalize(text: String): String =
         text.lowercase()
-            .replace(Regex("[^a-z0-9\\s]+"), " ")
-            .replace(Regex("\\s+"), " ")
-            .trim()
+            .replace(Regex("[\u2018\u2019`\u00b4]"), "'")
+            .split(Regex("\\s+"))
+            .map { word -> word.replace(Regex("[^a-z0-9']"), "") }
+            .filter { it.isNotEmpty() }
+            .flatMap { word -> CONTRACTIONS[word]?.split(' ') ?: listOf(word) }
+            .joinToString(" ")
+
+    /** Expanded forms, both sides of the comparison. */
+    private val CONTRACTIONS = mapOf(
+        "i'm" to "i am", "i've" to "i have", "i'll" to "i will", "i'd" to "i would",
+        "you're" to "you are", "you've" to "you have", "you'll" to "you will",
+        "you'd" to "you would", "he's" to "he is", "she's" to "she is",
+        "it's" to "it is", "we're" to "we are", "we've" to "we have",
+        "we'll" to "we will", "we'd" to "we would", "they're" to "they are",
+        "they've" to "they have", "they'll" to "they will", "they'd" to "they would",
+        "that's" to "that is", "there's" to "there is", "what's" to "what is",
+        "who's" to "who is", "let's" to "let us",
+        "don't" to "do not", "doesn't" to "does not", "didn't" to "did not",
+        "isn't" to "is not", "aren't" to "are not", "wasn't" to "was not",
+        "weren't" to "were not", "can't" to "cannot", "won't" to "will not",
+        "wouldn't" to "would not", "shouldn't" to "should not",
+        "couldn't" to "could not", "haven't" to "have not", "hasn't" to "has not",
+        "hadn't" to "had not",
+    )
 
     /**
      * Content words of the target — everything but a short stoplist — used for
