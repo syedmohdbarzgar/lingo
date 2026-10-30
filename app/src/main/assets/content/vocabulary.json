@@ -1,5 +1,5 @@
 {
-  "contentVersion": 28,
+  "contentVersion": 29,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -10525,6 +10525,906 @@
       ],
       "lessonId": "a1.where-i-live.lesson-01",
       "explanationFa": "busy هم برای مکان است هم برای شخص."
+    },
+    {
+      "id": "a2.hotel-booking.word.reservation",
+      "word": "reservation",
+      "translation": "رزرو",
+      "definition": "an arrangement to keep a room for you",
+      "pronunciation": "/ˌrezərˈveɪʃn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have a reservation for two nights.",
+          "fa": "برای دو شب رزرو دارم."
+        },
+        {
+          "en": "You can make a reservation online.",
+          "fa": "می‌توانید آنلاین رزرو کنید."
+        }
+      ],
+      "collocations": [
+        "make a reservation",
+        "a reservation for two nights"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "reservation از فعل reserve می‌آید؛ make a reservation یعنی رزرو کردن."
+    },
+    {
+      "id": "a2.hotel-booking.word.available",
+      "word": "available",
+      "translation": "موجود",
+      "definition": "free to be used or booked",
+      "pronunciation": "/əˈveɪləbl/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "A single room is available tonight.",
+          "fa": "امشب یک اتاق یک‌نفره موجود است."
+        },
+        {
+          "en": "No double rooms are available in July.",
+          "fa": "در ژوئیه هیچ اتاق دو تختهٔ موجودی نیست."
+        }
+      ],
+      "collocations": [
+        "rooms are available",
+        "available tonight"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "available صفت است و پیش از آن فعل be می‌آید: the room is available."
+    },
+    {
+      "id": "a2.hotel-booking.word.reserve",
+      "word": "reserve",
+      "translation": "رزرو کردن",
+      "definition": "to keep something for later use",
+      "pronunciation": "/rɪˈzɜːrv/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I would like to reserve a table for four.",
+          "fa": "می‌خواهم میزی برای چهار نفر رزرو کنم."
+        },
+        {
+          "en": "Please reserve the room until Monday.",
+          "fa": "لطفاً اتاق را تا دوشنبه رزرو کنید."
+        }
+      ],
+      "collocations": [
+        "reserve a room",
+        "reserve in advance"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "reserve کمی رسمی‌تر از book است؛ هر دو «رزرو کردن» هستند."
+    },
+    {
+      "id": "a2.hotel-booking.word.double-room",
+      "word": "double room",
+      "translation": "اتاق دو تخته",
+      "definition": "a room with a bed for two people",
+      "pronunciation": "/ˈdʌbl ruːm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We need a double room, not a single.",
+          "fa": "اتاق دو تخته لازم داریم، نه یک‌نفره."
+        },
+        {
+          "en": "The double room has a view of the sea.",
+          "fa": "اتاق دو تخته منظرهٔ دریا دارد."
+        }
+      ],
+      "collocations": [
+        "a double room for two nights",
+        "book a double room"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "double room اتاق دو تخته است؛ single room اتاق یک‌نفره."
+    },
+    {
+      "id": "a2.hotel-booking.word.per-night",
+      "word": "per night",
+      "translation": "به‌ازای هر شب",
+      "definition": "for each night of a stay",
+      "pronunciation": "/pər naɪt/",
+      "level": "A2",
+      "partOfSpeech": "phrase",
+      "examples": [
+        {
+          "en": "The room costs sixty euros per night.",
+          "fa": "اتاق شبی شصت یورو است."
+        },
+        {
+          "en": "Breakfast is included per night at this hotel.",
+          "fa": "صبحانه در این هتل برای هر شب شامل است."
+        }
+      ],
+      "collocations": [
+        "cost sixty euros per night",
+        "price per night"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "per یعنی «به‌ازای»؛ per night یعنی برای هر شب، در جمله پس از مبلغ می‌آید."
+    },
+    {
+      "id": "a2.hotel-booking.word.deposit",
+      "word": "deposit",
+      "translation": "ودیعه",
+      "definition": "money paid now as part of the whole price",
+      "pronunciation": "/dɪˈpɒzɪt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We ask for a small deposit by card.",
+          "fa": "ما ودیعهٔ کمی با کارت می‌خواهیم."
+        },
+        {
+          "en": "Your deposit is returned at the end of your stay.",
+          "fa": "ودیعهٔ شما در پایان اقامت برگردانده می‌شود."
+        }
+      ],
+      "collocations": [
+        "pay a deposit",
+        "a deposit of fifty dollars"
+      ],
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "explanationFa": "deposit پولی است که پیش می‌پردازید و در پایان اقامت برمی‌گردد."
+    },
+    {
+      "id": "a2.plane-ticket.word.flight",
+      "word": "flight",
+      "translation": "پرواز",
+      "definition": "a journey by plane",
+      "pronunciation": "/flaɪt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My flight leaves at seven in the morning.",
+          "fa": "پرواز من ساعت هفت صبح حرکت می‌کند."
+        },
+        {
+          "en": "The flight to Istanbul is full.",
+          "fa": "پرواز به استانبول پر است."
+        }
+      ],
+      "collocations": [
+        "catch a flight",
+        "a direct flight"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "flight خود سفر هوایی است؛ شمارهٔ آن هم با همان واژه می‌آید: flight 302."
+    },
+    {
+      "id": "a2.plane-ticket.word.airline",
+      "word": "airline",
+      "translation": "شرکت هواپیمایی",
+      "definition": "a company that flies planes",
+      "pronunciation": "/ˈeəlaɪn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Which airline are you flying with?",
+          "fa": "با کدام شرکت هواپیمایی پرواز می‌کنید؟"
+        },
+        {
+          "en": "The airline cancelled our flight.",
+          "fa": "شرکت هواپیمایی پرواز ما را لغو کرد."
+        }
+      ],
+      "collocations": [
+        "a cheap airline",
+        "fly with an airline"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "airline از air و line ساخته شده و نام شرکت‌های هوایی با همین واژه می‌آید."
+    },
+    {
+      "id": "a2.plane-ticket.word.one-way",
+      "word": "one-way",
+      "translation": "یک‌طرفه",
+      "definition": "a ticket for travel in one direction only",
+      "pronunciation": "/ˌwʌnˈweɪ/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "A one-way ticket to Rome, please.",
+          "fa": "یک بلیت یک‌طرفه به رم، لطفاً."
+        },
+        {
+          "en": "Is this ticket one-way or return?",
+          "fa": "این بلیت یک‌طرفه است یا رفت‌وبرگشت؟"
+        }
+      ],
+      "collocations": [
+        "a one-way ticket",
+        "one-way fare"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "one-way صفت است و پیش از ticket می‌آید؛ در آمریکا به‌جای آن single هم گفته می‌شود."
+    },
+    {
+      "id": "a2.plane-ticket.word.return",
+      "word": "return",
+      "translation": "رفت‌وبرگشت",
+      "definition": "a ticket for going and coming back",
+      "pronunciation": "/rɪˈtɜːrn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I need a return ticket to London.",
+          "fa": "من بلیت رفت‌وبرگشت به لندن لازم دارم."
+        },
+        {
+          "en": "The return is cheaper than two one-way tickets.",
+          "fa": "بلیت رفت‌وبرگشت از دو بلیت یک‌طرفه ارزان‌تر است."
+        }
+      ],
+      "collocations": [
+        "a return ticket",
+        "the return journey"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "return در بریتانیا بلیت رفت‌وبرگشت است؛ معادل آمریکایی آن round trip است."
+    },
+    {
+      "id": "a2.plane-ticket.word.luggage",
+      "word": "luggage",
+      "translation": "بار سفر",
+      "definition": "the bags you travel with",
+      "pronunciation": "/ˈlʌɡɪdʒ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "How much luggage can I take?",
+          "fa": "چقدر بار می‌توانم ببرم؟"
+        },
+        {
+          "en": "My luggage is too heavy for the cabin.",
+          "fa": "بار من برای کابین سنگین است."
+        }
+      ],
+      "collocations": [
+        "hand luggage",
+        "check in your luggage"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "luggage غیرقابل‌شمارش است؛ برای شمارش می‌گوییم two pieces of luggage."
+    },
+    {
+      "id": "a2.plane-ticket.word.fare",
+      "word": "fare",
+      "translation": "کرایه",
+      "definition": "the money you pay for a journey",
+      "pronunciation": "/feər/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The fare includes one suitcase.",
+          "fa": "کرایه شامل یک چمدان است."
+        },
+        {
+          "en": "Air fares go up in summer.",
+          "fa": "کرایهٔ پرواز در تابستان بالا می‌رود."
+        }
+      ],
+      "collocations": [
+        "a cheap fare",
+        "pay the fare"
+      ],
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "explanationFa": "fare هزینهٔ سفر است، نه خود بلیت؛ بلیت همان ticket است."
+    },
+    {
+      "id": "a2.hotel-checkin.word.check-in",
+      "word": "check-in",
+      "translation": "پذیرش",
+      "definition": "the desk where you register at a hotel",
+      "pronunciation": "/ˈtʃek ɪn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Check-in starts at two in the afternoon.",
+          "fa": "پذیرش از ساعت دو بعدازظهر شروع می‌شود."
+        },
+        {
+          "en": "Please go to check-in on the left.",
+          "fa": "لطفاً به پذیرش سمت چپ بروید."
+        }
+      ],
+      "collocations": [
+        "hotel check-in",
+        "at check-in"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "check-in اسم است؛ check in بدون خط تیره فعل است: we check in at two."
+    },
+    {
+      "id": "a2.hotel-checkin.word.reception",
+      "word": "reception",
+      "translation": "میز پذیرش",
+      "definition": "the front desk of a hotel",
+      "pronunciation": "/rɪˈsepʃn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The reception is open all night.",
+          "fa": "پذیرش تمام شب باز است."
+        },
+        {
+          "en": "Leave your key at reception.",
+          "fa": "کلید را در پذیرش بگذارید."
+        }
+      ],
+      "collocations": [
+        "the hotel reception",
+        "call reception"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "reception همان میز پذیرش است؛ check-in فرایند ثبت‌نام هنگام ورود."
+    },
+    {
+      "id": "a2.hotel-checkin.word.key-card",
+      "word": "key card",
+      "translation": "کارت کلید",
+      "definition": "a card that opens your room",
+      "pronunciation": "/ˈkiː kɑːrd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Here is your key card for room 402.",
+          "fa": "این کارت کلید اتاق ۴۰۲ شماست."
+        },
+        {
+          "en": "The key card stopped working this morning.",
+          "fa": "کارت کلید امروز صبح از کار افتاد."
+        }
+      ],
+      "collocations": [
+        "your key card",
+        "a key card for room 402"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "key card در بیشتر هتل‌ها جای کلید فلزی را گرفته است."
+    },
+    {
+      "id": "a2.hotel-checkin.word.lift",
+      "word": "lift",
+      "translation": "آسانسور",
+      "definition": "a machine that carries people between floors",
+      "pronunciation": "/lɪft/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The lift is next to reception.",
+          "fa": "آسانسور کنار پذیرش است."
+        },
+        {
+          "en": "Take the lift to the fifth floor.",
+          "fa": "با آسانسور به طبقهٔ پنجم بروید."
+        }
+      ],
+      "collocations": [
+        "take the lift",
+        "the lift is out of order"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "lift در بریتانیا و elevator در آمریکا؛ هر دو آسانسور هستند."
+    },
+    {
+      "id": "a2.hotel-checkin.word.breakfast",
+      "word": "breakfast",
+      "translation": "صبحانه",
+      "definition": "the first meal of the day",
+      "pronunciation": "/ˈbrekfəst/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Breakfast is served from seven to ten.",
+          "fa": "صبحانه از هفت تا ده سرو می‌شود."
+        },
+        {
+          "en": "Is breakfast included in the price?",
+          "fa": "صبحانه در قیمت هست؟"
+        }
+      ],
+      "collocations": [
+        "breakfast is included",
+        "have breakfast"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "breakfast با have می‌آید: have breakfast، نه take breakfast."
+    },
+    {
+      "id": "a2.hotel-checkin.word.checkout",
+      "word": "checkout",
+      "translation": "تخلیهٔ اتاق",
+      "definition": "the time you leave a hotel room",
+      "pronunciation": "/ˈtʃekaʊt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Checkout is at eleven in the morning.",
+          "fa": "تخلیهٔ اتاق ساعت یازده صبح است."
+        },
+        {
+          "en": "Can I have a late checkout?",
+          "fa": "می‌توانم تخلیهٔ دیرتر داشته باشم؟"
+        }
+      ],
+      "collocations": [
+        "late checkout",
+        "checkout time"
+      ],
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "explanationFa": "checkout پایان اقامت است؛ مقابل آن check-in زمان تحویل اتاق است."
+    },
+    {
+      "id": "a2.train-bus.word.platform",
+      "word": "platform",
+      "translation": "سکو",
+      "definition": "the place in a station where you get on a train",
+      "pronunciation": "/ˈplætfɔːrm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The train to Isfahan leaves from platform two.",
+          "fa": "قطار اصفهان از سکوی دو حرکت می‌کند."
+        },
+        {
+          "en": "Wait on the platform, not in the hall.",
+          "fa": "روی سکو منتظر بمان، نه در سالن."
+        }
+      ],
+      "collocations": [
+        "platform two",
+        "wait on the platform"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "platform شمارهٔ سکو را با عدد می‌گیرد و پیش از عدد می‌آید: platform 3."
+    },
+    {
+      "id": "a2.train-bus.word.timetable",
+      "word": "timetable",
+      "translation": "جدول زمانی",
+      "definition": "a list of the times when trains or buses leave",
+      "pronunciation": "/ˈtaɪmteɪbl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The timetable is on the wall.",
+          "fa": "جدول زمانی روی دیوار است."
+        },
+        {
+          "en": "According to the timetable, the bus leaves at six.",
+          "fa": "طبق جدول زمانی، اتوبوس ساعت شش حرکت می‌کند."
+        }
+      ],
+      "collocations": [
+        "check the timetable",
+        "the winter timetable"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "timetable در بریتانیا و schedule در آمریکا؛ هر دو برنامهٔ زمانی هستند."
+    },
+    {
+      "id": "a2.train-bus.word.delay",
+      "word": "delay",
+      "translation": "تأخیر",
+      "definition": "a time when something happens later than planned",
+      "pronunciation": "/dɪˈleɪ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There is a twenty-minute delay.",
+          "fa": "بیست دقیقه تأخیر وجود دارد."
+        },
+        {
+          "en": "The delay was because of the snow.",
+          "fa": "تأخیر به‌خاطر برف بود."
+        }
+      ],
+      "collocations": [
+        "a long delay",
+        "a delay of twenty minutes"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "delay هم اسم است هم فعل: the train was delayed by an hour."
+    },
+    {
+      "id": "a2.train-bus.word.direct",
+      "word": "direct",
+      "translation": "مستقیم",
+      "definition": "going somewhere without changing trains",
+      "pronunciation": "/dəˈrekt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "This bus is direct, so it does not stop in Qom.",
+          "fa": "این اتوبوس مستقیم است، پس در قم توقف نمی‌کند."
+        },
+        {
+          "en": "There is a direct train to Shiraz every morning.",
+          "fa": "هر صبح یک قطار مستقیم به شیراز هست."
+        }
+      ],
+      "collocations": [
+        "a direct train",
+        "go direct"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "direct یعنی بدون تغییر وسیله یا توقف؛ fast یعنی سریع."
+    },
+    {
+      "id": "a2.train-bus.word.passenger",
+      "word": "passenger",
+      "translation": "مسافر",
+      "definition": "a person travelling in a train or bus",
+      "pronunciation": "/ˈpæsɪndʒər/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Passengers must keep their tickets.",
+          "fa": "مسافران باید بلیت‌هایشان را نگه دارند."
+        },
+        {
+          "en": "The passenger asked the driver for the next stop.",
+          "fa": "مسافر از راننده ایستگاه بعدی را پرسید."
+        }
+      ],
+      "collocations": [
+        "a passenger train",
+        "the last passenger"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "passenger مسافر وسیلهٔ نقلیه است؛ traveller کسی است که سفر می‌کند."
+    },
+    {
+      "id": "a2.train-bus.word.coach",
+      "word": "coach",
+      "translation": "اتوبوس بین‌شهری",
+      "definition": "a comfortable bus for long journeys",
+      "pronunciation": "/koʊtʃ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The coach leaves every two hours.",
+          "fa": "این اتوبوس هر دو ساعت حرکت می‌کند."
+        },
+        {
+          "en": "We took a coach from Tehran to Rasht.",
+          "fa": "با اتوبوس بین‌شهری از تهران به رشت رفتیم."
+        }
+      ],
+      "collocations": [
+        "by coach",
+        "a coach trip"
+      ],
+      "lessonId": "a2.train-bus.lesson-01",
+      "explanationFa": "coach در بریتانیا اتوبوس بین‌شهری است؛ در آمریکا به آن bus می‌گویند."
+    },
+    {
+      "id": "a2.travel-info.word.information",
+      "word": "information",
+      "translation": "اطلاعات",
+      "definition": "facts about something",
+      "pronunciation": "/ˌɪnfərˈmeɪʃn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I need some information about the museum.",
+          "fa": "کمی اطلاعات دربارهٔ موزه لازم دارم."
+        },
+        {
+          "en": "The information desk is near the entrance.",
+          "fa": "میز اطلاعات نزدیک ورودی است."
+        }
+      ],
+      "collocations": [
+        "some information",
+        "the information desk"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "information غیرقابل‌شمارش است؛ با some یا the می‌آید و s جمع نمی‌گیرد."
+    },
+    {
+      "id": "a2.travel-info.word.journey",
+      "word": "journey",
+      "translation": "سفر",
+      "definition": "the act of travelling from one place to another",
+      "pronunciation": "/ˈdʒɜːrni/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The journey takes four hours by train.",
+          "fa": "این سفر با قطار چهار ساعت طول می‌کشد."
+        },
+        {
+          "en": "We had a long journey from Tabriz.",
+          "fa": "از تبریز سفر طولانی‌ای داشتیم."
+        }
+      ],
+      "collocations": [
+        "a long journey",
+        "the journey takes four hours"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "journey با فعل take می‌آید: the journey takes two hours."
+    },
+    {
+      "id": "a2.travel-info.word.route",
+      "word": "route",
+      "translation": "مسیر",
+      "definition": "the way from one place to another",
+      "pronunciation": "/ruːt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Which route is the fastest to the airport?",
+          "fa": "کدام مسیر به فرودگاه سریع‌ترین است؟"
+        },
+        {
+          "en": "This route goes along the river.",
+          "fa": "این مسیر در طول رودخانه می‌رود."
+        }
+      ],
+      "collocations": [
+        "the fastest route",
+        "take this route"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "route مسیر انتخاب‌شده است؛ road خود جاده است."
+    },
+    {
+      "id": "a2.travel-info.word.nearby",
+      "word": "nearby",
+      "translation": "نزدیک",
+      "definition": "not far from here",
+      "pronunciation": "/ˌnɪərˈbaɪ/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Is there a nearby pharmacy?",
+          "fa": "داروخانهٔ نزدیکی هست؟"
+        },
+        {
+          "en": "The nearby station is only ten minutes away.",
+          "fa": "ایستگاه نزدیک فقط ده دقیقه فاصله دارد."
+        }
+      ],
+      "collocations": [
+        "a nearby hotel",
+        "nearby shops"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "nearby صفت است و پیش از اسم می‌آید؛ near با to می‌آید: near to the hotel."
+    },
+    {
+      "id": "a2.travel-info.word.tourist",
+      "word": "tourist",
+      "translation": "گردشگر",
+      "definition": "a person who visits a place on holiday",
+      "pronunciation": "/ˈtʊərɪst/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Many tourists visit this palace in spring.",
+          "fa": "بسیاری از گردشگران در بهار به این کاخ می‌آیند."
+        },
+        {
+          "en": "The tourist asked how far the beach was.",
+          "fa": "گردشگر پرسید ساحل چقدر دور است."
+        }
+      ],
+      "collocations": [
+        "a tourist map",
+        "tourist season"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "tourist هم اسم است هم صفت: tourist office یعنی دفتر گردشگری."
+    },
+    {
+      "id": "a2.travel-info.word.map",
+      "word": "map",
+      "translation": "نقشه",
+      "definition": "a drawing of roads and places",
+      "pronunciation": "/mæp/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can you show me the station on the map?",
+          "fa": "می‌توانید ایستگاه را روی نقشه نشانم بدهید؟"
+        },
+        {
+          "en": "The map is free at the information desk.",
+          "fa": "نقشه در میز اطلاعات رایگان است."
+        }
+      ],
+      "collocations": [
+        "read the map",
+        "a city map"
+      ],
+      "lessonId": "a2.travel-info.lesson-01",
+      "explanationFa": "map با حرف اضافهٔ on می‌آید: on the map."
+    },
+    {
+      "id": "a2.holiday-plans.word.holiday",
+      "word": "holiday",
+      "translation": "تعطیلات",
+      "definition": "time when you do not work and travel",
+      "pronunciation": "/ˈhɒlədeɪ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Our holiday starts on the fifth of August.",
+          "fa": "تعطیلات ما پنجم اوت شروع می‌شود."
+        },
+        {
+          "en": "Where are you going for your holiday?",
+          "fa": "برای تعطیلات کجا می‌روید؟"
+        }
+      ],
+      "collocations": [
+        "a summer holiday",
+        "go on holiday"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "holiday در بریتانیا تعطیلات است؛ معادل آمریکایی آن vacation است."
+    },
+    {
+      "id": "a2.holiday-plans.word.trip",
+      "word": "trip",
+      "translation": "سفر",
+      "definition": "a short journey, often for pleasure",
+      "pronunciation": "/trɪp/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We are planning a trip to the north.",
+          "fa": "در حال برنامه‌ریزی سفر به شمال هستیم."
+        },
+        {
+          "en": "The trip to the island takes two hours.",
+          "fa": "سفر به جزیره دو ساعت طول می‌کشد."
+        }
+      ],
+      "collocations": [
+        "a day trip",
+        "plan a trip"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "trip سفر کوتاه است؛ journey می‌تواند بلند و طولانی باشد."
+    },
+    {
+      "id": "a2.holiday-plans.word.stay",
+      "word": "stay",
+      "translation": "ماندن",
+      "definition": "to live somewhere for a short time",
+      "pronunciation": "/steɪ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We will stay in a small hotel near the beach.",
+          "fa": "در هتل کوچکی نزدیک ساحل می‌مانیم."
+        },
+        {
+          "en": "How long will you stay in Shiraz?",
+          "fa": "چقدر در شیراز می‌مانید؟"
+        }
+      ],
+      "collocations": [
+        "stay for a week",
+        "stay at a hotel"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "stay با at برای هتل و با with برای میزبان می‌آید: stay at a hotel، stay with friends."
+    },
+    {
+      "id": "a2.holiday-plans.word.sightseeing",
+      "word": "sightseeing",
+      "translation": "گردش",
+      "definition": "visiting interesting places",
+      "pronunciation": "/ˈsaɪtsiːɪŋ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We will go sightseeing on the first day.",
+          "fa": "روز اول به گردش می‌رویم."
+        },
+        {
+          "en": "Sightseeing is cheaper on foot.",
+          "fa": "گردش پیاده ارزان‌تر است."
+        }
+      ],
+      "collocations": [
+        "go sightseeing",
+        "a sightseeing tour"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "sightseeing با فعل go می‌آید: go sightseeing، بدون to."
+    },
+    {
+      "id": "a2.holiday-plans.word.souvenir",
+      "word": "souvenir",
+      "translation": "سوغات",
+      "definition": "something you buy to remember a place",
+      "pronunciation": "/ˌsuːvəˈnɪər/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I bought a small souvenir for my sister.",
+          "fa": "برای خواهرم سوغات کوچکی خریدم."
+        },
+        {
+          "en": "Souvenir shops are near the old bridge.",
+          "fa": "فروشگاه‌های سوغات نزدیک پل قدیمی هستند."
+        }
+      ],
+      "collocations": [
+        "buy a souvenir",
+        "a souvenir shop"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "souvenir یادگاری سفر است؛ gift هدیهٔ معمولی است."
+    },
+    {
+      "id": "a2.holiday-plans.word.abroad",
+      "word": "abroad",
+      "translation": "خارج از کشور",
+      "definition": "in or to another country",
+      "pronunciation": "/əˈbrɔːd/",
+      "level": "A2",
+      "partOfSpeech": "adverb",
+      "examples": [
+        {
+          "en": "They will travel abroad next summer.",
+          "fa": "تابستان آینده به خارج از کشور سفر می‌کنند."
+        },
+        {
+          "en": "She has never been abroad.",
+          "fa": "او هرگز خارج از کشور نبوده."
+        }
+      ],
+      "collocations": [
+        "travel abroad",
+        "study abroad"
+      ],
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "explanationFa": "abroad قید است و حرف اضافه نمی‌گیرد: go abroad، نه go to abroad."
     }
   ]
 }

@@ -12,10 +12,11 @@
 
 **Status legend:** `✅ <lessonId>` ships today · `—` queued for a later batch.
 
-Current bundle: **70 lessons** (A1 = 37, A2 = 7, B1 = 6, B2 = 6, C1 = 7, C2 = 7). **A1 is complete**: all
+Current bundle: **76 lessons** (A1 = 37, A2 = 13, B1 = 6, B2 = 6, C1 = 7, C2 = 7). **A1 is complete**: all
 30 syllabus topics ship, plus the seven A1 grammar supplements (spelling, articles, plurals, pronouns,
 `can`, imperatives, question words). The six topics marked *new* shipped in v27; the sixteen marked
-*v28* completed the level.
+*v28* completed the level. A2 started in v29 with its first six syllabus topics (1 and 3–7), all
+travel and staying.
 
 ## 🟢 A1 — مبتدی (Beginner)
 
@@ -64,13 +65,13 @@ Goal: مدیریت موقعیت‌های متداول زندگی و مکالما
 
 | # | موضوع | Topic | Status |
 |---|-------|-------|--------|
-| 1 | رزرو هتل | Booking a Hotel | — |
+| 1 | رزرو هتل | Booking a Hotel | ✅ `a2.hotel-booking.lesson-01` *(v29)* |
 | 2 | در فرودگاه | At the Airport | ✅ `a2.airport.lesson-01` |
-| 3 | خرید بلیت هواپیما | Buying a Plane Ticket | — |
-| 4 | ورود به هتل و تحویل اتاق | Hotel Check-in | — |
-| 5 | سفر با قطار و اتوبوس | Traveling by Train and Bus | — |
-| 6 | پرسیدن اطلاعات سفر | Asking About Travel Information | — |
-| 7 | برنامه‌ریزی تعطیلات | Planning a Holiday | — |
+| 3 | خرید بلیت هواپیما | Buying a Plane Ticket | ✅ `a2.plane-ticket.lesson-01` *(v29)* |
+| 4 | ورود به هتل و تحویل اتاق | Hotel Check-in | ✅ `a2.hotel-checkin.lesson-01` *(v29)* |
+| 5 | سفر با قطار و اتوبوس | Traveling by Train and Bus | ✅ `a2.train-bus.lesson-01` *(v29)* |
+| 6 | پرسیدن اطلاعات سفر | Asking About Travel Information | ✅ `a2.travel-info.lesson-01` *(v29)* |
+| 7 | برنامه‌ریزی تعطیلات | Planning a Holiday | ✅ `a2.holiday-plans.lesson-01` *(v29)* |
 | 8 | خرید لباس و انتخاب اندازه | Buying Clothes | — |
 | 9 | مرجوع کردن کالا | Returning an Item | — |
 | 10 | پرداخت و روش‌های پرداخت | Payments and Payment Methods | — |
@@ -251,7 +252,8 @@ Goal: درک و تولید زبان بسیار دقیق، ظریف و متناس
 
 ## Authoring the next batch
 
-1. **Pick the next topics in order** (A1 is done; A2 is next: 1, 3–9, 10, 12–19, 21–27, 29, 30).
+1. **Pick the next topics in order** (A1 is done, and A2 has shipped 1–7 and 11/14/20/28; the next A2
+   topics are 8, 9, 10, 12, 13 and 15–19).
    A topic is a *lesson*, never a half-lesson.
 2. **Six words** per lesson, each with a Persian meaning, an English definition, IPA, a usage note
    (`explanationFa`), two collocations and **two bilingual examples** — and every example must

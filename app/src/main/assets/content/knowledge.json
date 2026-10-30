@@ -1,5 +1,5 @@
 {
-  "contentVersion": 28,
+  "contentVersion": 29,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -208,7 +208,8 @@
       ],
       "lessons": [
         "a2.airport.lesson-01",
-        "b1.plans.lesson-01"
+        "b1.plans.lesson-01",
+        "a2.holiday-plans.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -241,7 +242,10 @@
         "grammar.verb-be"
       ],
       "lessons": [
-        "a2.restaurant.lesson-01"
+        "a2.restaurant.lesson-01",
+        "a2.hotel-booking.lesson-01",
+        "a2.plane-ticket.lesson-01",
+        "a2.hotel-checkin.lesson-01"
       ],
       "skills": [
         "GRAMMAR",
@@ -1335,7 +1339,8 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "a1.question-words.lesson-01"
+        "a1.question-words.lesson-01",
+        "a2.travel-info.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -1833,6 +1838,108 @@
       ],
       "lessons": [
         "a1.where-i-live.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.hotel-booking",
+      "type": "VOCABULARY",
+      "title": "Booking a Hotel",
+      "titleFa": "رزرو هتل",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.places-town"
+      ],
+      "lessons": [
+        "a2.hotel-booking.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.plane-ticket",
+      "type": "VOCABULARY",
+      "title": "Buying a Plane Ticket",
+      "titleFa": "خرید بلیت هواپیما",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.transport"
+      ],
+      "lessons": [
+        "a2.plane-ticket.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.hotel-checkin",
+      "type": "VOCABULARY",
+      "title": "Hotel Check-in",
+      "titleFa": "ورود به هتل و تحویل اتاق",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.places-town"
+      ],
+      "lessons": [
+        "a2.hotel-checkin.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.train-bus",
+      "type": "VOCABULARY",
+      "title": "Traveling by Train and Bus",
+      "titleFa": "سفر با قطار و اتوبوس",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.transport"
+      ],
+      "lessons": [
+        "a2.train-bus.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.travel-info",
+      "type": "VOCABULARY",
+      "title": "Asking About Travel Information",
+      "titleFa": "پرسیدن اطلاعات سفر",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.transport"
+      ],
+      "lessons": [
+        "a2.travel-info.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.holiday-plans",
+      "type": "VOCABULARY",
+      "title": "Planning a Holiday",
+      "titleFa": "برنامه‌ریزی تعطیلات",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.places-town"
+      ],
+      "lessons": [
+        "a2.holiday-plans.lesson-01"
       ],
       "skills": [
         "VOCABULARY",

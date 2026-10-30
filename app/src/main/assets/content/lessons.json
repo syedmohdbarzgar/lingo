@@ -1,5 +1,5 @@
 {
-  "contentVersion": 28,
+  "contentVersion": 29,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -700,6 +700,66 @@
       "estimatedMinutes": 6,
       "order": 70,
       "grammarTipFa": "## قاعده\nبرای گفتن محل زندگی از I live in استفاده می‌کنیم: I live in a big city.\nبا خیابان in نمی‌آید؛ on می‌آید: I live on this street.\nبرای توصیف محل صفت پس از is می‌آید: Our street is quiet.\n## جدول\na city — شهر\na village — روستا\na street — خیابان\na neighbour — همسایه\nquiet — ساکت\nbusy — شلوغ\n## مثال‌ها\nI live in a small city. — من در شهر کوچکی زندگی می‌کنم.\nWe live on a quiet street. — ما در خیابانی ساکت زندگی می‌کنیم.\nMy neighbour is a teacher. — همسایهٔ من معلم است.\n## خطاهای رایج\n«I live in this street» با نشانی غلط است؛ I live on this street درست است.\ncity شهری بزرگ است و town شهر کوچک‌تر.\n## تلفظ\ncity با /s/ شروع می‌شود، نه /k/: /ˈsɪti/.\nvillage با /v/ و /ɪlɪdʒ/: /ˈvɪlɪdʒ/.\nquiet دو هجا دارد: /ˈkwaɪət/."
+    },
+    {
+      "id": "a2.hotel-booking.lesson-01",
+      "level": "A2",
+      "title": "Booking a Hotel",
+      "titleFa": "رزرو هتل",
+      "topic": "Travel",
+      "estimatedMinutes": 7,
+      "order": 71,
+      "grammarTipFa": "## قاعده\nبرای رزرو از I'd like to book… یا Could I book…? استفاده می‌کنیم؛ would like همیشه با to می‌آید.\nبرای پرسیدن موجود بودن اتاق: Is a double room available?\nبرای قیمت: How much is it per night? و برای تأیید نهایی will به کار می‌رود: I'll take it.\n## جدول\nI'd like to book a room. — می‌خواهم اتاق رزرو کنم.\nIs a double room available? — اتاق دو تخته موجود است؟\nHow much is it per night? — شبی چند است؟\nI'll take it. — همان را می‌گیرم.\n## مثال‌ها\nI would like to book a room for two nights. — می‌خواهم برای دو شب اتاق رزرو کنم.\nA double room is available from Friday. — اتاق دو تخته از جمعه موجود است.\nThe deposit is fifty dollars. — ودیعه پنجاه دلار است.\n## خطاهای رایج\nبعد از would like همیشه to می‌آید: «I'd like book» غلط است، «I'd like to book» درست.\nهزینهٔ هر شب با per night گفته می‌شود، نه با in night.\nبرای درخواست مؤدبانه فعل کمکی پیش از فاعل می‌آید: «Could I book…?» نه «I could book?»."
+    },
+    {
+      "id": "a2.plane-ticket.lesson-01",
+      "level": "A2",
+      "title": "Buying a Plane Ticket",
+      "titleFa": "خرید بلیت هواپیما",
+      "topic": "Travel",
+      "estimatedMinutes": 7,
+      "order": 72,
+      "grammarTipFa": "## قاعده\nبرای خرید بلیت می‌گوییم I'd like a ticket to … یا A ticket to Rome, please.\nنوع بلیت را with one-way (یک‌طرفه) و return (رفت‌وبرگشت) مشخص می‌کنیم.\nبرای برنامهٔ پرواز حال ساده به کار می‌رود: The flight leaves at nine.\n## جدول\na one-way ticket — بلیت یک‌طرفه\na return ticket — بلیت رفت‌وبرگشت\nI'd like a ticket to Rome. — یک بلیت به رم می‌خواهم.\nThe flight leaves at nine. — پرواز ساعت نه حرکت می‌کند.\n## مثال‌ها\nI would like a return ticket to London. — یک بلیت رفت‌وبرگشت به لندن می‌خواهم.\nWhich airline are you flying with? — با کدام شرکت هواپیمایی پرواز می‌کنید؟\nThe fare includes one suitcase. — کرایه شامل یک چمدان است.\n## خطاهای رایج\nluggage غیرقابل‌شمارش است: «luggages» غلط است، «a piece of luggage» درست.\nبرای هدف سفر حرف اضافهٔ to می‌آید: «a ticket to Rome»، نه «a ticket for Rome».\nreturn یک اسم است؛ برای خود عمل برگشتن فعل return به کار می‌رود: I return on Sunday."
+    },
+    {
+      "id": "a2.hotel-checkin.lesson-01",
+      "level": "A2",
+      "title": "Hotel Check-in",
+      "titleFa": "ورود به هتل و تحویل اتاق",
+      "topic": "Travel",
+      "estimatedMinutes": 6,
+      "order": 73,
+      "grammarTipFa": "## قاعده\nدر پذیرش با I have a reservation under the name … شروع می‌کنیم؛ under the name یعنی «به نام».\nدرخواست مؤدبانه با Could I have…? ساخته می‌شود: Could I have a room on a quiet floor?\nزمان تخلیه را با checkout is at … می‌گوییم.\n## جدول\nI have a reservation under the name Karimi. — به نام کریمی رزرو دارم.\nCould I have my key card? — می‌توانم کارت کلیدم را بگیرم؟\nWhere is the lift? — آسانسور کجاست؟\nCheckout is at eleven. — تخلیهٔ اتاق ساعت یازده است.\n## مثال‌ها\nI have a reservation under the name Ahmadi. — به نام احمدی رزرو دارم.\nCould I have a room on a quiet floor? — می‌توانم اتاقی در طبقهٔ آرام داشته باشم؟\nBreakfast is served from seven to ten. — صبحانه از هفت تا ده سرو می‌شود.\n## خطاهای رایج\nبرای نامی که رزرو به آن است under the name می‌گوییم، نه with the name.\ncould I…? درخواست است و could you…? خواهش؛ جای آن‌ها را عوض نکن.\ncheckout زمان تخلیه است و check-in زمان تحویل اتاق؛ این دو را با هم اشتباه نگیر."
+    },
+    {
+      "id": "a2.train-bus.lesson-01",
+      "level": "A2",
+      "title": "Traveling by Train and Bus",
+      "titleFa": "سفر با قطار و اتوبوس",
+      "topic": "Travel",
+      "estimatedMinutes": 7,
+      "order": 74,
+      "grammarTipFa": "## قاعده\nبرنامهٔ حرکت با حال ساده گفته می‌شود: The train leaves at 7:15 from platform 3.\nبرای مسیر بدون تغییر وسیله از direct استفاده می‌کنیم: a direct train to Shiraz.\nتأخیر با there is a delay یا the train is delayed بیان می‌شود.\n## جدول\nThe train leaves at 7:15. — قطار ساعت ۷:۱۵ حرکت می‌کند.\nIt leaves from platform 3. — از سکوی ۳ حرکت می‌کند.\nIs there a direct train? — قطار مستقیم هست؟\nThere is a twenty-minute delay. — بیست دقیقه تأخیر وجود دارد.\n## مثال‌ها\nThe train to Isfahan leaves from platform two. — قطار اصفهان از سکوی دو حرکت می‌کند.\nIs there a direct train to Shiraz? — قطار مستقیم به شیراز هست؟\nThe delay was because of the snow. — تأخیر به‌خاطر برف بود.\n## خطاهای رایج\nبرای حرکت از سکو حرف اضافهٔ from می‌آید: leaves from platform two.\nبرای تأخیر مدت‌دار از a delay of twenty minutes استفاده کن، نه a delay twenty minutes.\ndirect یعنی بدون تغییر وسیله؛ fast فقط یعنی سریع و ممکن است توقف داشته باشد."
+    },
+    {
+      "id": "a2.travel-info.lesson-01",
+      "level": "A2",
+      "title": "Asking About Travel Information",
+      "titleFa": "پرسیدن اطلاعات سفر",
+      "topic": "Travel",
+      "estimatedMinutes": 6,
+      "order": 75,
+      "grammarTipFa": "## قاعده\nبرای مدت از How long، برای فاصله از How far و برای انتخاب از Which استفاده می‌کنیم.\nترتیب پرسش: کلمهٔ پرسشی + فعل کمکی + فاعل + فعل اصلی: How long does the journey take?\nبرای وجود چیزی در نزدیکی: Is there a nearby hotel?\n## جدول\nHow long does the journey take? — سفر چقدر طول می‌کشد؟\nHow far is the station? — ایستگاه چقدر دور است؟\nWhich route is the fastest? — کدام مسیر سریع‌ترین است؟\nIs there a nearby pharmacy? — داروخانهٔ نزدیکی هست؟\n## مثال‌ها\nThe journey takes four hours by train. — این سفر با قطار چهار ساعت طول می‌کشد.\nWhich route is the fastest to the airport? — کدام مسیر به فرودگاه سریع‌ترین است؟\nThe map is free at the information desk. — نقشه در میز اطلاعات رایگان است.\n## خطاهای رایج\ninformation غیرقابل‌شمارش است: «informations» و «an information» غلط‌اند.\nبرای مدت از How long استفاده کن، نه How much time در هر جمله‌ای؛ How long طبیعی‌تر است.\nnearby پیش از اسم می‌آید: a nearby station، نه a station nearby در همهٔ جمله‌ها."
+    },
+    {
+      "id": "a2.holiday-plans.lesson-01",
+      "level": "A2",
+      "title": "Planning a Holiday",
+      "titleFa": "برنامه‌ریزی تعطیلات",
+      "topic": "Holidays",
+      "estimatedMinutes": 6,
+      "order": 76,
+      "grammarTipFa": "## قاعده\nبرای برنامهٔ آینده از will استفاده می‌کنیم: We will stay for a week.\nزمان آینده با next week، next summer و on the fifth of August می‌آید.\nبرای هدف سفر، go + ing به کار می‌رود: go sightseeing، go swimming.\n## جدول\nWe will stay for a week. — یک هفته می‌مانیم.\nThey will travel abroad next summer. — تابستان آینده به خارج از کشور سفر می‌کنند.\nWe will go sightseeing on the first day. — روز اول به گردش می‌رویم.\nI will buy a souvenir for my sister. — برای خواهرم سوغات می‌خرم.\n## مثال‌ها\nOur holiday starts on the fifth of August. — تعطیلات ما پنجم اوت شروع می‌شود.\nWe are planning a trip to the north. — در حال برنامه‌ریزی سفر به شمال هستیم.\nSightseeing is cheaper on foot. — گردش پیاده ارزان‌تر است.\n## خطاهای رایج\nبعد از will فعل ساده می‌آید: «will stays» غلط است، «will stay» درست.\nabroad قید است و to نمی‌گیرد: «go abroad»، نه «go to abroad».\nبرای گردش go sightseeing می‌گوییم، نه «go to sightseeing»."
     }
   ]
 }

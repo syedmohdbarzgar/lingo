@@ -1,5 +1,5 @@
 {
-  "contentVersion": 28,
+  "contentVersion": 29,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -10670,6 +10670,802 @@
       "hintFa": "برای سوم‌شخص مفرد به فعل s اضافه کنید: lives.",
       "skill": "VOCABULARY",
       "explanationFa": "الگوی جمله: My grandmother lives in a small village. — village life و village را با هم در یک جمله بیاورید."
+    },
+    {
+      "id": "a2.hotel-booking.ex.01",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"reservation\" mean?",
+      "questionFa": "معنی «reservation» چیست؟",
+      "options": [
+        "رزرو",
+        "موجود",
+        "رزرو کردن",
+        "اتاق دو تخته"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "reservation یعنی «رزرو». گزینه‌های دیگر معنی available، reserve، double room هستند."
+    },
+    {
+      "id": "a2.hotel-booking.ex.02",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"reserve\" mean?",
+      "questionFa": "معنی «reserve» چیست؟",
+      "options": [
+        "اتاق دو تخته",
+        "رزرو کردن",
+        "به‌ازای هر شب",
+        "ودیعه"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "reserve یعنی «رزرو کردن». گزینه‌های دیگر معنی double room، per night، deposit هستند."
+    },
+    {
+      "id": "a2.hotel-booking.ex.03",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"deposit\" mean?",
+      "questionFa": "معنی «deposit» چیست؟",
+      "options": [
+        "موجود",
+        "رزرو",
+        "ودیعه",
+        "رزرو کردن"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "deposit یعنی «ودیعه». گزینه‌های دیگر معنی reservation، available، reserve هستند."
+    },
+    {
+      "id": "a2.hotel-booking.ex.04",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "___ I book a room for tonight, please?",
+      "accepted": [
+        "Could",
+        "May"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "درخواست مؤدبانه با Could I…? یا May I…? و فعل ساده ساخته می‌شود، نه با can you to."
+    },
+    {
+      "id": "a2.hotel-booking.ex.05",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "The room costs eighty dollars ___ night.",
+      "accepted": [
+        "per",
+        "a"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "per night و a night هر دو یعنی «شبی»؛ a در این ساختار یعنی per."
+    },
+    {
+      "id": "a2.hotel-booking.ex.06",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "رزرو",
+      "accepted": [
+        "reservation"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "reservation یعنی «رزرو»؛ reservation از فعل reserve می‌آید؛ make a reservation یعنی رزرو کردن."
+    },
+    {
+      "id": "a2.hotel-booking.ex.07",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "می‌خواهم برای دو شب یک اتاق دو تخته رزرو کنم.",
+      "accepted": [
+        "i would like to book a double room for two nights",
+        "i'd like to book a double room for two nights",
+        "i want to book a double room for two nights"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "would like + to + فعل ساده؛ مدت اقامت با for two nights می‌آید."
+    },
+    {
+      "id": "a2.hotel-booking.ex.08",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The room costs sixty euros per night.",
+      "accepted": [
+        "the room costs sixty euros per night"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The room costs sixty euros per night. — per /pər/ در per night کوتاه و بی‌تکیه است و sixty /ˈsɪksti/ تکیه روی هجای اول دارد"
+    },
+    {
+      "id": "a2.hotel-booking.ex.09",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "ما به یک اتاق دو تخته نیاز داریم، نه یک‌نفره.",
+      "mustUse": [
+        "need",
+        "double"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "we need a double room, not a single"
+      ],
+      "hintFa": "از need a … not a … استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: We need a double room, not a single. — book a double room را به کار ببر و need و double را در جمله بیاور."
+    },
+    {
+      "id": "a2.plane-ticket.ex.01",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"flight\" mean?",
+      "questionFa": "معنی «flight» چیست؟",
+      "options": [
+        "رفت‌وبرگشت",
+        "شرکت هواپیمایی",
+        "یک‌طرفه",
+        "پرواز"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "flight یعنی «پرواز». گزینه‌های دیگر معنی airline، one-way، return هستند."
+    },
+    {
+      "id": "a2.plane-ticket.ex.02",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"one-way\" mean?",
+      "questionFa": "معنی «one-way» چیست؟",
+      "options": [
+        "یک‌طرفه",
+        "رفت‌وبرگشت",
+        "بار سفر",
+        "کرایه"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "one-way یعنی «یک‌طرفه». گزینه‌های دیگر معنی return، luggage، fare هستند."
+    },
+    {
+      "id": "a2.plane-ticket.ex.03",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"fare\" mean?",
+      "questionFa": "معنی «fare» چیست؟",
+      "options": [
+        "پرواز",
+        "کرایه",
+        "شرکت هواپیمایی",
+        "یک‌طرفه"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "fare یعنی «کرایه». گزینه‌های دیگر معنی flight، airline، one-way هستند."
+    },
+    {
+      "id": "a2.plane-ticket.ex.04",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "___ I have a window seat, please?",
+      "accepted": [
+        "Could",
+        "Can"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "درخواست مؤدبانه با Could I…? یا Can I…? و فعل ساده می‌آید: Could I have…?"
+    },
+    {
+      "id": "a2.plane-ticket.ex.05",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "Air ___ rise in the summer holidays.",
+      "accepted": [
+        "fares",
+        "prices"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "fare کرایهٔ سفر است و price قیمت کلی؛ هر دو در این جمله درست‌اند."
+    },
+    {
+      "id": "a2.plane-ticket.ex.06",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "بار سفر",
+      "accepted": [
+        "luggage"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "luggage یعنی «بار سفر»؛ luggage غیرقابل‌شمارش است؛ برای شمارش می‌گوییم two pieces of luggage."
+    },
+    {
+      "id": "a2.plane-ticket.ex.07",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "یک بلیت رفت‌وبرگشت به لندن می‌خواهم.",
+      "accepted": [
+        "i would like a return ticket to london",
+        "i'd like a return ticket to london",
+        "i want a return ticket to london"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "would like بدون to پیش از اسم می‌آید: would like a ticket؛ مقصد با to می‌آید."
+    },
+    {
+      "id": "a2.plane-ticket.ex.08",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "A one-way ticket to Rome, please.",
+      "accepted": [
+        "a one-way ticket to rome, please"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: A one-way ticket to Rome, please. — one-way /ˌwʌnˈweɪ/ تکیه‌اش روی way است و ticket /ˈtɪkɪt/ تکیه روی هجای اول"
+    },
+    {
+      "id": "a2.plane-ticket.ex.09",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "چقدر بار می‌توانم ببرم؟",
+      "mustUse": [
+        "flight",
+        "leaves"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "my flight leaves at seven in the morning"
+      ],
+      "hintFa": "پرسش مقدار با How much و اسم غیرقابل‌شمارش.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: My flight leaves at seven in the morning. — a direct flight را به کار ببر و flight و leaves را در جمله بیاور."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.01",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"reception\" mean?",
+      "questionFa": "معنی «reception» چیست؟",
+      "options": [
+        "آسانسور",
+        "کارت کلید",
+        "میز پذیرش",
+        "صبحانه"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "reception یعنی «میز پذیرش». گزینه‌های دیگر معنی key card، lift، breakfast هستند."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.02",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"key card\" mean?",
+      "questionFa": "معنی «key card» چیست؟",
+      "options": [
+        "تخلیهٔ اتاق",
+        "آسانسور",
+        "صبحانه",
+        "کارت کلید"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "key card یعنی «کارت کلید». گزینه‌های دیگر معنی lift، breakfast، checkout هستند."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.03",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"checkout\" mean?",
+      "questionFa": "معنی «checkout» چیست؟",
+      "options": [
+        "تخلیهٔ اتاق",
+        "پذیرش",
+        "میز پذیرش",
+        "کارت کلید"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "checkout یعنی «تخلیهٔ اتاق». گزینه‌های دیگر معنی check-in، reception، key card هستند."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.04",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "I have a ___ under the name Karimi.",
+      "accepted": [
+        "reservation",
+        "booking"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "reservation و booking هر دو یعنی رزرو؛ under the name یعنی به نام."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.05",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "___ I have a room on a quiet floor, please?",
+      "accepted": [
+        "Could",
+        "Can"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "درخواست مؤدبانه با Could I…? یا Can I…? و فعل ساده ساخته می‌شود."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.06",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "آسانسور",
+      "accepted": [
+        "lift"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "lift یعنی «آسانسور»؛ lift در بریتانیا و elevator در آمریکا؛ هر دو آسانسور هستند."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.07",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "صبحانه در قیمت اتاق هست؟",
+      "accepted": [
+        "is breakfast included in the price",
+        "does the price include breakfast",
+        "is breakfast included in the room price"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برای پرسش از شامل بودن چیزی در قیمت از is … included in the price استفاده می‌کنیم."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.08",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "Checkout is at eleven in the morning.",
+      "accepted": [
+        "checkout is at eleven in the morning"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: Checkout is at eleven in the morning. — checkout /ˈtʃekaʊt/ تکیه روی هجای اول است و eleven /ɪˈlevn/ با /ɪ/ کوتاه شروع می‌شود"
+    },
+    {
+      "id": "a2.hotel-checkin.ex.09",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "تخلیهٔ اتاق ساعت یازده صبح است.",
+      "mustUse": [
+        "checkout",
+        "eleven"
+      ],
+      "minWords": 7,
+      "accepted": [
+        "checkout is at eleven in the morning"
+      ],
+      "hintFa": "از Checkout is at + ساعت استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Checkout is at eleven in the morning. — checkout time را به کار ببر و checkout و eleven را در جمله بیاور."
+    },
+    {
+      "id": "a2.train-bus.ex.01",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"platform\" mean?",
+      "questionFa": "معنی «platform» چیست؟",
+      "options": [
+        "جدول زمانی",
+        "سکو",
+        "تأخیر",
+        "مستقیم"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "platform یعنی «سکو». گزینه‌های دیگر معنی timetable، delay، direct هستند."
+    },
+    {
+      "id": "a2.train-bus.ex.02",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"direct\" mean?",
+      "questionFa": "معنی «direct» چیست؟",
+      "options": [
+        "اتوبوس بین‌شهری",
+        "مسافر",
+        "مستقیم",
+        "سکو"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "direct یعنی «مستقیم». گزینه‌های دیگر معنی passenger، coach، platform هستند."
+    },
+    {
+      "id": "a2.train-bus.ex.03",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"passenger\" mean?",
+      "questionFa": "معنی «passenger» چیست؟",
+      "options": [
+        "جدول زمانی",
+        "اتوبوس بین‌شهری",
+        "سکو",
+        "مسافر"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "passenger یعنی «مسافر». گزینه‌های دیگر معنی coach، platform، timetable هستند."
+    },
+    {
+      "id": "a2.train-bus.ex.04",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The train ___ at 7:15 from platform three.",
+      "accepted": [
+        "leaves",
+        "departs"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "leaves و departs هر دو برای برنامهٔ حرکت به کار می‌روند و فعل سوم‌شخص مفرد s می‌گیرد."
+    },
+    {
+      "id": "a2.train-bus.ex.05",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "There is a ten-minute ___ because of the snow.",
+      "accepted": [
+        "delay",
+        "wait"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "delay تأخیر رسمی برنامه است و wait انتظار؛ هر دو در این جمله معنا می‌دهند."
+    },
+    {
+      "id": "a2.train-bus.ex.06",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "مسافر",
+      "accepted": [
+        "passenger"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "passenger یعنی «مسافر»؛ passenger مسافر وسیلهٔ نقلیه است؛ traveller کسی است که سفر می‌کند."
+    },
+    {
+      "id": "a2.train-bus.ex.07",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "قطار مستقیم به شیراز هست؟",
+      "accepted": [
+        "is there a direct train to shiraz",
+        "is there a direct train for shiraz"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پرسش وجود با Is there + a direct train + to + مقصد ساخته می‌شود."
+    },
+    {
+      "id": "a2.train-bus.ex.08",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "The coach leaves every two hours.",
+      "accepted": [
+        "the coach leaves every two hours"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: The coach leaves every two hours. — coach با /oʊ/ کشیده و every /ˈevri/ با تکیه روی هجای اول تلفظ می‌شود"
+    },
+    {
+      "id": "a2.train-bus.ex.09",
+      "lessonId": "a2.train-bus.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "قطار اصفهان از سکوی دو حرکت می‌کند.",
+      "mustUse": [
+        "train",
+        "isfahan"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "the train to isfahan leaves from platform two"
+      ],
+      "hintFa": "از The train to … leaves from platform … استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: The train to Isfahan leaves from platform two. — wait on the platform را به کار ببر و train و isfahan را در جمله بیاور."
+    },
+    {
+      "id": "a2.travel-info.ex.01",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"journey\" mean?",
+      "questionFa": "معنی «journey» چیست؟",
+      "options": [
+        "سفر",
+        "مسیر",
+        "نزدیک",
+        "گردشگر"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "journey یعنی «سفر». گزینه‌های دیگر معنی route، nearby، tourist هستند."
+    },
+    {
+      "id": "a2.travel-info.ex.02",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"nearby\" mean?",
+      "questionFa": "معنی «nearby» چیست؟",
+      "options": [
+        "گردشگر",
+        "نزدیک",
+        "نقشه",
+        "اطلاعات"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "nearby یعنی «نزدیک». گزینه‌های دیگر معنی tourist، map، information هستند."
+    },
+    {
+      "id": "a2.travel-info.ex.03",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"tourist\" mean?",
+      "questionFa": "معنی «tourist» چیست؟",
+      "options": [
+        "اطلاعات",
+        "نقشه",
+        "گردشگر",
+        "سفر"
+      ],
+      "correctIndex": 2,
+      "skill": "VOCABULARY",
+      "explanationFa": "tourist یعنی «گردشگر». گزینه‌های دیگر معنی map، information، journey هستند."
+    },
+    {
+      "id": "a2.travel-info.ex.04",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "The journey ___ about four hours.",
+      "accepted": [
+        "takes",
+        "lasts"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "takes و lasts هر دو برای مدت سفر درست‌اند و با سوم‌شخص مفرد s می‌آیند."
+    },
+    {
+      "id": "a2.travel-info.ex.05",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "___ route goes to the airport?",
+      "accepted": [
+        "Which",
+        "What"
+      ],
+      "skill": "GRAMMAR",
+      "explanationFa": "Which برای انتخاب میان چند گزینه و What برای پرسش عمومی‌تر است؛ هر دو درست‌اند."
+    },
+    {
+      "id": "a2.travel-info.ex.06",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "مسیر",
+      "accepted": [
+        "route"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "route یعنی «مسیر»؛ route مسیر انتخاب‌شده است؛ road خود جاده است."
+    },
+    {
+      "id": "a2.travel-info.ex.07",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "این سفر با قطار چهار ساعت طول می‌کشد.",
+      "accepted": [
+        "the journey takes four hours by train",
+        "the journey by train takes four hours"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "مدت سفر با the journey takes + مدت و وسیله با by train گفته می‌شود."
+    },
+    {
+      "id": "a2.travel-info.ex.08",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "I need some information about the museum.",
+      "accepted": [
+        "i need some information about the museum"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: I need some information about the museum. — information /ˌɪnfərˈmeɪʃn/ تکیه‌اش روی meɪ است و museum /mjuˈziːəm/ با /mju/ شروع می‌شود"
+    },
+    {
+      "id": "a2.travel-info.ex.09",
+      "lessonId": "a2.travel-info.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "می‌توانید ایستگاه را روی نقشه نشانم بدهید؟",
+      "mustUse": [
+        "show",
+        "station"
+      ],
+      "minWords": 9,
+      "accepted": [
+        "can you show me the station on the map"
+      ],
+      "hintFa": "درخواست با Can you show me … on the map?",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Can you show me the station on the map? — a city map را به کار ببر و show و station را در جمله بیاور."
+    },
+    {
+      "id": "a2.holiday-plans.ex.01",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 1,
+      "question": "What does \"trip\" mean?",
+      "questionFa": "معنی «trip» چیست؟",
+      "options": [
+        "سوغات",
+        "ماندن",
+        "گردش",
+        "سفر"
+      ],
+      "correctIndex": 3,
+      "skill": "VOCABULARY",
+      "explanationFa": "trip یعنی «سفر». گزینه‌های دیگر معنی stay، sightseeing، souvenir هستند."
+    },
+    {
+      "id": "a2.holiday-plans.ex.02",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 2,
+      "question": "What does \"sightseeing\" mean?",
+      "questionFa": "معنی «sightseeing» چیست؟",
+      "options": [
+        "گردش",
+        "سوغات",
+        "خارج از کشور",
+        "تعطیلات"
+      ],
+      "correctIndex": 0,
+      "skill": "VOCABULARY",
+      "explanationFa": "sightseeing یعنی «گردش». گزینه‌های دیگر معنی souvenir، abroad، holiday هستند."
+    },
+    {
+      "id": "a2.holiday-plans.ex.03",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "multiple_choice",
+      "order": 3,
+      "question": "What does \"abroad\" mean?",
+      "questionFa": "معنی «abroad» چیست؟",
+      "options": [
+        "تعطیلات",
+        "خارج از کشور",
+        "سفر",
+        "ماندن"
+      ],
+      "correctIndex": 1,
+      "skill": "VOCABULARY",
+      "explanationFa": "abroad یعنی «خارج از کشور». گزینه‌های دیگر معنی holiday، trip، stay هستند."
+    },
+    {
+      "id": "a2.holiday-plans.ex.04",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "fill_blank",
+      "order": 4,
+      "sentence": "They will travel ___ next summer.",
+      "accepted": [
+        "abroad",
+        "overseas"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "abroad و overseas هر دو «خارج از کشور» هستند و قید مکان‌اند، بدون to."
+    },
+    {
+      "id": "a2.holiday-plans.ex.05",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "fill_blank",
+      "order": 5,
+      "sentence": "I will ___ a souvenir for my sister.",
+      "accepted": [
+        "buy",
+        "get"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "buy و get هر دو با will و پیش از a souvenir می‌آیند."
+    },
+    {
+      "id": "a2.holiday-plans.ex.06",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "word_recall",
+      "order": 6,
+      "prompt": "تعطیلات",
+      "accepted": [
+        "holiday"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "holiday یعنی «تعطیلات»؛ holiday در بریتانیا تعطیلات است؛ معادل آمریکایی آن vacation است."
+    },
+    {
+      "id": "a2.holiday-plans.ex.07",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "translation",
+      "order": 7,
+      "prompt": "تابستان آینده به خارج از کشور سفر می‌کنیم.",
+      "accepted": [
+        "we will travel abroad next summer",
+        "we'll travel abroad next summer",
+        "next summer we will travel abroad"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "will + فعل ساده برای برنامهٔ آینده؛ abroad بدون to می‌آید."
+    },
+    {
+      "id": "a2.holiday-plans.ex.08",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "listening",
+      "order": 8,
+      "text": "We will stay in a small hotel near the beach.",
+      "accepted": [
+        "we will stay in a small hotel near the beach"
+      ],
+      "skill": "LISTENING",
+      "explanationFa": "جمله را بشنوید و همان را بنویسید: We will stay in a small hotel near the beach. — will /wɪl/ در گفتار سریع کوتاه می‌شود و hotel /həʊˈtel/ تکیه‌اش روی tel است"
+    },
+    {
+      "id": "a2.holiday-plans.ex.09",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "type": "sentence_production",
+      "order": 9,
+      "prompt": "تعطیلات ما پنجم اوت شروع می‌شود.",
+      "mustUse": [
+        "holiday",
+        "starts"
+      ],
+      "minWords": 8,
+      "accepted": [
+        "our holiday starts on the fifth of august"
+      ],
+      "hintFa": "از Our holiday starts on + تاریخ استفاده کن.",
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوی جمله: Our holiday starts on the fifth of August. — go on holiday را به کار ببر و holiday و starts را در جمله بیاور."
     }
   ]
 }
