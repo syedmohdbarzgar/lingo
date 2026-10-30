@@ -15,11 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.PillShape
 import org.token.english.core.designsystem.TouchTargetMin
 
-/** Primary action — design.md §15. Full-width on phones, 48dp high, 12dp radius (shape token). */
+/**
+ * Primary action — design.md §15. Full-width on phones, 48dp high, 12dp radius (shape token).
+ *
+ * [containerColor]/[contentColor] tint it for a card that carries its own hue
+ * (Home's plan / path / weak-spot cards): the action then belongs to the card it
+ * sits in instead of dropping a brand-blue block onto a coloured surface. Both
+ * come from the theme at the call site — never a raw color.
+ */
 @Composable
 fun PrimaryButton(
     text: String,
@@ -28,6 +37,8 @@ fun PrimaryButton(
     enabled: Boolean = true,
     loading: Boolean = false,
     contentDescription: String? = null,
+    containerColor: Color? = null,
+    contentColor: Color? = null,
 ) {
     Button(
         onClick = onClick,
@@ -38,16 +49,27 @@ fun PrimaryButton(
                 if (contentDescription != null) this.contentDescription = contentDescription
             },
         enabled = enabled && !loading,
-        shape = MaterialTheme.shapes.medium,
+        shape = PillShape,
+        colors = if (containerColor != null || contentColor != null) {
+            ButtonDefaults.buttonColors(
+                containerColor = containerColor ?: MaterialTheme.colorScheme.primary,
+                contentColor = contentColor ?: MaterialTheme.colorScheme.onPrimary,
+            )
+        } else {
+            ButtonDefaults.buttonColors()
+        },
     ) {
         if (loading) {
             CircularProgressIndicator(
                 modifier = Modifier.padding(AppSpacing.xs),
                 strokeWidth = 2.dp,
-                color = Color.White,
+                color = contentColor ?: MaterialTheme.colorScheme.onPrimary,
             )
         } else {
-            Text(text = text, style = MaterialTheme.typography.labelLarge)
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+            )
         }
     }
 }
@@ -64,13 +86,13 @@ fun SecondaryButton(
         onClick = onClick,
         modifier = modifier.height(TouchTargetMin),
         enabled = enabled,
-        shape = MaterialTheme.shapes.medium,
+        shape = PillShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(text = text, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold))
     }
 }
 
@@ -86,9 +108,9 @@ fun OutlinedActionButton(
         onClick = onClick,
         modifier = modifier.height(TouchTargetMin),
         enabled = enabled,
-        shape = MaterialTheme.shapes.medium,
+        shape = PillShape,
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(text = text, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold))
     }
 }
 

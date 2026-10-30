@@ -10,9 +10,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.Brand
 
 /**
  * Standard container card — flat, 16dp radius, hairline border instead of heavy shadow
@@ -23,6 +25,10 @@ import org.token.english.core.designsystem.AppSpacing
  * filled here (not left to each caller) so no new card can forget it; a caller that
  * passes an explicit width still wins, because `fillMaxWidth()` is appended after
  * its modifier.
+ *
+ * **Elevation is soft, not flat** (v28): a 10dp shadow at 8% ink under a 22dp
+ * corner is what separates a surface from the page. The old hairline-only card is
+ * exactly what the review called "paper" — an outlined rectangle with no depth.
  *
  * [containerColor] / [contentColor] say what KIND of content the card holds — a
  * teaching rule, a reference table, a set of examples — so a page of cards is not
@@ -42,7 +48,16 @@ fun AppCard(
         containerColor = containerColor,
         contentColor = contentColor,
     )
-    val fullWidth = modifier.fillMaxWidth()
+    val shape = MaterialTheme.shapes.large
+    val fullWidth = modifier
+        .fillMaxWidth()
+        .shadow(
+            elevation = 10.dp,
+            shape = shape,
+            clip = false,
+            ambientColor = Brand.ShadowInk.copy(alpha = 0.08f),
+            spotColor = Brand.ShadowInk.copy(alpha = 0.08f),
+        )
     if (onClick != null) {
         Card(
             onClick = onClick,

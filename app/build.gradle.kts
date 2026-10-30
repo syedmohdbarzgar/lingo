@@ -202,6 +202,34 @@ tasks.matching {
     }
 }
 
+// The offline speech model is the one release input that is fetched, not committed:
+// ~40 MB of Vosk assets (`scripts/fetch_vosk_model.sh`, git-ignored). A release built
+// from a clone that skipped the fetch would install and run, then fail at the first
+// take with «مدل گفتار پیدا نشد» — a dead feature that no compiler can catch. Fail
+// the release build instead, on the same three markers `scripts/release_check.sh`
+// trusts: the `uuid` marker (written last, after the whole tree landed), `am/` and
+// `graph/` (a recogniser cannot load without either).
+val voskModelDir = file("src/main/assets/vosk/vosk-model-small-en-us-0.15")
+tasks.matching {
+    (it.name.startsWith("assemble") || it.name.startsWith("bundle")) && it.name.contains("Release")
+}.configureEach {
+    // Local copy, same reason as the two gates above: a script-level `val` cannot be
+    // serialized by the configuration cache.
+    val modelDir = voskModelDir
+    doFirst {
+        val complete = File(modelDir, "uuid").exists() &&
+            File(modelDir, "am").isDirectory &&
+            File(modelDir, "graph").isDirectory
+        if (!complete) {
+            throw GradleException(
+                "The offline speech model is missing or incomplete at ${modelDir.path} — a " +
+                    "release would ship conversation practice that can only say «مدل گفتار پیدا " +
+                    "نشد». Run `bash scripts/fetch_vosk_model.sh` before building a release.",
+            )
+        }
+    }
+}
+
 // The content gate (`validateContent`, wired into preBuild) — the rules live in
 // buildSrc's ContentValidator, ONE Kotlin implementation shared with
 // ContentValidationTest (see that test for why buildSrc: compiling :app runs

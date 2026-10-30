@@ -26,6 +26,14 @@ data class AppExtendedColors(
     val infoContainer: Color,
     val onInfo: Color,
     val brandTint: Color,
+    /**
+     * A full-strength brand fill that always carries white text (the free-access
+     * status card). `colorScheme.primary` cannot serve: its dark-theme value
+     * (Primary400) is a light blue, so white ink on it would measure ~2:1. The
+     * pair is therefore its own token, one step deeper per theme.
+     */
+    val brandStrong: Color,
+    val onBrandStrong: Color,
     // The two CEFR-badge hues Material 3 does not model (see CefrBadge: one
     // color per level, B2 = violet and C2 = rose).
     val violet: Color,
@@ -34,9 +42,29 @@ data class AppExtendedColors(
     val rose: Color,
     val roseContainer: Color,
     val onRose: Color,
+    /**
+     * Ink for content drawn **over a bundled artwork** (the premium banner on the
+     * subscription card). The artwork is light pastel and does not follow the
+     * theme, so these are the same dark neutrals in both themes: a dark theme's
+     * [androidx.compose.material3.ColorScheme.onSurface] would put near-white text
+     * on a near-white picture and vanish. Measured against the artwork's darkest
+     * region (#92C2FD, the blue swoosh) [onArtwork] reads ~9:1 and [onArtworkMuted]
+     * ~7:1 before the veil, and ≥13:1 / ≥8:1 through it.
+     */
+    val onArtwork: Color,
+    val onArtworkMuted: Color,
+    /**
+     * The veil laid over that artwork: a near-white surface that lifts the pastel
+     * to a readable field without hiding it. Near-white — not the theme surface —
+     * for the same reason: on a dark theme a dark veil plus dark ink is 3.7:1.
+     */
+    val artworkVeil: Color,
 )
 
 private val LightExtended = AppExtendedColors(
+    // The three tinted Home cards (plan / path / weak spot) keep the palette they
+    // already had: the blue accent belongs to actions, and recolouring the card
+    // families on top of it made the weak-spot card read as olive mud.
     success = Brand.Success500,
     successContainer = Brand.Success100,
     onSuccess = Brand.Success700,
@@ -47,12 +75,20 @@ private val LightExtended = AppExtendedColors(
     infoContainer = Brand.Info100,
     onInfo = Brand.Info700,
     brandTint = Brand.Primary100,
+    // Deep blue, not Primary600: white body text on the 600 step measures 4.0:1,
+    // while white on Primary700 reads 5.5:1. The accent stays for actions; a
+    // surface that carries white text uses this pair.
+    brandStrong = Brand.Primary700,
+    onBrandStrong = Color.White,
     violet = Brand.Violet500,
     violetContainer = Brand.Violet100,
     onViolet = Brand.Violet700,
     rose = Brand.Rose500,
     roseContainer = Brand.Rose100,
     onRose = Brand.Rose700,
+    onArtwork = Brand.Neutral950,
+    onArtworkMuted = Brand.Neutral700,
+    artworkVeil = Brand.Neutral50,
 )
 
 private val DarkExtended = AppExtendedColors(
@@ -66,12 +102,21 @@ private val DarkExtended = AppExtendedColors(
     infoContainer = Color(0xFF0B2E42),
     onInfo = Color(0xFFBAE6FD),
     brandTint = Brand.NightPrimaryContainer,
+    // The same deep blue in both themes: white on it reads 5.5:1, and on the
+    // dark canvas it still separates from the surface without glowing.
+    brandStrong = Brand.Primary700,
+    onBrandStrong = Color.White,
     violet = Color(0xFFA78BFA),
     violetContainer = Color(0xFF241553),
     onViolet = Color(0xFFDDD6FE),
     rose = Color(0xFFFB7185),
     roseContainer = Color(0xFF4C0E21),
     onRose = Color(0xFFFECDD3),
+    // Deliberately the light values in the dark theme: the banner is the same
+    // light artwork in both, and dark ink on it is what stays readable.
+    onArtwork = Brand.Neutral950,
+    onArtworkMuted = Brand.Neutral700,
+    artworkVeil = Brand.Neutral50,
 )
 
 private val LightColors = lightColorScheme(
@@ -86,18 +131,18 @@ private val LightColors = lightColorScheme(
     tertiary = Brand.Info700,
     onTertiary = Color.White,
     background = Color.White,
-    onBackground = Brand.Neutral950,
+    onBackground = Brand.XiaoInk,
     surface = Color.White,
-    onSurface = Brand.Neutral950,
-    surfaceVariant = Brand.Neutral50,
-    onSurfaceVariant = Brand.Neutral600,
+    onSurface = Brand.XiaoInk,
+    surfaceVariant = Brand.XiaoSurface,
+    onSurfaceVariant = Brand.XiaoMuted,
     surfaceContainerLowest = Color.White,
-    surfaceContainerLow = Brand.Neutral50,
-    surfaceContainer = Brand.Neutral100,
-    surfaceContainerHigh = Brand.Neutral100,
-    surfaceContainerHighest = Brand.Neutral200,
-    outline = Brand.Neutral300,
-    outlineVariant = Brand.Neutral200,
+    surfaceContainerLow = Color(0xFFF7F8FA),
+    surfaceContainer = Color(0xFFF1F2F5),
+    surfaceContainerHigh = Color(0xFFECEEF2),
+    surfaceContainerHighest = Color(0xFFE4E7EC),
+    outline = Brand.XiaoBorder,
+    outlineVariant = Color(0xFFE8EBEF),
     // Error700, not Error500: this role is the *text* colour on surface (the two
     // inline failure sentences in the lesson exercise are its only consumers), and
     // #EF4444 on white measures 3.76:1 — under the 4.5:1 that bodySmall needs
@@ -120,20 +165,20 @@ private val DarkColors = darkColorScheme(
     secondaryContainer = Brand.NightPrimaryContainer,
     onSecondaryContainer = Brand.Primary100,
     tertiary = Color(0xFF38BDF8),
-    onTertiary = Brand.NightBackground,
-    background = Brand.NightBackground,
-    onBackground = Brand.Neutral50,
-    surface = Brand.NightSurface,
-    onSurface = Brand.Neutral50,
-    surfaceVariant = Brand.NightSurfaceElevated,
-    onSurfaceVariant = Brand.Neutral300,
-    surfaceContainerLowest = Brand.NightSurface,
-    surfaceContainerLow = Brand.NightSurfaceElevated,
-    surfaceContainer = Brand.NightSurfaceElevated,
-    surfaceContainerHigh = Brand.Neutral800,
-    surfaceContainerHighest = Brand.Neutral700,
-    outline = Brand.NightBorder,
-    outlineVariant = Brand.NightBorder,
+    onTertiary = Brand.XiaoNight,
+    background = Brand.XiaoNight,
+    onBackground = Color(0xFFF3F4F6),
+    surface = Brand.XiaoNightSurface,
+    onSurface = Color(0xFFF3F4F6),
+    surfaceVariant = Brand.XiaoNightElevated,
+    onSurfaceVariant = Color(0xFFA1A1AA),
+    surfaceContainerLowest = Brand.XiaoNight,
+    surfaceContainerLow = Brand.XiaoNightSurface,
+    surfaceContainer = Brand.XiaoNightElevated,
+    surfaceContainerHigh = Color(0xFF26262B),
+    surfaceContainerHighest = Color(0xFF2E2E34),
+    outline = Brand.XiaoNightBorder,
+    outlineVariant = Color(0xFF26262B),
     error = Color(0xFFF87171),
     onError = Brand.NightBackground,
     errorContainer = Color(0xFF401515),

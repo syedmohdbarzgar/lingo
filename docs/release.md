@@ -12,9 +12,19 @@
 ./gradlew :app:assembleGooglePlayDebug  # Google Play APK (Play Billing 9)
 ```
 
-Release `assemble*`/`bundle*` tasks **fail closed**: they refuse to build until `keystore.properties`
-holds `bazaarRsaKey` and `CompanionApp.EXPECTED_SIGNING_SHA256` is filled in (see
-[`docs/billing.md`](billing.md)). Debug is unaffected, so the everyday loop never needs those values.
+Release `assemble*`/`bundle*` tasks **fail closed**, in three ways:
+
+1. they refuse to build until `keystore.properties` holds `bazaarRsaKey`;
+2. they refuse to build until `CompanionApp.EXPECTED_SIGNING_SHA256` is filled in — otherwise any
+   APK declaring `org.token.zaribar` would unlock the paid tier (see [`docs/billing.md`](billing.md));
+3. they refuse to build until the offline Vosk model is unpacked into
+   `src/main/assets/vosk/vosk-model-small-en-us-0.15` (checked by the `uuid` marker plus `am/` and
+   `graph/`, the same three markers `scripts/release_check.sh` trusts). The model is fetched
+   (`scripts/fetch_vosk_model.sh`) and git-ignored, so a release built from a clone that skipped the
+   fetch would install and then have a conversation-practice screen that can only report
+   «مدل گفتار پیدا نشد» — a dead feature no compiler catches.
+
+Debug is unaffected, so the everyday loop never needs those values.
 
 Before a release, run the pre-flight so a missing value does not surface six minutes into an
 `assemble*Release`:

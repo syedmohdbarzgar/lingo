@@ -2,7 +2,10 @@ package org.token.english.feature.paywall
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,12 +36,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.R
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
@@ -46,6 +52,7 @@ import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.Storefront
 import org.token.english.core.billing.SubscriptionPlan
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.PrimaryButton
@@ -218,37 +225,70 @@ private fun paymentFootnote(state: PaywallUiState): String =
 
 @Composable
 private fun Hero(state: PaywallUiState) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+    val extended = LocalAppExtendedColors.current
+    Card(
         modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = extended.artworkVeil),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
-        Icon(
-            imageVector = Icons.Outlined.WorkspacePremium,
-            contentDescription = null,
-            modifier = Modifier.size(56.dp),
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Text(
-            text = "دسترسی کامل به همه درس‌ها",
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center,
-        )
-        Text(
-            text = when {
-                state.accessReason == AccessReason.COMPANION_APP ->
-                    "اشتراک شما رایگان است: برنامهٔ «زریبار» روی این دستگاه نصب است."
+        Box(Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(R.drawable.premium_gift_banner),
+                // Decorative: the headline underneath states the same promise, so a
+                // screen reader has nothing to gain from describing the artwork.
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.matchParentSize(),
+            )
+            // A near-white veil rather than a dark scrim. It keeps the pastel and
+            // the crown/gift shapes visible (the artwork shows through at ~38%) while
+            // lifting the darkest part of the picture to a field the dark ink can
+            // sit on — the colours are tokens, so both themes read the same.
+            Box(
+                Modifier
+                    .matchParentSize()
+                    .background(extended.artworkVeil.copy(alpha = 0.62f)),
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(AppSpacing.lg),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.WorkspacePremium,
+                    contentDescription = null,
+                    modifier = Modifier.size(56.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = "دسترسی کامل به همه درس‌ها",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = extended.onArtwork,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = when {
+                        state.accessReason == AccessReason.COMPANION_APP ->
+                            "اشتراک شما رایگان است: برنامهٔ «زریبار» روی این دستگاه نصب است."
 
-                else -> when (state.access) {
-                org.token.english.core.billing.AccessLevel.PREMIUM -> "اشتراک شما فعال است. ممنونیم!"
-                org.token.english.core.billing.AccessLevel.LOCKED ->
-                    "برای ادامه یادگیری، اشتراک فعال کنید. برای اعضا: خرید یا بازیابی اشتراک از همین صفحه انجام می‌شود."
-                }
-            },
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
+                        else -> when (state.access) {
+                            org.token.english.core.billing.AccessLevel.PREMIUM ->
+                                "اشتراک شما فعال است. ممنونیم!"
+
+                            org.token.english.core.billing.AccessLevel.LOCKED ->
+                                "برای ادامه یادگیری، اشتراک فعال کنید. برای اعضا: خرید یا «بازیابی خرید قبلی» از همین صفحه انجام می‌شود."
+                        }
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = extended.onArtworkMuted,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
     }
 }
 

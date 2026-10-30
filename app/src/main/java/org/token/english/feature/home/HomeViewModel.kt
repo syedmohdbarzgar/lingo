@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
@@ -168,7 +169,11 @@ class HomeViewModel(
             // Room only re-emits when review_item changes; `now` must be refreshed
             // too, otherwise newly-due cards stay invisible until the next write
             // (checklist: fixed-now → minute ticker).
-            dueCountFlow().collect {
+            //
+            // Only a DIFFERENT count is news, though. Rebuilding on every tick
+            // re-emitted the whole Home once a minute — the plan card visibly
+            // redrew under the learner's eyes while they were reading it.
+            dueCountFlow().distinctUntilChanged().collect {
                 dueCount = it
                 rebuild()
             }
@@ -253,7 +258,12 @@ class HomeViewModel(
             // would keep querying and write state after its scope died.
             val full = runCatchingCancellable { getTodayPlan(System.currentTimeMillis()) }.getOrNull()
                 ?: return@launch
-            _state.update { current -> current.copy(plan = full) }
+            // The engine is deterministic for the same inputs, so an equal plan must
+            // not replace the one already on screen: every replacement is a state
+            // emission, and an emission is a redraw the learner did not ask for.
+            if (_state.value.plan != full) {
+                _state.update { current -> current.copy(plan = full) }
+            }
             // …and ask the remediation engine whether there is a specific node
             // worth drilling (checklist B-1). The daily plan's own remediation
             // action names the node; with none the engine picks the weakest one that
@@ -262,7 +272,9 @@ class HomeViewModel(
                 .firstOrNull { it.type == LearningActionType.REMEDIATE }
                 ?.itemId
             val focus = runCatchingCancellable { getFocusPlan(weakSpot) }.getOrNull()
-            _state.update { current -> current.copy(focus = focus) }
+            if (_state.value.focus != focus) {
+                _state.update { current -> current.copy(focus = focus) }
+            }
         }
     }
 

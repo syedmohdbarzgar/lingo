@@ -60,6 +60,31 @@ object Brand {
     val Rose800 = Color(0xFF9F1239)
     val Rose900 = Color(0xFF881337)
 
+    // ── Xiaomi-inspired layer ────────────────────────────────────────────────
+    // The interface direction changed in v28: the review was that a Material
+    // default reads as "paper" — flat white boxes with hairline borders. The
+    // replacement follows Xiaomi's public design language: a bright canvas, one
+    // decisive orange accent, large rounded surfaces and soft shadows, with the
+    // accent reserved for actions rather than poured over every surface.
+    // Values from the Xiaomi DESIGN.md (ndroussi/design-md-for-ai).
+    val XiaoOrange = Color(0xFFFF6900)      // accent + primary action
+    val XiaoOrangeDeep = Color(0xFFC2410C)  // filled surface that carries white text
+    val XiaoOrangeSoft = Color(0xFFFFE8D6)  // light callout fill
+    val XiaoOrangeInk = Color(0xFF7A2E00)   // text on the soft fill
+    val XiaoInk = Color(0xFF191919)         // headings and navigation ink
+    val XiaoText = Color(0xFF222222)        // body text
+    val XiaoMuted = Color(0xFF6B7280)       // secondary text
+    val XiaoSurface = Color(0xFFF5F6F8)     // light section background
+    val XiaoBorder = Color(0xFFD9DEE5)      // card borders and separators
+    val XiaoGreen = Color(0xFF22A06B)       // positive state
+    val XiaoNight = Color(0xFF0E0E10)       // dark canvas
+    val XiaoNightSurface = Color(0xFF17171A) // dark card
+    val XiaoNightElevated = Color(0xFF202024)
+    val XiaoNightBorder = Color(0xFF2B2B31)
+    val XiaoOrangeLight = Color(0xFFFF8A3D) // accent on the dark canvas
+    /** Shadow ink — the soft, low-alpha black Xiaomi uses instead of heavy elevation. */
+    val ShadowInk = Color(0xFF191919)
+
     // Neutral
     val Neutral50 = Color(0xFFF8FAFC)
     val Neutral100 = Color(0xFFF1F5F9)

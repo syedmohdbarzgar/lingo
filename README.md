@@ -94,15 +94,18 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 24)**
+**Content bundle (JSON `contentVersion` 27)**
 
 | | Count |
 |---|---|
-| Lessons | 48 — A1: 15, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 482 |
-| Vocabulary entries | 290 |
-| Knowledge items | 89 |
+| Lessons | 54 — A1: 21, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
+| Exercises | 546 |
+| Vocabulary entries | 326 |
+| Knowledge items | 95 |
 | Placement questions | 36 |
+
+The lesson plan behind those numbers is the 180-topic syllabus (30 topics per CEFR band) in
+[`docs/curriculum.md`](docs/curriculum.md) — it lists every topic and which ones ship today.
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
 `contentVersion`, which is declared inside the files themselves.

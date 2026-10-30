@@ -10,9 +10,13 @@ The root file is deliberately short; the deep material is in `docs/`:
 - [`docs/learner-model.md`](docs/learner-model.md) — engines, the adaptive layer, the remediation
   bar, the three skill tracks.
 - [`docs/content-pipeline.md`](docs/content-pipeline.md) — the JSON bundle, `validateContent`,
-  every authoring rule; [`docs/CHANGELOG-content.md`](docs/CHANGELOG-content.md) — version history.
+  every authoring rule; [`docs/CHANGELOG-content.md`](docs/CHANGELOG-content.md) — version history;
+  [`docs/curriculum.md`](docs/curriculum.md) — the 180-topic syllabus (30 per level) and which
+  topics ship today.
 - [`docs/billing.md`](docs/billing.md) — subscription × 3 marketplaces, the companion grant, storefront
   wording; [`docs/connectivity.md`](docs/connectivity.md) — the offline rule and permission tables.
+- [`docs/design-direction.md`](docs/design-direction.md) — the Xiaomi-inspired design system (tokens,
+  shapes, the soft shadow, the entrance motion) and the sources behind it.
 - [`docs/release.md`](docs/release.md) — release ritual and toolchain facts;
   [`docs/testing.md`](docs/testing.md) — the test inventory; [`docs/debt.md`](docs/debt.md) — debt.
 
@@ -105,7 +109,8 @@ version history in [`docs/CHANGELOG-content.md`](docs/CHANGELOG-content.md). Aft
   `AppSpacing`, `MaterialTheme.shapes`. Root layout is **forced RTL**: all English goes through
   `EnglishText`/`AnswerField` (which re-assert LTR), and feedback is never color-only — always
   icon + text (`CorrectBanner`/`IncorrectBanner`).
-- Touch targets ≥ 48dp, primary buttons 48dp high, cards 16dp radius, and **cards always span the
+- Touch targets ≥ 48dp, primary buttons 48dp high, cards **22dp** radius with the soft shadow and
+  pill buttons (see [`docs/design-direction.md`](docs/design-direction.md)), and **cards always span the
   available width** (`AppCard` fills it itself). Streak must never outweigh learning progress.
 - Every feature screen needs empty/loading/error states; a local failure must never be blamed on the
   network — only a genuinely online action may show a connectivity error.
@@ -120,10 +125,10 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (426 tests / 56 classes as of the
-conversation-practice pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page,
-and the Vosk verdict engine, whose recogniser half is device-only by nature); the full inventory and
-ViewModel/fake conventions are in
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (444 tests / 57 classes as of the A1-complete bundle
+pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page, the two-party
+dialogue with its authored turns, and the Vosk verdict engine, whose recogniser half is device-only by
+nature); the full inventory and ViewModel/fake conventions are in
 [`docs/testing.md`](docs/testing.md). Content tests read assets through `File`, so run them with
 `--rerun`. There is no instrumented suite (the template was removed, not kept as a false signal).
 

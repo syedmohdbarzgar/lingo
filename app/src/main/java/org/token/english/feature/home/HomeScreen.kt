@@ -1,5 +1,6 @@
 package org.token.english.feature.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,19 +28,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
 import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.CefrBadge
 import org.token.english.core.designsystem.component.EnglishText
+import org.token.english.core.designsystem.component.LevelHeroCard
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.ProgressRing
-import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
+import org.token.english.core.designsystem.component.StaggeredReveal
 import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.homeViewModelFactory
 import org.token.english.domain.model.LearningLevel
@@ -57,7 +63,6 @@ fun HomeScreen(
     onOpenLesson: (String) -> Unit,
     onOpenSettings: () -> Unit,
     onOpenReview: () -> Unit,
-    onOpenVocabulary: () -> Unit,
     onOpenPaywall: () -> Unit,
     /** Speaking practice: say the lesson's target sentences back, graded on-device. */
     onOpenConversation: () -> Unit,
@@ -108,15 +113,24 @@ fun HomeScreen(
                 .padding(AppSpacing.md),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
         ) {
-            DailyGoalCard(state)
+            // The page assembles itself in reading order instead of appearing all at
+            // once ("every card at the same time" was the complaint): each slot is
+            // 55ms after the one above it. See StaggeredReveal.
+            var slot = 0
+
+            StaggeredReveal(slot++) { LevelHeroCard(state.level) }
+
+            StaggeredReveal(slot++) { DailyGoalCard(state) }
 
             val nextLevel = state.nextLevel
             if (state.levelComplete && nextLevel != null) {
-                LevelUpCard(
-                    currentLevel = state.level,
-                    nextLevel = nextLevel,
-                    onAdvance = vm::advanceLevel,
-                )
+                StaggeredReveal(slot++) {
+                    LevelUpCard(
+                        currentLevel = state.level,
+                        nextLevel = nextLevel,
+                        onAdvance = vm::advanceLevel,
+                    )
+                }
             }
 
             CompanionOfferBanner(state, onOpenPaywall = onOpenPaywall)
@@ -124,26 +138,34 @@ fun HomeScreen(
             CompanionFreeBanner(state)
 
             state.plan?.let { plan ->
-                TodayPlanCard(
-                    plan = plan,
-                    onOpenReview = onOpenReview,
-                    onOpenLesson = onOpenLesson,
-                )
-                TodayLessonCard(
-                    plan = plan,
-                    onStart = { plan.nextLesson?.let { onOpenLesson(it.id) } },
-                    onOpenReview = onOpenReview,
-                )
+                StaggeredReveal(slot++) {
+                    TodayPlanCard(
+                        plan = plan,
+                        onOpenReview = onOpenReview,
+                        onOpenLesson = onOpenLesson,
+                    )
+                }
+                StaggeredReveal(slot++) {
+                    TodayLessonCard(
+                        plan = plan,
+                        onStart = { plan.nextLesson?.let { onOpenLesson(it.id) } },
+                        onOpenReview = onOpenReview,
+                    )
+                }
             }
 
             state.focus?.let { focus ->
-                FocusSpotCard(
-                    focus = focus,
-                    onStart = { onOpenFocus(focus.lessonId, focus.itemId) },
-                )
+                StaggeredReveal(slot++) {
+                    FocusSpotCard(
+                        focus = focus,
+                        onStart = { onOpenFocus(focus.lessonId, focus.itemId) },
+                    )
+                }
             }
 
-            SkillsCard(profiles = state.profiles)
+            StaggeredReveal(slot++) { ConversationCard(onStart = onOpenConversation) }
+
+            StaggeredReveal(slot++) { SkillsCard(profiles = state.profiles) }
 
             state.stats?.let { stats ->
                 if (stats.streakDays > 0) {
@@ -166,17 +188,6 @@ fun HomeScreen(
                 }
             }
 
-            SecondaryButton(
-                text = "تمرین مکالمه",
-                onClick = onOpenConversation,
-                modifier = Modifier.fillMaxWidth(),
-            )
-
-            SecondaryButton(
-                text = "مرور واژه‌ها",
-                onClick = onOpenVocabulary,
-                modifier = Modifier.fillMaxWidth(),
-            )
         }
     }
 }
@@ -235,9 +246,18 @@ private fun LevelUpCard(
 private fun CompanionFreeBanner(state: HomeUiState) {
     if (state.accessReason != org.token.english.core.billing.AccessReason.COMPANION_APP) return
 
-    AppCard {
+    // The one card on Home that is the brand itself: full-strength brand fill with
+    // white ink, so "your access is free" reads as a status, not as another task.
+    val extended = LocalAppExtendedColors.current
+    AppCard(
+        containerColor = extended.brandStrong,
+        contentColor = extended.onBrandStrong,
+    ) {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-            SectionHeader("اشتراک رایگان فعال است")
+            Text(
+                text = "اشتراک رایگان فعال است",
+                style = MaterialTheme.typography.titleMedium,
+            )
             Text(
                 text = "برنامهٔ «زریبار» روی این دستگاه نصب است، بنابراین دسترسی شما به همهٔ درس‌ها رایگان است.",
                 style = MaterialTheme.typography.bodyMedium,
@@ -245,7 +265,7 @@ private fun CompanionFreeBanner(state: HomeUiState) {
             Text(
                 text = "تا زمانی که «زریبار» نصب بماند، اشتراک رایگان ادامه دارد.",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = extended.onBrandStrong.copy(alpha = 0.85f),
             )
         }
     }
@@ -295,6 +315,79 @@ private fun CompanionOfferBanner(state: HomeUiState, onOpenPaywall: () -> Unit) 
             }
             PrimaryButton(text = "اشتراک", onClick = onOpenPaywall)
         }
+    }
+}
+
+/**
+ * Conversation practice, introduced instead of merely named (v28).
+ *
+ * It used to be a bare «تمرین مکالمه» button at the bottom of Home — a label that
+ * told the learner nothing about what would happen inside, so the feature only
+ * existed for people who already knew it. The card says who speaks first, that
+ * the answer is spoken aloud, that the feedback is immediate, and that none of it
+ * touches the network; the button is the last thing in the card, not the card.
+ */
+@Composable
+private fun ConversationCard(onStart: () -> Unit) {
+    AppCard {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.compact),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.MicNone,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+            ) {
+                Text(
+                    text = "تمرین مکالمه",
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    text = "پارتنر می‌پرسد، تو بلند جواب می‌دهی.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+
+        Text(
+            text = "برای هر درس یک گفتگو ساخته شده؛ سؤال را می‌شنوی، با میکروفون پاسخ می‌دهی و " +
+                "همان لحظه می‌فهمی جمله‌ات درست بود یا نه — بعد گفتگو ادامه پیدا می‌کند.",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(top = AppSpacing.sm),
+        )
+
+        Row(
+            modifier = Modifier.padding(top = AppSpacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+        ) {
+            AppChip(label = "بدون اینترنت")
+            AppChip(label = "بازخورد فوری")
+            AppChip(label = "گفتگوی دوبخشی")
+        }
+
+        PrimaryButton(
+            text = "شروع گفتگو",
+            onClick = onStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = AppSpacing.sm),
+        )
     }
 }
 
@@ -355,6 +448,10 @@ private fun DailyGoalCard(state: HomeUiState) {
  */
 @Composable
 private fun FocusSpotCard(focus: FocusPlan, onStart: () -> Unit) {
+    // Default surface, like every other card on the page. The tinted families this
+    // card used to wear (amber / violet / green) turned the home screen into three
+    // competing colours for the same three actions; the sections are already told
+    // apart by their title, so the colour was decoration, not information.
     AppCard {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             SectionHeader("نقطهٔ ضعف")
@@ -365,7 +462,6 @@ private fun FocusSpotCard(focus: FocusPlan, onStart: () -> Unit) {
             Text(
                 text = focus.reasonFa,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 text = buildString {
@@ -375,7 +471,6 @@ private fun FocusSpotCard(focus: FocusPlan, onStart: () -> Unit) {
                     }
                 },
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
             )
             PrimaryButton(
                 text = "تمرین هدفمند",
@@ -414,7 +509,6 @@ private fun TodayPlanCard(
                         Text(
                             text = action.reasonFa,
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                     AppChip(label = when (action.type) {
@@ -472,10 +566,12 @@ private fun TodayLessonCard(
                         Text(
                             text = "${plan.dueReviewCount} مورد آماده مرور است",
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    PrimaryButton(text = "شروع مرور", onClick = onOpenReview)
+                    PrimaryButton(
+                        text = "شروع مرور",
+                        onClick = onOpenReview,
+                    )
                 }
             }
 
@@ -488,7 +584,6 @@ private fun TodayLessonCard(
                     Text(
                         text = "درس بعدی",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     EnglishText(
                         text = lesson.title,
@@ -497,7 +592,6 @@ private fun TodayLessonCard(
                     Text(
                         text = lesson.titleFa,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
@@ -517,7 +611,6 @@ private fun TodayLessonCard(
                 Text(
                     text = "همه درس‌های این سطح را تمام کردید. برای ادامه مسیر، در مرور واژه‌ها تمرین کنید.",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

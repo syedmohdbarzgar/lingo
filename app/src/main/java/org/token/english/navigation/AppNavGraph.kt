@@ -258,7 +258,6 @@ private fun NavGraphBuilder.home(navController: NavHostController) {
             onOpenLesson = { navController.navigate(Routes.lesson(it)) },
             onOpenSettings = { navController.navigate(Routes.SETTINGS) },
             onOpenReview = { navController.navigate(Routes.REVIEW) },
-            onOpenVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onOpenPaywall = { navController.navigate(Routes.PAYWALL) },
             onOpenConversation = { navController.navigate(Routes.CONVERSATION) },
             onOpenFocus = { lessonId, itemId ->

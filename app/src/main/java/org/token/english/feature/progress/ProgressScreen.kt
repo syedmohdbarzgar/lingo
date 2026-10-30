@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
-import org.token.english.core.designsystem.component.CefrBadge
+import org.token.english.core.designsystem.component.LevelHeroCard
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.component.SkillTrackProgress
@@ -62,16 +62,13 @@ fun ProgressScreen() {
                 .padding(AppSpacing.md),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
         ) {
-            AppCard {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
-                ) {
-                    Text("سطح فعلی", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
-                    CefrBadge(state.level)
-                }
-            }
+            // Same "your level" card as Home: the band's portrait, badge, name and
+            // goal. Progress used to show a bare "current level" row, which named
+            // the level without ever saying what it means.
+            LevelHeroCard(
+                level = state.level,
+                extra = "${stats?.lessonsCompleted ?: 0} درس از ${state.totalLessons} تمام شده",
+            )
 
             if (!hasAnyData) {
                 AppEmptyState(

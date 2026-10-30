@@ -69,12 +69,26 @@
   ([`release.md`](release.md)).
 - **Conversation practice ships its recogniser inside the APK.** The Vosk model is ~40 MB of
   assets (`scripts/fetch_vosk_model.sh`; not committed, but packaged), so the APK grows to roughly
-  70 MB and every install pays for a recogniser whether or not the learner ever opens the screen.
+  83 MB (measured on the unsigned `googlePlay` release APK, Oct 2026 — 67.6 MB of that is the model
+  tree; the debug APKs are ~107 MB) and every install pays for a recogniser whether or not the
+  learner ever opens the screen. The release gate in `app/build.gradle.kts` refuses to build
+  `assemble*`/`bundle*` `Release` when that tree is fetched-but-missing, so a release cannot ship the
+  dead screen by accident.
   Accepted for now because a downloadable model (Play Asset Delivery, a content package) needs the
   server infrastructure the connectivity policy keeps suspended. Alternatives when the size starts
   to hurt: split the model into (small) and (large) flavors, or ship it as a Play Asset Pack on the
   `googlePlay` flavor only. The recognition itself is speech-to-text on the model's vocabulary —
   it grades a whole sentence, not per-word pronunciation (see [`connectivity.md`](connectivity.md)).
+  Two consequences are accepted on purpose: **a verdict is a text match, not a pronunciation score**
+  («نزدیک» means the words were there, never that the sounds were right), and **a take the recogniser
+  did not hear is not a language error** — an empty take is reported as «چیزی نشنیدم» and never
+  recorded as a wrong answer. Teaching actual pronunciation needs phoneme-level scoring (a different
+  engine, or a cloud service the connectivity policy keeps suspended).
+- **The speech rate is one engine-wide constant.** `TtsAudioPlayer` sets 0.75× for every English
+  utterance in the app (native 1.0× was reported as unintelligible on a first A1 ear). It is not a
+  learner setting: a slower/faster control needs a preference, a settings row and a copy pass, and a
+  half-done speed setting is worse than one predictable pace. Revisit when the settings screen gets a
+  «سرعت صدا» row for both TTS and partner lines.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

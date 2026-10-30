@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.contentDescription
@@ -155,13 +156,23 @@ private fun SkillProfile.evidenceLineFa(compact: Boolean): String = buildString 
     append(" · ${status.labelFa()}")
 }
 
-/** Compact labeled section heading used across screens. */
+/**
+ * Compact labeled section heading used across screens.
+ *
+ * [color] follows the surface it sits on: the themed `onSurface` by default, or the
+ * card's own ink when the card is tinted (the coloured Home cards), where the
+ * default would be dark-on-tint instead of the card's readable pair.
+ */
 @Composable
-fun SectionHeader(title: String, modifier: Modifier = Modifier) {
+fun SectionHeader(
+    title: String,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onSurface,
+) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.onSurface,
+        color = color,
         modifier = modifier,
     )
 }
