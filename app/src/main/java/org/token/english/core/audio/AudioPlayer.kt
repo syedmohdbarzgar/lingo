@@ -53,7 +53,15 @@ class TtsAudioPlayer(context: Context) : AudioPlayer {
         tts = TextToSpeech(context.applicationContext) { status ->
             val engine = tts
             if (status == TextToSpeech.SUCCESS && engine != null) {
-                engine.setSpeechRate(0.95f)
+                // A learner-tuned rate, not the engine default (1.0 = native speed).
+                // Native speed is a *native listener's* speed: on a fresh A1 ear the
+                // words run together and the sentence is gone before it is parsed —
+                // reported on a real device as "TTS پخش می‌شود ولی نمی‌فهمم". 0.75 keeps
+                // the voice natural (below ~0.6 most engines slur) while leaving a
+                // gap between words. Rate is set once, engine-wide: every English
+                // utterance in the app is learning material, so there is no surface
+                // where native speed is the right default.
+                engine.setSpeechRate(LEARNER_SPEECH_RATE)
                 // B-3: the locale result was ignored before — a device without an
                 // English voice silently "played" nothing and the UI hung on
                 // "در حال پخش…". Check it and report availability instead.
@@ -150,5 +158,14 @@ class TtsAudioPlayer(context: Context) : AudioPlayer {
         listener = null
         errorListener = null
         _isEnglishAvailable.value = false
+    }
+
+    private companion object {
+        /**
+         * 1.0 is native speed. 0.75 is the rate a learner can follow; it is a
+         * constant (not a setting) so every English utterance in the app sounds the
+         * same, and a future settings toggle has one value to override.
+         */
+        const val LEARNER_SPEECH_RATE = 0.75f
     }
 }

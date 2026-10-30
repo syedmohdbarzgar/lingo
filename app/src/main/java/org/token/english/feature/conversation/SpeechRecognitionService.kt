@@ -147,24 +147,15 @@ class SpeechRecognitionService : Service() {
             return
         }
 
-        val record = try {
-            AudioRecord(
-                MediaRecorder.AudioSource.MIC,
-                SAMPLE_RATE,
-                AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,
-                // 2× min: a full buffer is a ~100 ms take, small enough for low
-                // partial latency and large enough not to underrun.
-                minBuffer * 2,
-            )
-        } catch (t: Throwable) {
-            rec.close()
-            SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
-            stopForegroundAndSelf()
-            return
-        }
-        if (record.state != AudioRecord.STATE_INITIALIZED) {
-            record.release()
+        // VOICE_RECOGNITION, not MIC: that source turns on the platform's speech
+        // processing (noise suppression, AGC) and keeps the capture mono/unprocessed
+        // in the way recognisers expect. With plain MIC the same sentence came back
+        // with words missing, which is half of why learners had to repeat themselves.
+        // It is not implemented everywhere, so an uninitialised stream falls back to
+        // MIC instead of failing the take.
+        val record = openAudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, minBuffer)
+            ?: openAudioRecord(MediaRecorder.AudioSource.MIC, minBuffer)
+        if (record == null) {
             rec.close()
             SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
             stopForegroundAndSelf()
@@ -186,12 +177,52 @@ class SpeechRecognitionService : Service() {
         }, "vosk-capture").also { it.start() }
     }
 
+    /** An initialised [AudioRecord] for [source], or null — the caller tries the next source. */
+    private fun openAudioRecord(source: Int, minBuffer: Int): AudioRecord? {
+        // Re-checked here even though the take already checked: the permission can be
+        // revoked between the screen and this call, and the constructor throws without
+        // it. Keeping the check inside the method that opens the recorder is also what
+        // lets a reader (and lint) see the guard next to the call it protects.
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            return null
+        }
+        val record = try {
+            AudioRecord(
+                source,
+                SAMPLE_RATE,
+                AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                // 2× min: a full buffer is a ~100 ms take, small enough for low
+                // partial latency and large enough not to underrun.
+                minBuffer * 2,
+            )
+        } catch (t: Throwable) {
+            return null
+        }
+        if (record.state != AudioRecord.STATE_INITIALIZED) {
+            record.release()
+            return null
+        }
+        return record
+    }
+
     /**
-     * The capture loop: read PCM → feed Vosk → publish partials, and the final
-     * text when Vosk detects an utterance boundary (silence). Runs on its own
-     * thread; every exit path funnels through [finishCapture].
+     * The capture loop: read PCM → feed Vosk → publish partials, and the take's
+     * transcript when Vosk detects an utterance boundary (silence). Runs on its
+     * own thread; every exit path funnels through [finishCapture].
+     *
+     * The take keeps its OWN transcript. Vosk finalises an utterance at every
+     * pause and the result JSON then holds only that segment — the one before it
+     * is gone. Publishing that JSON straight to the screen (the first version)
+     * meant a learner who breathed mid-sentence watched the first half disappear
+     * and had to start over, which on a long sentence makes a correct answer
+     * almost impossible. So every segment is appended here and the screen always
+     * sees the whole take.
      */
     private fun runCaptureLoop(record: AudioRecord, rec: Recognizer) {
+        val transcript = StringBuilder()
         val buffer = ShortArray(BUFFER_SAMPLES)
         try {
             record.startRecording()
@@ -199,8 +230,10 @@ class SpeechRecognitionService : Service() {
                 val read = record.read(buffer, 0, buffer.size)
                 if (read <= 0) {
                     // ERROR_INVALID_OPERATION / ERROR_DEAD_OBJECT: the recorder
-                    // was yanked out from under us — surface it, don't spin.
-                    SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+                    // was yanked out from under us — surface it, don't spin. Not
+                    // when the learner ended the take: `read` reports the same
+                    // negative codes for a stream stopped on purpose.
+                    if (keepRecording) SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
                     break
                 }
                 val bytes = ByteArray(read * 2)
@@ -212,26 +245,34 @@ class SpeechRecognitionService : Service() {
                 // getFinalResult(); Kotlin sees the getters as properties, so the
                 // bare `result()` form does not resolve.
                 if (rec.acceptWaveForm(bytes, bytes.size)) {
-                    val text = parseText(rec.getResult())
-                    SpeechBus.publish { it.copy(finalText = text, partial = "") }
+                    appendSegment(transcript, parseText(rec.getResult()))
+                    SpeechBus.publish { it.copy(finalText = transcript.toString(), partial = "") }
                 } else {
                     val partial = parsePartial(rec.getPartialResult())
                     SpeechBus.publish { it.copy(partial = partial) }
                 }
             }
-            // Flush whatever was still in the buffer as a final utterance, so a
-            // sentence ending in a short breath is not lost.
-            if (keepRecording) {
-                val tail = parseText(rec.getFinalResult())
-                if (tail.isNotBlank()) {
-                    SpeechBus.publish { it.copy(finalText = tail, partial = "") }
-                }
-            }
+            // Flush whatever was still in the buffer as a final utterance. This
+            // runs on EVERY exit, not only on an unexpected one: the common path
+            // is the learner tapping «پایان ضبط» mid-sentence, and that last
+            // in-flight utterance used to be dropped because the loop had already
+            // left on `keepRecording == false`.
+            appendSegment(transcript, parseText(rec.getFinalResult()))
+            SpeechBus.publish { it.copy(finalText = transcript.toString(), partial = "") }
         } catch (t: Throwable) {
-            SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+            // A take the learner ended is not a failure; only a recorder that
+            // died underneath a take still meant to be running is.
+            if (keepRecording) SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
         } finally {
             finishCapture(record, rec)
         }
+    }
+
+    /** Joins the take's segments with single spaces, skipping empty ones. */
+    private fun appendSegment(transcript: StringBuilder, segment: String) {
+        if (segment.isBlank()) return
+        if (transcript.isNotEmpty()) transcript.append(' ')
+        transcript.append(segment)
     }
 
     /** Main-thread cleanup after the capture thread is done. */

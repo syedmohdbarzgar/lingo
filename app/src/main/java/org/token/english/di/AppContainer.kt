@@ -217,6 +217,10 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         }
     }
 
+    override fun stop() {
+        audioPlayer.stop()
+    }
+
     // Content
     private val _contentSeeded = MutableStateFlow(false)
 

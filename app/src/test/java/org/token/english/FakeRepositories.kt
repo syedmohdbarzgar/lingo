@@ -405,11 +405,31 @@ class FakeVoiceNote(
 }
 
 /** Records what a ViewModel asked to speak; never throws. */
-class RecordingSpeaker : Speaker {
+class RecordingSpeaker(
+    /**
+     * False models a line that is still playing: the completion callback is kept
+     * until [finishSpeaking], which is how a test holds the mic shut.
+     */
+    private val finishImmediately: Boolean = true,
+) : Speaker {
     val spoken = mutableListOf<String>()
+    var stops = 0
+
+    private var pendingDone: (() -> Unit)? = null
 
     override fun speak(text: String, onDone: (() -> Unit)?, onError: (() -> Unit)?) {
         spoken += text
-        onDone?.invoke()
+        if (finishImmediately) onDone?.invoke() else pendingDone = onDone
+    }
+
+    /** Ends the line the way the TTS engine would. */
+    fun finishSpeaking() {
+        pendingDone?.invoke()
+        pendingDone = null
+    }
+
+    override fun stop() {
+        stops++
+        pendingDone = null
     }
 }

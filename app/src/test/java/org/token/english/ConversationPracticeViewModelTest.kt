@@ -17,6 +17,7 @@ import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.Skill
 import org.token.english.feature.conversation.ConversationEvent
 import org.token.english.feature.conversation.ConversationPracticeViewModel
 import org.token.english.feature.conversation.SpeechError
@@ -28,9 +29,10 @@ import org.token.english.feature.conversation.SpeechState
  * [SpeechState] flow the test drives by hand, which is exactly the seam the
  * service publishes through in production.
  *
- * What is pinned here: which exercises become practice targets, when a take is
- * graded exactly once, when a retry clears the previous verdict instead of
- * showing a stale one, and that leaving the feature stops the microphone.
+ * What is pinned here: which exercises become dialogue turns, that the partner's
+ * question is spoken and shown with its Persian gloss, that a take paused
+ * mid-sentence is graded as a whole, that a take the app never heard is not
+ * scored as a wrong answer, and that leaving the feature stops the microphone.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class ConversationPracticeViewModelTest {
@@ -50,23 +52,48 @@ class ConversationPracticeViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun lesson(id: String, order: Int) = Lesson(
+    private fun lesson(id: String, order: Int, titleFa: String = "درس $id") = Lesson(
         id = id,
         level = LearningLevel.A1,
         title = id,
-        titleFa = id,
-        topic = "directions",
+        titleFa = titleFa,
+        topic = "greetings",
         estimatedMinutes = 5,
         order = order,
     )
 
-    private fun speaking(lessonId: String, id: String, prompt: String, target: String) =
-        Exercise.Speaking(
-            id = id,
-            lessonId = lessonId,
-            prompt = prompt,
-            referenceAnswers = listOf(target),
-        )
+    /** A dialogue turn: the lesson authored a question for the partner to ask. */
+    private fun dialogue(
+        lessonId: String,
+        id: String,
+        question: String,
+        answer: String,
+        questionFa: String = "پرسش پارتنر",
+        tip: String? = null,
+    ) = Exercise.Speaking(
+        id = id,
+        lessonId = lessonId,
+        prompt = "پاسخ بده",
+        referenceAnswers = listOf(answer),
+        question = question,
+        questionFa = questionFa,
+        skill = Skill.SPEAKING,
+        explanation = tip,
+    )
+
+    /** The legacy shape: no question, the learner repeats the model. */
+    private fun echo(lessonId: String, id: String, answer: String) = Exercise.Speaking(
+        id = id,
+        lessonId = lessonId,
+        prompt = "این جمله را بگو",
+        referenceAnswers = listOf(answer),
+        skill = Skill.SPEAKING,
+    )
+
+    private fun repository(vararg lessons: Pair<Lesson, List<Exercise>>) =
+        FakeLessonRepository(lessons = lessons.map { it.first }).apply {
+            lessons.forEach { (lesson, exercises) -> this.exercises[lesson.id] = exercises }
+        }
 
     private fun viewModel(lessonRepository: FakeLessonRepository): ConversationPracticeViewModel =
         ConversationPracticeViewModel(
@@ -78,53 +105,72 @@ class ConversationPracticeViewModelTest {
             stopRecognition = { stops++ },
         )
 
-    // ---- targets --------------------------------------------------------------
+    // ---- turns ----------------------------------------------------------------
 
     @Test
-    fun `only speaking items become targets, in lesson order`() {
-        val lessons = FakeLessonRepository(
-            lessons = listOf(lesson("a1.second", order = 2), lesson("a1.first", order = 1)),
-        )
-        lessons.exercises["a1.first"] = listOf(
-            speaking("a1.first", "s1", "از بانک بپرس کجاست", "The bank is on the left"),
-            Exercise.Translation(
-                id = "m1",
-                lessonId = "a1.first",
-                prompt = "…",
-                accepted = listOf("a"),
+    fun `only speaking items become turns, in lesson order`() {
+        val lessons = repository(
+            lesson("a1.second", order = 2, titleFa = "درس دوم") to
+                listOf(dialogue("a1.second", "s2", "How are you?", "I'm fine, thank you.")),
+            lesson("a1.first", order = 1, titleFa = "درس اول") to listOf(
+                dialogue("a1.first", "s1", "Where is the bank?", "The bank is on the left."),
+                Exercise.Translation(
+                    id = "m1",
+                    lessonId = "a1.first",
+                    prompt = "…",
+                    accepted = listOf("a"),
+                ),
             ),
-        )
-        lessons.exercises["a1.second"] = listOf(
-            speaking("a1.second", "s2", "بگو مستقیم برو", "Go straight and turn left"),
         )
 
         val vm = viewModel(lessons)
 
         val state = vm.state.value
         assertFalse(state.isLoading)
-        assertEquals(listOf("s1", "s2"), state.items.map { it.id })
+        assertEquals(listOf("s1", "s2"), state.turns.map { it.exerciseId })
+        assertEquals(listOf("درس اول", "درس دوم"), state.turns.map { it.lessonTitleFa })
         assertEquals("1 / 2", state.progressLabel)
     }
 
     @Test
+    fun `an authored question becomes the partner's line and a repeat item has none`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "What are you doing this weekend?", "I'm going to visit my family.", questionFa = "آخر هفته چه کار می‌کنی؟", tip = "با going to حرف بزن."),
+                    echo("a1.one", "s2", "Nice to meet you too."),
+                ),
+            ),
+        )
+
+        val dialogueTurn = vm.state.value.turns[0]
+        assertEquals("What are you doing this weekend?", dialogueTurn.partnerLine)
+        assertEquals("آخر هفته چه کار می‌کنی؟", dialogueTurn.partnerLineFa)
+        assertEquals("I'm going to visit my family.", dialogueTurn.answer)
+        assertEquals("با going to حرف بزن.", dialogueTurn.tipFa)
+
+        // A repeat item still works: nothing is asked, the model is what to say.
+        assertNull(vm.state.value.turns[1].partnerLine)
+        assertNull(vm.state.value.turns[1].partnerLineFa)
+    }
+
+    @Test
     fun `a bundle with no speaking items is an empty state, not an error`() {
-        val vm = viewModel(FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1))))
+        val vm = viewModel(repository(lesson("a1.one", order = 1) to emptyList()))
 
         assertTrue(vm.state.value.isEmpty)
         assertEquals(SpeechError.NONE, vm.state.value.error)
     }
 
-    // ---- taking a turn --------------------------------------------------------
-
     @Test
-    fun `targets wait for the content seeder instead of reading an empty table`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight"),
+    fun `turns wait for the content seeder instead of reading an empty table`() {
+        val repository = repository(
+            lesson("a1.one", order = 1) to
+                listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
         )
         val seeded = MutableStateFlow(false)
         val vm = ConversationPracticeViewModel(
-            lessonRepository = lessons,
+            lessonRepository = repository,
             speaker = speaker,
             contentSeeded = seeded,
             speechState = speech,
@@ -133,35 +179,66 @@ class ConversationPracticeViewModelTest {
         )
 
         // Still loading: an empty table at this instant must not become the
-        // permanent "no targets" state.
+        // permanent "no turns" state.
         assertTrue(vm.state.value.isLoading)
 
         seeded.value = true
 
         assertFalse(vm.state.value.isLoading)
-        assertEquals(listOf("s1"), vm.state.value.items.map { it.id })
+        assertEquals(listOf("s1"), vm.state.value.turns.map { it.exerciseId })
     }
 
     @Test
-    fun `starting a take starts the recogniser`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight and turn left"),
+    fun `the partner opens the conversation by speaking its question`() {
+        viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
 
-        vm.onEvent(ConversationEvent.StartTake)
-
-        assertEquals(1, starts)
+        assertEquals(listOf("How are you?"), speaker.spoken)
     }
 
     @Test
-    fun `starting a take never stops the recogniser first`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight"),
+    fun `the partner can ask again when the learner reopens the turn`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
+        speaker.spoken.clear()
+
+        vm.onEvent(ConversationEvent.SpeakPartner)
+
+        assertEquals(listOf("How are you?"), speaker.spoken)
+    }
+
+    @Test
+    fun `a repeat item speaks the model instead of a question`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(echo("a1.one", "s1", "Nice to meet you too.")),
+            ),
+        )
+        speaker.spoken.clear()
+
+        vm.onEvent(ConversationEvent.SpeakPartner)
+
+        assertEquals(listOf("Nice to meet you too."), speaker.spoken)
+    }
+
+    // ---- taking a turn --------------------------------------------------------
+
+    @Test
+    fun `starting a response starts the recogniser and never stops it first`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
         stops = 0
 
         vm.onEvent(ConversationEvent.StartTake)
@@ -173,97 +250,317 @@ class ConversationPracticeViewModelTest {
     }
 
     @Test
-    fun `a partial is shown while speaking and graded once the take is final`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight and turn left"),
+    fun `a partial is shown live and never graded while the learner speaks`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
 
-        speech.value = SpeechState(isListening = true, partial = "go straight and")
-        assertEquals("go straight and", vm.state.value.partial)
+        speech.value = SpeechState(isListening = true, partial = "i'm fine")
+        assertEquals("i'm fine", vm.state.value.liveTranscript)
         assertNull(vm.state.value.verdict) // nothing to grade yet
+    }
 
-        speech.value = SpeechState(isListening = false, finalText = "go straight and turn left")
+    @Test
+    fun `a sentence paused mid-way is graded as the whole sentence`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue(
+                        "a1.one",
+                        "s1",
+                        "What are you doing this weekend?",
+                        "I'm going to visit my family.",
+                    ),
+                ),
+            ),
+        )
+
+        // Vosk finalises an utterance at every pause. The service accumulates the
+        // segments, so the screen sees the take growing instead of restarting —
+        // this is the state sequence that used to wipe the first half.
+        speech.value = SpeechState(isListening = true, finalText = "i'm going")
+        speech.value = SpeechState(isListening = true, finalText = "i'm going to visit")
+        speech.value = SpeechState(isListening = true, finalText = "i'm going to visit my family")
+        assertNull(vm.state.value.verdict)
+
+        speech.value = SpeechState(isListening = false, finalText = "i'm going to visit my family")
+
         assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
-        assertEquals("go straight and turn left", vm.state.value.finalText)
+        assertEquals("i'm going to visit my family", vm.state.value.finalText)
     }
 
     @Test
     fun `the same take is not graded twice`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight and turn left"),
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
 
-        speech.value = SpeechState(finalText = "go straight and turn left")
-        // A re-emission of the SAME second of audio must not overwrite the verdict
-        // the learner is already reading (e.g. a stale partial arriving late).
-        speech.value = SpeechState(finalText = "go straight and turn left")
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you")
         assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
 
-        // A new empty take reopens grading, so the same sentence can be said again.
-        speech.value = SpeechState()
-        assertNull(vm.state.value.verdict)
-        speech.value = SpeechState(finalText = "go straight and turn left")
+        // A late re-emission of the same finished take must not grade again.
+        speech.value = SpeechState(isListening = false, finalText = "i would like a coffee")
         assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
     }
 
     @Test
-    fun `retry clears the previous verdict so no stale feedback is left`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight and turn left"),
+    fun `a take with no recognised words is unheard, never a wrong answer`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
 
-        speech.value = SpeechState(finalText = "i would like a coffee")
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "")
+
+        assertTrue(vm.state.value.unheard)
+        assertNull(vm.state.value.verdict)
+    }
+
+    @Test
+    fun `a take broken by the recogniser is not graded`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(
+            isListening = false,
+            finalText = "i'm fine thank you",
+            error = SpeechError.INTERRUPTED,
+        )
+
+        assertNull(vm.state.value.verdict)
+        assertFalse(vm.state.value.unheard)
+        assertEquals(SpeechError.INTERRUPTED, vm.state.value.error)
+    }
+
+    @Test
+    fun `retry clears the previous verdict and restarts the microphone`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i would like a coffee")
         assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
+        starts = 0
 
         vm.onEvent(ConversationEvent.Retry)
 
         assertNull(vm.state.value.verdict)
         assertEquals("", vm.state.value.finalText)
         assertEquals("", vm.state.value.partial)
+        assertEquals(1, starts)
     }
 
     @Test
-    fun `next moves to the following target and stops at the end`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "اول", "Go straight"),
-            speaking("a1.one", "s2", "دوم", "Turn left"),
+    fun `next records the exchange, advances, and speaks the following question`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                    dialogue("a1.one", "s2", "Do you speak English?", "Yes, a little."),
+                ),
+            ),
         )
-        val vm = viewModel(lessons)
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you")
+        speaker.spoken.clear()
 
         vm.onEvent(ConversationEvent.Next)
-        assertEquals("s2", vm.state.value.current?.id)
+
+        val state = vm.state.value
+        assertEquals(1, state.index)
+        assertEquals("s2", state.current?.exerciseId)
+        assertEquals(1, state.history.size)
+        assertEquals(SpeakingVerdict.CORRECT, state.history.single().verdict)
+        assertEquals("i'm fine thank you", state.history.single().said)
+        assertEquals(listOf("Do you speak English?"), speaker.spoken)
+    }
+
+    @Test
+    fun `a near answer can still move on, so one hard sentence is never a dead end`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How do you get to the station?", "Go straight and turn left at the traffic light."),
+                    dialogue("a1.one", "s2", "Do you speak English?", "Yes, a little."),
+                ),
+            ),
+        )
+        speech.value = SpeechState(isListening = true)
+        // 5 of the 6 content words: unmistakably the same sentence, not the whole one.
+        speech.value = SpeechState(isListening = false, finalText = "go straight and turn left at the traffic")
+        assertEquals(SpeakingVerdict.NEAR, vm.state.value.verdict)
 
         vm.onEvent(ConversationEvent.Next)
+
+        assertEquals(1, vm.state.value.index)
+        assertEquals(SpeakingVerdict.NEAR, vm.state.value.history.single().verdict)
+    }
+
+    @Test
+    fun `next at the last turn finishes the conversation`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        vm.onEvent(ConversationEvent.Next)
+
         assertTrue(vm.state.value.isFinished)
     }
 
+    // ---- the partner's voice -------------------------------------------------
+
     @Test
-    fun `the model sentence is spoken when asked`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight and turn left"),
+    fun `retry starts a new take without stopping the recogniser first`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        val vm = viewModel(lessons)
+        speech.value = SpeechState(isListening = true, finalText = "hello")
+        speech.value = SpeechState(isListening = false, finalText = "hello")
+        stops = 0
+        starts = 0
 
-        vm.onEvent(ConversationEvent.SpeakModel)
+        vm.onEvent(ConversationEvent.Retry)
 
-        assertEquals(listOf("Go straight and turn left"), speaker.spoken)
+        // The stop/start race is what tore the service down and left the next take
+        // unable to stop: a retry is a new take, never a stop first.
+        assertEquals(0, stops)
+        assertEquals(1, starts)
+    }
+
+    @Test
+    fun `the mic stays closed until the partner has finished speaking`() {
+        val slowSpeaker = RecordingSpeaker(finishImmediately = false)
+        val vm = ConversationPracticeViewModel(
+            lessonRepository = repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+            speaker = slowSpeaker,
+            contentSeeded = MutableStateFlow(true),
+            speechState = speech,
+            startRecognition = { starts++ },
+            stopRecognition = { stops++ },
+        )
+        starts = 0
+
+        // The opening question is still playing: answering now would record the
+        // device's own voice and grade the question as the answer.
+        assertTrue(vm.state.value.isPartnerSpeaking)
+        vm.onEvent(ConversationEvent.StartTake)
+        assertEquals(0, starts)
+
+        slowSpeaker.finishSpeaking()
+
+        assertFalse(vm.state.value.isPartnerSpeaking)
+        vm.onEvent(ConversationEvent.StartTake)
+        assertEquals(1, starts)
+    }
+
+    @Test
+    fun `leaving the screen silences the partner`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        clearCallsOf(vm)
+
+        assertEquals(1, speaker.stops)
+    }
+
+    // ---- the summary ---------------------------------------------------------
+
+    @Test
+    fun `the summary counts answered exchanges, not skipped ones`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                    dialogue("a1.one", "s2", "Where are you from?", "I'm from Iran."),
+                ),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true, finalText = "i'm fine thank you")
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you")
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+        vm.onEvent(ConversationEvent.Next)
+
+        // The second exchange is skipped without speaking: a turn the learner moved
+        // past is not a miss, so it must not drag the accuracy down.
+        vm.onEvent(ConversationEvent.Next)
+
+        val state = vm.state.value
+        assertTrue(state.isFinished)
+        assertEquals(1, state.answeredCount)
+        assertEquals(1, state.correctCount)
+        assertEquals(0, state.retryCount)
+        assertEquals(100, state.accuracyPercent)
+    }
+
+    @Test
+    fun `restart rewinds to the first exchange and clears the score`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                    dialogue("a1.one", "s2", "Where are you from?", "I'm from Iran."),
+                ),
+            ),
+        )
+        vm.onEvent(ConversationEvent.Next)
+        vm.onEvent(ConversationEvent.Next)
+        assertTrue(vm.state.value.isFinished)
+        speaker.spoken.clear()
+
+        vm.onEvent(ConversationEvent.Restart)
+
+        val state = vm.state.value
+        assertEquals(0, state.index)
+        assertTrue(state.history.isEmpty())
+        assertFalse(state.isFinished)
+        assertEquals(0, state.answeredCount)
+        // The conversation opens again from the top, spoken.
+        assertEquals(listOf("How are you?"), speaker.spoken)
     }
 
     @Test
     fun `leaving the feature stops the microphone`() {
-        val lessons = FakeLessonRepository(lessons = listOf(lesson("a1.one", order = 1)))
-        lessons.exercises["a1.one"] = listOf(
-            speaking("a1.one", "s1", "بگو", "Go straight"),
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
         )
-        clearCallsOf(viewModel(lessons))
+        stops = 0
+
+        clearCallsOf(vm)
 
         assertEquals(1, stops)
     }

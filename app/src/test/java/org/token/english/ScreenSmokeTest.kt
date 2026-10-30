@@ -126,7 +126,6 @@ class ScreenSmokeTest {
                     onOpenLesson = {},
                     onOpenSettings = {},
                     onOpenReview = {},
-                    onOpenVocabulary = {},
                     onOpenPaywall = {},
                     onOpenConversation = {},
                     onOpenFocus = { _, _ -> },

@@ -51,7 +51,13 @@ data class SpeechState(
     val isPreparing: Boolean = false,
     /** Text recognised so far, refreshed on every Vosk partial. */
     val partial: String = "",
-    /** The completed utterance — cleared when the next take starts. */
+    /**
+     * The take's transcript: every segment Vosk finalised so far, joined, and
+     * cleared when the next take starts. It accumulates across pauses on purpose —
+     * Vosk ends an utterance at each silence and its result JSON then holds only
+     * that segment, so publishing the JSON alone would erase everything said before
+     * the pause (see [SpeechRecognitionService]).
+     */
     val finalText: String = "",
     val error: SpeechError = SpeechError.NONE,
 )

@@ -13,4 +13,11 @@ package org.token.english.core.audio
  */
 interface Speaker {
     fun speak(text: String, onDone: (() -> Unit)? = null, onError: (() -> Unit)? = null)
+
+    /**
+     * Stops whatever is playing, if anything. Defaulted so a test double only has
+     * to implement [speak]: the only production caller is the screen that must not
+     * leave the device talking after the learner has left it.
+     */
+    fun stop() = Unit
 }
