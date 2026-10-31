@@ -172,7 +172,9 @@ before calling a conversation-practice change done:
    text, «تلاش دوباره» clears the previous verdict before the next take, and «ادامهٔ گفتگو» is
    available even after a NEAR so one hard sentence is never a dead end.
 6. **Silence is not a wrong answer.** Start a take and say nothing, then stop: the copy must be
-   «چیزی نشنیدم», never «درست نبود», and no verdict is recorded.
+   «چیزی نشنیدم», never «درست نبود», and no verdict is recorded. The mic stays open while nothing has
+   been recognised (an untouched take is never auto-ended); once something is recognised, ~4 s of
+   quiet ends the take and grades it without a tap — the verdict must appear on its own.
 7. **Dialogue.** The partner's line is spoken when a turn starts, shows its Persian gloss under the
    English, and «شنیدن دوباره» replays it. A correct reply advances to the next turn, and the
    transcript above the live turn lists what was said before.

@@ -15,6 +15,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.token.english.R
 import org.vosk.Recognizer
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Owns the microphone and the on-device recogniser while conversation practice is
@@ -52,6 +54,22 @@ class SpeechRecognitionService : Service() {
 
     @Volatile
     private var keepRecording = false
+
+    /**
+     * Identifies the take the service is allowed to open the mic for; 0 means none.
+     *
+     * Both a START and a STOP can be in flight at once — the screen calls
+     * [start] again for «تلاش دوباره» while the first take is still copying the
+     * model — and the plain `keepRecording` boolean could not tell them apart: a
+     * STOP during the load set it false, then the older START set it true again
+     * and the mic opened after the service had already been told to stop. Each
+     * START takes a number and a STOP invalidates it, so a take that was abandoned
+     * while loading can never capture, and never takes ownership from a newer one.
+     */
+    private val takeSequence = AtomicInteger(0)
+
+    @Volatile
+    private var activeTake = 0
 
     private var audioRecord: AudioRecord? = null
     private var recognizer: Recognizer? = null
@@ -87,7 +105,12 @@ class SpeechRecognitionService : Service() {
     }
 
     private fun startRecording() {
+        // Numbered before the early return so a START that arrives while a take is
+        // already capturing still invalidates nothing: it is simply ignored, and
+        // the take on the mic keeps its number.
+        val take = takeSequence.incrementAndGet()
         if (captureThread != null) return
+        activeTake = take
 
         serviceScope.launch {
             SpeechBus.publish { it.copy(isPreparing = true, error = SpeechError.NONE) }
@@ -108,6 +131,13 @@ class SpeechRecognitionService : Service() {
                 stopForegroundAndSelf()
                 return@launch
             }
+            // The model load is the long part of a first take, so it is the window
+            // in which «پایان ضبط» / leaving the screen arrives most often. When that
+            // happened, this take is dead: it must not open the microphone, and it
+            // must not tear the service down for whatever START came after it.
+            // Silent: either a STOP already published the reset, or a newer take
+            // owns the screen state and must not have its spinner cleared here.
+            if (!isCurrentTake(take)) return@launch
             // A Recognizer holds per-utterance state, so it is built per take and
             // released with it; the heavy Model stays cached in VoskManager.
             //
@@ -129,12 +159,23 @@ class SpeechRecognitionService : Service() {
                 stopForegroundAndSelf()
                 return@launch
             }
-            beginCapture(rec)
+            if (!isCurrentTake(take)) {
+                closeQuietly(rec)
+                return@launch
+            }
+            beginCapture(rec, take)
         }
     }
 
-    /** Must be called on the main thread (startForeground constraint). */
-    private fun beginCapture(rec: Recognizer) {
+    /** Whether [take] is the one still allowed to run. */
+    private fun isCurrentTake(take: Int): Boolean = take != 0 && take == activeTake
+
+    /**
+     * Opens the mic for [take]. Runs after the model load (a background
+     * coroutine), not on the main thread: the foreground state was already
+     * established by [onStartCommand], which is where Android requires it.
+     */
+    private fun beginCapture(rec: Recognizer, take: Int) {
         // Ask before touching AudioRecord: the permission can be revoked between
         // the screen's check and this call (and the OS would throw inside the
         // constructor). The learner gets the same "blocked" copy either way.
@@ -173,6 +214,14 @@ class SpeechRecognitionService : Service() {
             stopForegroundAndSelf()
             return
         }
+        // A STOP or a newer START can land between the permission check above and
+        // this point; without the re-check that take would capture with the service
+        // already shutting down, and the microphone would look live forever.
+        if (!isCurrentTake(take)) {
+            record.release()
+            closeQuietly(rec)
+            return
+        }
 
         audioRecord = record
         recognizer = rec
@@ -185,7 +234,7 @@ class SpeechRecognitionService : Service() {
         SpeechBus.publish { it.copy(isListening = true, isPreparing = false, partial = "", finalText = "") }
 
         captureThread = Thread({
-            runCaptureLoop(record, rec)
+            runCaptureLoop(record, rec, take)
         }, "vosk-capture").also { it.start() }
     }
 
@@ -233,12 +282,23 @@ class SpeechRecognitionService : Service() {
      * almost impossible. So every segment is appended here and the screen always
      * sees the whole take.
      */
-    private fun runCaptureLoop(record: AudioRecord, rec: Recognizer) {
+    private fun runCaptureLoop(record: AudioRecord, rec: Recognizer, take: Int) {
         val transcript = StringBuilder()
         val buffer = ShortArray(BUFFER_SAMPLES)
+        // End-of-take detection. The learner had to tap «پایان ضبط» to finish a
+        // sentence, which is exactly the moment a speaking screen should not
+        // demand: a learner who pauses to find the next word either stopped too
+        // early (half a sentence graded) or kept the take open and collected the
+        // room's noise. After [SILENCE_END_MS] of quiet, with nothing still in
+        // flight, the take ends on its own. The window is deliberately long: a
+        // pause for thought is not the end of the sentence, and an auto-end that
+        // fires mid-sentence brings back the «اگر مکث کنم جمله‌ام می‌شکند» report
+        // this service already had to fix once (see [runCaptureLoop]).
+        var heardSomething = false
+        var lastSoundAt = 0L
         try {
             record.startRecording()
-            while (keepRecording) {
+            while (keepRecording && isCurrentTake(take)) {
                 val read = record.read(buffer, 0, buffer.size)
                 if (read <= 0) {
                     // ERROR_INVALID_OPERATION / ERROR_DEAD_OBJECT: the recorder
@@ -256,12 +316,36 @@ class SpeechRecognitionService : Service() {
                 // Vosk's Java API exposes these as getResult()/getPartialResult()/
                 // getFinalResult(); Kotlin sees the getters as properties, so the
                 // bare `result()` form does not resolve.
+                // What Vosk has not settled yet. A take ends on silence only when
+                // nothing is in flight — a phrase still being recognised is not a
+                // pause.
+                var inFlight = ""
                 if (rec.acceptWaveForm(bytes, bytes.size)) {
-                    appendSegment(transcript, parseText(rec.getResult()))
+                    val segment = parseText(rec.getResult())
+                    appendSegment(transcript, segment)
+                    if (segment.isNotBlank()) {
+                        heardSomething = true
+                        lastSoundAt = SystemClock.elapsedRealtime()
+                    }
                     SpeechBus.publish { it.copy(finalText = transcript.toString(), partial = "") }
                 } else {
                     val partial = parsePartial(rec.getPartialResult())
+                    inFlight = partial
+                    if (partial.isNotBlank()) {
+                        heardSomething = true
+                        lastSoundAt = SystemClock.elapsedRealtime()
+                    }
                     SpeechBus.publish { it.copy(partial = partial) }
+                }
+                // Only a take that has already recognised something can end by
+                // silence: a learner who has not spoken yet keeps an open mic
+                // instead of losing the take before they start.
+                if (heardSomething &&
+                    inFlight.isBlank() &&
+                    SystemClock.elapsedRealtime() - lastSoundAt >= SILENCE_END_MS
+                ) {
+                    keepRecording = false
+                    break
                 }
             }
             // Flush whatever was still in the buffer as a final utterance. This
@@ -280,6 +364,15 @@ class SpeechRecognitionService : Service() {
         }
     }
 
+    /** A recogniser that never opened must not keep the native model alive. */
+    private fun closeQuietly(rec: Recognizer) {
+        try {
+            rec.close()
+        } catch (t: Throwable) {
+            // Already closed.
+        }
+    }
+
     /** Joins the take's segments with single spaces, skipping empty ones. */
     private fun appendSegment(transcript: StringBuilder, segment: String) {
         if (segment.isBlank()) return
@@ -290,6 +383,10 @@ class SpeechRecognitionService : Service() {
     /** Main-thread cleanup after the capture thread is done. */
     private fun finishCapture(record: AudioRecord, rec: Recognizer) {
         cleanup(record, rec)
+        // The loop owns its thread, so it also clears the field: a stale, finished
+        // thread left there made [startRecording] believe a take was still running
+        // and refuse the next one.
+        if (captureThread === Thread.currentThread()) captureThread = null
         try {
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (t: Throwable) {
@@ -349,7 +446,14 @@ class SpeechRecognitionService : Service() {
     }
 
     private fun stopRecording() {
+        // Invalidates a take still copying/loading the model, so it cannot open the
+        // mic after this stop, and leaves no take current for the next START.
+        activeTake = 0
         keepRecording = false
+        // A take stopped while it was still preparing never reaches cleanup(), so
+        // without this the screen keeps showing the loading spinner of a take the
+        // learner already cancelled.
+        SpeechBus.publish { it.copy(isPreparing = false) }
         // The loop releases its own record/recorder on exit; joining here would
         // block the main thread, so just ask and let finishCapture run.
         captureThread?.interrupt()
@@ -424,6 +528,14 @@ class SpeechRecognitionService : Service() {
         private const val NOTIFICATION_ID = 4711
         const val SAMPLE_RATE = 16_000
         private const val BUFFER_SAMPLES = 1600 // 100 ms at 16 kHz mono
+
+        /**
+         * Quiet time after the last recognised sound that ends a take by itself.
+         * Comfortably longer than the three-second thinking pause the device
+         * checklist says must survive: ending a take mid-sentence grades half of
+         * what the learner meant to say.
+         */
+        private const val SILENCE_END_MS = 4_000L
 
         /**
          * Start (or restart) a take. Safe to call repeatedly — the service dedupes.
