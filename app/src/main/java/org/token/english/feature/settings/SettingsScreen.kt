@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +25,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -37,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -265,14 +269,33 @@ fun SettingsScreen(
 
     val page = infoPage
     if (page != null) {
-        AlertDialog(
+        // About / privacy / terms are reference pages, not decisions: they belong in
+        // a sheet that can be dragged away, where the page underneath is still
+        // visible. A dialog pretended the learner had to answer something.
+        ModalBottomSheet(
             onDismissRequest = { infoPage = null },
-            title = { Text(page.title) },
-            text = { InfoPageBody(page, onOpenStorePage = { StorePage.open(context) }) },
-            confirmButton = {
-                TextButton(onClick = { infoPage = null }) { Text("بستن") }
-            },
-        )
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        ) {
+            Text(
+                text = page.title,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = AppSpacing.lg),
+            )
+            Box(
+                modifier = Modifier
+                    .heightIn(max = 460.dp)
+                    .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+            ) {
+                InfoPageBody(page, onOpenStorePage = { StorePage.open(context) })
+            }
+            OutlinedActionButton(
+                text = "بستن",
+                onClick = { infoPage = null },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
+            )
+        }
     }
 
     if (showResetDialog) {
@@ -456,7 +479,6 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 listOf(
-                    "تمرین مکالمه و ارزیابی تلفظ",
                     "همگام‌سازی و پشتیبان‌گیری ابری",
                     "دریافت بسته‌های محتوای جدید",
                 ).forEach { feature ->
@@ -466,6 +488,13 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+                // Conversation practice used to be listed as suspended here, long
+                // after it shipped on-device: the page contradicted the app.
+                Text(
+                    text = "تمرین مکالمه روی خود دستگاه و بدون اینترنت کار می‌کند؛ ارزیابی آن تطبیق متنِ شنیده‌شده با پاسخ درس است، نه نمرهٔ تلفظ.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Text(
                     text = "برای گزارش خطا، پیشنهاد یا پیگیری نسخه‌های بعدی، از صفحهٔ برنامه در ${BuildConfig.STORE_NAME} استفاده کنید.",
                     style = MaterialTheme.typography.bodySmall,

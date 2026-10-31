@@ -1,7 +1,12 @@
 package org.token.english.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -49,6 +54,33 @@ import org.token.english.feature.review.ReviewScreen
 import org.token.english.feature.settings.SettingsScreen
 import org.token.english.feature.vocabulary.VocabularyDetailScreen
 import org.token.english.feature.vocabulary.VocabularyScreen
+
+/**
+ * Page changes move, they do not just cross-fade: the screen being left slides a
+ * little in the direction of travel and the one arriving comes in from the
+ * opposite edge. A push and a pop therefore read differently — before this, every
+ * route change was the same fade, so "I went deeper" and "I came back" looked
+ * identical.
+ *
+ * The offsets are fractions of the width, and the root layout is RTL: forward
+ * arrives from the left, which is where a Persian reader's eye starts. The full
+ * distance is never used — a quarter-screen slide keeps the tab bar steady and
+ * stops the motion from feeling like a page-turn on a navigation that also has
+ * a bottom bar.
+ */
+private const val NAV_SLIDE_MS = 260
+
+private fun forwardEnter(): EnterTransition =
+    slideInHorizontally(tween(NAV_SLIDE_MS)) { -it / 5 } + fadeIn(tween(NAV_SLIDE_MS / 2))
+
+private fun forwardExit(): ExitTransition =
+    slideOutHorizontally(tween(NAV_SLIDE_MS)) { it / 12 } + fadeOut(tween(NAV_SLIDE_MS / 2))
+
+private fun backEnter(): EnterTransition =
+    slideInHorizontally(tween(NAV_SLIDE_MS)) { it / 5 } + fadeIn(tween(NAV_SLIDE_MS / 2))
+
+private fun backExit(): ExitTransition =
+    slideOutHorizontally(tween(NAV_SLIDE_MS)) { -it / 12 } + fadeOut(tween(NAV_SLIDE_MS / 2))
 
 object Routes {
     const val ONBOARDING = "onboarding"
@@ -198,7 +230,7 @@ private fun NavGraphBuilder.paywall(
     navController: NavHostController,
     onDismissLocked: () -> Unit,
 ) {
-    composable(Routes.PAYWALL, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.PAYWALL, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         PaywallScreen(
             onClose = { navController.popBackStack() },
             onLockedExit = {
@@ -227,7 +259,7 @@ private fun NavGraphBuilder.paywall(
 }
 
 private fun NavGraphBuilder.onboarding(navController: NavHostController) {
-    composable(Routes.ONBOARDING, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.ONBOARDING, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         OnboardingScreen(
             onPlacement = { navController.navigate(Routes.PLACEMENT) },
             onSkip = {
@@ -240,7 +272,7 @@ private fun NavGraphBuilder.onboarding(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.placement(navController: NavHostController) {
-    composable(Routes.PLACEMENT, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.PLACEMENT, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         PlacementScreen(
             onFinished = {
                 navController.navigate(Routes.HOME) {
@@ -253,7 +285,7 @@ private fun NavGraphBuilder.placement(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.home(navController: NavHostController) {
-    composable(Routes.HOME, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.HOME, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         HomeScreen(
             onOpenLesson = { navController.navigate(Routes.lesson(it)) },
             onOpenSettings = { navController.navigate(Routes.SETTINGS) },
@@ -278,10 +310,10 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
                 defaultValue = null
             },
         ),
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
-        popEnterTransition = { fadeIn() },
-        popExitTransition = { fadeOut() },
+        enterTransition = { forwardEnter() },
+        exitTransition = { forwardExit() },
+        popEnterTransition = { backEnter() },
+        popExitTransition = { backExit() },
     ) { entry ->
         val lessonId = entry.arguments?.getString("lessonId").orEmpty()
         LessonScreen(
@@ -293,7 +325,7 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.review(navController: NavHostController) {
-    composable(Routes.REVIEW, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.REVIEW, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         ReviewScreen(
             onBrowseVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onGoHome = { navController.navigate(Routes.HOME) },
@@ -302,7 +334,7 @@ private fun NavGraphBuilder.review(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
-    composable(Routes.VOCABULARY, enterTransition = { fadeIn() }, exitTransition = { fadeOut() }, popEnterTransition = { fadeIn() }, popExitTransition = { fadeOut() }) {
+    composable(Routes.VOCABULARY, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
         VocabularyScreen(
             onOpenDetail = { navController.navigate(Routes.vocabularyDetail(it)) },
         )
@@ -310,10 +342,10 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
     composable(
         route = Routes.VOCABULARY_DETAIL,
         arguments = listOf(navArgument("vocabId") { type = NavType.StringType }),
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
-        popEnterTransition = { fadeIn() },
-        popExitTransition = { fadeOut() },
+        enterTransition = { forwardEnter() },
+        exitTransition = { forwardExit() },
+        popEnterTransition = { backEnter() },
+        popExitTransition = { backExit() },
     ) { entry ->
         val vocabId = entry.arguments?.getString("vocabId").orEmpty()
         VocabularyDetailScreen(
@@ -326,10 +358,10 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
 private fun NavGraphBuilder.conversation(navController: NavHostController) {
     composable(
         route = Routes.CONVERSATION,
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
-        popEnterTransition = { fadeIn() },
-        popExitTransition = { fadeOut() },
+        enterTransition = { forwardEnter() },
+        exitTransition = { forwardExit() },
+        popEnterTransition = { backEnter() },
+        popExitTransition = { backExit() },
     ) {
         ConversationPracticeScreen(onBack = { navController.popBackStack() })
     }
@@ -338,20 +370,20 @@ private fun NavGraphBuilder.conversation(navController: NavHostController) {
 private fun NavGraphBuilder.progress(navController: NavHostController) {
     composable(
         route = Routes.PROGRESS,
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
-        popEnterTransition = { fadeIn() },
-        popExitTransition = { fadeOut() },
+        enterTransition = { forwardEnter() },
+        exitTransition = { forwardExit() },
+        popEnterTransition = { backEnter() },
+        popExitTransition = { backExit() },
     ) { ProgressScreen() }
 }
 
 private fun NavGraphBuilder.settings(navController: NavHostController) {
     composable(
         route = Routes.SETTINGS,
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
-        popEnterTransition = { fadeIn() },
-        popExitTransition = { fadeOut() },
+        enterTransition = { forwardEnter() },
+        exitTransition = { forwardExit() },
+        popEnterTransition = { backEnter() },
+        popExitTransition = { backExit() },
     ) {
         SettingsScreen(
             onBack = { navController.popBackStack() },
