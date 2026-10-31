@@ -32,11 +32,12 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 29):** 76 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 30):** 76 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, A2 = 13 — seven earlier lessons plus the six travel topics of
-  v29, B1/B2 = 6 each, C1/C2 = 7 each), 744 exercises
+  v29, B1/B2 = 6 each, C1/C2 = 7 each), 772 exercises
   (8–19/lesson + reading passages + meaning items + A1 pronunciation drills + P2 recall/production
-  items + the 12 dialogue turns), 458 vocabulary entries (6/lesson, 8 in the numbers lesson),
+  items + the 40 dialogue turns, one per lesson of every shipped band), 458 vocabulary entries
+  (6/lesson, 8 in the numbers lesson),
   117 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
   difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
   test samples production and not recognition alone. Grammar points per level follow the British Council / EQUALS Core Inventory grammar
@@ -77,7 +78,7 @@
   fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 744 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 772 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

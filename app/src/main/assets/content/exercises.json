@@ -1,5 +1,5 @@
 {
-  "contentVersion": 29,
+  "contentVersion": 30,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -11466,6 +11466,435 @@
       "hintFa": "از Our holiday starts on + تاریخ استفاده کن.",
       "skill": "VOCABULARY",
       "explanationFa": "الگوی جمله: Our holiday starts on the fifth of August. — go on holiday را به کار ببر و holiday و starts را در جمله بیاور."
+    },
+    {
+      "id": "a1.countries.ex.10",
+      "lessonId": "a1.countries.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو اهل کجایی و کجا زندگی می‌کنی.",
+      "question": "Where are you from?",
+      "questionFa": "اهل کجایی؟",
+      "accepted": [
+        "I am from Iran.",
+        "I'm from Iran."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای ملیت و کشور از I am from + نام کشور استفاده می‌کنیم، نه I am of."
+    },
+    {
+      "id": "a1.age-birthday.ex.10",
+      "lessonId": "a1.age-birthday.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "سن خودت را بگو.",
+      "question": "How old are you?",
+      "questionFa": "چند سالت است؟",
+      "accepted": [
+        "I am twenty years old.",
+        "I'm twenty years old.",
+        "I am twenty."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای سن am/is/are + عدد + years old می‌آید؛ have years old غلط است."
+    },
+    {
+      "id": "a1.days-months.ex.10",
+      "lessonId": "a1.days-months.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو امروز چه روزی است.",
+      "question": "What day is it today?",
+      "questionFa": "امروز چه روزی است؟",
+      "accepted": [
+        "Today is Monday.",
+        "It is Monday.",
+        "It's Monday."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "روزهای هفته با حرف بزرگ شروع می‌شوند و برای پرسش روز از What day استفاده می‌کنیم."
+    },
+    {
+      "id": "a1.time.ex.10",
+      "lessonId": "a1.time.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "ساعت را بگو: هفت و نیم.",
+      "question": "Excuse me, what time is it?",
+      "questionFa": "ببخشید، ساعت چند است؟",
+      "accepted": [
+        "It is half past seven.",
+        "It's half past seven."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای نیم ساعت past به کار می‌رود: half past seven؛ it's پیش از ساعت می‌آید."
+    },
+    {
+      "id": "a1.colors.ex.10",
+      "lessonId": "a1.colors.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "رنگ کیف خودت را بگو.",
+      "question": "What colour is your bag?",
+      "questionFa": "رنگ کیفت چیست؟",
+      "accepted": [
+        "My bag is black.",
+        "It is black.",
+        "It's black."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "صفت رنگ بدون حرف تعریف پس از is می‌آید: My bag is black، نه My bag is a black."
+    },
+    {
+      "id": "a1.classroom.ex.10",
+      "lessonId": "a1.classroom.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "خودکار بخواه و مؤدبانه تشکر کن.",
+      "question": "Can I borrow your pen, please?",
+      "questionFa": "می‌توانم خودکارت را قرض بگیرم؟",
+      "accepted": [
+        "Yes, here you are.",
+        "Sure, here you are.",
+        "Yes, of course."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای دادن چیزی با دست، here you are گفته می‌شود؛ here is it غلط است."
+    },
+    {
+      "id": "a1.jobs.ex.10",
+      "lessonId": "a1.jobs.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "شغل خودت را بگو.",
+      "question": "What do you do?",
+      "questionFa": "شغلت چیست؟",
+      "accepted": [
+        "I am a teacher.",
+        "I'm a teacher."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "پیش از نام شغل a یا an می‌آید: I am a teacher."
+    },
+    {
+      "id": "a1.belongings.ex.10",
+      "lessonId": "a1.belongings.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو چتر مال توست.",
+      "question": "Is this your umbrella?",
+      "questionFa": "این چتر توست؟",
+      "accepted": [
+        "Yes, it is mine.",
+        "Yes, it's mine.",
+        "Yes, it is."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای مالکیت، mine جای my umbrella می‌آید: It is mine."
+    },
+    {
+      "id": "a1.home-rooms.ex.10",
+      "lessonId": "a1.home-rooms.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو خانه‌ات سه اتاق دارد.",
+      "question": "How many rooms are in your home?",
+      "questionFa": "خانه‌ات چند اتاق دارد؟",
+      "accepted": [
+        "There are three rooms in my home.",
+        "There are three rooms."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای شمارش از there are + عدد + جمع استفاده می‌کنیم، نه it has."
+    },
+    {
+      "id": "a1.house-objects.ex.10",
+      "lessonId": "a1.house-objects.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو کنترل روی میز است.",
+      "question": "Where is the remote control?",
+      "questionFa": "کنترل کجاست؟",
+      "accepted": [
+        "It is on the table.",
+        "It's on the table."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای سطح روی چیزی on به کار می‌رود: on the table، نه in the table."
+    },
+    {
+      "id": "a1.food-drinks.ex.10",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "یک نوشیدنی مؤدبانه سفارش بده.",
+      "question": "What would you like to drink?",
+      "questionFa": "چه نوشیدنی‌ای میل دارید؟",
+      "accepted": [
+        "I would like some tea, please.",
+        "I'd like some tea.",
+        "Some tea, please."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "would like + اسم یا to + فعل؛ برای نوشیدنی غیرقابل‌شمارش some می‌آید."
+    },
+    {
+      "id": "a1.fruits-vegetables.ex.10",
+      "lessonId": "a1.fruits-vegetables.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "میوه انتخاب کن: سیب.",
+      "question": "Do you want an apple or a banana?",
+      "questionFa": "سیب می‌خواهی یا موز؟",
+      "accepted": [
+        "An apple, please.",
+        "I would like an apple.",
+        "I'd like an apple."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "apple با an می‌آید چون با صدای صدادار شروع می‌شود؛ انتخاب با همان اسم کافی است."
+    },
+    {
+      "id": "a1.clothes.ex.10",
+      "lessonId": "a1.clothes.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "انداز خودت را بگو.",
+      "question": "What size do you wear?",
+      "questionFa": "چه اندازه‌ای می‌پوشی؟",
+      "accepted": [
+        "I wear a medium size.",
+        "I wear medium.",
+        "Medium, please."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "اندازه پس از wear می‌آید: I wear a medium size؛ size جمع بسته نمی‌شود."
+    },
+    {
+      "id": "a1.body.ex.10",
+      "lessonId": "a1.body.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو سرت درد می‌کند.",
+      "question": "What is the matter? Does your head hurt?",
+      "questionFa": "چه شده؟ سرت درد می‌کند؟",
+      "accepted": [
+        "Yes, my head hurts.",
+        "My head hurts."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "hurt برای درد بدن به کار می‌رود و با سوم‌شخص مفرد s می‌گیرد: my head hurts."
+    },
+    {
+      "id": "a1.animals.ex.10",
+      "lessonId": "a1.animals.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو یک گربه داری.",
+      "question": "Do you have a pet?",
+      "questionFa": "حیوان خانگی داری؟",
+      "accepted": [
+        "Yes, I have a cat.",
+        "I have a cat."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای داشتن pet از have a استفاده می‌کنیم و پیش از حیوان a می‌آید."
+    },
+    {
+      "id": "a1.hobbies.ex.10",
+      "lessonId": "a1.hobbies.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو از کتاب خواندن لذت می‌بری.",
+      "question": "What do you like doing in your free time?",
+      "questionFa": "در وقت آزاد چه کاری دوست داری؟",
+      "accepted": [
+        "I like reading books.",
+        "I like to read books."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "بعد از like هم -ing و هم to + فعل می‌آید؛ هر دو درست‌اند."
+    },
+    {
+      "id": "a1.places-town.ex.10",
+      "lessonId": "a1.places-town.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو داروخانه کنار بانک است.",
+      "question": "Where can I buy medicine near here?",
+      "questionFa": "نزدیک اینجا کجا می‌توانم دارو بخرم؟",
+      "accepted": [
+        "There is a pharmacy next to the bank.",
+        "The pharmacy is next to the bank."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای مجاورت next to به کار می‌رود: next to the bank."
+    },
+    {
+      "id": "a1.directions.ex.10",
+      "lessonId": "a1.directions.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "مسیر ادارهٔ پست را توضیح بده: مستقیم برو و سر چراغ به چپ بپیچ.",
+      "question": "How do I get to the post office?",
+      "questionFa": "چطور به ادارهٔ پست بروم؟",
+      "accepted": [
+        "Go straight and turn left at the traffic light.",
+        "Go straight and turn left."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای دادن مسیر، فعل امر (go, turn) و ترتیب کارها را بگو: straight، سپس left."
+    },
+    {
+      "id": "a1.transport.ex.10",
+      "lessonId": "a1.transport.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو اتوبوس شمارهٔ پنج به ایستگاه می‌رود.",
+      "question": "Which bus goes to the station?",
+      "questionFa": "کدام اتوبوس به ایستگاه می‌رود؟",
+      "accepted": [
+        "The number five bus goes to the station.",
+        "Take the number five bus."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "شمارهٔ خط با number five می‌آید و فعل go با سوم‌شخص مفرد s می‌گیرد: goes."
+    },
+    {
+      "id": "a1.cafe-restaurant.ex.10",
+      "lessonId": "a1.cafe-restaurant.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "یک ساندویچ سفارش بده.",
+      "question": "Are you ready to order?",
+      "questionFa": "برای سفارش آماده‌اید؟",
+      "accepted": [
+        "Yes, a chicken sandwich, please.",
+        "Yes, I would like a chicken sandwich.",
+        "I'd like a chicken sandwich."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای سفارش، نام غذا با a و سپس please کافی و مؤدبانه است."
+    },
+    {
+      "id": "a1.describing-people.ex.10",
+      "lessonId": "a1.describing-people.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "برادرت را توصیف کن: قدبلند با موی سیاه کوتاه.",
+      "question": "What does your brother look like?",
+      "questionFa": "برادرت چه شکلی است؟",
+      "accepted": [
+        "He is tall and has short black hair.",
+        "He's tall with short black hair."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای ظاهر از look like استفاده می‌کنیم؛ صفت پیش از اسم می‌آید: short black hair."
+    },
+    {
+      "id": "a1.where-i-live.ex.10",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "محل زندگی‌ات را توصیف کن.",
+      "question": "Tell me about your town.",
+      "questionFa": "دربارهٔ شهرت بگو.",
+      "accepted": [
+        "I live in a small town near the mountains.",
+        "I live in a small town."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای محل زندگی in به کار می‌رود: live in a town؛ for a town غلط است."
+    },
+    {
+      "id": "a2.hotel-booking.ex.10",
+      "lessonId": "a2.hotel-booking.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "یک اتاق دو تخته برای دو شب رزرو کن.",
+      "question": "Good evening. How can I help you?",
+      "questionFa": "عصر بخیر. چه کمکی می‌توانم بکنم؟",
+      "accepted": [
+        "I would like to book a double room for two nights.",
+        "I'd like to book a double room for two nights."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای رزرو از would like + to + book استفاده می‌کنیم و مدت اقامت با for می‌آید."
+    },
+    {
+      "id": "a2.plane-ticket.ex.10",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو به استانبول پرواز می‌کنی.",
+      "question": "Where are you flying to?",
+      "questionFa": "به کجا پرواز می‌کنید؟",
+      "accepted": [
+        "I am flying to Istanbul.",
+        "I'm flying to Istanbul."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "مقصد پرواز با to می‌آید و زمان حال استمراری آیندهٔ نزدیک را نشان می‌دهد."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.10",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو رزرو داری، به نام کریمی.",
+      "question": "Do you have a reservation?",
+      "questionFa": "رزرو دارید؟",
+      "accepted": [
+        "Yes, I have a reservation under the name Karimi.",
+        "Yes, a reservation under the name Karimi."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای نامی که رزرو به آن است under the name می‌گوییم، نه with the name."
+    },
+    {
+      "id": "a2.train-bus.ex.10",
+      "lessonId": "a2.train-bus.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو قطار از سکوی دو حرکت می‌کند.",
+      "question": "Which platform does the train leave from?",
+      "questionFa": "قطار از کدام سکو حرکت می‌کند؟",
+      "accepted": [
+        "It leaves from platform two.",
+        "From platform two."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای حرکت از سکو from می‌آید: leaves from platform two."
+    },
+    {
+      "id": "a2.travel-info.ex.10",
+      "lessonId": "a2.travel-info.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو سفر حدود چهار ساعت طول می‌کشد.",
+      "question": "How long does the journey take?",
+      "questionFa": "سفر چقدر طول می‌کشد؟",
+      "accepted": [
+        "It takes about four hours.",
+        "It takes four hours."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "مدت سفر با take می‌آید و تقریب با about بیان می‌شود."
+    },
+    {
+      "id": "a2.holiday-plans.ex.10",
+      "lessonId": "a2.holiday-plans.lesson-01",
+      "order": 10,
+      "type": "speaking",
+      "prompt": "بگو تابستان با خانواده به خارج سفر می‌کنی.",
+      "question": "What are you going to do in the summer?",
+      "questionFa": "تابستان چه کار می‌کنی؟",
+      "accepted": [
+        "I will travel abroad with my family.",
+        "I'm going to travel abroad with my family."
+      ],
+      "skill": "SPEAKING",
+      "explanationFa": "برای برنامهٔ آینده will یا be going to می‌آید؛ abroad قید است و to نمی‌گیرد."
     }
   ]
 }
