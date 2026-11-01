@@ -63,6 +63,21 @@
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
   `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
+- **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at
+  `DefaultKnowledgeEngine.FIRST_HIT_MASTERY` (0.4), not 1.0 — one tap is evidence, not proof, and
+  seeding it at full made a just-met node look learned to the planner and to the skill meters. A
+  node is mastered only when **all three** hold: `repetitions >= MASTERED_MIN_REPETITIONS` (3, so a
+  next-day retest is part of getting there — the first SM-2 interval is one day), the interval
+  clears `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and `mastery >= STRONG_MASTERY` (0.85).
+  That last number is now a **single constant** in `MasteryEngine.kt`, used by the node gate, the
+  planner and the exercise selector, because the interval-only rule used to call a node mastered
+  while the planner — deciding on `mastery >= 0.85` — still treated it as weak.
+- **A lesson's own gate (v30): first-pass accuracy.** The summary calls a lesson «تثبیت‌شده» only at
+  `LessonUiState.CONSOLIDATED_PERCENT` (80) or better **on the first try at each exercise**, else
+  «نیاز به مرور»; a miss the learner fixed on the repeat is progress but not the same as knowing it
+  the first time. The repeat itself is the same question in a **new layout**
+  (`shuffledForDisplay(variant = 1)`, word-bank included), because the order the learner just got
+  wrong is the order they would answer from memory.
 - **Progress is three independent skill tracks, not one blended number (P2).**
   `SkillProfileEngine` (pure, in `domain/engine`) folds three sources into one `SkillProfile` per
   axis: the *persisted* per-skill rows (`skill_mastery`), the curriculum side
@@ -74,7 +89,7 @@
   the EWMA stays single-source. The status is **evidence-gated**: `NOT_STARTED` at zero evidence,
   `BUILDING` below `DEFAULT_BUILDING_EVIDENCE = 5` attempts, and only past that does mastery
   separate `CONSOLIDATING` from `CONSOLIDATED` (0.75) — checking mastery first would call a single
-  correct answer (mastery seeded at 1.0) consolidated. `GetSkillProfilesUseCase` returns
+  correct answer (mastery seeded at `FIRST_HIT_MASTERY`, 0.4) consolidated. `GetSkillProfilesUseCase` returns
   `emptyList()` when no content is seeded, and Home + Progress both render the shared
   `SkillTrackProgress` composable (Home compact), so the two screens cannot disagree. Node
   accounting is not a clean partition and the tests say so: of the 89 nodes, GRAMMAR claims 49,

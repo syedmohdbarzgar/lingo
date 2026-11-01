@@ -25,6 +25,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.ErrorOutline
@@ -178,6 +180,9 @@ fun LessonScreen(
                 state.completed -> LessonSummary(
                     correct = state.correctCount,
                     total = state.askedCount,
+                    firstAttemptCorrect = state.firstAttemptCorrect,
+                    firstAttemptAsked = state.firstAttemptAsked,
+                    consolidated = state.isConsolidated,
                     weakAnswers = state.weakAnswers,
                     weakestDimension = state.weakestDimension,
                     onDone = onExit,
@@ -568,6 +573,9 @@ private fun ModelAnswer(text: String) {
 private fun LessonSummary(
     correct: Int,
     total: Int,
+    firstAttemptCorrect: Int,
+    firstAttemptAsked: Int,
+    consolidated: Boolean,
     weakAnswers: List<String>,
     weakestDimension: MasteryDimension?,
     onDone: () -> Unit,
@@ -590,6 +598,41 @@ private fun LessonSummary(
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
         )
+        // The mastery gate: first-pass accuracy decides whether the lesson is
+        // settled or needs a review. A miss fixed on the repeat is progress, but it
+        // is not the same as knowing it the first time — saying so here is what
+        // makes the next step (review vs. the next lesson) honest. Icon + text,
+        // never colour alone.
+        if (firstAttemptAsked > 0) {
+            val percent = (firstAttemptCorrect * 100) / firstAttemptAsked
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+            ) {
+                Icon(
+                    imageVector = if (consolidated) {
+                        Icons.Filled.CheckCircle
+                    } else {
+                        Icons.Filled.Refresh
+                    },
+                    contentDescription = null,
+                    tint = if (consolidated) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                )
+                Text(
+                    text = if (consolidated) {
+                        "تثبیت‌شده — $percent٪ درست در تلاش اول"
+                    } else {
+                        "نیاز به مرور — $percent٪ درست در تلاش اول"
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+        }
         // Missed items are marked separately instead of gating completion (P4).
         if (weakAnswers.isNotEmpty()) {
             AppCard(Modifier.fillMaxWidth()) {

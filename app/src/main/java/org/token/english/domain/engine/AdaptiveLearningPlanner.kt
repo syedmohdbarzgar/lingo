@@ -207,7 +207,8 @@ class AdaptiveLearningPlanner(
         (count * MINUTES_PER_REVIEW_CARD).coerceAtLeast(MIN_REVIEW_MINUTES)
 
     companion object {
-        const val STRONG_THRESHOLD = 0.85f
+        /** Same bar as the node gate in [DefaultKnowledgeEngine]: one [STRONG_MASTERY]. */
+        const val STRONG_THRESHOLD = STRONG_MASTERY
         const val MAX_ACTIONS = 6
 
         /** Default minutes for a single new/practise/remediate item when no lesson duration is known. */

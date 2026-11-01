@@ -7,6 +7,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.domain.engine.DefaultKnowledgeEngine
 import org.token.english.domain.engine.KnowledgeEvidence
+import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -62,9 +63,17 @@ class KnowledgeEngineTest {
     )
 
     @Test
-    fun `a first correct answer seeds mastery high and schedules tomorrow`() {
+    fun `a first correct answer seeds mastery as started, not known, and schedules tomorrow`() {
         val next = engine.applyAttempt("a", null, correct = true, now = now)
-        assertEquals("first hit counts as known, not half-known", 1f, next.mastery, 0.0001f)
+        // One tap is evidence, not proof: at 1.0 the node looked fully learned and
+        // the planner stopped offering what the learner had just met once.
+        assertEquals(
+            "first hit is 'started'",
+            DefaultKnowledgeEngine.FIRST_HIT_MASTERY,
+            next.mastery,
+            0.0001f,
+        )
+        assertFalse("and certainly not mastered", engine.isMastered(next))
         assertEquals(1, next.exposureCount)
         assertEquals(1, next.intervalDays)
         assertEquals(1, next.repetitions)
@@ -129,8 +138,51 @@ class KnowledgeEngineTest {
 
     @Test
     fun `mastery is only claimed once the interval clears the threshold`() {
-        assertTrue(engine.isMastered(state(intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS)))
-        assertFalse(engine.isMastered(state(intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS - 1)))
+        assertTrue(
+            engine.isMastered(
+                state(
+                    mastery = 0.9f,
+                    intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
+                    repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
+                ),
+            ),
+        )
+        assertFalse(
+            engine.isMastered(
+                state(
+                    mastery = 0.9f,
+                    intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS - 1,
+                    repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `a long interval alone does not make a node mastered`() {
+        // The spaced-repetition schedule can space a node far out while the learner
+        // has only answered it once; the planner judged the same node "weak" by its
+        // mastery, so the two screens disagreed. One gate now covers both.
+        assertFalse(
+            "three recalls are required before the word mastered is used",
+            engine.isMastered(
+                state(
+                    mastery = 0.9f,
+                    intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
+                    repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS - 1,
+                ),
+            ),
+        )
+        assertFalse(
+            "and the mastery has to be strong, not merely scheduled",
+            engine.isMastered(
+                state(
+                    mastery = STRONG_MASTERY - 0.01f,
+                    intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
+                    repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
+                ),
+            ),
+        )
     }
 
     @Test

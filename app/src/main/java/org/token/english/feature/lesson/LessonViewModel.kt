@@ -51,6 +51,13 @@ data class LessonUiState(
     val weakAnswers: List<String> = emptyList(),
     /** Attempts made so far (a missed exercise may be asked again). */
     val askedCount: Int = 0,
+    /**
+     * Attempts and hits on the FIRST try at each exercise. A repeat the learner got
+     * right after a miss is progress, not evidence the lesson landed: the summary
+     * decides «تثبیت‌شده» / «نیاز به مرور» from these, not from [correctCount].
+     */
+    val firstAttemptAsked: Int = 0,
+    val firstAttemptCorrect: Int = 0,
     /** Exercises still waiting in the session queue (excludes the current one). */
     val remainingCount: Int = 0,
     /** True when the just-answered exercise will be asked again later (a miss). */
@@ -86,6 +93,23 @@ data class LessonUiState(
 
     val progress: Float
         get() = if (visibleTotal <= 0) 0f else askedCount.toFloat() / visibleTotal
+
+    /** Accuracy on first tries only, 0..100. */
+    val firstAttemptAccuracyPercent: Int
+        get() = if (firstAttemptAsked == 0) 0 else (firstAttemptCorrect * 100) / firstAttemptAsked
+
+    /**
+     * The lesson landed on the first pass: at least [CONSOLIDATED_PERCENT] of the
+     * exercises answered right the first time. Everything the learner fixed on the
+     * repeat is deliberately not counted — that is what «نیاز به مرور» is for.
+     */
+    val isConsolidated: Boolean
+        get() = firstAttemptAsked > 0 && firstAttemptAccuracyPercent >= CONSOLIDATED_PERCENT
+
+    companion object {
+        /** The mastery gate's bar for a lesson that does not need a review. */
+        const val CONSOLIDATED_PERCENT = 80
+    }
 }
 
 /**
@@ -156,6 +180,9 @@ class LessonViewModel(
 
     /** Exercises already re-asked once — a miss is repeated at most one time. */
     private val requeued = mutableSetOf<String>()
+
+    /** Exercises already answered once: a second appearance is a repeat, not a first try. */
+    private val firstTries = mutableSetOf<String>()
 
     /** Per-dimension mastery of this session's own answers (audit §2/§6). */
     private var profile: MasteryProfile = MasteryProfile()
@@ -378,6 +405,9 @@ class LessonViewModel(
         viewModelScope.launch {
             try {
                 val outcome = submitExercise(exercise, answer, System.currentTimeMillis())
+                // First try or repeat: the summary's «تثبیت‌شده» verdict is about
+                // the first pass only, so a fix on the repeat cannot hide a gap.
+                val firstTry = firstTries.add(exercise.id)
                 // The answer is evidence about a *kind of knowing* too (audit §2):
                 // folding it keeps the session's own weakness visible and lets the
                 // selector steer the rest of the session with it (B-1).
@@ -401,6 +431,12 @@ class LessonViewModel(
                             (it.weakAnswers + outcome.correctAnswer).distinct()
                         },
                         askedCount = it.askedCount + 1,
+                        firstAttemptAsked = if (firstTry) it.firstAttemptAsked + 1 else it.firstAttemptAsked,
+                        firstAttemptCorrect = if (firstTry && outcome.correct) {
+                            it.firstAttemptCorrect + 1
+                        } else {
+                            it.firstAttemptCorrect
+                        },
                         // Not yet re-queued (that happens in next()) — used for the
                         // final-button label so "پایان درس" never lies.
                         repeatsCurrent = !outcome.correct && exercise.id !in requeued,
@@ -430,8 +466,15 @@ class LessonViewModel(
         // item starts with playback closed (the recorder keeps its own state).
         voiceNote.stopRecording()
         voiceNote.stopPlayback()
+        // A repeat shows the same question in a NEW order (P4 follow-through): the
+        // learner who just missed it could otherwise answer from the position they
+        // remembered instead of from the answer.
+        val exercises = s.exercises.toMutableList()
+        val next = exercises.getOrNull(nextIndex)
+        if (next != null && next.id in firstTries) exercises[nextIndex] = respaced(next)
         _state.update {
             it.copy(
+                exercises = exercises,
                 currentIndex = nextIndex,
                 selectedOption = null,
                 textAnswer = "",
@@ -469,6 +512,21 @@ class LessonViewModel(
         val index = candidates.first { s.exercises[it].id == chosen.id }
         pending.remove(index)
         return index
+    }
+
+    /**
+     * The same exercise with its answer positions moved: options re-shuffled with a
+     * different variant, word bank re-ordered. Nothing else about it changes.
+     */
+    private fun respaced(exercise: Exercise): Exercise = when (exercise) {
+        is Exercise.MultipleChoice -> exercise.shuffledForDisplay(variant = 1)
+        is Exercise.Translation -> if (exercise.bank.isEmpty()) {
+            exercise
+        } else {
+            exercise.copy(bank = exercise.bank.shuffled(Random(exercise.id.hashCode() + 1)))
+        }
+
+        else -> exercise
     }
 
     /**

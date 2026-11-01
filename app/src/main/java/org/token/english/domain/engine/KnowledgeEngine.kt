@@ -28,14 +28,16 @@ class DefaultKnowledgeEngine(
 
     /**
      * @param state the node's current state, or `null` the first time it is seen.
-     *   A first correct answer seeds mastery at 1.0 and a first miss at 0.0, so an
-     *   untouched node is never mistaken for a half-learned one.
+     *   A first answer is evidence, not proof: a hit seeds [FIRST_HIT_MASTERY] (0.4)
+     *   and a miss 0.0. Seeding a first hit at 1.0 made a single tap look like full
+     *   knowledge — the planner then stopped offering the node and the meter showed
+     *   100% for the very thing the learner had just met.
      */
     fun applyAttempt(itemId: String, state: KnowledgeState?, correct: Boolean, now: Long): KnowledgeState {
         val result = if (correct) ReviewResult.GOOD else ReviewResult.AGAIN
         val scheduled = scheduler.schedule(state.toReviewItem(itemId, now), result, now)
         val mastery = when (state) {
-            null -> if (correct) 1f else 0f
+            null -> if (correct) FIRST_HIT_MASTERY else 0f
             else -> masteryEngine.update(state.mastery, correct)
         }
         return KnowledgeState(
@@ -57,15 +59,33 @@ class DefaultKnowledgeEngine(
     }
 
     /**
-     * A node counts as mastered once its interval clears the scheduler's
-     * threshold — the same definition the review queue uses, so "mastered" cannot
-     * mean two different things in two screens.
+     * A node is mastered only when all three hold: it came back [MASTERED_MIN_REPETITIONS]
+     * times and was answered right (the scheduler's first interval is one day, so a
+     * next-day retest is part of getting there), its interval clears the scheduler's
+     * own threshold, and its mastery is [STRONG_MASTERY].
+     *
+     * The interval alone used to be the test, which called a node mastered on the
+     * spaced-repetition schedule while the planner — using `mastery >= 0.85` — still
+     * treated it as weak: two screens, two answers for the same node.
      */
     fun isMastered(state: KnowledgeState): Boolean =
-        state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS
+        state.repetitions >= MASTERED_MIN_REPETITIONS &&
+            state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS &&
+            state.mastery >= STRONG_MASTERY
 
     /** True when the node is due to come back (used by the daily plan, next slice). */
     fun isDue(state: KnowledgeState, now: Long): Boolean = state.nextReviewAt <= now
+
+    companion object {
+        /**
+         * Mastery after the first correct answer. Enough to show as "started" and to
+         * keep the node in the plan; not enough to look learned.
+         */
+        const val FIRST_HIT_MASTERY = 0.4f
+
+        /** Correct recalls before "mastered" is claimable — one hit is a guess. */
+        const val MASTERED_MIN_REPETITIONS = 3
+    }
 
     private fun KnowledgeState?.toReviewItem(itemId: String, now: Long): ReviewItem = ReviewItem(
         contentId = itemId,

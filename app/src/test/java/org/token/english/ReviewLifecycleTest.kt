@@ -26,31 +26,32 @@ class ReviewLifecycleTest {
 
     @Test
     fun `new node with three correct answers then a lapse then recovery`() {
-        // New + first correct: scheduled a day out, ease untouched, mastery full.
+        // New + first correct: scheduled a day out, ease untouched, mastery "started".
+        // One hit is not knowledge: the seed is 0.4, and the EWMA climbs from there.
         val first = step(null, correct = true)
-        assertEquals(1f, first.mastery, 0.0001f)
+        assertEquals(DefaultKnowledgeEngine.FIRST_HIT_MASTERY, first.mastery, 0.0001f)
         assertEquals(1, first.intervalDays)
         assertEquals(2.5f, first.easeFactor, 0.0001f)
         assertEquals(1, first.repetitions)
         assertEquals(1, first.consecutiveCorrect)
         assertTrue(first.nextReviewAt > now)
 
-        // Second correct: interval stretches, mastery already saturated.
+        // Second correct: interval stretches, mastery climbs by one fifth.
         val second = step(first, correct = true)
-        assertEquals(1f, second.mastery, 0.0001f)
+        assertEquals(0.52f, second.mastery, 0.0001f)
         assertEquals(3, second.intervalDays)
         assertEquals(2.5f, second.easeFactor, 0.0001f)
         assertEquals(2, second.repetitions)
 
-        // Third correct: interval keeps growing.
+        // Third correct: interval keeps growing, mastery still short of strong.
         val third = step(second, correct = true)
-        assertEquals(1f, third.mastery, 0.0001f)
+        assertEquals(0.616f, third.mastery, 0.0001f)
         assertEquals(8, third.intervalDays)
         assertEquals(3, third.repetitions)
 
         // A miss: mastery drops a fifth, ease loses 0.2, card returns within the session.
         val lapse = step(third, correct = false)
-        assertEquals(0.8f, lapse.mastery, 0.0001f)
+        assertEquals(0.4928f, lapse.mastery, 0.0001f)
         assertEquals(0, lapse.intervalDays)
         assertEquals(2.3f, lapse.easeFactor, 0.0001f)
         assertEquals(now + tenMinutes, lapse.nextReviewAt)
@@ -59,7 +60,7 @@ class ReviewLifecycleTest {
 
         // Recovery: mastery climbs gradually back, interval restarts at one day.
         val recovery = step(lapse, correct = true)
-        assertEquals(0.84f, recovery.mastery, 0.0001f)
+        assertEquals(0.59424f, recovery.mastery, 0.0001f)
         assertEquals(1, recovery.intervalDays)
         assertEquals(2.3f, recovery.easeFactor, 0.0001f)
         assertTrue(recovery.nextReviewAt > now)

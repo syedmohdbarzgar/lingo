@@ -370,6 +370,70 @@ class LessonViewModelTest {
     }
 
     @Test
+    fun `a repeat shows the same question in a different order`() {
+        val h = Harness()
+        h.lessonRepo.exercises[lessonId] = listOf(
+            Exercise.MultipleChoice(
+                id = "$lessonId.ex.09",
+                lessonId = lessonId,
+                question = "Choose",
+                questionFa = null,
+                options = listOf("a", "b", "c", "d"),
+                correctIndex = 1,
+                skill = Skill.VOCABULARY,
+                explanation = null,
+            ),
+        )
+        val vm = h.build()
+
+        val firstOrder = (vm.state.value.currentExercise as Exercise.MultipleChoice).options
+        val firstCorrect = firstOrder[(vm.state.value.currentExercise as Exercise.MultipleChoice).correctIndex]
+
+        answerWrong(vm)
+        vm.onEvent(LessonEvent.Next)
+
+        // The same question, laid out differently: a learner who missed it must not
+        // answer from the position they remember.
+        val repeat = vm.state.value.currentExercise as Exercise.MultipleChoice
+        assertTrue("the repeat is a new order", repeat.options != firstOrder)
+        assertEquals("the answer is the same, only its place moved", firstCorrect, repeat.options[repeat.correctIndex])
+    }
+
+    @Test
+    fun `a miss fixed on the repeat still leaves the lesson needing review`() {
+        val h = Harness().withOneExercise()
+        val vm = h.build()
+
+        answerWrong(vm)
+        vm.onEvent(LessonEvent.Next)
+        answerCorrectly(vm)
+        vm.onEvent(LessonEvent.Next)
+
+        val done = vm.state.value
+        assertTrue("the lesson still finishes", done.completed)
+        assertEquals("two attempts, one first try", 2, done.askedCount)
+        assertEquals(1, done.firstAttemptAsked)
+        assertEquals("the fix came on the repeat, not the first try", 0, done.firstAttemptCorrect)
+        assertEquals(0, done.firstAttemptAccuracyPercent)
+        assertFalse("so the lesson needs a review", done.isConsolidated)
+    }
+
+    @Test
+    fun `a lesson answered right the first time is consolidated`() {
+        val h = Harness().withOneExercise()
+        val vm = h.build()
+
+        answerCorrectly(vm)
+        vm.onEvent(LessonEvent.Next)
+
+        val done = vm.state.value
+        assertTrue(done.completed)
+        assertEquals(1, done.firstAttemptAsked)
+        assertEquals(100, done.firstAttemptAccuracyPercent)
+        assertTrue("80% first-pass accuracy or better", done.isConsolidated)
+    }
+
+    @Test
     fun `an answered dimension is persisted for the next session (Room v6)`() {
         val h = Harness().withOneExercise()
         val vm = h.build()

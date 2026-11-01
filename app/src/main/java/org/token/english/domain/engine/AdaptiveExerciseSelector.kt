@@ -51,6 +51,7 @@ class AdaptiveExerciseSelector(
         order(exercises, profile).firstOrNull()
 
     companion object {
-        const val STRONG_THRESHOLD = 0.85f
+        /** Same bar as the node gate in [DefaultKnowledgeEngine]: one [STRONG_MASTERY]. */
+        const val STRONG_THRESHOLD = STRONG_MASTERY
     }
 }
