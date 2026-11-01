@@ -1,5 +1,5 @@
 {
-  "contentVersion": 30,
+  "contentVersion": 31,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -11477,7 +11477,9 @@
       "questionFa": "اهل کجایی؟",
       "accepted": [
         "I am from Iran.",
-        "I'm from Iran."
+        "I'm from Iran.",
+        "I live in Iran.",
+        "I come from Iran."
       ],
       "skill": "SPEAKING",
       "explanationFa": "برای ملیت و کشور از I am from + نام کشور استفاده می‌کنیم، نه I am of."
@@ -11571,7 +11573,10 @@
       "questionFa": "شغلت چیست؟",
       "accepted": [
         "I am a teacher.",
-        "I'm a teacher."
+        "I'm a teacher.",
+        "I work as a teacher.",
+        "I am a student.",
+        "I'm a student."
       ],
       "skill": "SPEAKING",
       "explanationFa": "پیش از نام شغل a یا an می‌آید: I am a teacher."
@@ -11676,8 +11681,8 @@
       "order": 10,
       "type": "speaking",
       "prompt": "بگو سرت درد می‌کند.",
-      "question": "What is the matter? Does your head hurt?",
-      "questionFa": "چه شده؟ سرت درد می‌کند؟",
+      "question": "What is the matter?",
+      "questionFa": "چه شده؟",
       "accepted": [
         "Yes, my head hurts.",
         "My head hurts."
@@ -11735,15 +11740,15 @@
       "lessonId": "a1.directions.lesson-01",
       "order": 10,
       "type": "speaking",
-      "prompt": "مسیر ادارهٔ پست را توضیح بده: مستقیم برو و سر چراغ به چپ بپیچ.",
+      "prompt": "مسیر ادارهٔ پست را بگو: سر چهارراه به چپ بپیچ.",
       "question": "How do I get to the post office?",
       "questionFa": "چطور به ادارهٔ پست بروم؟",
       "accepted": [
-        "Go straight and turn left at the traffic light.",
-        "Go straight and turn left."
+        "Turn left at the post office.",
+        "Turn left at the post office, please."
       ],
       "skill": "SPEAKING",
-      "explanationFa": "برای دادن مسیر، فعل امر (go, turn) و ترتیب کارها را بگو: straight، سپس left."
+      "explanationFa": "برای گفتن مسیر یک جا: فعل امر (turn) + at + مکان. این جمله با نمونهٔ A2 یکی نیست، چون هر درس هدف خودش را دارد."
     },
     {
       "id": "a1.transport.ex.10",
@@ -11841,15 +11846,15 @@
       "lessonId": "a2.hotel-checkin.lesson-01",
       "order": 10,
       "type": "speaking",
-      "prompt": "بگو رزرو داری، به نام کریمی.",
+      "prompt": "بگو رزرو داری، برای دو شب.",
       "question": "Do you have a reservation?",
       "questionFa": "رزرو دارید؟",
       "accepted": [
-        "Yes, I have a reservation under the name Karimi.",
-        "Yes, a reservation under the name Karimi."
+        "Yes, I have a reservation for two nights.",
+        "Yes, a reservation for two nights."
       ],
       "skill": "SPEAKING",
-      "explanationFa": "برای نامی که رزرو به آن است under the name می‌گوییم، نه with the name."
+      "explanationFa": "برای رزرو از have a reservation استفاده می‌کنیم و مدت اقامت با for می‌آید: for two nights."
     },
     {
       "id": "a2.train-bus.ex.10",

@@ -1,0 +1,8 @@
+# Proper nouns this app deliberately allows in SPOKEN (speaking-item) answers.
+#
+# A Vosk recogniser built with a constrained grammar silently drops a word it does
+# not know, so a name that is missing from the model makes the take impossible to
+# pass. Every entry here was reviewed by a human; anything else must be reworded.
+# Checked by scripts/check_speech_vocabulary.mjs.
+iran
+istanbul
