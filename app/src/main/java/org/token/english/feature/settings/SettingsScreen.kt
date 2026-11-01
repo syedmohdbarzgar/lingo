@@ -51,6 +51,8 @@ import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.StorePage
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.DialogShape
+import org.token.english.core.designsystem.SheetShape
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
@@ -275,6 +277,9 @@ fun SettingsScreen(
         ModalBottomSheet(
             onDismissRequest = { infoPage = null },
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            // Explicit shape: the Material3 default resolves from the theme's
+            // extraLarge, which is a pill here, so the sheet came up a capsule.
+            shape = SheetShape,
         ) {
             Text(
                 text = page.title,
@@ -301,6 +306,9 @@ fun SettingsScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
+            // Same reason as the sheet above: without this the dialog inherits the
+            // pill token and its corners read as a lozenge.
+            shape = DialogShape,
             title = { Text("پیشرفت پاک شود؟") },
             text = {
                 Text("درس‌ها، واژه‌های در حال مرور و آمار یادگیری از دستگاه حذف می‌شوند. این عمل قابل بازگشت نیست.")

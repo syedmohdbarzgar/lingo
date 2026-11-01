@@ -39,7 +39,11 @@ Persian coverage; the app keeps Vazirmatn for Persian UI and the system face for
 | Border | `#D9DEE5` | Hairline, always paired with the shadow |
 | Dark canvas / surface / border | `#0E0E10` / `#17171A` / `#2B2B31` | Accent lightens to `#60A5FA` (`Brand.Primary400`), container `#17366F` |
 
-**Shape:** cards 22dp (`shapes.large`), fields 14dp, **buttons and chips are pills**
+**Shape:** cards 22dp (`shapes.large`), fields 14dp, **buttons and chips are pills** — and
+**dialogs 20dp / bottom sheets 22dp top corners** (`DialogShape` / `SheetShape`). Material3's dialog
+and sheet defaults resolve from `shapes.extraLarge`, which is the pill token here, so every dialog and
+sheet came up as a capsule until both call sites were given their own shape (v31, user report:
+«خمیدگی گوشه‌ها در دیالوگ و bottom sheet خیلی زیاد است»).
 (`shapes.extraLarge = 50%`). **Shadow:** 10dp elevation at 8% ink (`AppCard`) — the shadow is what
 stops a card reading as paper; a hairline alone never did.
 

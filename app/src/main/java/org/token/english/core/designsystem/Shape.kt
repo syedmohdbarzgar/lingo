@@ -21,3 +21,14 @@ val AppShapes = Shapes(
 
 /** Fully rounded action shape (Xiaomi's 999px button). */
 val PillShape = RoundedCornerShape(percent = 50)
+
+/**
+ * Dialogs and sheets get their own tokens (v31). Material3 resolves
+ * `AlertDialogDefaults.shape` and `BottomSheetDefaults.ExpandedShape` from
+ * `MaterialTheme.shapes.extraLarge` — which this design system uses for **pills** — so
+ * every dialog and every sheet came up as a 50% capsule. A sheet is a surface, not a
+ * button: it takes the card's 22dp on its top corners, and a dialog sits a touch
+ * tighter at 20dp.
+ */
+val DialogShape = RoundedCornerShape(20.dp)
+val SheetShape = RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp)
