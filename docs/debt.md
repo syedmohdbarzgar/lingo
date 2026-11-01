@@ -93,9 +93,14 @@
   audit).** The scorer now grades every accepted answer, folds recogniser homophones, forgives one
   edit on a long word, strips `please`/`thank you`, rejects a take that repeats the partner, and the
   recogniser is constrained to the turn's own sentences (`ConversationScorer.speechGrammar` via
-  `SpeechBus.grammar`). The service now ends a take by itself after 4 s of silence once it has
-  heard something (long enough that a three-second pause for thought still keeps the sentence), and a take invalidated by a STOP or a newer START while the model loads can no
-  longer open a second recorder (the take-generation counter in `SpeechRecognitionService`).
+  `SpeechBus.grammar`). The service now ends a take by itself: ~1.2 s after a transcript that already
+  *is* one of the turn's accepted answers (`SpeechBus.acceptedAnswer`, the scorer's own verdict), and
+  4 s of silence otherwise once it has heard something (long enough that a three-second pause for
+  thought still keeps the sentence). A take invalidated by a STOP or a newer START while the model
+  loads can no longer open a second recorder, and a take the learner ended still publishes
+  `isListening = false` — both from the take-generation counter in `SpeechRecognitionService` (which
+  owns the mic) and the newest-START rule (which owns the screen state). The phone check that found
+  the latter bug: «پایان پاسخ» closed the mic but the screen sat on «در حال صحبت…» forever.
   **Still deliberately not done:** `VoskManager.release()` on screen exit — ~300 MB of native model
   memory lives until process death, and releasing it pays a reload on the next visit, so it needs a
   device measurement rather than a guess. The backup rule now excludes `filesDir/vosk/` — that one

@@ -195,7 +195,11 @@ object ConversationScorer {
             .replace(Regex("[\u2018\u2019`\u00b4]"), "'")
             .split(Regex("\\s+"))
             .map { word -> word.replace(Regex("[^a-z0-9']"), "") }
-            .filter { it.isNotEmpty() }
+            // Stripping the brackets of the recogniser's `[unk]` leaves the word
+            // "unk", which counted as something the learner said: it darkened
+            // `similarity` for a take that was correct and pushed an item to
+            // «نزدیک» on a device take of "[unk] i am going to visit my family".
+            .filter { it.isNotEmpty() && it != UNK_WORD }
             .flatMap { word -> CONTRACTIONS[word]?.split(' ') ?: listOf(word) }
 
     /**
@@ -276,6 +280,9 @@ object ConversationScorer {
         }
         return previous[b.length]
     }
+
+    /** Vosk's `[unk]` after punctuation is stripped — a marker, not a word. */
+    private const val UNK_WORD = "unk"
 
     /** A take must share this much of the question before it counts as an echo. */
     private const val ECHO_MIN_RATIO = 0.6

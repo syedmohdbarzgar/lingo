@@ -618,6 +618,49 @@ class ConversationPracticeViewModelTest {
     }
 
     @Test
+    fun `a take that already is the answer may close before the silence window`() {
+        val answer = "Go straight and turn left at the traffic light."
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How do I get to the station?", answer),
+                ),
+            ),
+        )
+        // Before the learner answers there is nothing the service could end early on.
+        assertFalse(SpeechBus.acceptedAnswer("go straight and turn left at the traffic light"))
+
+        vm.onEvent(ConversationEvent.StartTake)
+
+        // The service asks this every buffer: a complete accepted answer closes the
+        // take ~1.2 s after the last word instead of holding the mic for four.
+        for (full in listOf(answer, "um go straight and turn left at the traffic light okay")) {
+            assertTrue("not a complete answer: $full", SpeechBus.acceptedAnswer(full))
+        }
+        // Half a sentence, or the partner's question, keeps the full window.
+        for (partial in listOf("go straight and turn left", "how do i get to the station")) {
+            assertFalse("closed the take early on: $partial", SpeechBus.acceptedAnswer(partial))
+        }
+    }
+
+    @Test
+    fun `leaving the screen forgets the turn's answers`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+        vm.onEvent(ConversationEvent.StartTake)
+        assertTrue(SpeechBus.acceptedAnswer("i am fine thank you"))
+
+        // Process-wide by design, so a stale list would let the next turn end a take
+        // on the previous turn's sentence.
+        SpeechBus.reset()
+        assertFalse(SpeechBus.acceptedAnswer("i am fine thank you"))
+    }
+
+    @Test
     fun `an echo of the partner's line is not accepted as the answer`() {
         val vm = viewModel(
             repository(

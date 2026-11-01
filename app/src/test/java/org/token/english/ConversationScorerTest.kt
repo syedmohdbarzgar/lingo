@@ -37,6 +37,26 @@ class ConversationScorerTest {
     }
 
     @Test
+    fun `the recogniser's unknown marker is not a word the learner said`() {
+        // Vosk answers a constrained grammar with `[unk]` for anything outside it.
+        // Stripping punctuation off that token left the word "unk" behind, which
+        // counted as content the learner had said: on a device take of
+        // "[unk] i am going to visit my family" the sentence was marked down for a
+        // word nobody spoke, and the placeholder itself was shown under «شما گفتید».
+        assertEquals(
+            "i am going to visit my family",
+            ConversationScorer.normalize("[unk] I'm going to visit my family."),
+        )
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess(
+                spoken = "[unk] [unk] i am going to visit my family",
+                target = "I'm going to visit my family.",
+            ),
+        )
+    }
+
+    @Test
     fun `a real word change drops it out of correct`() {
         val verdict = ConversationScorer.assess(
             spoken = "go straight and turn right at the traffic light",

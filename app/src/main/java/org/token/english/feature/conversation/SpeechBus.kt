@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import org.token.english.domain.engine.ConversationScorer
+import org.token.english.domain.engine.SpeakingVerdict
 
 /** Why a take could not be produced. Every case has Persian copy on the screen. */
 enum class SpeechError {
@@ -45,6 +47,35 @@ object SpeechBus {
     var grammar: String? = null
 
     /**
+     * Every reply the current turn accepts, as authored. Set by the ViewModel next
+     * to [grammar] and read by the service for exactly one decision: a take whose
+     * transcript already *is* an accepted answer can close soon after the last word
+     * instead of waiting out the whole silence window (see
+     * [SpeechRecognitionService.runCaptureLoop]). The service still does not grade —
+     * [acceptedAnswer] asks [ConversationScorer], it does not form its own verdict.
+     */
+    @Volatile
+    var acceptedAnswers: List<String> = emptyList()
+
+    /**
+     * The current turn is A1: the take waits longer before closing on silence
+     * ([EndOfTakePolicy.HESITANT_SILENCE_MS]). A beginner pausing to find the next
+     * word is not finished, and a four-second cut reads as a speed test.
+     */
+    @Volatile
+    var hesitant: Boolean = false
+
+    /**
+     * True when [spoken] already reads back as one of the turn's accepted replies.
+     * The `[unk]` marker and a repeated partner line are not answers, so they stay
+     * [SpeakingVerdict.RETRY] and the take keeps its full silence window.
+     */
+    internal fun acceptedAnswer(spoken: String): Boolean =
+        spoken.isNotBlank() &&
+            acceptedAnswers.isNotEmpty() &&
+            ConversationScorer.assessBest(spoken, acceptedAnswers) == SpeakingVerdict.CORRECT
+
+    /**
      * Called from the service's capture thread, the main thread and coroutines.
      * `update` retries against the latest value; assigning `value` from several
      * threads dropped updates (a lost `isListening = false` left a take ungraded
@@ -58,6 +89,8 @@ object SpeechBus {
     internal fun reset() {
         _state.value = SpeechState()
         grammar = null
+        acceptedAnswers = emptyList()
+        hesitant = false
     }
 }
 

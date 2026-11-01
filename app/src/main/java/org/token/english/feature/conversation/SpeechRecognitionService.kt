@@ -105,11 +105,24 @@ class SpeechRecognitionService : Service() {
     }
 
     private fun startRecording() {
-        // Numbered before the early return so a START that arrives while a take is
-        // already capturing still invalidates nothing: it is simply ignored, and
-        // the take on the mic keeps its number.
         val take = takeSequence.incrementAndGet()
-        if (captureThread != null) return
+        // A take is still on its way out (its thread has not exited yet). It no
+        // longer owns the mic, and this START is served by its finishCapture —
+        // dropping it left «تلاش دوباره» pressed right after «پایان پاسخ» with a
+        // spinner and no take at all.
+        if (captureThread != null) {
+            stopRecording() // clears activeTake: the old take no longer owns the mic
+            return
+        }
+        beginTake(take)
+    }
+
+    /**
+     * Loads the model and opens the mic for [take]. A newer START only replaces the
+     * take when its load finishes and finds itself still current; this one is
+     * never cancelled mid-load by anything but a STOP, which the checks below see.
+     */
+    private fun beginTake(take: Int) {
         activeTake = take
 
         serviceScope.launch {
@@ -167,8 +180,20 @@ class SpeechRecognitionService : Service() {
         }
     }
 
-    /** Whether [take] is the one still allowed to run. */
+    /** Whether [take] is the one still allowed to open the mic. */
     private fun isCurrentTake(take: Int): Boolean = take != 0 && take == activeTake
+
+    /**
+     * Whether [take] may still publish what the screen shows. The newest START owns
+     * the screen: a STOP does *not* take that away (the screen must still learn the
+     * take ended), while a newer take does — its own publish is the truth then.
+     *
+     * Using [activeTake] here instead was a real bug on the phone: a STOP clears it
+     * before the capture loop exits, so the take that was ended *by the learner*
+     * looked superseded, never published `isListening = false`, and the screen sat
+     * on «در حال صحبت…» with the microphone long closed.
+     */
+    private fun ownsScreenState(take: Int): Boolean = take != 0 && take == takeSequence.get()
 
     /**
      * Opens the mic for [take]. Runs after the model load (a background
@@ -293,7 +318,9 @@ class SpeechRecognitionService : Service() {
         // flight, the take ends on its own. The window is deliberately long: a
         // pause for thought is not the end of the sentence, and an auto-end that
         // fires mid-sentence brings back the «اگر مکث کنم جمله‌ام می‌شکند» report
-        // this service already had to fix once (see [runCaptureLoop]).
+        // this service already had to fix once (see [runCaptureLoop]). The exact
+        // windows live in [EndOfTakePolicy]; a take that is already a whole accepted
+        // answer gets a shorter fuse, and an A1 turn a longer one.
         var heardSomething = false
         var lastSoundAt = 0L
         try {
@@ -305,7 +332,9 @@ class SpeechRecognitionService : Service() {
                     // was yanked out from under us — surface it, don't spin. Not
                     // when the learner ended the take: `read` reports the same
                     // negative codes for a stream stopped on purpose.
-                    if (keepRecording) SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+                    if (keepRecording && isCurrentTake(take)) {
+                        SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+                    }
                     break
                 }
                 val bytes = ByteArray(read * 2)
@@ -337,14 +366,24 @@ class SpeechRecognitionService : Service() {
                     }
                     SpeechBus.publish { it.copy(partial = partial) }
                 }
-                // Only a take that has already recognised something can end by
-                // silence: a learner who has not spoken yet keeps an open mic
-                // instead of losing the take before they start.
-                if (heardSomething &&
-                    inFlight.isBlank() &&
-                    SystemClock.elapsedRealtime() - lastSoundAt >= SILENCE_END_MS
+                // The exit is a plain `break`, never `keepRecording = false`: that
+                // flag belongs to the service, and clearing it here stopped a NEW
+                // take the learner had already started with «تلاش دوباره» (the old
+                // take's trailing silence then killed the new take's loop).
+                //
+                // Whether this *should* be the last iteration is the policy's call
+                // (EndOfTakePolicy): a complete answer closes on a short fuse, any
+                // other take on silence, and an A1 turn gets longer still.
+                val quietFor = SystemClock.elapsedRealtime() - lastSoundAt
+                if (
+                    EndOfTakePolicy.shouldEnd(
+                        heardSomething = heardSomething,
+                        inFlight = inFlight.isNotBlank(),
+                        silenceMs = quietFor,
+                        completeAnswer = SpeechBus.acceptedAnswer(transcript.toString()),
+                        hesitant = SpeechBus.hesitant,
+                    )
                 ) {
-                    keepRecording = false
                     break
                 }
             }
@@ -358,9 +397,11 @@ class SpeechRecognitionService : Service() {
         } catch (t: Throwable) {
             // A take the learner ended is not a failure; only a recorder that
             // died underneath a take still meant to be running is.
-            if (keepRecording) SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+            if (keepRecording && isCurrentTake(take)) {
+                SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+            }
         } finally {
-            finishCapture(record, rec)
+            finishCapture(record, rec, take)
         }
     }
 
@@ -373,20 +414,48 @@ class SpeechRecognitionService : Service() {
         }
     }
 
-    /** Joins the take's segments with single spaces, skipping empty ones. */
-    private fun appendSegment(transcript: StringBuilder, segment: String) {
+    /**
+     * Joins the take's segments with single spaces, skipping empty ones and the
+     * word Vosk repeats across the join.
+     *
+     * A segment restarts at the last word the previous one already emitted, so a
+     * pause produced "the the bank is on the left …" and "… stay at home home" —
+     * the recogniser joining itself, not the learner repeating a word. Shown to the
+     * learner as their own transcript, that reads as a stutter.
+     */
+    private fun appendSegment(transcript: StringBuilder, rawSegment: String) {
+        var segment = rawSegment.trim()
         if (segment.isBlank()) return
+        val previous = transcript.toString().trim()
+        if (previous.isNotEmpty() &&
+            previous.substringAfterLast(' ').equals(segment.substringBefore(' '), ignoreCase = true)
+        ) {
+            segment = segment.substringAfter(' ', "")
+            if (segment.isBlank()) return
+        }
         if (transcript.isNotEmpty()) transcript.append(' ')
         transcript.append(segment)
     }
 
     /** Main-thread cleanup after the capture thread is done. */
-    private fun finishCapture(record: AudioRecord, rec: Recognizer) {
-        cleanup(record, rec)
+    private fun finishCapture(record: AudioRecord, rec: Recognizer, take: Int) {
+        cleanup(record, rec, take)
         // The loop owns its thread, so it also clears the field: a stale, finished
         // thread left there made [startRecording] believe a take was still running
         // and refuse the next one.
         if (captureThread === Thread.currentThread()) captureThread = null
+        val newest = takeSequence.get()
+        if (newest != take) {
+            // A START landed while this take was still leaving; serve it now that
+            // the microphone is free (see [startRecording]).
+            if (activeTake == 0) beginTake(newest)
+            return
+        }
+        // Only the take that is still current owns the service. An automatic end
+        // that fires just as «تلاش دوباره» starts a new take used to detach the
+        // foreground state and stop the service underneath the take that had just
+        // begun — the new take then looked live with nothing recording.
+        if (!isCurrentTake(take)) return
         try {
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (t: Throwable) {
@@ -460,7 +529,7 @@ class SpeechRecognitionService : Service() {
         captureThread = null
     }
 
-    private fun cleanup(record: AudioRecord, rec: Recognizer) {
+    private fun cleanup(record: AudioRecord, rec: Recognizer, take: Int) {
         try {
             record.stop()
         } catch (t: Throwable) {
@@ -472,6 +541,11 @@ class SpeechRecognitionService : Service() {
         } catch (t: Throwable) {
             // Already closed.
         }
+        // A finished take may already have been replaced by a newer one. Clearing
+        // the live take's fields or publishing «not listening» here would make the
+        // new take look dead — and the screen grades the end of a take by that
+        // flag, so the learner's next sentence would be scored against the old one.
+        if (!ownsScreenState(take)) return
         audioRecord = null
         recognizer = null
         SpeechBus.publish { it.copy(isListening = false, isPreparing = false) }
@@ -479,17 +553,30 @@ class SpeechRecognitionService : Service() {
 
     /** Vosk result JSON: `{"text": "go straight and turn left"}`. */
     private fun parseText(json: String): String = try {
-        JSONObject(json).optString("text").trim()
+        cleanRecognised(JSONObject(json).optString("text"))
     } catch (t: Throwable) {
         ""
     }
 
     /** Vosk partial JSON: `{"partial": "go straight and"}`. */
     private fun parsePartial(json: String): String = try {
-        JSONObject(json).optString("partial").trim()
+        cleanRecognised(JSONObject(json).optString("partial"))
     } catch (t: Throwable) {
         ""
     }
+
+    /**
+     * Drops the recogniser's `[unk]` placeholder. The grammar is asked for it so a
+     * different take is not forced into one of the allowed sentences, but it is a
+     * marker, not speech: shown verbatim it reached the learner as "[unk] [unk]
+     * [unk] i am going to visit my family" under «شما گفتید», and as a word it
+     * darkened the score of a sentence that had been said correctly.
+     */
+    private fun cleanRecognised(raw: String): String =
+        raw.split(Regex("\\s+"))
+            .filter { it.isNotBlank() && !it.equals(UNK_TOKEN, ignoreCase = true) }
+            .joinToString(" ")
+            .trim()
 
     private fun assetsMissing(t: Throwable?): Boolean =
         t is java.io.FileNotFoundException || t?.message?.contains("fetch_vosk_model") == true
@@ -536,6 +623,9 @@ class SpeechRecognitionService : Service() {
          * what the learner meant to say.
          */
         private const val SILENCE_END_MS = 4_000L
+
+        /** Vosk's unknown-word marker; it is never part of what the learner said. */
+        private const val UNK_TOKEN = "[unk]"
 
         /**
          * Start (or restart) a take. Safe to call repeatedly — the service dedupes.

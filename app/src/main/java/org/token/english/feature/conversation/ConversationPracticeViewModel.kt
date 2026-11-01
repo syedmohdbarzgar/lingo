@@ -12,6 +12,7 @@ import org.token.english.core.audio.Speaker
 import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.repository.LessonRepository
 
 /**
@@ -27,6 +28,8 @@ data class DialogueTurn(
     val lessonId: String,
     /** Persian lesson title: a turn is never a loose sentence, it belongs to a lesson. */
     val lessonTitleFa: String,
+    /** The lesson's CEFR level — an A1 turn gets longer to answer (checklist 1.5). */
+    val level: LearningLevel,
     /**
      * The partner's English line, spoken by the device. Null on a plain
      * repeat-the-model item, where the thing to say *is* the model.
@@ -239,6 +242,7 @@ class ConversationPracticeViewModel(
                                     exerciseId = ex.id,
                                     lessonId = lesson.id,
                                     lessonTitleFa = lesson.titleFa,
+                                    level = lesson.level,
                                     partnerLine = ex.question?.takeIf { it.isNotBlank() },
                                     partnerLineFa = ex.questionFa?.takeIf { it.isNotBlank() },
                                     taskFa = ex.prompt,
@@ -309,8 +313,15 @@ class ConversationPracticeViewModel(
         if (_state.value.isPartnerSpeaking) return
         // Constrain the recogniser to this turn's own sentences before the service
         // opens the microphone; an open vocabulary is what misheard accented
-        // English and made a correct answer look like a miss.
-        _state.value.current?.let { SpeechBus.grammar = ConversationScorer.speechGrammar(it.answers) }
+        // English and made a correct answer look like a miss. The same answers also
+        // let the service end the take as soon as the sentence is complete.
+        _state.value.current?.let {
+            SpeechBus.grammar = ConversationScorer.speechGrammar(it.answers)
+            SpeechBus.acceptedAnswers = it.answers
+            // A1 gets the long pause (checklist 1.5): the learner is assembling the
+            // sentence, not finished with it.
+            SpeechBus.hesitant = it.level == LearningLevel.A1
+        }
         // Deliberately NOT `clearTake()`: that stops the recogniser, and a stop
         // racing the start is what tore the foreground service down before it
         // could call startForeground() (process crash, Android 12). A new take
