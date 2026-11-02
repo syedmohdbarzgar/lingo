@@ -214,6 +214,27 @@ sealed interface Exercise {
     ) : Exercise
 }
 
+/**
+ * The exercise format an answer came *through* — the "distinct types" in the learner
+ * model (checklist 2.1). A node's mastery can be strong after one format the learner
+ * has learned to pattern-match; answering it in a second format is transfer, and that
+ * is a different claim. Ordered (ordinal = bit) because [KnowledgeState] records the
+ * formats seen as a bitmask, so the same format is never counted twice.
+ */
+enum class ExerciseFormat {
+    MULTIPLE_CHOICE,
+    FILL_BLANK,
+    WORD_RECALL,
+    TRANSLATION,
+    SENTENCE_PRODUCTION,
+    LISTENING,
+    SPEAKING,
+    ;
+
+    /** This format's bit inside [KnowledgeState.distinctTypesCorrect]. */
+    val bit: Int get() = 1 shl ordinal
+}
+
 /** SRS lifecycle (technical spec §16). */
 enum class ReviewState { NEW, LEARNING, REVIEW, RELEARNING, MASTERED }
 
@@ -318,7 +339,25 @@ data class KnowledgeState(
     val lapses: Int,
     val lastReviewedAt: Long?,
     val nextReviewAt: Long,
-)
+    /**
+     * When the node was first answered **right** (checklist 2.1) — the timestamp
+     * that makes "strong" a traceable claim rather than a bare number. `null`
+     * until the first correct answer, and on rows that predate Room v7 until their
+     * next correct answer (no invented dates, see [org.token.english.data.local.AppDatabase]).
+     */
+    val firstCorrectAt: Long? = null,
+    /**
+     * A **bitmask** of the [ExerciseFormat]s that have produced a correct answer
+     * (checklist 2.1): `format.bit` is OR-ed in on a hit, so answering the same
+     * format five times still counts once. A mask rather than a counter because the
+     * question is *which* formats confirmed the node, and a count cannot answer it.
+     * Read the number of formats with [distinctTypeCount].
+     */
+    val distinctTypesCorrect: Int = 0,
+) {
+    /** How many distinct formats have confirmed this node so far. */
+    val distinctTypeCount: Int get() = distinctTypesCorrect.countOneBits()
+}
 
 data class SkillMastery(
     val skill: Skill,

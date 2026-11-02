@@ -37,8 +37,6 @@ data class LearningDecision(
 class AdaptiveLearningPlanner(
     private val graph: KnowledgeGraph,
     private val prerequisites: PrerequisiteEngine,
-    /** At or above this, a met node needs no further practice. */
-    private val strongThreshold: Float = STRONG_THRESHOLD,
     /** Hard cap on actions so a single day is never an unbounded wall. */
     private val maxActions: Int = MAX_ACTIONS,
 ) {
@@ -103,7 +101,10 @@ class AdaptiveLearningPlanner(
                     estimatedMinutes = estimatedMinutesByItem[item.id] ?: DEFAULT_ITEM_MINUTES,
                 )
 
-                state.mastery < strongThreshold -> actions += LearningAction(
+                // One bar, shared with the learner model (checklist 2.1): the planner
+                // asks the gate, it does not compare floats of its own, so a node the
+                // gate calls secured cannot be "weak" here.
+                !KnowledgeGates.isSecured(state) -> actions += LearningAction(
                     type = LearningActionType.PRACTISE,
                     itemId = item.id,
                     titleFa = item.titleFa,
@@ -125,7 +126,7 @@ class AdaptiveLearningPlanner(
         }
         if (!focusHasUpcomingWork) {
             val masteredIds = byId
-                .filterValues { it.mastery >= strongThreshold }
+                .filterValues { KnowledgeGates.isSecured(it) }
                 .keys
             val next = graph.unlocked(masteredIds)
                 .firstOrNull { candidate ->
@@ -207,7 +208,11 @@ class AdaptiveLearningPlanner(
         (count * MINUTES_PER_REVIEW_CARD).coerceAtLeast(MIN_REVIEW_MINUTES)
 
     companion object {
-        /** Same bar as the node gate in [DefaultKnowledgeEngine]: one [STRONG_MASTERY]. */
+        /**
+         * The mastery number behind [KnowledgeGates.isSecured]: one [STRONG_MASTERY],
+         * not a second threshold. Kept public because the metrics and the simulation
+         * tests measure mastery against the same line the planner uses.
+         */
         const val STRONG_THRESHOLD = STRONG_MASTERY
         const val MAX_ACTIONS = 6
 

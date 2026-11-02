@@ -32,6 +32,7 @@ import org.token.english.domain.engine.MasteryEngine
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -84,10 +85,16 @@ class KnowledgeRepositoryImpl(
     override suspend fun allItems(): List<KnowledgeItem> =
         contentDao.getKnowledgeItems().map { it.toDomain() }
 
-    override suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long) {
+    override suspend fun recordAttempt(
+        lessonId: String,
+        skill: Skill,
+        format: ExerciseFormat,
+        correct: Boolean,
+        now: Long,
+    ) {
         KnowledgeEvidence.itemsFor(itemsForLesson(lessonId), skill).forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
-                engine.applyAttempt(item.id, existing?.toDomain(), correct, now).toEntity()
+                engine.applyAttempt(item.id, existing?.toDomain(), correct, now, format).toEntity()
             }
         }
     }
@@ -107,6 +114,8 @@ private fun KnowledgeStateEntity.toDomain(): KnowledgeState = KnowledgeState(
     lapses = lapses,
     lastReviewedAt = lastReviewedAt,
     nextReviewAt = nextReviewAt,
+    firstCorrectAt = firstCorrectAt,
+    distinctTypesCorrect = distinctTypesCorrect,
 )
 
 private fun KnowledgeState.toEntity(): KnowledgeStateEntity = KnowledgeStateEntity(
@@ -121,6 +130,8 @@ private fun KnowledgeState.toEntity(): KnowledgeStateEntity = KnowledgeStateEnti
     lapses = lapses,
     lastReviewedAt = lastReviewedAt,
     nextReviewAt = nextReviewAt,
+    firstCorrectAt = firstCorrectAt,
+    distinctTypesCorrect = distinctTypesCorrect,
 )
 
 private fun KnowledgeItemEntity.toDomain(): KnowledgeItem = KnowledgeItem(

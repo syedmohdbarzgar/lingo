@@ -35,6 +35,33 @@ import java.sql.SQLException
  */
 class DatabaseUpgradeTest {
 
+    @Test
+    fun `a pre-v7 knowledge row keeps its evidence gaps instead of inventing them`() {
+        DriverManager.getConnection("jdbc:sqlite::memory:").use { db ->
+            createSql(6).forEach { execSql(db, it) }
+            execSql(
+                db,
+                "INSERT INTO knowledge_state (itemId, mastery, exposureCount, " +
+                    "consecutiveCorrect, consecutiveIncorrect, intervalDays, easeFactor, " +
+                    "repetitions, lapses, lastReviewedAt, nextReviewAt) VALUES " +
+                    "('grammar.verb-be', 0.9, 3, 2, 0, 4, 2.5, 2, 0, 1700000000000, 1700003600000)",
+            )
+
+            AppDatabase.migrationStatements.getValue("6->7").forEach { execSql(db, it) }
+
+            val row = query(
+                db,
+                "SELECT firstCorrectAt, distinctTypesCorrect FROM knowledge_state",
+            ) { rs ->
+                rs.next()
+                ((rs.getObject(1) as? Number)?.toLong()) to rs.getInt(2)
+            } as Pair<Long?, Int>
+
+            assertNull("a legacy node must not be given a made-up first-correct date", row.first)
+            assertEquals("and starts with no confirmed format", 0, row.second)
+        }
+    }
+
     private val schemaDir = listOf(
         File("schemas/org.token.english.data.local.AppDatabase"),
         File("app/schemas/org.token.english.data.local.AppDatabase"),

@@ -26,7 +26,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 6
+internal const val DATABASE_VERSION = 7
 
 @Database(
     entities = [
@@ -120,6 +120,17 @@ abstract class AppDatabase : RoomDatabase() {
                     "mastery REAL NOT NULL, " +
                     "PRIMARY KEY(dimension))",
             ),
+            // v6 → v7: the learner model records *when* a node was first answered
+            // right and *how many exercise formats* have confirmed it (checklist 2.1),
+            // so "strong" is a traceable claim and "long-term mastered" can require
+            // transfer instead of one pattern-matched format. Additive and nullable/
+            // defaulted, so no existing row is invalidated; legacy rows keep
+            // firstCorrectAt NULL (no invented dates) and heal on their next correct
+            // answer, while the format mask starts filling from the same point.
+            "6->7" to listOf(
+                "ALTER TABLE knowledge_state ADD COLUMN firstCorrectAt INTEGER",
+                "ALTER TABLE knowledge_state ADD COLUMN distinctTypesCorrect INTEGER NOT NULL DEFAULT 0",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
@@ -127,10 +138,18 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_3_4 = migration(3, 4)
         val MIGRATION_4_5 = migration(4, 5)
         val MIGRATION_5_6 = migration(5, 6)
+        val MIGRATION_6_7 = migration(6, 7)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
-            get() = listOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+            get() = listOf(
+                MIGRATION_1_2,
+                MIGRATION_2_3,
+                MIGRATION_3_4,
+                MIGRATION_4_5,
+                MIGRATION_5_6,
+                MIGRATION_6_7,
+            )
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {
             override fun migrate(db: SupportSQLiteDatabase) {

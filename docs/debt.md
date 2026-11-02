@@ -11,6 +11,13 @@
   build does not know are ignored on read, and `DatabaseUpgradeTest` executes the step against a
   real SQLite engine. An untouched dimension is still *absent*, never 0 — "no evidence" keeps its
   meaning.
+- **Two nodes can never claim *long-term* mastery (Room v7).** `isLongTermMastered` requires two
+  confirming exercise formats, and `phonology.spelling-aloud` / `phonology.number-sounds` are only
+  exercised through translation in the current bundle, so their mask can never hold a second bit.
+  They are still *secured* (the planner's bar) and fully learnable — only the longer claim stays out
+  of reach until their lessons gain a second format. Recorded here so it reads as a content gap,
+  not a gate bug. The same migration leaves `firstCorrectAt` NULL on legacy rows instead of
+  inventing a date; each row fills it on its next correct answer.
 - **The companion key was pinned from a sideloaded build — since verified against the store
   build (N-1, Oct 2026).** `CompanionApp.EXPECTED_SIGNING_SHA256` holds the Zaribar 3.4.10
   certificate (`CN=wolfandmoon`), read from the sideloaded APK on the device. The comparison

@@ -65,13 +65,35 @@
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
 - **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at
   `DefaultKnowledgeEngine.FIRST_HIT_MASTERY` (0.4), not 1.0 — one tap is evidence, not proof, and
-  seeding it at full made a just-met node look learned to the planner and to the skill meters. A
-  node is mastered only when **all three** hold: `repetitions >= MASTERED_MIN_REPETITIONS` (3, so a
-  next-day retest is part of getting there — the first SM-2 interval is one day), the interval
-  clears `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and `mastery >= STRONG_MASTERY` (0.85).
-  That last number is now a **single constant** in `MasteryEngine.kt`, used by the node gate, the
-  planner and the exercise selector, because the interval-only rule used to call a node mastered
-  while the planner — deciding on `mastery >= 0.85` — still treated it as weak.
+  seeding it at full made a just-met node look learned to the planner and to the skill meters.
+  `mastery >= STRONG_MASTERY` (0.85) is a **single constant** in `MasteryEngine.kt`, used by the
+  node gate, the planner and the exercise selector, because the interval-only rule used to call a
+  node mastered while the planner — deciding on `mastery >= 0.85` — still treated it as weak.
+- **Two named gates, defined once (checklist 2.1, Room v7).** `KnowledgeGates` (in
+  `KnowledgeEngine.kt`, mirrored by `DefaultKnowledgeEngine.isSecured` / `isLongTermMastered`) owns
+  the two questions surfaces ask, so no screen compares floats of its own:
+  - **`isSecured`** — the **planner's bar**: `mastery >= STRONG_MASTERY` *and* a recorded correct
+    answer (`firstCorrectAt != null`), so a stored number that never came from an answer cannot
+    secure a node. A secured node needs no more practice today, which is what lets the plan open the
+    next unlocked unit. It is deliberately **not** the 30-day gate: requiring a month of retention
+    before moving on would hold the learner on a node they already know.
+  - **`isLongTermMastered`** — the old 30-day gate, renamed: `isSecured` plus
+    `repetitions >= MASTERED_MIN_REPETITIONS` (3, so a next-day retest is part of getting there —
+    the first SM-2 interval is one day), an interval past
+    `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and confirmation in at least
+    `MIN_CONFIRMING_FORMATS` (2) exercise formats. One format answered strong has been
+    pattern-matched; the mask is what separates that from transfer. The two `phonology.*` nodes
+    the content only exercises through translation (`phonology.spelling-aloud`,
+    `phonology.number-sounds`) therefore cannot claim *long-term* mastery today — a content gap,
+    recorded rather than papered over.
+- **The learner model records how the claim was earned (Room v7).** `knowledge_state` now carries
+  `firstCorrectAt` (when the node was first answered right, `NULL` until then) and
+  `distinctTypesCorrect`, a **bitmask** of the `ExerciseFormat`s that have produced a correct answer
+  — `KnowledgeState.distinctTypeCount` reads its population, so one format answered five times is
+  still one confirmation. The format travels from the exercise (`AnswerChecker.formatOf`) through
+  `KnowledgeRepository.recordAttempt` into `DefaultKnowledgeEngine.applyAttempt`. Migration 6→7 only
+  adds the two columns and invents no dates: a legacy row keeps `firstCorrectAt` NULL and heals on
+  its next correct answer, while its mask starts filling from that point.
 - **A lesson's own gate (v30): first-pass accuracy.** The summary calls a lesson «تثبیت‌شده» only at
   `LessonUiState.CONSOLIDATED_PERCENT` (80) or better **on the first try at each exercise**, else
   «نیاز به مرور»; a miss the learner fixed on the repeat is progress but not the same as knowing it

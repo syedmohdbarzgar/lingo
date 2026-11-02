@@ -7,8 +7,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.domain.engine.DefaultKnowledgeEngine
 import org.token.english.domain.engine.KnowledgeEvidence
+import org.token.english.domain.engine.KnowledgeGates
 import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
@@ -40,6 +42,8 @@ class KnowledgeEngineTest {
         skills = skills,
     )
 
+    private val twoFormats = ExerciseFormat.MULTIPLE_CHOICE.bit or ExerciseFormat.FILL_BLANK.bit
+
     private fun state(
         itemId: String = "a",
         mastery: Float = 0.5f,
@@ -48,6 +52,8 @@ class KnowledgeEngineTest {
         repetitions: Int = 0,
         lapses: Int = 0,
         nextReviewAt: Long = 0L,
+        firstCorrectAt: Long? = now,
+        distinctTypesCorrect: Int = twoFormats,
     ) = KnowledgeState(
         itemId = itemId,
         mastery = mastery,
@@ -60,11 +66,13 @@ class KnowledgeEngineTest {
         lapses = lapses,
         lastReviewedAt = null,
         nextReviewAt = nextReviewAt,
+        firstCorrectAt = firstCorrectAt,
+        distinctTypesCorrect = distinctTypesCorrect,
     )
 
     @Test
     fun `a first correct answer seeds mastery as started, not known, and schedules tomorrow`() {
-        val next = engine.applyAttempt("a", null, correct = true, now = now)
+        val next = engine.applyAttempt("a", null, correct = true, now = now, format = ExerciseFormat.MULTIPLE_CHOICE)
         // One tap is evidence, not proof: at 1.0 the node looked fully learned and
         // the planner stopped offering what the learner had just met once.
         assertEquals(
@@ -73,7 +81,9 @@ class KnowledgeEngineTest {
             next.mastery,
             0.0001f,
         )
-        assertFalse("and certainly not mastered", engine.isMastered(next))
+        assertFalse("and certainly not mastered", engine.isLongTermMastered(next))
+        assertEquals("the date it started being known", now, next.firstCorrectAt)
+        assertEquals("confirmed in one format so far", 1, next.distinctTypeCount)
         assertEquals(1, next.exposureCount)
         assertEquals(1, next.intervalDays)
         assertEquals(1, next.repetitions)
@@ -139,7 +149,7 @@ class KnowledgeEngineTest {
     @Test
     fun `mastery is only claimed once the interval clears the threshold`() {
         assertTrue(
-            engine.isMastered(
+            engine.isLongTermMastered(
                 state(
                     mastery = 0.9f,
                     intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
@@ -148,7 +158,7 @@ class KnowledgeEngineTest {
             ),
         )
         assertFalse(
-            engine.isMastered(
+            engine.isLongTermMastered(
                 state(
                     mastery = 0.9f,
                     intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS - 1,
@@ -165,7 +175,7 @@ class KnowledgeEngineTest {
         // mastery, so the two screens disagreed. One gate now covers both.
         assertFalse(
             "three recalls are required before the word mastered is used",
-            engine.isMastered(
+            engine.isLongTermMastered(
                 state(
                     mastery = 0.9f,
                     intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
@@ -175,7 +185,7 @@ class KnowledgeEngineTest {
         )
         assertFalse(
             "and the mastery has to be strong, not merely scheduled",
-            engine.isMastered(
+            engine.isLongTermMastered(
                 state(
                     mastery = STRONG_MASTERY - 0.01f,
                     intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
@@ -183,6 +193,68 @@ class KnowledgeEngineTest {
                 ),
             ),
         )
+    }
+
+    @Test
+    fun `one format answered right is secured but not yet confirmed two ways`() {
+        val same = state(
+            mastery = 0.9f,
+            intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
+            repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
+            distinctTypesCorrect = ExerciseFormat.MULTIPLE_CHOICE.bit,
+        )
+        assertTrue("strong mastery on recorded evidence secures the node", engine.isSecured(same))
+        assertFalse(
+            "but the same format five times is not transfer",
+            engine.isLongTermMastered(same),
+        )
+    }
+
+    @Test
+    fun `securing needs a correct answer, not just a strong number`() {
+        assertFalse(
+            "a mastery value with no recorded hit cannot be secured",
+            engine.isSecured(state(mastery = 0.95f, firstCorrectAt = null)),
+        )
+        assertFalse(
+            "and a long-term claim builds on security",
+            engine.isLongTermMastered(
+                state(
+                    mastery = 0.95f,
+                    firstCorrectAt = null,
+                    intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
+                    repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `the two gates are one definition, shared with the planner`() {
+        val secured = state(mastery = STRONG_MASTERY)
+        assertEquals(engine.isSecured(secured), KnowledgeGates.isSecured(secured))
+        assertTrue(KnowledgeGates.isSecured(secured))
+    }
+
+    @Test
+    fun `a second format confirms the node, the same one twice does not`() {
+        var current = engine.applyAttempt("a", null, correct = true, now = now, format = ExerciseFormat.MULTIPLE_CHOICE)
+        assertEquals("first format recorded", 1, current.distinctTypeCount)
+
+        current = engine.applyAttempt("a", current, true, now + 1, ExerciseFormat.MULTIPLE_CHOICE)
+        assertEquals("answering the same format again is not a new confirmation", 1, current.distinctTypeCount)
+
+        current = engine.applyAttempt("a", current, true, now + 2, ExerciseFormat.FILL_BLANK)
+        assertEquals("a different format is", 2, current.distinctTypeCount)
+        assertEquals("and the first correct answer keeps its date", now, current.firstCorrectAt)
+    }
+
+    @Test
+    fun `a miss records no format and moves no first-correct date`() {
+        val firstHit = engine.applyAttempt("a", null, true, now, ExerciseFormat.TRANSLATION)
+        val afterMiss = engine.applyAttempt("a", firstHit, false, now + 10, ExerciseFormat.LISTENING)
+        assertEquals("only correct answers confirm a format", 1, afterMiss.distinctTypeCount)
+        assertEquals("the first hit is not rewritten by a later answer", now, afterMiss.firstCorrectAt)
     }
 
     @Test

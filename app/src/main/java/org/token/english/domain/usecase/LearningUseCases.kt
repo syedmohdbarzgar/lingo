@@ -67,7 +67,13 @@ class SubmitExerciseUseCase(
         // teaches (audit §4/§19) — this is what turns exercise results into a
         // learner model instead of a score. A lesson the graph does not know (the
         // placement test) simply yields no nodes.
-        knowledge.recordAttempt(exercise.lessonId, skill, correct, now)
+        knowledge.recordAttempt(
+            lessonId = exercise.lessonId,
+            skill = skill,
+            format = AnswerChecker.formatOf(exercise),
+            correct = correct,
+            now = now,
+        )
         return ExerciseOutcome(
             correct = correct,
             correctAnswer = AnswerChecker.correctAnswerText(exercise),

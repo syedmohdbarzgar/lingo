@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
@@ -85,8 +86,18 @@ interface KnowledgeRepository {
      * Records one graded answer against every knowledge item it is evidence
      * about. Never throws for an unknown lesson (e.g. the placement test) — there
      * is simply nothing to attribute the answer to.
+     *
+     * @param format the exercise shape the answer came through — the learner model
+     *   records which formats confirmed a node (checklist 2.1), so it can tell
+     *   "answered this shape five times" from "proven two ways".
      */
-    suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long)
+    suspend fun recordAttempt(
+        lessonId: String,
+        skill: Skill,
+        format: ExerciseFormat,
+        correct: Boolean,
+        now: Long,
+    )
 
     suspend fun reset()
 }

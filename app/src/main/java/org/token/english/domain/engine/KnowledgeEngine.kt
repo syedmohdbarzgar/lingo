@@ -1,5 +1,6 @@
 package org.token.english.domain.engine
 
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -33,7 +34,19 @@ class DefaultKnowledgeEngine(
      *   knowledge — the planner then stopped offering the node and the meter showed
      *   100% for the very thing the learner had just met.
      */
-    fun applyAttempt(itemId: String, state: KnowledgeState?, correct: Boolean, now: Long): KnowledgeState {
+    /**
+     * @param format the exercise format the answer came through. Recorded only on a
+     *   correct answer, as evidence of *transfer*: the same format five times still
+     *   counts as one confirmation (checklist 2.1). Null when the caller has no
+     *   exercise shape to report, e.g. a placement replay.
+     */
+    fun applyAttempt(
+        itemId: String,
+        state: KnowledgeState?,
+        correct: Boolean,
+        now: Long,
+        format: ExerciseFormat? = null,
+    ): KnowledgeState {
         val result = if (correct) ReviewResult.GOOD else ReviewResult.AGAIN
         val scheduled = scheduler.schedule(state.toReviewItem(itemId, now), result, now)
         val mastery = when (state) {
@@ -55,23 +68,38 @@ class DefaultKnowledgeEngine(
             lapses = (state?.lapses ?: 0) + if (correct) 0 else 1,
             lastReviewedAt = now,
             nextReviewAt = scheduled.nextReviewAt,
+            // First correct answer wins: the date a node started being known does not
+            // move forward every time it is answered again.
+            firstCorrectAt = state?.firstCorrectAt ?: if (correct) now else null,
+            distinctTypesCorrect =
+                if (correct && format != null) {
+                    (state?.distinctTypesCorrect ?: 0) or format.bit
+                } else {
+                    state?.distinctTypesCorrect ?: 0
+                },
         )
     }
 
     /**
-     * A node is mastered only when all three hold: it came back [MASTERED_MIN_REPETITIONS]
-     * times and was answered right (the scheduler's first interval is one day, so a
-     * next-day retest is part of getting there), its interval clears the scheduler's
-     * own threshold, and its mastery is [STRONG_MASTERY].
+     * The planner's bar: this node needs no more practice today. Strong mastery
+     * **earned** on a recorded correct answer — the timestamp is the evidence, so a
+     * stored number that never came from an answer cannot secure a node.
      *
-     * The interval alone used to be the test, which called a node mastered on the
-     * spaced-repetition schedule while the planner — using `mastery >= 0.85` — still
-     * treated it as weak: two screens, two answers for the same node.
+     * Deliberately *not* the 30-day gate ([isLongTermMastered]): requiring a month of
+     * retention before the plan moves on would hold the learner on a node they already
+     * know. Both gates are defined once, in [KnowledgeGates], so the planner and the
+     * learner-model screen cannot drift apart.
      */
-    fun isMastered(state: KnowledgeState): Boolean =
-        state.repetitions >= MASTERED_MIN_REPETITIONS &&
-            state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS &&
-            state.mastery >= STRONG_MASTERY
+    fun isSecured(state: KnowledgeState): Boolean = KnowledgeGates.isSecured(state)
+
+    /**
+     * The 30-day gate from v30, renamed: the node has been recalled
+     * [MASTERED_MIN_REPETITIONS] times, its interval clears the scheduler's own
+     * threshold, and its mastery is [STRONG_MASTERY]. "Long-term" is the claim about
+     * remembered-next-month, not about today's plan.
+     */
+    fun isLongTermMastered(state: KnowledgeState): Boolean =
+        KnowledgeGates.isLongTermMastered(state)
 
     /** True when the node is due to come back (used by the daily plan, next slice). */
     fun isDue(state: KnowledgeState, now: Long): Boolean = state.nextReviewAt <= now
@@ -109,4 +137,49 @@ class DefaultKnowledgeEngine(
         state.intervalDays == 0 -> ReviewState.LEARNING
         else -> ReviewState.REVIEW
     }
+}
+
+/**
+ * The two questions the learner model answers about a node, defined **once**
+ * (checklist 2.1) so every surface reads the same bar instead of comparing floats
+ * of its own:
+ *
+ * - [isSecured]: does today's plan still need to practise this node?
+ * - [isLongTermMastered]: is the node remembered for the long term?
+ *
+ * Pure functions over stored state — no clock, no repository — so the planner and the
+ * screens can ask them without instantiating an engine, and the JVM tests can hold
+ * them to one definition.
+ */
+object KnowledgeGates {
+
+    /** Recalls a node must have to claim long-term mastery — one hit is a guess. */
+    const val MIN_RECALLS = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS
+
+    /** Distinct exercise formats that must confirm a node before "long-term". */
+    const val MIN_CONFIRMING_FORMATS = 2
+
+    /**
+     * Secured: mastery at [STRONG_MASTERY], earned on a recorded correct answer.
+     *
+     * The timestamp matters: a node only counts as secured when the value came from an
+     * answer the learner actually gave. This is the planner's bar, so a node it holds
+     * back on keeps the focus lesson open ("تمرین بیشتر") — and one it clears lets the
+     * plan move on, which is why this gate must not also demand a month of retention.
+     */
+    fun isSecured(state: KnowledgeState): Boolean =
+        state.mastery >= STRONG_MASTERY && state.firstCorrectAt != null
+
+    /**
+     * Long-term: [isSecured], plus the retention evidence — [MIN_RECALLS] recalls, an
+     * interval past `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and confirmation
+     * in at least [MIN_CONFIRMING_FORMATS] exercise formats. A node answered strong in
+     * one format has been pattern-matched, not necessarily learned; the mask is what
+     * separates the two claims.
+     */
+    fun isLongTermMastered(state: KnowledgeState): Boolean =
+        isSecured(state) &&
+            state.repetitions >= MIN_RECALLS &&
+            state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS &&
+            state.distinctTypeCount >= MIN_CONFIRMING_FORMATS
 }

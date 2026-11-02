@@ -3,9 +3,9 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 470 tests / 59 classes as of
-  the recognition-endpointing pass (the early end and the take-ownership rules are pinned in
-  `ConversationPracticeViewModelTest`) — a fresh install is locked with no trial (`TrialClockTest` went
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 477 tests / 59 classes as of
+  the v30 learner-model gates (the recognition-endpointing pass's early-end and take-ownership rules
+  are pinned in `ConversationPracticeViewModelTest`) — a fresh install is locked with no trial (`TrialClockTest` went
   with the clock; `StorePageTest` guards the per-flavor «ارتباط با ناشر» store link;
   `ConversationScorerTest` pins the «درست / نزدیک / تلاش دوباره» verdicts;
   `DialogueContentTest` holds the authored dialogue turns to their authoring rules): `ReviewSchedulerTest`,

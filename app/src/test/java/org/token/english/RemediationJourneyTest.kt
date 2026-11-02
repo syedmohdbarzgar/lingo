@@ -17,6 +17,7 @@ import org.token.english.domain.engine.KnowledgeEvidence
 import org.token.english.domain.engine.RemediationEngine
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.Lesson
@@ -95,11 +96,17 @@ class RemediationJourneyTest {
 
         override suspend fun allItems(): List<KnowledgeItem> = items
 
-        override suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long) {
+        override suspend fun recordAttempt(
+            lessonId: String,
+            skill: Skill,
+            format: ExerciseFormat,
+            correct: Boolean,
+            now: Long,
+        ) {
             val lessonItems = itemsForLesson(lessonId)
             val byId = statesFlow.value.associateBy { it.itemId }
             KnowledgeEvidence.itemsFor(lessonItems, skill).forEach { item ->
-                val updated = engine.applyAttempt(item.id, byId[item.id], correct, now)
+                val updated = engine.applyAttempt(item.id, byId[item.id], correct, now, format)
                 statesFlow.value = statesFlow.value.filterNot { it.itemId == item.id } + updated
             }
         }

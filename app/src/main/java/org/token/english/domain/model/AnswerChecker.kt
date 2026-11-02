@@ -410,6 +410,21 @@ object AnswerChecker {
         is Exercise.Speaking -> exercise.skill ?: Skill.SPEAKING
     }
 
+    /**
+     * The format an exercise is answered in — the evidence unit of the learner
+     * model's "confirmed in more than one way" (checklist 2.1). One mapping, next to
+     * [skillOf], so the writer of the attempt and any reader agree on the label.
+     */
+    fun formatOf(exercise: Exercise): ExerciseFormat = when (exercise) {
+        is Exercise.MultipleChoice -> ExerciseFormat.MULTIPLE_CHOICE
+        is Exercise.FillBlank -> ExerciseFormat.FILL_BLANK
+        is Exercise.WordRecall -> ExerciseFormat.WORD_RECALL
+        is Exercise.Translation -> ExerciseFormat.TRANSLATION
+        is Exercise.SentenceProduction -> ExerciseFormat.SENTENCE_PRODUCTION
+        is Exercise.Listening -> ExerciseFormat.LISTENING
+        is Exercise.Speaking -> ExerciseFormat.SPEAKING
+    }
+
     private fun heuristicMc(exercise: Exercise.MultipleChoice): Skill {
         val hasPersianOption = exercise.options.any { o -> o.any { it in '\u0600'..'\u06ff' } }
         if (hasPersianOption) return Skill.VOCABULARY

@@ -32,7 +32,12 @@ class AdaptiveLearningPlannerTest {
         skills = listOf(Skill.GRAMMAR),
     )
 
-    private fun state(itemId: String, mastery: Float) = KnowledgeState(
+    /**
+     * A node that has been answered: the planner reads [KnowledgeGates.isSecured], so a
+     * strong state must also carry the evidence the gate asks for (a recorded correct
+     * answer). A weak one keeps the single format it was met through.
+     */
+    private fun state(itemId: String, mastery: Float, firstCorrectAt: Long? = 1L) = KnowledgeState(
         itemId = itemId,
         mastery = mastery,
         exposureCount = 1,
@@ -44,6 +49,8 @@ class AdaptiveLearningPlannerTest {
         lapses = 0,
         lastReviewedAt = null,
         nextReviewAt = 0L,
+        firstCorrectAt = firstCorrectAt,
+        distinctTypesCorrect = org.token.english.domain.model.ExerciseFormat.MULTIPLE_CHOICE.bit,
     )
 
     // a (root) → b → c, d independent root
@@ -119,6 +126,19 @@ class AdaptiveLearningPlannerTest {
         // c needs no practice, so the planner advances to the next unlocked root.
         assertEquals(listOf(LearningActionType.LEARN), decision.actions.map { it.type })
         assertEquals("d", decision.actions.first().itemId)
+    }
+
+    @Test
+    fun `a strong number with no recorded answer is still practised`() {
+        // The planner reads KnowledgeGates.isSecured, not the float: a stored mastery
+        // that never came from an answer is not evidence (checklist 2.1), so the node
+        // keeps its practice slot instead of counting as secured.
+        val decision = plan(
+            states = listOf(state("a", 0.9f), state("b", 0.9f, firstCorrectAt = null)),
+            focus = listOf(item("b", listOf("a"))),
+        )
+        assertEquals(listOf(LearningActionType.PRACTISE), decision.actions.map { it.type })
+        assertEquals("b", decision.actions.first().itemId)
     }
 
     @Test

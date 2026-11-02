@@ -78,6 +78,15 @@ data class KnowledgeStateEntity(
     val lapses: Int,
     val lastReviewedAt: Long?,
     val nextReviewAt: Long,
+    /** When the node was first answered right; NULL until then (checklist 2.1, Room v7). */
+    val firstCorrectAt: Long? = null,
+    /**
+     * Bitmask of the exercise formats that produced a correct answer (Room v7). A
+     * mask, not a counter: [org.token.english.domain.model.KnowledgeState]
+     * reports the number of set bits, and the same format answered twice must not
+     * count as two confirmations.
+     */
+    @ColumnInfo(defaultValue = "0") val distinctTypesCorrect: Int = 0,
 )
 
 /** Learner progress: cursor + completion per lesson. */

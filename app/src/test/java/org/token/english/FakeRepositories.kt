@@ -17,6 +17,7 @@ import org.token.english.core.billing.TrialAndSubscription
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
@@ -258,7 +259,13 @@ class FakeKnowledgeRepository(
         return itemsFlow.value
     }
 
-    override suspend fun recordAttempt(lessonId: String, skill: Skill, correct: Boolean, now: Long) {
+    override suspend fun recordAttempt(
+        lessonId: String,
+        skill: Skill,
+        format: ExerciseFormat,
+        correct: Boolean,
+        now: Long,
+    ) {
         recorded += lessonId to correct
     }
 
