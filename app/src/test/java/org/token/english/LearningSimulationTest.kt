@@ -225,6 +225,7 @@ class LearningSimulationTest {
                 focusItems = focus.ifEmpty { unlocked.take(2) },
                 targetMinutes = 60,
                 todayStudySeconds = 0L,
+                now = now,
             )
 
             // Process reviews first, then plan actions.
@@ -235,7 +236,13 @@ class LearningSimulationTest {
             for (action in decision.actions) {
                 when (action.type) {
                     LearningActionType.REVIEW -> { /* already handled above */ }
-                    LearningActionType.LEARN, LearningActionType.PRACTISE, LearningActionType.REMEDIATE -> {
+                    // A retest is still work on the node — the learner answers its
+                    // exercises again, which is exactly what the gate is waiting for.
+                    LearningActionType.RETEST,
+                    LearningActionType.LEARN,
+                    LearningActionType.PRACTISE,
+                    LearningActionType.REMEDIATE,
+                    -> {
                         action.itemId?.let { itemsLearned.add(it) }
                         sim.workOnItem(action.itemId ?: continue, { true }, now)
                     }
@@ -318,6 +325,7 @@ class LearningSimulationTest {
                 focusItems = focus,
                 targetMinutes = 60,
                 todayStudySeconds = 0L,
+                now = now,
             )
 
             maxActionsPerDay.add(decision.actions.size)
@@ -353,7 +361,10 @@ class LearningSimulationTest {
                             }
                         }
                     }
-                    LearningActionType.LEARN, LearningActionType.PRACTISE -> {
+                    LearningActionType.LEARN,
+                    LearningActionType.PRACTISE,
+                    LearningActionType.RETEST,
+                    -> {
                         sim.workOnItem(action.itemId ?: continue, { false }, now)
                     }
                 }
@@ -583,6 +594,7 @@ class LearningSimulationTest {
             focusItems = unlocked.take(1),
             targetMinutes = 30,
             todayStudySeconds = 0L,
+            now = now,
         )
         assertEquals("first plan has exactly one LEARN action",
             1, decision.actions.size)
@@ -635,6 +647,7 @@ class LearningSimulationTest {
             focusItems = graph.unlocked(emptySet()).take(1),
             targetMinutes = 10,
             todayStudySeconds = 0L,
+            now = started,
         )
 
         assertEquals("review always leads", LearningActionType.REVIEW, decision.actions.first().type)
@@ -659,6 +672,7 @@ class LearningSimulationTest {
             focusItems = graph.unlocked(emptySet()).take(1),
             targetMinutes = 10,
             todayStudySeconds = TimeUtil.startOfDayPlusDays(started, 1) - started,
+            now = TimeUtil.startOfDayPlusDays(started, 1),
         )
         assertEquals(
             "a finished goal still offers retention work",

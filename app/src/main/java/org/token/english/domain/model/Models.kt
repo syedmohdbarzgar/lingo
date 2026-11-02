@@ -396,7 +396,8 @@ data class TodayPlan(
  * The kind of study move a planner can ask for (audit §5).
  *
  * Ordered by urgency in [org.token.english.domain.engine.AdaptiveLearningPlanner]:
- * a due review beats fixing a prerequisite, which beats a brand-new unit.
+ * a due review beats fixing a prerequisite, which beats a retest, which beats a
+ * brand-new unit.
  */
 enum class LearningActionType {
     /** Spaced-repetition cards are due right now. */
@@ -404,6 +405,14 @@ enum class LearningActionType {
 
     /** A prerequisite is unseen or too weak — study it before the dependent node. */
     REMEDIATE,
+
+    /**
+     * A node that is strong but not yet secured: it was last answered long enough ago
+     * to be retested, and it has not been recalled after a delay in enough formats
+     * (checklist 3, chapter 1). The move is a short focused session on that node, not
+     * another full pass at its lesson.
+     */
+    RETEST,
 
     /** A brand-new, unlocked curriculum node. */
     LEARN,
@@ -429,6 +438,12 @@ data class LearningAction(
     val estimatedMinutes: Int = 0,
     /** The mastery dimension this action targets, or null when not applicable. */
     val dimension: MasteryDimension? = null,
+    /**
+     * The lesson a focused session on this node would run in, when the engine knows it.
+     * Only [LearningActionType.RETEST] fills it: opening the action has to land on the
+     * node's own exercises rather than on whatever lesson the day happens to point at.
+     */
+    val lessonId: String? = null,
 )
 
 /**

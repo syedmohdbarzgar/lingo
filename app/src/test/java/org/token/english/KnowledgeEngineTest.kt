@@ -44,6 +44,14 @@ class KnowledgeEngineTest {
 
     private val twoFormats = ExerciseFormat.MULTIPLE_CHOICE.bit or ExerciseFormat.FILL_BLANK.bit
 
+    /** 20 hours: exactly the span the gate asks for before a node can be secured. */
+    private val span = KnowledgeGates.MIN_RETEST_SPAN_MS
+
+    /**
+     * A node with the evidence a secured one has: three in a row, two formats, and a
+     * retest [span] after the first correct answer. Tests that need an edge override
+     * the one field they care about.
+     */
     private fun state(
         itemId: String = "a",
         mastery: Float = 0.5f,
@@ -53,18 +61,20 @@ class KnowledgeEngineTest {
         lapses: Int = 0,
         nextReviewAt: Long = 0L,
         firstCorrectAt: Long? = now,
+        lastReviewedAt: Long? = firstCorrectAt?.plus(span),
+        consecutiveCorrect: Int = KnowledgeGates.MIN_CONSECUTIVE,
         distinctTypesCorrect: Int = twoFormats,
     ) = KnowledgeState(
         itemId = itemId,
         mastery = mastery,
         exposureCount = 1,
-        consecutiveCorrect = 0,
+        consecutiveCorrect = consecutiveCorrect,
         consecutiveIncorrect = 0,
         intervalDays = intervalDays,
         easeFactor = easeFactor,
         repetitions = repetitions,
         lapses = lapses,
-        lastReviewedAt = null,
+        lastReviewedAt = lastReviewedAt,
         nextReviewAt = nextReviewAt,
         firstCorrectAt = firstCorrectAt,
         distinctTypesCorrect = distinctTypesCorrect,
@@ -196,18 +206,88 @@ class KnowledgeEngineTest {
     }
 
     @Test
-    fun `one format answered right is secured but not yet confirmed two ways`() {
+    fun `one format is neither secured nor confirmed two ways`() {
         val same = state(
             mastery = 0.9f,
             intervalDays = Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS,
             repetitions = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS,
             distinctTypesCorrect = ExerciseFormat.MULTIPLE_CHOICE.bit,
         )
-        assertTrue("strong mastery on recorded evidence secures the node", engine.isSecured(same))
-        assertFalse(
-            "but the same format five times is not transfer",
-            engine.isLongTermMastered(same),
+        assertFalse("pattern-matching one shape does not secure a node", engine.isSecured(same))
+        assertFalse("nor does it claim long-term mastery", engine.isLongTermMastered(same))
+    }
+
+    @Test
+    fun `a same-sitting streak from one format is not secured`() {
+        // The gate's reason for existing (checklist 3, chapter 1): EWMA 0.2 from 0.4
+        // crosses 0.85 after eight hits in a single sitting, without a single delayed
+        // recall ever being asked for. Mastery alone must not move the plan on.
+        var current: KnowledgeState? = null
+        repeat(8) { i ->
+            current = engine.applyAttempt("a", current, true, now + i, ExerciseFormat.MULTIPLE_CHOICE)
+        }
+        assertTrue("the average did cross the bar", current!!.mastery >= STRONG_MASTERY)
+        assertFalse("but nothing was retested after a delay", engine.isSecured(current!!))
+        assertEquals("and only one shape proved it", 1, current!!.distinctTypeCount)
+    }
+
+    @Test
+    fun `securing needs the delay as well as the streak and the formats`() {
+        val justShort = state(
+            mastery = 0.9f,
+            firstCorrectAt = now,
+            lastReviewedAt = now + KnowledgeGates.MIN_RETEST_SPAN_MS - 1,
         )
+        assertFalse("nineteen hours is not a next-day retest", engine.isSecured(justShort))
+
+        val farEnough = state(
+            mastery = 0.9f,
+            firstCorrectAt = now,
+            lastReviewedAt = now + KnowledgeGates.MIN_RETEST_SPAN_MS,
+        )
+        assertTrue("twenty hours is", engine.isSecured(farEnough))
+    }
+
+    @Test
+    fun `a broken streak unsecures a node that was secured`() {
+        assertTrue(
+            "the same node, with its streak intact",
+            engine.isSecured(state(mastery = 0.9f)),
+        )
+        assertFalse(
+            "one miss breaks the run of correct answers",
+            engine.isSecured(state(mastery = 0.9f, consecutiveCorrect = 2)),
+        )
+    }
+
+    @Test
+    fun `a second format after the delay is what secures the node`() {
+        // The whole story in order: a same-sitting streak is not enough, a next-day
+        // answer in the same format is still one shape, and only a second format after
+        // the delay turns the claim into "secured".
+        var current: KnowledgeState? = null
+        repeat(8) { i ->
+            current = engine.applyAttempt("a", current, true, now + i, ExerciseFormat.MULTIPLE_CHOICE)
+        }
+        assertFalse("same sitting", engine.isSecured(current!!))
+
+        val dayLater = engine.applyAttempt(
+            "a",
+            current!!,
+            true,
+            now + 24 * 3_600_000L,
+            ExerciseFormat.MULTIPLE_CHOICE,
+        )
+        assertFalse("a delayed recall in the same format is still one shape", engine.isSecured(dayLater))
+
+        val transfer = engine.applyAttempt(
+            "a",
+            dayLater,
+            true,
+            now + 25 * 3_600_000L,
+            ExerciseFormat.FILL_BLANK,
+        )
+        assertTrue("two shapes, confirmed a day apart", engine.isSecured(transfer))
     }
 
     @Test

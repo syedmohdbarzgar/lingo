@@ -4,9 +4,11 @@ import kotlinx.coroutines.flow.first
 import org.token.english.domain.engine.AdaptiveLearningPlanner
 import org.token.english.domain.engine.DefaultKnowledgeGraph
 import org.token.english.domain.engine.ExerciseDimension
+import org.token.english.domain.engine.KnowledgeGates
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.PrerequisiteEngine
 import org.token.english.domain.engine.RemediationEngine
+import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
@@ -189,6 +191,7 @@ class GetTodayPlanUseCase(
                 focusItems = focusItems,
                 targetMinutes = settings.dailyGoalMinutes,
                 todayStudySeconds = stats.todayStudySeconds,
+                now = now,
                 estimatedMinutesByItem = minutesByItem,
             )
         }
@@ -267,11 +270,21 @@ class GetFocusPlanUseCase(
             engine.findWeakness(states, loaded)?.itemId ?: return null
         }
         val item = graph.byId(targetId) ?: return null
-        val mastery = states[targetId]?.mastery ?: return null
-        // A node the learner has never studied is *taught*, not drilled — and one
-        // already consolidated has nothing left to fix. Only a node the engine
-        // itself calls weak gets a focused block (checklist B-1).
-        if (mastery >= weaknessThreshold) return null
+        val state = states[targetId] ?: return null
+        val mastery = state.mastery
+        // A node the learner has never studied is *taught*, not drilled — and one the
+        // gate calls secured has nothing left to fix, so the auto-pick never chooses
+        // either (checklist B-1). An **explicit** request is different: the daily plan
+        // sends the learner here with a RETEST action for exactly the node the gate has
+        // not yet secured, and that session is a short retest of it (chapter 1) —
+        // refusing it would drop the learner into the whole lesson instead. A node that
+        // is merely "not weak" (0.5..0.85) is still not a retest: it has not earned the
+        // strong claim the retest is testing, so it keeps the old "nothing to drill"
+        // answer.
+        val retest = itemId != null &&
+            mastery >= STRONG_MASTERY &&
+            !KnowledgeGates.isSecured(state)
+        if (mastery >= weaknessThreshold && !retest) return null
         item.lessonIds.forEach { exercisesOf(it) }
 
         val plan = engine.plan(targetId, loaded) ?: return null
@@ -286,7 +299,13 @@ class GetFocusPlanUseCase(
             itemId = item.id,
             titleFa = item.titleFa,
             lessonId = lessonId,
-            reasonFa = plan.reasonFa,
+            // A retest says what it is: the learner already knows this node and is
+            // here to prove it survived a delay, not to be told it is a weakness.
+            reasonFa = if (retest) {
+                "بازآزمایی — بعد از یک فاصله دوباره بسنجیم"
+            } else {
+                plan.reasonFa
+            },
             mastery = mastery,
             exerciseIds = loaded[lessonId].orEmpty().map { it.id }.filter { it in plannedIds }.toSet(),
             reassessThreshold = plan.reassessThreshold,

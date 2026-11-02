@@ -81,9 +81,10 @@ class DefaultKnowledgeEngine(
     }
 
     /**
-     * The planner's bar: this node needs no more practice today. Strong mastery
-     * **earned** on a recorded correct answer — the timestamp is the evidence, so a
-     * stored number that never came from an answer cannot secure a node.
+     * The planner's bar: this node needs no more practice today. See
+     * [KnowledgeGates.isSecured] for what "secured" demands — strong mastery earned
+     * over a retest, in more than one exercise format, on a streak that has not been
+     * broken since.
      *
      * Deliberately *not* the 30-day gate ([isLongTermMastered]): requiring a month of
      * retention before the plan moves on would hold the learner on a node they already
@@ -156,30 +157,72 @@ object KnowledgeGates {
     /** Recalls a node must have to claim long-term mastery — one hit is a guess. */
     const val MIN_RECALLS = DefaultKnowledgeEngine.MASTERED_MIN_REPETITIONS
 
-    /** Distinct exercise formats that must confirm a node before "long-term". */
-    const val MIN_CONFIRMING_FORMATS = 2
+    /** Correct answers in a row that make "this is known" believable. */
+    const val MIN_CONSECUTIVE = 3
 
     /**
-     * Secured: mastery at [STRONG_MASTERY], earned on a recorded correct answer.
+     * Distinct exercise formats that must confirm a node before it is *secured*.
      *
-     * The timestamp matters: a node only counts as secured when the value came from an
-     * answer the learner actually gave. This is the planner's bar, so a node it holds
-     * back on keeps the focus lesson open ("تمرین بیشتر") — and one it clears lets the
-     * plan move on, which is why this gate must not also demand a month of retention.
+     * One format answered well can be pattern-matched — the learner recognises the
+     * shape of the question rather than knowing the language — so a second format is
+     * the cheapest honest evidence of transfer. It is also what the long-term claim
+     * asks for, so the number lives here once.
      */
-    fun isSecured(state: KnowledgeState): Boolean =
-        state.mastery >= STRONG_MASTERY && state.firstCorrectAt != null
+    const val MIN_FORMATS_TO_SECURE = 2
 
     /**
-     * Long-term: [isSecured], plus the retention evidence — [MIN_RECALLS] recalls, an
-     * interval past `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and confirmation
-     * in at least [MIN_CONFIRMING_FORMATS] exercise formats. A node answered strong in
-     * one format has been pattern-matched, not necessarily learned; the mask is what
-     * separates the two claims.
+     * Gap between the first correct answer and a later one, before a node can count as
+     * secured: 20 hours, i.e. at least one *next-day* retest.
+     *
+     * The mastery average on its own is a same-session number. With EWMA 0.2 from
+     * [DefaultKnowledgeEngine.FIRST_HIT_MASTERY] (0.4), seven correct answers in one
+     * sitting cross 0.85 without a single delayed recall being tested — enough to move
+     * the plan to the next unit the learner has only just met. A span taken from the
+     * stored timestamps (not a clock read) keeps the gate pure and testable.
+     */
+    const val MIN_RETEST_SPAN_MS = 20 * 3_600_000L
+
+    /**
+     * Secured: the node needs no more practice in today's plan. All four hold:
+     *
+     *  - mastery at [STRONG_MASTERY];
+     *  - at least [MIN_CONSECUTIVE] correct answers in a row (a miss voids it);
+     *  - at least [MIN_FORMATS_TO_SECURE] exercise formats confirmed it;
+     *  - a correct answer at least [MIN_RETEST_SPAN_MS] after the first one, so the
+     *    node survived a delay instead of only a same-sitting streak.
+     *
+     * `firstCorrectAt == null` (never answered right) is not secured — a stored number
+     * that never came from an answer proves nothing, and legacy rows before Room v7
+     * start there. This is the planner's bar, so it must not also demand a month of
+     * retention: that is the long-term claim.
+     */
+    fun isSecured(state: KnowledgeState): Boolean {
+        val first = state.firstCorrectAt ?: return false
+        val last = state.lastReviewedAt ?: return false
+        return state.mastery >= STRONG_MASTERY &&
+            state.consecutiveCorrect >= MIN_CONSECUTIVE &&
+            state.distinctTypeCount >= MIN_FORMATS_TO_SECURE &&
+            last - first >= MIN_RETEST_SPAN_MS
+    }
+
+    /**
+     * Has the node had time to be retested since it was last seen? The planner keeps a
+     * strong-but-unsecured node out of today's plan until this is true, rather than
+     * sending the learner back into the same drill they just finished.
+     */
+    fun hasWaitedForRetest(state: KnowledgeState, now: Long): Boolean {
+        val last = state.lastReviewedAt ?: return false
+        return now - last >= MIN_RETEST_SPAN_MS
+    }
+
+    /**
+     * Long-term: [isSecured], plus the retention evidence — [MIN_RECALLS] recalls and
+     * an interval past `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30). The format and
+     * streak requirements are already inside [isSecured]; repeating them here would let
+     * the two gates disagree about what "confirmed" means.
      */
     fun isLongTermMastered(state: KnowledgeState): Boolean =
         isSecured(state) &&
             state.repetitions >= MIN_RECALLS &&
-            state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS &&
-            state.distinctTypeCount >= MIN_CONFIRMING_FORMATS
+            state.intervalDays >= Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS
 }

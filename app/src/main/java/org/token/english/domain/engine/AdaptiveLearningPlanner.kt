@@ -55,6 +55,14 @@ class AdaptiveLearningPlanner(
         focusItems: List<KnowledgeItem>,
         targetMinutes: Int,
         todayStudySeconds: Long,
+        /**
+         * The current time, used for exactly one decision: whether a strong-but-
+         * unsecured node has had its retest delay yet. Everything else in the planner
+         * reads the stored state, so the parameter is a clock, not a second source of
+         * truth — and it has no default, because a wrong default would silently decide
+         * the retest question for every caller.
+         */
+        now: Long,
         estimatedMinutesByItem: Map<String, Int> = emptyMap(),
     ): LearningDecision {
         val byId: Map<String, KnowledgeState> = states.associateBy { it.itemId }
@@ -104,6 +112,32 @@ class AdaptiveLearningPlanner(
                 // One bar, shared with the learner model (checklist 2.1): the planner
                 // asks the gate, it does not compare floats of its own, so a node the
                 // gate calls secured cannot be "weak" here.
+                //
+                // A strong node the gate has not secured is one of two things
+                // (checklist 3, chapter 1):
+                //  - it was answered moments ago and still owes us a delayed recall.
+                //    Asking for more today would just re-run the drill it already
+                //    passed, so the plan says nothing about it until the delay is up;
+                //  - the delay has passed, so a short focused retest is the action.
+                //    `firstCorrectAt != null` keeps the branch honest: a stored number
+                //    with no recorded answer behind it is not "awaiting a retest", it
+                //    is a number we cannot trust — that node keeps its practice slot.
+                state.mastery >= STRONG_MASTERY &&
+                    state.firstCorrectAt != null &&
+                    !KnowledgeGates.isSecured(state) -> {
+                    if (KnowledgeGates.hasWaitedForRetest(state, now)) {
+                        actions += LearningAction(
+                            type = LearningActionType.RETEST,
+                            itemId = item.id,
+                            titleFa = item.titleFa,
+                            reasonFa = "بازآزمایی برای تثبیت",
+                            priority = PRIORITY_RETEST,
+                            estimatedMinutes = RETEST_MINUTES,
+                            lessonId = item.lessonIds.firstOrNull(),
+                        )
+                    }
+                }
+
                 !KnowledgeGates.isSecured(state) -> actions += LearningAction(
                     type = LearningActionType.PRACTISE,
                     itemId = item.id,
@@ -122,6 +156,7 @@ class AdaptiveLearningPlanner(
         val focusHasUpcomingWork = actions.any {
             it.type == LearningActionType.LEARN ||
                 it.type == LearningActionType.REMEDIATE ||
+                it.type == LearningActionType.RETEST ||
                 it.type == LearningActionType.PRACTISE
         }
         if (!focusHasUpcomingWork) {
@@ -219,6 +254,9 @@ class AdaptiveLearningPlanner(
         /** Default minutes for a single new/practise/remediate item when no lesson duration is known. */
         const val DEFAULT_ITEM_MINUTES = 5
 
+        /** A retest is one short pass over the node's own evidence, not a full lesson. */
+        const val RETEST_MINUTES = 3
+
         /** Minutes assumed per due review card. */
         const val MINUTES_PER_REVIEW_CARD = 1
 
@@ -227,7 +265,10 @@ class AdaptiveLearningPlanner(
 
         private const val PRIORITY_REVIEW = 0
         private const val PRIORITY_REMEDIATE = 1
-        private const val PRIORITY_LEARN = 2
-        private const val PRIORITY_PRACTISE = 3
+
+        /** Between a broken prerequisite and a new unit: finish what is nearly known. */
+        private const val PRIORITY_RETEST = 2
+        private const val PRIORITY_LEARN = 3
+        private const val PRIORITY_PRACTISE = 4
     }
 }

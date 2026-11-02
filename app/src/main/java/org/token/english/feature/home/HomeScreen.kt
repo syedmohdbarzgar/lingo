@@ -143,6 +143,7 @@ fun HomeScreen(
                         plan = plan,
                         onOpenReview = onOpenReview,
                         onOpenLesson = onOpenLesson,
+                        onOpenFocus = onOpenFocus,
                     )
                 }
                 StaggeredReveal(slot++) {
@@ -491,6 +492,8 @@ private fun TodayPlanCard(
     plan: org.token.english.domain.model.TodayPlan,
     onOpenReview: () -> Unit,
     onOpenLesson: (String) -> Unit,
+    /** Focused session on one node: (lessonId, node id) — what a retest opens. */
+    onOpenFocus: (String, String) -> Unit,
 ) {
     if (plan.actions.isEmpty()) return
     AppCard {
@@ -514,20 +517,28 @@ private fun TodayPlanCard(
                     AppChip(label = when (action.type) {
                         org.token.english.domain.model.LearningActionType.REVIEW -> "مرور"
                         org.token.english.domain.model.LearningActionType.REMEDIATE -> "پیش‌نیاز"
+                        org.token.english.domain.model.LearningActionType.RETEST -> "بازآزمایی"
                         org.token.english.domain.model.LearningActionType.LEARN -> "درس جدید"
                         org.token.english.domain.model.LearningActionType.PRACTISE -> "تمرین"
                     })
                 }
             }
             val lead = plan.actions.first()
-            if (lead.type == org.token.english.domain.model.LearningActionType.REVIEW) {
-                PrimaryButton(
+            when {
+                lead.type == org.token.english.domain.model.LearningActionType.REVIEW -> PrimaryButton(
                     text = "شروع مرور ${plan.dueReviewCount} کارت",
                     onClick = onOpenReview,
                     modifier = Modifier.fillMaxWidth(),
                 )
-            } else {
-                plan.nextLesson?.let { lesson ->
+                // A retest is a focused block on the node it names, not the lesson
+                // the day happens to point at (chapter 1).
+                lead.type == org.token.english.domain.model.LearningActionType.RETEST &&
+                    lead.lessonId != null && lead.itemId != null -> PrimaryButton(
+                    text = "بازآزمایی ${lead.titleFa}",
+                    onClick = { onOpenFocus(lead.lessonId!!, lead.itemId!!) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                else -> plan.nextLesson?.let { lesson ->
                     PrimaryButton(
                         text = "شروع درس: ${lesson.titleFa}",
                         onClick = { onOpenLesson(lesson.id) },

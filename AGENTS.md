@@ -125,7 +125,7 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (477 tests / 59 classes as of the v30 learner-model gates
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (485 tests / 59 classes as of the secured/retest gate
 pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page, the two-party
 dialogue with its authored turns, and the Vosk verdict engine, whose recogniser half is device-only by
 nature); the full inventory and ViewModel/fake conventions are in

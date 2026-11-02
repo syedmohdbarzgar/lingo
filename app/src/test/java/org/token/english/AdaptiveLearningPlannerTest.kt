@@ -5,8 +5,11 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.domain.engine.AdaptiveLearningPlanner
+import org.token.english.domain.engine.DefaultKnowledgeEngine
 import org.token.english.domain.engine.DefaultKnowledgeGraph
+import org.token.english.domain.engine.KnowledgeGates
 import org.token.english.domain.engine.PrerequisiteEngine
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
@@ -32,25 +35,38 @@ class AdaptiveLearningPlannerTest {
         skills = listOf(Skill.GRAMMAR),
     )
 
+    private val hour = 3_600_000L
+
     /**
-     * A node that has been answered: the planner reads [KnowledgeGates.isSecured], so a
-     * strong state must also carry the evidence the gate asks for (a recorded correct
-     * answer). A weak one keeps the single format it was met through.
+     * A node the learner has answered: strong mastery **plus** the evidence the gate now
+     * asks for — three in a row, two formats, and a retest a day after the first hit.
+     * Defaults describe a secured node so a test can say `0.9f` and mean "known"; the
+     * gates themselves are tested over their edges in `KnowledgeEngineTest`.
      */
-    private fun state(itemId: String, mastery: Float, firstCorrectAt: Long? = 1L) = KnowledgeState(
+    private fun state(
+        itemId: String,
+        mastery: Float,
+        firstCorrectAt: Long? = 0L,
+        lastReviewedAt: Long? = firstCorrectAt?.plus(25 * hour),
+        consecutiveCorrect: Int = 3,
+        formats: List<ExerciseFormat> = listOf(
+            ExerciseFormat.MULTIPLE_CHOICE,
+            ExerciseFormat.FILL_BLANK,
+        ),
+    ) = KnowledgeState(
         itemId = itemId,
         mastery = mastery,
         exposureCount = 1,
-        consecutiveCorrect = 0,
+        consecutiveCorrect = consecutiveCorrect,
         consecutiveIncorrect = 0,
         intervalDays = 0,
         easeFactor = 2.5f,
         repetitions = 0,
         lapses = 0,
-        lastReviewedAt = null,
+        lastReviewedAt = lastReviewedAt,
         nextReviewAt = 0L,
         firstCorrectAt = firstCorrectAt,
-        distinctTypesCorrect = org.token.english.domain.model.ExerciseFormat.MULTIPLE_CHOICE.bit,
+        distinctTypesCorrect = formats.fold(0) { acc, f -> acc or f.bit },
     )
 
     // a (root) → b → c, d independent root
@@ -59,17 +75,23 @@ class AdaptiveLearningPlannerTest {
     )
     private val planner = AdaptiveLearningPlanner(graph, PrerequisiteEngine(graph))
 
+    /**
+     * @param now the planner's clock. Defaults to "well after every state in these
+     *   tests", so a node that owes a retest is due for it unless a test says otherwise.
+     */
     private fun plan(
         states: List<KnowledgeState> = emptyList(),
         due: Int = 0,
         focus: List<KnowledgeItem> = emptyList(),
         todayStudySeconds: Long = 0L,
+        now: Long = 30 * hour,
     ) = planner.plan(
         states = states,
         dueReviewCount = due,
         focusItems = focus,
         targetMinutes = 15,
         todayStudySeconds = todayStudySeconds,
+        now = now,
     )
 
     // --- scenario 4: good knowledge, long absence ------------------------------
@@ -139,6 +161,116 @@ class AdaptiveLearningPlannerTest {
         )
         assertEquals(listOf(LearningActionType.PRACTISE), decision.actions.map { it.type })
         assertEquals("b", decision.actions.first().itemId)
+    }
+
+    // --- a strong node that owes a retest (checklist 3, chapter 1) ------------
+
+    @Test
+    fun `a strong node answered moments ago is not sent back into the same drill`() {
+        // Seven correct answers in one sitting cross the mastery bar without ever
+        // testing a delayed recall. Asking for more today would re-run what the learner
+        // just passed, so the plan leaves the node alone until the delay is up.
+        val decision = plan(
+            states = listOf(
+                state(
+                    itemId = "a",
+                    mastery = 0.9f,
+                    firstCorrectAt = 0L,
+                    lastReviewedAt = 1 * hour,
+                    consecutiveCorrect = 7,
+                    formats = listOf(ExerciseFormat.MULTIPLE_CHOICE),
+                ),
+            ),
+            focus = listOf(item("a")),
+            now = 2 * hour,
+        )
+        // The day is not empty (an unrelated unlocked unit may still be offered); what
+        // matters is that the waiting node is not sent back into scrutiny today.
+        assertTrue(
+            "no action for a node that has not had time to be retested",
+            decision.actions.none { it.itemId == "a" },
+        )
+    }
+
+    @Test
+    fun `a strong node whose retest delay has passed gets a retest action`() {
+        val decision = plan(
+            states = listOf(
+                state(
+                    itemId = "a",
+                    mastery = 0.9f,
+                    firstCorrectAt = 0L,
+                    lastReviewedAt = 1 * hour,
+                    consecutiveCorrect = 7,
+                    formats = listOf(ExerciseFormat.MULTIPLE_CHOICE),
+                ),
+            ),
+            focus = listOf(item("a")),
+            now = 40 * hour,
+        )
+        assertEquals(listOf(LearningActionType.RETEST), decision.actions.map { it.type })
+        val retest = decision.actions.first()
+        assertEquals("a", retest.itemId)
+        assertEquals("the session runs in the node's lesson", "l1", retest.lessonId)
+        assertEquals("بازآزمایی برای تثبیت", retest.reasonFa)
+        assertEquals(AdaptiveLearningPlanner.RETEST_MINUTES, retest.estimatedMinutes)
+    }
+
+    @Test
+    fun `the day after a same-sitting streak is a retest, and passing it opens the next unit`() {
+        // The whole chapter in one story (checklist 3, chapter 1), with a real engine
+        // and an injected clock: the streak is not enough on the day it happened, the
+        // node waits for the next day, then a retest in a second format secures it and
+        // the dependent unit becomes learnable.
+        val engine = DefaultKnowledgeEngine()
+        val day = 24 * hour
+
+        var known = engine.applyAttempt("a", null, true, 0L, ExerciseFormat.MULTIPLE_CHOICE)
+        repeat(7) { i ->
+            known = engine.applyAttempt("a", known, true, 1_000L * (i + 1), ExerciseFormat.MULTIPLE_CHOICE)
+        }
+        assertFalse("eight quick hits are still one shape on one day", KnowledgeGates.isSecured(known))
+
+        // Same day: nothing to do about it yet.
+        val sameDay = plan(states = listOf(known), focus = listOf(item("a")), now = 2 * hour)
+        assertTrue(sameDay.actions.none { it.itemId == "a" })
+
+        // The next day: the engine asks for the retest instead of more of the same.
+        val nextDay = plan(states = listOf(known), focus = listOf(item("a")), now = day)
+        assertEquals(listOf(LearningActionType.RETEST), nextDay.actions.map { it.type })
+
+        // Passing it in a second format is what the gate was waiting for.
+        var retested = engine.applyAttempt("a", known, true, day, ExerciseFormat.FILL_BLANK)
+        retested = engine.applyAttempt("a", retested, true, day + 1_000L, ExerciseFormat.FILL_BLANK)
+        assertTrue("a delayed retest in a second format secures the node", KnowledgeGates.isSecured(retested))
+
+        // …and the plan moves on to the unit it was blocking.
+        val after = plan(states = listOf(retested), focus = listOf(item("b", listOf("a"))), now = day + 2 * hour)
+        assertEquals(listOf(LearningActionType.LEARN), after.actions.map { it.type })
+        assertEquals("b", after.actions.first().itemId)
+    }
+
+    @Test
+    fun `a retest does not also open a new unit on the same day`() {
+        val decision = plan(
+            states = listOf(
+                state(
+                    itemId = "a",
+                    mastery = 0.9f,
+                    firstCorrectAt = 0L,
+                    lastReviewedAt = 1 * hour,
+                    consecutiveCorrect = 7,
+                    formats = listOf(ExerciseFormat.MULTIPLE_CHOICE),
+                ),
+            ),
+            focus = listOf(item("a")),
+            now = 40 * hour,
+        )
+        assertEquals(
+            "the day is about finishing what is nearly known",
+            listOf(LearningActionType.RETEST),
+            decision.actions.map { it.type },
+        )
     }
 
     @Test
@@ -226,6 +358,7 @@ class AdaptiveLearningPlannerTest {
             focusItems = listOf(item("x", listOf("p")), item("y", listOf("p"))),
             targetMinutes = 15,
             todayStudySeconds = 0L,
+            now = 30 * hour,
         )
         assertFalse(decision.actions.isEmpty())
         assertEquals(
@@ -248,6 +381,7 @@ class AdaptiveLearningPlannerTest {
             focusItems = listOf(item("a")),
             targetMinutes = 10,
             todayStudySeconds = 0L,
+            now = 30 * hour,
         )
         val review = decision.actions.first()
         assertEquals(LearningActionType.REVIEW, review.type)
@@ -277,6 +411,7 @@ class AdaptiveLearningPlannerTest {
                         focusItems = focus,
                         targetMinutes = target,
                         todayStudySeconds = spentSeconds,
+                        now = 30 * hour,
                     )
                     assertTrue(
                         "target=$target due=$due spent=$spentSeconds planned " +
@@ -298,6 +433,7 @@ class AdaptiveLearningPlannerTest {
             focusItems = listOf(item("a")),
             targetMinutes = 10,
             todayStudySeconds = 61L,
+            now = 30 * hour,
         )
         assertEquals(
             "8 minutes of budget remain after 61s",
@@ -316,6 +452,7 @@ class AdaptiveLearningPlannerTest {
             focusItems = listOf(item("a")),
             targetMinutes = 10,
             todayStudySeconds = 15 * 60L,
+            now = 30 * hour,
         )
         assertEquals(listOf(LearningActionType.REVIEW), decision.actions.map { it.type })
         assertEquals(0, decision.remainingMinutes)
@@ -333,6 +470,7 @@ class AdaptiveLearningPlannerTest {
             focusItems = focus,
             targetMinutes = 12,
             todayStudySeconds = 0L,
+            now = 30 * hour,
         )
         assertEquals(LearningActionType.REVIEW, decision.actions.first().type)
         assertTrue(decision.actions.size <= 3)

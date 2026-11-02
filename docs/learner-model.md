@@ -72,20 +72,34 @@
 - **Two named gates, defined once (checklist 2.1, Room v7).** `KnowledgeGates` (in
   `KnowledgeEngine.kt`, mirrored by `DefaultKnowledgeEngine.isSecured` / `isLongTermMastered`) owns
   the two questions surfaces ask, so no screen compares floats of its own:
-  - **`isSecured`** — the **planner's bar**: `mastery >= STRONG_MASTERY` *and* a recorded correct
-    answer (`firstCorrectAt != null`), so a stored number that never came from an answer cannot
-    secure a node. A secured node needs no more practice today, which is what lets the plan open the
-    next unlocked unit. It is deliberately **not** the 30-day gate: requiring a month of retention
-    before moving on would hold the learner on a node they already know.
+  - **`isSecured`** — the **planner's bar** (checklist 3, chapter 1). All four must hold:
+    `mastery >= STRONG_MASTERY`; `consecutiveCorrect >= MIN_CONSECUTIVE` (3, so a miss voids it);
+    `distinctTypeCount >= MIN_FORMATS_TO_SECURE` (2, one shape can be pattern-matched); and
+    `lastReviewedAt - firstCorrectAt >= MIN_RETEST_SPAN_MS` (20 h — the node survived **a delayed
+    retest**, not just a same-sitting streak). The first version of this gate only asked for
+    `mastery >= 0.85` plus a recorded hit, and that last condition was satisfied after the first
+    answer: EWMA 0.2 from 0.4 crosses 0.85 after eight quick hits from a single format, on one day,
+    so the plan marched on past a node nothing had retested. A secured node needs no more practice
+    today, which is what lets the plan open the next unlocked unit — so it is deliberately **not**
+    the 30-day gate.
   - **`isLongTermMastered`** — the old 30-day gate, renamed: `isSecured` plus
-    `repetitions >= MASTERED_MIN_REPETITIONS` (3, so a next-day retest is part of getting there —
-    the first SM-2 interval is one day), an interval past
-    `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30), and confirmation in at least
-    `MIN_CONFIRMING_FORMATS` (2) exercise formats. One format answered strong has been
-    pattern-matched; the mask is what separates that from transfer. The two `phonology.*` nodes
-    the content only exercises through translation (`phonology.spelling-aloud`,
-    `phonology.number-sounds`) therefore cannot claim *long-term* mastery today — a content gap,
-    recorded rather than papered over.
+    `repetitions >= MASTERED_MIN_REPETITIONS` (3) and an interval past
+    `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30). The format and streak rules are inside
+    `isSecured`; repeating them here would let the two gates disagree about what "confirmed" means.
+    Because securing already needs a second format, the two `phonology.*` nodes the content only
+    exercises through translation (`phonology.spelling-aloud`, `phonology.number-sounds`) cannot
+    reach either claim today — a content gap, recorded rather than papered over.
+- **A strong node that is not secured is a retest, not a re-drill.** The planner keeps one clock
+  parameter (`plan(..., now)`) for exactly this decision: a node at `STRONG_MASTERY` with a recorded
+  hit but not secured
+  - within `MIN_RETEST_SPAN_MS` of its last answer gets **no action today** — asking for more would
+    re-run the drill the learner just passed (`KnowledgeGates.hasWaitedForRetest`);
+  - after that gap gets a `LearningActionType.RETEST` action (priority between `REMEDIATE` and
+    `LEARN`, `RETEST_MINUTES` = 3, reason «بازآزمایی برای تثبیت»), which opens a focused session on
+    that node: `HomeScreen` routes it through the same `onOpenFocus(lessonId, itemId)` seam as the
+    weak-spot card, and `GetFocusPlanUseCase` serves a strong-but-unsecured node **only when the
+    plan names it explicitly** (auto-pick still never picks a consolidated node). A strong number
+    with **no** recorded answer is not "awaiting" anything: it keeps its `PRACTISE` slot.
 - **The learner model records how the claim was earned (Room v7).** `knowledge_state` now carries
   `firstCorrectAt` (when the node was first answered right, `NULL` until then) and
   `distinctTypesCorrect`, a **bitmask** of the `ExerciseFormat`s that have produced a correct answer
