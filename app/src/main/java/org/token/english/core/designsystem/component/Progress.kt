@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.labelFa
 import org.token.english.domain.engine.SkillProfile
@@ -100,7 +102,7 @@ fun SkillProgressBar(
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = valueText ?: "${(progress.coerceIn(0f, 1f) * 100).toInt()}٪",
+                text = valueText ?: persianPercent((progress.coerceIn(0f, 1f) * 100).toInt()),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -150,9 +152,9 @@ private fun SkillProfile.evidenceLineFa(compact: Boolean): String = buildString 
         append("هنوز پاسخی در این محور ثبت نشده")
         return@buildString
     }
-    append("$evidence پاسخ")
-    accuracyPercent?.let { append(" · دقت $it٪") }
-    if (!compact) append(" · $nodesPractised گره")
+    append(persianMeasure(evidence, "پاسخ"))
+    accuracyPercent?.let { append(" · دقت ${persianPercent(it)}") }
+    if (!compact) append(" · ${persianMeasure(nodesPractised, "گره")}")
     append(" · ${status.labelFa()}")
 }
 

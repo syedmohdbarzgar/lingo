@@ -31,6 +31,7 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
@@ -138,6 +139,27 @@ class FakeLessonRepository(
     }
 
     override suspend fun enqueueLessonVocabulary(lessonId: String, now: Long) = Unit
+
+    /** Lessons whose fake exercise list contains a spoken turn. */
+    override suspend fun lessonIdsWithDialogue(): Set<String> =
+        exercises.filterValues { list -> list.any { it is Exercise.Speaking } }.keys
+}
+
+/**
+ * Finished conversations, in memory. The gate reads the same set the practice
+ * screen writes, so a test can walk a dialogue and see the next lesson open.
+ */
+class FakeConversationRepository(
+    initial: Set<String> = emptySet(),
+) : ConversationRepository {
+
+    val doneFlow = MutableStateFlow(initial)
+
+    override fun observeCompleted(): Flow<Set<String>> = doneFlow
+
+    override suspend fun markCompleted(lessonId: String) {
+        doneFlow.value = doneFlow.value + lessonId
+    }
 }
 
 class FakeVocabularyRepository(

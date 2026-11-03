@@ -90,7 +90,8 @@ object Routes {
     const val LESSON = "lesson/{lessonId}?focusItemId={focusItemId}"
     const val REVIEW = "review"
     const val VOCABULARY = "vocabulary"
-    const val CONVERSATION = "conversation"
+    /** A lesson's dialogue; `lessonId` focuses one lesson, absent means the current one. */
+    const val CONVERSATION = "conversation?lessonId={lessonId}"
     const val VOCABULARY_DETAIL = "vocabulary/{vocabId}"
     const val PROGRESS = "progress"
     const val SETTINGS = "settings"
@@ -101,6 +102,9 @@ object Routes {
     fun focusLesson(lessonId: String, itemId: String) =
         "lesson/$lessonId?focusItemId=$itemId"
     fun vocabularyDetail(vocabId: String) = "vocabulary/$vocabId"
+
+    fun conversation(lessonId: String?) =
+        if (lessonId.isNullOrBlank()) "conversation" else "conversation?lessonId=$lessonId"
 }
 
 private data class Tab(
@@ -291,7 +295,9 @@ private fun NavGraphBuilder.home(navController: NavHostController) {
             onOpenSettings = { navController.navigate(Routes.SETTINGS) },
             onOpenReview = { navController.navigate(Routes.REVIEW) },
             onOpenPaywall = { navController.navigate(Routes.PAYWALL) },
-            onOpenConversation = { navController.navigate(Routes.CONVERSATION) },
+            onOpenConversation = { lessonId ->
+                navController.navigate(Routes.conversation(lessonId))
+            },
             onOpenFocus = { lessonId, itemId ->
                 navController.navigate(Routes.focusLesson(lessonId, itemId))
             },
@@ -358,12 +364,22 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
 private fun NavGraphBuilder.conversation(navController: NavHostController) {
     composable(
         route = Routes.CONVERSATION,
+        arguments = listOf(
+            navArgument("lessonId") {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            },
+        ),
         enterTransition = { forwardEnter() },
         exitTransition = { forwardExit() },
         popEnterTransition = { backEnter() },
         popExitTransition = { backExit() },
-    ) {
-        ConversationPracticeScreen(onBack = { navController.popBackStack() })
+    ) { entry ->
+        ConversationPracticeScreen(
+            lessonId = entry.arguments?.getString("lessonId"),
+            onBack = { navController.popBackStack() },
+        )
     }
 }
 

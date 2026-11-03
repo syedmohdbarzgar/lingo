@@ -1,0 +1,580 @@
+// v34 content, part 1 — A2 topics 21–23: renting a home, household problems,
+// future plans. Read by `v34_a2_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "a2.renting.lesson-01",
+      order: 87,
+      title: "Renting a Home",
+      titleFa: "اجارهٔ خانه",
+      topic: "Housing",
+      tip: [
+        "## قاعده",
+        "برای اجاره کردن خانه از rent به‌عنوان فعل و اسم استفاده می‌کنیم: We rent a flat.",
+        "صاحبخانه landlord است و پولی که پیش از ورود می‌دهید deposit؛ اگر خانه مبله باشد furnished است.",
+        "برای پرسیدن مبلغ می‌گوییم: How much is the rent? و برای امکانات: Is the flat furnished?",
+        "هزینهٔ آب و برق و گاز utility bills نام دارد و در قرارداد lease نوشته می‌شود.",
+        "## جدول",
+        "How much is the rent? — اجاره چقدر است؟",
+        "Is the flat furnished? — خانه مبله است؟",
+        "The rent includes utility bills. — اجاره شامل آب و برق است.",
+        "We paid a deposit of one month. — یک ماه ودیعه دادیم.",
+        "## مثال‌ها",
+        "We rent a small flat near the station. — ما آپارتمان کوچکی نزدیک ایستگاه اجاره می‌کنیم.",
+        "The landlord repairs the roof himself. — صاحبخانه خودش پشت‌بام را تعمیر می‌کند.",
+        "The lease is for one year. — قرارداد اجاره برای یک سال است.",
+        "## خطاهای رایج",
+        "rent فعل گذرا است: rent a flat درست است، نه rent for a flat.",
+        "deposit پول ودیعه است، نه اجارهٔ ماهانه؛ آن را با rent قاطی نکنید.",
+        "در حالت کلی utilities جمع می‌آید: utility bills، نه utility bill.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.how-much-questions",
+    vocab: {
+      id: "vocab.renting",
+      title: "Renting a Home",
+      titleFa: "اجارهٔ خانه",
+      prerequisites: ["vocab.where-i-live"],
+    },
+    words: [
+      {
+        slug: "rent", w: "rent", fa: "اجاره کردن؛ اجاره", ipa: "/rent/", pos: "verb",
+        def: "to pay money every month to live in a place",
+        ex: [
+          ["We rent a small flat near the station.", "ما آپارتمان کوچکی نزدیک ایستگاه اجاره می‌کنیم."],
+          ["They rent their house to a young couple.", "آن‌ها خانه‌شان را به زوج جوانی اجاره می‌دهند."],
+        ],
+        col: ["rent a flat", "pay the rent"],
+        note: "rent هم فعل است هم اسم؛ اجارهٔ ماهانه را pay the rent می‌گوییم.",
+      },
+      {
+        slug: "landlord", w: "landlord", fa: "صاحبخانه", ipa: "/ˈlændlɔːd/", pos: "noun",
+        def: "the person who owns the place you rent",
+        ex: [
+          ["The landlord fixed the boiler yesterday.", "صاحبخانه دیروز پکیج را تعمیر کرد."],
+          ["Our landlord lives on the ground floor.", "صاحبخانهٔ ما در طبقهٔ همکف زندگی می‌کند."],
+        ],
+        col: ["call the landlord", "the landlord agreed"],
+        note: "landlord صاحبخانه است و کسی که خانه را اجاره می‌کند tenant نام دارد.",
+      },
+      {
+        slug: "deposit", w: "deposit", fa: "ودیعه", ipa: "/dɪˈpɒzɪt/", pos: "noun",
+        def: "money you pay before you move in, returned when you leave",
+        ex: [
+          ["We paid one month's deposit.", "یک ماه ودیعه دادیم."],
+          ["The deposit is returned after the final check.", "ودیعه پس از بازرسی نهایی برگردانده می‌شود."],
+        ],
+        col: ["pay a deposit", "get the deposit back"],
+        note: "deposit پول ودیعه است و معمولاً هنگام تخلیه برمی‌گردد؛ با rent (اجارهٔ ماهانه) فرق دارد.",
+      },
+      {
+        slug: "lease", w: "lease", fa: "قرارداد اجاره", ipa: "/liːs/", pos: "noun",
+        def: "the written agreement for renting a place",
+        ex: [
+          ["We signed a one-year lease.", "قرارداد اجارهٔ یک‌ساله امضا کردیم."],
+          ["Read the lease before you sign it.", "قبل از امضا قرارداد اجاره را بخوان."],
+        ],
+        col: ["sign a lease", "a one-year lease"],
+        note: "lease قرارداد رسمی اجاره است؛ در گفتار روزمره contract هم شنیده می‌شود.",
+      },
+      {
+        slug: "furnished", w: "furnished", fa: "مبله", ipa: "/ˈfɜːnɪʃt/", pos: "adjective",
+        def: "with furniture already in it",
+        ex: [
+          ["The flat is fully furnished.", "خانه کاملاً مبله است."],
+          ["A furnished room costs more.", "اتاق مبله گران‌تر است."],
+        ],
+        col: ["fully furnished", "a furnished flat"],
+        note: "furnished از furniture (مبلمان) می‌آید؛ متضاد آن unfurnished است.",
+      },
+      {
+        slug: "utility", w: "utility", fa: "هزینهٔ آب و برق", ipa: "/juːˈtɪləti/", pos: "noun",
+        def: "a service like water, gas or electricity, and its bill",
+        ex: [
+          ["The rent includes all utility bills.", "اجاره شامل همهٔ هزینه‌های آب و برق است."],
+          ["Utility costs are higher in winter.", "هزینه‌های آب و برق در زمستان بیشتر است."],
+        ],
+        col: ["utility bills", "utility costs"],
+        note: "در حالت کلی utilities جمع می‌آید و به آب، برق و گاز اشاره دارد.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "landlord", gloss: "صاحبخانه",
+        options: ["مستأجر", "صاحبخانه", "همسایه", "لوله‌کش"],
+        note: "landlord یعنی «صاحبخانه»؛ مستأجر tenant است و لوله‌کش plumber.",
+      },
+      {
+        // deposit is already asked in a2.hotel-booking.ex.03, and two identical
+        // meaning items would test nothing new — this slot names the lesson's
+        // other new noun instead (the word is still taught and reviewed).
+        k: "mcq", word: "lease", gloss: "قرارداد اجاره",
+        options: ["ودیعه", "قرارداد اجاره", "اجارهٔ ماهانه", "صاحبخانه"],
+        note: "lease «قرارداد اجاره» است؛ ودیعه deposit، اجارهٔ ماهانه rent و صاحبخانه landlord است.",
+      }
+      {
+        k: "mcq", word: "furnished", gloss: "مبله",
+        options: ["خالی", "مبله", "نوساز", "گران"],
+        note: "furnished یعنی «مبله» — خانه تخت و میز و صندلی دارد؛ متضادش unfurnished است.",
+      },
+      {
+        k: "blank", sentence: "The rent ___ water and electricity.",
+        accepted: ["includes", "covers"], skill: "VOCABULARY",
+        note: "include و cover هر دو یعنی «شامل بودن»؛ بعد از The rent فعل سوم‌شخص s می‌گیرد.",
+      },
+      {
+        k: "blank", sentence: "The flat is fully ___.",
+        accepted: ["furnished", "equipped"], skill: "VOCABULARY",
+        note: "برای خانه، furnished «مبله» و equipped «تجهیزشده» است؛ هر دو با fully می‌آیند.",
+      },
+      {
+        k: "recall", prompt: "ودیعه", accepted: ["deposit"],
+        note: "ودیعهٔ خانه deposit است؛ پولی که پیش از ورود می‌دهید و بعد برمی‌گردد.",
+      },
+      {
+        k: "tr", prompt: "خانه مبله است.",
+        accepted: ["the flat is furnished", "the apartment is furnished"],
+        note: "flat در انگلیسی بریتانیایی و apartment در آمریکایی؛ صفت furnished بعد از is می‌آید.",
+      },
+      {
+        k: "listen", text: "The rent includes water and electricity.",
+        note: "جمله را بشنوید و بنویسید: include /ɪnˈkluːdz/ با صدای /z/ پایان می‌یابد و electricity /ɪˌlekˈtrɪsəti/ تکیه روی هجای سوم دارد.",
+      },
+      {
+        k: "prod", prompt: "بپرس اجارهٔ خانه چقدر است.",
+        mustUse: ["how", "much"], minWords: 5,
+        accepted: ["how much is the rent"],
+        hint: "با How much is…? مبلغ را بپرس.",
+        note: "برای پرسیدن مبلغ از How much is…? استفاده می‌کنیم و ترتیب پرسشی را حفظ می‌کنیم: How much is the rent?",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "دفتر مشاور املاک", partner: "مشاور املاک",
+        prompt: "بگو دنبال خانهٔ کوچکی برای یک سال هستی.",
+        question: "Good morning. Are you looking for a flat?",
+        questionFa: "صبح بخیر. دنبال خانه هستید؟",
+        accepted: [
+          "Yes, I need a small flat for one year.",
+          "Yes, I am looking for a furnished flat.",
+        ],
+        note: "looking for یعنی «دنبال چیزی بودن».",
+      },
+      {
+        scene: "دفتر مشاور املاک", partner: "مشاور املاک",
+        prompt: "بگو دو اتاق خواب برایت کافی است.",
+        question: "We have one near the park. Is two bedrooms enough?",
+        questionFa: "یکی نزدیک پارک داریم. دو اتاق خواب کافی است؟",
+        accepted: [
+          "Two bedrooms is perfect for me.",
+          "Yes, two bedrooms is enough.",
+        ],
+        note: "enough یعنی «کافی»؛ در انگلیسی محاوره دو اتاق به‌عنوان یک واحد is می‌گیرد.",
+      },
+      {
+        scene: "دفتر مشاور املاک", partner: "مشاور املاک",
+        prompt: "بپرس آیا آب و برق در اجاره هست.",
+        question: "The rent is five hundred a month. Does that work for you?",
+        questionFa: "اجاره ماهی پانصد است. برایتان مناسب است؟",
+        accepted: [
+          "That works. Does it include utilities?",
+          "That is fine. Are utilities included?",
+        ],
+        note: "That works یعنی «مناسب است»؛ برای امکانات از include استفاده کنید.",
+      },
+      {
+        scene: "دفتر مشاور املاک", partner: "مشاور املاک",
+        prompt: "بگو ودیعه را دوشنبه می‌پردازی.",
+        question: "Water and electricity are included. When can you pay the deposit?",
+        questionFa: "آب و برق شامل اجاره است. چه زمانی می‌توانید ودیعه را بپردازید؟",
+        accepted: [
+          "I can pay it on Monday.",
+          "I can pay the deposit this week.",
+        ],
+        note: "پرداخت ودیعه pay the deposit است و روز هفته با on می‌آید.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "a2.house-problems.lesson-01",
+      order: 88,
+      title: "Household Problems",
+      titleFa: "مشکلات خانه",
+      topic: "Housing",
+      tip: [
+        "## قاعده",
+        "برای گفتن مشکل خانه با There is شروع می‌کنیم: There is a leak under the sink.",
+        "برای چیزی که کار نمی‌کند: The heater does not work یا The window is broken.",
+        "برای کاری که همین حالا در جریان است حال استمراری می‌آید: Water is coming from the pipe.",
+        "برای درخواست کمک: Could you send a plumber? و برای الزام: I have to call the landlord.",
+        "## جدول",
+        "There is a leak in the bathroom. — در حمام نشتی هست.",
+        "The light switch does not work. — کلید برق کار نمی‌کند.",
+        "Could you repair the window? — می‌توانید پنجره را تعمیر کنید؟",
+        "The neighbours are noisy at night. — همسایه‌ها شب‌ها پرسروصدا هستند.",
+        "## مثال‌ها",
+        "The plumber fixed the sink in an hour. — لوله‌کش سینک را در یک ساعت درست کرد.",
+        "We have to repair the roof before winter. — باید پیش از زمستان پشت‌بام را تعمیر کنیم.",
+        "A broken pipe can cost a lot. — لولهٔ خراب می‌تواند گران تمام شود.",
+        "## خطاهای رایج",
+        "broken صفت است: the window is broken، نه the window is break.",
+        "plumber لوله‌کش است، نه برقکار؛ برقکار electrician نام دارد.",
+        "repair و fix هر دو درست‌اند، اما برای خانه repair رایج‌تر است.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.present-continuous",
+    vocab: {
+      id: "vocab.house-problems",
+      title: "Household Problems",
+      titleFa: "مشکلات خانه",
+      prerequisites: ["vocab.renting"],
+    },
+    words: [
+      {
+        slug: "leak", w: "leak", fa: "نشتی", ipa: "/liːk/", pos: "noun",
+        def: "a hole or crack where water escapes",
+        ex: [
+          ["There is a leak under the sink.", "زیر سینک نشتی هست."],
+          ["The leak is getting worse every day.", "نشتی هر روز بدتر می‌شود."],
+        ],
+        col: ["a small leak", "fix a leak"],
+        note: "leak اسم است و leaky صفت؛ فعل آن هم leak است: the pipe is leaking.",
+      },
+      {
+        slug: "broken", w: "broken", fa: "خراب", ipa: "/ˈbrəʊkən/", pos: "adjective",
+        def: "not working because a part is damaged",
+        ex: [
+          ["The kitchen window is broken.", "پنجرهٔ آشپزخانه خراب است."],
+          ["A broken heater is dangerous in winter.", "بخاری خراب در زمستان خطرناک است."],
+        ],
+        col: ["a broken window", "get broken"],
+        note: "broken صفت است؛ برای فعل از break استفاده می‌کنیم: someone broke the window.",
+      },
+      {
+        slug: "plumber", w: "plumber", fa: "لوله‌کش", ipa: "/ˈplʌmə/", pos: "noun",
+        def: "a person who repairs pipes and water systems",
+        ex: [
+          ["The plumber came to fix the sink.", "لوله‌کش آمد تا سینک را درست کند."],
+          ["We need a plumber for the bathroom.", "برای حمام به لوله‌کش نیاز داریم."],
+        ],
+        col: ["call a plumber", "send a plumber"],
+        note: "plumber با b بی‌صدا نوشته می‌شود و /ˈplʌmə/ خوانده می‌شود؛ برقکار electrician است.",
+      },
+      {
+        slug: "repair", w: "repair", fa: "تعمیر کردن", ipa: "/rɪˈpeə/", pos: "verb",
+        def: "to fix something that is damaged",
+        ex: [
+          ["The landlord will repair the roof.", "صاحبخانه پشت‌بام را تعمیر می‌کند."],
+          ["They repaired the door in one afternoon.", "آن‌ها در را در یک بعدازظهر تعمیر کردند."],
+        ],
+        col: ["repair a roof", "a repair job"],
+        note: "repair رسمی‌تر از fix است و برای خانه و وسایل بزرگ به‌کار می‌رود.",
+      },
+      {
+        slug: "switch", w: "switch", fa: "کلید برق", ipa: "/swɪtʃ/", pos: "noun",
+        def: "the part you press to turn a light on or off",
+        ex: [
+          ["The light switch is by the door.", "کلید برق کنار در است."],
+          ["Please do not touch the switch with wet hands.", "لطفاً با دست خیس به کلید برق دست نزنید."],
+        ],
+        col: ["the light switch", "turn off the switch"],
+        note: "switch هم اسم است هم فعل؛ switch off یعنی خاموش کردن.",
+      },
+      {
+        slug: "noisy", w: "noisy", fa: "پرسروصدا", ipa: "/ˈnɔɪzi/", pos: "adjective",
+        def: "making a lot of sound",
+        ex: [
+          ["The neighbours are noisy at night.", "همسایه‌ها شب‌ها پرسروصدا هستند."],
+          ["A noisy street is hard to sleep on.", "خیابان پرسروصدا خوابیدن را سخت می‌کند."],
+        ],
+        col: ["a noisy street", "noisy neighbours"],
+        note: "noisy از noise می‌آید و دربارهٔ صداهای آزاردهنده است.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "leak", gloss: "نشتی",
+        options: ["تعمیر", "نشتی", "کلید برق", "سروصدا"],
+        note: "leak یعنی «نشتی»؛ تعمیر repair، کلید برق switch و سروصدا noise است.",
+      },
+      {
+        k: "mcq", word: "plumber", gloss: "لوله‌کش",
+        options: ["برقکار", "لوله‌کش", "صاحبخانه", "همسایه"],
+        note: "plumber «لوله‌کش» است؛ برقکار electrician و صاحبخانه landlord نام دارد.",
+      },
+      {
+        k: "mcq", word: "noisy", gloss: "پرسروصدا",
+        options: ["تمیز", "خراب", "پرسروصدا", "مبله"],
+        note: "noisy یعنی «پرسروصدا»؛ خراب broken و مبله furnished است.",
+      },
+      {
+        k: "blank", sentence: "The tap has a ___ under the sink.",
+        accepted: ["leak", "drip"], skill: "VOCABULARY",
+        note: "leak «نشتی» و drip «چکه» است؛ هر دو با have a … می‌آیند.",
+      },
+      {
+        k: "blank", sentence: "The window is ___.",
+        accepted: ["broken", "cracked"], skill: "VOCABULARY",
+        note: "broken «خراب» و cracked «ترک‌خورده» است؛ هر دو صفت‌اند و بعد از is می‌آیند.",
+      },
+      {
+        k: "recall", prompt: "لوله‌کش", accepted: ["plumber"],
+        note: "لوله‌کش plumber است و با b بی‌صدا نوشته می‌شود.",
+      },
+      {
+        k: "tr", prompt: "کلید برق کار نمی‌کند.",
+        accepted: ["the light switch does not work", "the light switch doesn't work"],
+        note: "برای چیزی که کار نمی‌کند از does not work استفاده می‌کنیم؛ light switch کلید برق است.",
+      },
+      {
+        k: "listen", text: "There is a leak under the kitchen sink.",
+        note: "جمله را بشنوید و بنویسید: under /ˈʌndə/ و kitchen /ˈkɪtʃɪn/؛ صدای /tʃ/ در kitchen مثل «چ» فارسی است.",
+      },
+      {
+        k: "prod", prompt: "بگو باید لوله‌کش را خبر کنی.",
+        mustUse: ["have to", "plumber"], minWords: 5,
+        accepted: ["i have to call the plumber"],
+        hint: "با have to + فعل ساده بگو چه کاری لازم است.",
+        note: "برای الزام از have to استفاده می‌کنیم و بعد از آن فعل ساده می‌آید: I have to call the plumber.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "خانهٔ مستأجر — تماس با صاحبخانه", partner: "صاحبخانه",
+        prompt: "بگو بخاری خراب شده است.",
+        question: "Hello, this is your landlord. Is everything okay?",
+        questionFa: "سلام، صاحبخانه‌تان هستم. همه‌چیز خوب است؟",
+        accepted: [
+          "No, there is a problem with the heating.",
+          "Not really. The heater is broken.",
+        ],
+        note: "heating یعنی «سیستم گرمایش» و Not really پاسخ نرم «نه، زیاد» است.",
+      },
+      {
+        scene: "خانهٔ مستأجر — تماس با صاحبخانه", partner: "صاحبخانه",
+        prompt: "بگو دیشب از کار افتاد.",
+        question: "I am sorry to hear that. When did it stop working?",
+        questionFa: "متأسفم. چه زمانی از کار افتاد؟",
+        accepted: [
+          "It stopped working last night.",
+          "It stopped working two days ago.",
+        ],
+        note: "stop working یعنی «از کار افتادن»؛ last night و ago زمان گذشته را نشان می‌دهند.",
+      },
+      {
+        scene: "خانهٔ مستأجر — تماس با صاحبخانه", partner: "صاحبخانه",
+        prompt: "بگو فردا صبح خوب است.",
+        question: "I can send a plumber tomorrow morning. Is that okay?",
+        questionFa: "می‌توانم فردا صبح لوله‌کش بفرستم. خوب است؟",
+        accepted: [
+          "Tomorrow morning is fine, thank you.",
+          "Yes, that works for me.",
+        ],
+        note: "that works for me یعنی «برای من مناسب است».",
+      },
+      {
+        scene: "خانهٔ مستأجر — تماس با صاحبخانه", partner: "صاحبخانه",
+        prompt: "بگو تا رسیدن او کلید را خاموش نگه می‌داری.",
+        question: "Please keep the switch off until he arrives.",
+        questionFa: "لطفاً تا رسیدن او کلید را خاموش نگه دارید.",
+        accepted: [
+          "Okay, I will keep it off.",
+          "Sure, I will not turn it on.",
+        ],
+        note: "keep the switch off یعنی «کلید را خاموش نگه دار»؛ turn on یعنی روشن کردن.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "a2.future-plans.lesson-01",
+      order: 89,
+      title: "Future Plans",
+      titleFa: "برنامه‌ریزی برای آینده",
+      topic: "Plans",
+      tip: [
+        "## قاعده",
+        "برای برنامهٔ آینده از will استفاده می‌کنیم: I will start a course next month.",
+        "برای قصد و هدف از plan to و hope to + فعل ساده بهره می‌بریم: We plan to move in June.",
+        "برای هماهنگ کردن کاری از arrange استفاده می‌کنیم: I will arrange a meeting.",
+        "اگر برنامه عقب بیفتد، postpone یعنی «به تعویق انداختن» و goal یعنی «هدف».",
+        "## جدول",
+        "I will start a new course next month. — ماه بعد دورهٔ جدیدی شروع می‌کنم.",
+        "We plan to move in June. — قصد داریم در ژوئن اسباب‌کشی کنیم.",
+        "She hopes to find a better job. — امیدوار است کار بهتری پیدا کند.",
+        "We had to postpone the trip. — مجبور شدیم سفر را به تعویق بیندازیم.",
+        "## مثال‌ها",
+        "My goal is to save money every month. — هدف من پس‌انداز کردن هر ماه است.",
+        "We decided to take the early train. — تصمیم گرفتیم قطار زودتر را بگیریم.",
+        "They arranged a meeting for Friday. — برای جمعه جلسه‌ای ترتیب دادند.",
+        "## خطاهای رایج",
+        "hope با to + مصدر می‌آید، نه با ing: I hope to see you.",
+        "decide to do درست است، نه decide doing.",
+        "postpone با اسم یا ing می‌آید: postpone the meeting، نه postpone to the meeting.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.future-will",
+    vocab: {
+      id: "vocab.future-plans",
+      title: "Future Plans",
+      titleFa: "برنامه‌ریزی برای آینده",
+      prerequisites: ["vocab.holiday-plans"],
+    },
+    words: [
+      {
+        slug: "plan", w: "plan", fa: "برنامه؛ برنامه‌ریزی کردن", ipa: "/plæn/", pos: "noun",
+        def: "what you have decided to do later",
+        ex: [
+          ["My plan is to save money every month.", "برنامهٔ من پس‌انداز کردن هر ماه است."],
+          ["We plan to move in June.", "قصد داریم در ژوئن اسباب‌کشی کنیم."],
+        ],
+        col: ["make a plan", "plan to move"],
+        note: "plan هم اسم است هم فعل؛ بعد از plan to فعل ساده می‌آید.",
+      },
+      {
+        slug: "decide", w: "decide", fa: "تصمیم گرفتن", ipa: "/dɪˈsaɪd/", pos: "verb",
+        def: "to choose something after thinking",
+        ex: [
+          ["We decided to take the early train.", "تصمیم گرفتیم قطار زودتر را بگیریم."],
+          ["She decided to study at home.", "او تصمیم گرفت در خانه درس بخواند."],
+        ],
+        col: ["decide to go", "decide quickly"],
+        note: "decide با to + مصدر می‌آید؛ اسم آن decision است.",
+      },
+      {
+        slug: "hope", w: "hope", fa: "امیدوار بودن", ipa: "/həʊp/", pos: "verb",
+        def: "to want something to happen",
+        ex: [
+          ["I hope to start a new course soon.", "امیدوارم به‌زودی دورهٔ جدیدی شروع کنم."],
+          ["She hopes to find a better job.", "او امیدوار است کار بهتری پیدا کند."],
+        ],
+        col: ["hope to see", "I hope so"],
+        note: "hope to + فعل ساده؛ برای پاسخ کوتاه I hope so می‌گوییم.",
+      },
+      {
+        slug: "arrange", w: "arrange", fa: "ترتیب دادن", ipa: "/əˈreɪndʒ/", pos: "verb",
+        def: "to organise something so it can happen",
+        ex: [
+          ["I will arrange a meeting for Monday.", "برای دوشنبه جلسه‌ای ترتیب می‌دهم."],
+          ["Can you arrange a taxi for us?", "می‌توانی برای ما تاکسی ترتیب بدهی؟"],
+        ],
+        col: ["arrange a meeting", "arrange a taxi"],
+        note: "arrange یعنی «برنامه‌ریزی و هماهنگ کردن»؛ اسمش arrangement است.",
+      },
+      {
+        slug: "postpone", w: "postpone", fa: "به تعویق انداختن", ipa: "/pəˈspəʊn/", pos: "verb",
+        def: "to move an event to a later time",
+        ex: [
+          ["We had to postpone the trip to June.", "مجبور شدیم سفر را به ژوئن موکول کنیم."],
+          ["They postponed the match until Sunday.", "آن‌ها مسابقه را تا یکشنبه به تعویق انداختند."],
+        ],
+        col: ["postpone a meeting", "postpone until"],
+        note: "postpone با اسم می‌آید: postpone the meeting؛ مترادف آن put off است.",
+      },
+      {
+        slug: "goal", w: "goal", fa: "هدف", ipa: "/ɡəʊl/", pos: "noun",
+        def: "something you want to achieve",
+        ex: [
+          ["My goal is to speak English at work.", "هدف من صحبت کردن انگلیسی در محل کار است."],
+          ["Her goal is to run ten kilometres.", "هدف او دویدن ده کیلومتر است."],
+        ],
+        col: ["set a goal", "reach a goal"],
+        note: "goal هدف است؛ برای هدف گذاشتن set a goal و برای رسیدن reach a goal می‌گوییم.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "postpone", gloss: "به تعویق انداختن",
+        options: ["برنامه‌ریزی کردن", "به تعویق انداختن", "ترتیب دادن", "امیدوار بودن"],
+        note: "postpone یعنی «به تعویق انداختن»؛ arrange ترتیب دادن و hope امیدوار بودن است.",
+      },
+      {
+        k: "mcq", word: "goal", gloss: "هدف",
+        options: ["مهلت", "هدف", "تصمیم", "سفر"],
+        note: "goal «هدف» است؛ مهلت deadline و تصمیم decision نام دارد.",
+      },
+      {
+        k: "mcq", word: "arrange", gloss: "ترتیب دادن",
+        options: ["لغو کردن", "به تعویق انداختن", "ترتیب دادن", "تصمیم گرفتن"],
+        note: "arrange «ترتیب دادن» است؛ لغو کردن cancel و تصمیم گرفتن decide است.",
+      },
+      {
+        k: "blank", sentence: "We had to ___ the meeting until Monday.",
+        accepted: ["postpone", "delay"], skill: "VOCABULARY",
+        note: "postpone و delay هر دو یعنی «عقب انداختن»؛ بعد از had to فعل ساده می‌آید.",
+      },
+      {
+        k: "blank", sentence: "They ___ to buy a house next year.",
+        accepted: ["plan", "hope"], skill: "VOCABULARY",
+        note: "plan to و hope to هر دو با to + مصدر می‌آیند؛ فاعل جمع، فعل بدون s.",
+      },
+      {
+        k: "recall", prompt: "هدف", accepted: ["goal"],
+        note: "هدف goal است؛ set a goal یعنی هدف گذاشتن.",
+      },
+      {
+        k: "tr", prompt: "قصد داریم در ژوئن اسباب‌کشی کنیم.",
+        accepted: ["we plan to move in june", "we are planning to move in june"],
+        note: "plan to + فعل ساده؛ move یعنی اسباب‌کشی کردن و ماه با in می‌آید.",
+      },
+      {
+        k: "listen", text: "I will start a new course next month.",
+        note: "جمله را بشنوید و بنویسید: will /wɪl/ کوتاه خوانده می‌شود و course /kɔːs/ با /ɔː/ بلند است.",
+      },
+      {
+        k: "prod", prompt: "بگو امیدواری کار بهتری پیدا کنی.",
+        mustUse: ["hope", "to"], minWords: 6,
+        accepted: ["i hope to find a better job"],
+        hint: "با hope to + فعل ساده بگو.",
+        note: "الگوی hope to + فعل ساده: I hope to find a better job — حرف اضافه‌ای بین hope و فعل نمی‌آید.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "جلسهٔ برنامه‌ریزی با دوست", partner: "دوست",
+        prompt: "بگو قصد داری دورهٔ جدیدی شروع کنی.",
+        question: "What are your plans for next year?",
+        questionFa: "برنامه‌هایت برای سال بعد چیست؟",
+        accepted: [
+          "I plan to start a new course.",
+          "I hope to find a better job.",
+        ],
+        note: "plan to و hope to هر دو قصد و امید را بیان می‌کنند.",
+      },
+      {
+        scene: "جلسهٔ برنامه‌ریزی با دوست", partner: "دوست",
+        prompt: "بگو در سپتامبر شروع می‌کنی.",
+        question: "That sounds good. When will you start?",
+        questionFa: "خوب به نظر می‌رسد. چه زمانی شروع می‌کنی؟",
+        accepted: [
+          "I will start in September.",
+          "I will start after the summer.",
+        ],
+        note: "will برای برنامهٔ آینده؛ ماه‌ها با in می‌آیند.",
+      },
+      {
+        scene: "جلسهٔ برنامه‌ریزی با دوست", partner: "دوست",
+        prompt: "بگو اول باید مدارک را هماهنگ کنی.",
+        question: "Do you need to arrange anything first?",
+        questionFa: "باید اول چیزی را هماهنگ کنی؟",
+        accepted: [
+          "Yes, I need to arrange the paperwork.",
+          "Yes, I have to save some money first.",
+        ],
+        note: "paperwork یعنی «کارهای اداری و مدارک»؛ arrange یعنی هماهنگ کردن.",
+      },
+      {
+        scene: "جلسهٔ برنامه‌ریزی با دوست", partner: "دوست",
+        prompt: "بگو ممنون، خبرت می‌دهی.",
+        question: "If you need help, just tell me.",
+        questionFa: "اگر کمک خواستی، فقط به من بگو.",
+        accepted: [
+          "Thank you, I will let you know.",
+          "Thanks, I hope to see you soon.",
+        ],
+        note: "let you know یعنی «خبرت می‌دهم»؛ just در این جمله یعنی «فقط».",
+      },
+    ],
+  },
+];

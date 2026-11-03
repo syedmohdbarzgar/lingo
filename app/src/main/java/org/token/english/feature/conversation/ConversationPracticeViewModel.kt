@@ -8,11 +8,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.common.persianCountPair
 import org.token.english.core.audio.Speaker
 import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.SpeakingVerdict
+import org.token.english.domain.engine.owedConversation
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.Lesson
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.LessonRepository
 
 /**
@@ -63,6 +67,13 @@ data class AnsweredTurn(
 data class ConversationUiState(
     val isLoading: Boolean = true,
     val turns: List<DialogueTurn> = emptyList(),
+    /** The lesson whose dialogue this is — the whole practice belongs to it. */
+    val lessonId: String? = null,
+    val lessonTitleFa: String = "",
+    /** Where the exchange happens ("در فرودگاه — باجهٔ تحویل بار"). */
+    val sceneFa: String? = null,
+    /** Who the learner is talking to ("مأمور فرودگاه"). */
+    val partnerFa: String? = null,
     val index: Int = 0,
     /** Exchanges already answered, oldest first — the conversation so far. */
     val history: List<AnsweredTurn> = emptyList(),
@@ -101,7 +112,7 @@ data class ConversationUiState(
     val isFinished: Boolean get() = !isLoading && turns.isNotEmpty() && index >= turns.size
 
     val progressLabel: String get() =
-        if (turns.isEmpty()) "" else "${(index + 1).coerceAtMost(turns.size)} / ${turns.size}"
+        if (turns.isEmpty()) "" else persianCountPair((index + 1).coerceAtMost(turns.size), turns.size)
 
     /** Fraction of the conversation already answered — drives the header bar. */
     val progress: Float
@@ -153,6 +164,14 @@ data class ConversationUiState(
  */
 class ConversationPracticeViewModel(
     private val lessonRepository: LessonRepository,
+    /**
+     * Which lesson's dialogue to run. Null means "the one the learner owes right
+     * now": the practice is always a lesson's conversation, never a loose drill
+     * drawn from the whole bundle.
+     */
+    private val lessonId: String? = null,
+    /** Records the finished dialogue, which is what opens the next lesson. */
+    private val conversationRepository: ConversationRepository,
     private val speaker: Speaker,
     /** Flipped once the JSON bundle has reached Room; turns read after it. */
     private val contentSeeded: StateFlow<Boolean>,
@@ -166,6 +185,9 @@ class ConversationPracticeViewModel(
 
     /** Last value of the recogniser's listening flag, to detect the end of a take. */
     private var wasListening = false
+
+    /** The finish write is once per session, not once per finished screen. */
+    private var markedConversationDone = false
 
     init {
         loadTurns()
@@ -214,7 +236,11 @@ class ConversationPracticeViewModel(
         }
     }
 
-    /** Every `speaking` item in the bundle, in lesson order. */
+    /**
+     * Loads ONE lesson's dialogue — the turn list of the lesson the learner is on,
+     * never a pool of turns from every lesson in the bundle. A conversation is the
+     * last step of a lesson, so it has that lesson's topic, scene and roles.
+     */
     private fun loadTurns() {
         viewModelScope.launch {
             // The seeder runs in the background at app start. Reading the table
@@ -225,39 +251,91 @@ class ConversationPracticeViewModel(
             // `first()` takes one emission and closes the flow — a bare `collect`
             // would keep the lesson observation alive for the screen's lifetime.
             val lessons = lessonRepository.observeLessons().first().sortedBy { it.order }
+            val completed = lessonRepository.observeLessonStates().first()
+                .filter { it.completed }
+                .map { it.lessonId }
+                .toSet()
+            val conversationsDone = conversationRepository.observeCompleted().first()
 
-            val turns = buildList {
-                for (lesson in lessons) {
-                    lessonRepository.getExercises(lesson.id)
-                        .filterIsInstance<Exercise.Speaking>()
-                        .sortedBy { it.id }
-                        .forEach { ex ->
-                            val answers = ex.referenceAnswers
-                                .map { it.trim() }
-                                .filter { it.isNotEmpty() }
-                                .distinct()
-                            if (answers.isEmpty()) return@forEach
-                            add(
-                                DialogueTurn(
-                                    exerciseId = ex.id,
-                                    lessonId = lesson.id,
-                                    lessonTitleFa = lesson.titleFa,
-                                    level = lesson.level,
-                                    partnerLine = ex.question?.takeIf { it.isNotBlank() },
-                                    partnerLineFa = ex.questionFa?.takeIf { it.isNotBlank() },
-                                    taskFa = ex.prompt,
-                                    answers = answers,
-                                    tipFa = ex.explanation?.takeIf { it.isNotBlank() },
-                                ),
-                            )
-                        }
+            // Titled lessons with a dialogue: the ones a conversation can belong to.
+            val withDialogue = lessons.filter { lesson ->
+                lessonRepository.getExercises(lesson.id).any {
+                    it is Exercise.Speaking && it.referenceAnswers.isNotEmpty()
                 }
             }
-            _state.update { it.copy(isLoading = false, turns = turns) }
+            val dialogueIds = withDialogue.map { it.id }.toSet()
+            val target = resolveTarget(
+                lessons = withDialogue,
+                completedIds = completed,
+                dialogueLessonIds = dialogueIds,
+                conversationsDone = conversationsDone,
+            )
+
+            val speaking = target?.let { lesson ->
+                lessonRepository.getExercises(lesson.id)
+                    .filterIsInstance<Exercise.Speaking>()
+                    .sortedBy { it.id }
+            }.orEmpty()
+
+            val turns = target?.let { lesson ->
+                speaking.mapNotNull { ex ->
+                        val answers = ex.referenceAnswers
+                            .map { it.trim() }
+                            .filter { it.isNotEmpty() }
+                            .distinct()
+                        if (answers.isEmpty()) return@mapNotNull null
+                        DialogueTurn(
+                            exerciseId = ex.id,
+                            lessonId = lesson.id,
+                            lessonTitleFa = lesson.titleFa,
+                            level = lesson.level,
+                            partnerLine = ex.question?.takeIf { it.isNotBlank() },
+                            partnerLineFa = ex.questionFa?.takeIf { it.isNotBlank() },
+                            taskFa = ex.prompt,
+                            answers = answers,
+                            tipFa = ex.explanation?.takeIf { it.isNotBlank() },
+                        )
+                    }
+            }.orEmpty()
+
+            // The scene and the partner's role are authored on the turns; showing
+            // them once above the exchange is what makes it a situation rather
+            // than a list of prompts.
+            val firstSpeaking = speaking.firstOrNull()
+
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    turns = turns,
+                    lessonId = target?.id,
+                    lessonTitleFa = target?.titleFa.orEmpty(),
+                    sceneFa = firstSpeaking?.sceneFa,
+                    partnerFa = firstSpeaking?.partnerFa,
+                )
+            }
             // The partner opens the conversation: a dialogue that starts silent
             // gives the learner nothing to answer.
             speakPartner()
         }
+    }
+
+    /**
+     * The lesson whose dialogue to practise: the requested one, else the one the
+     * path is currently blocked on, else the first lesson that still has an
+     * unfinished dialogue.
+     */
+    private fun resolveTarget(
+        lessons: List<Lesson>,
+        completedIds: Set<String>,
+        dialogueLessonIds: Set<String>,
+        conversationsDone: Set<String>,
+    ): Lesson? {
+        lessonId?.let { wanted ->
+            lessons.firstOrNull { it.id == wanted }?.let { return it }
+        }
+        owedConversation(lessons, completedIds, dialogueLessonIds, conversationsDone)
+            ?.let { return it }
+        return lessons.firstOrNull { it.id !in conversationsDone }
     }
 
     /**
@@ -343,7 +421,25 @@ class ConversationPracticeViewModel(
 
         clearTake()
         _state.update { it.copy(index = it.index + 1, history = it.history + answered) }
+        markFinishedConversation()
         speakPartner()
+    }
+
+    /**
+     * Closes the lesson's dialogue once every turn has been answered.
+     *
+     * "Answered" is a graded take, not a skipped one: a turn the learner walked
+     * past without speaking is exactly the turn that taught nothing, so the
+     * conversation — and with it the next lesson — stays closed until the whole
+     * exchange has actually been spoken.
+     */
+    private fun markFinishedConversation() {
+        val st = _state.value
+        val id = st.lessonId ?: return
+        if (st.turns.isEmpty() || st.history.size < st.turns.size) return
+        if (markedConversationDone) return
+        markedConversationDone = true
+        viewModelScope.launch { conversationRepository.markCompleted(id) }
     }
 
     /** A take that is not on screen must not stay on screen as if it happened. */

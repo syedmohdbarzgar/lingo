@@ -82,7 +82,9 @@ dispatch/tags. There is no emulator or device job. Only per-flavor unit-test tas
 
 ## Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 
-- AGP **9.3.3** + Gradle **9.5.0**, `compileSdk 37`, `minSdk 24`, JDK toolchain 25.
+- AGP **9.5.0** + Gradle **9.6.0** (AGP 9.5 refuses anything below Gradle 9.6), `compileSdk 37`,
+  `minSdk 24`, JDK toolchain 25. AGP 9.5 still bundles Kotlin **2.2.10**, which is why the KSP
+  (`2.2.10-2.0.2`) and Compose-compiler (`2.2.10`) pins did not move with it.
 - **`gradlew` and `scripts/*.sh` must stay mode `100755` in the git index.** The dev machine is
   Windows with `core.fileMode=false`, so the executable bit is never detected or committed — which
   made every CI run die with **exit code 126** at the first `./gradlew` step (and at `Lint`), while

@@ -46,6 +46,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.BuildConfig
 import org.token.english.R
+import org.token.english.core.common.bidiNumber
+import org.token.english.core.common.persianMeasure
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
@@ -147,7 +149,7 @@ fun SettingsScreen(
                     Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                         listOf(10, 15, 20, 30).forEach { minutes ->
                             AppChip(
-                                label = "$minutes دقیقه",
+                                label = persianMeasure(minutes, "دقیقه"),
                                 selected = settings?.dailyGoalMinutes == minutes,
                                 onClick = { vm.setDailyGoal(minutes) },
                             )
@@ -184,7 +186,8 @@ fun SettingsScreen(
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Text("یادآوری روزانه مرور", style = MaterialTheme.typography.titleSmall)
                         Text(
-                            text = "هر روز ساعت ۱۹ یک یادآوری محلی نشان می‌دهد — بدون اینترنت و سرویس ابری.",
+                            text = "هر روز ساعت ${bidiNumber(19)} یک یادآوری محلی نشان می‌دهد — " +
+                                "بدون اینترنت و سرویس ابری.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -361,7 +364,7 @@ private fun SubscriptionCard(
 
                     else -> when (state.access) {
                         org.token.english.core.billing.AccessLevel.PREMIUM ->
-                            if (subDays >= 1) "اشتراک فعال — $subDays روز دیگر تمدید می‌شود."
+                            if (subDays >= 1) "اشتراک فعال — ${persianMeasure(subDays.toInt(), "روز")} دیگر تمدید می‌شود."
                             else "اشتراک شما فعال است."
 
                         org.token.english.core.billing.AccessLevel.LOCKED ->

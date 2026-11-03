@@ -75,6 +75,14 @@ interface ContentDao {
     @Query("SELECT * FROM exercise WHERE lessonId = :lessonId ORDER BY orderIndex ASC")
     suspend fun getExercises(lessonId: String): List<ExerciseEntity>
 
+    /**
+     * Lessons that ship a spoken dialogue. The lesson path needs to know *which*
+     * lessons owe a conversation before it may move on — a lesson without a
+     * dialogue can never hold the learner back.
+     */
+    @Query("SELECT DISTINCT lessonId FROM exercise WHERE type = 'speaking'")
+    suspend fun lessonIdsWithDialogue(): List<String>
+
     // Knowledge graph
     @Query("SELECT * FROM knowledge_item ORDER BY id ASC")
     suspend fun getKnowledgeItems(): List<KnowledgeItemEntity>

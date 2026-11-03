@@ -255,6 +255,11 @@ object ContentParser {
                 // question the learner gets asked with nothing in it.
                 question = o.optString("question").trim().ifBlank { null },
                 questionFa = o.optString("questionFa").trim().ifBlank { null },
+                // The situation and the partner's role are authored per turn as well:
+                // the practice screen shows them above the exchange, so the learner
+                // knows *who* is asking before answering.
+                sceneFa = o.optString("sceneFa").trim().ifBlank { null },
+                partnerFa = o.optString("partnerFa").trim().ifBlank { null },
                 skill = skill,
                 explanation = explanation,
             )

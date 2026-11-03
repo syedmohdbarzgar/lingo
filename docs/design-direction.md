@@ -58,6 +58,14 @@ Forced RTL with English through `EnglishText`/`AnswerField`; feedback as icon **
 targets; cards spanning the available width; spacing from `AppSpacing`; no raw colors in features —
 every value here lives behind `MaterialTheme`/`LocalAppExtendedColors`.
 
+**No bare number in Persian copy.** Every count, percentage, measure, step label and two-count phrase
+goes through `core/common/BidiText.kt` (`bidiNumber`, `persianMeasure`, `persianPercent`,
+`persianCountPair`, `persianStepLabel`), never string interpolation: those helpers add a directional
+isolate and a non-breaking space, so «۱۵ دقیقه» cannot become «دقیقه ۱۵» or break across lines on
+device. Engines that author Persian (`reasonFa`) use the same functions, since `core/common` is the
+one place both layers may depend on. Pinned by `BidiTextTest`, `BidiNumbersTest` and
+`DailyGoalCopyTest`.
+
 ## Open follow-ups
 
 - The launcher icon and the launch splash already use the brand blue, so reverting the accent left

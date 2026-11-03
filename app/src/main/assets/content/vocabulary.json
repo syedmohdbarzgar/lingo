@@ -1,5 +1,5 @@
 {
-  "contentVersion": 31,
+  "contentVersion": 35,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -11425,6 +11425,2856 @@
       ],
       "lessonId": "a2.holiday-plans.lesson-01",
       "explanationFa": "abroad قید است و حرف اضافه نمی‌گیرد: go abroad، نه go to abroad."
+    },
+    {
+      "id": "a2.buying-clothes.word.size",
+      "word": "size",
+      "translation": "اندازه",
+      "definition": "how big or small something is",
+      "pronunciation": "/saɪz/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "What size are these shoes?",
+          "fa": "این کفش‌ها چه اندازه‌ای هستند؟"
+        },
+        {
+          "en": "Do you have this shirt in my size?",
+          "fa": "این پیراهن را در اندازهٔ من دارید؟"
+        }
+      ],
+      "collocations": [
+        "what size",
+        "in my size"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "size برای اندازهٔ لباس و کفش به کار می‌رود و با in می‌آید: in my size."
+    },
+    {
+      "id": "a2.buying-clothes.word.fitting-room",
+      "word": "fitting room",
+      "translation": "اتاق پرو",
+      "definition": "a small room where you try clothes on",
+      "pronunciation": "/ˈfɪtɪŋ ruːm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The fitting room is next to the shoes.",
+          "fa": "اتاق پرو کنار کفش‌هاست."
+        },
+        {
+          "en": "There are two fitting rooms here.",
+          "fa": "اینجا دو اتاق پرو هست."
+        }
+      ],
+      "collocations": [
+        "in the fitting room",
+        "a free fitting room"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "fitting room اتاقی است که در فروشگاه لباس برای پرو کردن هست."
+    },
+    {
+      "id": "a2.buying-clothes.word.try-on",
+      "word": "try on",
+      "translation": "پرو کردن",
+      "definition": "to put clothes on to see if they fit",
+      "pronunciation": "/traɪ ɒn/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can I try on this jacket?",
+          "fa": "می‌توانم این کاپشن را پرو کنم؟"
+        },
+        {
+          "en": "She is trying on a dress.",
+          "fa": "او دارد یک پیراهن را پرو می‌کند."
+        }
+      ],
+      "collocations": [
+        "try on a jacket",
+        "try it on"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "try on جداشدنی است: try it on؛ ضمیر میان فعل و on می‌آید."
+    },
+    {
+      "id": "a2.buying-clothes.word.tight",
+      "word": "tight",
+      "translation": "تنگ",
+      "definition": "fitting closely, not loose",
+      "pronunciation": "/taɪt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "These jeans are too tight.",
+          "fa": "این شلوار جین خیلی تنگ است."
+        },
+        {
+          "en": "The shirt feels tight around my shoulders.",
+          "fa": "پیراهن دور شانه‌هایم تنگ است."
+        }
+      ],
+      "collocations": [
+        "too tight",
+        "a tight fit"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "tight متضاد loose است؛ برای اندازهٔ کوچک‌تر از تن به کار می‌رود."
+    },
+    {
+      "id": "a2.buying-clothes.word.loose",
+      "word": "loose",
+      "translation": "گشاد",
+      "definition": "not tight, with extra room",
+      "pronunciation": "/luːs/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "This dress is a little loose.",
+          "fa": "این پیراهن کمی گشاد است."
+        },
+        {
+          "en": "Do you have a loose fit in blue?",
+          "fa": "مدل گشادش را در آبی دارید؟"
+        }
+      ],
+      "collocations": [
+        "a loose fit",
+        "too loose"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "loose صفت است؛ loose fit یعنی برشی که گشاد می‌نشیند."
+    },
+    {
+      "id": "a2.buying-clothes.word.exchange",
+      "word": "exchange",
+      "translation": "تعویض کردن",
+      "definition": "to give one thing and get another",
+      "pronunciation": "/ɪksˈtʃeɪndʒ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can I exchange this shirt for a larger one?",
+          "fa": "می‌توانم این پیراهن را با یک اندازهٔ بزرگ‌تر تعویض کنم؟"
+        },
+        {
+          "en": "I want to exchange these shoes.",
+          "fa": "می‌خواهم این کفش‌ها را تعویض کنم."
+        }
+      ],
+      "collocations": [
+        "exchange something for",
+        "exchange it"
+      ],
+      "lessonId": "a2.buying-clothes.lesson-01",
+      "explanationFa": "exchange با for می‌آید وقتی می‌گوییم با چه چیزی عوض می‌شود."
+    },
+    {
+      "id": "a2.returns.word.receipt",
+      "word": "receipt",
+      "translation": "رسید",
+      "definition": "a paper that shows you paid",
+      "pronunciation": "/rɪˈsiːt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Do you have the receipt for this jacket?",
+          "fa": "رسید این کاپشن را دارید؟"
+        },
+        {
+          "en": "Keep the receipt in case you return it.",
+          "fa": "رسید را نگه دار در صورتی که بخواهی برگردانی."
+        }
+      ],
+      "collocations": [
+        "have the receipt",
+        "keep the receipt"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "receipt با p بی‌صدا تلفظ می‌شود: /rɪˈsiːt/."
+    },
+    {
+      "id": "a2.returns.word.refund",
+      "word": "refund",
+      "translation": "بازپرداخت",
+      "definition": "money given back for something returned",
+      "pronunciation": "/ˈriːfʌnd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I would like a refund, please.",
+          "fa": "می‌خواهم بازپرداخت بگیرم."
+        },
+        {
+          "en": "The refund takes five days.",
+          "fa": "بازپرداخت پنج روز طول می‌کشد."
+        }
+      ],
+      "collocations": [
+        "ask for a refund",
+        "a full refund"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "refund اسم است؛ فعل refund تکیه‌اش روی هجای دوم می‌رود."
+    },
+    {
+      "id": "a2.returns.word.faulty",
+      "word": "faulty",
+      "translation": "معیوب",
+      "definition": "not working correctly",
+      "pronunciation": "/ˈfɔːlti/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The battery is faulty.",
+          "fa": "باتری معیوب است."
+        },
+        {
+          "en": "This is the second faulty item.",
+          "fa": "این دومین کالای معیوب است."
+        }
+      ],
+      "collocations": [
+        "a faulty item",
+        "the battery is faulty"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "faulty برای کالایی است که از ابتدا درست کار نمی‌کند."
+    },
+    {
+      "id": "a2.returns.word.guarantee",
+      "word": "guarantee",
+      "translation": "ضمانت",
+      "definition": "a promise to repair or replace a product",
+      "pronunciation": "/ˌɡærənˈtiː/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The watch has a two-year guarantee.",
+          "fa": "این ساعت دو سال ضمانت دارد."
+        },
+        {
+          "en": "The guarantee does not cover water damage.",
+          "fa": "ضمانت آسیب آبی را پوشش نمی‌دهد."
+        }
+      ],
+      "collocations": [
+        "a two-year guarantee",
+        "under guarantee"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "guarantee دورهٔ ضمانت است؛ under guarantee یعنی هنوز ضمانت دارد."
+    },
+    {
+      "id": "a2.returns.word.replace",
+      "word": "replace",
+      "translation": "جایگزین کردن",
+      "definition": "to give a new thing instead of a broken one",
+      "pronunciation": "/rɪˈpleɪs/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can you replace the broken screen?",
+          "fa": "می‌توانید صفحهٔ شکسته را جایگزین کنید؟"
+        },
+        {
+          "en": "We will replace the item for free.",
+          "fa": "ما کالا را رایگان جایگزین می‌کنیم."
+        }
+      ],
+      "collocations": [
+        "replace the item",
+        "replace it for free"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "replace یعنی کالای نو جای کالای خراب؛ با with هم می‌آید: replace A with B."
+    },
+    {
+      "id": "a2.returns.word.purchase",
+      "word": "purchase",
+      "translation": "خرید",
+      "definition": "something you have bought",
+      "pronunciation": "/ˈpɜːtʃəs/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Keep your purchase receipt.",
+          "fa": "رسید خریدتان را نگه دارید."
+        },
+        {
+          "en": "You can return any purchase within thirty days.",
+          "fa": "هر خریدی را تا سی روز می‌توانید برگردانید."
+        }
+      ],
+      "collocations": [
+        "a purchase receipt",
+        "return a purchase"
+      ],
+      "lessonId": "a2.returns.lesson-01",
+      "explanationFa": "purchase اسم رسمی‌تر «خرید» است؛ در گفتار روزمره buy رایج‌تر است."
+    },
+    {
+      "id": "a2.payments.word.cash",
+      "word": "cash",
+      "translation": "پول نقد",
+      "definition": "money in coins and notes",
+      "pronunciation": "/kæʃ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I paid in cash at the shop.",
+          "fa": "در فروشگاه با پول نقد پرداخت کردم."
+        },
+        {
+          "en": "Do you have any cash?",
+          "fa": "پول نقد همراهت هست؟"
+        }
+      ],
+      "collocations": [
+        "pay in cash",
+        "any cash"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "cash غیرقابل‌شمارش است؛ with cash و in cash هر دو به کار می‌روند."
+    },
+    {
+      "id": "a2.payments.word.card",
+      "word": "card",
+      "translation": "کارت",
+      "definition": "a small plastic card used to pay",
+      "pronunciation": "/kɑːd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can I pay by card?",
+          "fa": "می‌توانم با کارت پرداخت کنم؟"
+        },
+        {
+          "en": "My card does not work today.",
+          "fa": "کارتم امروز کار نمی‌کند."
+        }
+      ],
+      "collocations": [
+        "pay by card",
+        "a bank card"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "card قابل‌شمارش است: a card، two cards."
+    },
+    {
+      "id": "a2.payments.word.change",
+      "word": "change",
+      "translation": "پول خرد",
+      "definition": "the money you get back after paying",
+      "pronunciation": "/tʃeɪndʒ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Here is your change.",
+          "fa": "این هم پول خرد شما."
+        },
+        {
+          "en": "Keep the change, please.",
+          "fa": "پول خرد را نگه دارید."
+        }
+      ],
+      "collocations": [
+        "keep the change",
+        "some change"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "change در این معنی غیرقابل‌شمارش است."
+    },
+    {
+      "id": "a2.payments.word.total",
+      "word": "total",
+      "translation": "جمع کل",
+      "definition": "the full amount to pay",
+      "pronunciation": "/ˈtəʊtl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The total is twelve dollars.",
+          "fa": "جمع کل دوازده دلار است."
+        },
+        {
+          "en": "The total includes tax.",
+          "fa": "جمع کل شامل مالیات است."
+        }
+      ],
+      "collocations": [
+        "the total is",
+        "the total amount"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "total اسم و صفت است؛ the total is… رایج‌ترین ساختار است."
+    },
+    {
+      "id": "a2.payments.word.wallet",
+      "word": "wallet",
+      "translation": "کیف پول",
+      "definition": "a small case for money and cards",
+      "pronunciation": "/ˈwɒlɪt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My wallet is in my bag.",
+          "fa": "کیف پولم در کیفم است."
+        },
+        {
+          "en": "He lost his wallet on the bus.",
+          "fa": "او کیف پولش را در اتوبوس گم کرد."
+        }
+      ],
+      "collocations": [
+        "lose a wallet",
+        "in my wallet"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "wallet مردانه و زنانه هر دو؛ purse کیف پول کوچک‌تر است."
+    },
+    {
+      "id": "a2.payments.word.amount",
+      "word": "amount",
+      "translation": "مبلغ",
+      "definition": "how much money something is",
+      "pronunciation": "/əˈmaʊnt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Please write the amount on the form.",
+          "fa": "لطفاً مبلغ را روی فرم بنویسید."
+        },
+        {
+          "en": "The amount is too large for cash.",
+          "fa": "مبلغ برای پرداخت نقدی زیاد است."
+        }
+      ],
+      "collocations": [
+        "the amount of money",
+        "a large amount"
+      ],
+      "lessonId": "a2.payments.lesson-01",
+      "explanationFa": "amount با اسم غیرقابل‌شمارش می‌آید: an amount of money."
+    },
+    {
+      "id": "a2.symptoms.word.headache",
+      "word": "headache",
+      "translation": "سردرد",
+      "definition": "a pain in your head",
+      "pronunciation": "/ˈhedeɪk/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have a bad headache.",
+          "fa": "سردرد بدی دارم."
+        },
+        {
+          "en": "The headache started last night.",
+          "fa": "سردرد دیشب شروع شد."
+        }
+      ],
+      "collocations": [
+        "a bad headache",
+        "have a headache"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "headache قابل‌شمارش است: a headache، two headaches."
+    },
+    {
+      "id": "a2.symptoms.word.sore-throat",
+      "word": "sore throat",
+      "translation": "گلودرد",
+      "definition": "a painful throat",
+      "pronunciation": "/sɔː θrəʊt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have a sore throat.",
+          "fa": "گلودرد دارم."
+        },
+        {
+          "en": "A sore throat makes it hard to speak.",
+          "fa": "گلودرد حرف زدن را سخت می‌کند."
+        }
+      ],
+      "collocations": [
+        "a sore throat",
+        "have a sore throat"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "sore یعنی دردناک؛ sore throat ترکیب ثابت است."
+    },
+    {
+      "id": "a2.symptoms.word.cough",
+      "word": "cough",
+      "translation": "سرفه",
+      "definition": "to push air out of your throat noisily",
+      "pronunciation": "/kɒf/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have a bad cough.",
+          "fa": "سرفهٔ بدی دارم."
+        },
+        {
+          "en": "This cough is worse at night.",
+          "fa": "این سرفه شب‌ها بدتر است."
+        }
+      ],
+      "collocations": [
+        "a bad cough",
+        "have a cough"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "cough هم اسم و هم فعل است؛ تلفظ با /f/ پایانی."
+    },
+    {
+      "id": "a2.symptoms.word.fever",
+      "word": "fever",
+      "translation": "تب",
+      "definition": "a body temperature that is too high",
+      "pronunciation": "/ˈfiːvə/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "She has a high fever.",
+          "fa": "او تب شدیدی دارد."
+        },
+        {
+          "en": "The fever went down after the medicine.",
+          "fa": "تب بعد از دارو پایین آمد."
+        }
+      ],
+      "collocations": [
+        "a high fever",
+        "have a fever"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "fever قابل‌شمارش است: a fever؛ high fever شدت را نشان می‌دهد."
+    },
+    {
+      "id": "a2.symptoms.word.dizzy",
+      "word": "dizzy",
+      "translation": "سرگیجه",
+      "definition": "feeling that everything is turning",
+      "pronunciation": "/ˈdɪzi/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "I feel dizzy when I stand up.",
+          "fa": "وقتی بلند می‌شوم سرگیجه دارم."
+        },
+        {
+          "en": "The heat made him dizzy.",
+          "fa": "گرما او را سرگیجه‌ای کرد."
+        }
+      ],
+      "collocations": [
+        "feel dizzy",
+        "get dizzy"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "dizzy صفت است؛ با feel یا get می‌آید، نه با have."
+    },
+    {
+      "id": "a2.symptoms.word.pain",
+      "word": "pain",
+      "translation": "درد",
+      "definition": "the feeling when part of the body hurts",
+      "pronunciation": "/peɪn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have a pain in my back.",
+          "fa": "کمرم درد می‌کند."
+        },
+        {
+          "en": "The pain comes and goes.",
+          "fa": "درد می‌آید و می‌رود."
+        }
+      ],
+      "collocations": [
+        "a pain in my back",
+        "sharp pain"
+      ],
+      "lessonId": "a2.symptoms.lesson-01",
+      "explanationFa": "pain با in + عضو می‌آید: a pain in my back."
+    },
+    {
+      "id": "a2.pharmacy.word.medicine",
+      "word": "medicine",
+      "translation": "دارو",
+      "definition": "something you take when you are ill",
+      "pronunciation": "/ˈmedsn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Take this medicine twice a day.",
+          "fa": "این دارو را روزی دو بار مصرف کنید."
+        },
+        {
+          "en": "Keep the medicine away from children.",
+          "fa": "دارو را از دسترس کودکان دور نگه دارید."
+        }
+      ],
+      "collocations": [
+        "take medicine",
+        "some medicine"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "medicine غیرقابل‌شمارش است؛ در انگلیسی بریتانیایی /ˈmedsn/ تلفظ می‌شود."
+    },
+    {
+      "id": "a2.pharmacy.word.prescription",
+      "word": "prescription",
+      "translation": "نسخه",
+      "definition": "a doctor's written order for medicine",
+      "pronunciation": "/prɪˈskrɪpʃn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The pharmacist needs your prescription.",
+          "fa": "داروساز نسخهٔ شما را لازم دارد."
+        },
+        {
+          "en": "This medicine is only sold with a prescription.",
+          "fa": "این دارو فقط با نسخه فروخته می‌شود."
+        }
+      ],
+      "collocations": [
+        "with a prescription",
+        "write a prescription"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "prescription از prescribe می‌آید و با with a می‌آید."
+    },
+    {
+      "id": "a2.pharmacy.word.dose",
+      "word": "dose",
+      "translation": "دوز",
+      "definition": "how much medicine you take at one time",
+      "pronunciation": "/dəʊs/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The dose is one spoon for adults.",
+          "fa": "دوز برای بزرگسالان یک قاشق است."
+        },
+        {
+          "en": "Do not take a double dose.",
+          "fa": "دوز دوبرابر مصرف نکنید."
+        }
+      ],
+      "collocations": [
+        "a double dose",
+        "the right dose"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "dose مقدار مصرف در هر نوبت است، نه مقدار کل."
+    },
+    {
+      "id": "a2.pharmacy.word.pharmacist",
+      "word": "pharmacist",
+      "translation": "داروساز",
+      "definition": "the person who prepares and sells medicine",
+      "pronunciation": "/ˈfɑːməsɪst/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The pharmacist explained how to use it.",
+          "fa": "داروساز توضیح داد چطور مصرفش کنم."
+        },
+        {
+          "en": "Ask the pharmacist about side effects.",
+          "fa": "دربارهٔ عوارض از داروساز بپرس."
+        }
+      ],
+      "collocations": [
+        "ask the pharmacist",
+        "the pharmacist said"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "pharmacist شخص داروساز است و pharmacy خود داروخانه."
+    },
+    {
+      "id": "a2.pharmacy.word.pills",
+      "word": "pills",
+      "translation": "قرص‌ها",
+      "definition": "small round pieces of medicine",
+      "pronunciation": "/pɪlz/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Take two pills after breakfast.",
+          "fa": "بعد از صبحانه دو قرص مصرف کنید."
+        },
+        {
+          "en": "These pills are for the pain.",
+          "fa": "این قرص‌ها برای درد هستند."
+        }
+      ],
+      "collocations": [
+        "take pills",
+        "two pills a day"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "pill یک قرص و pills جمع آن است."
+    },
+    {
+      "id": "a2.pharmacy.word.syrup",
+      "word": "syrup",
+      "translation": "شربت",
+      "definition": "a sweet liquid medicine",
+      "pronunciation": "/ˈsɪrəp/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The syrup is for children.",
+          "fa": "این شربت برای کودکان است."
+        },
+        {
+          "en": "Shake the syrup before you use it.",
+          "fa": "شربت را پیش از مصرف تکان دهید."
+        }
+      ],
+      "collocations": [
+        "a bottle of syrup",
+        "cough syrup"
+      ],
+      "lessonId": "a2.pharmacy.lesson-01",
+      "explanationFa": "syrup غیرقابل‌شمارش است: some syrup."
+    },
+    {
+      "id": "a2.childhood.word.childhood",
+      "word": "childhood",
+      "translation": "کودکی",
+      "definition": "the time when you are a child",
+      "pronunciation": "/ˈtʃaɪldhʊd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My childhood was very happy.",
+          "fa": "کودکی‌ام خیلی شاد بود."
+        },
+        {
+          "en": "She spent her childhood in Shiraz.",
+          "fa": "او کودکی‌اش را در شیراز گذراند."
+        }
+      ],
+      "collocations": [
+        "in my childhood",
+        "a happy childhood"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "childhood غیرقابل‌شمارش است و با in می‌آید: in my childhood."
+    },
+    {
+      "id": "a2.childhood.word.grow-up",
+      "word": "grow up",
+      "translation": "بزرگ شدن",
+      "definition": "to become an adult",
+      "pronunciation": "/ɡrəʊ ʌp/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I grew up in a small town.",
+          "fa": "در شهر کوچکی بزرگ شدم."
+        },
+        {
+          "en": "He wants to be a doctor when he grows up.",
+          "fa": "او وقتی بزرگ شود می‌خواهد دکتر شود."
+        }
+      ],
+      "collocations": [
+        "grow up in a town",
+        "when I grow up"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "گذشتهٔ grow بی‌قاعده است: grew up."
+    },
+    {
+      "id": "a2.childhood.word.primary-school",
+      "word": "primary school",
+      "translation": "دبستان",
+      "definition": "the first school for young children",
+      "pronunciation": "/ˈpraɪməri skuːl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I started primary school at six.",
+          "fa": "شش سالگی دبستان را شروع کردم."
+        },
+        {
+          "en": "My primary school was near our house.",
+          "fa": "دبستان من نزدیک خانه‌مان بود."
+        }
+      ],
+      "collocations": [
+        "start primary school",
+        "at primary school"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "primary school در انگلیسی بریتانیایی دبستان است؛ در آمریکا elementary school."
+    },
+    {
+      "id": "a2.childhood.word.playground",
+      "word": "playground",
+      "translation": "زمین بازی",
+      "definition": "a place where children play",
+      "pronunciation": "/ˈpleɪɡraʊnd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We played football in the playground.",
+          "fa": "در زمین بازی فوتبال بازی می‌کردیم."
+        },
+        {
+          "en": "The children are in the playground.",
+          "fa": "بچه‌ها در زمین بازی هستند."
+        }
+      ],
+      "collocations": [
+        "in the playground",
+        "a school playground"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "playground یک کلمه است، نه play ground."
+    },
+    {
+      "id": "a2.childhood.word.memory",
+      "word": "memory",
+      "translation": "خاطره",
+      "definition": "something you remember from the past",
+      "pronunciation": "/ˈmeməri/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My best memory is a trip to the sea.",
+          "fa": "بهترین خاطره‌ام سفر به دریا است."
+        },
+        {
+          "en": "I have happy memories of that house.",
+          "fa": "از آن خانه خاطرات شادی دارم."
+        }
+      ],
+      "collocations": [
+        "a happy memory",
+        "memories of"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "جمع memory می‌شود memories؛ با of می‌آید: memories of school."
+    },
+    {
+      "id": "a2.childhood.word.neighbourhood",
+      "word": "neighbourhood",
+      "translation": "محله",
+      "definition": "the area around your home",
+      "pronunciation": "/ˈneɪbəhʊd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I grew up in a quiet neighbourhood.",
+          "fa": "در محلهٔ آرامی بزرگ شدم."
+        },
+        {
+          "en": "The neighbourhood has a small park.",
+          "fa": "این محله یک پارک کوچک دارد."
+        }
+      ],
+      "collocations": [
+        "a quiet neighbourhood",
+        "in my neighbourhood"
+      ],
+      "lessonId": "a2.childhood.lesson-01",
+      "explanationFa": "در انگلیسی آمریکایی neighborhood نوشته می‌شود."
+    },
+    {
+      "id": "a2.celebrations.word.celebrate",
+      "word": "celebrate",
+      "translation": "جشن گرفتن",
+      "definition": "to do something special for an event",
+      "pronunciation": "/ˈselɪbreɪt/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We celebrate New Year with our family.",
+          "fa": "سال نو را با خانواده جشن می‌گیریم."
+        },
+        {
+          "en": "How do you celebrate your birthday?",
+          "fa": "تولدت را چطور جشن می‌گیری؟"
+        }
+      ],
+      "collocations": [
+        "celebrate a birthday",
+        "celebrate with family"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "celebrate فعل است و اسمش celebration."
+    },
+    {
+      "id": "a2.celebrations.word.wedding",
+      "word": "wedding",
+      "translation": "عروسی",
+      "definition": "the ceremony when two people marry",
+      "pronunciation": "/ˈwedɪŋ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Their wedding was in June.",
+          "fa": "عروسی‌شان در ژوئن بود."
+        },
+        {
+          "en": "We danced all night at the wedding.",
+          "fa": "در عروسی تا صبح رقصیدیم."
+        }
+      ],
+      "collocations": [
+        "a wedding party",
+        "at the wedding"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "wedding مراسم عروسی است؛ marriage خود پیوند زناشویی."
+    },
+    {
+      "id": "a2.celebrations.word.guest",
+      "word": "guest",
+      "translation": "مهمان",
+      "definition": "a person you invite to an event",
+      "pronunciation": "/ɡest/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There were thirty guests at the wedding.",
+          "fa": "سی مهمان در عروسی بود."
+        },
+        {
+          "en": "Every guest brought a small gift.",
+          "fa": "هر مهمان یک هدیهٔ کوچک آورد."
+        }
+      ],
+      "collocations": [
+        "a wedding guest",
+        "invite guests"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "guest قابل‌شمارش است: a guest، many guests."
+    },
+    {
+      "id": "a2.celebrations.word.gift",
+      "word": "gift",
+      "translation": "هدیه",
+      "definition": "a present you give someone",
+      "pronunciation": "/ɡɪft/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I bought a gift for my sister.",
+          "fa": "برای خواهرم یک هدیه خریدم."
+        },
+        {
+          "en": "The gift was wrapped in blue paper.",
+          "fa": "هدیه در کاغذ آبی پیچیده شده بود."
+        }
+      ],
+      "collocations": [
+        "buy a gift",
+        "a birthday gift"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "gift با for + شخص می‌آید: a gift for my sister."
+    },
+    {
+      "id": "a2.celebrations.word.candle",
+      "word": "candle",
+      "translation": "شمع",
+      "definition": "a stick of wax that burns with a flame",
+      "pronunciation": "/ˈkændl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "One candle is still burning.",
+          "fa": "یک شمع هنوز روشن است."
+        },
+        {
+          "en": "She blew out the candles on the cake.",
+          "fa": "او شمع‌های کیک را فوت کرد."
+        }
+      ],
+      "collocations": [
+        "blow out a candle",
+        "a birthday candle"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "candle قابل‌شمارش است: a candle، two candles."
+    },
+    {
+      "id": "a2.celebrations.word.anniversary",
+      "word": "anniversary",
+      "translation": "سالگرد",
+      "definition": "the yearly date of an important event",
+      "pronunciation": "/ˌænɪˈvɜːsəri/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "They celebrated their tenth anniversary.",
+          "fa": "دهمین سالگردشان را جشن گرفتند."
+        },
+        {
+          "en": "Our anniversary is in May.",
+          "fa": "سالگرد ما در ماه مه است."
+        }
+      ],
+      "collocations": [
+        "a wedding anniversary",
+        "our tenth anniversary"
+      ],
+      "lessonId": "a2.celebrations.lesson-01",
+      "explanationFa": "anniversary تاریخ تکرارشونده است؛ سالگرد ازدواج wedding anniversary."
+    },
+    {
+      "id": "a2.invitations.word.invite",
+      "word": "invite",
+      "translation": "دعوت کردن",
+      "definition": "to ask someone to come to an event",
+      "pronunciation": "/ɪnˈvaɪt/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "My friends invited me to dinner.",
+          "fa": "دوستانم مرا به شام دعوت کردند."
+        },
+        {
+          "en": "They invited us to their wedding.",
+          "fa": "آن‌ها ما را به عروسی‌شان دعوت کردند."
+        }
+      ],
+      "collocations": [
+        "invite someone to",
+        "invite a friend"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "invite با to + مناسبت می‌آید؛ اسمش invitation است."
+    },
+    {
+      "id": "a2.invitations.word.accept",
+      "word": "accept",
+      "translation": "پذیرفتن",
+      "definition": "to say yes to an offer",
+      "pronunciation": "/əkˈsept/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I am happy to accept your invitation.",
+          "fa": "خوشحالم دعوت شما را می‌پذیرم."
+        },
+        {
+          "en": "She accepted the invitation at once.",
+          "fa": "او فوراً دعوت را پذیرفت."
+        }
+      ],
+      "collocations": [
+        "accept an invitation",
+        "accept the offer"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "accept با invitation و offer می‌آید؛ except یعنی «به‌جز» و متفاوت است."
+    },
+    {
+      "id": "a2.invitations.word.refuse",
+      "word": "refuse",
+      "translation": "رد کردن",
+      "definition": "to say no to something",
+      "pronunciation": "/rɪˈfjuːz/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "He refused the offer politely.",
+          "fa": "او مودبانه پیشنهاد را رد کرد."
+        },
+        {
+          "en": "It is hard to refuse a friend.",
+          "fa": "رد کردن دوست سخت است."
+        }
+      ],
+      "collocations": [
+        "refuse an offer",
+        "refuse politely"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "refuse با مفعول مستقیم می‌آید و در گفتار روزمره say no هم رایج است."
+    },
+    {
+      "id": "a2.invitations.word.available",
+      "word": "available",
+      "translation": "در دسترس",
+      "definition": "free to meet or to be used",
+      "pronunciation": "/əˈveɪləbl/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Are you available on Friday?",
+          "fa": "جمعه در دسترس هستی؟"
+        },
+        {
+          "en": "The hall is available after six.",
+          "fa": "سالن بعد از شش در دسترس است."
+        }
+      ],
+      "collocations": [
+        "be available on",
+        "available after six"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "available صفت است و با be می‌آید: I am available."
+    },
+    {
+      "id": "a2.invitations.word.sorry",
+      "word": "sorry",
+      "translation": "متأسف",
+      "definition": "used to apologise politely",
+      "pronunciation": "/ˈsɒri/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "I am sorry, I cannot come on Friday.",
+          "fa": "متأسفم، جمعه نمی‌توانم بیایم."
+        },
+        {
+          "en": "Sorry, I have another plan.",
+          "fa": "متأسفم، برنامهٔ دیگری دارم."
+        }
+      ],
+      "collocations": [
+        "I am sorry",
+        "sorry, I can't"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "رد کردن دعوت با I'm sorry آغاز می‌شود تا مؤدبانه باشد."
+    },
+    {
+      "id": "a2.invitations.word.join",
+      "word": "join",
+      "translation": "ملحق شدن",
+      "definition": "to become part of a group or activity",
+      "pronunciation": "/dʒɔɪn/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Would you like to join us for dinner?",
+          "fa": "دوست داری برای شام به ما ملحق شوی؟"
+        },
+        {
+          "en": "Come and join the game.",
+          "fa": "بیا و به بازی ملحق شو."
+        }
+      ],
+      "collocations": [
+        "join us",
+        "join the game"
+      ],
+      "lessonId": "a2.invitations.lesson-01",
+      "explanationFa": "join بدون to می‌آید: join us، نه join to us."
+    },
+    {
+      "id": "a2.phone.word.call",
+      "word": "call",
+      "translation": "تماس گرفتن",
+      "definition": "to phone someone",
+      "pronunciation": "/kɔːl/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I will call you back in ten minutes.",
+          "fa": "ده دقیقهٔ دیگر بهت زنگ می‌زنم."
+        },
+        {
+          "en": "She called the office twice.",
+          "fa": "او دو بار به دفتر زنگ زد."
+        }
+      ],
+      "collocations": [
+        "call someone back",
+        "call the office"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "call back یعنی دوباره زنگ زدن؛ ضمیر میان call و back می‌آید."
+    },
+    {
+      "id": "a2.phone.word.hold-on",
+      "word": "hold on",
+      "translation": "منتظر ماندن",
+      "definition": "to wait for a short time",
+      "pronunciation": "/həʊld ɒn/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Please hold on for a moment.",
+          "fa": "لطفاً یک لحظه منتظر بمانید."
+        },
+        {
+          "en": "Hold on, I am checking the file.",
+          "fa": "یک لحظه، دارم پرونده را بررسی می‌کنم."
+        }
+      ],
+      "collocations": [
+        "hold on a moment",
+        "please hold on"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "hold on در تلفن یعنی «منتظر بمان» و مفعول نمی‌گیرد."
+    },
+    {
+      "id": "a2.phone.word.message",
+      "word": "message",
+      "translation": "پیام",
+      "definition": "words you send to someone",
+      "pronunciation": "/ˈmesɪdʒ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Can I leave a message?",
+          "fa": "می‌توانم پیامی بگذارم؟"
+        },
+        {
+          "en": "Your message was very clear.",
+          "fa": "پیامت خیلی واضح بود."
+        }
+      ],
+      "collocations": [
+        "leave a message",
+        "take a message"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "leave a message یعنی پیام گذاشتن و take a message یعنی پیام گرفتن."
+    },
+    {
+      "id": "a2.phone.word.line",
+      "word": "line",
+      "translation": "خط",
+      "definition": "the telephone connection",
+      "pronunciation": "/laɪn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The line is very bad today.",
+          "fa": "امروز خط خیلی بد است."
+        },
+        {
+          "en": "Please wait, the line is busy.",
+          "fa": "لطفاً صبر کنید، خط اشغال است."
+        }
+      ],
+      "collocations": [
+        "the line is busy",
+        "a bad line"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "the line is busy یعنی خط اشغال است؛ برای کیفیت هم می‌آید."
+    },
+    {
+      "id": "a2.phone.word.voicemail",
+      "word": "voicemail",
+      "translation": "پیام صوتی",
+      "definition": "a recorded message on the phone",
+      "pronunciation": "/ˈvɔɪsmeɪl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The line is busy, so I left a voicemail.",
+          "fa": "خط اشغال بود، برای همین پیام صوتی گذاشتم."
+        },
+        {
+          "en": "Listen to your voicemail after the meeting.",
+          "fa": "بعد از جلسه پیام صوتی‌هایت را گوش کن."
+        }
+      ],
+      "collocations": [
+        "leave a voicemail",
+        "check your voicemail"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "voicemail یک کلمه است؛ leave a voicemail یعنی پیام صوتی گذاشتن."
+    },
+    {
+      "id": "a2.phone.word.busy",
+      "word": "busy",
+      "translation": "مشغول",
+      "definition": "not free to talk now",
+      "pronunciation": "/ˈbɪzi/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The number is busy.",
+          "fa": "شماره اشغال است."
+        },
+        {
+          "en": "Sorry, I was busy this morning.",
+          "fa": "متأسفم، امروز صبح مشغول بودم."
+        }
+      ],
+      "collocations": [
+        "the line is busy",
+        "I am busy"
+      ],
+      "lessonId": "a2.phone.lesson-01",
+      "explanationFa": "busy هم برای شخص و هم برای خط تلفن به کار می‌رود."
+    },
+    {
+      "id": "a2.emails.word.subject",
+      "word": "subject",
+      "translation": "موضوع",
+      "definition": "the title line of an email",
+      "pronunciation": "/ˈsʌbdʒɪkt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Write a clear subject in your email.",
+          "fa": "در ایمیلت یک موضوع روشن بنویس."
+        },
+        {
+          "en": "The subject of your email was missing.",
+          "fa": "موضوع ایمیلت خالی بود."
+        }
+      ],
+      "collocations": [
+        "the subject line",
+        "write a subject"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "subject در ایمیل یعنی عنوان پیام؛ با the subject of می‌آید."
+    },
+    {
+      "id": "a2.emails.word.attach",
+      "word": "attach",
+      "translation": "پیوست کردن",
+      "definition": "to add a file to an email",
+      "pronunciation": "/əˈtætʃ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I attached the file to the email.",
+          "fa": "فایل را به ایمیل پیوست کردم."
+        },
+        {
+          "en": "Please attach the photo, not the link.",
+          "fa": "لطفاً عکس را پیوست کن، نه لینک را."
+        }
+      ],
+      "collocations": [
+        "attach a file",
+        "attached to the email"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "attach با to می‌آید: attach a file to an email."
+    },
+    {
+      "id": "a2.emails.word.reply",
+      "word": "reply",
+      "translation": "پاسخ دادن",
+      "definition": "to answer a message",
+      "pronunciation": "/rɪˈplaɪ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Please reply to my email soon.",
+          "fa": "لطفاً زودتر به ایمیلم پاسخ بدهید."
+        },
+        {
+          "en": "She replied to every message.",
+          "fa": "او به هر پیامی پاسخ داد."
+        }
+      ],
+      "collocations": [
+        "reply to an email",
+        "reply soon"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "reply با to می‌آید: reply to my email."
+    },
+    {
+      "id": "a2.emails.word.regards",
+      "word": "regards",
+      "translation": "با احترام",
+      "definition": "a polite way to end a letter",
+      "pronunciation": "/rɪˈɡɑːdz/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Best regards, Sara",
+          "fa": "با احترام، سارا"
+        },
+        {
+          "en": "Kind regards to your family.",
+          "fa": "به خانواده‌ات سلام برسان."
+        }
+      ],
+      "collocations": [
+        "best regards",
+        "kind regards"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "regards همیشه جمع است و در پایان نامه یا ایمیل می‌آید."
+    },
+    {
+      "id": "a2.emails.word.forward",
+      "word": "forward",
+      "translation": "ارسال کردن",
+      "definition": "to send a message on to someone else",
+      "pronunciation": "/ˈfɔːwəd/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can you forward this email to Ali?",
+          "fa": "می‌توانی این ایمیل را برای علی بفرستی؟"
+        },
+        {
+          "en": "I forwarded the message this morning.",
+          "fa": "من پیام را امروز صبح فرستادم."
+        }
+      ],
+      "collocations": [
+        "forward an email",
+        "forward it to"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "forward با to + شخص می‌آید: forward it to Ali."
+    },
+    {
+      "id": "a2.emails.word.document",
+      "word": "document",
+      "translation": "سند",
+      "definition": "a file with written information",
+      "pronunciation": "/ˈdɒkjumənt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Please find the document attached to this email.",
+          "fa": "سند پیوست این ایمیل است."
+        },
+        {
+          "en": "The document is in two pages.",
+          "fa": "این سند دو صفحه است."
+        }
+      ],
+      "collocations": [
+        "attach a document",
+        "the document attached"
+      ],
+      "lessonId": "a2.emails.lesson-01",
+      "explanationFa": "document اسم است؛ file عام‌تر و document سند رسمی‌تر."
+    },
+    {
+      "id": "a2.renting.word.rent",
+      "word": "rent",
+      "translation": "اجاره کردن؛ اجاره",
+      "definition": "to pay money every month to live in a place",
+      "pronunciation": "/rent/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We rent a small flat near the station.",
+          "fa": "ما آپارتمان کوچکی نزدیک ایستگاه اجاره می‌کنیم."
+        },
+        {
+          "en": "They rent their house to a young couple.",
+          "fa": "آن‌ها خانه‌شان را به زوج جوانی اجاره می‌دهند."
+        }
+      ],
+      "collocations": [
+        "rent a flat",
+        "pay the rent"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "rent هم فعل است هم اسم؛ اجارهٔ ماهانه را pay the rent می‌گوییم."
+    },
+    {
+      "id": "a2.renting.word.landlord",
+      "word": "landlord",
+      "translation": "صاحبخانه",
+      "definition": "the person who owns the place you rent",
+      "pronunciation": "/ˈlændlɔːd/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The landlord fixed the boiler yesterday.",
+          "fa": "صاحبخانه دیروز پکیج را تعمیر کرد."
+        },
+        {
+          "en": "Our landlord lives on the ground floor.",
+          "fa": "صاحبخانهٔ ما در طبقهٔ همکف زندگی می‌کند."
+        }
+      ],
+      "collocations": [
+        "call the landlord",
+        "the landlord agreed"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "landlord صاحبخانه است و کسی که خانه را اجاره می‌کند tenant نام دارد."
+    },
+    {
+      "id": "a2.renting.word.deposit",
+      "word": "deposit",
+      "translation": "ودیعه",
+      "definition": "money you pay before you move in, returned when you leave",
+      "pronunciation": "/dɪˈpɒzɪt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We paid one month's deposit.",
+          "fa": "یک ماه ودیعه دادیم."
+        },
+        {
+          "en": "The deposit is returned after the final check.",
+          "fa": "ودیعه پس از بازرسی نهایی برگردانده می‌شود."
+        }
+      ],
+      "collocations": [
+        "pay a deposit",
+        "get the deposit back"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "deposit پول ودیعه است و معمولاً هنگام تخلیه برمی‌گردد؛ با rent (اجارهٔ ماهانه) فرق دارد."
+    },
+    {
+      "id": "a2.renting.word.lease",
+      "word": "lease",
+      "translation": "قرارداد اجاره",
+      "definition": "the written agreement for renting a place",
+      "pronunciation": "/liːs/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We signed a one-year lease.",
+          "fa": "قرارداد اجارهٔ یک‌ساله امضا کردیم."
+        },
+        {
+          "en": "Read the lease before you sign it.",
+          "fa": "قبل از امضا قرارداد اجاره را بخوان."
+        }
+      ],
+      "collocations": [
+        "sign a lease",
+        "a one-year lease"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "lease قرارداد رسمی اجاره است؛ در گفتار روزمره contract هم شنیده می‌شود."
+    },
+    {
+      "id": "a2.renting.word.furnished",
+      "word": "furnished",
+      "translation": "مبله",
+      "definition": "with furniture already in it",
+      "pronunciation": "/ˈfɜːnɪʃt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The flat is fully furnished.",
+          "fa": "خانه کاملاً مبله است."
+        },
+        {
+          "en": "A furnished room costs more.",
+          "fa": "اتاق مبله گران‌تر است."
+        }
+      ],
+      "collocations": [
+        "fully furnished",
+        "a furnished flat"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "furnished از furniture (مبلمان) می‌آید؛ متضاد آن unfurnished است."
+    },
+    {
+      "id": "a2.renting.word.utility",
+      "word": "utility",
+      "translation": "هزینهٔ آب و برق",
+      "definition": "a service like water, gas or electricity, and its bill",
+      "pronunciation": "/juːˈtɪləti/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The rent includes all utility bills.",
+          "fa": "اجاره شامل همهٔ هزینه‌های آب و برق است."
+        },
+        {
+          "en": "Utility costs are higher in winter.",
+          "fa": "هزینه‌های آب و برق در زمستان بیشتر است."
+        }
+      ],
+      "collocations": [
+        "utility bills",
+        "utility costs"
+      ],
+      "lessonId": "a2.renting.lesson-01",
+      "explanationFa": "در حالت کلی utilities جمع می‌آید و به آب، برق و گاز اشاره دارد."
+    },
+    {
+      "id": "a2.house-problems.word.leak",
+      "word": "leak",
+      "translation": "نشتی",
+      "definition": "a hole or crack where water escapes",
+      "pronunciation": "/liːk/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There is a leak under the sink.",
+          "fa": "زیر سینک نشتی هست."
+        },
+        {
+          "en": "The leak is getting worse every day.",
+          "fa": "نشتی هر روز بدتر می‌شود."
+        }
+      ],
+      "collocations": [
+        "a small leak",
+        "fix a leak"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "leak اسم است و leaky صفت؛ فعل آن هم leak است: the pipe is leaking."
+    },
+    {
+      "id": "a2.house-problems.word.broken",
+      "word": "broken",
+      "translation": "خراب",
+      "definition": "not working because a part is damaged",
+      "pronunciation": "/ˈbrəʊkən/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The kitchen window is broken.",
+          "fa": "پنجرهٔ آشپزخانه خراب است."
+        },
+        {
+          "en": "A broken heater is dangerous in winter.",
+          "fa": "بخاری خراب در زمستان خطرناک است."
+        }
+      ],
+      "collocations": [
+        "a broken window",
+        "get broken"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "broken صفت است؛ برای فعل از break استفاده می‌کنیم: someone broke the window."
+    },
+    {
+      "id": "a2.house-problems.word.plumber",
+      "word": "plumber",
+      "translation": "لوله‌کش",
+      "definition": "a person who repairs pipes and water systems",
+      "pronunciation": "/ˈplʌmə/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The plumber came to fix the sink.",
+          "fa": "لوله‌کش آمد تا سینک را درست کند."
+        },
+        {
+          "en": "We need a plumber for the bathroom.",
+          "fa": "برای حمام به لوله‌کش نیاز داریم."
+        }
+      ],
+      "collocations": [
+        "call a plumber",
+        "send a plumber"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "plumber با b بی‌صدا نوشته می‌شود و /ˈplʌmə/ خوانده می‌شود؛ برقکار electrician است."
+    },
+    {
+      "id": "a2.house-problems.word.repair",
+      "word": "repair",
+      "translation": "تعمیر کردن",
+      "definition": "to fix something that is damaged",
+      "pronunciation": "/rɪˈpeə/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "The landlord will repair the roof.",
+          "fa": "صاحبخانه پشت‌بام را تعمیر می‌کند."
+        },
+        {
+          "en": "They repaired the door in one afternoon.",
+          "fa": "آن‌ها در را در یک بعدازظهر تعمیر کردند."
+        }
+      ],
+      "collocations": [
+        "repair a roof",
+        "a repair job"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "repair رسمی‌تر از fix است و برای خانه و وسایل بزرگ به‌کار می‌رود."
+    },
+    {
+      "id": "a2.house-problems.word.switch",
+      "word": "switch",
+      "translation": "کلید برق",
+      "definition": "the part you press to turn a light on or off",
+      "pronunciation": "/swɪtʃ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The light switch is by the door.",
+          "fa": "کلید برق کنار در است."
+        },
+        {
+          "en": "Please do not touch the switch with wet hands.",
+          "fa": "لطفاً با دست خیس به کلید برق دست نزنید."
+        }
+      ],
+      "collocations": [
+        "the light switch",
+        "turn off the switch"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "switch هم اسم است هم فعل؛ switch off یعنی خاموش کردن."
+    },
+    {
+      "id": "a2.house-problems.word.noisy",
+      "word": "noisy",
+      "translation": "پرسروصدا",
+      "definition": "making a lot of sound",
+      "pronunciation": "/ˈnɔɪzi/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The neighbours are noisy at night.",
+          "fa": "همسایه‌ها شب‌ها پرسروصدا هستند."
+        },
+        {
+          "en": "A noisy street is hard to sleep on.",
+          "fa": "خیابان پرسروصدا خوابیدن را سخت می‌کند."
+        }
+      ],
+      "collocations": [
+        "a noisy street",
+        "noisy neighbours"
+      ],
+      "lessonId": "a2.house-problems.lesson-01",
+      "explanationFa": "noisy از noise می‌آید و دربارهٔ صداهای آزاردهنده است."
+    },
+    {
+      "id": "a2.future-plans.word.plan",
+      "word": "plan",
+      "translation": "برنامه؛ برنامه‌ریزی کردن",
+      "definition": "what you have decided to do later",
+      "pronunciation": "/plæn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My plan is to save money every month.",
+          "fa": "برنامهٔ من پس‌انداز کردن هر ماه است."
+        },
+        {
+          "en": "We plan to move in June.",
+          "fa": "قصد داریم در ژوئن اسباب‌کشی کنیم."
+        }
+      ],
+      "collocations": [
+        "make a plan",
+        "plan to move"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "plan هم اسم است هم فعل؛ بعد از plan to فعل ساده می‌آید."
+    },
+    {
+      "id": "a2.future-plans.word.decide",
+      "word": "decide",
+      "translation": "تصمیم گرفتن",
+      "definition": "to choose something after thinking",
+      "pronunciation": "/dɪˈsaɪd/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We decided to take the early train.",
+          "fa": "تصمیم گرفتیم قطار زودتر را بگیریم."
+        },
+        {
+          "en": "She decided to study at home.",
+          "fa": "او تصمیم گرفت در خانه درس بخواند."
+        }
+      ],
+      "collocations": [
+        "decide to go",
+        "decide quickly"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "decide با to + مصدر می‌آید؛ اسم آن decision است."
+    },
+    {
+      "id": "a2.future-plans.word.hope",
+      "word": "hope",
+      "translation": "امیدوار بودن",
+      "definition": "to want something to happen",
+      "pronunciation": "/həʊp/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I hope to start a new course soon.",
+          "fa": "امیدوارم به‌زودی دورهٔ جدیدی شروع کنم."
+        },
+        {
+          "en": "She hopes to find a better job.",
+          "fa": "او امیدوار است کار بهتری پیدا کند."
+        }
+      ],
+      "collocations": [
+        "hope to see",
+        "I hope so"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "hope to + فعل ساده؛ برای پاسخ کوتاه I hope so می‌گوییم."
+    },
+    {
+      "id": "a2.future-plans.word.arrange",
+      "word": "arrange",
+      "translation": "ترتیب دادن",
+      "definition": "to organise something so it can happen",
+      "pronunciation": "/əˈreɪndʒ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I will arrange a meeting for Monday.",
+          "fa": "برای دوشنبه جلسه‌ای ترتیب می‌دهم."
+        },
+        {
+          "en": "Can you arrange a taxi for us?",
+          "fa": "می‌توانی برای ما تاکسی ترتیب بدهی؟"
+        }
+      ],
+      "collocations": [
+        "arrange a meeting",
+        "arrange a taxi"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "arrange یعنی «برنامه‌ریزی و هماهنگ کردن»؛ اسمش arrangement است."
+    },
+    {
+      "id": "a2.future-plans.word.postpone",
+      "word": "postpone",
+      "translation": "به تعویق انداختن",
+      "definition": "to move an event to a later time",
+      "pronunciation": "/pəˈspəʊn/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We had to postpone the trip to June.",
+          "fa": "مجبور شدیم سفر را به ژوئن موکول کنیم."
+        },
+        {
+          "en": "They postponed the match until Sunday.",
+          "fa": "آن‌ها مسابقه را تا یکشنبه به تعویق انداختند."
+        }
+      ],
+      "collocations": [
+        "postpone a meeting",
+        "postpone until"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "postpone با اسم می‌آید: postpone the meeting؛ مترادف آن put off است."
+    },
+    {
+      "id": "a2.future-plans.word.goal",
+      "word": "goal",
+      "translation": "هدف",
+      "definition": "something you want to achieve",
+      "pronunciation": "/ɡəʊl/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My goal is to speak English at work.",
+          "fa": "هدف من صحبت کردن انگلیسی در محل کار است."
+        },
+        {
+          "en": "Her goal is to run ten kilometres.",
+          "fa": "هدف او دویدن ده کیلومتر است."
+        }
+      ],
+      "collocations": [
+        "set a goal",
+        "reach a goal"
+      ],
+      "lessonId": "a2.future-plans.lesson-01",
+      "explanationFa": "goal هدف است؛ برای هدف گذاشتن set a goal و برای رسیدن reach a goal می‌گوییم."
+    },
+    {
+      "id": "a2.comparing.word.expensive",
+      "word": "expensive",
+      "translation": "گران",
+      "definition": "costing a lot of money",
+      "pronunciation": "/ɪkˈspensɪv/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "That restaurant is more expensive than I expected.",
+          "fa": "آن رستوران از آنچه انتظار داشتم گران‌تر است."
+        },
+        {
+          "en": "Good shoes are expensive.",
+          "fa": "کفش‌های خوب گران‌اند."
+        }
+      ],
+      "collocations": [
+        "too expensive",
+        "an expensive car"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "expensive صفت بلند است، پس با more مقایسه می‌شود: more expensive than."
+    },
+    {
+      "id": "a2.comparing.word.cheap",
+      "word": "cheap",
+      "translation": "ارزان",
+      "definition": "costing little money",
+      "pronunciation": "/tʃiːp/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "This market is cheaper than the one near my office.",
+          "fa": "این بازار از آن یکی نزدیک دفترم ارزان‌تر است."
+        },
+        {
+          "en": "The tickets were cheap.",
+          "fa": "بلیت‌ها ارزان بودند."
+        }
+      ],
+      "collocations": [
+        "a cheap ticket",
+        "cheap and good"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "cheap صفت کوتاه است و با er مقایسه می‌شود: cheaper than."
+    },
+    {
+      "id": "a2.comparing.word.similar",
+      "word": "similar",
+      "translation": "شبیه",
+      "definition": "almost the same",
+      "pronunciation": "/ˈsɪmələ/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Our two flats are very similar.",
+          "fa": "دو آپارتمان ما بسیار شبیه هم‌اند."
+        },
+        {
+          "en": "Her answer was similar to mine.",
+          "fa": "پاسخ او شبیه پاسخ من بود."
+        }
+      ],
+      "collocations": [
+        "similar to",
+        "very similar"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "similar با to می‌آید: similar to mine؛ اسم آن similarity است."
+    },
+    {
+      "id": "a2.comparing.word.different",
+      "word": "different",
+      "translation": "متفاوت",
+      "definition": "not the same",
+      "pronunciation": "/ˈdɪfrənt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "My brother is very different from me.",
+          "fa": "برادرم با من بسیار متفاوت است."
+        },
+        {
+          "en": "We chose a different table.",
+          "fa": "ما میز دیگری انتخاب کردیم."
+        }
+      ],
+      "collocations": [
+        "different from",
+        "completely different"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "در این درس different با from می‌آید: different from me."
+    },
+    {
+      "id": "a2.comparing.word.popular",
+      "word": "popular",
+      "translation": "محبوب",
+      "definition": "liked by many people",
+      "pronunciation": "/ˈpɒpjələ/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "This gym is popular with young people.",
+          "fa": "این باشگاه میان جوانان محبوب است."
+        },
+        {
+          "en": "The song became popular quickly.",
+          "fa": "آن آهنگ به‌سرعت محبوب شد."
+        }
+      ],
+      "collocations": [
+        "popular with",
+        "very popular"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "popular with یعنی «محبوب میان»؛ برای خود شخص popular است، نه برای چیزی که او دوست دارد."
+    },
+    {
+      "id": "a2.comparing.word.comfortable",
+      "word": "comfortable",
+      "translation": "راحت",
+      "definition": "pleasant to sit in or wear",
+      "pronunciation": "/ˈkʌmftəbl/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "The new chairs are more comfortable.",
+          "fa": "صندلی‌های جدید راحت‌ترند."
+        },
+        {
+          "en": "This bed is very comfortable.",
+          "fa": "این تخت بسیار راحت است."
+        }
+      ],
+      "collocations": [
+        "a comfortable chair",
+        "feel comfortable"
+      ],
+      "lessonId": "a2.comparing.lesson-01",
+      "explanationFa": "comfortable صفت بلند است: more comfortable؛ متضادش uncomfortable است."
+    },
+    {
+      "id": "a2.opinions.word.prefer",
+      "word": "prefer",
+      "translation": "ترجیح دادن",
+      "definition": "to like one thing more than another",
+      "pronunciation": "/prɪˈfɜː/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I prefer tea to coffee.",
+          "fa": "چای را به قهوه ترجیح می‌دهم."
+        },
+        {
+          "en": "She prefers walking to driving.",
+          "fa": "او پیاده‌روی را به رانندگی ترجیح می‌دهد."
+        }
+      ],
+      "collocations": [
+        "prefer A to B",
+        "would prefer"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "prefer A to B الگوی ثابت است؛ در انگلیسی آمریکایی prefer A over B هم شنیده می‌شود."
+    },
+    {
+      "id": "a2.opinions.word.opinion",
+      "word": "opinion",
+      "translation": "نظر",
+      "definition": "what you think about something",
+      "pronunciation": "/əˈpɪnjən/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "In my opinion, the film is too long.",
+          "fa": "به نظر من فیلم خیلی طولانی است."
+        },
+        {
+          "en": "Everyone shared an opinion about the plan.",
+          "fa": "همه دربارهٔ برنامه نظری دادند."
+        }
+      ],
+      "collocations": [
+        "in my opinion",
+        "a strong opinion"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "in my opinion یعنی «به نظر من» و معمولاً با ویرگول ادامه می‌یابد."
+    },
+    {
+      "id": "a2.opinions.word.agree",
+      "word": "agree",
+      "translation": "موافقت کردن",
+      "definition": "to have the same opinion",
+      "pronunciation": "/əˈɡriː/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I agree with your idea.",
+          "fa": "با ایدهٔ تو موافقم."
+        },
+        {
+          "en": "We all agreed on the price.",
+          "fa": "همه‌مان روی قیمت توافق کردیم."
+        }
+      ],
+      "collocations": [
+        "agree with",
+        "agree on a price"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "agree with + شخص، agree on + موضوع مورد توافق."
+    },
+    {
+      "id": "a2.opinions.word.disagree",
+      "word": "disagree",
+      "translation": "مخالف بودن",
+      "definition": "to have a different opinion",
+      "pronunciation": "/ˌdɪsəˈɡriː/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "They disagree about the price.",
+          "fa": "آن‌ها دربارهٔ قیمت اختلاف نظر دارند."
+        },
+        {
+          "en": "I disagree with that answer.",
+          "fa": "با آن پاسخ مخالفم."
+        }
+      ],
+      "collocations": [
+        "disagree with",
+        "agree to disagree"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "disagree با with می‌آید و مؤدبانه‌تر از no گفتن است."
+    },
+    {
+      "id": "a2.opinions.word.enjoy",
+      "word": "enjoy",
+      "translation": "لذت بردن",
+      "definition": "to get pleasure from something",
+      "pronunciation": "/ɪnˈdʒɔɪ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We enjoy cooking together.",
+          "fa": "از آشپزی با هم لذت می‌بریم."
+        },
+        {
+          "en": "She enjoys her new job.",
+          "fa": "او از کار جدیدش لذت می‌برد."
+        }
+      ],
+      "collocations": [
+        "enjoy doing",
+        "enjoy the film"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "enjoy + فعل ing دارد: enjoy cooking؛ نه enjoy to cook."
+    },
+    {
+      "id": "a2.opinions.word.choice",
+      "word": "choice",
+      "translation": "انتخاب",
+      "definition": "the chance to choose between things",
+      "pronunciation": "/tʃɔɪs/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "You have a choice of two colours.",
+          "fa": "بین دو رنگ حق انتخاب داری."
+        },
+        {
+          "en": "The menu offers a wide choice.",
+          "fa": "منو انتخاب گسترده‌ای دارد."
+        }
+      ],
+      "collocations": [
+        "have a choice",
+        "a wide choice"
+      ],
+      "lessonId": "a2.opinions.lesson-01",
+      "explanationFa": "choice اسم است و choose فعل؛ have a choice یعنی «حق انتخاب داشتن»."
+    },
+    {
+      "id": "a2.asking-help.word.borrow",
+      "word": "borrow",
+      "translation": "قرض گرفتن",
+      "definition": "to take something for a short time and give it back",
+      "pronunciation": "/ˈbɒrəʊ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can I borrow your pen?",
+          "fa": "می‌توانم خودکارت را قرض بگیرم؟"
+        },
+        {
+          "en": "I borrowed two books from the library.",
+          "fa": "دو کتاب از کتابخانه امانت گرفتم."
+        }
+      ],
+      "collocations": [
+        "borrow from",
+        "borrow a book"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "borrow یعنی گرفتن و lend یعنی دادن؛ borrow از کسی با from می‌آید."
+    },
+    {
+      "id": "a2.asking-help.word.permission",
+      "word": "permission",
+      "translation": "اجازه",
+      "definition": "when someone allows you to do something",
+      "pronunciation": "/pəˈmɪʃn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I asked for permission to leave early.",
+          "fa": "برای رفتن زودتر اجازه خواستم."
+        },
+        {
+          "en": "You need permission to park here.",
+          "fa": "برای پارک کردن اینجا اجازه لازم است."
+        }
+      ],
+      "collocations": [
+        "ask for permission",
+        "without permission"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "ask for permission یعنی «اجازه خواستن»؛ فعل آن permit و allow هم هست."
+    },
+    {
+      "id": "a2.asking-help.word.allow",
+      "word": "allow",
+      "translation": "اجازه دادن",
+      "definition": "to let someone do something",
+      "pronunciation": "/əˈlaʊ/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "The school does not allow phones in class.",
+          "fa": "مدرسه گوشی را در کلاس مجاز نمی‌داند."
+        },
+        {
+          "en": "My parents allow me to stay out late.",
+          "fa": "والدینم اجازه می‌دهند دیر بیرون بمانم."
+        }
+      ],
+      "collocations": [
+        "allow someone to",
+        "not allow"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "allow + شخص + to + فعل: allow me to go؛ allow doing هم در حالت کلی می‌آید."
+    },
+    {
+      "id": "a2.asking-help.word.mind",
+      "word": "mind",
+      "translation": "اشکالی داشتن",
+      "definition": "to be bothered by something",
+      "pronunciation": "/maɪnd/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Do you mind if I open the window?",
+          "fa": "اشکالی دارد پنجره را باز کنم؟"
+        },
+        {
+          "en": "I do not mind waiting.",
+          "fa": "منتظر ماندن برایم اشکالی ندارد."
+        }
+      ],
+      "collocations": [
+        "do you mind",
+        "I do not mind"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "Do you mind…? درخواست مؤدبانه است و پاسخ منفی یعنی موافقت."
+    },
+    {
+      "id": "a2.asking-help.word.favour",
+      "word": "favour",
+      "translation": "لطف",
+      "definition": "a small act of help for someone",
+      "pronunciation": "/ˈfeɪvə/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Could you do me a favour?",
+          "fa": "می‌توانی لطفی به من بکنی؟"
+        },
+        {
+          "en": "She asked her neighbour for a favour.",
+          "fa": "او از همسایه‌اش لطفی خواست."
+        }
+      ],
+      "collocations": [
+        "do me a favour",
+        "ask a favour"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "do me a favour الگوی ثابت است؛ در انگلیسی آمریکایی favor نوشته می‌شود."
+    },
+    {
+      "id": "a2.asking-help.word.lend",
+      "word": "lend",
+      "translation": "قرض دادن",
+      "definition": "to give something for a short time",
+      "pronunciation": "/lend/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "Can you lend me your charger?",
+          "fa": "می‌توانی شارژرت را به من قرض بدهی؟"
+        },
+        {
+          "en": "We lend our bikes to friends.",
+          "fa": "ما دوچرخه‌هایمان را به دوستان قرض می‌دهیم."
+        }
+      ],
+      "collocations": [
+        "lend someone something",
+        "lend to"
+      ],
+      "lessonId": "a2.asking-help.lesson-01",
+      "explanationFa": "lend + شخص + چیز: lend me your charger؛ گذشتهٔ آن lent است."
+    },
+    {
+      "id": "a2.sports.word.exercise",
+      "word": "exercise",
+      "translation": "ورزش؛ تمرین",
+      "definition": "physical activity that keeps you healthy",
+      "pronunciation": "/ˈeksəsaɪz/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I do some exercise before breakfast.",
+          "fa": "پیش از صبحانه کمی ورزش می‌کنم."
+        },
+        {
+          "en": "Exercise is good for your health.",
+          "fa": "ورزش برای سلامتی مفید است."
+        }
+      ],
+      "collocations": [
+        "do exercise",
+        "regular exercise"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "با exercise فعل do می‌آید: do exercise؛ make exercise غلط است."
+    },
+    {
+      "id": "a2.sports.word.team",
+      "word": "team",
+      "translation": "تیم",
+      "definition": "a group of people who play or work together",
+      "pronunciation": "/tiːm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "Our team plays on Fridays.",
+          "fa": "تیم ما جمعه‌ها بازی می‌کند."
+        },
+        {
+          "en": "She is the best player in the team.",
+          "fa": "او بهترین بازیکن تیم است."
+        }
+      ],
+      "collocations": [
+        "join a team",
+        "a football team"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "team در انگلیسی بریتانیایی مفرد یا جمع فعل می‌گیرد؛ اینجا مفرد است."
+    },
+    {
+      "id": "a2.sports.word.match",
+      "word": "match",
+      "translation": "مسابقه",
+      "definition": "a game between two players or teams",
+      "pronunciation": "/mætʃ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The match starts at five.",
+          "fa": "مسابقه ساعت پنج شروع می‌شود."
+        },
+        {
+          "en": "We watched a football match.",
+          "fa": "ما یک مسابقهٔ فوتبال تماشا کردیم."
+        }
+      ],
+      "collocations": [
+        "watch a match",
+        "win a match"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "match برای رقابت رسمی است؛ game بیشتر برای بازی دوستانه به‌کار می‌رود."
+    },
+    {
+      "id": "a2.sports.word.coach",
+      "word": "coach",
+      "translation": "مربی",
+      "definition": "the person who trains a team or player",
+      "pronunciation": "/kəʊtʃ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The coach gave us a new plan.",
+          "fa": "مربی برنامهٔ جدیدی به ما داد."
+        },
+        {
+          "en": "Our coach is very patient.",
+          "fa": "مربی ما بسیار صبور است."
+        }
+      ],
+      "collocations": [
+        "the team coach",
+        "train with a coach"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "coach مربی ورزشی است؛ معلم teacher و استاد دانشگاه professor است."
+    },
+    {
+      "id": "a2.sports.word.gym",
+      "word": "gym",
+      "translation": "باشگاه ورزشی",
+      "definition": "a place with equipment for exercise",
+      "pronunciation": "/dʒɪm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "She goes to the gym three times a week.",
+          "fa": "او هفته‌ای سه بار به باشگاه می‌رود."
+        },
+        {
+          "en": "The gym is closed on Sunday.",
+          "fa": "باشگاه یکشنبه‌ها تعطیل است."
+        }
+      ],
+      "collocations": [
+        "go to the gym",
+        "a gym membership"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "gym مخفف gymnasium است و با go to the gym می‌آید."
+    },
+    {
+      "id": "a2.sports.word.fit",
+      "word": "fit",
+      "translation": "خوش‌اندام؛ آماده",
+      "definition": "healthy and strong because of exercise",
+      "pronunciation": "/fɪt/",
+      "level": "A2",
+      "partOfSpeech": "adjective",
+      "examples": [
+        {
+          "en": "Running keeps me fit.",
+          "fa": "دویدن مرا خوش‌اندام نگه می‌دارد."
+        },
+        {
+          "en": "He is very fit for his age.",
+          "fa": "او برای سنش بسیار آماده است."
+        }
+      ],
+      "collocations": [
+        "keep fit",
+        "get fit"
+      ],
+      "lessonId": "a2.sports.lesson-01",
+      "explanationFa": "keep fit یعنی «خوش‌اندام ماندن»؛ fit دربارهٔ آمادگی جسمانی است."
+    },
+    {
+      "id": "a2.work.word.manager",
+      "word": "manager",
+      "translation": "مدیر",
+      "definition": "the person in charge of a team at work",
+      "pronunciation": "/ˈmænɪdʒə/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My manager asked for the report today.",
+          "fa": "مدیرم امروز گزارش را خواست."
+        },
+        {
+          "en": "The manager is in a meeting.",
+          "fa": "مدیر در جلسه است."
+        }
+      ],
+      "collocations": [
+        "the team manager",
+        "ask the manager"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "manager مدیر است و manage فعل «مدیریت کردن»؛ رئیس کل boss نامیده می‌شود."
+    },
+    {
+      "id": "a2.work.word.deadline",
+      "word": "deadline",
+      "translation": "آخرین مهلت",
+      "definition": "the last day or time to finish something",
+      "pronunciation": "/ˈdedlaɪn/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The deadline for the report is Monday.",
+          "fa": "آخرین مهلت گزارش دوشنبه است."
+        },
+        {
+          "en": "We missed the deadline by one day.",
+          "fa": "یک روز از مهلت عقب افتادیم."
+        }
+      ],
+      "collocations": [
+        "meet a deadline",
+        "miss the deadline"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "meet a deadline یعنی «به مهلت رسیدن» و miss the deadline یعنی «از دست دادن آن»."
+    },
+    {
+      "id": "a2.work.word.meeting",
+      "word": "meeting",
+      "translation": "جلسه",
+      "definition": "a time when people come together to talk about work",
+      "pronunciation": "/ˈmiːtɪŋ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The meeting starts at nine.",
+          "fa": "جلسه ساعت نه شروع می‌شود."
+        },
+        {
+          "en": "I have a meeting with my manager.",
+          "fa": "با مدیرم جلسه دارم."
+        }
+      ],
+      "collocations": [
+        "have a meeting",
+        "attend a meeting"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "meeting از meet می‌آید و با have یا attend می‌آید."
+    },
+    {
+      "id": "a2.work.word.report",
+      "word": "report",
+      "translation": "گزارش",
+      "definition": "a written or spoken account of work",
+      "pronunciation": "/rɪˈpɔːt/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "I have to finish the monthly report.",
+          "fa": "باید گزارش ماهانه را تمام کنم."
+        },
+        {
+          "en": "She sent the report by email.",
+          "fa": "او گزارش را با ایمیل فرستاد."
+        }
+      ],
+      "collocations": [
+        "write a report",
+        "send a report"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "report هم اسم است هم فعل؛ send a report یعنی «گزارش فرستادن»."
+    },
+    {
+      "id": "a2.work.word.colleague",
+      "word": "colleague",
+      "translation": "همکار",
+      "definition": "a person who works with you",
+      "pronunciation": "/ˈkɒliːɡ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My colleague helped me with the file.",
+          "fa": "همکارم با پرونده کمکم کرد."
+        },
+        {
+          "en": "I share the office with two colleagues.",
+          "fa": "دفتر را با دو همکار شریک هستم."
+        }
+      ],
+      "collocations": [
+        "a close colleague",
+        "talk to a colleague"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "colleague رسمی‌تر از coworker است و در انگلیسی بریتانیایی رایج‌تر."
+    },
+    {
+      "id": "a2.work.word.task",
+      "word": "task",
+      "translation": "وظیفه",
+      "definition": "one piece of work you have to do",
+      "pronunciation": "/tɑːsk/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "My first task is to answer the emails.",
+          "fa": "اولین وظیفهٔ من پاسخ دادن به ایمیل‌هاست."
+        },
+        {
+          "en": "This task takes about an hour.",
+          "fa": "این وظیفه حدود یک ساعت وقت می‌برد."
+        }
+      ],
+      "collocations": [
+        "finish a task",
+        "a simple task"
+      ],
+      "lessonId": "a2.work.lesson-01",
+      "explanationFa": "task کار مشخص و کوچک است؛ job شغل یا کار کلی است."
+    },
+    {
+      "id": "a2.everyday-problems.word.problem",
+      "word": "problem",
+      "translation": "مشکل",
+      "definition": "something that is wrong and needs a solution",
+      "pronunciation": "/ˈprɒbləm/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "We have a problem with the internet.",
+          "fa": "با اینترنت مشکل داریم."
+        },
+        {
+          "en": "The problem is easy to solve.",
+          "fa": "مشکل حل کردنش آسان است."
+        }
+      ],
+      "collocations": [
+        "have a problem",
+        "solve a problem"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "have a problem with یعنی «با چیزی مشکل داشتن»؛ solve a problem یعنی حلش کردن."
+    },
+    {
+      "id": "a2.everyday-problems.word.solve",
+      "word": "solve",
+      "translation": "حل کردن",
+      "definition": "to find the answer to a problem",
+      "pronunciation": "/sɒlv/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "They solved the problem in ten minutes.",
+          "fa": "مشکل را در ده دقیقه حل کردند."
+        },
+        {
+          "en": "We can solve this together.",
+          "fa": "می‌توانیم این را با هم حل کنیم."
+        }
+      ],
+      "collocations": [
+        "solve a problem",
+        "solve it quickly"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "solve برای مشکل و معما است؛ fix برای چیزِ خراب."
+    },
+    {
+      "id": "a2.everyday-problems.word.complain",
+      "word": "complain",
+      "translation": "شکایت کردن",
+      "definition": "to say that you are not happy with something",
+      "pronunciation": "/kəmˈpleɪn/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "I complained about the noise.",
+          "fa": "دربارهٔ سر و صدا شکایت کردم."
+        },
+        {
+          "en": "Please complain to the manager.",
+          "fa": "لطفاً به مدیر شکایت کنید."
+        }
+      ],
+      "collocations": [
+        "complain about",
+        "complain to the manager"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "complain about چیز و complain to شخص؛ اسم آن complaint است."
+    },
+    {
+      "id": "a2.everyday-problems.word.delay",
+      "word": "delay",
+      "translation": "تأخیر",
+      "definition": "when something happens later than planned",
+      "pronunciation": "/dɪˈleɪ/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "There was a delay of twenty minutes.",
+          "fa": "بیست دقیقه تأخیر بود."
+        },
+        {
+          "en": "The delay was caused by the weather.",
+          "fa": "تأخیر به‌خاطر هوا بود."
+        }
+      ],
+      "collocations": [
+        "a long delay",
+        "without delay"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "delay هم اسم است هم فعل؛ a delay of twenty minutes یعنی «بیست دقیقه تأخیر»."
+    },
+    {
+      "id": "a2.everyday-problems.word.apology",
+      "word": "apology",
+      "translation": "عذرخواهی",
+      "definition": "words that say sorry for something",
+      "pronunciation": "/əˈpɒlədʒi/",
+      "level": "A2",
+      "partOfSpeech": "noun",
+      "examples": [
+        {
+          "en": "The shop sent an apology by email.",
+          "fa": "فروشگاه عذرخواهی را با ایمیل فرستاد."
+        },
+        {
+          "en": "She offered a short apology.",
+          "fa": "او عذرخواهی کوتاهی کرد."
+        }
+      ],
+      "collocations": [
+        "send an apology",
+        "accept an apology"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "apology اسم است و apologize فعل؛ send an apology یعنی «عذرخواهی فرستادن»."
+    },
+    {
+      "id": "a2.everyday-problems.word.cancel",
+      "word": "cancel",
+      "translation": "لغو کردن",
+      "definition": "to stop something that was planned",
+      "pronunciation": "/ˈkænsl/",
+      "level": "A2",
+      "partOfSpeech": "verb",
+      "examples": [
+        {
+          "en": "We had to cancel the order.",
+          "fa": "مجبور شدیم سفارش را لغو کنیم."
+        },
+        {
+          "en": "They cancelled the meeting.",
+          "fa": "آن‌ها جلسه را لغو کردند."
+        }
+      ],
+      "collocations": [
+        "cancel an order",
+        "cancel a booking"
+      ],
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "explanationFa": "cancel با یک l نوشته می‌شود و ing آن cancelling است (انگلیسی بریتانیایی)."
     }
   ]
 }

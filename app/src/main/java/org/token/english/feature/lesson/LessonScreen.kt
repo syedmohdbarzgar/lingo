@@ -62,6 +62,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
+import org.token.english.core.common.persianCountPair
+import org.token.english.core.common.persianPercent
+import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.labelFa
@@ -214,7 +217,7 @@ private fun FocusCard(focus: FocusBanner) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                text = "تسلط فعلی ${focus.masteryPercent}٪ — هدف ${focus.targetPercent}٪",
+                text = "تسلط فعلی ${persianPercent(focus.masteryPercent)} — هدف ${persianPercent(focus.targetPercent)}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -253,7 +256,7 @@ private fun ExerciseContent(
         )
         Text(
             // The total grows when a missed exercise is re-queued in this session.
-            text = "تمرین ${state.askedCount + 1} از ${state.visibleTotal}",
+            text = persianStepLabel("تمرین", state.askedCount + 1, state.visibleTotal),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -593,7 +596,7 @@ private fun LessonSummary(
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(
-            text = "$correct از $total پاسخ درست",
+            text = "${persianCountPair(correct, total)} پاسخ درست",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
@@ -624,9 +627,9 @@ private fun LessonSummary(
                 )
                 Text(
                     text = if (consolidated) {
-                        "تثبیت‌شده — $percent٪ درست در تلاش اول"
+                        "تثبیت‌شده — ${persianPercent(percent)} درست در تلاش اول"
                     } else {
-                        "نیاز به مرور — $percent٪ درست در تلاش اول"
+                        "نیاز به مرور — ${persianPercent(percent)} درست در تلاش اول"
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,

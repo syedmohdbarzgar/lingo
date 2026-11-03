@@ -209,6 +209,19 @@ sealed interface Exercise {
         val question: String? = null,
         /** Persian gloss of [question] — the learner must understand what was asked. */
         val questionFa: String? = null,
+        /**
+         * The situation this exchange happens in, in Persian ("در فرودگاه — باجهٔ
+         * تحویل بار"). The practice screen opens with it so the learner knows who
+         * they are talking to and why; it is authored per lesson, never invented
+         * in the UI.
+         */
+        val sceneFa: String? = null,
+        /**
+         * The partner's role in Persian ("مأمور فرودگاه"). Every turn of a lesson's
+         * dialogue carries it, so one turn can never be answered without knowing
+         * whose question it is.
+         */
+        val partnerFa: String? = null,
         override val skill: Skill? = null,
         override val explanation: String? = null,
     ) : Exercise

@@ -35,6 +35,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.common.persianCountPair
+import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.AppEmptyState
@@ -295,7 +297,7 @@ private fun QuestionContent(state: PlacementUiState, onEvent: (PlacementEvent) -
             contentDescription = "پیشرفت آزمون",
         )
         Text(
-            text = "سؤال ${state.index + 1} از ${state.total}",
+            text = persianStepLabel("سؤال", state.index + 1, state.total),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -473,7 +475,7 @@ private fun SkillReportRow(report: PlacementSkillReport) {
                 style = MaterialTheme.typography.labelLarge,
             )
             Text(
-                text = "${report.correct} از ${report.asked} درست",
+                text = "${persianCountPair(report.correct, report.asked)} درست",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

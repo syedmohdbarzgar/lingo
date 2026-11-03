@@ -106,6 +106,7 @@ class ScreenSmokeTest {
         val vm = HomeViewModel(
             settingsRepository = settings,
             lessonRepository = lessons,
+            conversationRepository = FakeConversationRepository(),
             progressRepository = progress,
             reviewRepository = reviews,
             studyStats = progress.statsFlow,
@@ -127,7 +128,7 @@ class ScreenSmokeTest {
                     onOpenSettings = {},
                     onOpenReview = {},
                     onOpenPaywall = {},
-                    onOpenConversation = {},
+                    onOpenConversation = { _ -> },
                     onOpenFocus = { _, _ -> },
                 )
             }

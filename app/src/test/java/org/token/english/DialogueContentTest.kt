@@ -23,6 +23,9 @@ import java.io.File
  */
 class DialogueContentTest {
 
+    /** A question and its answer is a repetition drill; a conversation has more. */
+    private val MIN_TURNS = 4
+
     private fun contentFile(name: String): File {
         val candidates = listOf(
             File("src/main/assets/content/$name"),
@@ -81,6 +84,28 @@ class DialogueContentTest {
                 "${item.id}: the question must not be the answer itself",
                 !question.trim().equals(item.referenceAnswers.first().trim(), ignoreCase = true),
             )
+        }
+    }
+
+    @Test
+    fun `every lesson has a dialogue long enough to be a conversation`() {
+        val lessonIds = levelOf().keys
+        val turnsByLesson = speakingItems().groupBy { it.lessonId }
+        val short = lessonIds
+            .map { it to turnsByLesson[it].orEmpty().size }
+            .filter { (_, turns) -> turns < MIN_TURNS }
+
+        assertTrue(
+            "these lessons have fewer than $MIN_TURNS dialogue turns: $short",
+            short.isEmpty(),
+        )
+    }
+
+    @Test
+    fun `every turn names its situation and the person asking`() {
+        speakingItems().forEach { item ->
+            assertTrue("${item.id}: no sceneFa", hasPersian(item.sceneFa.orEmpty()))
+            assertTrue("${item.id}: no partnerFa", hasPersian(item.partnerFa.orEmpty()))
         }
     }
 

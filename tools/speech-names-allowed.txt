@@ -6,3 +6,11 @@
 # Checked by scripts/check_speech_vocabulary.mjs.
 iran
 istanbul
+
+# Language and country names the lessons teach in a spoken answer. They are not
+# ambiguous names: a small English model lists them, and the countries lesson
+# ("I speak Persian, and a little English.") has to say them to be worth anything.
+english
+persian
+turkish
+turkey

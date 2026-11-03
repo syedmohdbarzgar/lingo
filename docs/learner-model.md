@@ -58,6 +58,17 @@
   inside the `c2.rhetoric` lesson's own exercises rather than as a graph grammar node, because C2
   mastery is about precision, style and argument, not new forms. Stated here so "0 C2 grammar
   items" reads as the design, not a gap; adding C2 grammar nodes is a content decision, not a bug.
+- **A lesson ends with its conversation (v33).** The exercises prove the learner *recognises* the
+  structure; the dialogue is where they have to *use* it in a reply, so a lesson is not finished when
+  its last exercise is answered. `owedConversation` (pure, in `LearningPlanner.kt`) names the first
+  completed lesson whose dialogue (four turns at A1, five or six at A2 and above) has not been walked
+  through, and `canOpenLesson` refuses
+  everything after it. `HomeViewModel` exposes that lesson as `HomeUiState.dialogueDue`, so the
+  next-lesson card offers the conversation instead of the lesson and says why — the button and the
+  permission read the same rule and cannot disagree. Completion is written by
+  `ConversationPracticeViewModel` once every turn has been **answered** (a graded take, not a skip)
+  into `ConversationRepository`, one lesson id at a time; a lesson that ships no dialogue can never
+  gate the path.
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.

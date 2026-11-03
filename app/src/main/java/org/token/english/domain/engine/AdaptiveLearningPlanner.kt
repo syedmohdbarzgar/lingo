@@ -1,5 +1,7 @@
 package org.token.english.domain.engine
 
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianPercent
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningAction
@@ -74,7 +76,7 @@ class AdaptiveLearningPlanner(
                 type = LearningActionType.REVIEW,
                 itemId = null,
                 titleFa = "مرور کارت‌های امروز",
-                reasonFa = "$dueReviewCount کارت برای مرور آماده است",
+                reasonFa = "${persianMeasure(dueReviewCount, "کارت")} برای مرور آماده است",
                 priority = PRIORITY_REVIEW,
                 estimatedMinutes = estimateReviewMinutes(dueReviewCount),
             )
@@ -237,7 +239,7 @@ class AdaptiveLearningPlanner(
         else -> "پیش‌نیاز «${item.titleFa}» هنوز تثبیت نشده"
     }
 
-    private fun percent(mastery: Float): String = "${(mastery * 100).toInt()}٪"
+    private fun percent(mastery: Float): String = persianPercent((mastery * 100).toInt())
 
     private fun estimateReviewMinutes(count: Int): Int =
         (count * MINUTES_PER_REVIEW_CARD).coerceAtLeast(MIN_REVIEW_MINUTES)

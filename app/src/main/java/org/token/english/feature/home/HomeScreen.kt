@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,6 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
@@ -47,6 +50,7 @@ import org.token.english.core.designsystem.component.StaggeredReveal
 import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.homeViewModelFactory
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.Lesson
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.FocusPlan
@@ -65,7 +69,8 @@ fun HomeScreen(
     onOpenReview: () -> Unit,
     onOpenPaywall: () -> Unit,
     /** Speaking practice: say the lesson's target sentences back, graded on-device. */
-    onOpenConversation: () -> Unit,
+    /** Opens a lesson's dialogue; null asks the screen to pick the current one. */
+    onOpenConversation: (String?) -> Unit,
     /** Focused practice on the engine's weak spot: (lessonId, curriculum node id). */
     onOpenFocus: (String, String) -> Unit,
 ) {
@@ -149,8 +154,10 @@ fun HomeScreen(
                 StaggeredReveal(slot++) {
                     TodayLessonCard(
                         plan = plan,
+                        dialogueDue = state.dialogueDue,
                         onStart = { plan.nextLesson?.let { onOpenLesson(it.id) } },
                         onOpenReview = onOpenReview,
+                        onOpenConversation = { onOpenConversation(it) },
                     )
                 }
             }
@@ -164,7 +171,12 @@ fun HomeScreen(
                 }
             }
 
-            StaggeredReveal(slot++) { ConversationCard(onStart = onOpenConversation) }
+            StaggeredReveal(slot++) {
+                ConversationCard(
+                    lessonTitleFa = state.dialogueDue?.titleFa,
+                    onStart = { onOpenConversation(state.dialogueDue?.id) },
+                )
+            }
 
             StaggeredReveal(slot++) { SkillsCard(profiles = state.profiles) }
 
@@ -181,7 +193,7 @@ fun HomeScreen(
                             modifier = Modifier.size(18.dp),
                         )
                         Text(
-                            text = "${stats.streakDays} روز پیاپی یادگیری",
+                            text = "${persianMeasure(stats.streakDays, "روز")} پیاپی یادگیری",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -329,7 +341,7 @@ private fun CompanionOfferBanner(state: HomeUiState, onOpenPaywall: () -> Unit) 
  * touches the network; the button is the last thing in the card, not the card.
  */
 @Composable
-private fun ConversationCard(onStart: () -> Unit) {
+private fun ConversationCard(lessonTitleFa: String?, onStart: () -> Unit) {
     AppCard {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -367,11 +379,12 @@ private fun ConversationCard(onStart: () -> Unit) {
         }
 
         Text(
-            text = "برای هر درس یک گفتگو ساخته شده؛ سؤال را می‌شنوی، با میکروفون پاسخ می‌دهی و " +
-                "همان لحظه می‌فهمی جمله‌ات درست بود یا نه — بعد گفتگو ادامه پیدا می‌کند.",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(top = AppSpacing.sm),
-        )
+                    text = lessonTitleFa?.let { "گفتگوی درس «$it» مانده است." }
+                        ?: "برای هر درس یک گفتگو ساخته شده؛ سؤال را می‌شنوی، با میکروفون پاسخ می‌دهی و " +
+                        "همان لحظه می‌فهمی جمله‌ات درست بود یا نه — بعد گفتگو ادامه پیدا می‌کند.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = AppSpacing.sm),
+                )
 
         Row(
             modifier = Modifier.padding(top = AppSpacing.sm),
@@ -416,7 +429,7 @@ private fun DailyGoalCard(state: HomeUiState) {
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Text(
-                        text = "/ $goal دقیقه",
+                        text = dailyGoalRingLabel(goal),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -431,7 +444,7 @@ private fun DailyGoalCard(state: HomeUiState) {
                     text = if (doneSeconds >= goal * 60) {
                         "هدف امروز انجام شد. آفرین!"
                     } else {
-                        "${(doneSeconds / 60)} دقیقه از $goal دقیقه"
+                        dailyGoalProgressLabel(doneMinutes.toInt(), goal)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -466,9 +479,9 @@ private fun FocusSpotCard(focus: FocusPlan, onStart: () -> Unit) {
             )
             Text(
                 text = buildString {
-                    append("تسلط فعلی ${(focus.mastery * 100).toInt()}٪")
+                    append("تسلط فعلی ${persianPercent((focus.mastery * 100).toInt())}")
                     if (focus.blockedCount > 0) {
-                        append(" — ${focus.blockedCount} مفهوم بعدی به آن گره خورده است")
+                        append(" — ${persianMeasure(focus.blockedCount, "مفهوم بعدی")} به آن گره خورده است")
                     }
                 },
                 style = MaterialTheme.typography.labelMedium,
@@ -526,7 +539,7 @@ private fun TodayPlanCard(
             val lead = plan.actions.first()
             when {
                 lead.type == org.token.english.domain.model.LearningActionType.REVIEW -> PrimaryButton(
-                    text = "شروع مرور ${plan.dueReviewCount} کارت",
+                    text = "شروع مرور ${persianMeasure(plan.dueReviewCount, "کارت")}",
                     onClick = onOpenReview,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -553,8 +566,10 @@ private fun TodayPlanCard(
 @Composable
 private fun TodayLessonCard(
     plan: org.token.english.domain.model.TodayPlan,
+    dialogueDue: Lesson?,
     onStart: () -> Unit,
     onOpenReview: () -> Unit,
+    onOpenConversation: (String) -> Unit,
 ) {
     AppCard {
         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
@@ -575,7 +590,7 @@ private fun TodayLessonCard(
                             style = MaterialTheme.typography.titleSmall,
                         )
                         Text(
-                            text = "${plan.dueReviewCount} مورد آماده مرور است",
+                            text = "${persianMeasure(plan.dueReviewCount, "مورد")} آماده مرور است",
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -609,14 +624,42 @@ private fun TodayLessonCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         CefrBadge(lesson.level)
-                        AppChip(label = "${lesson.estimatedMinutes} دقیقه")
+                        AppChip(label = persianMeasure(lesson.estimatedMinutes, "دقیقه"))
                         AppChip(label = lesson.topic)
                     }
-                    PrimaryButton(
-                        text = "شروع درس",
-                        onClick = onStart,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                    // The gate: a lesson is finished when its dialogue has been
+                    // spoken too, so while one is owed the card offers the
+                    // conversation instead of the next lesson.
+                    if (dialogueDue != null) {
+                        PrimaryButton(
+                            text = "تمرین مکالمهٔ درسی که مانده",
+                            onClick = { onOpenConversation(dialogueDue.id) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                        ) {
+                            Icon(
+                                Icons.Outlined.Lock,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(18.dp),
+                            )
+                            Text(
+                                text = "برای شروع این درس، اول مکالمهٔ «${dialogueDue.titleFa}» را " +
+                                    "تا آخر انجام بده.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    } else {
+                        PrimaryButton(
+                            text = "شروع درس",
+                            onClick = onStart,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 }
             } else {
                 Text(

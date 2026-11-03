@@ -225,6 +225,9 @@ class LearningPathJourneyTest {
                 progress.noteWordLearned()
             }
         }
+
+        /** This journey watches the exercise path, not the dialogue gate. */
+        override suspend fun lessonIdsWithDialogue(): Set<String> = emptySet()
     }
 
     private class FakeReviews : ReviewRepository {

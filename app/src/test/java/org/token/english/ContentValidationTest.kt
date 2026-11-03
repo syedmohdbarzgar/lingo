@@ -69,7 +69,23 @@ class ContentValidationTest {
             {"contentVersion": 1, "exercises": [
               {"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 1,
                "question": "Which one?", "options": ["a", "b", "c", "d"], "correctIndex": 0,
-               "explanationFa": "توضیح"}
+               "explanationFa": "توضیح"},
+              {"id": "l1.dlg.01", "lessonId": "l1", "type": "speaking", "order": 2,
+               "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
+               "question": "How are you?", "questionFa": "حالت چطور است؟",
+               "accepted": ["I'm fine, thank you."], "skill": "SPEAKING", "explanationFa": "توضیح"},
+              {"id": "l1.dlg.02", "lessonId": "l1", "type": "speaking", "order": 3,
+               "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
+               "question": "Where are you from?", "questionFa": "اهل کجایی؟",
+               "accepted": ["I'm from Tehran."], "skill": "SPEAKING", "explanationFa": "توضیح"},
+              {"id": "l1.dlg.03", "lessonId": "l1", "type": "speaking", "order": 4,
+               "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
+               "question": "Do you study here?", "questionFa": "اینجا درس می‌خوانی؟",
+               "accepted": ["Yes, I do."], "skill": "SPEAKING", "explanationFa": "توضیح"},
+              {"id": "l1.dlg.04", "lessonId": "l1", "type": "speaking", "order": 5,
+               "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
+               "question": "See you tomorrow?", "questionFa": "فردا می‌بینمت؟",
+               "accepted": ["See you tomorrow."], "skill": "SPEAKING", "explanationFa": "توضیح"}
             ]}
             """.trimIndent(),
         )

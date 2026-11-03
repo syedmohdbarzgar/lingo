@@ -23,6 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.common.bidiNumber
+import org.token.english.core.common.persianCountPair
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
@@ -67,7 +71,8 @@ fun ProgressScreen() {
             // the level without ever saying what it means.
             LevelHeroCard(
                 level = state.level,
-                extra = "${stats?.lessonsCompleted ?: 0} درس از ${state.totalLessons} تمام شده",
+                extra = "${persianMeasure(stats?.lessonsCompleted ?: 0, "درس")} از " +
+                    "${bidiNumber(state.totalLessons)} تمام شده",
             )
 
             if (!hasAnyData) {
@@ -83,7 +88,7 @@ fun ProgressScreen() {
                         Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                             StatBox(
                                 label = "درس تمام‌شده",
-                                value = "${stats?.lessonsCompleted ?: 0} از ${state.totalLessons}",
+                                value = persianCountPair(stats?.lessonsCompleted ?: 0, state.totalLessons),
                                 modifier = Modifier.weight(1f),
                             )
                             StatBox(
@@ -96,7 +101,7 @@ fun ProgressScreen() {
                             StatBox(
                                 label = "دقت مرور",
                                 value = if ((stats?.reviewsToday ?: 0) > 0) {
-                                    "${((stats?.reviewAccuracy ?: 0f) * 100).toInt()}٪"
+                                    persianPercent(((stats?.reviewAccuracy ?: 0f) * 100).toInt())
                                 } else {
                                     "—"
                                 },
@@ -138,7 +143,7 @@ fun ProgressScreen() {
                             SkillProgressBar(
                                 label = "گره‌های تمرین‌شده",
                                 progress = state.knowledgePractised.toFloat() / state.knowledgeTotal,
-                                valueText = "${state.knowledgePractised} از ${state.knowledgeTotal}",
+                                valueText = persianCountPair(state.knowledgePractised, state.knowledgeTotal),
                             )
                             state.weakestKnowledge?.let { weakest ->
                                 Text(

@@ -94,6 +94,8 @@ class ContentSeederTest {
         override suspend fun clearExercises() = exercises.clear()
         override suspend fun clearKnowledgeItems() = knowledge.clear()
         override suspend fun clearLessonStates() = Unit
+
+        override suspend fun lessonIdsWithDialogue(): List<String> = emptyList()
     }
 
     private class FakeSettings : SettingsRepository {

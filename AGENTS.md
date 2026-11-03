@@ -34,7 +34,8 @@ The root file is deliberately short; the deep material is in `docs/`:
 ## 1. What this project is
 
 An offline-first Android app for Persian speakers learning English (CEFR A1–C2): daily lessons →
-exercises → spaced-repetition review → progress. Specs in `files/` are **design intent, not proof**.
+exercises → the lesson’s own conversation (which is what opens the next lesson) → spaced-repetition
+review → progress. Specs in `files/` are **design intent, not proof**.
 
 ## 2. Build & verify
 
@@ -125,9 +126,10 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (485 tests / 59 classes as of the secured/retest gate
-pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page, the two-party
-dialogue with its authored turns, and the Vosk verdict engine, whose recogniser half is device-only by
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (503 tests / 61 classes as of the v33
+dialogue pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page, the
+per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut
+until that dialogue is spoken, and the Vosk verdict engine, whose recogniser half is device-only by
 nature); the full inventory and ViewModel/fake conventions are in
 [`docs/testing.md`](docs/testing.md). Content tests read assets through `File`, so run them with
 `--rerun`. There is no instrumented suite (the template was removed, not kept as a false signal).

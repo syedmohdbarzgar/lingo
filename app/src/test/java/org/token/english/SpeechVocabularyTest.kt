@@ -62,14 +62,24 @@ class SpeechVocabularyTest {
             .filter { it.isNotEmpty() && !it.startsWith("#") }
             .toSet()
 
-    /** Words of one answer, with the position kept so "capitalised" can be judged. */
-    private fun tokens(text: String): List<Pair<Int, String>> =
-        text.replace(Regex("[\u2018\u2019`\u00b4]"), "'")
+    /**
+     * Words of one answer, each with whether it opens a sentence.
+     *
+     * The flag has to come from the raw text before punctuation is stripped: an
+     * answer can be two sentences ("Yes, please. It's Karimi."), and the capital
+     * after the full stop is ordinary English, not a proper noun.
+     */
+    private fun tokens(text: String): List<Pair<Boolean, String>> {
+        var opens = true
+        return text.replace(Regex("[\u2018\u2019`\u00b4]"), "'")
             .split(Regex("\\s+"))
-            .mapIndexedNotNull { index, raw ->
+            .mapNotNull { raw ->
                 val word = raw.replace(Regex("[^A-Za-z0-9']"), "")
-                if (word.isEmpty()) null else index to word
+                val token = if (word.isEmpty()) null else opens to word
+                opens = raw.endsWith(".") || raw.endsWith("?") || raw.endsWith("!")
+                token
             }
+    }
 
     @Test
     fun `no spoken answer uses a word the recogniser cannot hear`() {
@@ -94,20 +104,18 @@ class SpeechVocabularyTest {
         val problems = mutableListOf<String>()
         for ((id, answers) in answers) {
             for (answer in answers) {
-                val words = tokens(answer)
-                for ((index, raw) in words) {
+                for ((opensSentence, raw) in tokens(answer)) {
                     val lower = raw.lowercase()
                     val where = "$id: \"$answer\" → \"$raw\""
                     if (raw.any { it.isDigit() }) {
                         problems += "$where — a digit is not a word the recogniser produces"
                         continue
                     }
-                    val previous = words.getOrNull(index - 1)?.second.orEmpty()
-                    val opensSentence = index == 0 || previous.endsWith(".") ||
-                        previous.endsWith("?") || previous.endsWith("!")
+                    // "Mondays" is as legitimate as "Monday".
+                    val dayOrMonth = lower in daysAndMonths || lower.removeSuffix("s") in daysAndMonths
                     val capitalisedInside = !opensSentence && raw.first().isUpperCase()
                     if (capitalisedInside && lower !in neverAName &&
-                        lower !in daysAndMonths && lower !in allowedNames
+                        !dayOrMonth && lower !in allowedNames
                     ) {
                         problems += "$where — proper noun in a spoken answer; reword it or " +
                             "add it to tools/speech-names-allowed.txt with a reason"

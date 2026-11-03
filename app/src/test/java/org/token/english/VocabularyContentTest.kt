@@ -77,6 +77,12 @@ class VocabularyContentTest {
         "b1.work.word.apply" to "applied",
         "c2.nuance.word.imply" to "implies",
         "c1.inference.word.imply" to "implied",
+        // Irregular past of a phrasal verb (grow → grew), so the particle still matches.
+        "a2.childhood.word.grow-up" to "grew up",
+        // y → ies plural: the plural rule cannot see a stem it has to respell.
+        "a2.childhood.word.memory" to "memories",
+        // y → ied past of reply, same respelling the prefix rule cannot see.
+        "a2.emails.word.reply" to "replied",
         // Separable phrasal verbs: the particle moves away from the verb.
         "c1.phrasal-idioms.word.give-up" to "gave up",
         "c1.phrasal-idioms.word.come-across" to "came across",

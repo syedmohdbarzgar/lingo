@@ -12,11 +12,15 @@
 
 **Status legend:** `✅ <lessonId>` ships today · `—` queued for a later batch.
 
-Current bundle: **76 lessons** (A1 = 37, A2 = 13, B1 = 6, B2 = 6, C1 = 7, C2 = 7). **A1 is complete**: all
-30 syllabus topics ship, plus the seven A1 grammar supplements (spelling, articles, plurals, pronouns,
-`can`, imperatives, question words). The six topics marked *new* shipped in v27; the sixteen marked
-*v28* completed the level. A2 started in v29 with its first six syllabus topics (1 and 3–7), all
-travel and staying.
+Current bundle: **95 lessons** (A1 = 37, A2 = 32, B1 = 6, B2 = 6, C1 = 7, C2 = 7). **A1 and A2 are
+complete**: all 30 syllabus topics ship at both levels, plus the seven A1 grammar supplements
+(spelling, articles, plurals, pronouns, `can`, imperatives, question words) and the A2 past-simple
+lesson. The six topics marked *new* shipped in v27; the sixteen marked *v28* completed A1. A2 started
+in v29 with its first six syllabus topics (1 and 3–7), all travel and staying; v32 added topics 8, 9,
+10, 12, 13 and 15–19 — clothes, returns, payments, symptoms, the pharmacy, childhood, celebrations,
+invitations, phones and emails; and v34 closed the level with 21–27, 29 and 30 — renting, household
+problems, future plans, comparing, opinions, asking for help, sports, work and everyday problems.
+B1 is next.
 
 ## 🟢 A1 — مبتدی (Beginner)
 
@@ -72,29 +76,29 @@ Goal: مدیریت موقعیت‌های متداول زندگی و مکالما
 | 5 | سفر با قطار و اتوبوس | Traveling by Train and Bus | ✅ `a2.train-bus.lesson-01` *(v29)* |
 | 6 | پرسیدن اطلاعات سفر | Asking About Travel Information | ✅ `a2.travel-info.lesson-01` *(v29)* |
 | 7 | برنامه‌ریزی تعطیلات | Planning a Holiday | ✅ `a2.holiday-plans.lesson-01` *(v29)* |
-| 8 | خرید لباس و انتخاب اندازه | Buying Clothes | — |
-| 9 | مرجوع کردن کالا | Returning an Item | — |
-| 10 | پرداخت و روش‌های پرداخت | Payments and Payment Methods | — |
+| 8 | خرید لباس و انتخاب اندازه | Buying Clothes | ✅ `a2.buying-clothes.lesson-01` *(v32)* |
+| 9 | مرجوع کردن کالا | Returning an Item | ✅ `a2.returns.lesson-01` *(v32)* |
+| 10 | پرداخت و روش‌های پرداخت | Payments and Payment Methods | ✅ `a2.payments.lesson-01` *(v32)* |
 | 11 | مراجعه به پزشک | Visiting a Doctor | ✅ `a2.health.lesson-01` |
-| 12 | بیان علائم بیماری | Describing Symptoms | — |
-| 13 | داروخانه و خرید دارو | At the Pharmacy | — |
+| 12 | بیان علائم بیماری | Describing Symptoms | ✅ `a2.symptoms.lesson-01` *(v32)* |
+| 13 | داروخانه و خرید دارو | At the Pharmacy | ✅ `a2.pharmacy.lesson-01` *(v32)* |
 | 14 | صحبت دربارهٔ گذشته | Talking About the Past | ✅ `a2.past-simple.lesson-01` |
-| 15 | تعریف خاطرات کودکی | Childhood Memories | — |
-| 16 | جشن‌ها و مناسبت‌ها | Celebrations and Special Occasions | — |
-| 17 | دعوت کردن و پاسخ به دعوت | Invitations | — |
-| 18 | تماس تلفنی | Phone Conversations | — |
-| 19 | نوشتن ایمیل ساده | Writing Simple Emails | — |
+| 15 | تعریف خاطرات کودکی | Childhood Memories | ✅ `a2.childhood.lesson-01` *(v32)* |
+| 16 | جشن‌ها و مناسبت‌ها | Celebrations and Special Occasions | ✅ `a2.celebrations.lesson-01` *(v32)* |
+| 17 | دعوت کردن و پاسخ به دعوت | Invitations | ✅ `a2.invitations.lesson-01` *(v32)* |
+| 18 | تماس تلفنی | Phone Conversations | ✅ `a2.phone.lesson-01` *(v32)* |
+| 19 | نوشتن ایمیل ساده | Writing Simple Emails | ✅ `a2.emails.lesson-01` *(v32)* |
 | 20 | زندگی در شهر و روستا | City and Country Life | ✅ `a2.city-life.lesson-01` |
-| 21 | اجارهٔ خانه | Renting a Home | — |
-| 22 | مشکلات خانه | Household Problems | — |
-| 23 | برنامه‌ریزی برای آینده | Future Plans | — |
-| 24 | مقایسهٔ افراد و اشیا | Comparing People and Things | — |
-| 25 | بیان نظر و ترجیح | Opinions and Preferences | — |
-| 26 | درخواست کمک و اجازه | Asking for Help and Permission | — |
-| 27 | ورزش و فعالیت بدنی | Sports and Exercise | — |
+| 21 | اجارهٔ خانه | Renting a Home | ✅ `a2.renting.lesson-01` *(v34)* |
+| 22 | مشکلات خانه | Household Problems | ✅ `a2.house-problems.lesson-01` *(v34)* |
+| 23 | برنامه‌ریزی برای آینده | Future Plans | ✅ `a2.future-plans.lesson-01` *(v34)* |
+| 24 | مقایسهٔ افراد و اشیا | Comparing People and Things | ✅ `a2.comparing.lesson-01` *(v34)* |
+| 25 | بیان نظر و ترجیح | Opinions and Preferences | ✅ `a2.opinions.lesson-01` *(v34)* |
+| 26 | درخواست کمک و اجازه | Asking for Help and Permission | ✅ `a2.asking-help.lesson-01` *(v34)* |
+| 27 | ورزش و فعالیت بدنی | Sports and Exercise | ✅ `a2.sports.lesson-01` *(v34)* |
 | 28 | سینما و سرگرمی | Movies and Entertainment | ✅ `a2.hobbies.lesson-01` (سرگرمی) |
-| 29 | محیط کار و وظایف شغلی | Work and Job Responsibilities | — |
-| 30 | حل مشکلات روزمره | Solving Everyday Problems | — |
+| 29 | محیط کار و وظایف شغلی | Work and Job Responsibilities | ✅ `a2.work.lesson-01` *(v34)* |
+| 30 | حل مشکلات روزمره | Solving Everyday Problems | ✅ `a2.everyday-problems.lesson-01` *(v34)* |
 
 Also shipping at A2 outside this list: `a2.restaurant.lesson-01`, `a2.directions.lesson-01`.
 
@@ -252,9 +256,10 @@ Goal: درک و تولید زبان بسیار دقیق، ظریف و متناس
 
 ## Authoring the next batch
 
-1. **Pick the next topics in order** (A1 is done, and A2 has shipped 1–7 and 11/14/20/28; the next A2
-   topics are 8, 9, 10, 12, 13 and 15–19).
-   A topic is a *lesson*, never a half-lesson.
+1. **Pick the next topics in order.** A1 and A2 are done; B1 ships 2 (as `b1.work`), 12
+   (`b1.experiences`), 14 (`b1.news`), 18 (`b1.health-lifestyle`), 21 (`b1.money`) and 28 (`b1.plans`),
+   so the next B1 topics are 1 Personal Background, 3 Job Hunting, 4 University Life and 5 Learning New
+   Skills. A topic is a *lesson*, never a half-lesson.
 2. **Six words** per lesson, each with a Persian meaning, an English definition, IPA, a usage note
    (`explanationFa`), two collocations and **two bilingual examples** — and every example must
    contain its own word.

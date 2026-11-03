@@ -22,6 +22,7 @@ import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.engine.nextLessonFor
+import org.token.english.domain.engine.owedConversation
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
@@ -29,6 +30,7 @@ import org.token.english.domain.model.LearningActionType
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.TodayPlan
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
@@ -56,6 +58,12 @@ data class HomeUiState(
      * Progress screen shows, so Home cannot describe a track differently.
      */
     val profiles: List<SkillProfile> = emptyList(),
+    /**
+     * The lesson whose conversation is still owed. While it is set, the next
+     * lesson stays shut: the conversation is the last step of a lesson, not an
+     * optional extra.
+     */
+    val dialogueDue: Lesson? = null,
     /** True once every lesson at the learner's current level is completed. */
     val levelComplete: Boolean = false,
     /** The next level above the current one that still has pending lessons. */
@@ -75,6 +83,8 @@ data class HomeUiState(
 class HomeViewModel(
     private val settingsRepository: SettingsRepository,
     private val lessonRepository: LessonRepository,
+    /** Finished conversations — the gate that keeps the next lesson shut. */
+    private val conversationRepository: ConversationRepository,
     private val progressRepository: ProgressRepository,
     private val reviewRepository: ReviewRepository,
     private val studyStats: StateFlow<StudyStats>,
@@ -97,6 +107,8 @@ class HomeViewModel(
     private var goalMinutes: Int = 15
     private var lessons: List<Lesson> = emptyList()
     private var states: List<LessonState> = emptyList()
+    private var conversationsDone: Set<String> = emptySet()
+    private var dialogueLessonIds: Set<String> = emptySet()
     private var mastery: Map<Skill, Float> = emptyMap()
     private var profiles: List<SkillProfile> = emptyList()
     private var stats: StudyStats? = null
@@ -148,6 +160,20 @@ class HomeViewModel(
         viewModelScope.launch {
             lessonRepository.observeLessonStates().collect {
                 states = it
+                rebuild()
+            }
+        }
+        viewModelScope.launch {
+            // Which lessons ship a dialogue — a lesson without one can never hold
+            // the path back, so the gate is inert until content exists for it.
+            dialogueLessonIds = runCatchingCancellable {
+                lessonRepository.lessonIdsWithDialogue()
+            }.getOrDefault(emptySet())
+            rebuild()
+        }
+        viewModelScope.launch {
+            conversationRepository.observeCompleted().collect {
+                conversationsDone = it
                 rebuild()
             }
         }
@@ -204,6 +230,15 @@ class HomeViewModel(
     private fun rebuild() {
         val completedIds = states.filter { it.completed }.map { it.lessonId }.toSet()
         val nextLesson = nextLessonFor(lessons, completedIds, level)
+        // The last lesson whose conversation has not been practised yet. It gates
+        // the next lesson: the learner finished the exercises but never used the
+        // structure in a reply.
+        val dialogueDue = owedConversation(
+            allLessons = lessons,
+            completedIds = completedIds,
+            dialogueLessonIds = dialogueLessonIds,
+            conversationsDone = conversationsDone,
+        )
 
         // Level progression: a learner who has finished every lesson at their
         // current level needs a clear way up, not just the next lesson card.
@@ -238,6 +273,7 @@ class HomeViewModel(
             companionStatus = companion,
             levelComplete = levelComplete,
             nextLevel = nextLevel,
+            dialogueDue = dialogueDue,
         )
         // …then enrich it with the adaptive planner's ordered, justified actions
         // (checklist B-1), which need a suspend read of the knowledge graph.

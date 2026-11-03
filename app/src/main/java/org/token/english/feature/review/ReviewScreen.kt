@@ -42,6 +42,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
+import org.token.english.core.common.bidiNumber
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LearningTargetStyle
 import org.token.english.core.designsystem.LocalAppExtendedColors
@@ -144,12 +147,12 @@ private fun SummaryContent(state: ReviewUiState, vm: ReviewViewModel) {
             Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                 SectionHeader("مرور امروز")
                 Text(
-                    text = "${state.queue.size} مورد",
+                    text = persianMeasure(state.queue.size, "مورد"),
                     style = MaterialTheme.typography.displaySmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    text = "واژگان: ${state.queue.size}",
+                    text = "واژگان: ${bidiNumber(state.queue.size)}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -183,7 +186,7 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
             contentDescription = "پیشرفت مرور",
         )
         Text(
-            text = "مورد ${state.index + 1} از ${state.total}",
+            text = persianStepLabel("مورد", state.index + 1, state.total),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -413,13 +416,13 @@ private fun DoneContent(
     ) {
         Text("مرور تمام شد!", style = MaterialTheme.typography.headlineSmall)
         Text(
-            text = "${state.gradedCount} مورد مرور شد",
+            text = "${persianMeasure(state.gradedCount, "مورد")} مرور شد",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary,
         )
         if (state.againCount > 0) {
             Text(
-                text = "${state.againCount} مورد برای تکرار زودتر برنامه‌ریزی شد.",
+                text = "${persianMeasure(state.againCount, "مورد")} برای تکرار زودتر برنامه‌ریزی شد.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

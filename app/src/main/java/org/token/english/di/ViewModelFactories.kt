@@ -28,6 +28,7 @@ fun homeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c 
     HomeViewModel(
         settingsRepository = c.settingsRepository,
         lessonRepository = c.lessonRepository,
+        conversationRepository = c.conversationRepository,
         progressRepository = c.progressRepository,
         reviewRepository = c.reviewRepository,
         studyStats = c.studyStats,
@@ -131,9 +132,14 @@ fun onboardingViewModelFactory(): ViewModelProvider.Factory = appViewModelFactor
     OnboardingViewModel(settingsRepository = c.settingsRepository)
 }
 
-fun conversationPracticeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c ->
+fun conversationPracticeViewModelFactory(
+    /** The lesson whose dialogue to run; null runs the one the path owes. */
+    lessonId: String? = null,
+): ViewModelProvider.Factory = appViewModelFactory { c ->
     ConversationPracticeViewModel(
         lessonRepository = c.lessonRepository,
+        lessonId = lessonId,
+        conversationRepository = c.conversationRepository,
         speaker = c,
         contentSeeded = c.contentSeeded,
         speechState = c.conversationSpeech,

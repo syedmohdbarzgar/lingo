@@ -13,6 +13,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.persianCountPair
 import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
@@ -100,9 +101,15 @@ class ConversationPracticeViewModelTest {
             lessons.forEach { (lesson, exercises) -> this.exercises[lesson.id] = exercises }
         }
 
-    private fun viewModel(lessonRepository: FakeLessonRepository): ConversationPracticeViewModel =
+    private fun viewModel(
+        lessonRepository: FakeLessonRepository,
+        lessonId: String? = null,
+        conversations: FakeConversationRepository = FakeConversationRepository(),
+    ): ConversationPracticeViewModel =
         ConversationPracticeViewModel(
             lessonRepository = lessonRepository,
+            lessonId = lessonId,
+            conversationRepository = conversations,
             speaker = speaker,
             contentSeeded = MutableStateFlow(true),
             speechState = speech,
@@ -113,7 +120,7 @@ class ConversationPracticeViewModelTest {
     // ---- turns ----------------------------------------------------------------
 
     @Test
-    fun `only speaking items become turns, in lesson order`() {
+    fun `a session runs one lesson's dialogue, never a pool of every lesson`() {
         val lessons = repository(
             lesson("a1.second", order = 2, titleFa = "درس دوم") to
                 listOf(dialogue("a1.second", "s2", "How are you?", "I'm fine, thank you.")),
@@ -132,9 +139,96 @@ class ConversationPracticeViewModelTest {
 
         val state = vm.state.value
         assertFalse(state.isLoading)
-        assertEquals(listOf("s1", "s2"), state.turns.map { it.exerciseId })
-        assertEquals(listOf("درس اول", "درس دوم"), state.turns.map { it.lessonTitleFa })
-        assertEquals("1 / 2", state.progressLabel)
+        // The current lesson is the first one on the path: the airport lesson must
+        // not be answered with the greetings lesson's reply in turn two.
+        assertEquals(listOf("s1"), state.turns.map { it.exerciseId })
+        assertEquals("a1.first", state.lessonId)
+        assertEquals("درس اول", state.lessonTitleFa)
+        assertEquals(persianCountPair(1, 1), state.progressLabel)
+    }
+
+    @Test
+    fun `the requested lesson is the one that runs`() {
+        val lessons = repository(
+            lesson("a1.first", order = 1, titleFa = "درس اول") to
+                listOf(dialogue("a1.first", "s1", "How are you?", "I'm fine, thank you.")),
+            lesson("a2.airport", order = 2, titleFa = "در فرودگاه") to listOf(
+                dialogue("a2.airport", "s09", "May I see your passport?", "Here you are."),
+                dialogue("a2.airport", "s10", "How many bags?", "Two bags, please."),
+            ),
+        )
+
+        val vm = viewModel(lessons, lessonId = "a2.airport")
+
+        assertEquals("a2.airport", vm.state.value.lessonId)
+        assertEquals("در فرودگاه", vm.state.value.lessonTitleFa)
+        assertEquals(listOf("s09", "s10"), vm.state.value.turns.map { it.exerciseId })
+    }
+
+    @Test
+    fun `the scene and the partner's role come from the authored turn`() {
+        val lessons = repository(
+            lesson("a2.airport", order = 1) to listOf(
+                Exercise.Speaking(
+                    id = "s1",
+                    lessonId = "a2.airport",
+                    prompt = "پاسخ بده",
+                    referenceAnswers = listOf("Here you are."),
+                    question = "May I see your passport?",
+                    questionFa = "پاسپورتتان را می‌بینم؟",
+                    sceneFa = "فرودگاه، باجهٔ تحویل بار",
+                    partnerFa = "مأمور فرودگاه",
+                    skill = Skill.SPEAKING,
+                ),
+            ),
+        )
+
+        val state = viewModel(lessons).state.value
+
+        assertEquals("فرودگاه، باجهٔ تحویل بار", state.sceneFa)
+        assertEquals("مأمور فرودگاه", state.partnerFa)
+    }
+
+    @Test
+    fun `finishing every turn records the lesson's conversation`() {
+        val lessons = repository(
+            lesson("a1.one", order = 1) to listOf(
+                dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                dialogue("a1.one", "s2", "Do you speak English?", "Yes, a little."),
+            ),
+        )
+        val conversations = FakeConversationRepository()
+        val vm = viewModel(lessons, conversations = conversations)
+
+        // Both turns answered, any verdict counts: the point is that the learner
+        // spoke the exchange, not that every sentence was perfect.
+        listOf("i'm fine thank you", "yes a little").forEach { said ->
+            speech.value = SpeechState(isListening = true)
+            speech.value = SpeechState(isListening = false, finalText = said)
+            vm.onEvent(ConversationEvent.Next)
+        }
+
+        assertTrue(vm.state.value.isFinished)
+        assertEquals(setOf("a1.one"), conversations.doneFlow.value)
+    }
+
+    @Test
+    fun `a skipped turn leaves the conversation unrecorded`() {
+        val lessons = repository(
+            lesson("a1.one", order = 1) to listOf(
+                dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                dialogue("a1.one", "s2", "Do you speak English?", "Yes, a little."),
+            ),
+        )
+        val conversations = FakeConversationRepository()
+        val vm = viewModel(lessons, conversations = conversations)
+
+        // Walked past without a take: nothing was said, so nothing was practised.
+        vm.onEvent(ConversationEvent.Next)
+        vm.onEvent(ConversationEvent.Next)
+
+        assertTrue(vm.state.value.isFinished)
+        assertTrue(conversations.doneFlow.value.isEmpty())
     }
 
     @Test
@@ -176,6 +270,7 @@ class ConversationPracticeViewModelTest {
         val seeded = MutableStateFlow(false)
         val vm = ConversationPracticeViewModel(
             lessonRepository = repository,
+            conversationRepository = FakeConversationRepository(),
             speaker = speaker,
             contentSeeded = seeded,
             speechState = speech,
@@ -464,6 +559,7 @@ class ConversationPracticeViewModelTest {
                 lesson("a1.one", order = 1) to
                     listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
             ),
+            conversationRepository = FakeConversationRepository(),
             speaker = slowSpeaker,
             contentSeeded = MutableStateFlow(true),
             speechState = speech,

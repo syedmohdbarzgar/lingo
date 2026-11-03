@@ -17,6 +17,7 @@ import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.TtsAudioPlayer
 import org.token.english.data.content.ContentSeeder
 import org.token.english.data.local.AppDatabase
+import org.token.english.data.repository.ConversationRepositoryImpl
 import org.token.english.data.repository.KnowledgeRepositoryImpl
 import org.token.english.data.repository.LessonRepositoryImpl
 import org.token.english.data.repository.ProgressRepositoryImpl
@@ -29,6 +30,7 @@ import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.MasteryEngine
 import org.token.english.domain.engine.ReviewScheduler
 import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
@@ -87,6 +89,10 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     val reviewRepository: ReviewRepository by lazy { ReviewRepositoryImpl(database.reviewDao()) }
     val knowledgeRepository: KnowledgeRepository by lazy {
         KnowledgeRepositoryImpl(database.contentDao(), database.knowledgeDao())
+    }
+    /** Which lessons' dialogues are finished — the lesson gate reads it. */
+    val conversationRepository: ConversationRepository by lazy {
+        ConversationRepositoryImpl(appContext)
     }
     val progressRepository: ProgressRepository by lazy {
         ProgressRepositoryImpl(

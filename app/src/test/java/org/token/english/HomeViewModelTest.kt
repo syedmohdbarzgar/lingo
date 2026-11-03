@@ -69,9 +69,11 @@ class HomeViewModelTest {
         val companion: MutableStateFlow<CompanionStatus>,
     ) {
         val planner = DefaultLearningPlanner()
+        val conversations = FakeConversationRepository()
         val vm = HomeViewModel(
             settingsRepository = settings,
             lessonRepository = lessons,
+            conversationRepository = conversations,
             progressRepository = progress,
             reviewRepository = reviews,
             studyStats = progress.statsFlow,

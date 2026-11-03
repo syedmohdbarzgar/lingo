@@ -30,6 +30,25 @@ interface LessonRepository {
     suspend fun completeLesson(lessonId: String, at: Long)
     /** Ensures every vocabulary item of the lesson exists in the SRS queue. */
     suspend fun enqueueLessonVocabulary(lessonId: String, now: Long)
+
+    /** Lessons that ship an authored dialogue (a `speaking` item in the bundle). */
+    suspend fun lessonIdsWithDialogue(): Set<String>
+}
+
+/**
+ * The learner's finished conversations, one flag per lesson.
+ *
+ * Conversation is the last step of a lesson: the exercises prove the learner
+ * recognises the structure, the dialogue proves they can *use* it in a reply. The
+ * lesson path reads this set to keep the next lesson shut until the current
+ * lesson's conversation has been practised end to end.
+ */
+interface ConversationRepository {
+    /** Lesson ids whose dialogue has been completed. */
+    fun observeCompleted(): Flow<Set<String>>
+
+    /** Marks the lesson's dialogue as practised. Idempotent. */
+    suspend fun markCompleted(lessonId: String)
 }
 
 interface VocabularyRepository {

@@ -3,6 +3,15 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
+- **The guided lesson flow is modelled but not yet rendered.** `LearningStage`,
+  `LessonStagePlan`/`LessonStageUnit` and `LessonStageState` (`domain/model`, pure, pinned by
+  `LearningStagePlanTest`) define the eight steps, which step an exercise belongs to, which steps a
+  lesson actually ships, and the difference between completed and skipped. The lesson screen still
+  runs its two-phase intro → exercises flow, so no learner sees the eight-step guide yet and nothing
+  persists a learner's stage — Phase 2 (screen + ViewModel navigation) and Phase 4 (resume) are
+  outstanding. Recorded here so the model does not read as a shipped feature; it is the foundation
+  the next phase builds on, and it deliberately changes no behaviour on its own.
+
 - **Settled (B-1): mastery by dimension now crosses sessions (Room v6).** `dimension_mastery`
   stores the per-dimension fold as answers arrive, and a lesson session seeds its `MasteryProfile`
   from those rows before the first exercise — so the selector and the weakest-dimension read work

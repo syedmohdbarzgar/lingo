@@ -50,6 +50,7 @@ import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyExample
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
@@ -194,6 +195,9 @@ class LessonRepositoryImpl(
         contentDao.ensureLessonState(lessonId)
         contentDao.markLessonCompleted(lessonId, at)
     }
+
+    override suspend fun lessonIdsWithDialogue(): Set<String> =
+        contentDao.lessonIdsWithDialogue().toSet()
 
     override suspend fun enqueueLessonVocabulary(lessonId: String, now: Long) {
         // Daily new-card cap: at most NEW_CARDS_PER_DAY cards become due per
@@ -393,6 +397,13 @@ class ProgressRepositoryImpl(
 
 private val Context.dataStore by preferencesDataStore(name = "app_settings")
 
+/**
+ * Lesson ids whose conversation has been finished (newline-separated). Shared by
+ * the settings store's file and the conversation repository, which live next to
+ * each other on purpose: it is one small set written once per dialogue.
+ */
+private val CONVERSATIONS_DONE = stringPreferencesKey("conversations_done")
+
 class SettingsRepositoryImpl(
     private val context: Context,
 ) : SettingsRepository {
@@ -473,6 +484,34 @@ class SettingsRepositoryImpl(
         context.dataStore.edit { it[Keys.CONTENT_VERSION] = version }
     }
 }
+
+/**
+ * Finished conversations, kept in the same preferences file as the settings: it
+ * is one small set of lesson ids, written once per dialogue, and it must survive a
+ * restart or the gate would reopen by itself. Stored as a newline-joined string
+ * rather than a `stringSet` so the value has a stable, readable shape.
+ */
+class ConversationRepositoryImpl(
+    private val context: Context,
+) : ConversationRepository {
+
+    override fun observeCompleted(): Flow<Set<String>> =
+        context.dataStore.data.map { prefs ->
+            parseDoneLessonIds(prefs[CONVERSATIONS_DONE])
+        }
+
+    override suspend fun markCompleted(lessonId: String) {
+        if (lessonId.isBlank()) return
+        context.dataStore.edit { prefs ->
+            val done = parseDoneLessonIds(prefs[CONVERSATIONS_DONE]) + lessonId
+            prefs[CONVERSATIONS_DONE] = done.joinToString("\n")
+        }
+    }
+}
+
+/** One lesson id per line; blank lines are skipped so a stray write never counts. */
+private fun parseDoneLessonIds(raw: String?): Set<String> =
+    raw.orEmpty().split('\n').map { it.trim() }.filter { it.isNotEmpty() }.toSet()
 
 // ----------------------------------------------------------------- Mappers
 

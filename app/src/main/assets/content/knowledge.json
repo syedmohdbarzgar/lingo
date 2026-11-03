@@ -1,5 +1,5 @@
 {
-  "contentVersion": 31,
+  "contentVersion": 35,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -59,7 +59,8 @@
         "grammar.verb-be"
       ],
       "lessons": [
-        "a1.daily-routine.lesson-01"
+        "a1.daily-routine.lesson-01",
+        "a2.sports.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -92,7 +93,8 @@
       ],
       "lessons": [
         "a1.family.lesson-01",
-        "a2.health.lesson-01"
+        "a2.health.lesson-01",
+        "a2.symptoms.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -141,7 +143,9 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "a1.shopping.lesson-01"
+        "a1.shopping.lesson-01",
+        "a2.buying-clothes.lesson-01",
+        "a2.renting.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -174,7 +178,10 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "a1.weather.lesson-01"
+        "a1.weather.lesson-01",
+        "a2.phone.lesson-01",
+        "a2.emails.lesson-01",
+        "a2.house-problems.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -209,7 +216,9 @@
       "lessons": [
         "a2.airport.lesson-01",
         "b1.plans.lesson-01",
-        "a2.holiday-plans.lesson-01"
+        "a2.holiday-plans.lesson-01",
+        "a2.celebrations.lesson-01",
+        "a2.future-plans.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -226,7 +235,8 @@
       ],
       "lessons": [
         "a2.airport.lesson-01",
-        "a2.health.lesson-01"
+        "a2.health.lesson-01",
+        "a2.work.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -245,7 +255,10 @@
         "a2.restaurant.lesson-01",
         "a2.hotel-booking.lesson-01",
         "a2.plane-ticket.lesson-01",
-        "a2.hotel-checkin.lesson-01"
+        "a2.hotel-checkin.lesson-01",
+        "a2.payments.lesson-01",
+        "a2.invitations.lesson-01",
+        "a2.asking-help.lesson-01"
       ],
       "skills": [
         "GRAMMAR",
@@ -295,7 +308,9 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "a2.health.lesson-01"
+        "a2.health.lesson-01",
+        "a2.pharmacy.lesson-01",
+        "a2.everyday-problems.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -311,7 +326,8 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "a2.hobbies.lesson-01"
+        "a2.hobbies.lesson-01",
+        "a2.opinions.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -359,7 +375,8 @@
         "grammar.verb-be"
       ],
       "lessons": [
-        "a2.city-life.lesson-01"
+        "a2.city-life.lesson-01",
+        "a2.comparing.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -376,7 +393,9 @@
       ],
       "lessons": [
         "b1.work.lesson-01",
-        "a2.past-simple.lesson-01"
+        "a2.past-simple.lesson-01",
+        "a2.returns.lesson-01",
+        "a2.childhood.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -1940,6 +1959,329 @@
       ],
       "lessons": [
         "a2.holiday-plans.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.buying-clothes",
+      "type": "VOCABULARY",
+      "title": "Buying Clothes",
+      "titleFa": "خرید لباس و انتخاب اندازه",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.clothes"
+      ],
+      "lessons": [
+        "a2.buying-clothes.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.returns",
+      "type": "VOCABULARY",
+      "title": "Returning an Item",
+      "titleFa": "مرجوع کردن کالا",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.numbers-prices"
+      ],
+      "lessons": [
+        "a2.returns.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.payments",
+      "type": "VOCABULARY",
+      "title": "Payments and Payment Methods",
+      "titleFa": "پرداخت و روش‌های پرداخت",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.numbers-prices"
+      ],
+      "lessons": [
+        "a2.payments.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.symptoms",
+      "type": "VOCABULARY",
+      "title": "Describing Symptoms",
+      "titleFa": "بیان علائم بیماری",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.body"
+      ],
+      "lessons": [
+        "a2.symptoms.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.pharmacy",
+      "type": "VOCABULARY",
+      "title": "At the Pharmacy",
+      "titleFa": "داروخانه و خرید دارو",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.body"
+      ],
+      "lessons": [
+        "a2.pharmacy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.childhood",
+      "type": "VOCABULARY",
+      "title": "Childhood Memories",
+      "titleFa": "تعریف خاطرات کودکی",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.family"
+      ],
+      "lessons": [
+        "a2.childhood.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.celebrations",
+      "type": "VOCABULARY",
+      "title": "Celebrations and Special Occasions",
+      "titleFa": "جشن‌ها و مناسبت‌ها",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.days-months"
+      ],
+      "lessons": [
+        "a2.celebrations.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.invitations",
+      "type": "VOCABULARY",
+      "title": "Invitations",
+      "titleFa": "دعوت کردن و پاسخ به دعوت",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.hobbies"
+      ],
+      "lessons": [
+        "a2.invitations.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.phone",
+      "type": "VOCABULARY",
+      "title": "Phone Conversations",
+      "titleFa": "تماس تلفنی",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.greetings"
+      ],
+      "lessons": [
+        "a2.phone.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.emails",
+      "type": "VOCABULARY",
+      "title": "Writing Simple Emails",
+      "titleFa": "نوشتن ایمیل ساده",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.daily-routine"
+      ],
+      "lessons": [
+        "a2.emails.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.renting",
+      "type": "VOCABULARY",
+      "title": "Renting a Home",
+      "titleFa": "اجارهٔ خانه",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.where-i-live"
+      ],
+      "lessons": [
+        "a2.renting.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.house-problems",
+      "type": "VOCABULARY",
+      "title": "Household Problems",
+      "titleFa": "مشکلات خانه",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.renting"
+      ],
+      "lessons": [
+        "a2.house-problems.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.future-plans",
+      "type": "VOCABULARY",
+      "title": "Future Plans",
+      "titleFa": "برنامه‌ریزی برای آینده",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.holiday-plans"
+      ],
+      "lessons": [
+        "a2.future-plans.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.comparing",
+      "type": "VOCABULARY",
+      "title": "Comparing People and Things",
+      "titleFa": "مقایسهٔ افراد و اشیا",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.describing-people"
+      ],
+      "lessons": [
+        "a2.comparing.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.opinions",
+      "type": "VOCABULARY",
+      "title": "Opinions and Preferences",
+      "titleFa": "بیان نظر و ترجیح",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.hobbies"
+      ],
+      "lessons": [
+        "a2.opinions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.asking-help",
+      "type": "VOCABULARY",
+      "title": "Asking for Help and Permission",
+      "titleFa": "درخواست کمک و اجازه",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.renting"
+      ],
+      "lessons": [
+        "a2.asking-help.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.sports",
+      "type": "VOCABULARY",
+      "title": "Sports and Exercise",
+      "titleFa": "ورزش و فعالیت بدنی",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.hobbies"
+      ],
+      "lessons": [
+        "a2.sports.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.work",
+      "type": "VOCABULARY",
+      "title": "Work and Job Responsibilities",
+      "titleFa": "محیط کار و وظایف شغلی",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.payments"
+      ],
+      "lessons": [
+        "a2.work.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.everyday-problems",
+      "type": "VOCABULARY",
+      "title": "Solving Everyday Problems",
+      "titleFa": "حل مشکلات روزمره",
+      "level": "A2",
+      "prerequisites": [
+        "vocab.asking-help"
+      ],
+      "lessons": [
+        "a2.everyday-problems.lesson-01"
       ],
       "skills": [
         "VOCABULARY",

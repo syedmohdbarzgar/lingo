@@ -44,6 +44,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.common.persianMeasure
+import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
@@ -75,7 +77,14 @@ import org.token.english.domain.engine.SpeakingVerdict
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConversationPracticeScreen(
-    vm: ConversationPracticeViewModel = viewModel(factory = conversationPracticeViewModelFactory()),
+    /**
+     * The lesson whose dialogue this screen runs. Null means "the one the lesson
+     * path is currently on": the practice is always one lesson's conversation.
+     */
+    lessonId: String? = null,
+    vm: ConversationPracticeViewModel = viewModel(
+        factory = conversationPracticeViewModelFactory(lessonId),
+    ),
     onBack: () -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -149,6 +158,8 @@ fun ConversationPracticeScreen(
                     if (turn != null) {
                         TurnHeader(
                             turn = turn,
+                            sceneFa = state.sceneFa,
+                            partnerFa = state.partnerFa,
                             progressLabel = state.progressLabel,
                             progress = state.progress,
                         )
@@ -206,7 +217,13 @@ fun ConversationPracticeScreen(
  * much is left only after the learner does the arithmetic), and the count.
  */
 @Composable
-private fun TurnHeader(turn: DialogueTurn, progressLabel: String, progress: Float) {
+private fun TurnHeader(
+    turn: DialogueTurn,
+    sceneFa: String?,
+    partnerFa: String?,
+    progressLabel: String,
+    progress: Float,
+) {
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -221,6 +238,16 @@ private fun TurnHeader(turn: DialogueTurn, progressLabel: String, progress: Floa
             Text(
                 text = progressLabel,
                 style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        // Who is speaking and where: the same set of English sentences is a
+        // different exercise at an airport counter than in a classroom, and the
+        // learner should never have to infer the situation.
+        sceneFa?.let { scene ->
+            Text(
+                text = partnerFa?.let { "$scene · با $it" } ?: scene,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -627,7 +654,7 @@ private fun SessionSummary(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "${state.accuracyPercent}٪",
+                        text = persianPercent(state.accuracyPercent),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -647,8 +674,10 @@ private fun SessionSummary(
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
-                    text = "${state.answeredCount} نوبت جواب دادی: ${state.correctCount} درست، " +
-                        "${state.nearCount} نزدیک و ${state.retryCount} نیازمند تکرار.",
+                    text = "${persianMeasure(state.answeredCount, "نوبت")} جواب دادی: " +
+                        "${persianMeasure(state.correctCount, "درست")}، " +
+                        "${persianMeasure(state.nearCount, "نزدیک")} و " +
+                        "${persianMeasure(state.retryCount, "نیازمند تکرار")}.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

@@ -242,7 +242,12 @@ class LessonViewModel(
             val lesson = lessonRepository.getLesson(lessonId)
             // Display-time shuffles: option order and word-bank order derive from
             // the exercise id — stable per question, never gameable (P1/P4).
-            val exercises = lessonRepository.getExercises(lessonId).map { exercise ->
+            val exercises = lessonRepository.getExercises(lessonId)
+                // A dialogue turn is not a lesson exercise: it belongs to the
+                // lesson's conversation, which asks, listens and grades the reply.
+                // Inline it would only be a card the learner reads out loud once.
+                .filterNot { it is Exercise.Speaking && it.question != null }
+                .map { exercise ->
                 when {
                     exercise is Exercise.MultipleChoice -> exercise.shuffledForDisplay()
                     exercise is Exercise.Translation && exercise.bank.isNotEmpty() ->

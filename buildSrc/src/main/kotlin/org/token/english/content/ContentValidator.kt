@@ -36,6 +36,12 @@ object ContentValidator {
 
     private val LEVELS = setOf("A1", "A2", "B1", "B2", "C1", "C2")
 
+    /**
+     * Floor for a lesson's dialogue. A question and its answer is a repetition
+     * drill; a conversation has an opening, a middle and a close.
+     */
+    private const val MIN_DIALOGUE_TURNS = 4
+
     /** Mirrors ContentParser.supportedTypes. */
     private val EXERCISE_TYPES = setOf(
         "multiple_choice", "fill_blank", "word_recall", "translation",
@@ -244,6 +250,15 @@ object ContentValidator {
                         if (models.any { it.equals(question, ignoreCase = true) }) {
                             report(id, "question repeats the accepted answer — write a real reply")
                         }
+                        // A turn is part of a situation, not a floating sentence: the
+                        // practice screen names the place and the person asking, and
+                        // both are authored per lesson, never invented in the UI.
+                        if (text(o, "sceneFa").isEmpty()) {
+                            report(id, "dialogue turn without sceneFa — where does this exchange happen?")
+                        }
+                        if (text(o, "partnerFa").isEmpty()) {
+                            report(id, "dialogue turn without partnerFa — who is asking?")
+                        }
                     }
                 }
             }
@@ -398,8 +413,19 @@ object ContentValidator {
         val exerciseLessonIds = exercises.map { text(it, "lessonId") }.toSet()
         val vocabularyLessonIds = vocabulary.map { text(it, "lessonId") }.toSet()
         val taughtLessonIds = knowledge.flatMap { item -> array(item, "lessons").map { it.toString() } }.toSet()
+        // Conversation practice is the last step of every lesson, so every lesson
+        // needs a real exchange: a two-line pair is a repetition drill, not a
+        // dialogue, and the lesson path will not open the next lesson until this
+        // one has been spoken.
+        val dialogueTurns = exercises
+            .filter { text(it, "type") == "speaking" }
+            .groupBy { text(it, "lessonId") }
         lessonIds.sorted().forEach { lessonId ->
             if (lessonId !in exerciseLessonIds) report(lessonId, "lesson has no exercises")
+            val turns = dialogueTurns[lessonId].orEmpty().size
+            if (turns < MIN_DIALOGUE_TURNS) {
+                report(lessonId, "lesson has $turns dialogue turns — a conversation needs $MIN_DIALOGUE_TURNS")
+            }
             if (lessonId !in vocabularyLessonIds) report(lessonId, "lesson has no vocabulary")
             if (lessonId !in taughtLessonIds) report(lessonId, "no knowledge item teaches this lesson")
         }

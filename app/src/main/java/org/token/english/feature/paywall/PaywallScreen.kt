@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.token.english.R
+import org.token.english.core.common.persianMeasure
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionApp
 import org.token.english.core.billing.CompanionOffer
@@ -217,7 +218,8 @@ fun PaywallScreen(
 private fun paymentFootnote(state: PaywallUiState): String =
     if (state.storefront == Storefront.MYKET) {
         "پرداخت از طریق ${state.storeName} انجام می‌شود. مایکت اشتراک تمدیدخودکار ندارد؛ " +
-            "هر خرید یک دورهٔ کامل را فعال می‌کند (ماهانه ۳۰ روز، سالانه ۳۶۵ روز) و پس از پایان " +
+            "هر خرید یک دورهٔ کامل را فعال می‌کند (ماهانه ${persianMeasure(30, "روز")}، " +
+            "سالانه ${persianMeasure(365, "روز")}) و پس از پایان " +
             "دوره می‌توانید دوباره خرید کنید."
     } else {
         "پرداخت از طریق ${state.storeName} انجام می‌شود. اشتراک تمدید خودکار دارد و هر زمان قابل لغو است."

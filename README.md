@@ -16,7 +16,7 @@ daily lessons → exercises → spaced-repetition review → progress.
 | Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v5, exported) + DataStore Preferences |
+| Local storage | Room (schema v7, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -26,7 +26,7 @@ re-assert LTR, because the root layout is forced RTL.
 ## Contents
 
 - [What is in the app today](#what-is-in-the-app-today)
-- [Design preview](#design-preview)
+- [Screenshots](#screenshots)
 - [Build and run](#build-and-run)
 - [Project layout](#project-layout)
 - [Content pipeline](#content-pipeline)
@@ -80,7 +80,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 
 - per **skill** (vocabulary, grammar, listening, speaking, reading, writing) — an exponentially
   weighted average, seeded by the first observation;
-- per **knowledge item** — 89 curriculum nodes carrying prerequisites, mastery, exposure counts and
+- per **knowledge item** — 127 curriculum nodes carrying prerequisites, mastery, exposure counts and
   their own review schedule. `KnowledgeGraph` orders and unlocks the graph; every graded lesson
   answer is attributed to the nodes its lesson teaches and written with an atomic
   read-modify-write.
@@ -94,14 +94,14 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 27)**
+**Content bundle (JSON `contentVersion` 35)**
 
 | | Count |
 |---|---|
-| Lessons | 54 — A1: 21, A2: 7, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 546 |
-| Vocabulary entries | 326 |
-| Knowledge items | 95 |
+| Lessons | 95 — A1: 37, A2: 32, B1/B2: 6 each, C1/C2: 7 each |
+| Exercises | 1373 — including a dialogue in every lesson (five or six turns at A2 and above) |
+| Vocabulary entries | 572 |
+| Knowledge items | 136 |
 | Placement questions | 36 |
 
 The lesson plan behind those numbers is the 180-topic syllabus (30 topics per CEFR band) in
@@ -139,21 +139,26 @@ and it is declared in the manifest `<queries>` block for API 30+ visibility.
 
 ---
 
-## Design preview
+## Screenshots
 
-These are the original design mockups, kept in `files/` as design intent — not screenshots of the
-running app. The built UI follows them through the shared design-system tokens rather than by
-copying pixels.
+Captured from the running app (Bazaar debug, light theme, Persian RTL) on a 1080×2400 device and
+downscaled to 720 px wide. They are the real screens, not mockups — what you see is what the
+bundled content and the learner model produced on that install.
 
-| Home | Lesson | Review |
+| Home | Lesson (intro) | Lesson (feedback) |
 |---|---|---|
-| <img src="files/stitch_english_learning_app_design_system/home/screen.png" width="220" alt="Home screen mockup"> | <img src="files/stitch_english_learning_app_design_system/lesson_exercise/screen.png" width="220" alt="Lesson screen mockup"> | <img src="files/stitch_english_learning_app_design_system/review/screen.png" width="220" alt="Review screen mockup"> |
+| <img src="docs/images/screens/home.png" width="230" alt="Home: level card, daily goal, plan of the day"> | <img src="docs/images/screens/lesson.png" width="230" alt="Lesson intro: rule, table and examples"> | <img src="docs/images/screens/exercise.png" width="230" alt="Exercise with the correct answer and the feedback banner"> |
 
-| Progress | Roadmap | Settings |
+| Review | Vocabulary | Progress |
 |---|---|---|
-| <img src="files/stitch_english_learning_app_design_system/progress/screen.png" width="220" alt="Progress screen mockup"> | <img src="files/stitch_english_learning_app_design_system/learning_roadmap/screen.png" width="220" alt="Learning roadmap mockup"> | <img src="files/stitch_english_learning_app_design_system/settings_profile/screen.png" width="220" alt="Settings screen mockup"> |
+| <img src="docs/images/screens/review.png" width="230" alt="Review card with word, phonetics and reveal"> | <img src="docs/images/screens/vocabulary.png" width="230" alt="Vocabulary list with CEFR level badges"> | <img src="docs/images/screens/progress.png" width="230" alt="Progress: level, summary and three skill tracks"> |
 
-The brand board is at
+| Settings |
+|---|
+| <img src="docs/images/screens/settings.png" width="230" alt="Settings: theme, daily goal, reminder, level"> |
+
+The original design mockups are kept in `files/` as design intent; the built UI follows them through
+the shared design-system tokens rather than by copying pixels. The brand board is
 [`lingua_english_learning_brand_board.png`](files/stitch_english_learning_app_design_system/lingua_english_learning_brand_board.png/screen.png).
 
 ---
@@ -169,7 +174,7 @@ and buys nothing — do it at release points or when putting a build on a device
   with; the foojay toolchain resolver in `settings.gradle.kts` can provision a missing toolchain.
 - **Android SDK** with platform **37** and matching build-tools, plus `platform-tools` for ADB.
   Point the build at it with `sdk.dir` in an untracked `local.properties`.
-- **No local Gradle install** — always use the wrapper (`./gradlew`), which pins Gradle 9.5.0.
+- **No local Gradle install** — always use the wrapper (`./gradlew`), which pins Gradle 9.6.0.
 - A device or emulator is only needed for instrumented tests or manual UI checks; the unit-test gate
   runs on the JVM alone.
 - Optional: `keystore.properties` for release signing and the marketplace billing keys.
@@ -214,7 +219,7 @@ manual dispatch or a tag, because building every flavor on every commit buys not
 
 Verified October 2026 — do not "fix" these casually:
 
-- AGP **9.3.3** + Gradle **9.5.0**, JDK toolchain **25** (Kotlin falls back to JVM 24 target).
+- AGP **9.5.0** + Gradle **9.6.0**, JDK toolchain **25** (Kotlin falls back to JVM 24 target).
 - **Built-in Kotlin** (AGP 9 default): never apply `org.jetbrains.kotlin.android`.
 - KSP `2.2.10-2.0.2` must match the built-in KGP `2.2.10`; `composeCompiler` must equal the built-in
   Kotlin version too.

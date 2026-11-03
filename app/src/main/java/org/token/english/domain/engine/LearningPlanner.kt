@@ -36,6 +36,51 @@ fun nextLessonFor(
         ?: pending.firstOrNull()
 }
 
+/**
+ * The lesson whose conversation is still owed before the path may move on.
+ *
+ * A lesson is not finished when its last exercise is answered: its dialogue is
+ * where the learner *produces* the structure the exercises only tested. So once a
+ * lesson's exercises are complete, its conversation becomes a gate — the next
+ * lesson stays shut until the exchange has been walked through to its last turn.
+ * Only lessons that actually ship a dialogue can owe one, so content without a
+ * conversation never blocks the path.
+ *
+ * @param dialogueLessonIds lessons whose bundle carries a spoken dialogue.
+ * @param conversationsDone lessons whose dialogue has been practised end to end.
+ */
+fun owedConversation(
+    allLessons: List<Lesson>,
+    completedIds: Set<String>,
+    dialogueLessonIds: Set<String>,
+    conversationsDone: Set<String>,
+): Lesson? = allLessons
+    .sortedBy { it.order }
+    .firstOrNull { lesson ->
+        lesson.id in dialogueLessonIds &&
+            lesson.id in completedIds &&
+            lesson.id !in conversationsDone
+    }
+
+/**
+ * Whether [lessonId] may be opened right now: no earlier lesson may be sitting on
+ * an unfinished conversation. This is the hard side of the gate — the Home screen
+ * uses the same rule to decide what its primary button offers, so the button and
+ * the permission can never disagree.
+ */
+fun canOpenLesson(
+    allLessons: List<Lesson>,
+    completedIds: Set<String>,
+    dialogueLessonIds: Set<String>,
+    conversationsDone: Set<String>,
+    lessonId: String,
+): Boolean {
+    val target = allLessons.firstOrNull { it.id == lessonId } ?: return false
+    val owed = owedConversation(allLessons, completedIds, dialogueLessonIds, conversationsDone)
+    // The owed lesson itself stays open — that is where the learner has to go.
+    return owed == null || owed.order >= target.order
+}
+
 class DefaultLearningPlanner(
     private val weaknessThreshold: Float = 0.6f,
     private val maxRecommendedSkills: Int = 2,

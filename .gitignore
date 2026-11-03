@@ -47,6 +47,10 @@ Thumbs.db
 /device_screenshot.png
 /shots/
 
+# Ad-hoc device-capture scratch (raw screencaps, UIAutomator dumps, wrapper logs).
+# The shots that ship live in docs/images/screens/; everything here is throwaway.
+/devshots/
+
 # ---------------------------------------------------------------------------
 # Push-notification / backend keys — NEVER commit these
 # The app itself only ever carries a public google-services.json (which is fine to

@@ -3,7 +3,7 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 485 tests / 59 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 503 tests / 61 classes as of
   the secured/retest gate (the recognition-endpointing pass's early-end and take-ownership rules
   are pinned in `ConversationPracticeViewModelTest`; `KnowledgeEngineTest` holds
   `KnowledgeGates.isSecured` to its four edges and `AdaptiveLearningPlannerTest` walks the
@@ -36,8 +36,14 @@
   (the content gate itself: the shared buildSrc `ContentValidator` on the real bundle, plus
   mutation fixtures proving each rule fails), `DialogueContentTest` (the dialogue turns the practice
   screen consumes: every `speaking` item still parses, a `question` is English and always carries a
-  Persian `questionFa`, a question is never its own answer, and the authored spread still reaches
-  A1, A2, B1 and B2), `ReadingContentTest`
+  Persian `questionFa`, a question is never its own answer, **every lesson has at least four turns**,
+  every turn names its `sceneFa` and the partner's `partnerFa`, and the authored spread still reaches
+  A1, A2, B1 and B2), `DailyGoalCopyTest` (the Home ring's «از ۱۵ دقیقه»: the number is direction-
+  isolated, its space before «دقیقه» is non-breaking so the device cannot split the pair across a
+  line or reorder it, and the phrase stays an RTL paragraph), `SpeechVocabularyTest` (every spoken
+  answer stays inside what the bundled
+  recogniser can hear: no proper noun outside the reviewed allowlist, no digit, no non-ASCII),
+  `ReadingContentTest`
   (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
   (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
@@ -100,8 +106,13 @@
   app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
   cancelled/failed/succeeded, a checkout that throws, restore active/none/store-failure, the
   companion grant, and the storefront reaching the state so the wording can match the market),
+  `ConversationGateTest` (the lesson gate: a lesson still in progress owes nothing; the first
+  completed lesson without its dialogue blocks the next one; finishing the conversation opens it;
+  the oldest owed conversation wins; a lesson with no authored dialogue never gates),
   `ConversationPracticeViewModelTest` (turns wait for the content seeder instead of reading an empty
-  table; only speaking items become turns, in lesson order, each carrying its lesson title; an
+  table; a session runs ONE lesson's dialogue rather than a pool of every lesson, the requested
+  lesson wins, the scene and the partner's role come from the authored turn; finishing every turn
+  records the conversation while a skipped turn leaves it unrecorded; an
   authored `question` becomes the partner's line with its Persian gloss while an echo item has none;
   the partner opens the conversation and can repeat itself on request; a partial is shown live and
   never graded mid-take; **a sentence paused mid-way is graded as the whole sentence** (the sequence

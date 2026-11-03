@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.common.persianMeasure
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LearningTargetStyle
 import org.token.english.core.designsystem.component.AppCard
@@ -277,7 +278,8 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
                                 message = when (review.state) {
                                     ReviewState.NEW -> "در صف مرور — اولین مرور: $nextText"
                                     ReviewState.MASTERED -> "تسلط بلندمدت — مرور بعدی: $nextText"
-                                    else -> "در حال مرور — مرور بعدی: $nextText (فاصله ${review.intervalDays} روز)"
+                                    else -> "در حال مرور — مرور بعدی: $nextText " +
+                                        "(فاصله ${persianMeasure(review.intervalDays, "روز")})"
                                 },
                             )
                         }

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 31,
+  "contentVersion": 35,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -760,6 +760,196 @@
       "estimatedMinutes": 6,
       "order": 76,
       "grammarTipFa": "## قاعده\nبرای برنامهٔ آینده از will استفاده می‌کنیم: We will stay for a week.\nزمان آینده با next week، next summer و on the fifth of August می‌آید.\nبرای هدف سفر، go + ing به کار می‌رود: go sightseeing، go swimming.\n## جدول\nWe will stay for a week. — یک هفته می‌مانیم.\nThey will travel abroad next summer. — تابستان آینده به خارج از کشور سفر می‌کنند.\nWe will go sightseeing on the first day. — روز اول به گردش می‌رویم.\nI will buy a souvenir for my sister. — برای خواهرم سوغات می‌خرم.\n## مثال‌ها\nOur holiday starts on the fifth of August. — تعطیلات ما پنجم اوت شروع می‌شود.\nWe are planning a trip to the north. — در حال برنامه‌ریزی سفر به شمال هستیم.\nSightseeing is cheaper on foot. — گردش پیاده ارزان‌تر است.\n## خطاهای رایج\nبعد از will فعل ساده می‌آید: «will stays» غلط است، «will stay» درست.\nabroad قید است و to نمی‌گیرد: «go abroad»، نه «go to abroad».\nبرای گردش go sightseeing می‌گوییم، نه «go to sightseeing»."
+    },
+    {
+      "id": "a2.buying-clothes.lesson-01",
+      "level": "A2",
+      "title": "Buying Clothes",
+      "titleFa": "خرید لباس و انتخاب اندازه",
+      "topic": "Shopping",
+      "estimatedMinutes": 7,
+      "order": 77,
+      "grammarTipFa": "## قاعده\nبرای اندازهٔ لباس از What size…? و برای قیمت از How much is/are…? استفاده می‌کنیم.\nفعل try on جداشدنی است: try it on درست است، نه try on it.\nبرای توصیف اندازه از too + صفت استفاده می‌کنیم: too tight، too big، a little loose.\nبرای تعویض کالا: Can I exchange it for a larger size?\n## جدول\nWhat size are these shoes? — این کفش‌ها چه اندازه‌ای هستند؟\nHow much is this jacket? — این کاپشن چند است؟\nCan I try it on? — می‌توانم پرو کنم؟\nIt is too tight for me. — برای من خیلی تنگ است.\n## مثال‌ها\nDo you have this shirt in my size? — این پیراهن را در اندازهٔ من دارید؟\nThe fitting room is next to the shoes. — اتاق پرو کنار کفش‌هاست.\nCan I exchange this shirt for a larger one? — می‌توانم این پیراهن را با یک اندازهٔ بزرگ‌تر تعویض کنم؟\n## خطاهای رایج\ntry on جدا می‌شود: «try it on» درست است و «try on it» غلط.\nبرای اندازه از How much استفاده نکن؛ اندازه با What size پرسیده می‌شود.\nپیش از صفت اندازه too می‌آید: «this is too big»، نه «this is big too»."
+    },
+    {
+      "id": "a2.returns.lesson-01",
+      "level": "A2",
+      "title": "Returning an Item",
+      "titleFa": "مرجوع کردن کالا",
+      "topic": "Shopping",
+      "estimatedMinutes": 7,
+      "order": 78,
+      "grammarTipFa": "## قاعده\nبرای برگرداندن کالا از I'd like to return… یا I'd like a refund استفاده می‌کنیم.\nبرای دلیل مرجوعی صفت را با be می‌آوریم: The zip is broken، The battery is faulty.\nبرای درخواست مؤدبانه: Could I have a refund, please?\nguarantee دورهٔ ضمانت است و replace یعنی کالا را با کالای سالم عوض کردن.\n## جدول\nI'd like to return these shoes. — می‌خواهم این کفش‌ها را برگردانم.\nDo you have the receipt? — رسید را دارید؟\nThe battery is faulty. — باتری معیوب است.\nCould I have a refund, please? — می‌توانم بازپرداخت بگیرم؟\n## مثال‌ها\nI bought these shoes yesterday and I want to return them. — این کفش‌ها را دیروز خریدم و می‌خواهم برگردانم.\nThe refund takes five days. — بازپرداخت پنج روز طول می‌کشد.\nWe will replace the item for free. — ما کالا را رایگان جایگزین می‌کنیم.\n## خطاهای رایج\nrefund اسم است و با a می‌آید: «a refund»، نه «refund» تنها در جملهٔ درخواست.\nبرای معیوب بودن از be استفاده کن: «the zip is broken»، نه «the zip has broken» در این معنی.\nreceipt با p بی‌صدا نوشته می‌شود: /rɪˈsiːt/."
+    },
+    {
+      "id": "a2.payments.lesson-01",
+      "level": "A2",
+      "title": "Payments and Payment Methods",
+      "titleFa": "پرداخت و روش‌های پرداخت",
+      "topic": "Shopping",
+      "estimatedMinutes": 7,
+      "order": 79,
+      "grammarTipFa": "## قاعده\nروش پرداخت با by یا in می‌آید: pay by card، pay in cash.\nبرای پرسیدن مبلغ: How much is it? و برای جمع کل: What is the total?\nchange پول خردی است که پس از پرداخت برمی‌گردد؛ Keep the change یعنی پول خرد مال شما.\nبرای درخواست مؤدبانه: Could I pay by card?\n## جدول\nCan I pay by card? — می‌توانم با کارت پرداخت کنم؟\nI paid in cash. — با پول نقد پرداخت کردم.\nThe total is twelve dollars. — جمع کل دوازده دلار است.\nHere is your change. — این هم پول خرد شما.\n## مثال‌ها\nDo you take card payments? — پرداخت با کارت قبول می‌کنید؟\nPlease pay in cash at the desk. — لطفاً در باجه با پول نقد پرداخت کنید.\nMy wallet is in my bag. — کیف پولم در کیفم است.\n## خطاهای رایج\nبا کارت «by card» است، نه «with card» بدون حرف تعریف در این ساختار ثابت.\nchange غیرقابل‌شمارش است: «some change»، نه «a change» به معنی پول خرد.\ntotal اسم است؛ برای پرسیدن جمع کل از What is the total? استفاده کن."
+    },
+    {
+      "id": "a2.symptoms.lesson-01",
+      "level": "A2",
+      "title": "Describing Symptoms",
+      "titleFa": "بیان علائم بیماری",
+      "topic": "Health",
+      "estimatedMinutes": 7,
+      "order": 80,
+      "grammarTipFa": "## قاعده\nبرای درد و بیماری از have استفاده می‌کنیم: I have a headache، She has a fever.\nبرای دردِ عضوی از pain یا hurt استفاده می‌کنیم: I have a pain in my back، My head hurts.\nبرای مدت بیماری: for two days، since yesterday.\ndizzy صفت است و با feel می‌آید: I feel dizzy.\n## جدول\nI have a bad headache. — سردرد بدی دارم.\nI have a sore throat. — گلودرد دارم.\nMy head hurts and I have a fever. — سرم درد می‌کند و تب دارم.\nI feel dizzy when I stand up. — وقتی بلند می‌شوم سرگیجه دارم.\n## مثال‌ها\nThis cough is worse at night. — این سرفه شب‌ها بدتر است.\nThe fever went down after the medicine. — تب بعد از دارو پایین آمد.\nThe pain comes and goes. — درد می‌آید و می‌رود.\n## خطاهای رایج\nheadache یک کلمه است: «head ache» و «headache pain» غلط‌اند.\nبرای درد از have استفاده کن، نه از be: «I have a fever»، نه «I am fever».\nsore throat با sore می‌آید، نه با painful throat در گفتار روزمره."
+    },
+    {
+      "id": "a2.pharmacy.lesson-01",
+      "level": "A2",
+      "title": "At the Pharmacy",
+      "titleFa": "داروخانه و خرید دارو",
+      "topic": "Health",
+      "estimatedMinutes": 7,
+      "order": 81,
+      "grammarTipFa": "## قاعده\nبرای گرفتن دارو: I'd like something for a cough.\nبرای مقدار مصرف: How often should I take it? و Take it twice a day.\nبرای زمان مصرف از after یا before استفاده می‌کنیم: after meals، before breakfast.\nshould برای توصیه به کار می‌رود: You should take it after food.\n## جدول\nI'd like something for a cough. — چیزی برای سرفه می‌خواهم.\nHow often should I take it? — هر چند وقت یک بار باید مصرف کنم؟\nTake it twice a day. — روزی دو بار مصرف کنید.\nYou should take it after meals. — باید بعد از غذا مصرف کنید.\n## مثال‌ها\nThe pharmacist explained how to use it. — داروساز توضیح داد چطور مصرفش کنم.\nThis medicine is only sold with a prescription. — این دارو فقط با نسخه فروخته می‌شود.\nDo not take a double dose. — دوز دوبرابر مصرف نکنید.\n## خطاهای رایج\nmedicine غیرقابل‌شمارش است: «some medicine»، نه «a medicine».\nبرای مقدار مصرف از dose استفاده کن، نه از number.\nafter meals یعنی پس از غذا؛ before meals یعنی پیش از غذا — این دو را جابه‌جا نکن."
+    },
+    {
+      "id": "a2.childhood.lesson-01",
+      "level": "A2",
+      "title": "Childhood Memories",
+      "titleFa": "تعریف خاطرات کودکی",
+      "topic": "Past",
+      "estimatedMinutes": 7,
+      "order": 82,
+      "grammarTipFa": "## قاعده\nبرای گذشتهٔ دور و عادت‌های کودکی از گذشتهٔ ساده استفاده می‌کنیم: I played، we lived.\ngrow up یعنی بزرگ شدن و گذشتهٔ آن grew up است.\nبرای زمان گذشته from + سن یا when I was six می‌آید.\nبرای خاطره: my best memory is… و I have happy memories of…\n## جدول\nI grew up in a small town. — در شهر کوچکی بزرگ شدم.\nWe played football every day. — ما هر روز فوتبال بازی می‌کردیم.\nMy family moved when I was six. — خانواده‌ام وقتی شش ساله بودم اسباب‌کشی کرد.\nMy best memory is a trip to the sea. — بهترین خاطره‌ام سفر به دریا است.\n## مثال‌ها\nI started primary school at six. — شش سالگی دبستان را شروع کردم.\nThe children are in the playground. — بچه‌ها در زمین بازی هستند.\nI have happy memories of that house. — از آن خانه خاطرات شادی دارم.\n## خطاهای رایج\nگذشتهٔ grow بی‌قاعده است: grew up، نه growed up.\nplayground یک کلمه است و به معنی زمین بازی مدرسه یا محله است.\nmemory قابل‌شمارش است: a memory، happy memories."
+    },
+    {
+      "id": "a2.celebrations.lesson-01",
+      "level": "A2",
+      "title": "Celebrations and Special Occasions",
+      "titleFa": "جشن‌ها و مناسبت‌ها",
+      "topic": "Culture",
+      "estimatedMinutes": 7,
+      "order": 83,
+      "grammarTipFa": "## قاعده\nبرای جشن گرفتن از celebrate + مناسبت استفاده می‌کنیم: celebrate New Year.\nparty با have یا hold می‌آید: We had a big party.\nwedding عروسی و anniversary سالگرد است.\nبرای گذشتهٔ جشن، گذشتهٔ ساده به کار می‌رود: There were thirty guests.\n## جدول\nWe celebrate New Year with our family. — سال نو را با خانواده جشن می‌گیریم.\nTheir wedding was in June. — عروسی‌شان در ژوئن بود.\nThere were thirty guests. — سی مهمان بود.\nThey celebrated their tenth anniversary. — دهمین سالگردشان را جشن گرفتند.\n## مثال‌ها\nI bought a gift for my sister. — برای خواهرم یک هدیه خریدم.\nShe blew out the candles on the cake. — او شمع‌های کیک را فوت کرد.\nHow do you celebrate your birthday? — تولدت را چطور جشن می‌گیری؟\n## خطاهای رایج\ncelebrate با مفعول مستقیم می‌آید: celebrate New Year، نه celebrate for New Year.\nwedding عروسی است، نه همهٔ جشن‌ها؛ مهمانی party است.\nanniversary تاریخ تکرارشوندهٔ یک رویداد است، نه خود رویداد."
+    },
+    {
+      "id": "a2.invitations.lesson-01",
+      "level": "A2",
+      "title": "Invitations",
+      "titleFa": "دعوت کردن و پاسخ به دعوت",
+      "topic": "Social",
+      "estimatedMinutes": 6,
+      "order": 84,
+      "grammarTipFa": "## قاعده\nبرای دعوت مؤدبانه: Would you like to…? یا How about + فعل ing?\nپاسخ مثبت: I'd love to و پاسخ منفی مؤدبانه: I'm sorry, I can't.\nبرای پرسیدن آمادگی طرف: Are you free on Saturday?\naccept یعنی پذیرفتن و refuse یعنی رد کردن دعوت.\n## جدول\nWould you like to join us? — دوست داری به ما ملحق شوی؟\nAre you free on Saturday? — شنبه آزادی؟\nI'd love to come. — با کمال میل می‌آیم.\nI'm sorry, I can't. — متأسفم، نمی‌توانم.\n## مثال‌ها\nMy friends invited me to dinner. — دوستانم مرا به شام دعوت کردند.\nShe accepted the invitation at once. — او فوراً دعوت را پذیرفت.\nIt is hard to refuse a friend. — رد کردن دوست سخت است.\n## خطاهای رایج\ninvite با to می‌آید: invite someone to dinner، نه invite someone for dinner در ساختار ثابت.\nبعد از Would you like حتماً to می‌آید: Would you like to come.\nپاسخ منفی مؤدبانه با I'm sorry آغاز می‌شود، نه با no تنها."
+    },
+    {
+      "id": "a2.phone.lesson-01",
+      "level": "A2",
+      "title": "Phone Conversations",
+      "titleFa": "تماس تلفنی",
+      "topic": "Communication",
+      "estimatedMinutes": 6,
+      "order": 85,
+      "grammarTipFa": "## قاعده\nبرای درخواست صحبت با کسی: Can I speak to Sara, please?\nبرای پرسیدن گوینده: Who is calling? یا Who's speaking?\nبرای انتظار: Please hold on a moment.\nبرای پیام: Can I leave a message? و The line is busy یعنی خط اشغال است.\n## جدول\nCan I speak to Sara, please? — می‌توانم با سارا صحبت کنم؟\nWho is calling? — چه کسی تماس گرفته؟\nPlease hold on a moment. — لطفاً یک لحظه منتظر بمانید.\nCan I leave a message? — می‌توانم پیامی بگذارم؟\n## مثال‌ها\nThe line is busy, so I left a voicemail. — خط اشغال بود، برای همین پیام صوتی گذاشتم.\nI will call you back in ten minutes. — ده دقیقهٔ دیگر بهت زنگ می‌زنم.\nYour message was very clear. — پیامت خیلی واضح بود.\n## خطاهای رایج\nspeak to با to می‌آید: speak to Sara، نه speak Sara.\nhold on جداشدنی نیست و مفعول نمی‌گیرد.\nvoicemail یک کلمه است و message با leave می‌آید: leave a message."
+    },
+    {
+      "id": "a2.emails.lesson-01",
+      "level": "A2",
+      "title": "Writing Simple Emails",
+      "titleFa": "نوشتن ایمیل ساده",
+      "topic": "Writing",
+      "estimatedMinutes": 6,
+      "order": 86,
+      "grammarTipFa": "## قاعده\nهر ایمیل ساده یک subject دارد و با Dear + نام شروع می‌شود.\nبرای هدف ایمیل: I am writing to ask about… یا I am writing to reply to…\nفایل با attach پیوست می‌شود: I attached the file to the email.\nپایان ایمیل با Best regards یا Kind regards و نام فرستنده.\n## جدول\nSubject: Booking for June — موضوع: رزرو برای ژوئن\nDear Ali, — علی عزیز،\nI attached the file to the email. — فایل را به ایمیل پیوست کردم.\nBest regards, Sara — با احترام، سارا\n## مثال‌ها\nPlease reply to my email soon. — لطفاً زودتر به ایمیلم پاسخ بدهید.\nCan you forward this email to Ali? — می‌توانی این ایمیل را برای علی بفرستی؟\nThe subject of your email was missing. — موضوع ایمیلت خالی بود.\n## خطاهای رایج\nreply to لازم است: «reply my email» غلط است، «reply to my email» درست.\nattach فعل است و attachment اسم؛ file را attach می‌کنیم.\nsubject موضوع ایمیل است، نه شخص؛ آن subject (درس) در جمله قاطی نشود."
+    },
+    {
+      "id": "a2.renting.lesson-01",
+      "level": "A2",
+      "title": "Renting a Home",
+      "titleFa": "اجارهٔ خانه",
+      "topic": "Housing",
+      "estimatedMinutes": 6,
+      "order": 87,
+      "grammarTipFa": "## قاعده\nبرای اجاره کردن خانه از rent به‌عنوان فعل و اسم استفاده می‌کنیم: We rent a flat.\nصاحبخانه landlord است و پولی که پیش از ورود می‌دهید deposit؛ اگر خانه مبله باشد furnished است.\nبرای پرسیدن مبلغ می‌گوییم: How much is the rent? و برای امکانات: Is the flat furnished?\nهزینهٔ آب و برق و گاز utility bills نام دارد و در قرارداد lease نوشته می‌شود.\n## جدول\nHow much is the rent? — اجاره چقدر است؟\nIs the flat furnished? — خانه مبله است؟\nThe rent includes utility bills. — اجاره شامل آب و برق است.\nWe paid a deposit of one month. — یک ماه ودیعه دادیم.\n## مثال‌ها\nWe rent a small flat near the station. — ما آپارتمان کوچکی نزدیک ایستگاه اجاره می‌کنیم.\nThe landlord repairs the roof himself. — صاحبخانه خودش پشت‌بام را تعمیر می‌کند.\nThe lease is for one year. — قرارداد اجاره برای یک سال است.\n## خطاهای رایج\nrent فعل گذرا است: rent a flat درست است، نه rent for a flat.\ndeposit پول ودیعه است، نه اجارهٔ ماهانه؛ آن را با rent قاطی نکنید.\nدر حالت کلی utilities جمع می‌آید: utility bills، نه utility bill."
+    },
+    {
+      "id": "a2.house-problems.lesson-01",
+      "level": "A2",
+      "title": "Household Problems",
+      "titleFa": "مشکلات خانه",
+      "topic": "Housing",
+      "estimatedMinutes": 6,
+      "order": 88,
+      "grammarTipFa": "## قاعده\nبرای گفتن مشکل خانه با There is شروع می‌کنیم: There is a leak under the sink.\nبرای چیزی که کار نمی‌کند: The heater does not work یا The window is broken.\nبرای کاری که همین حالا در جریان است حال استمراری می‌آید: Water is coming from the pipe.\nبرای درخواست کمک: Could you send a plumber? و برای الزام: I have to call the landlord.\n## جدول\nThere is a leak in the bathroom. — در حمام نشتی هست.\nThe light switch does not work. — کلید برق کار نمی‌کند.\nCould you repair the window? — می‌توانید پنجره را تعمیر کنید؟\nThe neighbours are noisy at night. — همسایه‌ها شب‌ها پرسروصدا هستند.\n## مثال‌ها\nThe plumber fixed the sink in an hour. — لوله‌کش سینک را در یک ساعت درست کرد.\nWe have to repair the roof before winter. — باید پیش از زمستان پشت‌بام را تعمیر کنیم.\nA broken pipe can cost a lot. — لولهٔ خراب می‌تواند گران تمام شود.\n## خطاهای رایج\nbroken صفت است: the window is broken، نه the window is break.\nplumber لوله‌کش است، نه برقکار؛ برقکار electrician نام دارد.\nrepair و fix هر دو درست‌اند، اما برای خانه repair رایج‌تر است."
+    },
+    {
+      "id": "a2.future-plans.lesson-01",
+      "level": "A2",
+      "title": "Future Plans",
+      "titleFa": "برنامه‌ریزی برای آینده",
+      "topic": "Plans",
+      "estimatedMinutes": 6,
+      "order": 89,
+      "grammarTipFa": "## قاعده\nبرای برنامهٔ آینده از will استفاده می‌کنیم: I will start a course next month.\nبرای قصد و هدف از plan to و hope to + فعل ساده بهره می‌بریم: We plan to move in June.\nبرای هماهنگ کردن کاری از arrange استفاده می‌کنیم: I will arrange a meeting.\nاگر برنامه عقب بیفتد، postpone یعنی «به تعویق انداختن» و goal یعنی «هدف».\n## جدول\nI will start a new course next month. — ماه بعد دورهٔ جدیدی شروع می‌کنم.\nWe plan to move in June. — قصد داریم در ژوئن اسباب‌کشی کنیم.\nShe hopes to find a better job. — امیدوار است کار بهتری پیدا کند.\nWe had to postpone the trip. — مجبور شدیم سفر را به تعویق بیندازیم.\n## مثال‌ها\nMy goal is to save money every month. — هدف من پس‌انداز کردن هر ماه است.\nWe decided to take the early train. — تصمیم گرفتیم قطار زودتر را بگیریم.\nThey arranged a meeting for Friday. — برای جمعه جلسه‌ای ترتیب دادند.\n## خطاهای رایج\nhope با to + مصدر می‌آید، نه با ing: I hope to see you.\ndecide to do درست است، نه decide doing.\npostpone با اسم یا ing می‌آید: postpone the meeting، نه postpone to the meeting."
+    },
+    {
+      "id": "a2.comparing.lesson-01",
+      "level": "A2",
+      "title": "Comparing People and Things",
+      "titleFa": "مقایسهٔ افراد و اشیا",
+      "topic": "Description",
+      "estimatedMinutes": 6,
+      "order": 90,
+      "grammarTipFa": "## قاعده\nصفت کوتاه + er و بعد than: This flat is cheaper than that one.\nصفت بلند با more می‌آید: That car is more expensive than mine.\nبرترین با the + est یا the most ساخته می‌شود: the cheapest، the most comfortable.\nبرای شباهت as … as و similar to به‌کار می‌رود و برای تفاوت different from.\n## جدول\nThis flat is cheaper than that one. — این خانه از آن یکی ارزان‌تر است.\nThat car is more expensive than mine. — آن ماشین از مال من گران‌تر است.\nThe new chairs are more comfortable. — صندلی‌های جدید راحت‌ترند.\nMy city is very different from yours. — شهر من با شهر تو بسیار متفاوت است.\n## مثال‌ها\nOur two flats are very similar. — دو آپارتمان ما بسیار شبیه هم‌اند.\nThis gym is popular with young people. — این باشگاه میان جوانان محبوب است.\nThe cheapest tickets are already gone. — ارزان‌ترین بلیت‌ها پیش‌تر تمام شده‌اند.\n## خطاهای رایج\nبعد از صفت برتر than می‌آید، نه that.\nexpensive را کوتاه نمی‌کنیم: expensiver غلط است و more expensive درست.\nدر این درس different با from می‌آید: different from me."
+    },
+    {
+      "id": "a2.opinions.lesson-01",
+      "level": "A2",
+      "title": "Opinions and Preferences",
+      "titleFa": "بیان نظر و ترجیح",
+      "topic": "Communication",
+      "estimatedMinutes": 6,
+      "order": 91,
+      "grammarTipFa": "## قاعده\nبرای بیان نظر از In my opinion, … یا I think … استفاده می‌کنیم.\nبرای ترجیح: I prefer tea to coffee و برای انتخاب: You have a choice of two colours.\nبرای موافقت I agree with you و برای مخالفت I disagree with that.\nبعد از enjoy و prefer فعل + ing می‌آید: I enjoy cooking.\n## جدول\nIn my opinion, the film is too long. — به نظر من فیلم خیلی طولانی است.\nI prefer tea to coffee. — چای را به قهوه ترجیح می‌دهم.\nI agree with you. — با تو موافقم.\nI disagree with that idea. — با آن ایده مخالفم.\n## مثال‌ها\nWe enjoy cooking together. — از آشپزی با هم لذت می‌بریم.\nYou have a choice of two colours. — بین دو رنگ حق انتخاب داری.\nShe prefers walking to driving. — پیاده‌روی را به رانندگی ترجیح می‌دهد.\n## خطاهای رایج\nprefer A to B درست است، نه prefer A than B.\nبعد از enjoy فعل ing می‌آید: enjoy reading، نه enjoy to read.\nagree with برای شخص و agree to برای طرح و پیشنهاد به‌کار می‌رود."
+    },
+    {
+      "id": "a2.asking-help.lesson-01",
+      "level": "A2",
+      "title": "Asking for Help and Permission",
+      "titleFa": "درخواست کمک و اجازه",
+      "topic": "Communication",
+      "estimatedMinutes": 6,
+      "order": 92,
+      "grammarTipFa": "## قاعده\nدرخواست مؤدبانه با Could you …? یا Would you mind …? ساخته می‌شود.\nبرای اجازه گرفتن May I …? یا Can I …? می‌گوییم و پاسخ کوتاه Of course یا Sure است.\nborrow یعنی چیزی را موقت گرفتن و lend یعنی دادن آن به دیگری.\npermission اجازه است و allow فعل «اجازه دادن»؛ favour یعنی لطف کوچک.\n## جدول\nCould you help me, please? — می‌توانید کمکم کنید؟\nMay I borrow your pen? — می‌توانم خودکارت را قرض بگیرم؟\nDo you mind if I open the window? — اشکالی ندارد پنجره را باز کنم؟\nCan you do me a favour? — می‌توانی لطفی به من بکنی؟\n## مثال‌ها\nI asked for permission to leave early. — اجازه خواستم زودتر بروم.\nThe school does not allow phones in class. — مدرسه گوشی را در کلاس مجاز نمی‌داند.\nCan you lend me your charger? — می‌توانی شارژرت را قرض بدهی؟\n## خطاهای رایج\nborrow با from می‌آید و lend با to: borrow a pen from a friend.\nپاسخ منفی به Do you mind…? یعنی موافقت: No, not at all.\nبعد از Would you mind فعل ing می‌آید: Would you mind opening the window?"
+    },
+    {
+      "id": "a2.sports.lesson-01",
+      "level": "A2",
+      "title": "Sports and Exercise",
+      "titleFa": "ورزش و فعالیت بدنی",
+      "topic": "Leisure",
+      "estimatedMinutes": 6,
+      "order": 93,
+      "grammarTipFa": "## قاعده\nبرای ورزش‌های توپی و تیمی از play استفاده می‌کنیم: play football، play tennis.\nبرای فعالیت‌های ing‌دار از go بهره می‌بریم: go running، go swimming.\nبرای ورزش فردی از do استفاده می‌کنیم: do exercise، do yoga.\nteam تیم، coach مربی، match مسابقه و fit یعنی «خوش‌اندام و آماده».\n## جدول\nI play football every Friday. — هر جمعه فوتبال بازی می‌کنم.\nShe goes running before work. — پیش از کار می‌دود.\nWe do exercise at the gym. — در باشگاه ورزش می‌کنیم.\nThe match starts at five. — مسابقه ساعت پنج شروع می‌شود.\n## مثال‌ها\nOur team plays in a local league. — تیم ما در لیگی محلی بازی می‌کند.\nThe coach gave us a new plan. — مربی برنامهٔ جدیدی به ما داد.\nRunning keeps me fit. — دویدن مرا خوش‌اندام نگه می‌دارد.\n## خطاهای رایج\ndo exercise درست است، نه make exercise.\nبرای فعالیت همیشگی go running می‌گوییم، نه go to run.\nmatch برای مسابقه به‌کار می‌رود و play فعل بازی کردن است؛ این دو را قاطی نکنید."
+    },
+    {
+      "id": "a2.work.lesson-01",
+      "level": "A2",
+      "title": "Work and Job Responsibilities",
+      "titleFa": "محیط کار و وظایف شغلی",
+      "topic": "Work",
+      "estimatedMinutes": 6,
+      "order": 94,
+      "grammarTipFa": "## قاعده\nبرای وظایف کاری از have to و need to + فعل ساده استفاده می‌کنیم: I have to finish the report.\nmanager مدیر است و colleague همکار؛ task یعنی کار مشخصی که باید انجام شود.\nبرای جلسه meeting و برای آخرین مهلت deadline به‌کار می‌رود.\nبرای برنامهٔ کاری روزانه: The meeting starts at nine و I have a meeting at ten.\n## جدول\nI have to finish the report by Monday. — باید گزارش را تا دوشنبه تمام کنم.\nThe meeting starts at nine. — جلسه ساعت نه شروع می‌شود.\nMy manager asked for a summary. — مدیرم خلاصه‌ای خواست.\nMy colleague helped me with the file. — همکارم با پرونده کمکم کرد.\n## مثال‌ها\nMy first task is to answer the emails. — اولین کارم پاسخ دادن به ایمیل‌هاست.\nThe deadline for the report is Monday. — آخرین مهلت گزارش دوشنبه است.\nI need to send the numbers today. — باید امروز اعداد را بفرستم.\n## خطاهای رایج\nبعد از have to فعل ساده می‌آید: have to finish، نه have to finishing.\ndeadline «آخرین مهلت» است، نه «تاریخ شروع».\ncolleague در انگلیسی بریتانیایی با u نوشته می‌شود و همکار است، نه رئیس."
+    },
+    {
+      "id": "a2.everyday-problems.lesson-01",
+      "level": "A2",
+      "title": "Solving Everyday Problems",
+      "titleFa": "حل مشکلات روزمره",
+      "topic": "Daily life",
+      "estimatedMinutes": 6,
+      "order": 95,
+      "grammarTipFa": "## قاعده\nبرای مشکل می‌گوییم: We have a problem with … و برای راه‌حل: We can solve it.\nبرای شکایت مؤدبانه: I would like to complain about … و برای عذرخواهی: I am sorry for the delay.\ncancel یعنی لغو کردن و delay یعنی تأخیر؛ apology اسم «عذرخواهی» است.\nبرای پیشنهاد راه‌حل از should استفاده می‌کنیم: You should call them.\n## جدول\nWe have a problem with the internet. — با اینترنت مشکل داریم.\nI would like to complain about the noise. — می‌خواهم دربارهٔ سر و صدا شکایت کنم.\nI am sorry for the delay. — بابت تأخیر متأسفم.\nWe had to cancel the order. — مجبور شدیم سفارش را لغو کنیم.\n## مثال‌ها\nThey solved the problem in ten minutes. — مشکل را در ده دقیقه حل کردند.\nThe shop sent an apology by email. — فروشگاه عذرخواهی را با ایمیل فرستاد.\nThere was a delay of twenty minutes. — بیست دقیقه تأخیر بود.\n## خطاهای رایج\napology اسم است و apologize فعل: send an apology / apologize for the delay.\ncomplain about چیزی و complain to کسی: complain to the manager about the noise.\ncancel در ing با l دوتایی می‌آید: cancelling."
     }
   ]
 }
