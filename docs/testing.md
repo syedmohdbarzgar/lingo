@@ -3,7 +3,7 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 526 tests / 63 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 527 tests / 63 classes as of
   the v60 guided-lesson pass — the eight-step lesson (`GuidedLessonTest`: a lesson opens on its
   context step with no exercise yet, Continue walks the teaching steps and records each one,
   practice does not advance until its exercise is answered, Previous reopens a done step without
@@ -53,7 +53,9 @@
   (A-5 passages + meaning items + placement reading), `KnowledgeEngineTest`
   (evidence attribution), `GrammarTipTest` (multi-section lesson tips), `PhonologyCoverageTest`
   (A1 pronunciation coverage), `GrammarCoverageTest` (six exercises per grammar topic),
-  `RoomMigrationTest` (migration ↔ exported schema, no gaps) + `DatabaseUpgradeTest` (the same
+  `RoomMigrationTest` (migration ↔ exported schema, no gaps, plus — v60 — that
+  `AppContainer` registers `ALL_MIGRATIONS` wholesale instead of a hand-picked list that once omitted
+  a step and crashed every upgrading install) + `DatabaseUpgradeTest` (the same
   chain *executed* on a learner-filled v1 database: every value survives, added columns take their
   documented defaults, the graph tables arrive empty — needs the test-only `org.xerial:sqlite-jdbc`,
   because it upgrades with a real SQLite engine rather than inspecting the schemas),

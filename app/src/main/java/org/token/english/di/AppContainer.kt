@@ -66,17 +66,13 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     // Data
     val database: AppDatabase by lazy {
         Room.databaseBuilder(appContext, AppDatabase::class.java, "english.db")
-            // Every migration must be listed here: Room throws at open time when a
-            // path from the installed version is missing, which would crash an
-            // upgrading install before the seeder ever runs.
-            .addMigrations(
-                AppDatabase.MIGRATION_1_2,
-                AppDatabase.MIGRATION_2_3,
-                AppDatabase.MIGRATION_3_4,
-                AppDatabase.MIGRATION_4_5,
-                AppDatabase.MIGRATION_5_6,
-                AppDatabase.MIGRATION_6_7,
-            )
+            // Every migration must be registered here: Room throws at open time when
+            // a path from the installed version is missing, which would crash an
+            // upgrading install before the seeder ever runs. Taken as a whole from
+            // the database itself rather than listed one by one — the list used to be
+            // spelled out and v7→v8 was forgotten, which crashed every upgrading
+            // install on the device. `RoomMigrationTest` pins this line.
+            .addMigrations(*AppDatabase.ALL_MIGRATIONS.toTypedArray())
             .build()
     }
     val settingsRepository: SettingsRepository by lazy { SettingsRepositoryImpl(appContext) }

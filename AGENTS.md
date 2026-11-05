@@ -127,7 +127,7 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (526 tests / 63 classes as of the v60
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (527 tests / 63 classes as of the v60
 guided-lesson pass — one active stage at a time across the eight-step lesson, no trial on a fresh
 install, the per-flavor «ارتباط با ناشر» store page, the
 per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut

@@ -343,7 +343,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-526 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
+527 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -434,9 +434,10 @@ offline, and must not block the learning core.
 - `bazaarRsaKey` unset disables Poolakey verification — release builds refuse to ship in that state.
 - Persian UI strings live inline in composables; extracting them to `strings.xml` is open design
   debt until a second locale appears.
-- Room is at `version = 5` with exported schemas in `app/schemas`. Schema changes must ship a
-  migration **and** be registered in `AppContainer.database` — Room throws at open time when a path
-  from the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
+- Room is at `version = 8` with exported schemas in `app/schemas`. Schema changes must ship a
+  migration; the container registers `AppDatabase.ALL_MIGRATIONS` wholesale, because a hand-picked
+  list once omitted a step and crashed **upgrading** installs at open time while fresh installs
+  stayed green.
 - Due counts capture `now` when the collection starts, so a long-running session will not see newly
   due items until the ViewModel is recreated.
 - Studied seconds are credited on screen close/finish (best effort), not by a foreground timer.

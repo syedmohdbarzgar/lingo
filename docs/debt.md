@@ -58,9 +58,13 @@
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
   Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
-- Room is at `version = 6` with exported schemas (`app/schemas`). Schema changes must ship a
-  migration **and** be added to `AppContainer.database` — Room throws at open time when a path from
-  the installed version is missing, so a forgotten `addMigrations` crashes upgrading installs.
+- Room is at `version = 8` with exported schemas (`app/schemas`). Schema changes must ship a
+  migration; registration is no longer a step anyone can forget, because `AppContainer` takes
+  `AppDatabase.ALL_MIGRATIONS` as a whole (`RoomMigrationTest` fails if a hand-picked list comes
+  back). That was not always so: v60 listed the steps one by one, v7→v8 was added to the database
+  and not to the list, and every *upgrading* install — not a fresh one — crashed at open time with
+  «A migration from 7 to 8 was required but not found». The lesson: a migration path is only
+  exercised by an install that already holds data.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items
   until the ViewModel is recreated.
 - The daily reminder is pinned to 19:00 local (`DailyReminder.REMINDER_HOUR`); the time is not

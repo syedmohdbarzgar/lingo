@@ -109,6 +109,34 @@ class RoomMigrationTest {
         )
     }
 
+    /**
+     * The crash that reached a phone (v60): `AppContainer` listed the migrations one by
+     * one, `MIGRATION_7_8` was added to the database but not to that list, and every
+     * *upgrading* install died at open time with "A migration from 7 to 8 was required
+     * but not found" — a fresh install never notices. The container now takes
+     * [AppDatabase.ALL_MIGRATIONS] as a whole; this test reads its own source so a
+     * hand-written list cannot come back.
+     */
+    @Test
+    fun `the container registers every migration from one source of truth`() {
+        val container = listOf(
+            File("src/main/java/org/token/english/di/AppContainer.kt"),
+            File("app/src/main/java/org/token/english/di/AppContainer.kt"),
+        ).firstOrNull(File::exists)
+            ?: error("AppContainer.kt not found — run tests from the repo root or app/")
+
+        val source = container.readText()
+        assertTrue(
+            "AppContainer must register AppDatabase.ALL_MIGRATIONS, not a hand-picked subset",
+            source.contains("addMigrations(*AppDatabase.ALL_MIGRATIONS.toTypedArray())"),
+        )
+        assertTrue(
+            "no migration may be named in the container: a step added to the database but " +
+                "not to that list crashes every upgrading install",
+            !source.contains("AppDatabase.MIGRATION_"),
+        )
+    }
+
     @Test
     fun `each migration produces the schema delta of its step`() {
         val versions = availableVersions()
