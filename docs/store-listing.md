@@ -142,7 +142,7 @@ claim that stops being true is a policy problem, not a copy problem.
 |---|---|
 | Free with the companion app | `CompanionOffer.isOffered` + `CompanionApp` (see [`billing.md`](billing.md)) |
 | 36 questions, six bands A1–C2 | `placement.json` + README placement section |
-| 48 lessons, 290 vocabulary entries | `lessons.json`, `vocabulary.json` |
+| 192 lessons, 1154 vocabulary entries | `lessons.json`, `vocabulary.json` |
 | Fully offline learning core | [`connectivity.md`](connectivity.md) — the offline rule |
 | No account / no ads / no tracking | no auth, no ad SDK, no analytics dependency in `app/build.gradle.kts` |
 | Cancel any time via the store | [`billing.md`](billing.md) — subscription × 3 marketplaces |

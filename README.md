@@ -53,9 +53,13 @@ re-assert LTR, because the root layout is forced RTL.
 - **Foundations first** — the alphabet and letter names, spelling your name, and numbers 0–100 are the
   first three A1 lessons, so a complete beginner meets letters before words. Greetings now sits
   behind the alphabet in the curriculum graph.
-- **Lessons** — an intro stage (word list, short Persian grammar tip, optional audio) followed by
-  exercises. A wrong answer shows a short explanation and re-asks that same item once in the same
-  session, so a miss is never just a score.
+- **Lessons** — one active stage at a time, in eight steps: context and objective → grammar →
+  vocabulary → controlled practice → listening (optional, skipped explicitly on a device without an
+  English voice) → writing → speaking → review and assessment. The stage rail and the header's
+  percentage show only *completed required* steps, so a skip never reads as progress, and the
+  lesson resumes on the step the learner left. The plan is derived from each lesson's own content,
+  so no lesson needed re-authoring. A wrong answer shows a short explanation and re-asks that same
+  item once in the same session, so a miss is never just a score.
 - **Exercises** — `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
   `sentence_production`, `listening`. Multiple-choice options are shuffled deterministically per
   question id (fixed seed), so the answer position never leaks. `word_recall` names the English word
@@ -94,14 +98,14 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 35)**
+**Content bundle (JSON `contentVersion` 60)**
 
 | | Count |
 |---|---|
-| Lessons | 95 — A1: 37, A2: 32, B1/B2: 6 each, C1/C2: 7 each |
-| Exercises | 1373 — including a dialogue in every lesson (five or six turns at A2 and above) |
-| Vocabulary entries | 572 |
-| Knowledge items | 136 |
+| Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
+| Exercises | 2828 — including a dialogue in every lesson (five or six turns at A2 and above) |
+| Vocabulary entries | 1154 |
+| Knowledge items | 233 |
 | Placement questions | 36 |
 
 The lesson plan behind those numbers is the 180-topic syllabus (30 topics per CEFR band) in
@@ -339,7 +343,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-344 unit tests across 47 classes. The pure cores carry the most weight — review scheduling,
+526 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

@@ -89,13 +89,22 @@ data class KnowledgeStateEntity(
     @ColumnInfo(defaultValue = "0") val distinctTypesCorrect: Int = 0,
 )
 
-/** Learner progress: cursor + completion per lesson. */
+/** Learner progress: cursor + completion per lesson, plus the guided step. */
 @Entity(tableName = "lesson_state")
 data class LessonStateEntity(
     @PrimaryKey val lessonId: String,
     val currentIndex: Int,
     val completed: Boolean,
     val completedAt: Long?,
+    /**
+     * The guided lesson's saved step (its stable id, e.g. `practice`) and the
+     * steps already completed or skipped, comma-separated (Room v8). Empty for
+     * a lesson that has not been opened since the redesign, which resumes at the
+     * first step instead of inventing a position.
+     */
+    @ColumnInfo(defaultValue = "") val stage: String = "",
+    @ColumnInfo(defaultValue = "") val completedStages: String = "",
+    @ColumnInfo(defaultValue = "") val skippedStages: String = "",
 )
 
 /** Spaced-repetition state per content item (technical spec §15). */

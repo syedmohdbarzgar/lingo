@@ -32,8 +32,8 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
+import org.token.english.domain.model.LearningStage
 import org.token.english.feature.lesson.LessonEvent
-import org.token.english.feature.lesson.LessonStage
 import org.token.english.feature.lesson.LessonViewModel
 
 /**
@@ -104,22 +104,31 @@ class LessonViewModelTest {
         val complete = CompleteLessonUseCase(lessonRepo, progress)
         val focusPlan = GetFocusPlanUseCase(knowledge, lessonRepo)
 
-        fun build(focusItemId: String? = null): LessonViewModel = LessonViewModel(
-            lessonId = lessonId,
-            contentSeeded = contentSeeded,
-            lessonRepository = lessonRepo,
-            progressRepository = progress,
-            submitExercise = submit,
-            completeLesson = complete,
-            audioPlayer = audio,
-            voiceNote = voiceNote,
-            speaker = speaker,
-            isAppInForeground = { true },
-            getFocusPlan = focusPlan,
-            profileEngine = DefaultMasteryProfileEngine(),
-            selector = AdaptiveExerciseSelector(),
-            focusItemId = focusItemId,
-        )
+        /**
+         * Builds the session. These tests are about grading, so by default the
+         * lesson is skipped past its teaching steps into the exercises; the guided
+         * flow itself is walked by `GuidedLessonTest` from the context step.
+         */
+        fun build(focusItemId: String? = null, atContext: Boolean = false): LessonViewModel {
+            val vm = LessonViewModel(
+                lessonId = lessonId,
+                contentSeeded = contentSeeded,
+                lessonRepository = lessonRepo,
+                progressRepository = progress,
+                submitExercise = submit,
+                completeLesson = complete,
+                audioPlayer = audio,
+                voiceNote = voiceNote,
+                speaker = speaker,
+                isAppInForeground = { true },
+                getFocusPlan = focusPlan,
+                profileEngine = DefaultMasteryProfileEngine(),
+                selector = AdaptiveExerciseSelector(),
+                focusItemId = focusItemId,
+            )
+            if (!atContext) vm.onEvent(LessonEvent.StartExercises)
+            return vm
+        }
     }
 
     private fun Harness.withOneExercise(): Harness {
@@ -193,7 +202,14 @@ class LessonViewModelTest {
                 referenceAnswers = listOf("Go straight."),
                 skill = Skill.SPEAKING,
             ),
-            choice("a1.test.ex.02"),
+            // A second sentence of the same step: Next moves within speaking.
+            Exercise.Speaking(
+                id = "a1.test.sp.02",
+                lessonId = lessonId,
+                prompt = "جملهٔ دوم را بگو",
+                referenceAnswers = listOf("Turn left at the bank."),
+                skill = Skill.SPEAKING,
+            ),
         )
         val vm = h.build()
 
@@ -203,7 +219,7 @@ class LessonViewModelTest {
         assertTrue("the take plays", vm.state.value.isPlayingRecording)
 
         vm.onEvent(LessonEvent.FinishSpeaking)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
 
         // The next item is a different sentence: an old take is not "your answer"
         // to it, so playback closes and the button goes back to disabled.
@@ -341,7 +357,7 @@ class LessonViewModelTest {
         val h = Harness().withOneExercise()
         val vm = h.build()
 
-        assertEquals(LessonStage.EXERCISES, vm.state.value.stage)
+        assertEquals(LearningStage.PRACTICE, vm.state.value.activeStage)
 
         // Options are shuffled for display, so the wrong index is derived from the
         // exercise the screen is actually showing — never assumed to be 1.
@@ -355,7 +371,7 @@ class LessonViewModelTest {
         assertTrue("a miss is flagged for a second pass", vm.state.value.repeatsCurrent)
 
         // Continue → the SAME exercise comes back, only once.
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
         assertEquals(h.lessonRepo.exercises[lessonId]!!.first().id, vm.state.value.currentExercise?.id)
         assertEquals(0, vm.state.value.remainingCount)
         assertFalse(vm.state.value.repeatsCurrent)
@@ -364,7 +380,7 @@ class LessonViewModelTest {
         vm.onEvent(LessonEvent.SelectOption(displayed().correctIndex))
         vm.onEvent(LessonEvent.Submit)
         assertEquals(true, vm.state.value.outcome?.correct)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
         assertTrue("the lesson is completed", vm.state.value.completed)
         assertTrue("completion is persisted", lessonId in h.lessonRepo.completed)
     }
@@ -390,7 +406,7 @@ class LessonViewModelTest {
         val firstCorrect = firstOrder[(vm.state.value.currentExercise as Exercise.MultipleChoice).correctIndex]
 
         answerWrong(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
 
         // The same question, laid out differently: a learner who missed it must not
         // answer from the position they remember.
@@ -405,9 +421,9 @@ class LessonViewModelTest {
         val vm = h.build()
 
         answerWrong(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
         answerCorrectly(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
 
         val done = vm.state.value
         assertTrue("the lesson still finishes", done.completed)
@@ -424,7 +440,7 @@ class LessonViewModelTest {
         val vm = h.build()
 
         answerCorrectly(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
 
         val done = vm.state.value
         assertTrue(done.completed)
@@ -527,7 +543,7 @@ class LessonViewModelTest {
         // One correct answer consolidates recognition, so the unassessed recall
         // item leads the rest of the session instead of more multiple choice.
         answerCorrectly(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
         assertEquals("$lessonId.ex.04", vm.state.value.currentExercise?.id)
     }
 
@@ -536,13 +552,13 @@ class LessonViewModelTest {
         val h = Harness().with(choice("$lessonId.ex.01"), choice("$lessonId.ex.02"))
         val vm = h.build()
         answerWrong(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
 
         assertEquals("$lessonId.ex.02", vm.state.value.currentExercise?.id)
         assertEquals("the missed item is still queued", 1, vm.state.value.remainingCount)
 
         answerCorrectly(vm)
-        vm.onEvent(LessonEvent.Next)
+        vm.onEvent(LessonEvent.Next())
         assertEquals("the missed item is re-asked once", "$lessonId.ex.01", vm.state.value.currentExercise?.id)
     }
 
@@ -585,7 +601,7 @@ class LessonViewModelTest {
 
         val vm = h.build(focusItemId = "grammar.test")
 
-        assertEquals("only the grammar exercise is evidence for the node", 1, vm.state.value.exercises.size)
+        assertEquals("only the grammar exercise is evidence for the node", 1, vm.state.value.stageExercises.size)
         assertEquals("$lessonId.ex.01", vm.state.value.currentExercise?.id)
         assertEquals("گرامر آزمایشی", vm.state.value.focus?.titleFa)
         assertTrue("the engine's reason is shown", vm.state.value.focus!!.reasonFa.isNotEmpty())
@@ -622,14 +638,14 @@ class LessonViewModelTest {
         h.knowledge.allItemsGate = gate
 
         val vm = h.build(focusItemId = "grammar.test")
-        assertEquals("the session is still loading", 0, vm.state.value.exercises.size)
+        assertEquals("the session is still loading", 0, vm.state.value.stageExercises.size)
 
         vm.viewModelScope.cancel()
         gate.complete(Unit)
 
         // With a plain runCatching the CancellationException is swallowed, the
         // coroutine carries on and loads the lesson anyway — this is the guard.
-        assertEquals("nothing may be loaded after cancellation", 0, vm.state.value.exercises.size)
+        assertEquals("nothing may be loaded after cancellation", 0, vm.state.value.stageExercises.size)
         assertTrue("the screen stays in its loading state", vm.state.value.isLoading)
     }
 }

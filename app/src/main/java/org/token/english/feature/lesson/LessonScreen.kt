@@ -25,6 +25,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.VolumeUp
@@ -63,6 +64,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import org.token.english.core.common.persianCountPair
+import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
 import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
@@ -83,6 +85,7 @@ import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.GrammarSection
 import org.token.english.domain.model.GrammarSectionKind
+import org.token.english.domain.model.LearningStage
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.Skill
@@ -192,7 +195,12 @@ fun LessonScreen(
                     modifier = Modifier.align(Alignment.Center),
                 )
 
-                state.stage == LessonStage.INTRO -> IntroContent(state = state, onEvent = vm::onEvent)
+                // One active step, never the whole lesson at once (checklist Phase 2).
+                // A teaching step (context / grammar / vocabulary / review) has no
+                // exercise to grade; everything else runs this step's own items.
+                state.activeStage == null -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+
+                state.isTeachingStage -> TeachingContent(state = state, onEvent = vm::onEvent)
 
                 else -> ExerciseContent(state = state, onEvent = vm::onEvent)
             }
@@ -250,10 +258,8 @@ private fun ExerciseContent(
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
-        AppLinearProgress(
-            progress = state.progress,
-            contentDescription = "پیشرفت درس",
-        )
+        StageRail(state = state)
+        StageHeader(state = state)
         Text(
             // The total grows when a missed exercise is re-queued in this session.
             text = persianStepLabel("تمرین", state.askedCount + 1, state.visibleTotal),
@@ -535,11 +541,129 @@ private fun ExerciseContent(
                 )
             }
         } else {
-            PrimaryButton(
-                text = if (state.remainingCount == 0 && !state.repeatsCurrent) "پایان درس" else "ادامه",
-                onClick = { onEvent(LessonEvent.Next) },
-                modifier = Modifier.fillMaxWidth(),
+            StageNav(
+                state = state,
+                onEvent = onEvent,
+                label = if (state.remainingCount == 0 && !state.repeatsCurrent) {
+                    if (state.hasNextStage) "مرحلهٔ بعد" else "پایان درس"
+                } else {
+                    "ادامه"
+                },
             )
+        }
+    }
+}
+
+/**
+ * The eight-step map of the lesson (checklist Phase 2): completed, active,
+ * upcoming and not-in-this-lesson are four different states, and the dot row is
+ * paired with a text label so the map is never carried by colour alone.
+ */
+@Composable
+private fun StageRail(state: LessonUiState) {
+    val stageState = state.stageState ?: return
+    val plan = stageState.plan
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        plan.stages.forEach { unit ->
+            val done = stageState.isCompleted(unit.stage)
+            val skipped = stageState.isSkipped(unit.stage)
+            val active = unit.stage == stageState.active
+            val color = when {
+                done -> MaterialTheme.colorScheme.primary
+                active -> MaterialTheme.colorScheme.primary
+                skipped -> MaterialTheme.colorScheme.outline
+                else -> MaterialTheme.colorScheme.surfaceVariant
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(6.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(
+                        if (active || done) color else MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                    .then(
+                        if (active) {
+                            Modifier.border(1.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small)
+                        } else {
+                            Modifier
+                        },
+                    ),
+            )
+        }
+    }
+}
+
+/** Title of the active step, its number, and the lesson's overall percentage. */
+@Composable
+private fun StageHeader(state: LessonUiState) {
+    val stage = state.activeStage ?: return
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            Text(
+                text = persianStepLabel("مرحلهٔ ${stage.labelFa}", state.stageNumber, state.stageTotal),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = "پیشرفت درس ${persianPercent(state.lessonPercent)}",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Text(
+            text = persianCountPair(state.stageNumber, state.stageTotal),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.primary,
+        )
+    }
+}
+
+/**
+ * Stage navigation (checklist Phase 2): Previous never erases an answer, the
+ * primary action validates the step, and only an **optional** step offers Skip —
+ * labelled as a skip, so it can never read as mastery.
+ */
+@Composable
+private fun StageNav(
+    state: LessonUiState,
+    onEvent: (LessonEvent) -> Unit,
+    label: String,
+    primaryEnabled: Boolean = true,
+    onPrimary: (() -> Unit)? = null,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (state.hasPreviousStage) {
+                TextButton(onClick = { onEvent(LessonEvent.Previous) }) {
+                    Text("مرحلهٔ قبل")
+                }
+            }
+            PrimaryButton(
+                text = label,
+                onClick = onPrimary ?: { onEvent(LessonEvent.Next(state.activeStage)) },
+                enabled = primaryEnabled,
+                modifier = Modifier.weight(1f),
+            )
+        }
+        if (state.activeStage?.required == false) {
+            TextButton(
+                onClick = { onEvent(LessonEvent.SkipStage) },
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            ) {
+                Text("رد کردن این مرحله (اختیاری)")
+            }
         }
     }
 }
@@ -688,9 +812,15 @@ private fun LessonSummary(
     }
 }
 
-/** Intro stage: vocabulary with examples, the grammar tip, then start (P4). */
+/**
+ * A teaching step: the lesson's context, its grammar page, or its vocabulary —
+ * whichever step is active, and nothing else (checklist Phase 2/3). The step is
+ * completed by its own Continue: a teaching page has nothing to grade, so it is
+ * never marked via a test it did not give.
+ */
 @Composable
-private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
+private fun TeachingContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
+    val stage = state.activeStage ?: return
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -698,86 +828,110 @@ private fun IntroContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
-        SectionHeader("معرفی درس")
-        state.lesson?.let { lesson ->
+        StageRail(state = state)
+        StageHeader(state = state)
+        state.focus?.let { FocusCard(it) }
+
+        when (stage) {
+            LearningStage.CONTEXT -> ContextCard(state = state)
+            LearningStage.GRAMMAR -> state.lesson?.let { GrammarTeachingCards(lesson = it) }
+            LearningStage.VOCABULARY -> VocabularyCard(state = state, onEvent = onEvent)
+            else -> Unit
+        }
+
+        StageNav(state = state, onEvent = onEvent, label = "ادامه")
+    }
+}
+
+/** Step 1: what this lesson is about, what the learner will be able to do, how long. */
+@Composable
+private fun ContextCard(state: LessonUiState) {
+    val lesson = state.lesson ?: return
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("موقعیت و هدف")
             Text(text = lesson.titleFa, style = MaterialTheme.typography.headlineSmall)
             EnglishText(
                 text = lesson.title,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
-            lesson.grammarTipFa?.let { _ ->
-                // A-8 stage 1: sectioned teaching cards (rule/table/examples/
-                // mistakes); a legacy plain tip renders as its single TIP card.
-                GrammarTeachingCards(lesson = lesson)
-            }
+            Text(
+                text = "در این درس دربارهٔ «${lesson.topic}» حرف می‌زنی و در پایان می‌توانی " +
+                    "واژه‌ها و ساختار آن را در یک موقعیت واقعی به کار ببری.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = "زمان تقریبی: ${persianMeasure(lesson.estimatedMinutes, "دقیقه")} — " +
+                    "${persianCountPair(state.plan?.stages?.size ?: 0, 8)} مرحلهٔ این درس",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
+    }
+}
 
-        if (state.vocabulary.isNotEmpty()) {
-            AppCard {
-                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-                    SectionHeader("واژه‌های درس")
-                    state.vocabulary.forEach { item ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
-                            ) {
-                                EnglishText(text = item.word, style = MaterialTheme.typography.titleMedium)
-                                item.pronunciation?.let {
-                                    EnglishText(
-                                        text = it,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
+/** Step 3: the lesson's six words with pronunciation, meaning, examples and their gloss. */
+@Composable
+private fun VocabularyCard(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
+    if (state.vocabulary.isEmpty()) return
+    AppCard {
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+            SectionHeader("واژه‌های درس")
+            state.vocabulary.forEach { item ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                    ) {
+                        EnglishText(text = item.word, style = MaterialTheme.typography.titleMedium)
+                        item.pronunciation?.let {
+                            EnglishText(
+                                text = it,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Text(
+                            text = item.translation,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        // A-10: the example carries its own Persian gloss,
+                        // so the step teaches meaning, not just form.
+                        item.examples.forEach { example ->
+                            EnglishText(
+                                text = example.en,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            if (example.fa.isNotBlank()) {
                                 Text(
-                                    text = item.translation,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    text = isolateEmbeddedLtr(example.fa),
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                // A-10: the example carries its own Persian gloss,
-                                // so the intro stage teaches meaning, not just form.
-                                item.examples.forEach { example ->
-                                    EnglishText(
-                                        text = example.en,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                    if (example.fa.isNotBlank()) {
-                                        Text(
-                                            text = isolateEmbeddedLtr(example.fa),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
-                                }
-                            }
-                            androidx.compose.material3.IconButton(
-                                onClick = { onEvent(LessonEvent.SpeakText(item.word)) },
-                            ) {
-                                Icon(
-                                    Icons.Default.VolumeUp,
-                                    contentDescription = "پخش تلفظ",
-                                    tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(28.dp),
                                 )
                             }
                         }
                     }
+                    androidx.compose.material3.IconButton(
+                        onClick = { onEvent(LessonEvent.SpeakText(item.word)) },
+                    ) {
+                        Icon(
+                            Icons.Default.VolumeUp,
+                            contentDescription = "پخش تلفظ",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(28.dp),
+                        )
+                    }
                 }
             }
         }
-
-        PrimaryButton(
-            text = "شروع تمرین‌ها",
-            onClick = { onEvent(LessonEvent.StartExercises) },
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
 

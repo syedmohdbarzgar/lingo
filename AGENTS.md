@@ -86,7 +86,8 @@ di      → everything (the only place that wires them together)
   locator; `di/ViewModelFactories.kt` is the only `di/` symbol `feature/` may import (`grep
   AppContainer …/feature/` must stay empty); non-zero defaults exist only for ticks.
 - Engines are pure and swappable and the adaptive layer is wired to the UI — the full model
-  (planner budget, focused sessions, the unified remediation bar, the three skill tracks) is in
+  (planner budget, focused sessions, the unified remediation bar, the three skill tracks, the
+eight-step guided lesson) is in
   [`docs/learner-model.md`](docs/learner-model.md). The UI never learns how mastery is computed.
 
 ## 4. Connectivity — offline-first
@@ -126,8 +127,9 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (503 tests / 61 classes as of the v33
-dialogue pass — no trial on a fresh install, the per-flavor «ارتباط با ناشر» store page, the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (526 tests / 63 classes as of the v60
+guided-lesson pass — one active stage at a time across the eight-step lesson, no trial on a fresh
+install, the per-flavor «ارتباط با ناشر» store page, the
 per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut
 until that dialogue is spoken, and the Vosk verdict engine, whose recogniser half is device-only by
 nature); the full inventory and ViewModel/fake conventions are in

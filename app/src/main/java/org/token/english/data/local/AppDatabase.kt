@@ -26,7 +26,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 7
+internal const val DATABASE_VERSION = 8
 
 @Database(
     entities = [
@@ -131,6 +131,17 @@ abstract class AppDatabase : RoomDatabase() {
                 "ALTER TABLE knowledge_state ADD COLUMN firstCorrectAt INTEGER",
                 "ALTER TABLE knowledge_state ADD COLUMN distinctTypesCorrect INTEGER NOT NULL DEFAULT 0",
             ),
+            // v7 → v8: the lesson becomes a guided sequence of eight steps
+            // (checklist Phase 1/4). Three defaulted columns on the existing
+            // learner row: the saved step and the steps completed or skipped.
+            // An upgrading install keeps its cursor and completion, resumes at the
+            // first step (the saved step is empty, not invented), and its progress
+            // rows are otherwise untouched.
+            "7->8" to listOf(
+                "ALTER TABLE lesson_state ADD COLUMN stage TEXT NOT NULL DEFAULT ''",
+                "ALTER TABLE lesson_state ADD COLUMN completedStages TEXT NOT NULL DEFAULT ''",
+                "ALTER TABLE lesson_state ADD COLUMN skippedStages TEXT NOT NULL DEFAULT ''",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
@@ -139,6 +150,7 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_4_5 = migration(4, 5)
         val MIGRATION_5_6 = migration(5, 6)
         val MIGRATION_6_7 = migration(6, 7)
+        val MIGRATION_7_8 = migration(7, 8)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
@@ -149,6 +161,7 @@ abstract class AppDatabase : RoomDatabase() {
                 MIGRATION_4_5,
                 MIGRATION_5_6,
                 MIGRATION_6_7,
+                MIGRATION_7_8,
             )
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {

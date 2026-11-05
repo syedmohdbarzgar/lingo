@@ -1,0 +1,428 @@
+// v39 content, part 2 — B1 topics 19 and 20: eating habits, time management.
+// Read by `v39_b1_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "b1.eating-habits.lesson-01",
+      order: 110,
+      title: "Eating Habits",
+      titleFa: "عادت‌های غذایی",
+      topic: "Health",
+      tip: [
+        "## قاعده",
+        "برای عادت گذشته که دیگر نیست: used to + فعل ساده — I used to eat fast food.",
+        "برای کارهای تکراری در گذشته (کمی رسمی‌تر): would + فعل ساده — We would cook together on Fridays.",
+        "سؤال و منفی با did: Did you use to drink coffee? / I did not use to eat breakfast.",
+        "برای عادت فعلی: I usually have a snack at four.",
+        "## جدول",
+        "I used to drink sugary drinks. — قبلاً نوشیدنی شیرین می‌نوشیدم.",
+        "She did not use to cook at home. — او قبلاً در خانه غذا نمی‌پخت.",
+        "Breakfast is my favourite meal of the day. — صبحانه غذای محبوب من در روز است.",
+        "## مثال‌ها",
+        "Eating breakfast is a good habit. — صبحانه خوردن عادت خوبی است.",
+        "He eats smaller portions than before. — او حالا کمتر از قبل غذا می‌خورد.",
+        "Organic fruit is often more expensive. — میوهٔ ارگانیک اغلب گران‌تر است.",
+        "## خطاهای رایج",
+        "بعد از used to فعل ساده می‌آید: used to ate ✗ / used to eat ✓.",
+        "در سؤال did استفاده می‌شود، پس use بدون d: Did you use to…?",
+        "would فقط برای کارهای تکراری است، نه برای حالت: I would have a dog ✗.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.used-to-and-would",
+    vocab: {
+      id: "vocab.eating-habits",
+      title: "Eating Habits",
+      titleFa: "عادت‌های غذایی",
+      prerequisites: ["vocab.food-drinks"],
+    },
+    words: [
+      {
+        slug: "habit", w: "habit", fa: "عادت", ipa: "/ˈhæbɪt/", pos: "noun",
+        def: "something you do regularly, often without thinking",
+        ex: [
+          ["Eating breakfast is a good habit.", "صبحانه خوردن عادت خوبی است."],
+          ["Bad habits are hard to break.", "ترک عادت‌های بد سخت است."],
+        ],
+        col: ["a good habit", "break a habit"],
+        note: "break a habit یعنی «ترک عادت»؛ به‌جای آن quit a habit هم گفته می‌شود.",
+      },
+      {
+        slug: "snack", w: "snack", fa: "میان‌وعده", ipa: "/snæk/", pos: "noun",
+        def: "a small amount of food between meals",
+        ex: [
+          ["I usually have a snack at four.", "معمولاً ساعت چهار میان‌وعده می‌خورم."],
+          ["She snacked on nuts instead of crisps.", "او به‌جای چیپس آجیل به‌عنوان میان‌وعده خورد."],
+        ],
+        col: ["have a snack", "a healthy snack"],
+        note: "snack هم اسم است و هم فعل؛ فعل آن با on می‌آید: snack on fruit.",
+      },
+      {
+        slug: "portion", w: "portion", fa: "پرس؛ مقدار غذا", ipa: "/ˈpɔːʃn/", pos: "noun",
+        def: "the amount of food served to one person",
+        ex: [
+          ["The portions in that restaurant are huge.", "پرس‌های آن رستوران خیلی بزرگ است."],
+          ["He eats smaller portions than before.", "او حالا پرس‌های کوچک‌تری از قبل می‌خورد."],
+        ],
+        col: ["a large portion", "portion size"],
+        note: "portion قابل‌شمارش است: small portions؛ serving هم تقریباً همین معنا را دارد.",
+      },
+      {
+        slug: "organic", w: "organic", fa: "ارگانیک؛ طبیعی", ipa: "/ɔːˈɡænɪk/", pos: "adjective",
+        def: "grown without chemicals",
+        ex: [
+          ["Organic fruit is often more expensive.", "میوهٔ ارگانیک اغلب گران‌تر است."],
+          ["They buy organic vegetables at the market.", "آن‌ها سبزیجات ارگانیک از بازار می‌خرند."],
+        ],
+        col: ["organic food", "organic vegetables"],
+        note: "تکیه روی بخش دوم است: /ɔːˈɡænɪk/. متضاد آن در این معنا non-organic است.",
+      },
+      {
+        slug: "sugary", w: "sugary", fa: "شیرین؛ پرشکر", ipa: "/ˈʃʊɡəri/", pos: "adjective",
+        def: "containing a lot of sugar",
+        ex: [
+          ["Sugary drinks are bad for your teeth.", "نوشیدنی‌های شیرین برای دندان‌ها بد هستند."],
+          ["I stopped drinking sugary coffee.", "من نوشیدن قهوهٔ شیرین را ترک کردم."],
+        ],
+        col: ["sugary drinks", "sugary snacks"],
+        note: "sugary یعنی «پرشکر»؛ sweet فقط «شیرین‌مزه» است و بار منفی ندارد.",
+      },
+      {
+        slug: "meal", w: "meal", fa: "وعدهٔ غذایی", ipa: "/miːl/", pos: "noun",
+        def: "the food you eat at one time",
+        ex: [
+          ["Breakfast is the most important meal of the day.", "صبحانه مهم‌ترین وعدهٔ روز است."],
+          ["We had a simple meal together.", "با هم یک وعدهٔ ساده خوردیم."],
+        ],
+        col: ["a hot meal", "have a meal"],
+        note: "meal قابل‌شمارش است: three meals a day. food غیرقابل‌شمارش است.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "habit", gloss: "عادت",
+        options: ["عادت", "میان‌وعده", "پرس غذا", "وعده"],
+        note: "habit «عادت» است؛ میان‌وعده snack و وعده meal است.",
+      },
+      {
+        k: "mcq", word: "portion", gloss: "پرس؛ مقدار غذا",
+        options: ["پرس؛ مقدار غذا", "ارگانیک", "پرشکر", "عادت"],
+        note: "portion مقدار غذایی است که برای یک نفر کشیده می‌شود: large portions.",
+      },
+      {
+        k: "mcq", word: "sugary", gloss: "شیرین؛ پرشکر",
+        options: ["شیرین؛ پرشکر", "ارگانیک", "تازه", "کم‌چرب"],
+        note: "sugary «پرشکر» است؛ organic «ارگانیک» و fresh «تازه» است.",
+      },
+      {
+        k: "blank", sentence: "Breakfast is my favourite ___ of the day.",
+        accepted: ["meal", "time"], skill: "VOCABULARY",
+        note: "meal of the day ساختار ثابت است؛ time هم در گفتار روزمره می‌آید.",
+      },
+      {
+        k: "blank", sentence: "He ___ eat junk food, but now he cooks at home.",
+        accepted: ["used to", "would"], skill: "GRAMMAR",
+        note: "used to و would هر دو عادت گذشته را می‌گویند؛ used to رایج‌تر است.",
+      },
+      {
+        k: "recall", prompt: "میان‌وعده", accepted: ["snack"],
+        note: "میان‌وعده snack است؛ فعل آن با on می‌آید: snack on nuts.",
+      },
+      {
+        k: "tr", prompt: "من قبلاً نوشیدنی شیرین می‌نوشیدم.",
+        accepted: ["i used to drink sugary drinks"],
+        note: "used to + فعل ساده و sugary drinks برای «نوشیدنی شیرین».",
+      },
+      {
+        k: "listen", text: "She used to eat sugary snacks every day.",
+        note: "به used to گوش کنید: /ˈjuːstə/ یک‌جا تلفظ می‌شود و d شنیده نمی‌شود.",
+      },
+      {
+        k: "prod", prompt: "بگو می‌خواهی عادت‌های غذایی‌ات را بهتر کنی.",
+        mustUse: ["want", "habits"], minWords: 6,
+        accepted: ["i want to change my eating habits this year"],
+        hint: "با I want to change… شروع کن.",
+        note: "want to + فعل ساده و eating habits ترکیب ثابت «عادت‌های غذایی» است.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو صبحانه نمی‌خوری و تا ظهر گرسنه می‌مانی.",
+        question: "What do you usually eat in the morning?",
+        questionFa: "صبح‌ها معمولاً چه می‌خوری؟",
+        accepted: [
+          "I do not eat breakfast and I am hungry by noon.",
+          "Nothing. I skip breakfast and feel hungry later.",
+        ],
+        note: "by noon یعنی «تا ظهر»؛ skip breakfast هم «صبحانه نخوردن» است.",
+      },
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو قبلاً هر روز میان‌وعدهٔ شیرین می‌خوردی.",
+        question: "And what about snacks?",
+        questionFa: "و میان‌وعده‌ها؟",
+        accepted: [
+          "I used to have a sugary snack every day.",
+          "I used to eat sweet snacks every afternoon.",
+        ],
+        note: "used to + فعل ساده عادت گذشته‌ای را می‌گوید که تمام شده است.",
+      },
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو حالا آجیل و میوه می‌خوری.",
+        question: "What do you eat instead now?",
+        questionFa: "حالا به‌جایش چه می‌خوری؟",
+        accepted: [
+          "Now I snack on nuts and fruit.",
+          "I eat nuts or fruit instead.",
+        ],
+        note: "snack on چیزی؛ instead در پایان جمله «به‌جایش» می‌دهد.",
+      },
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو پرس‌های غذایت بزرگ بوده است.",
+        question: "How much do you eat at dinner?",
+        questionFa: "شام چقدر می‌خوری؟",
+        accepted: [
+          "My portions used to be very large.",
+          "I eat a large portion at dinner.",
+        ],
+        note: "portion قابل‌شمارش است: large portions.",
+      },
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو می‌خواهی غذای ارگانیک بیشتر بخری.",
+        question: "Would you change anything else?",
+        questionFa: "چیز دیگری را عوض می‌کنی؟",
+        accepted: [
+          "I would like to buy more organic food.",
+          "I want to eat more organic vegetables.",
+        ],
+        note: "would like to + فعل ساده مؤدبانه‌تر از want to است.",
+      },
+      {
+        scene: "مطب تغذیه", partner: "متخصص تغذیه",
+        prompt: "بگو قبول داری و هفتهٔ بعد برمی‌گردی.",
+        question: "Can you come back next week?",
+        questionFa: "هفتهٔ بعد می‌توانی برگردی؟",
+        accepted: [
+          "Yes, I will come back next week.",
+          "Sure, see you next week.",
+        ],
+        note: "will برای قصد و تصمیم در آینده: I will come back.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "b1.time-management.lesson-01",
+      order: 111,
+      title: "Time Management",
+      titleFa: "مدیریت زمان",
+      topic: "Work",
+      tip: [
+        "## قاعده",
+        "برای اجبار بیرونی: have to — I have to finish this today.",
+        "برای نیاز شخصی: need to — I need to plan my week.",
+        "have to در سوم شخص has to می‌شود: She has to leave early.",
+        "برای توصیه: should / ought to — You should start with the urgent task.",
+        "## جدول",
+        "I need to plan my week. — باید هفته‌ام را برنامه‌ریزی کنم.",
+        "She has to finish the report by Friday. — او باید گزارش را تا جمعه تمام کند.",
+        "You should not check your phone every minute. — نباید هر دقیقه گوشی‌ات را چک کنی.",
+        "## مثال‌ها",
+        "My schedule is full this week. — برنامهٔ این هفته‌ام پر است.",
+        "Study is my first priority. — درس اولویت اول من است.",
+        "I cannot focus when the room is noisy. — وقتی اتاق شلوغ است نمی‌توانم تمرکز کنم.",
+        "## خطاهای رایج",
+        "have to بعد از سوم شخص s می‌گیرد: She have to ✗ / She has to ✓.",
+        "need to با فعل ساده می‌آید؛ need not to ✗ / do not need to ✓.",
+        "priority قابل‌شمارش است: set your priorities.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.obligation-need-have-to",
+    vocab: {
+      id: "vocab.time-management",
+      title: "Time Management",
+      titleFa: "مدیریت زمان",
+      prerequisites: ["vocab.everyday-problems"],
+    },
+    words: [
+      {
+        slug: "schedule", w: "schedule", fa: "برنامهٔ زمانی", ipa: "/ˈʃedjuːl/", pos: "noun",
+        def: "a plan of the times when things will happen",
+        ex: [
+          ["My schedule is full this week.", "برنامهٔ این هفته‌ام پر است."],
+          ["I scheduled the meeting for Monday.", "جلسه را برای دوشنبه تنظیم کردم."],
+        ],
+        col: ["a busy schedule", "on schedule"],
+        note: "در انگلیسی آمریکایی /ˈskedʒuːl/ تلفظ می‌شود؛ فعل آن scheduled.",
+      },
+      {
+        slug: "priority", w: "priority", fa: "اولویت", ipa: "/praɪˈɒrəti/", pos: "noun",
+        def: "something that is more important than other things",
+        ex: [
+          ["Study is my first priority.", "درس اولویت اول من است."],
+          ["You need to decide your first priority.", "باید اولویت اولت را مشخص کنی."],
+        ],
+        col: ["the first priority", "set priorities"],
+        note: "قابل‌شمارش است و اغلب جمع می‌آید: decide your priorities.",
+      },
+      {
+        slug: "distraction", w: "distraction", fa: "حواس‌پرتی؛ عامل پرت‌کننده", ipa: "/dɪˈstrækʃn/", pos: "noun",
+        def: "something that takes your attention away",
+        ex: [
+          ["My phone is my biggest distraction.", "گوشی‌ام بزرگ‌ترین عامل حواس‌پرتی من است."],
+          ["Turn off notifications to avoid distractions.", "برای دوری از حواس‌پرتی اعلان‌ها را ببند."],
+        ],
+        col: ["a constant distraction", "avoid distractions"],
+        note: "از فعل distract ساخته شده؛ avoid distractions یعنی «از حواس‌پرتی پرهیز کردن».",
+      },
+      {
+        slug: "focus", w: "focus", fa: "تمرکز کردن", ipa: "/ˈfəʊkəs/", pos: "verb",
+        def: "to give all your attention to one thing",
+        ex: [
+          ["I cannot focus when the room is noisy.", "وقتی اتاق شلوغ است نمی‌توانم تمرکز کنم."],
+          ["She focused on one task at a time.", "او هر بار روی یک کار تمرکز کرد."],
+        ],
+        col: ["focus on something", "lose focus"],
+        note: "focus on چیزی: focus on one task. اسم آن هم focus است.",
+      },
+      {
+        slug: "routine", w: "routine", fa: "روتین؛ برنامهٔ همیشگی", ipa: "/ruːˈtiːn/", pos: "noun",
+        def: "the things you do regularly in the same order",
+        ex: [
+          ["A morning routine helps me start well.", "روتین صبحگاهی کمک می‌کند روز را خوب شروع کنم."],
+          ["His routine changed after he started work.", "روتینش بعد از شروع کار عوض شد."],
+        ],
+        col: ["a daily routine", "change your routine"],
+        note: "routine قابل‌شمارش است: a simple routine؛ صفت هم می‌شود: a routine check.",
+      },
+      {
+        slug: "urgent", w: "urgent", fa: "فوری", ipa: "/ˈɜːdʒənt/", pos: "adjective",
+        def: "needing attention immediately",
+        ex: [
+          ["This email is urgent.", "این ایمیل فوری است."],
+          ["Do the urgent jobs first, then the rest.", "اول کارهای فوری را انجام بده، بعد بقیه را."],
+        ],
+        col: ["an urgent task", "an urgent message"],
+        note: "urgent یعنی «فوری»؛ مهم لزوماً فوری نیست — important ≠ urgent.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "focus", gloss: "تمرکز کردن",
+        options: ["تمرکز کردن", "برنامه‌ریزی کردن", "به تعویق انداختن", "عجله کردن"],
+        note: "focus «تمرکز کردن» است و با on می‌آید: focus on one task.",
+      },
+      {
+        k: "mcq", word: "priority", gloss: "اولویت",
+        options: ["اولویت", "برنامهٔ زمانی", "حواس‌پرتی", "روتین"],
+        note: "priority «اولویت» است؛ برنامهٔ زمانی schedule و روتین routine است.",
+      },
+      {
+        k: "mcq", word: "urgent", gloss: "فوری",
+        options: ["فوری", "مهم", "آرام", "دقیق"],
+        note: "urgent «فوری» است؛ مهم important است و همیشه فوری نیست.",
+      },
+      {
+        k: "blank", sentence: "You need to decide which task is the most ___.",
+        accepted: ["urgent", "important"], skill: "VOCABULARY",
+        note: "urgent و important هر دو با the most می‌آیند؛ اولی فوریت را می‌رساند.",
+      },
+      {
+        k: "blank", sentence: "I turned off my phone to avoid ___.",
+        accepted: ["distraction", "distractions"], skill: "VOCABULARY",
+        note: "distraction قابل‌شمارش است و به‌صورت مفرد یا جمع می‌آید.",
+      },
+      {
+        k: "recall", prompt: "اولویت", accepted: ["priority"],
+        note: "اولویت priority است و جمع آن priorities.",
+      },
+      {
+        k: "tr", prompt: "او هر روز برنامهٔ خود را می‌نویسد.",
+        accepted: ["he writes his schedule every day"],
+        note: "schedule «برنامهٔ زمانی» است و سوم شخص writes می‌گیرد.",
+      },
+      {
+        k: "listen", text: "My phone is my biggest distraction.",
+        note: "به distraction /dɪˈstrækʃn/ گوش کنید: تکیه روی stræk و پایانهٔ /ʃn/.",
+      },
+      {
+        k: "prod", prompt: "بگو چطور روی کارت بهتر تمرکز می‌کنی.",
+        mustUse: ["focus", "because"], minWords: 6,
+        accepted: ["i focus better because i turn off my phone"],
+        hint: "با I focus better because… شروع کن.",
+        note: "focus better صفت مقایسه‌ای‌وار با قید است؛ because دلیل را می‌آورد.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو برنامهٔ این هفته‌ات پر است.",
+        question: "How is your week going?",
+        questionFa: "هفته‌ات چطور می‌گذرد؟",
+        accepted: [
+          "My schedule is full this week.",
+          "I have a very busy schedule this week.",
+        ],
+        note: "schedule با full یا busy می‌آید: a full schedule.",
+      },
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو باید گزارش را تا چهارشنبه تمام کنی.",
+        question: "Can you finish the report by Thursday?",
+        questionFa: "می‌توانی گزارش را تا پنجشنبه تمام کنی؟",
+        accepted: [
+          "I have to finish it by Wednesday.",
+          "I need to send it before Wednesday.",
+        ],
+        note: "have to و need to هر دو اجبار را می‌رسانند؛ by یعنی «تا». ",
+      },
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو چه چیزی بیشتر حواس‌ات را پرت می‌کند.",
+        question: "What slows you down most?",
+        questionFa: "چه چیزی بیشتر از همه سرعتت را کم می‌کند؟",
+        accepted: [
+          "My biggest distraction is my phone.",
+          "Notifications are my biggest distraction.",
+        ],
+        note: "biggest صفت عالی big است: بزرگ‌ترین.",
+      },
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو باید اولویت‌هایت را مشخص کنی.",
+        question: "So what is your plan?",
+        questionFa: "پس برنامه‌ات چیست؟",
+        accepted: [
+          "I need to decide my priorities.",
+          "I have to set my priorities first.",
+        ],
+        note: "set priorities یعنی «اولویت‌ها را تعیین کردن».",
+      },
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو پیشنهاد می‌کنی صبح‌ها گوشی را خاموش کند.",
+        question: "Any advice for me?",
+        questionFa: "توصیه‌ای برای من داری؟",
+        accepted: [
+          "You should turn off your phone in the morning.",
+          "You should not check your phone every minute.",
+        ],
+        note: "should + فعل ساده برای توصیه؛ در جملهٔ منفی should not.",
+      },
+      {
+        scene: "جلسهٔ هفتگی تیم", partner: "همکار",
+        prompt: "بگو موافقی و از فردا روتین تازه‌ای شروع می‌کنی.",
+        question: "Shall we try it from tomorrow?",
+        questionFa: "از فردا امتحانش کنیم؟",
+        accepted: [
+          "Yes, I will start a new routine tomorrow.",
+          "Good idea, we can start a morning routine.",
+        ],
+        note: "start a routine ترکیب طبیعی است: روتینی را شروع کردن.",
+      },
+    ],
+  },
+];

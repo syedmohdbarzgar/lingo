@@ -1,0 +1,433 @@
+// v47 content, part 2 — B2 topics 27 and 28: strategy and evaluation,
+// professional ethics. Read by `v47_b2_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "b2.strategy.lesson-01",
+      order: 142,
+      title: "Strategy and Evaluation",
+      titleFa: "طراحی و ارزیابی استراتژی",
+      topic: "Business",
+      tip: [
+        "## قاعده",
+        "مجهول با فعل وجهی: modal + be + قسمت سوم — The plan should be reviewed every quarter.",
+        "برای گذشته: modal + have been + قسمت سوم — The target might have been set too high.",
+        "مجهول وقتی طبیعی است که انجام‌دهنده معلوم نیست یا مهم نیست: The results will be measured monthly.",
+        "اگر فاعل مهم باشد با by می‌آید: The roadmap was approved by the board.",
+        "## جدول",
+        "The plan should be reviewed every quarter. — برنامه باید هر فصل بازبینی شود.",
+        "The target might have been set too high. — ممکن است هدف بیش از حد بالا گذاشته شده باشد.",
+        "The results will be measured monthly. — نتایج ماهانه اندازه‌گیری می‌شود.",
+        "## مثال‌ها",
+        "Our main objective is retention. — هدف اصلی ما نگه‌داشتن مشتری است.",
+        "The benchmark was set last year. — معیار سنجش سال پیش تعیین شد.",
+        "We evaluate every initiative after six months. — هر طرح را بعد از شش ماه ارزیابی می‌کنیم.",
+        "## خطاهای رایج",
+        "پس از وجهی be می‌آید: should be reviewed ✓ / should reviewed ✗.",
+        "objective با for می‌آید: an objective for the year.",
+        "evaluate با مفعول مستقیم می‌آید: evaluate the plan (بدون on).",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.passive-with-modals",
+    vocab: {
+      id: "vocab.strategy-evaluation",
+      title: "Strategy and Evaluation",
+      titleFa: "استراتژی و ارزیابی",
+      prerequisites: ["vocab.goals"],
+    },
+    words: [
+      {
+        slug: "objective", w: "objective", fa: "هدف", ipa: "/əbˈdʒektɪv/", pos: "noun",
+        def: "a result you plan to reach",
+        ex: [
+          ["Our main objective is retention.", "هدف اصلی ما نگه‌داشتن مشتری است."],
+          ["Every objective needs a number.", "هر هدفی به یک عدد نیاز دارد."],
+        ],
+        col: ["a clear objective", "meet an objective"],
+        note: "objective هم اسم است و هم صفت (به معنی بی‌طرف)؛ اینجا اسم است.",
+      },
+      {
+        slug: "benchmark", w: "benchmark", fa: "معیار سنجش", ipa: "/ˈbentʃmɑːk/", pos: "noun",
+        def: "a standard used to compare results",
+        ex: [
+          ["The benchmark was set last year.", "معیار سنجش سال پیش تعیین شد."],
+          ["We use last year's results as a benchmark.", "نتایج سال پیش را معیار سنجش می‌گیریم."],
+        ],
+        col: ["set a benchmark", "against the benchmark"],
+        note: "benchmark قابل‌شمارش است و با against می‌آید: against the benchmark.",
+      },
+      {
+        slug: "evaluate", w: "evaluate", fa: "ارزیابی کردن", ipa: "/ɪˈvæljueɪt/", pos: "verb",
+        def: "to judge how good or useful something is",
+        ex: [
+          ["We evaluate every initiative after six months.", "هر طرح را بعد از شش ماه ارزیابی می‌کنیم."],
+          ["The board will evaluate the plan in June.", "هیئت‌مدیره در ژوئن برنامه را ارزیابی می‌کند."],
+        ],
+        col: ["evaluate a plan", "evaluate the results"],
+        note: "evaluate با مفعول مستقیم می‌آید؛ اسم آن evaluation است.",
+      },
+      {
+        slug: "metric", w: "metric", fa: "شاخص اندازه‌گیری", ipa: "/ˈmetrɪk/", pos: "noun",
+        def: "a number used to measure success",
+        ex: [
+          ["One metric is not enough to judge a plan.", "یک شاخص برای قضاوت یک برنامه کافی نیست."],
+          ["Pick two metrics and stick to them.", "دو شاخص انتخاب کن و به آن‌ها پایبند بمان."],
+        ],
+        col: ["a key metric", "track a metric"],
+        note: "metric قابل‌شمارش است و بیشتر جمع می‌آید: metrics.",
+      },
+      {
+        slug: "initiative", w: "initiative", fa: "طرح؛ اقدام", ipa: "/ɪˈnɪʃətɪv/", pos: "noun",
+        def: "a new plan started to reach a goal",
+        ex: [
+          ["The new initiative starts in April.", "طرح تازه در آوریل شروع می‌شود."],
+          ["Two initiatives failed for the same reason.", "دو طرح به یک دلیل شکست خوردند."],
+        ],
+        col: ["launch an initiative", "a new initiative"],
+        note: "initiative هم «طرح» است و هم «ابتکار»: take the initiative یعنی پیش‌قدم شدن.",
+      },
+      {
+        slug: "roadmap", w: "roadmap", fa: "نقشهٔ راه", ipa: "/ˈrəʊdmæp/", pos: "noun",
+        def: "a plan that shows the steps over time",
+        ex: [
+          ["The roadmap covers the next two years.", "نقشهٔ راه دو سال آینده را پوشش می‌دهد."],
+          ["We update the roadmap every quarter.", "نقشهٔ راه را هر فصل به‌روز می‌کنیم."],
+        ],
+        col: ["a product roadmap", "update the roadmap"],
+        note: "roadmap یک واژه است و جمع آن roadmaps؛ با for هم می‌آید: a roadmap for growth.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "objective", gloss: "هدف",
+        options: ["هدف", "بودجه", "ریسک", "نتیجه"],
+        note: "objective نتیجه‌ای است که برای رسیدن به آن برنامه می‌ریزیم.",
+      },
+      {
+        k: "mcq", word: "benchmark", gloss: "معیار سنجش",
+        options: ["معیار سنجش", "سود", "قرارداد", "گزارش"],
+        note: "benchmark استانداردی است که نتیجه را با آن می‌سنجیم.",
+      },
+      {
+        k: "mcq", word: "roadmap", gloss: "نقشهٔ راه",
+        options: ["نقشهٔ راه", "فهرست کارکنان", "صورت‌حساب", "شاخص"],
+        note: "roadmap گام‌های یک برنامه را در طول زمان نشان می‌دهد.",
+      },
+      {
+        k: "blank", sentence: "The plan should ___ reviewed every quarter.",
+        accepted: ["be", "get"], skill: "VOCABULARY",
+        note: "پس از وجهی be می‌آید؛ get reviewed در گفتار هم رایج است.",
+      },
+      {
+        k: "blank", sentence: "The target might ___ been set too high.",
+        accepted: ["have", "'ve"], skill: "VOCABULARY",
+        note: "برای گذشته: might have been + قسمت سوم.",
+      },
+      {
+        k: "recall", prompt: "نقشهٔ راه", accepted: ["roadmap"],
+        note: "نقشهٔ راه roadmap است و هر فصل به‌روز می‌شود.",
+      },
+      {
+        k: "tr", prompt: "برنامه باید هر فصل بازبینی شود.",
+        accepted: [
+          "the plan should be reviewed every quarter",
+          "the plan should be reviewed each quarter",
+        ],
+        note: "should be + قسمت سوم، مجهول با وجهی است.",
+      },
+      {
+        k: "listen", text: "The results will be measured monthly.",
+        note: "به will be measured گوش کنید: وجهی + be + قسمت سوم.",
+      },
+      {
+        k: "prod", prompt: "بگو چه چیزی باید پیش از فصل بعد به‌روز شود.",
+        mustUse: ["should", "be"], minWords: 8,
+        accepted: ["The roadmap should be updated before the next quarter."],
+        hint: "با The roadmap should be… شروع کن.",
+        note: "ترتیب لنگرها: should پیش از be می‌آید.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو برنامه باید هر فصل بازبینی شود.",
+        question: "How often do we revisit the plan?",
+        questionFa: "چند وقت یک بار برنامه را بازبینی می‌کنیم؟",
+        accepted: [
+          "The plan should be reviewed every quarter.",
+          "It should be reviewed at the end of each quarter.",
+        ],
+        note: "should be + قسمت سوم: مجهول وجهی، بدون فاعل.",
+      },
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو هدف اصلی نگه‌داشتن مشتری است.",
+        question: "What are we optimising for?",
+        questionFa: "برای چه چیزی بهینه‌سازی می‌کنیم؟",
+        accepted: [
+          "Our main objective is retention.",
+          "The main objective is keeping customers.",
+        ],
+        note: "the main objective مفرد است، پس is می‌گیرد.",
+      },
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو ممکن است هدف بیش از حد بالا گذاشته شده باشد.",
+        question: "Why are we behind?",
+        questionFa: "چرا عقب هستیم؟",
+        accepted: [
+          "The target might have been set too high.",
+          "Because the target might have been too ambitious.",
+        ],
+        note: "might have been + قسمت سوم حدس دربارهٔ گذشتهٔ مجهول است.",
+      },
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو یک شاخص برای قضاوت کافی نیست.",
+        question: "Can we judge by sales alone?",
+        questionFa: "با فروش تنها می‌توان قضاوت کرد؟",
+        accepted: [
+          "One metric is not enough to judge a plan.",
+          "No, one metric is never enough.",
+        ],
+        note: "one metric مفرد است و فعل مفرد می‌گیرد.",
+      },
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو هر طرح را بعد از شش ماه ارزیابی می‌کنیم.",
+        question: "When do you assess a new initiative?",
+        questionFa: "طرح تازه را کِی ارزیابی می‌کنید؟",
+        accepted: [
+          "We evaluate every initiative after six months.",
+          "Every initiative is evaluated after six months.",
+        ],
+        note: "evaluate با مفعول مستقیم می‌آید، بدون on.",
+      },
+      {
+        scene: "جلسهٔ بازبینی استراتژی سه‌ماهه", partner: "مدیر استراتژی",
+        prompt: "بگو نقشهٔ راه دو سال آینده را پوشش می‌دهد.",
+        question: "How far ahead does the plan go?",
+        questionFa: "برنامه تا چه افقی پیش می‌رود؟",
+        accepted: [
+          "The roadmap covers the next two years.",
+          "It covers the next two years.",
+        ],
+        note: "the roadmap مفرد است: covers ✓.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "b2.ethics.lesson-01",
+      order: 143,
+      title: "Professional Ethics",
+      titleFa: "اخلاق حرفه‌ای",
+      topic: "Business",
+      tip: [
+        "## قاعده",
+        "have to برای اجبار بیرونی: We have to report every payment.",
+        "must برای اجبار قوی یا قانونی: Auditors must declare a conflict.",
+        "don't have to یعنی لازم نیست، ولی mustn't یعنی ممنوع است — این دو را با هم عوض نکن.",
+        "## جدول",
+        "We have to report every payment. — باید هر پرداخت را گزارش کنیم.",
+        "Auditors must declare a conflict of interest. — حسابرسان باید تعارض منافع را اعلام کنند.",
+        "You do not have to sign it today. — لازم نیست امروز امضایش کنی.",
+        "## مثال‌ها",
+        "Integrity is the base of every audit. — درستکاری پایهٔ هر حسابرسی است.",
+        "Transparency builds trust faster than promises. — شفافیت سریع‌تر از وعده اعتماد می‌سازد.",
+        "A bribe can end a career. — رشوه می‌تواند یک حرفه را تمام کند.",
+        "## خطاهای رایج",
+        "must بدون to می‌آید: must declare ✓ / must to declare ✗.",
+        "mustn't ممنوعیت است، نه «لازم نیست».",
+        "integrity غیرقابل‌شمارش است: a lot of integrity ✓ / integrities ✗.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.obligation-need-have-to",
+    vocab: {
+      id: "vocab.professional-ethics",
+      title: "Professional Ethics",
+      titleFa: "اخلاق حرفه‌ای",
+      prerequisites: ["vocab.leadership"],
+    },
+    words: [
+      {
+        slug: "integrity", w: "integrity", fa: "درستکاری", ipa: "/ɪnˈteɡrəti/", pos: "noun",
+        def: "being honest and having strong principles",
+        ex: [
+          ["Integrity is the base of every audit.", "درستکاری پایهٔ هر حسابرسی است."],
+          ["Nobody questioned her integrity.", "هیچ‌کس درستکاری او را زیر سؤال نبرد."],
+        ],
+        col: ["personal integrity", "act with integrity"],
+        note: "integrity غیرقابل‌شمارش است و با with می‌آید: act with integrity.",
+      },
+      {
+        slug: "transparency", w: "transparency", fa: "شفافیت", ipa: "/trænsˈpærənsi/", pos: "noun",
+        def: "being open about what you do and why",
+        ex: [
+          ["Transparency builds trust faster than promises.", "شفافیت سریع‌تر از وعده اعتماد می‌سازد."],
+          ["The report asks for more transparency.", "گزارش شفافیت بیشتری می‌خواهد."],
+        ],
+        col: ["full transparency", "call for transparency"],
+        note: "transparency غیرقابل‌شمارش است؛ صفت آن transparent است.",
+      },
+      {
+        slug: "bribe", w: "bribe", fa: "رشوه", ipa: "/braɪb/", pos: "noun",
+        def: "money given to make someone act dishonestly",
+        ex: [
+          ["A bribe can end a career.", "رشوه می‌تواند یک حرفه را تمام کند."],
+          ["He refused the bribe and reported it.", "او رشوه را رد کرد و آن را گزارش داد."],
+        ],
+        col: ["take a bribe", "offer a bribe"],
+        note: "bribe هم اسم است و هم فعل: to bribe an official.",
+      },
+      {
+        slug: "disclosure", w: "disclosure", fa: "افشا؛ اعلام", ipa: "/dɪsˈkləʊʒə/", pos: "noun",
+        def: "the act of making information public",
+        ex: [
+          ["Full disclosure was the only option.", "افشای کامل تنها گزینه بود."],
+          ["The rules require disclosure of any gift.", "قواعد اعلام هر هدیه را الزامی می‌کند."],
+        ],
+        col: ["full disclosure", "require disclosure"],
+        note: "disclosure غیرقابل‌شمارش است؛ فعل آن disclose است.",
+      },
+      {
+        slug: "confidential", w: "confidential", fa: "محرمانه", ipa: "/ˌkɒnfɪˈdenʃl/", pos: "adjective",
+        def: "meant to be kept secret",
+        ex: [
+          ["The report stays confidential for five years.", "گزارش پنج سال محرمانه می‌ماند."],
+          ["Never share confidential data by email.", "هرگز دادهٔ محرمانه را با ایمیل به اشتراک نگذار."],
+        ],
+        col: ["strictly confidential", "confidential data"],
+        note: "confidential صفت است؛ اسم آن confidentiality و قید آن confidentially.",
+      },
+      {
+        slug: "dilemma", w: "dilemma", fa: "دو راهی اخلاقی", ipa: "/dɪˈlemə/", pos: "noun",
+        def: "a choice between two difficult options",
+        ex: [
+          ["The team faced a real dilemma.", "تیم با یک دو راهی واقعی روبه‌رو شد."],
+          ["There is no easy answer to that dilemma.", "برای آن دو راهی پاسخ آسانی نیست."],
+        ],
+        col: ["face a dilemma", "a moral dilemma"],
+        note: "dilemma قابل‌شمارش است و با face می‌آید: face a dilemma.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "integrity", gloss: "درستکاری",
+        options: ["درستکاری", "هوش", "قدرت", "ثروت"],
+        note: "integrity یعنی صادق بودن و داشتن اصول محکم.",
+      },
+      {
+        k: "mcq", word: "transparency", gloss: "شفافیت",
+        options: ["شفافیت", "محرمانگی", "سرعت", "سود"],
+        note: "transparency یعنی باز بودن دربارهٔ کاری که انجام می‌دهی و دلیلش.",
+      },
+      {
+        k: "mcq", word: "dilemma", gloss: "دو راهی اخلاقی",
+        options: ["دو راهی اخلاقی", "قطعی‌نامه", "پاداش", "مهلت"],
+        note: "dilemma انتخاب بین دو گزینهٔ سخت است.",
+      },
+      {
+        k: "blank", sentence: "We ___ to report every payment.",
+        accepted: ["have", "need"], skill: "VOCABULARY",
+        note: "have to و need to هر دو اجبار را می‌رسانند.",
+      },
+      {
+        k: "blank", sentence: "Auditors ___ declare a conflict of interest.",
+        accepted: ["must", "should"], skill: "VOCABULARY",
+        note: "must اجبار قانونی است؛ should توصیهٔ قوی.",
+      },
+      {
+        k: "recall", prompt: "محرمانه", accepted: ["confidential"],
+        note: "محرمانه confidential است و اسم آن confidentiality.",
+      },
+      {
+        k: "tr", prompt: "باید هر پرداخت را گزارش کنیم.",
+        accepted: [
+          "we have to report every payment",
+          "we must report every payment",
+        ],
+        note: "have to و must هر دو اجبار را می‌رسانند؛ must قوی‌تر است.",
+      },
+      {
+        k: "listen", text: "The report stays confidential for five years.",
+        note: "به stays confidential گوش کنید: صفت پس از فعل ربطی می‌آید.",
+      },
+      {
+        k: "prod", prompt: "بگو چه چیزی را باید به تیم مالی گزارش کنیم.",
+        mustUse: ["have", "to"], minWords: 8,
+        accepted: ["We have to report every payment to the finance team."],
+        hint: "با We have to… شروع کن.",
+        note: "ترتیب لنگرها: have پیش از to می‌آید.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو باید هر پرداخت را گزارش کنیم.",
+        question: "What is our duty here?",
+        questionFa: "وظیفهٔ ما اینجاست چیست؟",
+        accepted: [
+          "We have to report every payment.",
+          "Every payment has to be reported.",
+        ],
+        note: "have to اجبار بیرونی را می‌رساند؛ has to برای سوم‌شخص مفرد.",
+      },
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو حسابرس‌ها باید تعارض منافع را اعلام کنند.",
+        question: "What must the auditors do?",
+        questionFa: "حسابرسان چه باید بکنند؟",
+        accepted: [
+          "Auditors must declare a conflict of interest.",
+          "They must declare any conflict of interest.",
+        ],
+        note: "must بدون to می‌آید: must declare.",
+      },
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو یک رشوه می‌تواند یک حرفه را تمام کند.",
+        question: "Why is this case so serious?",
+        questionFa: "چرا این پرونده این‌قدر جدی است؟",
+        accepted: [
+          "A bribe can end a career.",
+          "Because a bribe can end a career.",
+        ],
+        note: "a bribe قابل‌شمارش است و با a می‌آید.",
+      },
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو درستکاری پایهٔ هر حسابرسی است.",
+        question: "What matters most in an audit?",
+        questionFa: "در حسابرسی مهم‌ترین چیز چیست؟",
+        accepted: [
+          "Integrity is the base of every audit.",
+          "Integrity matters most — it is the base of an audit.",
+        ],
+        note: "integrity غیرقابل‌شمارش است، پس فعل مفرد می‌گیرد.",
+      },
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو افشای کامل تنها گزینه بود.",
+        question: "Could we have kept it quiet?",
+        questionFa: "می‌توانستیم پنهانش کنیم؟",
+        accepted: [
+          "Full disclosure was the only option.",
+          "No, full disclosure was the only option.",
+        ],
+        note: "full disclosure با full می‌آید و the فقط اگر اشاره به مورد مشخص باشد.",
+      },
+      {
+        scene: "جلسهٔ کمیتهٔ اخلاق شرکت", partner: "رئیس کمیته",
+        prompt: "بگو لازم نیست امروز امضایش کنی.",
+        question: "Do I have to sign today?",
+        questionFa: "باید امروز امضا کنم؟",
+        accepted: [
+          "You do not have to sign it today.",
+          "No, you do not have to sign today.",
+        ],
+        note: "do not have to یعنی لازم نیست؛ must not یعنی ممنوع.",
+      },
+    ],
+  },
+];

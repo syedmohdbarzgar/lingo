@@ -32,15 +32,36 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 35):** 95 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 60):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
-  `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, B1/B2 = 6
-  each, C1/C2 = 7 each), 1373 exercises
+  `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
+  — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
+  28 as `b1.plans`)**, **B2 = 32 — all 30 syllabus topics** (5, 8, 11 and 17 from the v5
+  bundle, then v42's negotiation, project, leadership and entrepreneurship lessons, v43's finance,
+  economy, artificial-intelligence and privacy lessons, v44's renewables, education, mental-health
+  and media-literacy lessons, v45's persuasion, crisis, report and presentation lessons, v46's
+  debate, review, idiom and phrasal-verb lessons, v47's intercultural, workplace-conflict,
+  strategy and ethics lessons and v54's career-decisions and viewpoints lessons) plus two outside
+  the list, `b2.interview`/`b2.research`**, **C1 = 31 — all 30 syllabus topics
+  (8, 12, 13, 23, 25 and 30 ship from the v5 bundle) plus `c1.phrasal-idioms`, v48's executive-communication,
+  advanced-negotiation, public-policy and international-relations lessons, v49's economic-analysis,
+  technology-ethics, philosophy-and-reasoning and cognitive-bias lessons, v50's statistical-literacy,
+  media-analysis, organizational-change and risk-management lessons, v51's research-reports,
+  research-methodology, data-interpretation and organizational-culture lessons, v52's
+  research-ethics, diversity-inclusion, business-sustainability and semantic-nuance lessons and
+  v53's argumentation, proposals, stakeholder-communication and specialist-presentations
+  lessons**, **C2 = 30 — all 30 syllabus topics** (1, 2, 3, 6, 7, 10 and 29 from the v5 bundle
+  plus v55's sociolinguistics, discourse-analysis, philosophical-texts and speeches lessons,
+  v56's persuasion, academic-writing, editing and synthesis lessons, v57's argument-analysis,
+  dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
+  translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
+  sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
+  2828 exercises
   (8–19/lesson + reading passages + meaning items + A1 pronunciation drills + P2 recall/production
-  items + **a dialogue in every lesson: five or six turns at A2–C2, four at A1 — 470 speaking
-  turns**), 572 vocabulary entries
+  items + **a dialogue in every lesson: five or six turns at A2–C2, four at A1 — 1052 speaking
+  turns**), 1154 vocabulary entries
   (6/lesson, 8 in the numbers lesson),
-  136 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
+  233 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
   difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
   test samples production and not recognition alone. Grammar points per level follow the British Council / EQUALS Core Inventory grammar
   tables (verified against examenglish.com/CEFR, Oct 2026): e.g. B1 = 2nd/3rd conditional + reported
@@ -80,7 +101,7 @@
   fails the build below the bar; add exercises to that topic's lessons.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 1373 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 2828 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

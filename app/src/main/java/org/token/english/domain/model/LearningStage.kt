@@ -109,7 +109,14 @@ data class LessonStagePlan(val stages: List<LessonStageUnit>) {
                             if (lesson.grammarTipFa.orEmpty().isBlank()) null else LessonStageUnit(stage)
                         LearningStage.VOCABULARY ->
                             if (vocabulary.isEmpty()) null else LessonStageUnit(stage)
-                        LearningStage.SPEAKING -> if (hasDialogue) LessonStageUnit(stage) else null
+                        // The dialogue turns are filtered out of the session, so an
+                        // inline "say this sentence" item is what fills this step;
+                        // a lesson whose only speaking is its conversation still
+                        // gets the step, as a teaching card that opens it.
+                        LearningStage.SPEAKING -> byStage[stage]
+                            ?.takeIf { it.isNotEmpty() }
+                            ?.let { LessonStageUnit(stage, it) }
+                            ?: if (hasDialogue) LessonStageUnit(stage) else null
                         LearningStage.REVIEW -> LessonStageUnit(stage)
                         else -> byStage[stage]
                             ?.takeIf { it.isNotEmpty() }

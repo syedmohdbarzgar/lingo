@@ -3,9 +3,15 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 503 tests / 61 classes as of
-  the secured/retest gate (the recognition-endpointing pass's early-end and take-ownership rules
-  are pinned in `ConversationPracticeViewModelTest`; `KnowledgeEngineTest` holds
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 526 tests / 63 classes as of
+  the v60 guided-lesson pass — the eight-step lesson (`GuidedLessonTest`: a lesson opens on its
+  context step with no exercise yet, Continue walks the teaching steps and records each one,
+  practice does not advance until its exercise is answered, Previous reopens a done step without
+  erasing progress, an optional step can be skipped and is never counted as mastery, a required
+  step offers no skip, a restart resumes on the saved step with its bookkeeping, a Continue queued
+  against a step the session already left is ignored so a double tap cannot skip a card, and the
+  review step is the summary that completes the lesson) — the v54 B2 batch — the secured/retest gate (the recognition-endpointing pass's early-end and
+  take-ownership rules are pinned in `ConversationPracticeViewModelTest`; `KnowledgeEngineTest` holds
   `KnowledgeGates.isSecured` to its four edges and `AdaptiveLearningPlannerTest` walks the
   same-day → next-day-retest → secured story) — a fresh install is locked with no trial (`TrialClockTest` went
   with the clock; `StorePageTest` guards the per-flavor «ارتباط با ناشر» store link;
@@ -93,6 +99,12 @@
   partner's question is not an answer — and the speech grammar lists every accepted phrase plus
   `[unk]`),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
+- **The guided lesson (v60)** splits `LessonViewModelTest`'s territory in two: `GuidedLessonTest`
+  drives the eight-step walk itself (see above), while `LessonViewModelTest` keeps the exercise
+  rules — the requeue-once-on-a-miss, the TTS-unavailable fallback, the authored order, a focused
+  session's evidence subset and the P7 study ticks. `ScreenSmokeTest` renders the Lesson screen
+  through the same fakes, so the stage header, rail and Previous/Continue controls are exercised on
+  the host JVM (Robolectric) rather than only on a device.
 - **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
   `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
   `HomeViewModelTest` (installing/removing the companion app flips access to COMPANION_APP / LOCKED;

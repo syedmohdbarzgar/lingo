@@ -1,0 +1,431 @@
+// v40 content, part 1 — B1 topics 22 and 23: banking services, complaints and
+// refunds. Read by `v40_b1_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "b1.banking.lesson-01",
+      order: 112,
+      title: "Banking Services",
+      titleFa: "خدمات بانکی",
+      topic: "Money",
+      tip: [
+        "## قاعده",
+        "در بانک اغلب فاعل مهم نیست؛ کار «انجام می‌شود». مجهول حال ساده: am/is/are + قسمت سوم فعل — A small fee is charged for every transfer.",
+        "مجهول گذشتهٔ ساده: was/were + قسمت سوم فعل — My account was opened last week.",
+        "اگر فاعل لازم باشد با by می‌آید — The form was signed by the manager.",
+        "برای درخواست مؤدبانه در باجه: I would like to open a savings account.",
+        "## جدول",
+        "My account was opened last week. — حساب من هفتهٔ پیش باز شد.",
+        "A small fee is charged for each transfer. — برای هر انتقال کارمزد کمی گرفته می‌شود.",
+        "The form must be signed before you leave. — فرم باید قبل از رفتن امضا شود.",
+        "## مثال‌ها",
+        "I want to withdraw some cash. — می‌خواهم کمی پول نقد برداشت کنم.",
+        "The bank pays interest every month. — بانک هر ماه سود می‌پردازد.",
+        "Please check your statement online. — لطفاً صورت‌حسابت را آنلاین بررسی کن.",
+        "## خطاهای رایج",
+        "در مجهول قسمت سوم فعل لازم است: was open ✗ / was opened ✓.",
+        "withdraw بی‌قاعده است: withdraw – withdrew – withdrawn.",
+        "fee قابل‌شمارش است (a fee / fees) اما interest در این معنا غیرقابل‌شمارش.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.passive-simple",
+    vocab: {
+      id: "vocab.banking",
+      title: "Banking Services",
+      titleFa: "خدمات بانکی",
+      prerequisites: ["vocab.payments"],
+    },
+    words: [
+      {
+        slug: "account", w: "account", fa: "حساب بانکی", ipa: "/əˈkaʊnt/", pos: "noun",
+        def: "a record of the money you keep in a bank",
+        ex: [
+          ["I opened a bank account last month.", "ماه پیش یک حساب بانکی باز کردم."],
+          ["Choose an account with no monthly fee.", "حسابی انتخاب کن که کارمزد ماهانه نداشته باشد."],
+        ],
+        col: ["open an account", "a bank account"],
+        note: "account در این درس «حساب بانکی» است و با open می‌آید: open an account.",
+      },
+      {
+        slug: "fee", w: "fee", fa: "کارمزد؛ هزینهٔ خدمات", ipa: "/fiː/", pos: "noun",
+        def: "money you pay for a service",
+        ex: [
+          ["The bank charges a small fee for each transfer.", "بانک برای هر انتقال کارمزد کمی می‌گیرد."],
+          ["There is no fee for online payments.", "پرداخت آنلاین کارمزدی ندارد."],
+        ],
+        col: ["a monthly fee", "charge a fee"],
+        note: "fee با charge می‌آید (کارمزد گرفتن) و قابل‌شمارش است: a fee / fees.",
+      },
+      {
+        slug: "interest", w: "interest", fa: "سود بانکی", ipa: "/ˈɪntrəst/", pos: "noun",
+        def: "extra money the bank pays you for keeping your money there",
+        ex: [
+          ["The bank pays interest every month.", "بانک هر ماه سود می‌پردازد."],
+          ["Interest on savings is low this year.", "امسال سود پس‌انداز پایین است."],
+        ],
+        col: ["pay interest", "a low interest rate"],
+        note: "در این معنا interest غیرقابل‌شمارش است: interest ✓ / an interest ✗.",
+      },
+      {
+        slug: "withdraw", w: "withdraw", fa: "برداشت کردن", ipa: "/wɪðˈdrɔː/", pos: "verb",
+        def: "to take money out of a bank account",
+        ex: [
+          ["I want to withdraw some cash.", "می‌خواهم کمی پول نقد برداشت کنم."],
+          ["You can withdraw at any cash machine.", "می‌توانی از هر خودپردازی برداشت کنی."],
+        ],
+        col: ["withdraw cash", "withdraw money from"],
+        note: "بی‌قاعده است: withdraw – withdrew – withdrawn. متضاد آن deposit است (واریز کردن).",
+      },
+      {
+        slug: "transfer", w: "transfer", fa: "انتقال وجه", ipa: "/ˈtrænsfɜː/", pos: "noun",
+        def: "moving money from one account to another",
+        ex: [
+          ["The transfer was made this morning.", "انتقال وجه امروز صبح انجام شد."],
+          ["I made a transfer to my sister's account.", "به حساب خواهرم انتقال وجه انجام دادم."],
+        ],
+        col: ["a bank transfer", "make a transfer"],
+        note: "در اسم تکیه روی بخش اول است /ˈtrænsfɜː/ و در فعل روی بخش دوم /trænsˈfɜː/.",
+      },
+      {
+        slug: "statement", w: "statement", fa: "صورت‌حساب بانکی", ipa: "/ˈsteɪtmənt/", pos: "noun",
+        def: "a list of the money that went in and out of your account",
+        ex: [
+          ["Please check your statement online.", "لطفاً صورت‌حسابت را آنلاین بررسی کن."],
+          ["The statement shows every payment this month.", "صورت‌حساب همهٔ پرداخت‌های این ماه را نشان می‌دهد."],
+        ],
+        col: ["a bank statement", "check your statement"],
+        note: "statement در این درس «صورت‌حساب» است، نه «بیانیه» یا «اظهارنظر».",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "withdraw", gloss: "برداشت کردن",
+        options: ["برداشت کردن", "واریز کردن", "قرض گرفتن", "پس‌انداز کردن"],
+        note: "withdraw «برداشت کردن» است؛ واریز کردن deposit نام دارد.",
+      },
+      {
+        k: "mcq", word: "fee", gloss: "کارمزد؛ هزینهٔ خدمات",
+        options: ["کارمزد؛ هزینهٔ خدمات", "سود بانکی", "وام", "جریمه"],
+        note: "fee پولی است که بابت یک خدمت می‌پردازی؛ سود بانکی interest است.",
+      },
+      {
+        k: "mcq", word: "statement", gloss: "صورت‌حساب بانکی",
+        options: ["صورت‌حساب بانکی", "قرارداد", "رسید خرید", "فیش حقوقی"],
+        note: "statement فهرست گردش حساب است؛ رسید خرید receipt نام دارد.",
+      },
+      {
+        k: "blank", sentence: "You can ___ money from the cash machine.",
+        accepted: ["withdraw", "take"], skill: "VOCABULARY",
+        note: "withdraw و take هر دو با from money معنا می‌دهند؛ take کمی غیررسمی‌تر است.",
+      },
+      {
+        k: "blank", sentence: "The bank charges a small ___ for every transfer.",
+        accepted: ["fee", "charge"], skill: "VOCABULARY",
+        note: "charges a small fee یعنی کارمزد کمی می‌گیرد؛ charge هم در این ساختار درست است.",
+      },
+      {
+        k: "recall", prompt: "سود بانکی", accepted: ["interest"],
+        note: "سود بانکی interest است و غیرقابل‌شمارش.",
+      },
+      {
+        k: "tr", prompt: "حساب من هفتهٔ پیش باز شد.",
+        accepted: ["my account was opened last week", "i opened my account last week"],
+        note: "در مجهول گذشته: was + قسمت سوم فعل — was opened.",
+      },
+      {
+        k: "listen", text: "The transfer was made this morning.",
+        note: "به was made گوش کنید: مجهول گذشتهٔ make، یعنی «انجام شد».",
+      },
+      {
+        k: "prod", prompt: "بگو چرا حساب بانکی باز کردی.",
+        mustUse: ["account", "because"], minWords: 6,
+        accepted: ["I opened an account because I want to save money for university."],
+        hint: "با I opened an account because… شروع کن.",
+        note: "because علت را با یک جملهٔ کامل می‌آورد؛ account با open می‌آید.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو می‌خواهی حساب باز کنی.",
+        question: "Good morning, how can I help you?",
+        questionFa: "صبح بخیر، چه کمکی می‌توانم بکنم؟",
+        accepted: [
+          "I would like to open an account.",
+          "I want to open a bank account.",
+        ],
+        note: "would like to مؤدبانه‌تر از want است و در باجهٔ بانک طبیعی‌تر.",
+      },
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو حساب پس‌انداز می‌خواهی.",
+        question: "What kind of account do you need?",
+        questionFa: "چه نوع حسابی لازم داری؟",
+        accepted: [
+          "A savings account, please.",
+          "I need a savings account.",
+        ],
+        note: "برای جواب کوتاه و مؤدبانه، please در پایان جمله می‌آید.",
+      },
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو کارمزد ماهانه مشکلی ندارد.",
+        question: "There is a small monthly fee. Is that fine?",
+        questionFa: "یک کارمزد ماهانهٔ کوچک وجود دارد. مشکلی نیست؟",
+        accepted: [
+          "That is fine, thank you.",
+          "Yes, a small fee is no problem.",
+        ],
+        note: "That is fine کوتاه‌ترین پاسخ مثبت مؤدبانه است؛ fee اینجا قابل‌شمارش با a.",
+      },
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو می‌خواهی از حساب قبلی‌ات پول منتقل کنی.",
+        question: "Would you like to transfer money from your old account?",
+        questionFa: "می‌خواهی از حساب قبلی‌ات پول منتقل کنی؟",
+        accepted: [
+          "Yes, I would like to transfer it today.",
+          "Yes, please transfer the money today.",
+        ],
+        note: "transfer money from an account؛ would like to + فعل ساده.",
+      },
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو صورت‌حساب را آنلاین می‌بینی.",
+        question: "Do you want a paper statement every month?",
+        questionFa: "هر ماه صورت‌حساب کاغذی می‌خواهی؟",
+        accepted: [
+          "No, I check my statement online.",
+          "I prefer to see it online.",
+        ],
+        note: "prefer to + فعل ساده برای بیان ترجیح؛ check your statement ترکیب رایج است.",
+      },
+      {
+        scene: "شعبهٔ بانک، باجهٔ پذیرش", partner: "کارمند بانک",
+        prompt: "بگو ممنون هستی و کارت را کِی می‌گیری.",
+        question: "Your card will arrive in a week. Anything else?",
+        questionFa: "کارتت یک هفتهٔ دیگر می‌رسد. کار دیگری هست؟",
+        accepted: [
+          "No, thank you. When will my card arrive?",
+          "That is all, thank you very much.",
+        ],
+        note: "سؤال با will برای آیندهٔ قطعی؛ Anything else? یعنی «کار دیگری هست؟».",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "b1.complaints.lesson-01",
+      order: 113,
+      title: "Complaints and Refunds",
+      titleFa: "شکایت و درخواست بازپرداخت",
+      topic: "Shopping",
+      tip: [
+        "## قاعده",
+        "شرطی نوع اول برای شکایتی که نتیجهٔ واقعی دارد: If + حال ساده، will + فعل ساده — If you do not reply, I will contact the manager.",
+        "ترتیب دو بخش را می‌توان عوض کرد؛ اگر if اول بیاید، ویرگول لازم است: I will return it if the replacement is late.",
+        "در بخش شرط هرگز will نمی‌آید: If it will arrive ✗ / If it arrives ✓.",
+        "برای درخواست رسمی: I am writing to complain about… / Could you please replace it?",
+        "## جدول",
+        "If the item is damaged, we will send a replacement. — اگر کالا آسیب‌دیده باشد، جایگزین می‌فرستیم.",
+        "If you do not reply, I will escalate the complaint. — اگر پاسخ ندهید، شکایت را بالاتر می‌برم.",
+        "I would like a full refund. — بازپرداخت کامل می‌خواهم.",
+        "## مثال‌ها",
+        "The box arrived damaged. — جعبه آسیب‌دیده رسید.",
+        "Could you please inspect the machine? — می‌شود لطفاً دستگاه را بررسی کنید؟",
+        "The delay is unacceptable. — این تأخیر پذیرفتنی نیست.",
+        "## خطاهای رایج",
+        "بعد از if حال ساده می‌آید، نه will: If you will send ✗ / If you send ✓.",
+        "complain about چیزی: complain about the delay (با about).",
+        "damaged صفت است: the box is damaged ✓ / the box is damage ✗.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.first-conditional",
+    vocab: {
+      id: "vocab.complaints",
+      title: "Complaints and Refunds",
+      titleFa: "شکایت و بازپرداخت",
+      prerequisites: ["vocab.returns"],
+    },
+    words: [
+      {
+        slug: "damaged", w: "damaged", fa: "آسیب‌دیده", ipa: "/ˈdæmɪdʒd/", pos: "adjective",
+        def: "broken or spoiled",
+        ex: [
+          ["The box arrived damaged.", "جعبه آسیب‌دیده رسید."],
+          ["The damaged parts were sent back.", "قطعه‌های آسیب‌دیده پس فرستاده شدند."],
+        ],
+        col: ["arrive damaged", "damaged goods"],
+        note: "damage هم اسم است و هم فعل؛ damaged صفتِ نتیجه است: the box is damaged.",
+      },
+      {
+        slug: "replacement", w: "replacement", fa: "کالای جایگزین", ipa: "/rɪˈpleɪsmənt/", pos: "noun",
+        def: "a new thing given instead of a broken one",
+        ex: [
+          ["They sent a replacement the next day.", "روز بعد یک جایگزین فرستادند."],
+          ["I asked for a replacement, not a refund.", "من جایگزین خواستم، نه بازپرداخت."],
+        ],
+        col: ["send a replacement", "ask for a replacement"],
+        note: "replacement از replace می‌آید و قابل‌شمارش است: a replacement / two replacements.",
+      },
+      {
+        slug: "supervisor", w: "supervisor", fa: "سرپرست", ipa: "/ˈsuːpəvaɪzə/", pos: "noun",
+        def: "the person in charge of a team",
+        ex: [
+          ["I asked to speak to the supervisor.", "خواستم با سرپرست صحبت کنم."],
+          ["Her supervisor signed the form.", "سرپرستش فرم را امضا کرد."],
+        ],
+        col: ["speak to the supervisor", "my supervisor"],
+        note: "speak to the supervisor، نه speak the supervisor؛ talk to هم رایج است.",
+      },
+      {
+        slug: "escalate", w: "escalate", fa: "ارجاع دادن به سطح بالاتر", ipa: "/ˈeskəleɪt/", pos: "verb",
+        def: "to send a problem to a higher level",
+        ex: [
+          ["If nobody replies, I will escalate the complaint.", "اگر کسی پاسخ ندهد، شکایت را بالاتر می‌برم."],
+          ["The case was escalated to head office.", "پرونده به دفتر مرکزی ارجاع شد."],
+        ],
+        col: ["escalate a complaint", "escalate the issue"],
+        note: "escalate در زبان تجاری یعنی «ارجاع دادن به سطح بالاتر»، نه «شدیدتر کردن».",
+      },
+      {
+        slug: "unacceptable", w: "unacceptable", fa: "پذیرفتنی نیست", ipa: "/ˌʌnəkˈseptəbl/", pos: "adjective",
+        def: "too bad to accept",
+        ex: [
+          ["The delay is unacceptable.", "این تأخیر پذیرفتنی نیست."],
+          ["Two weeks without an answer is unacceptable.", "دو هفته بی‌پاسخ ماندن پذیرفتنی نیست."],
+        ],
+        col: ["completely unacceptable", "an unacceptable delay"],
+        note: "un- منفی‌ساز است: acceptable یعنی «پذیرفتنی»؛ در شکایت رسمی از completely unacceptable استفاده می‌شود.",
+      },
+      {
+        slug: "inspect", w: "inspect", fa: "بررسی کردن", ipa: "/ɪnˈspekt/", pos: "verb",
+        def: "to look at something carefully to check it",
+        ex: [
+          ["The technician will inspect the machine.", "تکنسین دستگاه را بررسی خواهد کرد."],
+          ["We inspect every parcel before it leaves.", "ما هر بسته را قبل از ارسال بررسی می‌کنیم."],
+        ],
+        col: ["inspect the goods", "inspect a machine"],
+        note: "inspect بررسی دقیق و فنی است؛ check عمومی‌تر و روزمره‌تر است.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "damaged", gloss: "آسیب‌دیده",
+        options: ["آسیب‌دیده", "گران", "تقلبی", "ناقص"],
+        note: "damaged یعنی آسیب‌دیده؛ «تقلبی» fake است.",
+      },
+      {
+        k: "mcq", word: "supervisor", gloss: "سرپرست",
+        options: ["سرپرست", "مشتری", "راننده", "فروشنده"],
+        note: "supervisor سرپرست تیم است؛ customer مشتری است.",
+      },
+      {
+        k: "mcq", word: "escalate", gloss: "ارجاع دادن به سطح بالاتر",
+        options: ["ارجاع دادن به سطح بالاتر", "لغو کردن سفارش", "تخفیف گرفتن", "بسته‌بندی کردن"],
+        note: "escalate a complaint یعنی شکایت را به سطح بالاتر بردن؛ لغو سفارش cancel an order است.",
+      },
+      {
+        k: "blank", sentence: "If the item is ___, we will replace it.",
+        accepted: ["damaged", "broken"], skill: "VOCABULARY",
+        note: "damaged و broken هر دو بعد از is صفت‌اند و جمله را کامل می‌کنند.",
+      },
+      {
+        k: "blank", sentence: "Could you please ___ the parcel before you send it?",
+        accepted: ["inspect", "check"], skill: "VOCABULARY",
+        note: "inspect بررسی دقیق است و check بررسی سریع؛ هر دو با Could you please می‌آیند.",
+      },
+      {
+        k: "recall", prompt: "پذیرفتنی نیست", accepted: ["unacceptable"],
+        note: "پذیرفتنی نیست unacceptable است؛ در شکایت رسمی با completely می‌آید.",
+      },
+      {
+        k: "tr", prompt: "اگر تا جمعه پاسخ ندهید، شکایت را بالاتر می‌برم.",
+        accepted: [
+          "if you do not reply by friday, i will escalate the complaint",
+          "if you do not answer by friday, i will escalate the complaint",
+        ],
+        note: "شرطی نوع اول: if + حال ساده (do not reply)، سپس will + فعل ساده.",
+      },
+      {
+        k: "listen", text: "The box arrived damaged, so we sent a replacement.",
+        note: "به so گوش کنید: نتیجه را بیان می‌کند و پیش از خودش ویرگول دارد.",
+      },
+      {
+        k: "prod", prompt: "شکایتت را بنویس: چه چیزی خراب بود و چه می‌خواهی.",
+        mustUse: ["damaged", "replacement"], minWords: 8,
+        accepted: ["The screen arrived damaged, so I would like a replacement."],
+        hint: "با The … arrived damaged, so I would like… شروع کن.",
+        note: "so نتیجه را بیان می‌کند؛ would like مؤدبانه‌تر از want است.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو بسته آسیب‌دیده رسیده است.",
+        question: "How can I help you today?",
+        questionFa: "امروز چطور می‌توانم کمک کنم؟",
+        accepted: [
+          "The box arrived damaged.",
+          "My order arrived damaged.",
+        ],
+        note: "arrive damaged ترکیب ثابت است: کالا آسیب‌دیده می‌رسد.",
+      },
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو عکس را همین صبح ایمیل کردی.",
+        question: "Can you send a photo of the damage?",
+        questionFa: "می‌توانی عکسی از آسیب بفرستی؟",
+        accepted: [
+          "Yes, I emailed a photo this morning.",
+          "I have already sent a photo.",
+        ],
+        note: "already با حال کامل می‌آید: I have already sent…",
+      },
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو جایگزین می‌خواهی، نه بازپرداخت.",
+        question: "Would you like a refund or a replacement?",
+        questionFa: "بازپرداخت می‌خواهی یا کالای جایگزین؟",
+        accepted: [
+          "I would like a replacement, please.",
+          "A replacement, not a refund.",
+        ],
+        note: "a refund / a replacement هر دو قابل‌شمارش‌اند و با a می‌آیند.",
+      },
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو تا پایان هفته برایت خوب است.",
+        question: "When would you like it delivered?",
+        questionFa: "چه زمانی تحویلش بدهیم؟",
+        accepted: [
+          "By the end of the week, please.",
+          "Any day before Friday is fine.",
+        ],
+        note: "by یعنی «تا» (مهلت)؛ before Friday یعنی پیش از جمعه.",
+      },
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو تأخیر دو هفته‌ای پذیرفتنی نبود.",
+        question: "Is there anything else I should know?",
+        questionFa: "چیز دیگری هست که باید بدانم؟",
+        accepted: [
+          "The two-week delay was unacceptable.",
+          "The delay was unacceptable for me.",
+        ],
+        note: "unacceptable صفت است: was unacceptable؛ برای تأکید completely unacceptable.",
+      },
+      {
+        scene: "تماس با پشتیبانی فروشگاه", partner: "کارشناس پشتیبانی",
+        prompt: "بگو ممنون هستی و منتظر تماس می‌مانی.",
+        question: "I will escalate this to my supervisor. Is that all right?",
+        questionFa: "این را به سرپرستم ارجاع می‌دهم. مشکلی نیست؟",
+        accepted: [
+          "Yes, that is fine. Thank you.",
+          "Thank you, I will wait for the call.",
+        ],
+        note: "escalate to somebody یعنی ارجاع دادن به کسی؛ با to می‌آید.",
+      },
+    ],
+  },
+];

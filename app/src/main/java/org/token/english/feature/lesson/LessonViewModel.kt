@@ -17,7 +17,11 @@ import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.engine.ExerciseDimension
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.LearningStage
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonStagePlan
+import org.token.english.domain.model.LessonStageProgress
+import org.token.english.domain.model.LessonStageState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.Skill
@@ -32,17 +36,27 @@ import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
 import kotlin.random.Random
 
-enum class LessonStage { INTRO, EXERCISES }
-
+/**
+ * One lesson session: **one active step at a time** out of the eight the plan
+ * gives it (checklist Phase 2).
+ *
+ * The sequence, the membership of each step and the completion rules are the
+ * domain model's ([LessonStagePlan], [LessonStageState]); this class only walks
+ * them — it never re-derives an order or counts a visited screen as progress.
+ */
 data class LessonUiState(
     val isLoading: Boolean = true,
     val error: String? = null,
     val lesson: Lesson? = null,
-    val exercises: List<Exercise> = emptyList(),
     val vocabulary: List<VocabularyItem> = emptyList(),
-    /** Intro first (vocab, examples, grammar tip), then the exercises (P4). */
-    val stage: LessonStage = LessonStage.INTRO,
-    val currentIndex: Int = 0,
+    /** Which of the eight steps this lesson actually has, in the authored order. */
+    val plan: LessonStagePlan? = null,
+    /** Active step plus the completed/skipped bookkeeping behind the progress bar. */
+    val stageState: LessonStageState? = null,
+    /** The active step's own exercises, in show order (empty for a teaching step). */
+    val stageExercises: List<Exercise> = emptyList(),
+    /** Cursor inside [stageExercises]. */
+    val stageCursor: Int = 0,
     val selectedOption: Int? = null,
     val textAnswer: String = "",
     val outcome: ExerciseOutcome? = null,
@@ -58,7 +72,7 @@ data class LessonUiState(
      */
     val firstAttemptAsked: Int = 0,
     val firstAttemptCorrect: Int = 0,
-    /** Exercises still waiting in the session queue (excludes the current one). */
+    /** Exercises still waiting in the current step's queue (excludes the current one). */
     val remainingCount: Int = 0,
     /** True when the just-answered exercise will be asked again later (a miss). */
     val repeatsCurrent: Boolean = false,
@@ -84,13 +98,34 @@ data class LessonUiState(
      */
     val weakestDimension: MasteryDimension? = null,
 ) {
-    val currentExercise: Exercise? get() = exercises.getOrNull(currentIndex)
+    val currentExercise: Exercise? get() = stageExercises.getOrNull(stageCursor)
     val answeredCorrectly: Boolean? get() = outcome?.correct
-    val totalExercises: Int get() = exercises.size
+    val totalExercises: Int get() = stageExercises.size
+    val activeStage: LearningStage? get() = stageState?.active
+
+    /** The step is teaching material: no exercise to grade, Continue moves on. */
+    val isTeachingStage: Boolean get() = activeStage != null && stageExercises.isEmpty()
+
+    /** Overall lesson progress, over the completed **required** steps. */
+    val lessonPercent: Int get() = stageState?.percent ?: 0
+
+    /** Step n of the lesson's own sequence, and how many steps it has. */
+    val stageNumber: Int
+        get() = activeStage?.let { stage -> (stageState?.plan?.indexOf(stage) ?: -1) + 1 } ?: 0
+
+    val stageTotal: Int get() = stageState?.plan?.stages?.size ?: 0
+
+    /** True while the lesson still has a step after this one. */
+    val hasNextStage: Boolean
+        get() = activeStage?.let { stageState?.plan?.next(it) != null } ?: false
+
+    val hasPreviousStage: Boolean
+        get() = activeStage?.let { stageState?.plan?.previous(it) != null } ?: false
 
     /** Attempts total: done + pending + current — grows when a miss is re-queued. */
     val visibleTotal: Int get() = askedCount + remainingCount + 1
 
+    /** Progress inside the active step's exercises. */
     val progress: Float
         get() = if (visibleTotal <= 0) 0f else askedCount.toFloat() / visibleTotal
 
@@ -128,8 +163,23 @@ sealed interface LessonEvent {
     data class SelectOption(val index: Int) : LessonEvent
     data class TextAnswerChanged(val value: String) : LessonEvent
     data object Submit : LessonEvent
-    data object Next : LessonEvent
+
+    /**
+     * Continue. [from] is the step the button was rendered for: a tap that lands
+     * after the step has already moved on is ignored, instead of walking a second
+     * step the learner never saw (a queued double-tap).
+     */
+    data class Next(val from: LearningStage? = null) : LessonEvent
+
+    /** One step back inside the guided lesson; a completed step can be revisited. */
+    data object Previous : LessonEvent
+
+    /** Deliberately leaves an **optional** step. Never marks it completed. */
+    data object SkipStage : LessonEvent
+
     data object ReplayAudio : LessonEvent
+
+    /** Enters the practice step directly (a focused drill skips the teaching ones). */
     data object StartExercises : LessonEvent
     data class SpeakText(val text: String) : LessonEvent
 
@@ -175,7 +225,7 @@ class LessonViewModel(
     /** Blocks a second submit() while the first grade is still in flight (double-tap). */
     private var submitting: Boolean = false
 
-    /** Indices still to show this session; the head has already been removed. */
+    /** Indices of the active step's exercises still to show; the head is removed. */
     private val pending = ArrayDeque<Int>()
 
     /** Exercises already re-asked once — a miss is repeated at most one time. */
@@ -272,45 +322,59 @@ class LessonViewModel(
                 return@launch
             }
             val vocabulary = lessonRepository.getVocabulary(lessonId)
+            val hasDialogue = runCatchingCancellable {
+                lessonRepository.lessonIdsWithDialogue()
+            }.getOrDefault(emptySet()).contains(lessonId)
+            val plan = LessonStagePlan.of(
+                lesson = lesson,
+                vocabulary = vocabulary,
+                exercises = sessionExercises,
+                hasDialogue = hasDialogue,
+            )
             val saved = lessonRepository.getLessonState(lessonId)
-            // A focused block is short and always starts at its beginning: the saved
-            // lesson cursor points into the full lesson, not into this subset.
-            val startIndex = when {
+            val restored = buildList {
+                saved?.completedStages.orEmpty()
+                    .mapNotNull(LearningStage::fromId)
+                    .forEach { add(LessonStageProgress(it, completed = true)) }
+                saved?.skippedStages.orEmpty()
+                    .mapNotNull(LearningStage::fromId)
+                    .forEach { add(LessonStageProgress(it, skipped = true)) }
+            }
+            // A focused block is a drill, not a first teach: it opens on the
+            // exercises the engine picked. Otherwise the saved step wins, but only
+            // when that step still exists in this plan and is not already done.
+            val startStage = when {
+                focus != null -> sessionExercises.firstOrNull()?.let(LearningStage::of)
+                    ?: LearningStage.PRACTICE
+                saved?.completed == true -> plan.firstStage
+                else -> saved?.stage
+                    ?.takeIf { plan.indexOf(it) >= 0 && saved.completedStages.contains(it.id).not() }
+                    ?: plan.firstStage
+            }
+            val base = LessonStageState(plan = plan, progress = restored, active = startStage)
+            val cursor = when {
                 focus != null -> 0
                 saved?.completed == true -> 0
-                else -> (saved?.currentIndex ?: 0)
-            }
-            val index = startIndex.coerceIn(0, sessionExercises.lastIndex.coerceAtLeast(0))
-            pending.addAll(index until sessionExercises.size)
-            val firstIndex = pending.removeFirstOrNull() ?: index
-            // A resumed lesson (cursor > 0) has already shown the intro, and a
-            // focused block is a drill rather than a first teach — it starts on the
-            // exercises the engine picked.
-            val stage = if (focus == null && index == 0 && vocabulary.isNotEmpty()) {
-                LessonStage.INTRO
-            } else {
-                LessonStage.EXERCISES
+                saved?.stage == startStage -> saved.currentIndex
+                else -> 0
             }
             _state.update {
                 it.copy(
                     isLoading = false,
                     lesson = lesson,
-                    exercises = sessionExercises,
                     vocabulary = vocabulary,
-                    stage = stage,
-                    currentIndex = firstIndex,
-                    remainingCount = pending.size,
-                    focus = focus?.let { plan ->
+                    plan = plan,
+                    focus = focus?.let { plan2 ->
                         FocusBanner(
-                            titleFa = plan.titleFa,
-                            reasonFa = plan.reasonFa,
-                            masteryPercent = (plan.mastery * 100).toInt(),
-                            targetPercent = (plan.reassessThreshold * 100).toInt(),
+                            titleFa = plan2.titleFa,
+                            reasonFa = plan2.reasonFa,
+                            masteryPercent = (plan2.mastery * 100).toInt(),
+                            targetPercent = (plan2.reassessThreshold * 100).toInt(),
                         )
                     },
                 )
             }
-            if (stage == LessonStage.EXERCISES && sessionExercises[firstIndex] is Exercise.Listening) playAudio()
+            enterStage(base, startStage, cursor)
         }
     }
 
@@ -326,9 +390,17 @@ class LessonViewModel(
             }
 
             LessonEvent.Submit -> submit()
-            LessonEvent.Next -> next()
+            is LessonEvent.Next -> next(event.from)
+            LessonEvent.Previous -> previous()
+            LessonEvent.SkipStage -> skipStage()
             LessonEvent.ReplayAudio -> playAudio()
-            LessonEvent.StartExercises -> startExercises()
+            // «شروع تمرین‌ها» jumps past the teaching steps to the first step that
+            // actually asks something — practice in almost every lesson, but the
+            // speaking step when the session is a dialogue drill.
+            LessonEvent.StartExercises -> _state.value.stageState?.let { set ->
+                val first = set.plan.stages.firstOrNull { it.exercises.isNotEmpty() }?.stage
+                if (first != null) enterStage(set, first)
+            }
 
             // Speaking practice stays ungraded on purpose: there is no recogniser
             // offline, so the learner compares against the model and moves on.
@@ -366,6 +438,66 @@ class LessonViewModel(
     }
 
     /**
+     * Opens [stage] of [base]: its own exercises become the session list, its
+     * cursor is honoured on a resume, and the step is recorded as visited. Room
+     * is written here, not on screen composition, so merely rendering a step
+     * never moves progress.
+     */
+    private fun enterStage(base: LessonStageState, stage: LearningStage, cursor: Int = 0) {
+        val unit = base.plan.unitOf(stage)
+        val list = unit?.exercises.orEmpty()
+        val index = cursor.coerceIn(0, (list.size - 1).coerceAtLeast(0))
+        pending.clear()
+        pending.addAll((index + 1) until list.size)
+        // The review step IS the lesson's summary: opening it is completing it,
+        // so the bar reads 100% while the learner reads the result instead of
+        // stalling one step short.
+        val stageState = if (stage == LearningStage.REVIEW) {
+            base.withCompleted(stage).withActive(stage)
+        } else {
+            base.withActive(stage)
+        }
+        _state.update {
+            it.copy(
+                stageState = stageState,
+                stageExercises = list,
+                stageCursor = index,
+                selectedOption = null,
+                textAnswer = "",
+                outcome = null,
+                repeatsCurrent = false,
+                remainingCount = pending.size,
+                audioFailed = false,
+                hasRecording = false,
+                isPlayingRecording = false,
+                recordingFailed = false,
+                completed = stage == LearningStage.REVIEW,
+            )
+        }
+        persistStage()
+        if (list.getOrNull(index) is Exercise.Listening) playAudio()
+        // The review step IS the summary: completing it completes the lesson.
+        if (stage == LearningStage.REVIEW) finishLesson()
+    }
+
+    /** Writes the active step and its bookkeeping, so a restart resumes here. */
+    private fun persistStage() {
+        val s = _state.value
+        val stageState = s.stageState ?: return
+        val completed = stageState.progress.filter { it.completed }.map { it.stage.id }.toSet()
+        val skipped = stageState.progress.filter { it.skipped }.map { it.stage.id }.toSet()
+        viewModelScope.launch {
+            lessonRepository.saveLessonStage(
+                lessonId = lessonId,
+                stageId = stageState.active.id,
+                completedStages = completed,
+                skippedStages = skipped,
+            )
+            lessonRepository.saveLessonIndex(lessonId, s.stageCursor)
+        }
+    }
+
+    /**
      * Closes out a `speaking` item. It is deliberately NOT graded: with no
      * recogniser the app cannot judge pronunciation, so the exercise is
      * "hear the model, say it, hear yourself, compare" — self-assessed. The
@@ -389,12 +521,6 @@ class LessonViewModel(
                 repeatsCurrent = false,
             )
         }
-    }
-
-    private fun startExercises() {
-        _state.update { it.copy(stage = LessonStage.EXERCISES) }
-        // Listening IS the exercise — play it the moment the exercises begin.
-        if (_state.value.currentExercise is Exercise.Listening) playAudio()
     }
 
     private fun submit() {
@@ -427,7 +553,7 @@ class LessonViewModel(
                 _state.update {
                     it.copy(
                         outcome = outcome,
-                        weakestDimension = weakestDimensionOf(updatedProfile, it.exercises),
+                        weakestDimension = weakestDimensionOf(updatedProfile, it.stageExercises),
                         correctCount = if (outcome.correct) it.correctCount + 1 else it.correctCount,
                         // Misses are marked so the summary can point them out (P4).
                         weakAnswers = if (outcome.correct) {
@@ -443,7 +569,7 @@ class LessonViewModel(
                             it.firstAttemptCorrect
                         },
                         // Not yet re-queued (that happens in next()) — used for the
-                        // final-button label so "پایان درس" never lies.
+                        // final-button label so «پایان درس» never lies.
                         repeatsCurrent = !outcome.correct && exercise.id !in requeued,
                     )
                 }
@@ -453,18 +579,29 @@ class LessonViewModel(
         }
     }
 
-    private fun next() {
+    private fun next(from: LearningStage? = null) {
         val s = _state.value
+        val stageState = s.stageState ?: return
+        val stage = stageState.active
+        // The tap belonged to a step this session has already left: a teaching step
+        // has nothing to gate it, so honouring it would skip the card that replaced
+        // the button. Only the screen supplies [from]; the events in tests may not.
+        if (from != null && from != stage) return
+        // A teaching step has nothing to grade: Continue is the completion.
+        if (s.isTeachingStage) {
+            completeStage(stageState)
+            return
+        }
         if (s.outcome == null) return
         // Wrong answer → ask the SAME exercise again later in this session (P4),
         // but only once so the session is guaranteed to end.
         val current = s.currentExercise
         if (s.answeredCorrectly == false && current != null && requeued.add(current.id)) {
-            pending.addLast(s.currentIndex)
+            pending.addLast(s.stageCursor)
         }
         val nextIndex = pickNextIndex(s)
         if (nextIndex == null) {
-            finishLesson()
+            completeStage(stageState)
             return
         }
         // A take belongs to the sentence it was recorded against, so the next
@@ -474,13 +611,13 @@ class LessonViewModel(
         // A repeat shows the same question in a NEW order (P4 follow-through): the
         // learner who just missed it could otherwise answer from the position they
         // remembered instead of from the answer.
-        val exercises = s.exercises.toMutableList()
+        val exercises = s.stageExercises.toMutableList()
         val next = exercises.getOrNull(nextIndex)
         if (next != null && next.id in firstTries) exercises[nextIndex] = respaced(next)
         _state.update {
             it.copy(
-                exercises = exercises,
-                currentIndex = nextIndex,
+                stageExercises = exercises,
+                stageCursor = nextIndex,
                 selectedOption = null,
                 textAnswer = "",
                 outcome = null,
@@ -495,26 +632,66 @@ class LessonViewModel(
         viewModelScope.launch {
             lessonRepository.saveLessonIndex(lessonId, nextIndex)
         }
-        // Check the NEW exercise (the update above already advanced currentIndex).
-        if (s.exercises.getOrNull(nextIndex) is Exercise.Listening) playAudio()
+        // Check the NEW exercise (the update above already advanced the cursor).
+        if (s.stageExercises.getOrNull(nextIndex) is Exercise.Listening) playAudio()
+    }
+
+    /** Marks the active step done and opens the next one; the last one finishes. */
+    private fun completeStage(stageState: LessonStageState) {
+        val stage = stageState.active
+        val done = stageState.withCompleted(stage)
+        val nextStage = done.plan.next(stage)
+        if (nextStage == null) {
+            _state.update { it.copy(stageState = done) }
+            persistStage()
+            finishLesson()
+            return
+        }
+        enterStage(done, nextStage)
+    }
+
+    private fun previous() {
+        val s = _state.value
+        val stageState = s.stageState ?: return
+        val previous = stageState.plan.previous(stageState.active) ?: return
+        voiceNote.stopRecording()
+        voiceNote.stopPlayback()
+        enterStage(stageState, previous)
+    }
+
+    /**
+     * Leaves an **optional** step (listening, speaking) without completing it: the
+     * skip is recorded as a skip, never as mastery (checklist Phase 1/4).
+     */
+    private fun skipStage() {
+        val s = _state.value
+        val stageState = s.stageState ?: return
+        val stage = stageState.active
+        if (stage.required) return
+        val skipped = stageState.withSkipped(stage)
+        val nextStage = skipped.plan.next(stage)
+        if (nextStage == null) {
+            _state.update { it.copy(stageState = skipped) }
+            persistStage()
+            finishLesson()
+            return
+        }
+        enterStage(skipped, nextStage)
     }
 
     /**
      * Picks which queued exercise comes next (checklist B-1). The authored order
      * stands until the learner's own answers justify a change: the
      * [AdaptiveExerciseSelector] front-loads the dimension this session has shown
-     * to be weakest, so after shaky recognition the fill-in-the-blanks (recall)
-     * lead instead of more multiple choice. With no evidence yet the sort is
-     * stable, so a fresh lesson runs exactly as authored — and a miss still comes
-     * back later in the session, because a failed dimension ties with an untouched
-     * one (0.0 vs 0f) and the tie is broken by queue position.
+     * to be weakest. With no evidence yet the sort is stable, so a fresh step runs
+     * exactly as authored — and a miss still comes back later in the step.
      */
     private fun pickNextIndex(s: LessonUiState): Int? {
         val candidates = pending.toList()
         if (candidates.size <= 1) return pending.removeFirstOrNull()
-        val chosen = selector.order(candidates.map { s.exercises[it] }, profile).firstOrNull()
+        val chosen = selector.order(candidates.map { s.stageExercises[it] }, profile).firstOrNull()
             ?: return pending.removeFirstOrNull()
-        val index = candidates.first { s.exercises[it].id == chosen.id }
+        val index = candidates.first { s.stageExercises[it].id == chosen.id }
         pending.remove(index)
         return index
     }

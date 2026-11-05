@@ -50,7 +50,19 @@ data class LessonState(
     val currentIndex: Int,
     val completed: Boolean,
     val completedAt: Long?,
-)
+    /**
+     * The guided step the learner stopped on, stored by its stable
+     * [LearningStage.id] (not the enum name, so a rename cannot lose a place).
+     */
+    val stageId: String? = null,
+    /** Ids of the steps actually completed — what the progress bar counts. */
+    val completedStages: Set<String> = emptySet(),
+    /** Ids of the optional steps the learner chose to skip. Never counted as done. */
+    val skippedStages: Set<String> = emptySet(),
+) {
+    /** The saved step, resolved; null when nothing was saved or the id is unknown. */
+    val stage: LearningStage? get() = stageId?.let(LearningStage::fromId)
+}
 
 /**
  * One bilingual example sentence (A-10). The English sentence and its Persian

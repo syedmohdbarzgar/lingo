@@ -35,6 +35,7 @@ import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.home.HomeScreen
 import org.token.english.feature.home.HomeViewModel
+import org.token.english.feature.lesson.LessonEvent
 import org.token.english.feature.lesson.LessonScreen
 import org.token.english.feature.lesson.LessonViewModel
 import org.token.english.feature.paywall.PaywallScreen
@@ -170,6 +171,10 @@ class ScreenSmokeTest {
             }
         }
 
+        // The guided flow opens on the lesson's own first step, not mid-exercise.
+        compose.onNodeWithText("زمان تقریبی", substring = true).assertIsDisplayed()
+
+        vm.onEvent(LessonEvent.StartExercises)
         compose.onNodeWithText("Choose", substring = true).assertIsDisplayed()
     }
 

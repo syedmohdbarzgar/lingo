@@ -1,0 +1,428 @@
+// v39 content, part 1 — B1 topics 16 and 17: social media, environment and
+// pollution. Read by `v39_b1_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "b1.social-media.lesson-01",
+      order: 108,
+      title: "Social Media",
+      titleFa: "شبکه‌های اجتماعی",
+      topic: "Media",
+      tip: [
+        "## قاعده",
+        "برای تجربه‌ای که از گذشته تا حال ادامه دارد: I have used this app since 2019.",
+        "for + مدت (for three years) و since + نقطهٔ شروع (since Monday / since I was a student).",
+        "سوم شخص: has + گذشتهٔ نقلی — She has posted three photos today.",
+        "برای توصیهٔ ملایم: You should check your privacy settings.",
+        "## جدول",
+        "I have posted three photos today. — امروز سه عکس پست کرده‌ام.",
+        "She has been a follower for months. — ماه‌هاست که فالوور است.",
+        "We should not share our address online. — نباید آدرسمان را آنلاین به اشتراک بگذاریم.",
+        "## مثال‌ها",
+        "His video went viral last week. — ویدیویش هفتهٔ پیش وایرال شد.",
+        "I turned off the comments on my post. — کامنت‌های پستم را بستم.",
+        "Privacy is more important than likes. — حریم خصوصی از لایک مهم‌تر است.",
+        "## خطاهای رایج",
+        "since با مدت نمی‌آید: since three years ✗ / for three years ✓.",
+        "share چیزی با کسی: share a photo with your friends (با with).",
+        "comment on a post — حرف اضافهٔ on، نه to.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.present-perfect-for-since",
+    vocab: {
+      id: "vocab.social-media",
+      title: "Social Media",
+      titleFa: "شبکه‌های اجتماعی",
+      prerequisites: ["vocab.technology"],
+    },
+    words: [
+      {
+        slug: "post", w: "post", fa: "پست؛ منتشر کردن", ipa: "/pəʊst/", pos: "noun",
+        def: "a message or picture you put on social media",
+        ex: [
+          ["She wrote a long post about her trip.", "او پست بلندی دربارهٔ سفرش نوشت."],
+          ["He posts a photo every morning.", "او هر صبح عکسی پست می‌کند."],
+        ],
+        col: ["write a post", "post a photo"],
+        note: "post هم اسم است و هم فعل: a post / to post. در انگلیسی مدرن «پست» فارسی همین واژه است.",
+      },
+      {
+        slug: "follower", w: "follower", fa: "دنبال‌کننده؛ فالوور", ipa: "/ˈfɒləʊə/", pos: "noun",
+        def: "someone who regularly sees your posts",
+        ex: [
+          ["She has more than a thousand followers.", "او بیش از هزار فالوور دارد."],
+          ["A good post brings new followers.", "یک پست خوب فالوورهای تازه می‌آورد."],
+        ],
+        col: ["gain followers", "a loyal follower"],
+        note: "follower از follow ساخته شده است؛ در فارسی همین «فالوور» رایج است.",
+      },
+      {
+        slug: "share", w: "share", fa: "به اشتراک گذاشتن", ipa: "/ʃeə/", pos: "verb",
+        def: "to put something online for other people to see",
+        ex: [
+          ["I share recipes with my friends.", "من دستور پخت‌ها را با دوستانم به اشتراک می‌گذارم."],
+          ["She shared the news with us.", "او خبر را با ما به اشتراک گذاشت."],
+        ],
+        col: ["share something with someone", "share a link"],
+        note: "share چیزی با کسی: with. گذشتهٔ آن shared.",
+      },
+      {
+        slug: "comment", w: "comment", fa: "نظر؛ کامنت", ipa: "/ˈkɒment/", pos: "noun",
+        def: "a message you write under a post",
+        ex: [
+          ["He left a kind comment under my photo.", "او زیر عکسم کامنت مهربانی گذاشت."],
+          ["Please do not comment on my weight.", "لطفاً دربارهٔ وزنم کامنت نگذار."],
+        ],
+        col: ["leave a comment", "comment on something"],
+        note: "اسم آن تکیه روی بخش اول /ˈkɒment/ و فعل آن /kəˈment/ است؛ حرف اضافه on.",
+      },
+      {
+        slug: "viral", w: "viral", fa: "وایرال؛ بسیار پر بازدید", ipa: "/ˈvaɪrəl/", pos: "adjective",
+        def: "spreading very quickly on the internet",
+        ex: [
+          ["Her dance video went viral overnight.", "ویدیوی رقصش یک‌شبه وایرال شد."],
+          ["A viral post can reach millions of people.", "یک پست وایرال می‌تواند به میلیون‌ها نفر برسد."],
+        ],
+        col: ["go viral", "a viral video"],
+        note: "go viral یعنی «وایرال شدن»؛ go + صفت، نه become viral در گفتار روزمره.",
+      },
+      {
+        slug: "privacy", w: "privacy", fa: "حریم خصوصی", ipa: "/ˈprɪvəsi/", pos: "noun",
+        def: "the right to keep your personal information private",
+        ex: [
+          ["Check your privacy settings before you post.", "قبل از پست کردن تنظیمات حریم خصوصی‌ات را بررسی کن."],
+          ["Privacy matters more than followers.", "حریم خصوصی از فالوور مهم‌تر است."],
+        ],
+        col: ["privacy settings", "protect your privacy"],
+        note: "privacy غیرقابل‌شمارش است: privacy ✓ / a privacy ✗.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "viral", gloss: "وایرال؛ بسیار پر بازدید",
+        options: ["وایرال؛ بسیار پر بازدید", "حریم خصوصی", "دنبال‌کننده", "نظر"],
+        note: "viral برای چیزی است که سریع همه‌جا پخش می‌شود؛ حریم خصوصی privacy است.",
+      },
+      {
+        k: "mcq", word: "follower", gloss: "دنبال‌کننده؛ فالوور",
+        options: ["دنبال‌کننده؛ فالوور", "کامنت", "پست", "پیوند"],
+        note: "follower کسی است که مطالب شما را دنبال می‌کند؛ comment «نظر» است.",
+      },
+      {
+        k: "mcq", word: "privacy", gloss: "حریم خصوصی",
+        options: ["حریم خصوصی", "شهرت", "اشتراک‌گذاری", "ویدیو"],
+        note: "privacy «حریم خصوصی» است و با protect your privacy می‌آید.",
+      },
+      {
+        k: "blank", sentence: "People ___ every detail of their lives online.",
+        accepted: ["share", "post"], skill: "VOCABULARY",
+        note: "share و post هر دو فعل‌اند و با to their lives online معنا می‌دهند.",
+      },
+      {
+        k: "blank", sentence: "A ___ is a person who reads your posts.",
+        accepted: ["follower", "fan"], skill: "VOCABULARY",
+        note: "follower از follow ساخته شده و fan طرفدار است؛ هر دو درست‌اند.",
+      },
+      {
+        k: "recall", prompt: "حریم خصوصی", accepted: ["privacy"],
+        note: "حریم خصوصی privacy است و غیرقابل‌شمارش.",
+      },
+      {
+        k: "tr", prompt: "او عکس‌هایش را در شبکه‌های اجتماعی به اشتراک می‌گذارد.",
+        accepted: ["she shares her photos on social media"],
+        note: "share something on social media؛ سوم شخص مفرد shares می‌گیرد.",
+      },
+      {
+        k: "listen", text: "I have used this app since last year.",
+        note: "به since /sɪns/ گوش کنید: با فعل حال کامل می‌آید و نقطهٔ شروع را می‌گوید.",
+      },
+      {
+        k: "prod", prompt: "بگو چرا شبکه‌های اجتماعی می‌توانند استرس‌زا باشند.",
+        mustUse: ["because", "media"], minWords: 6,
+        accepted: ["they can be stressful because people compare themselves on social media"],
+        hint: "با They can be stressful because… شروع کن.",
+        note: "because جملهٔ دوم را علت‌دار می‌کند: stressful because people compare themselves.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو چند سال است از این شبکه استفاده می‌کنی.",
+        question: "How long have you used that app?",
+        questionFa: "چند وقت است که از آن اپلیکیشن استفاده می‌کنی؟",
+        accepted: [
+          "I have used it for three years.",
+          "I have had it since I was a student.",
+        ],
+        note: "for + مدت و since + نقطهٔ شروع، هر دو با حال کامل.",
+      },
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو بله، ویدیو وایرال شد.",
+        question: "Did you see my video yesterday?",
+        questionFa: "ویدیوی من را دیروز دیدی؟",
+        accepted: [
+          "Yes, it went viral!",
+          "Yes, I saw it and it went viral.",
+        ],
+        note: "go viral در گذشته went viral می‌شود.",
+      },
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو بعضی از کامنت‌ها بی‌ادبانه بود.",
+        question: "What did people write in the comments?",
+        questionFa: "مردم در کامنت‌ها چه نوشتند؟",
+        accepted: [
+          "Some people were rude in the comments.",
+          "The comments were very rude.",
+        ],
+        note: "comments جمع comment است و با in the comments می‌آید.",
+      },
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو حریم خصوصی برایت مهم است و عکس خانوادگی نمی‌گذاری.",
+        question: "Would you post photos of your family?",
+        questionFa: "عکس‌های خانواده‌ات را پست می‌کنی؟",
+        accepted: [
+          "No, privacy is important to me.",
+          "I do not share family photos because of privacy.",
+        ],
+        note: "privacy غیرقابل‌شمارش است: no article.",
+      },
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو پیشنهاد می‌کنی کامنت‌ها را ببندد.",
+        question: "What should I do about it?",
+        questionFa: "چه کار کنم؟",
+        accepted: [
+          "You should turn off the comments.",
+          "You should change your privacy settings.",
+        ],
+        note: "should + فعل ساده برای توصیه؛ turn off جدا شدنی است: turn the comments off.",
+      },
+      {
+        scene: "کافه، دو دوست", partner: "دوست",
+        prompt: "بگو قبول داری و ممنون هستی.",
+        question: "Shall we change the settings now?",
+        questionFa: "تنظیمات را الان عوض کنیم؟",
+        accepted: [
+          "Yes, thank you for the advice.",
+          "Good idea, let us do it together.",
+        ],
+        note: "thank you for + اسم/فعل ing: thank you for the advice.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "b1.environment.lesson-01",
+      order: 109,
+      title: "Environment and Pollution",
+      titleFa: "محیط زیست و آلودگی",
+      topic: "Nature",
+      tip: [
+        "## قاعده",
+        "برای گفتن کاری که روی چیز دیگر انجام می‌شود: مجهول + can/should — Bottles can be recycled.",
+        "ساختار: modal + be + گذشتهٔ فعل — should be reduced / must be protected.",
+        "وقتی فاعل مهم نیست یا همه می‌دانند چه کسی است، مجهول طبیعی‌تر است.",
+        "برای توصیهٔ عمومی: We should reduce our waste.",
+        "## جدول",
+        "Plastic can be recycled. — پلاستیک بازیافت‌شدنی است.",
+        "The air in the city must be cleaned. — هوای شهر باید پاک شود.",
+        "Do not waste water. — آب را هدر نده.",
+        "## مثال‌ها",
+        "Cars damage the environment. — خودروها به محیط زیست آسیب می‌زنند.",
+        "The factory reduced its waste last year. — کارخانه سال پیش ضایعاتش را کم کرد.",
+        "Some countries want to cut carbon emissions. — بعضی کشورها می‌خواهند انتشار کربن را کم کنند.",
+        "## خطاهای رایج",
+        "بعد از modal فعل be لازم است: can recycled ✗ / can be recycled ✓.",
+        "environment با the می‌آید: protect the environment.",
+        "pollution غیرقابل‌شمارش است: a pollution ✗ / pollution ✓.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.passive-with-modals",
+    vocab: {
+      id: "vocab.environment",
+      title: "Environment and Pollution",
+      titleFa: "محیط زیست",
+      prerequisites: ["vocab.technology"],
+    },
+    words: [
+      {
+        slug: "recycle", w: "recycle", fa: "بازیافت کردن", ipa: "/ˌriːˈsaɪkl/", pos: "verb",
+        def: "to use something again to make a new product",
+        ex: [
+          ["We recycle paper and glass at home.", "ما در خانه کاغذ و شیشه را بازیافت می‌کنیم."],
+          ["These bottles can be recycled.", "این بطری‌ها را می‌توان بازیافت کرد."],
+        ],
+        col: ["recycle waste", "a recycling bin"],
+        note: "تکیه روی بخش دوم است: /ˌriːˈsaɪkl/. اسم آن recycling است.",
+      },
+      {
+        slug: "waste", w: "waste", fa: "زباله؛ هدر دادن", ipa: "/weɪst/", pos: "noun",
+        def: "things you throw away; also using something badly",
+        ex: [
+          ["Plastic waste ends up in the sea.", "زبالهٔ پلاستیکی سر از دریا در می‌آورد."],
+          ["Do not waste water in summer.", "تابستان آب را هدر نده."],
+        ],
+        col: ["plastic waste", "waste time"],
+        note: "waste غیرقابل‌شمارش است؛ هم اسم (زباله) و هم فعل (هدر دادن).",
+      },
+      {
+        slug: "plastic", w: "plastic", fa: "پلاستیک", ipa: "/ˈplæstɪk/", pos: "noun",
+        def: "a light artificial material used for bottles and bags",
+        ex: [
+          ["Half of our rubbish is plastic.", "نیمی از زبالهٔ ما پلاستیک است."],
+          ["I take a plastic bag to the shop.", "کیسهٔ پلاستیکی به فروشگاه می‌برم."],
+        ],
+        col: ["plastic bags", "a plastic bottle"],
+        note: "plastic هم اسم است و هم صفت: plastic bags / a piece of plastic.",
+      },
+      {
+        slug: "environment", w: "environment", fa: "محیط زیست", ipa: "/ɪnˈvaɪrənmənt/", pos: "noun",
+        def: "the natural world around us",
+        ex: [
+          ["Cars damage the environment.", "خودروها به محیط زیست آسیب می‌زنند."],
+          ["We must protect the environment for children.", "باید محیط زیست را برای کودکان حفظ کنیم."],
+        ],
+        col: ["protect the environment", "damage the environment"],
+        note: "با حرف تعریف: the environment. تلفظ آن /ɪnˈvaɪrənmənt/ با تکیه روی vaɪ.",
+      },
+      {
+        slug: "carbon", w: "carbon", fa: "کربن", ipa: "/ˈkɑːbən/", pos: "noun",
+        def: "a gas in the air that traps heat",
+        ex: [
+          ["Flying produces a lot of carbon.", "پرواز کربن زیادی تولید می‌کند."],
+          ["They want to cut carbon emissions.", "آن‌ها می‌خواهند انتشار کربن را کم کنند."],
+        ],
+        col: ["carbon emissions", "a carbon footprint"],
+        note: "در گفتار روزمره carbon به‌معنای «دی‌اکسید کربن» به کار می‌رود: cut carbon.",
+      },
+      {
+        slug: "reduce", w: "reduce", fa: "کاهش دادن", ipa: "/rɪˈdjuːs/", pos: "verb",
+        def: "to make something smaller in amount",
+        ex: [
+          ["We should reduce the amount of plastic we use.", "باید مقدار پلاستیکی که مصرف می‌کنیم را کم کنیم."],
+          ["The factory reduced its waste last year.", "کارخانه سال پیش ضایعاتش را کم کرد."],
+        ],
+        col: ["reduce waste", "reduce emissions"],
+        note: "reduce در انگلیسی آمریکایی /rɪˈduːs/ است؛ اسم آن reduction.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "recycle", gloss: "بازیافت کردن",
+        options: ["بازیافت کردن", "هدر دادن", "آلوده کردن", "کاهش دادن"],
+        note: "recycle «بازیافت کردن» است؛ هدر دادن waste و کاهش دادن reduce است.",
+      },
+      {
+        k: "mcq", word: "carbon", gloss: "کربن",
+        options: ["کربن", "پلاستیک", "زباله", "محیط زیست"],
+        note: "carbon گازی است که گرما را نگه می‌دارد: carbon emissions.",
+      },
+      {
+        k: "mcq", word: "reduce", gloss: "کاهش دادن",
+        options: ["کاهش دادن", "افزایش دادن", "جمع کردن", "بازیافت کردن"],
+        note: "reduce «کم کردن» است؛ متضاد آن increase است.",
+      },
+      {
+        k: "blank", sentence: "Bottles can ___ into new products.",
+        accepted: ["be recycled", "be reused"], skill: "GRAMMAR",
+        note: "بعد از can مجهول با be + گذشتهٔ فعل ساخته می‌شود.",
+      },
+      {
+        k: "blank", sentence: "We should ___ the amount of plastic we use.",
+        accepted: ["reduce", "cut"], skill: "VOCABULARY",
+        note: "reduce و cut هر دو «کم کردن» هستند و با the amount of می‌آیند.",
+      },
+      {
+        k: "recall", prompt: "زباله؛ هدر دادن", accepted: ["waste"],
+        note: "waste هم اسم است (زباله) و هم فعل (هدر دادن).",
+      },
+      {
+        k: "tr", prompt: "این بطری‌ها را می‌توان بازیافت کرد.",
+        accepted: ["these bottles can be recycled"],
+        note: "مجهول با modal: can be + recycled.",
+      },
+      {
+        k: "listen", text: "Plastic waste can be recycled.",
+        note: "به waste /weɪst/ و recycled /ˌriːˈsaɪkld/ گوش کنید: پایانهٔ -ed در recycled شنیده می‌شود.",
+      },
+      {
+        k: "prod", prompt: "بگو چرا باید مصرف پلاستیک را کم کنیم.",
+        mustUse: ["should", "plastic"], minWords: 6,
+        accepted: ["we should reduce plastic because it harms the environment"],
+        hint: "با We should reduce plastic because… شروع کن.",
+        note: "should + فعل ساده و because برای دلیل؛ harm the environment ساختار ثابت است.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو این هفته زبالهٔ پلاستیکی زیادی داشتیم.",
+        question: "Why are there so many bottles in the bin?",
+        questionFa: "چرا این‌قدر بطری در سطل زباله است؟",
+        accepted: [
+          "We had a lot of plastic waste this week.",
+          "There was a lot of plastic waste at home this week.",
+        ],
+        note: "waste غیرقابل‌شمارش است: a lot of waste، نه many waste.",
+      },
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو می‌شود آن‌ها را بازیافت کرد.",
+        question: "Can we just throw them away?",
+        questionFa: "می‌توانیم همین‌طوری دورشان بریزیم؟",
+        accepted: [
+          "We can recycle them.",
+          "They can be recycled.",
+        ],
+        note: "هر دو ساختار درست است؛ مجهول وقتی فاعل مهم نیست طبیعی‌تر است.",
+      },
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو کاغذ و شیشه هم بازیافت می‌شوند.",
+        question: "What about the paper and the glass?",
+        questionFa: "کاغذ و شیشه چه؟",
+        accepted: [
+          "Paper and glass can be recycled too.",
+          "We can recycle paper and glass as well.",
+        ],
+        note: "too و as well هر دو «همچنین» هستند و در پایان جمله می‌آیند.",
+      },
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو باید کیسهٔ پارچه‌ای به فروشگاه ببریم.",
+        question: "And what do we do at the shop?",
+        questionFa: "و در فروشگاه چه کنیم؟",
+        accepted: [
+          "We should take a cloth bag.",
+          "We should not buy plastic bags.",
+        ],
+        note: "should not برای منع ملایم: We should not buy plastic bags.",
+      },
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو اگر مصرف را کم کنیم، محیط زیست بهتر می‌شود.",
+        question: "Will that really help the environment?",
+        questionFa: "واقعاً به محیط زیست کمک می‌کند؟",
+        accepted: [
+          "Yes, if we reduce waste, the environment will be better.",
+          "Yes, the environment will improve if we use less plastic.",
+        ],
+        note: "شرطی نوع اول: if + حال ساده، سپس will + فعل ساده.",
+      },
+      {
+        scene: "خانه، آشپزخانه", partner: "مادر",
+        prompt: "بگو موافقی و از فردا شروع می‌کنیم.",
+        question: "So shall we start tomorrow?",
+        questionFa: "پس از فردا شروع کنیم؟",
+        accepted: [
+          "Yes, let us start tomorrow.",
+          "Agreed, we start tomorrow morning.",
+        ],
+        note: "let us (let's) + فعل ساده برای پیشنهاد مشترک.",
+      },
+    ],
+  },
+];

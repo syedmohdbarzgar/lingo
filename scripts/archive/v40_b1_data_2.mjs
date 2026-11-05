@@ -1,0 +1,431 @@
+// v40 content, part 2 — B1 topics 24 and 25: formal letters and emails, giving a
+// short presentation. Read by `v40_b1_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "b1.formal-emails.lesson-01",
+      order: 114,
+      title: "Formal Letters and Emails",
+      titleFa: "نوشتن نامه و ایمیل رسمی",
+      topic: "Work",
+      tip: [
+        "## قاعده",
+        "درخواست مؤدبانهٔ رسمی با شرطی نوع دوم می‌آید: If + گذشتهٔ ساده، would + فعل ساده — If you could confirm the date, I would be grateful.",
+        "could در این ساختار گذشته نیست؛ نشانهٔ ادب است: If you could send the invoice…",
+        "آغاز و پایان رسمی: Dear Mr Karimi, / I am writing regarding… / Yours sincerely,",
+        "اگر نام مخاطب را نمی‌دانی: Dear Sir or Madam, و در پایان Yours faithfully,",
+        "## جدول",
+        "I am writing regarding your advertisement. — دربارهٔ آگهی شما می‌نویسم.",
+        "If you could confirm the date, I would be grateful. — اگر تاریخ را تأیید کنید ممنون می‌شوم.",
+        "I look forward to your reply. — منتظر پاسخ شما هستم.",
+        "## مثال‌ها",
+        "Please find the document attached. — سند پیوست است.",
+        "Keep a polite tone even in a complaint. — حتی در شکایت لحن مؤدبانه نگه دار.",
+        "Use a formal closing at the end. — در پایان از یک بستن رسمی استفاده کن.",
+        "## خطاهای رایج",
+        "بعد از if در شرطی نوع دوم فعل گذشته می‌آید، نه would: If you would send ✗ / If you could send ✓.",
+        "sincerely با نام مخاطب و faithfully بدون نام می‌آید.",
+        "regarding حرف اضافه نمی‌خواهد: regarding to your email ✗ / regarding your email ✓.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.second-conditional",
+    vocab: {
+      id: "vocab.formal-emails",
+      title: "Formal Letters and Emails",
+      titleFa: "نامه و ایمیل رسمی",
+      prerequisites: ["vocab.emails"],
+    },
+    words: [
+      {
+        slug: "enquiry", w: "enquiry", fa: "پرس‌وجو؛ درخواست اطلاعات", ipa: "/ɪnˈkwaɪəri/", pos: "noun",
+        def: "a question asking for information",
+        ex: [
+          ["I sent an enquiry about the price.", "دربارهٔ قیمت پرس‌وجویی فرستادم."],
+          ["Please reply to my enquiry by Friday.", "لطفاً تا جمعه به پرس‌وجوی من پاسخ دهید."],
+        ],
+        col: ["send an enquiry", "a polite enquiry"],
+        note: "املای بریتانیایی enquiry و آمریکایی inquiry است؛ در نامهٔ رسمی هر دو دیده می‌شود.",
+      },
+      {
+        slug: "regarding", w: "regarding", fa: "دربارهٔ؛ در خصوص", ipa: "/rɪˈɡɑːdɪŋ/", pos: "preposition",
+        def: "about (formal)",
+        ex: [
+          ["I am writing regarding your advertisement.", "دربارهٔ آگهی شما می‌نویسم."],
+          ["The email regarding the meeting arrived late.", "ایمیل مربوط به جلسه دیر رسید."],
+        ],
+        col: ["regarding your order", "a question regarding"],
+        note: "regarding رسمی‌تر از about است و بعد از آن مستقیم اسم می‌آید.",
+      },
+      {
+        slug: "sincerely", w: "sincerely", fa: "از صمیم قلب (در پایان نامه)", ipa: "/sɪnˈsɪəli/", pos: "adverb",
+        def: "used before your name at the end of a formal letter",
+        ex: [
+          ["Yours sincerely is used when you know the name.", "Yours sincerely وقتی به کار می‌رود که نام مخاطب را می‌دانی."],
+          ["She ended the letter with sincerely.", "او نامه را با sincerely تمام کرد."],
+        ],
+        col: ["Yours sincerely", "sincerely yours"],
+        note: "با نام مخاطب Yours sincerely و بدون نام Yours faithfully؛ بعد از آن ویرگول و نام خودت.",
+      },
+      {
+        slug: "closing", w: "closing", fa: "بستن نامه؛ جملهٔ پایانی", ipa: "/ˈkləʊzɪŋ/", pos: "noun",
+        def: "the last line of a letter",
+        ex: [
+          ["Use a formal closing at the end.", "در پایان از یک بستن رسمی استفاده کن."],
+          ["The closing line thanks the reader.", "جملهٔ پایانی از خواننده تشکر می‌کند."],
+        ],
+        col: ["a formal closing", "the closing line"],
+        note: "closing در این درس بخش پایانی نامه است، نه «بستن مغازه» (closing time).",
+      },
+      {
+        slug: "recipient", w: "recipient", fa: "گیرنده", ipa: "/rɪˈsɪpiənt/", pos: "noun",
+        def: "the person who receives something",
+        ex: [
+          ["Write the recipient's name at the top.", "نام گیرنده را بالای نامه بنویس."],
+          ["The recipient did not answer the email.", "گیرنده به ایمیل پاسخ نداد."],
+        ],
+        col: ["the recipient of the letter", "the intended recipient"],
+        note: "متضاد آن sender (فرستنده) است؛ recipient اسم قابل‌شمارش است.",
+      },
+      {
+        slug: "tone", w: "tone", fa: "لحن", ipa: "/təʊn/", pos: "noun",
+        def: "the feeling or attitude of your words",
+        ex: [
+          ["Keep a polite tone in the email.", "در ایمیل لحن مؤدبانه نگه دار."],
+          ["A formal tone is not the same as a rude tone.", "لحن رسمی با لحن بی‌ادب یکی نیست."],
+        ],
+        col: ["a polite tone", "a formal tone"],
+        note: "tone در نامه «لحن» است؛ tone of voice هم به معنای «آهنگ صدا» است.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "enquiry", gloss: "پرس‌وجو؛ درخواست اطلاعات",
+        options: ["پرس‌وجو؛ درخواست اطلاعات", "شکایت", "پیشنهاد شغلی", "فاکتور"],
+        note: "enquiry درخواست اطلاعات است؛ شکایت complaint نام دارد.",
+      },
+      {
+        k: "mcq", word: "regarding", gloss: "دربارهٔ؛ در خصوص",
+        options: ["دربارهٔ؛ در خصوص", "به‌جای", "با وجود", "بر اساس"],
+        note: "regarding یعنی «در خصوص» و رسمی‌تر از about است.",
+      },
+      {
+        k: "mcq", word: "recipient", gloss: "گیرنده",
+        options: ["گیرنده", "فرستنده", "امضاکننده", "مدیر"],
+        note: "recipient گیرنده است؛ فرستنده sender نام دارد.",
+      },
+      {
+        k: "blank", sentence: "I am writing ___ your last email.",
+        accepted: ["regarding", "about"], skill: "VOCABULARY",
+        note: "regarding رسمی و about خنثی است؛ هر دو بعد از writing بدون حرف اضافه می‌آیند.",
+      },
+      {
+        k: "blank", sentence: "Please keep a polite ___ in a formal email.",
+        accepted: ["tone", "style"], skill: "VOCABULARY",
+        note: "tone «لحن» است و style «سبک»؛ هر دو با keep a polite… می‌آیند.",
+      },
+      {
+        k: "recall", prompt: "گیرنده", accepted: ["recipient"],
+        note: "گیرنده recipient است و متضادش sender.",
+      },
+      {
+        k: "tr", prompt: "دربارهٔ سفارش خود می‌نویسم.",
+        accepted: ["i am writing regarding my order", "i am writing about my order"],
+        note: "I am writing regarding… ساختار ثابت آغاز نامهٔ رسمی است.",
+      },
+      {
+        k: "listen", text: "If you could confirm the date, I would be grateful.",
+        note: "به could و would گوش کنید: شرطی نوع دوم مؤدبانه، بدون will.",
+      },
+      {
+        k: "prod", prompt: "یک ایمیل رسمی کوتاه بنویس و برای تأیید تاریخ درخواست بده.",
+        mustUse: ["regarding", "would"], minWords: 8,
+        accepted: ["I am writing regarding the meeting and I would like to confirm the date."],
+        hint: "با I am writing regarding… و بعد I would like to… شروع کن.",
+        note: "would like to + فعل ساده درخواست مؤدبانه می‌سازد؛ regarding بدون to می‌آید.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو دربارهٔ ایمیل قبلی تماس گرفتی.",
+        question: "Good morning, how may I help you?",
+        questionFa: "صبح بخیر، چطور می‌توانم کمک کنم؟",
+        accepted: [
+          "I am calling regarding your last email.",
+          "I am calling about the email you sent.",
+        ],
+        note: "I am calling regarding… معادل رسمی I am writing regarding… در تماس تلفنی است.",
+      },
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو اگر ممکن است با مدیر صحبت کنی.",
+        question: "Would you like to speak to the manager?",
+        questionFa: "می‌خواهی با مدیر صحبت کنی؟",
+        accepted: [
+          "Yes, if she is available.",
+          "Yes, please, if that is possible.",
+        ],
+        note: "if she is available یعنی «اگر در دسترس باشد»؛ درخواست را مؤدبانه‌تر می‌کند.",
+      },
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو جزئیات را امروز ایمیل می‌کنی.",
+        question: "Could you send the details by email?",
+        questionFa: "می‌توانی جزئیات را با ایمیل بفرستی؟",
+        accepted: [
+          "Certainly, I will send them today.",
+          "Of course, I will email the details today.",
+        ],
+        note: "certainly و of course هر دو پاسخ مؤدبانه به درخواست‌اند؛ details جمع است.",
+      },
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو تأیید کتبی لازم داری.",
+        question: "Do you need written confirmation?",
+        questionFa: "تأیید کتبی لازم داری؟",
+        accepted: [
+          "Yes, I would appreciate written confirmation.",
+          "Yes, please send a confirmation in writing.",
+        ],
+        note: "I would appreciate… ادب رسمی را با شرطی نوع دوم می‌سازد؛ in writing یعنی «کتبی».",
+      },
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو لحن ایمیل قبلی کمی تند بود.",
+        question: "Was there a problem with the email?",
+        questionFa: "مشکلی با آن ایمیل بود؟",
+        accepted: [
+          "The tone of the email was a little strong.",
+          "I think the tone was too direct.",
+        ],
+        note: "a little strong نقد نرم است؛ tone با صفت توصیف می‌شود.",
+      },
+      {
+        scene: "تماس رسمی با دفتر یک شرکت", partner: "مسئول دفتر",
+        prompt: "بگو ممنون و منتظر پاسخ هستی.",
+        question: "Thank you for calling. Is there anything else?",
+        questionFa: "ممنون که تماس گرفتید. کار دیگری هست؟",
+        accepted: [
+          "No, thank you. I look forward to your reply.",
+          "That is all, thank you for your help.",
+        ],
+        note: "I look forward to + اسم یا فعل ing: look forward to your reply.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "b1.presentation.lesson-01",
+      order: 115,
+      title: "Giving a Short Presentation",
+      titleFa: "ارائهٔ یک موضوع کوتاه",
+      topic: "Study",
+      tip: [
+        "## قاعده",
+        "نقشهٔ ارائه را با be going to اعلام می‌کنیم، چون از قبل تصمیم گرفته شده است: I am going to talk about three points.",
+        "ساختار: am/is/are + going to + فعل ساده — She is going to show one chart.",
+        "ترتیب ارائه با First… / Then… / Finally… روشن می‌شود.",
+        "برای پایان: To sum up, … / Thank you for listening.",
+        "## جدول",
+        "I am going to talk about three points. — می‌خواهم دربارهٔ سه نکته صحبت کنم.",
+        "She is going to show one chart. — او یک نمودار نشان خواهد داد.",
+        "We are going to answer questions at the end. — در پایان به پرسش‌ها پاسخ می‌دهیم.",
+        "## مثال‌ها",
+        "The first slide shows the plan. — اسلاید اول برنامه را نشان می‌دهد.",
+        "Rehearse the talk twice before Friday. — سخنرانی را دو بار قبل از جمعه تمرین کن.",
+        "End with a clear conclusion. — با نتیجه‌گیری روشن تمام کن.",
+        "## خطاهای رایج",
+        "بعد از be همیشه going to: I going to talk ✗ / I am going to talk ✓.",
+        "بعد از going to فعل ساده می‌آید: going to talking ✗ / going to talk ✓.",
+        "slide قابل‌شمارش است: a slide / three slides.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.going-to-future",
+    vocab: {
+      id: "vocab.presentation",
+      title: "Giving a Short Presentation",
+      titleFa: "ارائهٔ کوتاه",
+      prerequisites: ["vocab.work"],
+    },
+    words: [
+      {
+        slug: "slide", w: "slide", fa: "اسلاید", ipa: "/slaɪd/", pos: "noun",
+        def: "one page of a presentation on a screen",
+        ex: [
+          ["The first slide shows the plan.", "اسلاید اول برنامه را نشان می‌دهد."],
+          ["Do not read every slide aloud.", "هر اسلاید را بلند نخوان."],
+        ],
+        col: ["the first slide", "a slide with a chart"],
+        note: "slide قابل‌شمارش است: a slide / three slides؛ فعل slide یعنی «سُریدن».",
+      },
+      {
+        slug: "overview", w: "overview", fa: "نمای کلی", ipa: "/ˈəʊvəvjuː/", pos: "noun",
+        def: "a short description of the whole subject",
+        ex: [
+          ["I will start with a short overview.", "با یک نمای کلی کوتاه شروع می‌کنم."],
+          ["The overview tells the audience the structure.", "نمای کلی ساختار را به حاضران می‌گوید."],
+        ],
+        col: ["a short overview", "give an overview"],
+        note: "overview با a می‌آید و اغلب با give an overview of… همراه است.",
+      },
+      {
+        slug: "conclusion", w: "conclusion", fa: "نتیجه‌گیری", ipa: "/kənˈkluːʒn/", pos: "noun",
+        def: "the last part, where you give your final idea",
+        ex: [
+          ["My conclusion has three points.", "نتیجه‌گیری من سه نکته دارد."],
+          ["End with a clear conclusion.", "با نتیجه‌گیری روشن تمام کن."],
+        ],
+        col: ["a clear conclusion", "in conclusion"],
+        note: "in conclusion یعنی «در پایان»؛ conclude فعل آن است.",
+      },
+      {
+        slug: "rehearse", w: "rehearse", fa: "تمرین کردن", ipa: "/rɪˈhɜːs/", pos: "verb",
+        def: "to practise a talk before you give it",
+        ex: [
+          ["Rehearse the talk twice before Friday.", "سخنرانی را دو بار قبل از جمعه تمرین کن."],
+          ["She rehearsed in front of a friend.", "او جلوی یک دوست تمرین کرد."],
+        ],
+        col: ["rehearse a talk", "rehearse aloud"],
+        note: "rehearse با practice فرق دارد: rehearse مخصوص اجرای آماده‌شده است.",
+      },
+      {
+        slug: "visual", w: "visual", fa: "تصویری؛ عنصر بصری", ipa: "/ˈvɪʒuəl/", pos: "noun",
+        def: "a picture or diagram that helps people understand",
+        ex: [
+          ["One visual is better than ten lines of text.", "یک تصویر از ده خط متن بهتر است."],
+          ["Add a simple visual to the slide.", "یک عنصر بصری ساده به اسلاید اضافه کن."],
+        ],
+        col: ["a simple visual", "use a visual"],
+        note: "visual هم صفت است (visual aids) و هم در این درس اسم (a visual).",
+      },
+      {
+        slug: "handout", w: "handout", fa: "برگهٔ چاپی برای حاضران", ipa: "/ˈhændaʊt/", pos: "noun",
+        def: "a printed page you give to the people listening",
+        ex: [
+          ["I have a one-page handout for the class.", "یک برگهٔ یک‌صفحه‌ای برای کلاس دارم."],
+          ["The handout repeats the main numbers.", "برگهٔ چاپی عددهای اصلی را تکرار می‌کند."],
+        ],
+        col: ["a one-page handout", "give out a handout"],
+        note: "handout قابل‌شمارش است و با give out یا hand out می‌آید.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "overview", gloss: "نمای کلی",
+        options: ["نمای کلی", "پرسش", "نتیجه‌گیری", "اسلاید"],
+        note: "overview نمای کلی است؛ conclusion نتیجه‌گیری است.",
+      },
+      {
+        k: "mcq", word: "rehearse", gloss: "تمرین کردن",
+        options: ["تمرین کردن", "ضبط کردن", "ترجمه کردن", "خلاصه کردن"],
+        note: "rehearse یعنی اجرا را از قبل تمرین کردن؛ record ضبط کردن است.",
+      },
+      {
+        k: "mcq", word: "handout", gloss: "برگهٔ چاپی برای حاضران",
+        options: ["برگهٔ چاپی برای حاضران", "تخته", "میکروفون", "پروژکتور"],
+        note: "handout برگه‌ای است که به حاضران می‌دهی؛ projector پروژکتور است.",
+      },
+      {
+        k: "blank", sentence: "I am going to ___ with a short overview.",
+        accepted: ["start", "begin"], skill: "VOCABULARY",
+        note: "start و begin هر دو با with می‌آیند: start with an overview.",
+      },
+      {
+        k: "blank", sentence: "Do not read every ___ aloud.",
+        accepted: ["slide", "line"], skill: "VOCABULARY",
+        note: "read every slide aloud یعنی همهٔ اسلایدها را بلند خواندن؛ line هم معنا می‌دهد.",
+      },
+      {
+        k: "recall", prompt: "نتیجه‌گیری", accepted: ["conclusion"],
+        note: "نتیجه‌گیری conclusion است و با in conclusion می‌آید.",
+      },
+      {
+        k: "tr", prompt: "می‌خواهم دربارهٔ سه نکته صحبت کنم.",
+        accepted: [
+          "i am going to talk about three points",
+          "i am going to speak about three points",
+        ],
+        note: "be going to + فعل ساده برای قصد از پیش تصمیم‌گرفته‌شده.",
+      },
+      {
+        k: "listen", text: "I am going to talk about three points.",
+        note: "به going to گوش کنید: در گفتار سریع /ɡənə/ شنیده می‌شود.",
+      },
+      {
+        k: "prod", prompt: "بگو ارائه‌ات چه ساختاری دارد.",
+        mustUse: ["going", "first"], minWords: 8,
+        accepted: ["I am going to start with an overview and first explain the problem."],
+        hint: "با I am going to start with… و بعد first… ادامه بده.",
+        note: "going to برنامه را می‌گوید و first ترتیب را نشان می‌دهد.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو آماده‌ای و دربارهٔ پروژه‌ات صحبت می‌کنی.",
+        question: "Are you ready to start?",
+        questionFa: "آماده‌ای شروع کنی؟",
+        accepted: [
+          "Yes, I am going to talk about my project.",
+          "Yes, I am ready to begin.",
+        ],
+        note: "be going to قصد را پیش از اجرا اعلام می‌کند.",
+      },
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو حدود ده دقیقه طول می‌کشد.",
+        question: "How long will it take?",
+        questionFa: "چقدر طول می‌کشد؟",
+        accepted: [
+          "It is going to take about ten minutes.",
+          "About ten minutes, I think.",
+        ],
+        note: "take برای مدت زمان می‌آید: take ten minutes؛ about یعنی «حدود».",
+      },
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو اسلاید اول نمای کلی را نشان می‌دهد.",
+        question: "What is on the first slide?",
+        questionFa: "روی اسلاید اول چیست؟",
+        accepted: [
+          "The first slide shows a short overview.",
+          "The first slide gives an overview of the topic.",
+        ],
+        note: "روی اسلاید با on می‌آید: on the first slide؛ show و give هر دو طبیعی‌اند.",
+      },
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو یک نمودار نشان می‌دهی.",
+        question: "Will you show any data?",
+        questionFa: "داده‌ای نشان می‌دهی؟",
+        accepted: [
+          "Yes, I am going to show one chart.",
+          "Yes, there is a chart on the third slide.",
+        ],
+        note: "data جمع است و با any در سؤال می‌آید؛ chart یک نمودار است.",
+      },
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو برای کلاس برگهٔ چاپی داری.",
+        question: "Do you have a handout for the class?",
+        questionFa: "برای کلاس برگهٔ چاپی داری؟",
+        accepted: [
+          "Yes, there is a handout for the class.",
+          "Yes, I have a handout for everyone.",
+        ],
+        note: "a handout for the class؛ a در جملهٔ مثبت لازم است.",
+      },
+      {
+        scene: "کلاس، ارائهٔ کوتاه", partner: "استاد",
+        prompt: "بگو برای نتیجه‌گیری‌ات راهنمایی می‌خواهی.",
+        question: "Do you have any questions for me?",
+        questionFa: "پرسشی از من داری؟",
+        accepted: [
+          "Yes, I would like some advice on my conclusion.",
+          "Could you give me advice on the conclusion?",
+        ],
+        note: "advice غیرقابل‌شمارش است: some advice ✓ / an advice ✗.",
+      },
+    ],
+  },
+];

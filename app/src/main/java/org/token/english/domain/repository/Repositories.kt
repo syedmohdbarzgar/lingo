@@ -26,6 +26,19 @@ interface LessonRepository {
     suspend fun getExercises(lessonId: String): List<Exercise>
     suspend fun getVocabulary(lessonId: String): List<VocabularyItem>
     suspend fun saveLessonIndex(lessonId: String, index: Int)
+
+    /**
+     * Persists where the guided lesson stands: the active step and the steps
+     * already completed or skipped. Called on every step change, so an
+     * interrupted lesson resumes on the same step (checklist Phase 4).
+     */
+    suspend fun saveLessonStage(
+        lessonId: String,
+        stageId: String,
+        completedStages: Set<String>,
+        skippedStages: Set<String>,
+    )
+
     suspend fun getLessonState(lessonId: String): LessonState?
     suspend fun completeLesson(lessonId: String, at: Long)
     /** Ensures every vocabulary item of the lesson exists in the SRS queue. */

@@ -188,6 +188,21 @@ class LessonRepositoryImpl(
         contentDao.updateLessonIndex(lessonId, index)
     }
 
+    override suspend fun saveLessonStage(
+        lessonId: String,
+        stageId: String,
+        completedStages: Set<String>,
+        skippedStages: Set<String>,
+    ) {
+        contentDao.ensureLessonState(lessonId)
+        contentDao.updateLessonStage(
+            lessonId = lessonId,
+            stage = stageId,
+            completed = completedStages.sorted().joinToString(","),
+            skipped = skippedStages.sorted().joinToString(","),
+        )
+    }
+
     override suspend fun getLessonState(lessonId: String): LessonState? =
         contentDao.getLessonState(lessonId)?.toDomain()
 
@@ -519,7 +534,15 @@ private fun LessonEntity.toDomain() = LearningLevel.valueOf(level).let {
     Lesson(id, it, title, titleFa, topic, estimatedMinutes, orderIndex, grammarTipFa)
 }
 
-private fun LessonStateEntity.toDomain() = LessonState(lessonId, currentIndex, completed, completedAt)
+private fun LessonStateEntity.toDomain() = LessonState(
+    lessonId = lessonId,
+    currentIndex = currentIndex,
+    completed = completed,
+    completedAt = completedAt,
+    stageId = stage.takeIf { it.isNotBlank() },
+    completedStages = completedStages.split(',').filter { it.isNotBlank() }.toSet(),
+    skippedStages = skippedStages.split(',').filter { it.isNotBlank() }.toSet(),
+)
 
 private fun VocabularyEntity.toDomain() = VocabularyItem(
     id = id,

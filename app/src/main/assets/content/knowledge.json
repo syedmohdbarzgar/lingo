@@ -1,5 +1,5 @@
 {
-  "contentVersion": 35,
+  "contentVersion": 60,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -236,7 +236,9 @@
       "lessons": [
         "a2.airport.lesson-01",
         "a2.health.lesson-01",
-        "a2.work.lesson-01"
+        "a2.work.lesson-01",
+        "b1.time-management.lesson-01",
+        "b2.ethics.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -310,7 +312,8 @@
       "lessons": [
         "a2.health.lesson-01",
         "a2.pharmacy.lesson-01",
-        "a2.everyday-problems.lesson-01"
+        "a2.everyday-problems.lesson-01",
+        "b1.emotions.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -327,7 +330,8 @@
       ],
       "lessons": [
         "a2.hobbies.lesson-01",
-        "a2.opinions.lesson-01"
+        "a2.opinions.lesson-01",
+        "b2.phrasal-verbs.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -376,7 +380,12 @@
       ],
       "lessons": [
         "a2.city-life.lesson-01",
-        "a2.comparing.lesson-01"
+        "a2.comparing.lesson-01",
+        "b1.charts.lesson-01",
+        "b2.persuasion.lesson-01",
+        "c1.data-interpretation.lesson-01",
+        "c1.semantic-nuance.lesson-01",
+        "c2.audience.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -412,7 +421,10 @@
       ],
       "lessons": [
         "b1.work.lesson-01",
-        "b1.money.lesson-01"
+        "b1.money.lesson-01",
+        "b1.personal-background.lesson-01",
+        "b1.friendship.lesson-01",
+        "b1.social-media.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -428,7 +440,13 @@
         "grammar.past-simple"
       ],
       "lessons": [
-        "b1.news.lesson-01"
+        "b1.news.lesson-01",
+        "b1.university.lesson-01",
+        "b1.banking.lesson-01",
+        "b1.social-issues.lesson-01",
+        "b2.reports.lesson-01",
+        "c1.research-reports.lesson-01",
+        "c2.paraphrasing.lesson-01"
       ],
       "skills": [
         "GRAMMAR",
@@ -460,7 +478,9 @@
         "grammar.future-will"
       ],
       "lessons": [
-        "b1.plans.lesson-01"
+        "b1.plans.lesson-01",
+        "b1.technology.lesson-01",
+        "b1.presentation.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -477,7 +497,12 @@
       ],
       "lessons": [
         "b1.plans.lesson-01",
-        "b1.health-lifestyle.lesson-01"
+        "b1.health-lifestyle.lesson-01",
+        "b1.new-skills.lesson-01",
+        "b1.agreeing.lesson-01",
+        "b1.complaints.lesson-01",
+        "b1.goals.lesson-01",
+        "c1.proposals.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -493,7 +518,10 @@
         "grammar.past-simple"
       ],
       "lessons": [
-        "b1.plans.lesson-01"
+        "b1.plans.lesson-01",
+        "b1.conflicts.lesson-01",
+        "b1.formal-emails.lesson-01",
+        "c2.sensitive.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -509,7 +537,8 @@
         "grammar.past-simple"
       ],
       "lessons": [
-        "b1.experiences.lesson-01"
+        "b1.experiences.lesson-01",
+        "b1.travel-problems.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -525,7 +554,10 @@
         "grammar.past-simple"
       ],
       "lessons": [
-        "b1.experiences.lesson-01"
+        "b1.experiences.lesson-01",
+        "b1.storytelling.lesson-01",
+        "b2.crisis.lesson-01",
+        "c2.narrative.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -558,7 +590,11 @@
         "grammar.should-advice"
       ],
       "lessons": [
-        "b1.health-lifestyle.lesson-01"
+        "b1.health-lifestyle.lesson-01",
+        "b1.job-hunting.lesson-01",
+        "b1.cultural-differences.lesson-01",
+        "b1.meetings.lesson-01",
+        "b2.mental-health.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -590,7 +626,15 @@
         "grammar.present-simple-affirmative"
       ],
       "lessons": [
-        "b2.technology.lesson-01"
+        "b2.technology.lesson-01",
+        "b2.entrepreneurship.lesson-01",
+        "b2.education.lesson-01",
+        "b2.presentations.lesson-01",
+        "b2.review.lesson-01",
+        "c1.media-analysis.lesson-01",
+        "c1.diversity-inclusion.lesson-01",
+        "b2.viewpoints.lesson-01",
+        "c2.allusions.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -606,7 +650,14 @@
         "grammar.passive-simple"
       ],
       "lessons": [
-        "b2.technology.lesson-01"
+        "b2.technology.lesson-01",
+        "b1.environment.lesson-01",
+        "b2.media-literacy.lesson-01",
+        "b2.strategy.lesson-01",
+        "c1.tech-ethics.lesson-01",
+        "c1.research-ethics.lesson-01",
+        "c2.speeches.lesson-01",
+        "c2.translation.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -622,7 +673,10 @@
         "grammar.passive-simple"
       ],
       "lessons": [
-        "b2.environment.lesson-01"
+        "b2.environment.lesson-01",
+        "b2.leadership.lesson-01",
+        "b2.ai.lesson-01",
+        "c2.uncertainty.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -638,7 +692,13 @@
         "grammar.second-conditional"
       ],
       "lessons": [
-        "b2.environment.lesson-01"
+        "b2.environment.lesson-01",
+        "b2.negotiation.lesson-01",
+        "b2.renewables.lesson-01",
+        "b2.debate.lesson-01",
+        "c1.risk.lesson-01",
+        "c1.business-sustainability.lesson-01",
+        "c2.diplomacy.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -671,7 +731,11 @@
         "discourse.reported-speech-basic"
       ],
       "lessons": [
-        "b2.interview.lesson-01"
+        "b2.interview.lesson-01",
+        "b2.intercultural.lesson-01",
+        "c1.stakeholders.lesson-01",
+        "c2.synthesis.lesson-01",
+        "c2.pragmatics.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -687,7 +751,10 @@
         "grammar.past-continuous"
       ],
       "lessons": [
-        "b2.media.lesson-01"
+        "b2.media.lesson-01",
+        "b1.eating-habits.lesson-01",
+        "c1.org-culture.lesson-01",
+        "c2.dialects.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -704,7 +771,10 @@
       ],
       "lessons": [
         "b2.media.lesson-01",
-        "c1.culture.lesson-01"
+        "c1.culture.lesson-01",
+        "b2.finance.lesson-01",
+        "b2.workplace-conflict.lesson-01",
+        "b2.career-decisions.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -721,7 +791,13 @@
         "grammar.passive-simple"
       ],
       "lessons": [
-        "b2.problems.lesson-01"
+        "b2.problems.lesson-01",
+        "b2.projects.lesson-01",
+        "b2.privacy.lesson-01",
+        "c1.org-change.lesson-01",
+        "c1.specialist-presentations.lesson-01",
+        "c2.academic-writing.lesson-01",
+        "c2.legal.lesson-01"
       ],
       "skills": [
         "GRAMMAR",
@@ -771,7 +847,11 @@
         "grammar.third-person-s"
       ],
       "lessons": [
-        "b2.research.lesson-01"
+        "b2.research.lesson-01",
+        "b2.economy.lesson-01",
+        "c1.statistics.lesson-01",
+        "c2.sociolinguistics.lesson-01",
+        "c2.editing.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -788,7 +868,13 @@
       ],
       "lessons": [
         "c1.academic.lesson-01",
-        "c1.persuasion.lesson-01"
+        "c1.persuasion.lesson-01",
+        "c1.executive.lesson-01",
+        "c1.philosophy.lesson-01",
+        "c1.argumentation.lesson-01",
+        "c2.discourse.lesson-01",
+        "c2.advanced-persuasion.lesson-01",
+        "c2.specialist-audiences.lesson-01"
       ],
       "skills": [
         "GRAMMAR",
@@ -824,7 +910,11 @@
       ],
       "lessons": [
         "c1.persuasion.lesson-01",
-        "c1.culture.lesson-01"
+        "c1.culture.lesson-01",
+        "c1.negotiation.lesson-01",
+        "c1.economy.lesson-01",
+        "c2.philosophy.lesson-01",
+        "c2.policy.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -840,7 +930,10 @@
         "grammar.modals-of-deduction"
       ],
       "lessons": [
-        "c1.persuasion.lesson-01"
+        "c1.persuasion.lesson-01",
+        "c1.policy.lesson-01",
+        "c1.research-method.lesson-01",
+        "c2.argument-analysis.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -906,7 +999,9 @@
         "grammar.modals-of-deduction"
       ],
       "lessons": [
-        "c1.inference.lesson-01"
+        "c1.inference.lesson-01",
+        "c1.international.lesson-01",
+        "c1.cognitive-bias.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -1280,7 +1375,9 @@
       "level": "A1",
       "prerequisites": [],
       "lessons": [
-        "a1.articles.lesson-01"
+        "a1.articles.lesson-01",
+        "b2.idioms.lesson-01",
+        "c2.culture-expressions.lesson-01"
       ],
       "skills": [
         "GRAMMAR"
@@ -2282,6 +2379,1655 @@
       ],
       "lessons": [
         "a2.everyday-problems.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.personal-background",
+      "type": "VOCABULARY",
+      "title": "Personal Background",
+      "titleFa": "سوابق شخصی و تحصیلی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.work"
+      ],
+      "lessons": [
+        "b1.personal-background.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.job-hunting",
+      "type": "VOCABULARY",
+      "title": "Job Hunting",
+      "titleFa": "جست‌وجوی شغل",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.personal-background"
+      ],
+      "lessons": [
+        "b1.job-hunting.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.university",
+      "type": "VOCABULARY",
+      "title": "University Life",
+      "titleFa": "تحصیل در دانشگاه",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.personal-background"
+      ],
+      "lessons": [
+        "b1.university.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.new-skills",
+      "type": "VOCABULARY",
+      "title": "Learning New Skills",
+      "titleFa": "یادگیری مهارت‌های جدید",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.university"
+      ],
+      "lessons": [
+        "b1.new-skills.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.travel-problems",
+      "type": "VOCABULARY",
+      "title": "International Travel Problems",
+      "titleFa": "مشکلات سفر",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.holiday-plans"
+      ],
+      "lessons": [
+        "b1.travel-problems.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.cultural-differences",
+      "type": "VOCABULARY",
+      "title": "Cultural Differences",
+      "titleFa": "تفاوت‌های فرهنگی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.travel-problems"
+      ],
+      "lessons": [
+        "b1.cultural-differences.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.friendship",
+      "type": "VOCABULARY",
+      "title": "Friendship and Relationships",
+      "titleFa": "دوستی و روابط",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.cultural-differences"
+      ],
+      "lessons": [
+        "b1.friendship.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.emotions",
+      "type": "VOCABULARY",
+      "title": "Feelings and Emotions",
+      "titleFa": "احساسات و حالات روحی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.friendship"
+      ],
+      "lessons": [
+        "b1.emotions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.conflicts",
+      "type": "VOCABULARY",
+      "title": "Resolving Conflicts",
+      "titleFa": "حل اختلاف",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.emotions"
+      ],
+      "lessons": [
+        "b1.conflicts.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.agreeing",
+      "type": "VOCABULARY",
+      "title": "Agreeing and Disagreeing",
+      "titleFa": "موافقت و مخالفت",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.conflicts"
+      ],
+      "lessons": [
+        "b1.agreeing.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.storytelling",
+      "type": "VOCABULARY",
+      "title": "Storytelling",
+      "titleFa": "داستان‌گویی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.agreeing"
+      ],
+      "lessons": [
+        "b1.storytelling.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.technology",
+      "type": "VOCABULARY",
+      "title": "Technology in Daily Life",
+      "titleFa": "فناوری در زندگی روزمره",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.storytelling"
+      ],
+      "lessons": [
+        "b1.technology.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.social-media",
+      "type": "VOCABULARY",
+      "title": "Social Media",
+      "titleFa": "شبکه‌های اجتماعی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.technology"
+      ],
+      "lessons": [
+        "b1.social-media.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.environment",
+      "type": "VOCABULARY",
+      "title": "Environment and Pollution",
+      "titleFa": "محیط زیست",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.technology"
+      ],
+      "lessons": [
+        "b1.environment.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.eating-habits",
+      "type": "VOCABULARY",
+      "title": "Eating Habits",
+      "titleFa": "عادت‌های غذایی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.food-drinks"
+      ],
+      "lessons": [
+        "b1.eating-habits.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.time-management",
+      "type": "VOCABULARY",
+      "title": "Time Management",
+      "titleFa": "مدیریت زمان",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.everyday-problems"
+      ],
+      "lessons": [
+        "b1.time-management.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.banking",
+      "type": "VOCABULARY",
+      "title": "Banking Services",
+      "titleFa": "خدمات بانکی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.payments"
+      ],
+      "lessons": [
+        "b1.banking.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.complaints",
+      "type": "VOCABULARY",
+      "title": "Complaints and Refunds",
+      "titleFa": "شکایت و بازپرداخت",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.returns"
+      ],
+      "lessons": [
+        "b1.complaints.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.formal-emails",
+      "type": "VOCABULARY",
+      "title": "Formal Letters and Emails",
+      "titleFa": "نامه و ایمیل رسمی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.emails"
+      ],
+      "lessons": [
+        "b1.formal-emails.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.presentation",
+      "type": "VOCABULARY",
+      "title": "Giving a Short Presentation",
+      "titleFa": "ارائهٔ کوتاه",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.work"
+      ],
+      "lessons": [
+        "b1.presentation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.meetings",
+      "type": "VOCABULARY",
+      "title": "Participating in Meetings",
+      "titleFa": "شرکت در جلسه",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.work"
+      ],
+      "lessons": [
+        "b1.meetings.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.charts",
+      "type": "VOCABULARY",
+      "title": "Describing Charts and Data",
+      "titleFa": "نمودارها و داده‌ها",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.presentation"
+      ],
+      "lessons": [
+        "b1.charts.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.goals",
+      "type": "VOCABULARY",
+      "title": "Future Goals and Ambitions",
+      "titleFa": "اهداف و آرزوها",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.future-plans"
+      ],
+      "lessons": [
+        "b1.goals.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.social-issues",
+      "type": "VOCABULARY",
+      "title": "Discussing Social Issues",
+      "titleFa": "مسائل اجتماعی",
+      "level": "B1",
+      "prerequisites": [
+        "vocab.environment"
+      ],
+      "lessons": [
+        "b1.social-issues.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.negotiations",
+      "type": "VOCABULARY",
+      "title": "Workplace Negotiations",
+      "titleFa": "مذاکره در محیط کار",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.job-hunting"
+      ],
+      "lessons": [
+        "b2.negotiation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.project-management",
+      "type": "VOCABULARY",
+      "title": "Project Management",
+      "titleFa": "مدیریت پروژه",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.meetings"
+      ],
+      "lessons": [
+        "b2.projects.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.leadership",
+      "type": "VOCABULARY",
+      "title": "Leadership and Teamwork",
+      "titleFa": "رهبری و کار تیمی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.conflicts"
+      ],
+      "lessons": [
+        "b2.leadership.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.entrepreneurship",
+      "type": "VOCABULARY",
+      "title": "Entrepreneurship",
+      "titleFa": "کارآفرینی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.banking"
+      ],
+      "lessons": [
+        "b2.entrepreneurship.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.finance",
+      "type": "VOCABULARY",
+      "title": "Finance and Investment",
+      "titleFa": "مالیه و سرمایه‌گذاری",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.entrepreneurship"
+      ],
+      "lessons": [
+        "b2.finance.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.global-economy",
+      "type": "VOCABULARY",
+      "title": "The Global Economy",
+      "titleFa": "اقتصاد جهانی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.banking"
+      ],
+      "lessons": [
+        "b2.economy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.artificial-intelligence",
+      "type": "VOCABULARY",
+      "title": "Artificial Intelligence",
+      "titleFa": "هوش مصنوعی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.technology"
+      ],
+      "lessons": [
+        "b2.ai.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.digital-privacy",
+      "type": "VOCABULARY",
+      "title": "Digital Privacy and Security",
+      "titleFa": "حریم خصوصی دیجیتال",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.social-media"
+      ],
+      "lessons": [
+        "b2.privacy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.renewable-energy",
+      "type": "VOCABULARY",
+      "title": "Renewable Energy",
+      "titleFa": "انرژی تجدیدپذیر",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.environment"
+      ],
+      "lessons": [
+        "b2.renewables.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.education-systems",
+      "type": "VOCABULARY",
+      "title": "Education Systems",
+      "titleFa": "نظام آموزشی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.university"
+      ],
+      "lessons": [
+        "b2.education.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.mental-health",
+      "type": "VOCABULARY",
+      "title": "Mental Health",
+      "titleFa": "سلامت روان",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.emotions"
+      ],
+      "lessons": [
+        "b2.mental-health.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.media-literacy",
+      "type": "VOCABULARY",
+      "title": "Media Literacy",
+      "titleFa": "سواد رسانه‌ای",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.social-media"
+      ],
+      "lessons": [
+        "b2.media-literacy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.persuasion",
+      "type": "VOCABULARY",
+      "title": "Persuasion and Advertising",
+      "titleFa": "اقناع و تبلیغات",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.negotiations"
+      ],
+      "lessons": [
+        "b2.persuasion.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.crisis-management",
+      "type": "VOCABULARY",
+      "title": "Crisis Management",
+      "titleFa": "مدیریت بحران",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.project-management"
+      ],
+      "lessons": [
+        "b2.crisis.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.professional-reports",
+      "type": "VOCABULARY",
+      "title": "Writing Professional Reports",
+      "titleFa": "گزارش حرفه‌ای",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.charts"
+      ],
+      "lessons": [
+        "b2.reports.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.professional-presentations",
+      "type": "VOCABULARY",
+      "title": "Professional Presentations",
+      "titleFa": "ارائهٔ حرفه‌ای",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.presentation"
+      ],
+      "lessons": [
+        "b2.presentations.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.debating",
+      "type": "VOCABULARY",
+      "title": "Debating and Discussion",
+      "titleFa": "مناظره",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.social-issues"
+      ],
+      "lessons": [
+        "b2.debate.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.film-reviews",
+      "type": "VOCABULARY",
+      "title": "Reviewing Films and Books",
+      "titleFa": "نقد فیلم و کتاب",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.storytelling"
+      ],
+      "lessons": [
+        "b2.review.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.common-idioms",
+      "type": "VOCABULARY",
+      "title": "Common English Idioms",
+      "titleFa": "اصطلاحات رایج",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.idioms-and-figurative"
+      ],
+      "lessons": [
+        "b2.idioms.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.common-phrasal-verbs",
+      "type": "VOCABULARY",
+      "title": "Common Phrasal Verbs",
+      "titleFa": "افعال عبارتی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.phrasal-verbs"
+      ],
+      "lessons": [
+        "b2.phrasal-verbs.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.intercultural",
+      "type": "VOCABULARY",
+      "title": "Intercultural Communication",
+      "titleFa": "ارتباط بین‌فرهنگی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.cultural-differences"
+      ],
+      "lessons": [
+        "b2.intercultural.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.workplace-conflict",
+      "type": "VOCABULARY",
+      "title": "Workplace Conflict Resolution",
+      "titleFa": "حل اختلاف کاری",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.conflicts"
+      ],
+      "lessons": [
+        "b2.workplace-conflict.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.strategy-evaluation",
+      "type": "VOCABULARY",
+      "title": "Strategy and Evaluation",
+      "titleFa": "استراتژی و ارزیابی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.goals"
+      ],
+      "lessons": [
+        "b2.strategy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.professional-ethics",
+      "type": "VOCABULARY",
+      "title": "Professional Ethics",
+      "titleFa": "اخلاق حرفه‌ای",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.leadership"
+      ],
+      "lessons": [
+        "b2.ethics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.executive-communication",
+      "type": "VOCABULARY",
+      "title": "Executive Communication",
+      "titleFa": "ارتباطات مدیریتی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.strategy-evaluation"
+      ],
+      "lessons": [
+        "c1.executive.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.advanced-negotiation",
+      "type": "VOCABULARY",
+      "title": "Advanced Negotiation",
+      "titleFa": "مذاکره‌های پیچیده",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.workplace-conflict"
+      ],
+      "lessons": [
+        "c1.negotiation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.public-policy",
+      "type": "VOCABULARY",
+      "title": "Public Policy",
+      "titleFa": "سیاست‌گذاری عمومی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.professional-ethics"
+      ],
+      "lessons": [
+        "c1.policy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.international-relations",
+      "type": "VOCABULARY",
+      "title": "International Relations",
+      "titleFa": "روابط بین‌الملل",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.intercultural"
+      ],
+      "lessons": [
+        "c1.international.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.economic-analysis",
+      "type": "VOCABULARY",
+      "title": "Economic Analysis",
+      "titleFa": "تحلیل اقتصادی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.global-economy"
+      ],
+      "lessons": [
+        "c1.economy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.technology-ethics",
+      "type": "VOCABULARY",
+      "title": "Technology Ethics",
+      "titleFa": "اخلاق در فناوری",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.professional-ethics"
+      ],
+      "lessons": [
+        "c1.tech-ethics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.philosophy-reasoning",
+      "type": "VOCABULARY",
+      "title": "Philosophy and Reasoning",
+      "titleFa": "فلسفه و استدلال",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.debating"
+      ],
+      "lessons": [
+        "c1.philosophy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.cognitive-biases",
+      "type": "VOCABULARY",
+      "title": "Cognitive Biases",
+      "titleFa": "خطاهای شناختی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.media-literacy"
+      ],
+      "lessons": [
+        "c1.cognitive-bias.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.statistical-literacy",
+      "type": "VOCABULARY",
+      "title": "Statistical Literacy",
+      "titleFa": "سواد آماری",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.charts"
+      ],
+      "lessons": [
+        "c1.statistics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.critical-media-analysis",
+      "type": "VOCABULARY",
+      "title": "Critical Media Analysis",
+      "titleFa": "تحلیل انتقادی رسانه",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.media-literacy"
+      ],
+      "lessons": [
+        "c1.media-analysis.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.organizational-change",
+      "type": "VOCABULARY",
+      "title": "Organizational Change",
+      "titleFa": "مدیریت تغییر سازمانی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.leadership"
+      ],
+      "lessons": [
+        "c1.org-change.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.risk-management",
+      "type": "VOCABULARY",
+      "title": "Risk Management",
+      "titleFa": "مدیریت ریسک",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.strategy-evaluation"
+      ],
+      "lessons": [
+        "c1.risk.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.research-reports",
+      "type": "VOCABULARY",
+      "title": "Research Reports",
+      "titleFa": "گزارش‌های پژوهشی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.professional-reports"
+      ],
+      "lessons": [
+        "c1.research-reports.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.research-methodology",
+      "type": "VOCABULARY",
+      "title": "Research Methodology",
+      "titleFa": "روش تحقیق",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.statistical-literacy"
+      ],
+      "lessons": [
+        "c1.research-method.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.data-interpretation",
+      "type": "VOCABULARY",
+      "title": "Interpreting Complex Data",
+      "titleFa": "تفسیر داده‌های پیچیده",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.charts"
+      ],
+      "lessons": [
+        "c1.data-interpretation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.organizational-culture",
+      "type": "VOCABULARY",
+      "title": "Organizational Culture",
+      "titleFa": "فرهنگ سازمانی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.organizational-change"
+      ],
+      "lessons": [
+        "c1.org-culture.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.research-ethics",
+      "type": "VOCABULARY",
+      "title": "Research Ethics",
+      "titleFa": "اخلاق در پژوهش",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.research-methodology"
+      ],
+      "lessons": [
+        "c1.research-ethics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.diversity-inclusion",
+      "type": "VOCABULARY",
+      "title": "Diversity and Inclusion",
+      "titleFa": "تنوع و شمول",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.organizational-culture"
+      ],
+      "lessons": [
+        "c1.diversity-inclusion.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.business-sustainability",
+      "type": "VOCABULARY",
+      "title": "Business Sustainability",
+      "titleFa": "پایداری کسب‌وکار",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.strategy-evaluation"
+      ],
+      "lessons": [
+        "c1.business-sustainability.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.semantic-nuance",
+      "type": "VOCABULARY",
+      "title": "Semantic Nuance",
+      "titleFa": "ظرافت‌های معنایی واژگان",
+      "level": "C1",
+      "prerequisites": [
+        "discourse.register-and-formality"
+      ],
+      "lessons": [
+        "c1.semantic-nuance.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.argumentation-rebuttal",
+      "type": "VOCABULARY",
+      "title": "Argumentation and Rebuttal",
+      "titleFa": "استدلال و پاسخ به نقد",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.debating"
+      ],
+      "lessons": [
+        "c1.argumentation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.professional-proposals",
+      "type": "VOCABULARY",
+      "title": "Professional Proposals",
+      "titleFa": "نگارش پیشنهادهای حرفه‌ای",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.professional-reports"
+      ],
+      "lessons": [
+        "c1.proposals.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.stakeholder-communication",
+      "type": "VOCABULARY",
+      "title": "Stakeholder Communication",
+      "titleFa": "مدیریت ارتباط با ذی‌نفعان",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.executive-communication"
+      ],
+      "lessons": [
+        "c1.stakeholders.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.specialist-presentations",
+      "type": "VOCABULARY",
+      "title": "Specialist Presentations",
+      "titleFa": "ارائهٔ تخصصی",
+      "level": "C1",
+      "prerequisites": [
+        "vocab.professional-presentations"
+      ],
+      "lessons": [
+        "c1.specialist-presentations.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.career-decisions",
+      "type": "VOCABULARY",
+      "title": "Career Decisions",
+      "titleFa": "تصمیم‌گیری دربارهٔ آیندهٔ شغلی",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.leadership"
+      ],
+      "lessons": [
+        "b2.career-decisions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.evaluating-viewpoints",
+      "type": "VOCABULARY",
+      "title": "Evaluating Different Viewpoints",
+      "titleFa": "تحلیل دیدگاه‌های مخالف",
+      "level": "B2",
+      "prerequisites": [
+        "vocab.debating"
+      ],
+      "lessons": [
+        "b2.viewpoints.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.sociolinguistics",
+      "type": "VOCABULARY",
+      "title": "Sociolinguistics",
+      "titleFa": "زبان‌شناسی اجتماعی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.semantic-precision"
+      ],
+      "lessons": [
+        "c2.sociolinguistics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.discourse-analysis",
+      "type": "VOCABULARY",
+      "title": "Discourse Analysis",
+      "titleFa": "تحلیل گفتمان",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.narrative-voice-and-ambiguity"
+      ],
+      "lessons": [
+        "c2.discourse.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.philosophical-texts",
+      "type": "VOCABULARY",
+      "title": "Philosophical Texts",
+      "titleFa": "تحلیل متون فلسفی",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.logical-fallacies"
+      ],
+      "lessons": [
+        "c2.philosophy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.interpreting-speeches",
+      "type": "VOCABULARY",
+      "title": "Interpreting Complex Speeches",
+      "titleFa": "تفسیر سخنرانی‌های پیچیده",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.specialist-presentations"
+      ],
+      "lessons": [
+        "c2.speeches.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.advanced-persuasion",
+      "type": "VOCABULARY",
+      "title": "Advanced Persuasion",
+      "titleFa": "فنون اقناع پیشرفته",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.rhetorical-emphasis"
+      ],
+      "lessons": [
+        "c2.advanced-persuasion.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.academic-writing",
+      "type": "VOCABULARY",
+      "title": "Advanced Academic Writing",
+      "titleFa": "نگارش دانشگاهی پیشرفته",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.evidence-and-claims"
+      ],
+      "lessons": [
+        "c2.academic-writing.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.editing-revision",
+      "type": "VOCABULARY",
+      "title": "Professional Editing and Revision",
+      "titleFa": "ویرایش و بازنویسی حرفه‌ای",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.semantic-precision"
+      ],
+      "lessons": [
+        "c2.editing.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.synthesizing-texts",
+      "type": "VOCABULARY",
+      "title": "Synthesizing Specialized Texts",
+      "titleFa": "خلاصه‌سازی متون تخصصی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.professional-reports"
+      ],
+      "lessons": [
+        "c2.synthesis.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.critical-argument",
+      "type": "VOCABULARY",
+      "title": "Critical Argument Analysis",
+      "titleFa": "تحلیل انتقادی استدلال‌ها",
+      "level": "C2",
+      "prerequisites": [
+        "discourse.logical-fallacies"
+      ],
+      "lessons": [
+        "c2.argument-analysis.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.dialect-variation",
+      "type": "VOCABULARY",
+      "title": "English Dialect Variation",
+      "titleFa": "تفاوت‌های گویشی انگلیسی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.sociolinguistics"
+      ],
+      "lessons": [
+        "c2.dialects.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.pragmatics",
+      "type": "VOCABULARY",
+      "title": "Pragmatics",
+      "titleFa": "کاربردشناسی زبان",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.discourse-analysis"
+      ],
+      "lessons": [
+        "c2.pragmatics.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.culture-expressions",
+      "type": "VOCABULARY",
+      "title": "Culture-specific Expressions",
+      "titleFa": "اصطلاحات فرهنگی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.intercultural"
+      ],
+      "lessons": [
+        "c2.culture-expressions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.literary-allusions",
+      "type": "VOCABULARY",
+      "title": "Literary Allusions",
+      "titleFa": "کنایه‌های ادبی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.idioms-and-figurative"
+      ],
+      "lessons": [
+        "c2.allusions.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.precision-paraphrase",
+      "type": "VOCABULARY",
+      "title": "Paraphrasing with Precision",
+      "titleFa": "بازنویسی با حفظ معنا",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.academic-writing"
+      ],
+      "lessons": [
+        "c2.paraphrasing.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.meaning-translation",
+      "type": "VOCABULARY",
+      "title": "Meaning-based Translation",
+      "titleFa": "ترجمهٔ مفهومی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.semantic-nuance"
+      ],
+      "lessons": [
+        "c2.translation.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.diplomatic-communication",
+      "type": "VOCABULARY",
+      "title": "Diplomatic Communication",
+      "titleFa": "ارتباطات دیپلماتیک",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.intercultural"
+      ],
+      "lessons": [
+        "c2.diplomacy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.specialist-audiences",
+      "type": "VOCABULARY",
+      "title": "Speaking to Specialist Audiences",
+      "titleFa": "سخنرانی برای مخاطبان تخصصی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.specialist-presentations"
+      ],
+      "lessons": [
+        "c2.specialist-audiences.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.narrative-analysis",
+      "type": "VOCABULARY",
+      "title": "Narrative Analysis",
+      "titleFa": "تحلیل روایت",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.storytelling"
+      ],
+      "lessons": [
+        "c2.narrative.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.reasoning-uncertainty",
+      "type": "VOCABULARY",
+      "title": "Reasoning Under Uncertainty",
+      "titleFa": "استدلال در شرایط عدم قطعیت",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.discourse-analysis"
+      ],
+      "lessons": [
+        "c2.uncertainty.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.sensitive-communication",
+      "type": "VOCABULARY",
+      "title": "Communication in Sensitive Situations",
+      "titleFa": "ارتباطات در شرایط حساس",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.workplace-conflict"
+      ],
+      "lessons": [
+        "c2.sensitive.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.policy-critique",
+      "type": "VOCABULARY",
+      "title": "Policy and Decision Critique",
+      "titleFa": "نقد سیاست‌ها و تصمیم‌ها",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.strategy-evaluation"
+      ],
+      "lessons": [
+        "c2.policy.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.legal-text",
+      "type": "VOCABULARY",
+      "title": "Legal Text Analysis",
+      "titleFa": "تحلیل متون حقوقی",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.academic-writing"
+      ],
+      "lessons": [
+        "c2.legal.lesson-01"
+      ],
+      "skills": [
+        "VOCABULARY",
+        "LISTENING"
+      ]
+    },
+    {
+      "id": "vocab.audience-design",
+      "type": "VOCABULARY",
+      "title": "Audience-sensitive Language Use",
+      "titleFa": "انتخاب سبک زبانی متناسب با مخاطب",
+      "level": "C2",
+      "prerequisites": [
+        "vocab.specialist-presentations"
+      ],
+      "lessons": [
+        "c2.audience.lesson-01"
       ],
       "skills": [
         "VOCABULARY",

@@ -69,6 +69,30 @@
   `ConversationPracticeViewModel` once every turn has been **answered** (a graded take, not a skip)
   into `ConversationRepository`, one lesson id at a time; a lesson that ships no dialogue can never
   gate the path.
+- **A lesson is eight steps, not one page (v60).** `LearningStage` (pure, `domain/model`) fixes the
+  authored order — context → grammar → vocabulary → practice → listening → writing → speaking →
+  review — and `LessonStagePlan.of` derives the steps a lesson actually ships from the content that
+  already exists: **no new JSON field**, so every shipped lesson gets the guided flow. A step the
+  lesson has no material for is omitted rather than shown empty (no grammar tip → no GRAMMAR step;
+  no dialogue and no inline speaking item → no SPEAKING step). `LearningStage.of` is the one mapping
+  both the plan and the session use: `listening` is its own step, `sentence_production` is writing,
+  a `speaking` item is speaking, and everything else is controlled practice. `id` is the stable
+  string that is persisted — the enum name is never storage, so renaming a constant cannot move a
+  learner's place.
+- **Completion is per step, and a skip is not mastery.** A teaching step (context, grammar,
+  vocabulary, review) ends on the learner's Continue; a step that carries exercises ends only when
+  every one of them has been answered. Only `LISTENING` is optional
+  (`LearningStage.required = false`) — a device with no English TTS voice cannot do it — and
+  skipping writes `LessonStageProgress.skipped`, never `completed`, so
+  `LessonStageState.percent` (completed **required** steps over required steps) cannot be inflated
+  by a skip. Progress is persisted per lesson in `lesson_state.stage` / `completedStages` /
+  `skippedStages` (Room v8, comma-joined ids, empty by default), so an interrupted lesson resumes
+  where it stopped.
+- **Resume is derived, not guessed.** On open the session rebuilds the plan from the lesson's own
+  content, restores the completed/skipped sets, and opens the saved step **only while it still
+  exists in this plan and is not already done** — otherwise the first step. A focused drill (B-1)
+  short-circuits that and opens on the exercises the engine picked. Progress comes from stage
+  status alone, so merely opening a step moves nothing.
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.

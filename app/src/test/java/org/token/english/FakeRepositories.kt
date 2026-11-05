@@ -114,6 +114,10 @@ class FakeLessonRepository(
     val vocabulary: MutableMap<String, List<VocabularyItem>> = mutableMapOf()
     val savedIndex = mutableMapOf<String, Int>()
     val completed = mutableSetOf<String>()
+    /** Guided-step writes: active step id, completed ids and skipped ids per lesson. */
+    val savedStages = mutableMapOf<String, String>()
+    val savedCompleted = mutableMapOf<String, Set<String>>()
+    val savedSkipped = mutableMapOf<String, Set<String>>()
 
     override fun observeLessons(): Flow<List<Lesson>> = lessonsFlow
     override fun observeLessonStates(): Flow<List<LessonState>> = statesFlow
@@ -131,8 +135,31 @@ class FakeLessonRepository(
             LessonState(lessonId, index, completed.contains(lessonId), null)
     }
 
-    override suspend fun getLessonState(lessonId: String): LessonState? =
-        statesFlow.value.firstOrNull { it.lessonId == lessonId }
+    override suspend fun saveLessonStage(
+        lessonId: String,
+        stageId: String,
+        completedStages: Set<String>,
+        skippedStages: Set<String>,
+    ) {
+        savedStages[lessonId] = stageId
+        savedCompleted[lessonId] = completedStages
+        savedSkipped[lessonId] = skippedStages
+    }
+
+    /** The guided-step writes are part of the saved state, so a restart sees them. */
+    override suspend fun getLessonState(lessonId: String): LessonState? {
+        val base = statesFlow.value.firstOrNull { it.lessonId == lessonId }
+        val stage = savedStages[lessonId] ?: return base
+        return LessonState(
+            lessonId = lessonId,
+            currentIndex = savedIndex[lessonId] ?: base?.currentIndex ?: 0,
+            completed = base?.completed ?: completed.contains(lessonId),
+            completedAt = base?.completedAt,
+            stageId = stage,
+            completedStages = savedCompleted[lessonId].orEmpty(),
+            skippedStages = savedSkipped[lessonId].orEmpty(),
+        )
+    }
 
     override suspend fun completeLesson(lessonId: String, at: Long) {
         completed += lessonId

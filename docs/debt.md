@@ -3,14 +3,17 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
-- **The guided lesson flow is modelled but not yet rendered.** `LearningStage`,
-  `LessonStagePlan`/`LessonStageUnit` and `LessonStageState` (`domain/model`, pure, pinned by
-  `LearningStagePlanTest`) define the eight steps, which step an exercise belongs to, which steps a
-  lesson actually ships, and the difference between completed and skipped. The lesson screen still
-  runs its two-phase intro → exercises flow, so no learner sees the eight-step guide yet and nothing
-  persists a learner's stage — Phase 2 (screen + ViewModel navigation) and Phase 4 (resume) are
-  outstanding. Recorded here so the model does not read as a shipped feature; it is the foundation
-  the next phase builds on, and it deliberately changes no behaviour on its own.
+- **The guided lesson persists stage progress, not each step's answers (v60).** The eight-step walk
+  ships (`LearningStage` → `LessonStagePlan` → `LessonStageState`, rendered by `LessonScreen`,
+  persisted per lesson in `lesson_state.stage` / `completedStages` / `skippedStages`), so the plan,
+  the done/skipped split and the resume point all survive a restart. What is deliberately *not*
+  stored is finer grain: there is no per-stage completion timestamp (the summary reads the
+  lesson-level study ticks), and "Previous" reopens a completed step **from its first exercise**
+  rather than replaying the answers already given inside it — the step's completion is kept, its
+  in-step answer sheet is not. Accepting that is cheaper than a second table keyed by
+  (lesson, stage, exercise) that nothing else reads yet; revisit if a step ever needs to resume
+  mid-way. Re-answering on a revisit is a normal graded attempt, not double counting:
+  `firstTries` already refuses to recount it as a first pass.
 
 - **Settled (B-1): mastery by dimension now crosses sessions (Room v6).** `dimension_mastery`
   stores the per-dimension fold as answers arrive, and a lesson session seeds its `MasteryProfile`

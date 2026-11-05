@@ -1,5 +1,5 @@
 {
-  "contentVersion": 35,
+  "contentVersion": 60,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -950,6 +950,976 @@
       "estimatedMinutes": 6,
       "order": 95,
       "grammarTipFa": "## قاعده\nبرای مشکل می‌گوییم: We have a problem with … و برای راه‌حل: We can solve it.\nبرای شکایت مؤدبانه: I would like to complain about … و برای عذرخواهی: I am sorry for the delay.\ncancel یعنی لغو کردن و delay یعنی تأخیر؛ apology اسم «عذرخواهی» است.\nبرای پیشنهاد راه‌حل از should استفاده می‌کنیم: You should call them.\n## جدول\nWe have a problem with the internet. — با اینترنت مشکل داریم.\nI would like to complain about the noise. — می‌خواهم دربارهٔ سر و صدا شکایت کنم.\nI am sorry for the delay. — بابت تأخیر متأسفم.\nWe had to cancel the order. — مجبور شدیم سفارش را لغو کنیم.\n## مثال‌ها\nThey solved the problem in ten minutes. — مشکل را در ده دقیقه حل کردند.\nThe shop sent an apology by email. — فروشگاه عذرخواهی را با ایمیل فرستاد.\nThere was a delay of twenty minutes. — بیست دقیقه تأخیر بود.\n## خطاهای رایج\napology اسم است و apologize فعل: send an apology / apologize for the delay.\ncomplain about چیزی و complain to کسی: complain to the manager about the noise.\ncancel در ing با l دوتایی می‌آید: cancelling."
+    },
+    {
+      "id": "b1.personal-background.lesson-01",
+      "level": "B1",
+      "title": "Personal Background",
+      "titleFa": "معرفی سوابق شخصی و تحصیلی",
+      "topic": "Work and study",
+      "estimatedMinutes": 7,
+      "order": 96,
+      "grammarTipFa": "## قاعده\nبرای گفتن سابقه از حال کامل استفاده می‌کنیم: I have worked in sales for five years.\nاگر زمان مشخص باشد گذشتهٔ ساده می‌آید: I graduated from university in twenty nineteen.\nبرای تحصیلات و رشته: a degree in engineering، و برای مهارت: I am good at working with people.\nبرای تجربهٔ کاری: I have experience in customer service و برای معرف: my manager can give me a reference.\n## جدول\nI have worked here for three years. — سه سال است که اینجا کار می‌کنم.\nI graduated in twenty nineteen. — سال دو هزار و نوزده فارغ‌التحصیل شدم.\nI have experience in customer service. — در خدمات مشتری تجربه دارم.\nMy background is in engineering. — پیشینهٔ من مهندسی است.\n## مثال‌ها\nMy background is in engineering. — پیشینهٔ تحصیلی من مهندسی است.\nShe graduated from university last year. — او سال گذشته از دانشگاه فارغ‌التحصیل شد.\nThe job asks for a teaching qualification. — این شغل مدرک تدریس می‌خواهد.\n## خطاهای رایج\nبا for مدت می‌آید و با since نقطهٔ شروع: for five years، since twenty twenty.\ngraduate با from می‌آید: graduate from university، نه graduate of university در این ساختار.\nexperience در معنای «تجربهٔ کاری» غیرقابل‌شمارش است: experience، نه experiences."
+    },
+    {
+      "id": "b1.job-hunting.lesson-01",
+      "level": "B1",
+      "title": "Job Hunting",
+      "titleFa": "جست‌وجوی شغل",
+      "topic": "Work and study",
+      "estimatedMinutes": 7,
+      "order": 97,
+      "grammarTipFa": "## قاعده\nبرای جست‌وجو look for a job می‌گوییم و برای درخواست دادن apply for a job.\nبرای نصیحت ought to و should به‌کار می‌رود: You ought to update your CV.\nبرای کاری که تازه انجام شده حال کامل می‌آید: I have applied to three companies.\nنتیجهٔ شرطی با شرطی نوع اول: If they call me, I will prepare for the interview.\n## جدول\nI am looking for a full-time job. — دنبال کار تمام‌وقت هستم.\nI applied for a position online. — آنلاین برای یک موقعیت درخواست دادم.\nYou ought to check the advert again. — بهتر است آگهی را دوباره ببینی.\nThey invited me for an interview. — مرا به مصاحبه دعوت کردند.\n## مثال‌ها\nThere is a vacancy in the kitchen. — در آشپزخانه یک جای خالی شغلی هست.\nThe advert says they need a driver. — آگهی می‌گوید راننده لازم دارند.\nMy employer pays for training. — کارفرمای من هزینهٔ آموزش را می‌دهد.\n## خطاهای رایج\napply for a job، نه apply to a job؛ apply to برای شرکت یا دانشگاه است.\nought همیشه با to می‌آید: ought to apply، نه ought apply.\nvacancy «جای خالی شغلی» است، نه «مرخصی»؛ مرخصی leave است."
+    },
+    {
+      "id": "b1.university.lesson-01",
+      "level": "B1",
+      "title": "University Life",
+      "titleFa": "تحصیل در دانشگاه",
+      "topic": "Work and study",
+      "estimatedMinutes": 7,
+      "order": 98,
+      "grammarTipFa": "## قاعده\nبرای درس خواندن در دانشگاه study at university می‌گوییم و برای رشته a degree in economics.\nمجهول ساده با is/are + قسمت سوم فعل ساخته می‌شود: The course is taught in English.\nبرای تکلیف و ترم: an assignment، this term، three courses.\nبرای درخواست مؤدبانه: I would like to enrol in this course.\n## جدول\nI study economics at university. — در دانشگاه اقتصاد می‌خوانم.\nThe course is taught in English. — این درس به انگلیسی تدریس می‌شود.\nThe library was built fifty years ago. — کتابخانه پنجاه سال پیش ساخته شد.\nI have to write two essays this term. — این ترم باید دو مقاله بنویسم.\n## مثال‌ها\nMy tutor helped me choose my courses. — استاد راهنما کمکم کرد درس‌هایم را انتخاب کنم.\nThe campus has a large library. — محوطهٔ دانشگاه کتابخانهٔ بزرگی دارد.\nThe assignment is due on Friday. — مهلت تکلیف جمعه است.\n## خطاهای رایج\nat university درست است، نه in university در انگلیسی بریتانیایی.\na degree in economics، نه a degree of economics.\nدر مجهولِ درس از is taught استفاده می‌کنیم، نه is teaching؛ is teaching یعنی «در حال تدریس است»."
+    },
+    {
+      "id": "b1.new-skills.lesson-01",
+      "level": "B1",
+      "title": "Learning New Skills",
+      "titleFa": "یادگیری مهارت‌های جدید",
+      "topic": "Work and study",
+      "estimatedMinutes": 7,
+      "order": 99,
+      "grammarTipFa": "## قاعده\nبرای یاد گرفتن مهارت: learn a skill، practise every day، take a course.\nشرطی نوع اول با if + حال ساده و نتیجه با will: If you practise every day, you will improve.\nبرای پیشرفت تدریجی حال استمراری می‌آید: I am getting better at it.\nبرای نتیجه تا امروز حال کامل: I have learned a lot this month.\n## جدول\nIf you practise, you will improve. — اگر تمرین کنی، بهتر می‌شوی.\nI am taking a course in photography. — در دورهٔ عکاسی شرکت می‌کنم.\nIt takes time to learn a new skill. — یاد گرفتن یک مهارت تازه زمان می‌برد.\nI have made good progress. — پیشرفت خوبی کرده‌ام.\n## مثال‌ها\nPractice will improve your speaking. — تمرین مهارت صحبت کردن را بهتر می‌کند.\nEvery mistake teaches you something. — هر اشتباه چیزی به تو یاد می‌دهد.\nShe is patient when she learns something new. — او وقتی چیز تازه‌ای یاد می‌گیرد صبور است.\n## خطاهای رایج\nپس از if فعل آینده نمی‌آید: if you practise، نه if you will practise.\nprogress غیرقابل‌شمارش است: a lot of progress، نه many progresses.\npractise در انگلیسی بریتانیایی فعل است و practice اسم؛ در آمریکایی هر دو practice نوشته می‌شوند."
+    },
+    {
+      "id": "b1.travel-problems.lesson-01",
+      "level": "B1",
+      "title": "International Travel Problems",
+      "titleFa": "سفرهای خارجی و مشکلات سفر",
+      "topic": "Travel",
+      "estimatedMinutes": 7,
+      "order": 100,
+      "grammarTipFa": "## قاعده\nبرای تعریف مشکل سفر گذشتهٔ ساده و استمراری را با هم می‌آوریم: I was waiting at the gate when they cancelled the flight.\nبرای پرواز و بار از مجهول استفاده می‌کنیم: The flight was delayed، My luggage was lost.\nبرای شکایت مؤدبانه: Could you tell me why the flight is delayed?\nبرای درخواست پول یا جبران: I would like a refund و Can I claim money for the delay?\n## جدول\nMy flight was cancelled. — پروازم لغو شد.\nI missed my connection. — پرواز اتصالی‌ام را از دست دادم.\nMy luggage is missing. — چمدانم گم شده است.\nThe airline offered me a hotel. — شرکت هواپیمایی هتل به من پیشنهاد داد.\n## مثال‌ها\nThere was a long delay at the airport. — در فرودگاه تأخیر طولانی بود.\nWhere do I claim my luggage? — چمدانم را کجا تحویل بگیرم؟\nThe refund arrived after two weeks. — بازپرداخت بعد از دو هفته رسید.\n## خطاهای رایج\nluggage غیرقابل‌شمارش است: luggage، نه luggages؛ برای شمارش a piece of luggage می‌گوییم.\ncancel در مجهول cancelled می‌شود؛ my flight cancelled غلط است.\nconnection در سفر «پرواز یا قطار اتصالی» است، نه فقط «ارتباط»."
+    },
+    {
+      "id": "b1.cultural-differences.lesson-01",
+      "level": "B1",
+      "title": "Cultural Differences",
+      "titleFa": "فرهنگ‌ها و تفاوت‌های فرهنگی",
+      "topic": "Culture",
+      "estimatedMinutes": 7,
+      "order": 101,
+      "grammarTipFa": "## قاعده\nبرای گفتن رسم و عادت یک فرهنگ از حال ساده و usually استفاده می‌کنیم: People usually take off their shoes.\nبرای نصیحت دربارهٔ آداب: You should wait for the host و You ought not to be late.\nبرای مقایسهٔ دو فرهنگ: In my country we greet people with a handshake.\nبرای پرسیدن با احتیاط: Is it polite to ask about the family?\n## جدول\nIt is polite to say thank you. — تشکر کردن مؤدبانه است.\nA handshake is a common greeting. — دست دادن یک سلام رایج است.\nEvery country has its own customs. — هر کشوری رسوم خودش را دارد.\nYou might offend people if you arrive late. — اگر دیر برسی ممکن است کسی را برنجانی.\n## مثال‌ها\nOur host cooked a big meal. — میزبان ما غذای مفصلی پخت.\nI noticed one difference straight away. — یک تفاوت را همان لحظه متوجه شدم.\nThe host explained the custom to us. — میزبان رسم را برای ما توضیح داد.\n## خطاهای رایج\ncustom «رسم» است و costume «لباس نمایشی»؛ این دو را قاطی نکنید.\npolite صفت است: it is polite، نه it is politely.\noffend بدون to می‌آید: offend someone، نه offend to someone."
+    },
+    {
+      "id": "b1.friendship.lesson-01",
+      "level": "B1",
+      "title": "Friendship and Relationships",
+      "titleFa": "دوستی و روابط اجتماعی",
+      "topic": "Relationships",
+      "estimatedMinutes": 7,
+      "order": 102,
+      "grammarTipFa": "## قاعده\nبرای مدت دوستی از حال کامل با for استفاده می‌کنیم: We have been friends for ten years.\nصفت‌های شخصیت با be می‌آیند: She is honest، He is easy to talk to.\nبرای اعتماد و پشتیبانی: I trust her و She gave me a lot of support.\nبرای اختلاف نظر ملایم: We argue sometimes، but we stay friends.\n## جدول\nOur friendship started at school. — دوستی ما از مدرسه شروع شد.\nA good friend is honest with you. — دوست خوب با تو صادق است.\nYou can trust him with a secret. — می‌توانی راز را به او بسپاری.\nFriends need support in hard times. — دوستان در سختی به پشتیبانی نیاز دارند.\n## مثال‌ها\nWe argue sometimes but we stay friends. — گاهی بحث می‌کنیم اما دوست می‌مانیم.\nMy neighbour is also my best friend. — همسایهٔ من بهترین دوستم هم هست.\nShe gave me a lot of support. — او خیلی پشتیبانی‌ام کرد.\n## خطاهای رایج\ntrust فعل است و با مفعول مستقیم می‌آید: I trust her، نه I trust to her.\nsupport غیرقابل‌شمارش است: a lot of support، نه many supports.\nargue با about یا with می‌آید: argue about money / argue with a friend."
+    },
+    {
+      "id": "b1.emotions.lesson-01",
+      "level": "B1",
+      "title": "Feelings and Emotions",
+      "titleFa": "بیان احساسات و حالات روحی",
+      "topic": "Feelings",
+      "estimatedMinutes": 7,
+      "order": 103,
+      "grammarTipFa": "## قاعده\nصفت احساس با be می‌آید: I am nervous، She feels lonely، They were proud.\nبرای علت احساس از about و of استفاده می‌کنیم: worried about the exam، proud of my work.\nبرای نصیحت: You should talk to someone و Try to stay calm.\nبرای بیان احساس به‌صورت فعل: I want to express my feelings.\n## جدول\nI feel nervous before an exam. — پیش از امتحان مضطرب می‌شوم.\nI am proud of my work. — به کارم افتخار می‌کنم.\nHe felt lonely in the new city. — در شهر جدید احساس تنهایی می‌کرد.\nIt is good to express your feelings. — بیان احساسات خوب است.\n## مثال‌ها\nI am worried about my exam. — از امتحانم نگرانم.\nTry to stay calm. — سعی کن آرام بمانی.\nHis voice was calm and clear. — صدایش آرام و واضح بود.\n## خطاهای رایج\nproud of می‌آید، نه proud to: I am proud of my work.\nworried about و nervous about هر دو با about می‌آیند.\nlonely «احساس تنهایی» است و alone «تنها بودن»؛ می‌توان تنها بود و احساس تنهایی نکرد."
+    },
+    {
+      "id": "b1.conflicts.lesson-01",
+      "level": "B1",
+      "title": "Resolving Conflicts",
+      "titleFa": "حل اختلاف و مذاکره",
+      "topic": "Relationships",
+      "estimatedMinutes": 7,
+      "order": 104,
+      "grammarTipFa": "## قاعده\nبرای اختلاف ملایم: We had a conflict about the plan و برای حل آن: We resolved it.\nبرای عذرخواهی: I apologise for being late / I apologise to her.\nبرای پیشنهاد شرطی و مؤدبانه: If you explained first, she would listen (شرطی نوع دوم).\nبرای پیشنهاد راه‌حل: We can find a solution و Let us reach a compromise.\n## جدول\nWe had a small conflict about the budget. — دربارهٔ بودجه اختلاف کوچکی داشتیم.\nI apologised for my words. — بابت حرف‌هایم عذرخواهی کردم.\nWe found a solution that suited both sides. — راه‌حلی پیدا کردیم که به هر دو طرف می‌خورد.\nDo not blame the new worker. — کارمند تازه را سرزنش نکن.\n## مثال‌ها\nAfter an hour we reached a compromise. — بعد از یک ساعت به سازش رسیدیم.\nThey resolve conflicts by talking. — آن‌ها اختلاف‌ها را با گفت‌وگو حل می‌کنند.\nShe blamed the weather for the delay. — او تأخیر را گردن هوا انداخت.\n## خطاهای رایج\napologise for کار و apologise to شخص: apologise to her for being late.\nblame someone for something — حرف اضافهٔ for لازم است: blame him for the mistake.\nconflict بر خلاف quarrel اسم خنثی است؛ conflict میتواند داخلی هم باشد: an inner conflict."
+    },
+    {
+      "id": "b1.agreeing.lesson-01",
+      "level": "B1",
+      "title": "Agreeing and Disagreeing",
+      "titleFa": "بیان موافقت و مخالفت",
+      "topic": "Discussion",
+      "estimatedMinutes": 7,
+      "order": 105,
+      "grammarTipFa": "## قاعده\nموافقت: I agree with you / That is true / You are right.\nمخالفت مؤدبانه: I am afraid I disagree / I see it differently / I do not think so.\nنظر شخصی: In my opinion… / I think… / For me…\nبرای پذیرفتن نکتهٔ طرف مقابل: That is a fair point, but…\n## جدول\nI agree with your plan. — با برنامه‌ات موافقم.\nI disagree with that idea. — با آن ایده مخالفم.\nYou make a good point. — نکتهٔ خوبی می‌گویی.\nI respect your opinion, but I see it differently. — به نظرت احترام می‌گذارم، اما جور دیگری می‌بینم.\n## مثال‌ها\nIn my opinion, the first option is better. — به نظر من گزینهٔ اول بهتر است.\nEveryone has a different opinion. — هر کس نظر متفاوتی دارد.\nWe respect each other even when we disagree. — حتی وقتی مخالفیم به هم احترام می‌گذاریم.\n## خطاهای رایج\nagree with شخص و agree on موضوع: I agree with you on this point.\nopinion با in می‌آید: in my opinion، نه on my opinion.\ndisagree خودش منفی است؛ don't disagree با not معنای مثبت می‌دهد."
+    },
+    {
+      "id": "b1.storytelling.lesson-01",
+      "level": "B1",
+      "title": "Storytelling",
+      "titleFa": "داستان‌گویی",
+      "topic": "Narrative",
+      "estimatedMinutes": 7,
+      "order": 106,
+      "grammarTipFa": "## قاعده\nداستان را با زمان مشخص شروع می‌کنیم: Once, on a trip, I got lost.\nبرای کاری که پیش از رخداد دیگر تمام شده بود گذشتهٔ کامل می‌آید: When we arrived, the desk had closed.\nقیدهای ترتیب داستان: first، then، suddenly، in the end.\nبرای پایان داستان: In the end we found the hotel و The story has a happy ending.\n## جدول\nOnce I got lost in a big city. — یک بار در شهر بزرگی گم شدم.\nSuddenly the lights went out. — ناگهان برق رفت.\nWhen we arrived, the film had started. — وقتی رسیدیم، فیلم شروع شده بود.\nThe story has a happy ending. — داستان پایان خوشی دارد.\n## مثال‌ها\nThe plot of the film is simple. — خط داستان فیلم ساده است.\nMy favourite character is the old teacher. — شخصیت محبوب من معلم پیر است.\nHe remembered every detail of that day. — او هر جزئیات آن روز را به یاد داشت.\n## خطاهای رایج\nپس از when در داستان گذشتهٔ کامل را برای کارِ قبلی به‌کار ببر: had started، نه has started.\nsuddenly قید است و جای فعل کمکی و فعل می‌آید: it suddenly began، نه it began suddenly to rain.\ncharacter در داستان «شخصیت» است، نه «شخصیت اخلاقی»؛ آن meaning است."
+    },
+    {
+      "id": "b1.technology.lesson-01",
+      "level": "B1",
+      "title": "Technology in Daily Life",
+      "titleFa": "فناوری در زندگی روزمره",
+      "topic": "Technology",
+      "estimatedMinutes": 7,
+      "order": 107,
+      "grammarTipFa": "## قاعده\nبرای برنامه‌های آیندهٔ نزدیک be going to می‌آید: I am going to buy a new phone.\nبرای عادت روزمره حال ساده: I charge my phone every night.\nبرای هدف استفاده از دستگاه: I use it for work and taking photos.\nبرای درخواست کمک فنی: Can you help me move my apps?\n## جدول\nMy phone is my most useful device. — گوشی من کاربردی‌ترین دستگاهم است.\nI update the software once a month. — ماهی یک بار نرم‌افزار را به‌روزرسانی می‌کنم.\nThe battery lasts two days. — باتری دو روز دوام می‌آورد.\nAll my photos are online. — همهٔ عکس‌هایم آنلاین است.\n## مثال‌ها\nThe app saves my notes online. — برنامه یادداشت‌هایم را آنلاین ذخیره می‌کند.\nThe battery does not charge quickly. — باتری سریع شارژ نمی‌شود.\nI keep the files online so I can open them anywhere. — فایل‌ها را آنلاین نگه می‌دارم تا هر جا بازشان کنم.\n## خطاهای رایج\nبرای برنامهٔ آیندهٔ تصمیم‌گرفته‌شده be going to و برای پیش‌بینی will؛ هر دو درست‌اند اما یکی نیستند.\ncharge هم «شارژ کردن» است هم «هزینه»؛ در فناوری شارژ باتری است.\napp مخفف application است و like device اسم است، نه فعل."
+    },
+    {
+      "id": "b1.social-media.lesson-01",
+      "level": "B1",
+      "title": "Social Media",
+      "titleFa": "شبکه‌های اجتماعی",
+      "topic": "Media",
+      "estimatedMinutes": 7,
+      "order": 108,
+      "grammarTipFa": "## قاعده\nبرای تجربه‌ای که از گذشته تا حال ادامه دارد: I have used this app since 2019.\nfor + مدت (for three years) و since + نقطهٔ شروع (since Monday / since I was a student).\nسوم شخص: has + گذشتهٔ نقلی — She has posted three photos today.\nبرای توصیهٔ ملایم: You should check your privacy settings.\n## جدول\nI have posted three photos today. — امروز سه عکس پست کرده‌ام.\nShe has been a follower for months. — ماه‌هاست که فالوور است.\nWe should not share our address online. — نباید آدرسمان را آنلاین به اشتراک بگذاریم.\n## مثال‌ها\nHis video went viral last week. — ویدیویش هفتهٔ پیش وایرال شد.\nI turned off the comments on my post. — کامنت‌های پستم را بستم.\nPrivacy is more important than likes. — حریم خصوصی از لایک مهم‌تر است.\n## خطاهای رایج\nsince با مدت نمی‌آید: since three years ✗ / for three years ✓.\nshare چیزی با کسی: share a photo with your friends (با with).\ncomment on a post — حرف اضافهٔ on، نه to."
+    },
+    {
+      "id": "b1.environment.lesson-01",
+      "level": "B1",
+      "title": "Environment and Pollution",
+      "titleFa": "محیط زیست و آلودگی",
+      "topic": "Nature",
+      "estimatedMinutes": 7,
+      "order": 109,
+      "grammarTipFa": "## قاعده\nبرای گفتن کاری که روی چیز دیگر انجام می‌شود: مجهول + can/should — Bottles can be recycled.\nساختار: modal + be + گذشتهٔ فعل — should be reduced / must be protected.\nوقتی فاعل مهم نیست یا همه می‌دانند چه کسی است، مجهول طبیعی‌تر است.\nبرای توصیهٔ عمومی: We should reduce our waste.\n## جدول\nPlastic can be recycled. — پلاستیک بازیافت‌شدنی است.\nThe air in the city must be cleaned. — هوای شهر باید پاک شود.\nDo not waste water. — آب را هدر نده.\n## مثال‌ها\nCars damage the environment. — خودروها به محیط زیست آسیب می‌زنند.\nThe factory reduced its waste last year. — کارخانه سال پیش ضایعاتش را کم کرد.\nSome countries want to cut carbon emissions. — بعضی کشورها می‌خواهند انتشار کربن را کم کنند.\n## خطاهای رایج\nبعد از modal فعل be لازم است: can recycled ✗ / can be recycled ✓.\nenvironment با the می‌آید: protect the environment.\npollution غیرقابل‌شمارش است: a pollution ✗ / pollution ✓."
+    },
+    {
+      "id": "b1.eating-habits.lesson-01",
+      "level": "B1",
+      "title": "Eating Habits",
+      "titleFa": "عادت‌های غذایی",
+      "topic": "Health",
+      "estimatedMinutes": 7,
+      "order": 110,
+      "grammarTipFa": "## قاعده\nبرای عادت گذشته که دیگر نیست: used to + فعل ساده — I used to eat fast food.\nبرای کارهای تکراری در گذشته (کمی رسمی‌تر): would + فعل ساده — We would cook together on Fridays.\nسؤال و منفی با did: Did you use to drink coffee? / I did not use to eat breakfast.\nبرای عادت فعلی: I usually have a snack at four.\n## جدول\nI used to drink sugary drinks. — قبلاً نوشیدنی شیرین می‌نوشیدم.\nShe did not use to cook at home. — او قبلاً در خانه غذا نمی‌پخت.\nBreakfast is my favourite meal of the day. — صبحانه غذای محبوب من در روز است.\n## مثال‌ها\nEating breakfast is a good habit. — صبحانه خوردن عادت خوبی است.\nHe eats smaller portions than before. — او حالا کمتر از قبل غذا می‌خورد.\nOrganic fruit is often more expensive. — میوهٔ ارگانیک اغلب گران‌تر است.\n## خطاهای رایج\nبعد از used to فعل ساده می‌آید: used to ate ✗ / used to eat ✓.\nدر سؤال did استفاده می‌شود، پس use بدون d: Did you use to…?\nwould فقط برای کارهای تکراری است، نه برای حالت: I would have a dog ✗."
+    },
+    {
+      "id": "b1.time-management.lesson-01",
+      "level": "B1",
+      "title": "Time Management",
+      "titleFa": "مدیریت زمان",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 111,
+      "grammarTipFa": "## قاعده\nبرای اجبار بیرونی: have to — I have to finish this today.\nبرای نیاز شخصی: need to — I need to plan my week.\nhave to در سوم شخص has to می‌شود: She has to leave early.\nبرای توصیه: should / ought to — You should start with the urgent task.\n## جدول\nI need to plan my week. — باید هفته‌ام را برنامه‌ریزی کنم.\nShe has to finish the report by Friday. — او باید گزارش را تا جمعه تمام کند.\nYou should not check your phone every minute. — نباید هر دقیقه گوشی‌ات را چک کنی.\n## مثال‌ها\nMy schedule is full this week. — برنامهٔ این هفته‌ام پر است.\nStudy is my first priority. — درس اولویت اول من است.\nI cannot focus when the room is noisy. — وقتی اتاق شلوغ است نمی‌توانم تمرکز کنم.\n## خطاهای رایج\nhave to بعد از سوم شخص s می‌گیرد: She have to ✗ / She has to ✓.\nneed to با فعل ساده می‌آید؛ need not to ✗ / do not need to ✓.\npriority قابل‌شمارش است: set your priorities."
+    },
+    {
+      "id": "b1.banking.lesson-01",
+      "level": "B1",
+      "title": "Banking Services",
+      "titleFa": "خدمات بانکی",
+      "topic": "Money",
+      "estimatedMinutes": 7,
+      "order": 112,
+      "grammarTipFa": "## قاعده\nدر بانک اغلب فاعل مهم نیست؛ کار «انجام می‌شود». مجهول حال ساده: am/is/are + قسمت سوم فعل — A small fee is charged for every transfer.\nمجهول گذشتهٔ ساده: was/were + قسمت سوم فعل — My account was opened last week.\nاگر فاعل لازم باشد با by می‌آید — The form was signed by the manager.\nبرای درخواست مؤدبانه در باجه: I would like to open a savings account.\n## جدول\nMy account was opened last week. — حساب من هفتهٔ پیش باز شد.\nA small fee is charged for each transfer. — برای هر انتقال کارمزد کمی گرفته می‌شود.\nThe form must be signed before you leave. — فرم باید قبل از رفتن امضا شود.\n## مثال‌ها\nI want to withdraw some cash. — می‌خواهم کمی پول نقد برداشت کنم.\nThe bank pays interest every month. — بانک هر ماه سود می‌پردازد.\nPlease check your statement online. — لطفاً صورت‌حسابت را آنلاین بررسی کن.\n## خطاهای رایج\nدر مجهول قسمت سوم فعل لازم است: was open ✗ / was opened ✓.\nwithdraw بی‌قاعده است: withdraw – withdrew – withdrawn.\nfee قابل‌شمارش است (a fee / fees) اما interest در این معنا غیرقابل‌شمارش."
+    },
+    {
+      "id": "b1.complaints.lesson-01",
+      "level": "B1",
+      "title": "Complaints and Refunds",
+      "titleFa": "شکایت و درخواست بازپرداخت",
+      "topic": "Shopping",
+      "estimatedMinutes": 7,
+      "order": 113,
+      "grammarTipFa": "## قاعده\nشرطی نوع اول برای شکایتی که نتیجهٔ واقعی دارد: If + حال ساده، will + فعل ساده — If you do not reply, I will contact the manager.\nترتیب دو بخش را می‌توان عوض کرد؛ اگر if اول بیاید، ویرگول لازم است: I will return it if the replacement is late.\nدر بخش شرط هرگز will نمی‌آید: If it will arrive ✗ / If it arrives ✓.\nبرای درخواست رسمی: I am writing to complain about… / Could you please replace it?\n## جدول\nIf the item is damaged, we will send a replacement. — اگر کالا آسیب‌دیده باشد، جایگزین می‌فرستیم.\nIf you do not reply, I will escalate the complaint. — اگر پاسخ ندهید، شکایت را بالاتر می‌برم.\nI would like a full refund. — بازپرداخت کامل می‌خواهم.\n## مثال‌ها\nThe box arrived damaged. — جعبه آسیب‌دیده رسید.\nCould you please inspect the machine? — می‌شود لطفاً دستگاه را بررسی کنید؟\nThe delay is unacceptable. — این تأخیر پذیرفتنی نیست.\n## خطاهای رایج\nبعد از if حال ساده می‌آید، نه will: If you will send ✗ / If you send ✓.\ncomplain about چیزی: complain about the delay (با about).\ndamaged صفت است: the box is damaged ✓ / the box is damage ✗."
+    },
+    {
+      "id": "b1.formal-emails.lesson-01",
+      "level": "B1",
+      "title": "Formal Letters and Emails",
+      "titleFa": "نوشتن نامه و ایمیل رسمی",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 114,
+      "grammarTipFa": "## قاعده\nدرخواست مؤدبانهٔ رسمی با شرطی نوع دوم می‌آید: If + گذشتهٔ ساده، would + فعل ساده — If you could confirm the date, I would be grateful.\ncould در این ساختار گذشته نیست؛ نشانهٔ ادب است: If you could send the invoice…\nآغاز و پایان رسمی: Dear Mr Karimi, / I am writing regarding… / Yours sincerely,\nاگر نام مخاطب را نمی‌دانی: Dear Sir or Madam, و در پایان Yours faithfully,\n## جدول\nI am writing regarding your advertisement. — دربارهٔ آگهی شما می‌نویسم.\nIf you could confirm the date, I would be grateful. — اگر تاریخ را تأیید کنید ممنون می‌شوم.\nI look forward to your reply. — منتظر پاسخ شما هستم.\n## مثال‌ها\nPlease find the document attached. — سند پیوست است.\nKeep a polite tone even in a complaint. — حتی در شکایت لحن مؤدبانه نگه دار.\nUse a formal closing at the end. — در پایان از یک بستن رسمی استفاده کن.\n## خطاهای رایج\nبعد از if در شرطی نوع دوم فعل گذشته می‌آید، نه would: If you would send ✗ / If you could send ✓.\nsincerely با نام مخاطب و faithfully بدون نام می‌آید.\nregarding حرف اضافه نمی‌خواهد: regarding to your email ✗ / regarding your email ✓."
+    },
+    {
+      "id": "b1.presentation.lesson-01",
+      "level": "B1",
+      "title": "Giving a Short Presentation",
+      "titleFa": "ارائهٔ یک موضوع کوتاه",
+      "topic": "Study",
+      "estimatedMinutes": 7,
+      "order": 115,
+      "grammarTipFa": "## قاعده\nنقشهٔ ارائه را با be going to اعلام می‌کنیم، چون از قبل تصمیم گرفته شده است: I am going to talk about three points.\nساختار: am/is/are + going to + فعل ساده — She is going to show one chart.\nترتیب ارائه با First… / Then… / Finally… روشن می‌شود.\nبرای پایان: To sum up, … / Thank you for listening.\n## جدول\nI am going to talk about three points. — می‌خواهم دربارهٔ سه نکته صحبت کنم.\nShe is going to show one chart. — او یک نمودار نشان خواهد داد.\nWe are going to answer questions at the end. — در پایان به پرسش‌ها پاسخ می‌دهیم.\n## مثال‌ها\nThe first slide shows the plan. — اسلاید اول برنامه را نشان می‌دهد.\nRehearse the talk twice before Friday. — سخنرانی را دو بار قبل از جمعه تمرین کن.\nEnd with a clear conclusion. — با نتیجه‌گیری روشن تمام کن.\n## خطاهای رایج\nبعد از be همیشه going to: I going to talk ✗ / I am going to talk ✓.\nبعد از going to فعل ساده می‌آید: going to talking ✗ / going to talk ✓.\nslide قابل‌شمارش است: a slide / three slides."
+    },
+    {
+      "id": "b1.meetings.lesson-01",
+      "level": "B1",
+      "title": "Participating in Meetings",
+      "titleFa": "شرکت در جلسه",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 116,
+      "grammarTipFa": "## قاعده\nپیشنهاد و توصیه در جلسه با ought to یا should می‌آید: We ought to decide today.\nought to + فعل ساده؛ در سؤال و منفی معمولاً should جای آن را می‌گیرد: Should we decide now?\nhad better برای توصیهٔ فوری یا هشدار است و **to** ندارد: We had better ask the client first.\nبرای وارد شدن مؤدبانه به بحث: Could I add one point? / I would like to add something.\n## جدول\nWe ought to start with the agenda. — بهتر است با دستور جلسه شروع کنیم.\nYou had better check the numbers again. — بهتر است عددها را دوباره بررسی کنی.\nCould I add one point? — می‌توانم یک نکته اضافه کنم؟\n## مثال‌ها\nShe took the minutes of the meeting. — او صورت‌جلسه را نوشت.\nEveryone attended the weekly meeting. — همه در جلسهٔ هفتگی شرکت کردند.\nWe voted on the new plan. — دربارهٔ برنامهٔ جدید رأی دادیم.\n## خطاهای رایج\nought همیشه با to می‌آید: ought decide ✗ / ought to decide ✓.\nhad better بدون to است: had better to go ✗ / had better go ✓.\nattend حرف اضافه نمی‌خواهد: attend the meeting ✓ / attend to the meeting ✗."
+    },
+    {
+      "id": "b1.charts.lesson-01",
+      "level": "B1",
+      "title": "Describing Charts and Data",
+      "titleFa": "توصیف نمودارها و اطلاعات",
+      "topic": "Study",
+      "estimatedMinutes": 7,
+      "order": 117,
+      "grammarTipFa": "## قاعده\nمقایسهٔ دو چیز: صفت کوتاه + er + than، یا more + صفت بلند + than — Sales are higher than last year.\nبرترین: the + صفت + est یا the most + صفت — This is the highest point on the chart.\nبرای مقدار تغییر: increase by ten per cent؛ برای مقدار نهایی: increase to ten per cent.\nبرای روند ثابت: The number stayed the same. / There was no change.\n## جدول\nSales are higher than last year. — فروش از سال پیش بیشتر است.\nThe chart shows the highest point in June. — نمودار بالاترین نقطه را در ژوئن نشان می‌دهد.\nThe percentage increased by ten. — درصد ده واحد افزایش یافت.\n## مثال‌ها\nThe trend is going up. — روند صعودی است.\nThe average price is higher this year. — میانگین قیمت امسال بالاتر است.\nThis chart is easier to read. — خواندن این نمودار راحت‌تر است.\n## خطاهای رایج\nدر مقایسه than می‌آید، نه that: higher that ✗ / higher than ✓.\nبرترین صفت کوتاه با est ساخته می‌شود: the most high ✗ / the highest ✓.\nby برای مقدار تغییر است و to برای مقدار پایانی: rose by five / rose to five."
+    },
+    {
+      "id": "b1.goals.lesson-01",
+      "level": "B1",
+      "title": "Future Goals and Ambitions",
+      "titleFa": "اهداف و آرزوهای آینده",
+      "topic": "Plans",
+      "estimatedMinutes": 7,
+      "order": 118,
+      "grammarTipFa": "## قاعده\nهدفی که به یک شرط وابسته است با شرطی نوع اول می‌آید: If + حال ساده، will + فعل ساده — If I pass the exam, I will start university.\nاگر هدف از قبل تصمیم‌گرفته‌شده است: I am going to open my own shop.\nبرای قول و پشتکار: I will not give up.\nبرای هدف بلندمدت: My long-term ambition is to become a teacher.\n## جدول\nIf I save enough money, I will travel next year. — اگر پول کافی پس‌انداز کنم، سال بعد سفر می‌کنم.\nShe is determined to finish the course. — او مصمم است دوره را تمام کند.\nMy ambition is to work abroad. — آرزوی من کار در خارج است.\n## مثال‌ها\nHe decided to pursue a career in design. — او تصمیم گرفت حرفهٔ طراحی را دنبال کند.\nThis is a long-term plan. — این یک برنامهٔ بلندمدت است.\nPassing the test was a milestone for her. — قبولی در آزمون نقطهٔ عطفی برای او بود.\n## خطاهای رایج\nبعد از if هرگز will نمی‌آید: If I will pass ✗ / If I pass ✓.\nambition با to + فعل یا of + ing می‌آید: the ambition to travel.\ndetermined با to می‌آید: determined to succeed (نه determined for)."
+    },
+    {
+      "id": "b1.social-issues.lesson-01",
+      "level": "B1",
+      "title": "Discussing Social Issues",
+      "titleFa": "بحث دربارهٔ مسائل اجتماعی",
+      "topic": "Social",
+      "estimatedMinutes": 7,
+      "order": 119,
+      "grammarTipFa": "## قاعده\nدر بحث اجتماعی فاعل اغلب مهم نیست؛ مجهول حال ساده: am/is/are + قسمت سوم — Many families are moved out of the city.\nمجهول گذشتهٔ ساده: was/were + قسمت سوم — The new houses were built last year.\nبرای بیان نظر: I think… / In my opinion… / It seems to me that…\nبرای دیدن دو طرف: On the one hand… on the other hand…\n## جدول\nThe new houses were built last year. — خانه‌های جدید سال پیش ساخته شدند.\nYoung people are paid less in this area. — جوانان در این منطقه دستمزد کمتری می‌گیرند.\nIn my opinion, rent is too high. — به نظر من اجاره خیلی بالاست.\n## مثال‌ها\nPoverty is a serious problem here. — فقر اینجا مسئلهٔ جدی است.\nThe community centre helps many families. — مرکز محله به خانواده‌های زیادی کمک می‌کند.\nYouth unemployment is rising. — بیکاری جوانان در حال افزایش است.\n## خطاهای رایج\nدر مجهول قسمت سوم لازم است: was build ✗ / was built ✓.\npeople جمع است: people are ✓ / people is ✗.\npolicy قابل‌شمارش است: a policy / policies."
+    },
+    {
+      "id": "b2.negotiation.lesson-01",
+      "level": "B2",
+      "title": "Workplace Negotiations",
+      "titleFa": "مذاکره در محیط کار",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 120,
+      "grammarTipFa": "## قاعده\nبرای پیشنهاد فرضی و محتاطانه: If + گذشتهٔ ساده، would + فعل ساده — If we lowered the price, we would win the contract.\ncould و might در بخش نتیجه احتمال را نرم می‌کنند — We might lose the client if we waited.\nدر زبان رسمی به‌جای was از were استفاده می‌شود: If I were in your position, I would wait.\nزبان نرم‌کننده در مذاکره: I'm afraid… / It seems to me… / Would you be open to…?\n## جدول\nIf we lowered the price, we would win the contract. — اگر قیمت را کم می‌کردیم، قرارداد را می‌بردیم.\nIf I were you, I would ask for more time. — جای تو بودم، وقت بیشتری می‌خواستم.\nWould you be open to a shorter contract? — با قرارداد کوتاه‌تر موافقید؟\n## مثال‌ها\nWe need to agree on the terms first. — اول باید روی شرایط توافق کنیم.\nBoth sides made a concession. — هر دو طرف امتیاز دادند.\nThe proposal was fair and mutual. — پیشنهاد منصفانه و دوجانبه بود.\n## خطاهای رایج\nدر بخش if هرگز would نمی‌آید: If we would lower ✗ / If we lowered ✓.\nconcession قابل‌شمارش است: a concession / two concessions.\nleverage غیرقابل‌شمارش است: have leverage ✓ / have a leverage ✗."
+    },
+    {
+      "id": "b2.projects.lesson-01",
+      "level": "B2",
+      "title": "Project Management",
+      "titleFa": "مدیریت پروژه",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 121,
+      "grammarTipFa": "## قاعده\nکارهایی که تا حالا انجام شده و فاعل مهم نیست: has/have been + قسمت سوم — The report has been sent to the client.\nمنفی و سؤال با yet: The timeline has not been approved yet. / Has the budget been approved?\nبرای مرحلهٔ بعد می‌توان مجهول آینده ساخت: The next step will be discussed on Friday.\nبرای مسئولیت: Each task has an owner, and every owner reports weekly.\n## جدول\nThe report has been sent to the client. — گزارش برای مشتری فرستاده شده است.\nThe timeline has not been approved yet. — زمان‌بندی هنوز تأیید نشده است.\nThree tasks have been completed this week. — این هفته سه کار تمام شده است.\n## مثال‌ها\nEach deliverable has an owner. — هر محصول تحویلی یک مسئول دارد.\nWe need to agree on the scope first. — اول باید روی دامنهٔ کار توافق کنیم.\nThe stakeholder wants weekly updates. — ذی‌نفع به‌روزرسانی هفتگی می‌خواهد.\n## خطاهای رایج\nساختار کامل است: has been + قسمت سوم — has been send ✗ / has been sent ✓.\nyet در جملهٔ منفی و سؤالی می‌آید: has not been approved yet.\nscope غیرقابل‌شمارش است: the scope of the project ✓ / a scope ✗."
+    },
+    {
+      "id": "b2.leadership.lesson-01",
+      "level": "B2",
+      "title": "Leadership and Teamwork",
+      "titleFa": "رهبری و مدیریت تیم",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 122,
+      "grammarTipFa": "## قاعده\nاستنباط از شواهد: must be (قطعاً هست) / might be, could be (شاید) / can't be (قطعاً نیست).\nThe team must be tired — they have worked all day.\nبرای احتمال منفی: She might not know about the change.\nmust be و can't be دربارهٔ حال هستند؛ برای گذشته must have been می‌آید.\n## جدول\nThe team must be under pressure. — تیم قطعاً تحت فشار است.\nHe might not have the full picture. — ممکن است تصویر کامل را نداشته باشد.\nIt can't be a simple task. — نمی‌تواند کار ساده‌ای باشد.\n## مثال‌ها\nA good leader motivates the team. — رهبر خوب تیم را انگیزه می‌دهد.\nShe delegates small tasks every morning. — او هر صبح کارهای کوچک را واگذار می‌کند.\nWe reached a consensus in ten minutes. — در ده دقیقه به اجماع رسیدیم.\n## خطاهای رایج\nmust be برای قطعیت است، نه توصیه: You must be delegating ✗ (این جمله یعنی «قطعاً واگذار می‌کنی»).\ncan't be (قطعاً نه) با mustn't be اشتباه نشود.\nfeedback غیرقابل‌شمارش است: some feedback ✓ / a feedback ✗."
+    },
+    {
+      "id": "b2.entrepreneurship.lesson-01",
+      "level": "B2",
+      "title": "Entrepreneurship",
+      "titleFa": "کارآفرینی و راه‌اندازی کسب‌وکار",
+      "topic": "Work",
+      "estimatedMinutes": 7,
+      "order": 123,
+      "grammarTipFa": "## قاعده\nبند موصولی با who برای انسان، which برای چیز و that برای هر دو می‌آید: A founder who listens builds a better product.\nاگر بند اطلاعات ضروری بدهد، ویرگول نمی‌خواهد: The investor who called is our main backer.\nبرای تعریف یک چیز: a product that solves a real problem.\nبرای کاربرد: a tool for tracking costs (for + فعل ing).\n## جدول\nA founder who listens builds a better product. — بنیادی که گوش می‌دهد محصول بهتری می‌سازد.\nWe need a product that solves a real problem. — محصولی لازم داریم که مسئلهٔ واقعی را حل کند.\nThe investor who called is our main backer. — سرمایه‌گذاری که تماس گرفت حامی اصلی ماست.\n## مثال‌ها\nThe prototype works but it is slow. — نمونهٔ اولیه کار می‌کند اما کند است.\nRevenue grew in the second year. — درآمد در سال دوم رشد کرد.\nThey pitched the idea to three investors. — ایده را به سه سرمایه‌گذار ارائه کردند.\n## خطاهای رایج\nبرای انسان who می‌آید، نه which: the man which ✗ / the man who ✓.\nبند موصولی بلافاصله بعد از اسم می‌آید: a product that solves… ✓.\nrevenue غیرقابل‌شمارش است: revenue grew ✓ / a revenue ✗."
+    },
+    {
+      "id": "b2.finance.lesson-01",
+      "level": "B2",
+      "title": "Finance and Investment",
+      "titleFa": "مدیریت مالی و سرمایه‌گذاری",
+      "topic": "Money",
+      "estimatedMinutes": 7,
+      "order": 124,
+      "grammarTipFa": "## قاعده\nپشیمانی از گذشته: wish + گذشتهٔ کامل — I wish I had invested earlier.\nپشیمانی از وضعیت حال: wish + گذشتهٔ ساده — I wish I had more savings.\nif only همان معنا را با تأکید بیشتر می‌رساند: If only we had sold last year.\nشرطی نوع سوم برای فرض گذشته: If we had bought in March, we would have doubled our money.\n## جدول\nI wish I had invested earlier. — کاش زودتر سرمایه‌گذاری کرده بودم.\nI wish I had more savings. — کاش پس‌انداز بیشتری داشتم.\nIf we had bought in March, we would have doubled our money. — اگر در مارس خریده بودیم، پولمان دو برابر می‌شد.\n## مثال‌ها\nEvery asset carries some risk. — هر دارایی ریسکی دارد.\nThe portfolio is spread across five funds. — سبد سرمایه‌گذاری روی پنج صندوق پخش شده است.\nA dividend is paid twice a year. — سود سهام سالی دو بار پرداخت می‌شود.\n## خطاهای رایج\nبرای پشیمانی گذشته گذشتهٔ کامل لازم است: I wish I invested ✗ (این جمله به حال اشاره دارد).\nasset و liability متضادند؛ liability بدهی است، نه دارایی.\ninvest با in می‌آید: invest in shares ✓ / invest on shares ✗."
+    },
+    {
+      "id": "b2.economy.lesson-01",
+      "level": "B2",
+      "title": "The Global Economy",
+      "titleFa": "اقتصاد جهانی",
+      "topic": "Money",
+      "estimatedMinutes": 7,
+      "order": 125,
+      "grammarTipFa": "## قاعده\nthe number of + اسم جمع فعل مفرد می‌گیرد: The number of exports has fallen.\na number of + اسم جمع فعل جمع می‌گیرد: A number of countries are raising tariffs.\nبرخی اسم‌ها مفردند هرچند شبیه جمع‌اند: Economics is a social science. / The news is good.\nبا درصد و کسر، فعل از اسم بعد از of پیروی می‌کند: Fifty per cent of the budget is gone. / Fifty per cent of the workers are new.\n## جدول\nThe number of exports has fallen. — تعداد صادرات کاهش یافته است.\nA number of countries are raising tariffs. — شماری از کشورها تعرفه‌ها را بالا می‌برند.\nEconomics is a social science. — اقتصاد یک علم اجتماعی است.\n## مثال‌ها\nInflation is rising in many markets. — تورم در بسیاری از بازارها در حال افزایش است.\nThe country entered a recession last year. — کشور سال پیش به رکود رفت.\nThe currency lost value against the dollar. — ارز در برابر دلار ارزش از دست داد.\n## خطاهای رایج\nthe number of … has ✓ / have ✗.\neconomics فعل مفرد می‌گیرد: economics is.\ntariff قابل‌شمارش است: a tariff / tariffs."
+    },
+    {
+      "id": "b2.ai.lesson-01",
+      "level": "B2",
+      "title": "Artificial Intelligence",
+      "titleFa": "هوش مصنوعی در زندگی و کار",
+      "topic": "Technology",
+      "estimatedMinutes": 7,
+      "order": 126,
+      "grammarTipFa": "## قاعده\nبرای حدس زدن از روی شواهد: must (حتماً) / might و could (شاید) / can't (نمی‌تواند).\nاین افعال در این معنا شکل گذشته و آینده نمی‌گیرند؛ زمان جمله را از فعل بعدی می‌فهمیم: It might be a bug.\nبرای حدس دربارهٔ گذشته: must have + قسمت سوم / might have + قسمت سوم / can't have + قسمت سوم.\ncan't در این معنا مخالف must است، نه مخالف can: That can't be right یعنی «حتماً درست نیست».\n## جدول\nThat must be a mistake. — این حتماً اشتباه است.\nThe model might be making the same mistake again. — شاید مدل دوباره همان اشتباه را می‌کند.\nThe system must have been trained on old data. — سیستم حتماً با داده‌های قدیمی آموزش دیده است.\n## مثال‌ها\nAutomation changed how the team works. — خودکارسازی شیوهٔ کار تیم را عوض کرد.\nThe dataset is small, so the accuracy is low. — داده‌ها کم است، پس دقت پایین است.\nThe output is easy to read. — خروجی خواندنش آسان است.\n## خطاهای رایج\nmust در این معنا گذشته نمی‌شود: It musted ✗ — برای گذشته must have done ✓.\ncan't مخالف must است: That can't be right = That must be wrong.\naccuracy غیرقابل‌شمارش است: high accuracy ✓ / a high accuracy ✗."
+    },
+    {
+      "id": "b2.privacy.lesson-01",
+      "level": "B2",
+      "title": "Digital Privacy and Security",
+      "titleFa": "حریم خصوصی و امنیت دیجیتال",
+      "topic": "Technology",
+      "estimatedMinutes": 7,
+      "order": 127,
+      "grammarTipFa": "## قاعده\nمجهول حال کامل: has/have been + قسمت سوم — My account has been hacked.\nوقتی انجام‌دهنده معلوم نیست یا مهم نیست، مجهول طبیعی‌تر است: The data has been deleted.\nبه‌جای by us معمولاً کسی را نمی‌آوریم؛ اگر لازم شد، by + فاعل: has been checked by the team.\nبرای کارِ ناتمام از حال کامل مجهول استفاده نکن؛ آن برای نتیجه‌ای است که همین حالا اثر دارد.\n## جدول\nMy account has been hacked. — حسابم هک شده است.\nYour data has been encrypted. — داده‌هایت رمزگذاری شده است.\nThe password has been changed without my consent. — رمز بدون رضایت من عوض شده است.\n## مثال‌ها\nEncryption keeps messages private. — رمزنگاری پیام‌ها را خصوصی نگه می‌دارد.\nThe breach affected two million users. — نشت اطلاعات دو میلیون کاربر را درگیر کرد.\nTracking follows what you do online. — ردیابی کارهایت را در اینترنت دنبال می‌کند.\n## خطاهای رایج\nحال کامل مجهول has been + قسمت سوم است، نه has be: has be changed ✗.\nconsent غیرقابل‌شمارش است: without my consent ✓ / without my consents ✗.\nphishing با p نوشته می‌شود و از fishing (ماهیگیری) گرفته شده است."
+    },
+    {
+      "id": "b2.renewables.lesson-01",
+      "level": "B2",
+      "title": "Renewable Energy",
+      "titleFa": "انرژی‌های تجدیدپذیر",
+      "topic": "Environment",
+      "estimatedMinutes": 7,
+      "order": 128,
+      "grammarTipFa": "## قاعده\nشرطی نوع دوم برای وضعیت غیرواقعی در حال یا آینده: If + گذشتهٔ ساده، would + مصدر.\nدر نیمهٔ if هرگز would نمی‌آید: If we invested more, bills would fall.\nunless خودش منفی است، پس فعل بعدش مثبت می‌آید: Unless we act, the grid stays dirty.\nبرای پیشنهاد مؤدبانه هم به کار می‌رود: It would help if we started this year.\n## جدول\nIf we invested in solar, bills would fall. — اگر روی خورشیدی سرمایه‌گذاری می‌کردیم، قبض‌ها کم می‌شد.\nUnless we cut fossil fuels, the grid would stay dirty. — اگر سوخت‌های فسیلی را کم نکنیم، شبکهٔ برق آلوده می‌ماند.\nWhat would happen if the subsidy ended? — اگر یارانه تمام شود چه می‌شود؟\n## مثال‌ها\nSolar panels now cover the school roof. — پنل‌های خورشیدی حالا سقف مدرسه را پوشانده‌اند.\nA single turbine can power two hundred homes. — یک توربین می‌تواند دویست خانه را برق بدهد.\nThe grid was built for coal, not for wind. — شبکهٔ برق برای زغال ساخته شده، نه برای باد.\n## خطاهای رایج\nwould در نیمهٔ if نمی‌آید: If we would invest ✗ / If we invested ✓.\nپس از unless منفی نمی‌آید: unless we do not act ✗.\nfossil fuel معمولاً جمع می‌آید: fossil fuels ✓."
+    },
+    {
+      "id": "b2.education.lesson-01",
+      "level": "B2",
+      "title": "Education Systems",
+      "titleFa": "نظام‌های آموزشی",
+      "topic": "Education",
+      "estimatedMinutes": 7,
+      "order": 129,
+      "grammarTipFa": "## قاعده\nبند موصولی تعریف‌کننده اطلاعاتِ لازم می‌دهد و با کاما نمی‌آید: students who learn by doing.\nبند موصولی غیرتعریف‌کننده فقط توضیح اضافه است و بین دو کاما می‌نشیند: The exam, which nobody liked, was cancelled.\nthat فقط در بند تعریف‌کننده می‌آید: the system that fails them ✓ / the system, that fails them ✗.\nwhere برای مکان و when برای زمان: a school where children decide.\n## جدول\nThe system that tests memory is not working. — سیستمی که حافظه را می‌سنجد کار نمی‌کند.\nThe teacher, who had taught for years, disagreed. — معلم، که سال‌ها درس داده بود، مخالفت کرد.\nStudents learn best in classes where they can talk. — دانش‌آموزان در کلاس‌هایی که می‌توانند حرف بزنند بهتر یاد می‌گیرند.\n## مثال‌ها\nThe curriculum is the same for every school. — برنامهٔ درسی برای همهٔ مدرسه‌ها یکسان است.\nTuition has doubled in ten years. — شهریه در ده سال دو برابر شده است.\nA scholarship covered her whole degree. — بورس تحصیلی تمام دورهٔ او را پوشش داد.\n## خطاهای رایج\nپس از کاما that نمی‌آید؛ آن‌جا which یا who لازم است.\nضمیر در بند موصولی تکرار نمی‌شود: the book that I read it ✗.\nجمع curriculum در متن‌های رسمی curricula است."
+    },
+    {
+      "id": "b2.mental-health.lesson-01",
+      "level": "B2",
+      "title": "Mental Health",
+      "titleFa": "سلامت روان",
+      "topic": "Health",
+      "estimatedMinutes": 7,
+      "order": 130,
+      "grammarTipFa": "## قاعده\nshould + مصدر ساده برای توصیه: You should talk to someone.\nought to همان معنا را با لحن رسمی‌تر می‌رساند: You ought to rest.\nhad better برای هشدار است، چون نتیجهٔ بد در انتظار است: You had better tell your manager. (بدون to)\nshould have + قسمت سوم برای پشیمانی: I should have asked for help.\n## جدول\nYou should take a proper break. — باید یک استراحت واقعی بکنی.\nYou ought to speak to a doctor. — بهتر است با پزشک صحبت کنی.\nYou had better tell someone today. — بهتر است همین امروز به کسی بگویی.\n## مثال‌ها\nAnxiety often starts with small worries. — اضطراب اغلب با نگرانی‌های کوچک شروع می‌شود.\nBurnout takes months to recover from. — بهبود از فرسودگی ماه‌ها طول می‌کشد.\nTherapy is not a sign of weakness. — درمان نشانهٔ ضعف نیست.\n## خطاهای رایج\nhad better با to نمی‌آید: had better to rest ✗.\nshould توصیه است، نه اجبار؛ برای اجبار must لازم است.\nanxiety غیرقابل‌شمارش است: a lot of anxiety ✓ / many anxieties ✗."
+    },
+    {
+      "id": "b2.media-literacy.lesson-01",
+      "level": "B2",
+      "title": "Media Literacy",
+      "titleFa": "رسانه و سواد رسانه‌ای",
+      "topic": "Media",
+      "estimatedMinutes": 7,
+      "order": 131,
+      "grammarTipFa": "## قاعده\nمجهول با فعل وجهی: modal + be + قسمت سوم — A claim should be checked.\nبرای گذشته: modal + have been + قسمت سوم — The story might have been invented.\nاگر فاعل مهم باشد با by می‌آید: The post was shared by thousands.\nمجهول وقتی طبیعی است که انجام‌دهنده معلوم نیست یا مهم نیست — دقیقاً وضعیت بیشتر خبرهای آنلاین.\n## جدول\nA claim should be checked before it is shared. — یک ادعا باید پیش از بازنشر بررسی شود.\nThe photo must have been edited. — عکس حتماً ویرایش شده است.\nHeadlines can be written to shock. — تیترها می‌توانند برای شوک نوشته شوند.\n## مثال‌ها\nClickbait promises more than the article gives. — کلیک‌بیت بیشتر از چیزی که مقاله می‌دهد وعده می‌دهد.\nThe rumour spread faster than the correction. — شایعه سریع‌تر از تصحیح پخش شد.\nA serious outlet names its sources. — یک رسانهٔ جدی منابعش را نام می‌برد.\n## خطاهای رایج\nپس از وجهی be می‌آید، نه been: must be checked ✓ / must checked ✗.\nmisleading صفت است: a misleading headline ✓ / a mislead headline ✗.\nrumour املای بریتانیایی و rumor املای آمریکایی است؛ هر دو درست‌اند."
+    },
+    {
+      "id": "b2.persuasion.lesson-01",
+      "level": "B2",
+      "title": "Persuasion and Advertising",
+      "titleFa": "تبلیغات و تأثیرگذاری بر مخاطب",
+      "topic": "Media",
+      "estimatedMinutes": 7,
+      "order": 132,
+      "grammarTipFa": "## قاعده\nمقایسهٔ برابری: as + صفت + as — The new advert is as clear as the old one.\nمقایسهٔ نابرابر: صفت کوتاه + er + than، یا more + صفت بلند + than — cheaper than / more effective than.\nبرترین: the + est یا the most — the best price on the market.\nدو برابر و چند برابر: twice as fast as / three times as many as.\n## جدول\nThe new model is cheaper than the old one. — مدل تازه از قبلی ارزان‌تر است.\nIt is twice as fast as the old model. — دو برابر مدل قدیمی سریع است.\nThis is the most common claim in advertising. — این رایج‌ترین ادعا در تبلیغات است.\n## مثال‌ها\nThe consumer sees the price, not the cost. — مصرف‌کننده قیمت را می‌بیند، نه هزینهٔ واقعی را.\nA strong brand does not need to shout. — یک برند قوی لازم نیست داد بزند.\nOne testimonial can sell more than a slogan. — یک توصیهٔ مشتری می‌تواند بیشتر از یک شعار بفروشد.\n## خطاهای رایج\nas … as کامل است: as good as ✓ / as good than ✗.\nصفت بلند er نمی‌گیرد: more effective ✓ / effectiver ✗.\nبرترین صفت با the می‌آید: the strongest claim ✓ / strongest claim ✗ در جملهٔ کامل."
+    },
+    {
+      "id": "b2.crisis.lesson-01",
+      "level": "B2",
+      "title": "Crisis Management",
+      "titleFa": "مدیریت بحران",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 133,
+      "grammarTipFa": "## قاعده\nگذشتهٔ کامل برای کاری است که پیش از یک رویداد گذشته تمام شده بود: had + قسمت سوم.\nبا before، after و by the time ترتیب روشن می‌شود: By the time we called, the story had spread.\nدر نقل خبر، گذشتهٔ کامل نشان می‌دهد کدام اتفاق اول افتاده است.\nگذشتهٔ کامل استمراری برای کاری که پیش از رویداد ادامه داشت: We had been waiting for hours.\n## جدول\nBy the time we called, the story had spread. — تا ما زنگ زدیم، خبر پخش شده بود.\nNobody had prepared a statement. — هیچ‌کس بیانیه‌ای آماده نکرده بود.\nWe had already apologised when the article appeared. — وقتی مقاله منتشر شد، ما قبلاً عذرخواهی کرده بودیم.\n## مثال‌ها\nThe crisis started with one tweet. — بحران با یک توییت شروع شد.\nA spokesperson read the statement. — سخنگو بیانیه را خواند.\nPanic makes every answer worse. — وحشت هر پاسخی را بدتر می‌کند.\n## خطاهای رایج\nگذشتهٔ کامل با did نمی‌آید: had prepared ✓ / did had prepare ✗.\nhad + قسمت سوم است، نه گذشتهٔ ساده: had went ✗ / had gone ✓.\nby the time با گذشتهٔ کامل جفت می‌شود، نه با حال کامل."
+    },
+    {
+      "id": "b2.reports.lesson-01",
+      "level": "B2",
+      "title": "Writing Professional Reports",
+      "titleFa": "نوشتن گزارش حرفه‌ای",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 134,
+      "grammarTipFa": "## قاعده\nمجهول گذشتهٔ ساده: was/were + قسمت سوم — The data was collected in May.\nدر گزارش رسمی فاعل اغلب معلوم نیست یا مهم نیست، پس مجهول طبیعی‌تر است.\nاگر انجام‌دهنده مهم باشد با by می‌آید: The survey was designed by the research team.\nمجهول حال کامل برای نتیجه‌ای که همین حالا مهم است: The figures have been checked.\n## جدول\nThe data was collected in May. — داده‌ها در ماه مه جمع‌آوری شد.\nThe survey was designed by the research team. — پرسش‌نامه توسط تیم پژوهش طراحی شد.\nThe figures have been checked twice. — ارقام دو بار بررسی شده‌اند.\n## مثال‌ها\nThe main finding was simple. — یافتهٔ اصلی ساده بود.\nThe summary fits on one page. — خلاصه در یک صفحه جا می‌شود.\nThe full table sits in the appendix. — جدول کامل در پیوست است.\n## خطاهای رایج\nمجهول گذشته was/were + قسمت سوم است: was collect ✗ / was collected ✓.\nby فقط وقتی می‌آید که انجام‌دهنده اطلاعات مهمی باشد.\nجمع appendix در متن رسمی appendices است."
+    },
+    {
+      "id": "b2.presentations.lesson-01",
+      "level": "B2",
+      "title": "Professional Presentations",
+      "titleFa": "ارائه و سخنرانی حرفه‌ای",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 135,
+      "grammarTipFa": "## قاعده\nبند موصولی اسلاید یا بخش را معرفی می‌کند: the slide that shows the trend.\nبرای شخص who و برای چیز that/which: the colleague who asked the question.\nبند غیرتعریف‌کننده توضیح اضافه است و بین دو کاما می‌آید: The last point, which I will repeat, is the ask.\nwhere برای بخش یا مکان: the part where we show the numbers.\n## جدول\nThe slide that shows the trend is slide four. — اسلایدی که روند را نشان می‌دهد اسلاید چهار است.\nThe colleague who asked the question was right. — همکاری که سؤال پرسید درست می‌گفت.\nThe last point, which I will repeat, is the ask. — نکتهٔ آخر، که تکرارش می‌کنم، همان درخواست است.\n## مثال‌ها\nA small gesture can hold attention. — یک حرکت کوچک دست می‌تواند توجه را نگه دارد.\nYour pace matters more than your slides. — آهنگ سخن از اسلایدهایت مهم‌تر است.\nConfidence comes from rehearsal. — اعتمادبه‌نفس از تمرین می‌آید.\n## خطاهای رایج\nپس از کاما that نمی‌آید؛ آن‌جا which یا who لازم است.\nضمیر در بند موصولی تکرار نمی‌شود: the slide that I showed it ✗.\nهر بند موصولی یک اسم لازم دارد؛ بدون آن جمله ناقص است."
+    },
+    {
+      "id": "b2.debate.lesson-01",
+      "level": "B2",
+      "title": "Debating and Discussion",
+      "titleFa": "بحث و مناظره",
+      "topic": "Communication",
+      "estimatedMinutes": 7,
+      "order": 136,
+      "grammarTipFa": "## قاعده\nبرای پذیرفتن فرض طرف مقابل و بعد رد کردنش: Even if + گذشتهٔ ساده، would — Even if that were true, the plan would still fail.\nشرطی نوع دوم فرض غیرواقعی را می‌سازد: If we cut the budget, the service would suffer.\nرد مؤدبانه با عبارت‌های ثابت: I see your point, but … / That may be so, however …\nبرای برگشتن به موضوع اصلی: To come back to the main question, …\n## جدول\nEven if that were true, the cost would still be too high. — حتی اگر آن درست باشد، هزینه باز هم زیادی است.\nIf we cut the budget, the service would suffer. — اگر بودجه را کم کنیم، خدمات آسیب می‌بیند.\nThat may be so, however the data says otherwise. — ممکن است چنین باشد، اما داده چیز دیگری می‌گوید.\n## مثال‌ها\nHer argument rests on one weak assumption. — استدلال او بر یک فرض ضعیف تکیه دارد.\nHe conceded the point and moved on. — او نکته را پذیرفت و ادامه داد.\nThe debate ended without a clear winner. — مناظره بدون برندهٔ روشن تمام شد.\n## خطاهای رایج\nپس از even if در فرض غیرواقعی گذشتهٔ ساده می‌آید: even if it were true ✓.\nhowever با کاما و در آغاز جملهٔ تازه می‌آید؛ در میانهٔ جمله but طبیعی‌تر است.\nargument در این درس «استدلال» است، نه «دعوا»."
+    },
+    {
+      "id": "b2.review.lesson-01",
+      "level": "B2",
+      "title": "Reviewing Films and Books",
+      "titleFa": "نقد فیلم و کتاب",
+      "topic": "Culture",
+      "estimatedMinutes": 7,
+      "order": 137,
+      "grammarTipFa": "## قاعده\nبند موصولی اثر را توصیف می‌کند: a film that keeps you guessing.\nبرای شخص who و برای چیز that/which: the actor who plays the father.\nبند غیرتعریف‌کننده توضیح اضافه است و بین دو کاما می‌آید: The ending, which nobody expected, divides viewers.\nدر نقد، ترکیب صفت + اسم نظر را دقیق می‌کند: a slow first act / a brilliant cast.\n## جدول\nIt is a film that keeps you guessing. — فیلمی است که تا آخر حدس می‌زنی.\nThe actor who plays the father is excellent. — بازیگری که نقش پدر را دارد عالی است.\nThe ending, which nobody expected, divides viewers. — پایان، که کسی انتظارش را نداشت، بیننده‌ها را دو دسته می‌کند.\n## مثال‌ها\nThe cast carries the whole film. — بازیگران کل فیلم را روی دوش می‌کشند.\nThe screenplay is sharper than the book. — فیلم‌نامه از کتاب تیزتر است.\nOne twist near the end changes everything. — یک پیچش نزدیک پایان همه چیز را عوض می‌کند.\n## خطاهای رایج\nپس از کاما that نمی‌آید؛ آن‌جا which لازم است.\ncast اسم جمع‌نماست و با فعل مفرد و جمع هر دو می‌آید؛ در این درس مفرد.\ncritic نقدنویس است، نه «منتقد بودن» به‌طور کلی."
+    },
+    {
+      "id": "b2.idioms.lesson-01",
+      "level": "B2",
+      "title": "Common English Idioms",
+      "titleFa": "اصطلاحات رایج انگلیسی",
+      "topic": "Language",
+      "estimatedMinutes": 7,
+      "order": 138,
+      "grammarTipFa": "## قاعده\nحرف تعریف بخشی از خود اصطلاح است و عوض نمی‌شود: once in a blue moon (نه the blue moon).\nفعل اصطلاح صرف می‌شود ولی شکل اصطلاح ثابت می‌ماند: she bit the bullet.\nمعنای اصطلاح از جمع واژه‌هایش درنمی‌آید، پس آن را یک واحد حفظ کن.\nبرای پرسیدن معنا: What does it mean when someone says …؟\n## جدول\nHe calls once in a blue moon. — خیلی به‌ندرت زنگ می‌زند.\nYou have to bite the bullet and apologise. — باید دندان روی جگر بگذاری و عذرخواهی کنی.\nI feel under the weather today. — امروز حالم خوش نیست.\n## مثال‌ها\nA joke can break the ice at a meeting. — یک شوخی می‌تواند در جلسه یخ را بشکند.\nCheap shoes cost more in the long run. — کفش ارزان در بلندمدت گران‌تر تمام می‌شود.\nLet us make sure we are on the same page. — مطمئن شویم یک حرف می‌زنیم.\n## خطاهای رایج\nحرف تعریف را عوض نکن: once in the blue moon ✗.\nترجمهٔ واژه‌به‌واژه معنای اصطلاح را نمی‌دهد.\non the same page همیشه با the می‌آید، نه a."
+    },
+    {
+      "id": "b2.phrasal-verbs.lesson-01",
+      "level": "B2",
+      "title": "Common Phrasal Verbs",
+      "titleFa": "افعال عبارتی پرکاربرد",
+      "topic": "Language",
+      "estimatedMinutes": 7,
+      "order": 139,
+      "grammarTipFa": "## قاعده\nفعل عبارتی از فعل + حرف اضافه یا قید ساخته می‌شود و معنا از جمع آن دو می‌آید.\nبسیاری از این فعل‌ها مفعول را بین دو بخش هم می‌پذیرند: sort the problem out / sort out the problem.\nبا ضمیر، مفعول همیشه وسط می‌آید: sort it out ✓ / sort out it ✗.\nاگر فعل عبارتی با حرف اضافه تمام شود، فعل بعدی gerund می‌گیرد: put up with waiting.\n## جدول\nThe manager will look into the complaint. — مدیر شکایت را بررسی می‌کند.\nWe need to carry out the survey in May. — باید نظرسنجی را در ماه مه انجام دهیم.\nI cannot put up with the noise. — نمی‌توانم سر و صدا را تحمل کنم.\n## مثال‌ها\nThey plan to take over two rivals. — آن‌ها قصد دارند دو رقیب را تصاحب کنند.\nI will sort out the schedule today. — امروز برنامه را مرتب می‌کنم.\nOld vans break down in cold weather. — وَن‌های قدیمی در هوای سرد خراب می‌شوند.\n## خطاهای رایج\nبا ضمیر مفعول بین دو بخش می‌آید: sort it out ✓ / sort out it ✗.\ncarry out با مفعول مستقیم می‌آید: carry out the survey ✓.\nbreak down برای ماشین و سیستم است، نه برای انسان."
+    },
+    {
+      "id": "b2.intercultural.lesson-01",
+      "level": "B2",
+      "title": "Intercultural Communication",
+      "titleFa": "ارتباط بین‌فرهنگی",
+      "topic": "Communication",
+      "estimatedMinutes": 7,
+      "order": 140,
+      "grammarTipFa": "## قاعده\nنقل پرسش بله/خیر با whether یا if: She asked whether we shake hands.\nنقل پرسش wh با همان کلمهٔ پرسشی، ولی با ترتیب جملهٔ خبری: He asked where I was from.\nزمان یک پله عقب می‌رود: Are you coming? → She asked whether I was coming.\nبرای درخواست: ask somebody to do something — She asked me to wait outside.\n## جدول\nShe asked whether we shake hands. — پرسید آیا دست می‌دهیم.\nHe asked where I was from. — پرسید اهل کجا هستم.\nShe asked me to wait outside. — از من خواست بیرون منتظر بمانم.\n## مثال‌ها\nEvery culture has its own norms. — هر فرهنگی هنجارهای خودش را دارد.\nA misunderstanding can start with one word. — یک سوءتفاهم می‌تواند با یک کلمه شروع شود.\nSmall talk is not small in every culture. — گفت‌وگوی تعارفی در هر فرهنگی کوچک نیست.\n## خطاهای رایج\nترتیب پرسشی در نقل پرسش نمی‌ماند: asked where was I ✗.\nask somebody to do something (نه ask somebody do).\nwhether با or not طبیعی‌تر است: whether or not we agree."
+    },
+    {
+      "id": "b2.workplace-conflict.lesson-01",
+      "level": "B2",
+      "title": "Workplace Conflict Resolution",
+      "titleFa": "حل اختلاف در محیط کار",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 141,
+      "grammarTipFa": "## قاعده\nwish + گذشتهٔ کامل برای پشیمانی از کاری که شد: I wish I had said something.\nwish + گذشتهٔ ساده برای وضعیت فعلی: I wish we had a clearer process.\nبرای تأکید بیشتر: If only we had talked earlier.\nafter wish هرگز will نمی‌آید؛ برای آیندهٔ غیرواقعی would به کار می‌رود: I wish he would listen.\n## جدول\nI wish I had said something in the meeting. — کاش در جلسه چیزی گفته بودم.\nI wish we had a clearer process. — کاش فرایند روشن‌تری داشتیم.\nIf only we had talked earlier. — ای کاش زودتر حرف زده بودیم.\n## مثال‌ها\nThe mediation lasted two hours. — میانجی‌گری دو ساعت طول کشید.\nShe filed a formal grievance. — او شکایت رسمی ثبت کرد.\nTension rose after the second meeting. — تنش بعد از جلسهٔ دوم بالا گرفت.\n## خطاهای رایج\nبرای گذشته wish + گذشتهٔ کامل است، نه گذشتهٔ ساده: I wish I said ✗.\nwish با will نمی‌آید: I wish it will stop ✗.\ngrievance قابل‌شمارش است: a formal grievance."
+    },
+    {
+      "id": "b2.strategy.lesson-01",
+      "level": "B2",
+      "title": "Strategy and Evaluation",
+      "titleFa": "طراحی و ارزیابی استراتژی",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 142,
+      "grammarTipFa": "## قاعده\nمجهول با فعل وجهی: modal + be + قسمت سوم — The plan should be reviewed every quarter.\nبرای گذشته: modal + have been + قسمت سوم — The target might have been set too high.\nمجهول وقتی طبیعی است که انجام‌دهنده معلوم نیست یا مهم نیست: The results will be measured monthly.\nاگر فاعل مهم باشد با by می‌آید: The roadmap was approved by the board.\n## جدول\nThe plan should be reviewed every quarter. — برنامه باید هر فصل بازبینی شود.\nThe target might have been set too high. — ممکن است هدف بیش از حد بالا گذاشته شده باشد.\nThe results will be measured monthly. — نتایج ماهانه اندازه‌گیری می‌شود.\n## مثال‌ها\nOur main objective is retention. — هدف اصلی ما نگه‌داشتن مشتری است.\nThe benchmark was set last year. — معیار سنجش سال پیش تعیین شد.\nWe evaluate every initiative after six months. — هر طرح را بعد از شش ماه ارزیابی می‌کنیم.\n## خطاهای رایج\nپس از وجهی be می‌آید: should be reviewed ✓ / should reviewed ✗.\nobjective با for می‌آید: an objective for the year.\nevaluate با مفعول مستقیم می‌آید: evaluate the plan (بدون on)."
+    },
+    {
+      "id": "b2.ethics.lesson-01",
+      "level": "B2",
+      "title": "Professional Ethics",
+      "titleFa": "اخلاق حرفه‌ای",
+      "topic": "Business",
+      "estimatedMinutes": 7,
+      "order": 143,
+      "grammarTipFa": "## قاعده\nhave to برای اجبار بیرونی: We have to report every payment.\nmust برای اجبار قوی یا قانونی: Auditors must declare a conflict.\ndon't have to یعنی لازم نیست، ولی mustn't یعنی ممنوع است — این دو را با هم عوض نکن.\n## جدول\nWe have to report every payment. — باید هر پرداخت را گزارش کنیم.\nAuditors must declare a conflict of interest. — حسابرسان باید تعارض منافع را اعلام کنند.\nYou do not have to sign it today. — لازم نیست امروز امضایش کنی.\n## مثال‌ها\nIntegrity is the base of every audit. — درستکاری پایهٔ هر حسابرسی است.\nTransparency builds trust faster than promises. — شفافیت سریع‌تر از وعده اعتماد می‌سازد.\nA bribe can end a career. — رشوه می‌تواند یک حرفه را تمام کند.\n## خطاهای رایج\nmust بدون to می‌آید: must declare ✓ / must to declare ✗.\nmustn't ممنوعیت است، نه «لازم نیست».\nintegrity غیرقابل‌شمارش است: a lot of integrity ✓ / integrities ✗."
+    },
+    {
+      "id": "c1.executive.lesson-01",
+      "level": "C1",
+      "title": "Executive Communication",
+      "titleFa": "ارتباطات مدیریتی",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 146,
+      "grammarTipFa": "## قاعده\nپس از قید منفی در آغاز جمله، فعل کمکی پیش از فاعل می‌آید: Rarely have we seen such a clear mandate.\nNot only … but also ساختار پرکاربرد دیگری است: Not only did the board reject the plan, but it also cut the budget.\nUnder no circumstances و on no account هم وارونگی می‌خواهند: Under no circumstances should the message cascade without a briefing.\nبدون قید منفی در ابتدا، جملهٔ عادی است: We have rarely seen such a clear mandate.\n## جدول\nRarely have we seen such a clear mandate. — بهندرت چنین اختیار روشنی دیده‌ایم.\nNot only did the board reject the plan, but it also cut the budget. — هیئت‌مدیره نه‌تنها طرح را رد کرد، بودجه را هم کم کرد.\nUnder no circumstances should the message cascade without a briefing. — تحت هیچ شرایطی پیام نباید بدون یک جلسهٔ توجیهی پایین برود.\n## مثال‌ها\nThe board gave the CEO a clear mandate to restructure. — هیئت‌مدیره اختیار روشنی برای بازسازی به مدیرعامل داد.\nAlignment across the three teams took two weeks. — هم‌سویی سه تیم دو هفته طول کشید.\nThe morning briefing lasts fifteen minutes. — جلسهٔ توجیهی صبحگاهی پانزده دقیقه طول می‌کشد.\n## خطاهای رایج\nبا وارونگی، شکل پرسشی فعل می‌آید: did the board reject ✓ / the board did reject ✗.\nmandate با to می‌آید: a mandate to restructure.\nalignment غیرقابل‌شمارش است: there is no alignment ✓ / there are no alignments ✗."
+    },
+    {
+      "id": "c1.negotiation.lesson-01",
+      "level": "C1",
+      "title": "Advanced Negotiation",
+      "titleFa": "مذاکره‌های پیچیده",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 147,
+      "grammarTipFa": "## قاعده\nشرطی مختلط دو زمان را در هم می‌آمیزد: گذشته در شرط، حال در نتیجه — If we had settled in March, we would be in a stronger position now.\nبرعکسش هم رایج است: حال در شرط، گذشته در نتیجه — If they were serious, they would have signed the draft last week.\nبرای احتمال گذشته و نتیجهٔ حال: If we had conceded earlier, we might be in a stronger position now.\n## جدول\nIf we had settled in March, we would be in a stronger position now. — اگر در مارس توافق کرده بودیم، الان در موقعیت قوی‌تری بودیم.\nIf they were serious, they would have signed the draft last week. — اگر جدی بودند، هفتهٔ پیش پیش‌نویس را امضا می‌کردند.\nIf we had conceded earlier, we might be in a stronger position now. — اگر زودتر کوتاه آمده بودیم، ممکن بود الان در موقعیت بهتری باشیم.\n## مثال‌ها\nThe talks have reached a deadlock over price. — مذاکرات بر سر قیمت به بن‌بست خورده است.\nWe have a clear walkaway point. — ما نقطهٔ ترک مذاکرهٔ روشنی داریم.\nIf they do not move, we will go to arbitration. — اگر تکان نخورند، به داوری می‌رویم.\n## خطاهای رایج\nدر نیمهٔ اولِ مختلط، had + قسمت سوم می‌آید نه would have: If we had settled ✓ / If we would have settled ✗.\nدر نیمهٔ دومِ مختلط، would + مصدر ساده است، نه will: we would be ✓ / we will be ✗.\nwalkaway در این معنا اسم است و یک واژه: a clear walkaway point."
+    },
+    {
+      "id": "c1.policy.lesson-01",
+      "level": "C1",
+      "title": "Public Policy",
+      "titleFa": "سیاست‌گذاری عمومی",
+      "topic": "Social",
+      "estimatedMinutes": 9,
+      "order": 148,
+      "grammarTipFa": "## قاعده\nبرای نقد گذشته از should have + قسمت سوم استفاده می‌کنیم: The ministry should have consulted the unions first.\ncould have یعنی «می‌شد» و may have یعنی «ممکن است»؛ needn't have یعنی «لازم نبود».\nاین ساختار همیشه دربارهٔ گذشته است، پس با now نمی‌آید.\n## جدول\nThe ministry should have consulted the unions first. — وزارت باید اول با اتحادیه‌ها مشورت می‌کرد.\nParliament could have acted sooner. — پارلمان می‌توانست زودتر اقدام کند.\nThey needn't have published the draft so early. — لازم نبود پیش‌نویس را این‌قدر زود منتشر کنند.\n## مثال‌ها\nThe legislation goes to parliament next month. — قانون ماه آینده به پارلمان می‌رود.\nA referendum is planned for the spring. — همه‌پرسی برای بهار برنامه‌ریزی شده است.\nEnforcement is the weakest part of the plan. — اجرا ضعیف‌ترین بخش این طرح است.\n## خطاهای رایج\nپس از وجهی have می‌آید: should have consulted ✓ / should consulted ✗.\nneedn't have یعنی کاری انجام شد ولی لازم نبود؛ didn't need to یعنی کاری انجام نشد چون لازم نبود.\nlegislation غیرقابل‌شمارش است: the legislation is ✓ / the legislations are ✗."
+    },
+    {
+      "id": "c1.international.lesson-01",
+      "level": "C1",
+      "title": "International Relations",
+      "titleFa": "روابط بین‌الملل",
+      "topic": "Social",
+      "estimatedMinutes": 9,
+      "order": 149,
+      "grammarTipFa": "## قاعده\nبرای حدس قوی دربارهٔ گذشته: must have + قسمت سوم — They must have misread the signals.\nبرای حدس ضعیف یا احتمال: may have / might have + قسمت سوم — The talks may have failed for a simpler reason.\nبرای «غیرممکن بودن»: can't have + قسمت سوم — They can't have ignored the warning twice.\n## جدول\nThey must have misread the signals from the summit. — آن‌ها باید نشانه‌های نشست را اشتباه خوانده باشند.\nThe talks may have failed for a simpler reason. — ممکن است مذاکرات به دلیل ساده‌تری شکست خورده باشد.\nThey can't have ignored the warning twice. — ممکن نیست هشدار را دو بار نادیده گرفته باشند.\n## مثال‌ها\nThe sovereignty of both countries is respected. — حاکمیت هر دو کشور محترم است.\nThe treaty has not been signed yet. — پیمان‌نامه هنوز امضا نشده است.\nThe envoy returns to the capital next week. — فرستاده هفتهٔ آینده به پایتخت برمی‌گردد.\n## خطاهای رایج\nپس از وجهی حتماً have می‌آید: must have misread ✓ / must misread ✗.\nmustn't have در این معنا به کار نمی‌رود؛ برای «ممکن نیست» can't have می‌گوییم.\ntreaty قابل‌شمارش است: a treaty, two treaties (نه treatys)."
+    },
+    {
+      "id": "c1.economy.lesson-01",
+      "level": "C1",
+      "title": "Economic Analysis",
+      "titleFa": "تحلیل اقتصادی",
+      "topic": "Money",
+      "estimatedMinutes": 9,
+      "order": 150,
+      "grammarTipFa": "## قاعده\nشرطی مختلط در تحلیل اقتصادی زیاد است: شرط در گذشته، نتیجه در حال — If the bank had acted sooner, inflation would be lower now.\nنتیجهٔ گذشته با حال در شرط: If the economy were stronger, the deficit would have shrunk.\ncould have و might have برای نتیجهٔ گذشته‌ای که رخ نداد: If the stimulus had come earlier, output might have held.\n## جدول\nIf the bank had acted sooner, inflation would be lower now. — اگر بانک زودتر اقدام کرده بود، تورم الان کمتر بود.\nIf the economy were stronger, the deficit would have shrunk. — اگر اقتصاد قوی‌تر بود، کسری کم می‌شد.\nIf the stimulus had come earlier, output might have held. — اگر محرک زودتر آمده بود، تولید ممکن بود حفظ شود.\n## مثال‌ها\nThe deficit widened for a third year. — کسری برای سومین سال بزرگ‌تر شد.\nVolatility makes planning harder for importers. — نوسان برنامه‌ریزی را برای واردکنندگان سخت‌تر می‌کند.\nMonetary policy is set by the central bank. — سیاست پولی را بانک مرکزی تعیین می‌کند.\n## خطاهای رایج\nدر نیمهٔ شرط should have نیست، had + قسمت سوم است: If the bank had acted ✓ / If the bank should have acted ✗.\ndeficit قابل‌شمارش است: a deficit, two deficits.\nmonetary پیش از اسم می‌آید: monetary policy (نه policy monetary)."
+    },
+    {
+      "id": "c1.tech-ethics.lesson-01",
+      "level": "C1",
+      "title": "Technology Ethics",
+      "titleFa": "اخلاق در فناوری",
+      "topic": "Technology",
+      "estimatedMinutes": 9,
+      "order": 151,
+      "grammarTipFa": "## قاعده\nمجهول با وجهی: modal + be + قسمت سوم — Data should be deleted after ninety days.\nمنفی آن: The model must not be used without a human review.\nبرای گذشته: modal + have been + قسمت سوم — The logs should have been reviewed.\n## جدول\nData should be deleted after ninety days. — داده‌ها باید بعد از نود روز حذف شوند.\nThe model must not be used without a human review. — مدل نباید بدون بازبینی انسانی استفاده شود.\nThe logs should have been reviewed. — گزارش‌ها باید بازبینی می‌شدند.\n## مثال‌ها\nOpacity destroys trust faster than any error. — ناشفافیت سریع‌تر از هر خطایی اعتماد را از بین می‌برد.\nAn autonomous system needs a safeguard. — یک سیستم خودگردان به محافظ نیاز دارد.\nThe provenance of the data must be recorded. — منشأ داده‌ها باید ثبت شود.\n## خطاهای رایج\nپس از وجهی be می‌آید: must be recorded ✓ / must recorded ✗.\nopacity غیرقابل‌شمارش است؛ صفت آن opaque است.\nsafeguard قابل‌شمارش است: a safeguard, several safeguards."
+    },
+    {
+      "id": "c1.philosophy.lesson-01",
+      "level": "C1",
+      "title": "Philosophy and Reasoning",
+      "titleFa": "فلسفه و استدلال",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 152,
+      "grammarTipFa": "## قاعده\nدر استدلال، ساختار وارونه برای تأکید بر نقد به کار می‌آید: Not only does the premise fail, but the conclusion collapses too.\nRarely و seldom هم همین الگو را دارند: Rarely has an argument survived without a counterexample.\nاگر جملهٔ دوم با nor ادامه یابد، باز هم وارونگی می‌خواهد: Nor does the evidence support it.\n## جدول\nNot only does the premise fail, but the conclusion collapses too. — نه‌تنها مقدمه فرو می‌ریزد، نتیجه هم فرومی‌پاشد.\nRarely has an argument survived without a counterexample. — به‌ندرت استدلالی بدون مثال نقض دوام آورده است.\nNor does the evidence support it. — شواهد هم آن را تأیید نمی‌کند.\n## مثال‌ها\nA valid syllogism can still reach a false conclusion. — یک قیاس معتبر هم می‌تواند به نتیجهٔ نادرست برسد.\nOne counterexample is enough to break the claim. — یک مثال نقض برای شکستن آن ادعا کافی است.\nValidity is not the same as truth. — اعتبار با درستی یکی نیست.\n## خطاهای رایج\nبا وارونگی، فعل کمکی پیش از فاعل می‌آید: Not only does the premise fail ✓ / Not only the premise does fail ✗.\nvalidity غیرقابل‌شمارش است: the validity of the argument.\nentail با مفعول مستقیم می‌آید: entails that conclusion (بدون to)."
+    },
+    {
+      "id": "c1.cognitive-bias.lesson-01",
+      "level": "C1",
+      "title": "Cognitive Biases",
+      "titleFa": "خطاهای شناختی",
+      "topic": "Study",
+      "estimatedMinutes": 9,
+      "order": 153,
+      "grammarTipFa": "## قاعده\nبرای توضیح رفتار گذشته با حدس قوی: must have + قسمت سوم — The panel must have anchored on the first figure.\nبرای احتمال: may have / might have + قسمت سوم — They may have ignored the warning.\nبرای «ممکن نیست»: can't have + قسمت سوم — They can't have read the whole report in ten minutes.\n## جدول\nThe panel must have anchored on the first figure. — پنل باید روی نخستین عدد لنگر انداخته باشد.\nThey may have ignored the warning. — ممکن است هشدار را نادیده گرفته باشند.\nThey can't have read the whole report. — ممکن نیست تمام گزارش را خوانده باشند.\n## مثال‌ها\nFraming the question changes the answer. — چارچوب‌بندی پرسش پاسخ را تغییر می‌دهد.\nHindsight always makes it look obvious. — بصیرت پس از واقعه همیشه آن را بدیهی نشان می‌دهد.\nOverconfidence is the most dangerous bias. — اعتمادبه‌نفس بیش از حد خطرناک‌ترین سوگیری است.\n## خطاهای رایج\nپس از وجهی have می‌آید: must have anchored ✓ / must anchored ✗.\nبرای «ممکن نیست» mustn't have نمی‌گوییم؛ can't have درست است.\nbias قابل‌شمارش است: a bias, several biases."
+    },
+    {
+      "id": "c1.statistics.lesson-01",
+      "level": "C1",
+      "title": "Statistical Literacy",
+      "titleFa": "سواد آماری",
+      "topic": "Science",
+      "estimatedMinutes": 9,
+      "order": 154,
+      "grammarTipFa": "## قاعده\ndata در انگلیسی آکادمیک جمع است: The data show a small effect.\nاما در گفتار روزمره data اغلب مفرد گرفته می‌شود؛ در این درس شکل جمع را می‌آموزیم.\nبا neither of و each of فعل مفرد می‌آید: Neither of the samples was significant.\n## جدول\nThe data show that the effect is small. — داده‌ها نشان می‌دهند که اثر کوچک است.\nNeither of the samples was significant. — هیچ‌کدام از نمونه‌ها معنادار نبود.\nA number of studies suggest the opposite. — شماری از پژوهش‌ها خلاف آن را نشان می‌دهند.\n## مثال‌ها\nCorrelation is not causation. — همبستگی به معنی علیت نیست.\nOne outlier pulled the average up. — یک دادهٔ پرت میانگین را بالا کشید.\nUse the median when the data are skewed. — وقتی داده چولگی دارد از میانه استفاده کن.\n## خطاهای رایج\nthe data shows در نوشتار آکادمیک ضعیف شمرده می‌شود؛ the data show ترجیح دارد.\nsignificant در آمار یعنی «معنادار»، نه «مهم»؛ برای اهمیت از important استفاده کن.\nmedian و mean را با هم عوض نکن: median میانه و mean میانگین است."
+    },
+    {
+      "id": "c1.media-analysis.lesson-01",
+      "level": "C1",
+      "title": "Critical Media Analysis",
+      "titleFa": "تحلیل انتقادی رسانه",
+      "topic": "Media",
+      "estimatedMinutes": 9,
+      "order": 155,
+      "grammarTipFa": "## قاعده\nبند موصولی تعریف‌کننده با that یا which می‌آید و اطلاعات لازم را اضافه می‌کند: The report that omitted the figure was published on Monday.\nبند موصولی غیرتعریف‌کننده با کاما و only which/who می‌آید (نه that): The editor, who approved the story, has resigned.\nبرای شخص who/that و برای چیز which/that به کار می‌رود.\n## جدول\nThe report that omitted the figure was published on Monday. — گزارشی که عدد را حذف کرده بود دوشنبه منتشر شد.\nThe editor who approved the story has resigned. — سردبیری که خبر را تأیید کرده بود استعفا داد.\nThe line, which sounded clever, hid the cost. — آن جمله که هوشمندانه به نظر می‌رسید هزینه را پنهان می‌کرد.\n## مثال‌ها\nThis kind of spin destroys trust. — این نوع چرخش خبری اعتماد را از بین می‌برد.\nGatekeeping decides what gets covered. — دروازه‌بانی تعیین می‌کند چه چیزی پوشش داده شود.\nThe paywall limits access to the archive. — دیوار پرداخت دسترسی به آرشیو را محدود می‌کند.\n## خطاهای رایج\nپس از کاما that نمی‌آید: the editor, who approved it, ✓ / the editor, that approved it, ✗.\nsoundbite قابل‌شمارش است: a soundbite, two soundbites.\nomission غیرقابل‌شمارش است؛ فعل آن omit و با مفعول مستقیم: omit a figure."
+    },
+    {
+      "id": "c1.org-change.lesson-01",
+      "level": "C1",
+      "title": "Organizational Change",
+      "titleFa": "مدیریت تغییر سازمانی",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 156,
+      "grammarTipFa": "## قاعده\nبرای تغییری که از گذشته تا حال ادامه دارد، مجهول حال کامل: has/have been + قسمت سوم — The plant has been closed since March.\nبرای دو چیز: have been + قسمت سوم — Two teams have been merged into one.\nاگر فاعل مهم باشد با by می‌آید: The plan was approved by the board.\n## جدول\nThe plant has been closed since March. — کارخانه از مارس بسته شده است.\nTwo teams have been merged into one. — دو تیم در یکی ادغام شده‌اند.\nThe plan has been approved by the board. — طرح را هیئت‌مدیره تأیید کرده است.\n## مثال‌ها\nThe downsizing has lowered morale. — کوچک‌سازی روحیه را پایین آورده است.\nOrganizational inertia is the biggest barrier. — رخوت سازمانی بزرگ‌ترین مانع است.\nWithout buy-in, change does not last. — بدون همراه‌سازی، تغییر دوام نمی‌آورد.\n## خطاهای رایج\nپس از have/has حتماً been می‌آید: has been closed ✓ / has closed ✗ (آن یعنی «بسته کرده است»).\nbuy-in با خط تیره نوشته می‌شود و غیرقابل‌شمارش است.\nresistance با to می‌آید: resistance to change."
+    },
+    {
+      "id": "c1.risk.lesson-01",
+      "level": "C1",
+      "title": "Risk Management",
+      "titleFa": "مدیریت ریسک",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 157,
+      "grammarTipFa": "## قاعده\nشرطی خیالی برای ریسک: If the supplier failed, we would lose two weeks.\nبرای نتیجهٔ گذشته‌ای که رخ نداده: If we had hedged earlier, the loss would have been smaller.\ncould و might در هر دو نیمه ممکن است: If we diversified, we might sleep better.\n## جدول\nIf the supplier failed, we would lose two weeks. — اگر تأمین‌کننده از کار بیفتد، دو هفته از دست می‌دهیم.\nIf we had hedged earlier, the loss would have been smaller. — اگر زودتر پوشش داده بودیم، ضرر کمتر بود.\nIf we diversified, we might sleep better. — اگر تنوع می‌دادیم، ممکن بود راحت‌تر بخوابیم.\n## مثال‌ها\nOur exposure is concentrated in one supplier. — مواجههٔ ما در یک تأمین‌کننده متمرکز است.\nMitigation is cheaper than recovery. — کاهش ریسک از جبران خسارت ارزان‌تر است.\nDiversification raises resilience. — تنوع‌بخشی تاب‌آوری را بالا می‌برد.\n## خطاهای رایج\nدر نیمهٔ دوم شرطی از will استفاده نکن: we would lose ✓ / we will lose ✗.\nexposure با to می‌آید: exposure to a single market.\nmitigation غیرقابل‌شمارش است؛ فعل آن mitigate."
+    },
+    {
+      "id": "c1.research-reports.lesson-01",
+      "level": "C1",
+      "title": "Research Reports",
+      "titleFa": "گزارش‌های پژوهشی",
+      "topic": "Study",
+      "estimatedMinutes": 9,
+      "order": 158,
+      "grammarTipFa": "## قاعده\nگزارش پژوهشی مجهول‌محور است، چون خودِ کار مهم است نه انجام‌دهنده: The survey was conducted in June.\nحال سادهٔ مجهول برای روش: The sample is described in section two.\nگذشتهٔ سادهٔ مجهول برای کاری که تمام شده: The data were collected in June.\n## جدول\nThe survey was conducted in June. — پیمایش در ژوئن انجام شد.\nThe findings are summarised on page two. — یافته‌ها در صفحهٔ دوم خلاصه شده‌اند.\nThe data were collected in two waves. — داده‌ها در دو موج جمع‌آوری شدند.\n## مثال‌ها\nThe abstract states the main finding in five lines. — چکیده یافتهٔ اصلی را در پنج خط می‌گوید.\nOne caveat: the sample was small. — یک قید احتیاط: نمونه کوچک بود.\nEvery report lists its limitations. — هر گزارشی محدودیت‌هایش را فهرست می‌کند.\n## خطاهای رایج\nبرای داده‌ای که جمع شده was/were می‌آید: was collected ✓ / is collected ✗ (اگر کار تمام شده باشد).\ncaveat گاهی مفرد و گاهی جمع می‌آید: one caveat / several caveats.\nfindings همیشه جمع است: the findings are، نه the findings is."
+    },
+    {
+      "id": "c1.research-method.lesson-01",
+      "level": "C1",
+      "title": "Research Methodology",
+      "titleFa": "روش تحقیق",
+      "topic": "Science",
+      "estimatedMinutes": 9,
+      "order": 159,
+      "grammarTipFa": "## قاعده\nبرای نقد روشِ گذشته: should have + قسمت سوم — The study should have controlled for age.\nبرای امکان گذشته: could have + قسمت سوم — The sample could have been larger.\nneedn't have یعنی «لازم نبود انجام شود»: We needn't have run a second wave.\n## جدول\nThe study should have controlled for age. — مطالعه باید سن را کنترل می‌کرد.\nThe sample could have been larger. — نمونه می‌توانست بزرگ‌تر باشد.\nWe needn't have run a second wave. — لازم نبود موج دوم را اجرا کنیم.\n## مثال‌ها\nThe reliability of the measure was low. — پایایی ابزار اندازه‌گیری پایین بود.\nReplication matters more than a single result. — تکرارپذیری از یک نتیجهٔ تنها مهم‌تر است.\nA longitudinal study takes several years. — مطالعهٔ طولی چند سال طول می‌کشد.\n## خطاهای رایج\nپس از وجهی have می‌آید: should have controlled ✓ / should controlled ✗.\nreliability غیرقابل‌شمارش است؛ صفت آن reliable.\nrandomised در انگلیسی بریتانیایی با s نوشته می‌شود (آمریکایی: randomized)."
+    },
+    {
+      "id": "c1.data-interpretation.lesson-01",
+      "level": "C1",
+      "title": "Interpreting Complex Data",
+      "titleFa": "تفسیر داده‌های پیچیده",
+      "topic": "Science",
+      "estimatedMinutes": 9,
+      "order": 160,
+      "grammarTipFa": "## قاعده\nمقایسه با as … as و than: Sales are twice as high as last year.\nصفت عالی با the: This is the steepest fall since 2019.\nبرای سه برابر: three times higher than؛ برای نصف: half as high as.\n## جدول\nSales are twice as high as last year. — فروش دو برابر سال پیش است.\nThis is the steepest fall since 2019. — این تندترین افت از ۲۰۱۹ است.\nRevenue is half as high as in March. — درآمد نصف مارس است.\n## مثال‌ها\nCustomer segmentation makes the picture clearer. — بخش‌بندی مشتریان تصویر را روشن‌تر می‌کند.\nSeasonality explains part of the fall. — فصلی‌بودن بخشی از افت را توضیح می‌دهد.\nWe take January as the baseline. — ژانویه را خط پایه می‌گیریم.\n## خطاهای رایج\nپس از twice/three times ساختار as … as می‌آید: twice as high as ✓ / twice high than ✗.\nthe steepest fall: صفت عالی همیشه با the.\nbaseline غیرقابل‌شمارش است؛ در گزارش‌ها a baseline هم دیده می‌شود."
+    },
+    {
+      "id": "c1.org-culture.lesson-01",
+      "level": "C1",
+      "title": "Organizational Culture",
+      "titleFa": "فرهنگ سازمانی",
+      "topic": "Work",
+      "estimatedMinutes": 9,
+      "order": 161,
+      "grammarTipFa": "## قاعده\nبرای عادت گذشته که دیگر نیست: used to + مصدر — People used to decide in meetings.\nwould + مصدر هم عادت گذشته را نشان می‌دهد، اما فقط برای کنش‌های تکراری: Every Friday the team would share one lesson.\nبرای وضع فعلی از حال ساده استفاده کن: Now they decide in chat.\n## جدول\nPeople used to decide in meetings. — قبلاً همه در جلسه تصمیم می‌گرفتند.\nEvery Friday the team would share one lesson. — هر جمعه تیم یک درس را به اشتراک می‌گذاشت.\nNow they decide in chat. — حالا در چت تصمیم می‌گیرند.\n## مثال‌ها\nThe hierarchy slows decisions down. — سلسله‌مراتب تصمیم‌ها را کند می‌کند.\nSilos keep information inside a team. — جزیره‌های سازمانی اطلاعات را داخل تیم نگه می‌دارند.\nOnboarding takes a month. — آشناسازی یک ماه طول می‌کشد.\n## خطاهای رایج\nدر جملهٔ منفی و پرسشی used to به did برمی‌گردد: did not use to ✓ / did not used to ✗.\nwould برای وضعیت پایدار به کار نمی‌رود: used to know ✓ / would know ✗ (در این معنا).\nattrition غیرقابل‌شمارش است؛ عبارت رایج attrition rate."
+    },
+    {
+      "id": "c1.research-ethics.lesson-01",
+      "level": "C1",
+      "title": "Research Ethics",
+      "titleFa": "اخلاق در پژوهش",
+      "topic": "Science",
+      "estimatedMinutes": 9,
+      "order": 162,
+      "grammarTipFa": "## قاعده\nدر متن اخلاق پژوهش، قاعده‌ها را با مجهول + وجهی می‌نویسند، چون قاعده بر همه لازم است نه بر یک نفر: Participants must be told the purpose.\nساختار: must/should/can + be + قسمت سوم فعل — Data should be anonymised before analysis.\n## جدول\nParticipants must be told the purpose of the study. — باید هدف پژوهش به شرکت‌کنندگان گفته شود.\nData should be anonymised before analysis. — داده‌ها باید پیش از تحلیل ناشناس شوند.\nConsent must be obtained in writing. — رضایت باید کتبی گرفته شود.\n## مثال‌ها\nAnonymity protects the people who took part. — ناشناس‌بودن از شرکت‌کنندگان محافظت می‌کند.\nPlagiarism ends a research career quickly. — سرقت علمی به‌سرعت به کار پژوهشی پایان می‌دهد.\nMisconduct is reported to the committee, not to the funder alone. — تخلف پژوهشی به کمیته گزارش می‌شود، نه فقط به تأمین‌کنندهٔ مالی.\n## خطاهای رایج\nپس از وجهی، شکل مجهول با be می‌آید: must be anonymised ✓ / must anonymised ✗.\nmust be told یعنی «باید گفته شود»، نه «باید بگوید».\nconfidentiality غیرقابل‌شمارش است: confidentiality is، نه are."
+    },
+    {
+      "id": "c1.diversity-inclusion.lesson-01",
+      "level": "C1",
+      "title": "Diversity and Inclusion",
+      "titleFa": "تنوع و شمول",
+      "topic": "Work",
+      "estimatedMinutes": 9,
+      "order": 163,
+      "grammarTipFa": "## قاعده\nبرای تعریف یک گروه از بند موصولی که/which استفاده کن: A policy that excludes part-time staff is not inclusive.\nبند غیرتعریفی با کاما می‌آید و who/which می‌گیرد: The manager, who joined last year, runs the network.\nدر جملهٔ غیرتعریفی that به کار نمی‌رود: The manager, who joined… ✓ / The manager, that joined… ✗.\n## جدول\nA policy that excludes part-time staff is not inclusive. — سیاستی که کارکنان پاره‌وقت را حذف می‌کند فراگیر نیست.\nThe manager, who joined last year, runs the network. — مدیر که سال پیش آمد، شبکه را می‌گرداند.\nTeams that listen to every voice make better decisions. — تیم‌هایی که به همهٔ صداها گوش می‌دهند بهتر تصمیم می‌گیرند.\n## مثال‌ها\nRepresentation on the board is still low. — نمایندگی در هیئت‌مدیره هنوز کم است.\nOne accommodation changed her whole week. — یک سازگاری کل هفتهٔ او را عوض کرد.\nAllyship means speaking up when you are not the target. — همراهی یعنی وقتی خودت هدف نیستی هم صدا بلند کنی.\n## خطاهای رایج\nپس از اسم مفرد، فعل مفرد می‌آید: A policy that excludes… is ✓.\ninclusion غیرقابل‌شمارش است؛ inclusive صفت است، نه اسم.\nbelonging با حرف اضافهٔ of می‌آید: a sense of belonging."
+    },
+    {
+      "id": "c1.business-sustainability.lesson-01",
+      "level": "C1",
+      "title": "Business Sustainability",
+      "titleFa": "پایداری کسب‌وکار",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 164,
+      "grammarTipFa": "## قاعده\nبرای نتیجهٔ فرضی و غیرواقعی از شرطی نوع دوم استفاده کن: If + گذشتهٔ ساده، would + مصدر.\nIf we repaired products, we would cut waste.\nبا were برای همهٔ ضمیرها رسمی‌تر است: If the packaging were compostable, the line would qualify.\n## جدول\nIf we repaired products, we would cut waste. — اگر محصولات را تعمیر می‌کردیم، پسماند کمتری داشتیم.\nIf the packaging were compostable, the whole line would qualify. — اگر بسته‌بندی قابل کمپوست بود، کل خط واجد شرایط می‌شد.\nIf procurement asked for an audit, suppliers would move faster. — اگر خرید تقاضای ممیزی می‌کرد، تأمین‌کنندگان سریع‌تر حرکت می‌کردند.\n## مثال‌ها\nOur footprint fell after the switch to rail. — رد پای محیطی ما پس از روی آوردن به ریل کم شد.\nThe lifecycle of the battery is eight years. — چرخهٔ عمر باتری هشت سال است.\nA circular model keeps materials in use. — مدل چرخه‌ای مواد را در استفاده نگه می‌دارد.\n## خطاهای رایج\nدر شرطی نوع دوم، فعل جملهٔ if گذشته است: If we repaired… ✓ / If we repair… would ✗ (برای فرض).\nwould پس از کاما می‌آید، نه در جملهٔ if.\nfootprint قابل‌شمارش است؛ عبارت رایج carbon footprint."
+    },
+    {
+      "id": "c1.semantic-nuance.lesson-01",
+      "level": "C1",
+      "title": "Semantic Nuance",
+      "titleFa": "ظرافت‌های معنایی واژگان",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 165,
+      "grammarTipFa": "## قاعده\nدو واژهٔ هم‌معنا همیشه قابل جانشینی نیستند؛ بار معنایی (connotation) تفاوت می‌سازد.\nبرای مقایسهٔ نرمی و تندی واژه‌ها از صفت تفضیلی استفاده کن: softer than، less loaded than، more neutral than.\nبرای شدت بیشتر: far/much + تفضیلی — This option is far less loaded than that one.\n## جدول\nThe second word is softer than the first. — واژهٔ دوم از اولی ملایم‌تر است.\nThis option is much less loaded than that one. — این گزینه بار منفی بسیار کمتری از آن یکی دارد.\nThe report is as neutral as the brief allows. — گزارش تا جایی که شرح کار اجازه می‌دهد بی‌طرف است.\n## مثال‌ها\nEvery nuance matters in a legal letter. — هر تفاوت ظریف در نامهٔ حقوقی مهم است.\nDownsizing is a euphemism for cutting jobs. — کوچک‌سازی تعبیری خوش‌بینانه برای تعدیل نیرو است.\nThe label was pejorative and unfair. — آن برچسب تحقیرآمیز و ناعادلانه بود.\n## خطاهای رایج\ndenotation با connotation یکی نیست: denotation معنی فرهنگ‌نامه‌ای است، connotation بار احساسی.\neuphemism قابل‌شمارش است: a euphemism / two euphemisms.\nhyperbole غیرقابل‌شمارش است؛ فعل آن exaggerate است."
+    },
+    {
+      "id": "c1.argumentation.lesson-01",
+      "level": "C1",
+      "title": "Argumentation and Rebuttal",
+      "titleFa": "استدلال و پاسخ به نقد",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 166,
+      "grammarTipFa": "## قاعده\nبرای تأکید بر نقد، جمله را با یک قید منفی آغاز کن و فعل کمکی را پیش از فاعل بیاور: Not only does the study fail to show a link, but it also misreads the data.\nساختار: قید منفی + فعل کمکی + فاعل + فعل اصلی — Rarely is a single study enough.\n## جدول\nNot only does the study fail to show a link, but it also misreads the data. — پژوهش نه‌تنها پیوندی نشان نمی‌دهد، بلکه داده را هم بد می‌خواند.\nRarely is a single study enough to settle the question. — به‌ندرت یک پژوهش برای حل مسئله کافی است.\nNever have I seen a weaker warrant. — هرگز مجوز استدلالی ضعیف‌تر از این ندیده‌ام.\n## مثال‌ها\nAn ad hominem attack answers the person, not the argument. — حملهٔ شخصی به شخص پاسخ می‌دهد، نه به استدلال.\nA steelman makes the other side's case better than they did. — تقویت استدلال حریف، ادعای او را بهتر از خودش بیان می‌کند.\nThe burden of proof sits with the person making the claim. — بار اثبات بر دوش کسی است که ادعا می‌کند.\n## خطاهای رایج\nپس از Not only در آغاز جمله، ترتیب کمکی/فاعل جابه‌جا می‌شود: does the study fail ✓ / the study fails ✗.\nRarely is a single study… ✓ / Rarely a single study is… ✗.\nrejoinder پاسخ متقابل است، نه تکرار ادعا؛ و rebuttal با ad hominem یکی نیست."
+    },
+    {
+      "id": "c1.proposals.lesson-01",
+      "level": "C1",
+      "title": "Professional Proposals",
+      "titleFa": "نگارش پیشنهادهای حرفه‌ای",
+      "topic": "Business",
+      "estimatedMinutes": 9,
+      "order": 167,
+      "grammarTipFa": "## قاعده\nپیشنهاد حرفه‌ای با تعهد شرطی نوشته می‌شود: If + حال ساده، will + مصدر.\nIf the client approves the scope, we will start in May.\nبرای تعهد قطعی‌تر می‌توانی shall یا can را جای will بگذاری — در جملهٔ شرط هیچ‌گاه will نمی‌آید.\n## جدول\nIf the client approves the scope, we will start in May. — اگر مشتری محدوده را تأیید کند، در ماه مه شروع می‌کنیم.\nIf the budget changes, we will revise the timeline. — اگر بودجه تغییر کند، زمان‌بندی را بازنگری می‌کنیم.\nIf the pilot succeeds, we will roll it out in two regions. — اگر آزمون موفق باشد، آن را در دو منطقه اجرا می‌کنیم.\n## مثال‌ها\nThe feasibility study takes three weeks. — مطالعهٔ امکان‌سنجی سه هفته طول می‌کشد.\nWe need sign-off before we order anything. — پیش از هر سفارشی به تأیید نهایی نیاز داریم.\nThe rationale sits on page one. — منطق پشتوانه در صفحهٔ اول است.\n## خطاهای رایج\nدر جملهٔ if فعل حال ساده است، نه will: If the client approves… ✓ / If the client will approve… ✗.\nsign-off با خط تیره نوشته می‌شود و غیرقابل‌شمارش است: we need sign-off.\nannex پیوستِ سند است؛ appendix در گزارش علمی رایج‌تر است."
+    },
+    {
+      "id": "c1.stakeholders.lesson-01",
+      "level": "C1",
+      "title": "Stakeholder Communication",
+      "titleFa": "مدیریت ارتباط با ذی‌نفعان",
+      "topic": "Communication",
+      "estimatedMinutes": 9,
+      "order": 168,
+      "grammarTipFa": "## قاعده\nدر گزارش ارتباط با ذی‌نفعان، پرسش‌ها را غیرمستقیم نقل کن: ترتیب جمله خبری می‌ماند و فعل کمکی به گذشته برمی‌گردد.\nThe board asked when the pilot would start. — نه «when would the pilot start».\nبرای پرسش بله/خیر از whether یا if استفاده کن: She asked whether the figures were final.\n## جدول\nThe board asked when the pilot would start. — هیئت‌مدیره پرسید آزمون آزمایشی چه زمانی شروع می‌شود.\nShe asked whether the figures were final. — او پرسید آیا ارقام نهایی هستند.\nThey wanted to know how often updates would arrive. — آن‌ها می‌خواستند بدانند به‌روزرسانی‌ها هر چند وقت می‌رسند.\n## مثال‌ها\nEngagement is measured by who turns up. — مشارکت‌جویی با این سنجیده می‌شود که چه کسی می‌آید.\nShe is our liaison with the ministry. — او رابط ما با وزارتخانه است.\nClear expectations prevent most surprises. — انتظارات روشن بیشتر غافلگیری‌ها را جلوگیری می‌کند.\n## خطاهای رایج\nدر نقل غیرمستقیم ترتیب پرسشی حذف می‌شود: asked when the pilot would start ✓ / asked when would the pilot start ✗.\nwhether برای پرسش بله/خیر است، نه for چه چیزی: asked whether ✓ / asked for whether ✗.\nliaison تلفظ /liˈeɪzn/ دارد و h آن خوانده نمی‌شود."
+    },
+    {
+      "id": "c1.specialist-presentations.lesson-01",
+      "level": "C1",
+      "title": "Specialist Presentations",
+      "titleFa": "ارائهٔ تخصصی",
+      "topic": "Communication",
+      "estimatedMinutes": 9,
+      "order": 169,
+      "grammarTipFa": "## قاعده\nدر ارائهٔ تخصصی، کاری که انجام شده را با مجهول حال کامل می‌گویی تا نتیجه امروز مهم باشد: The results have been validated by an external lab.\nساختار: have/has + been + قسمت سوم فعل؛ فاعل عمل‌کننده با by می‌آید.\n## جدول\nThe results have been validated by an external lab. — نتایج را یک آزمایشگاه بیرونی تأیید کرده است.\nThe slides have been cut to eight. — اسلایدها به هشت رسیده‌اند.\nThe method has been described in the appendix. — روش در پیوست شرح داده شده است.\n## مثال‌ها\nThe takeaway fits on one line. — نکتهٔ کلیدی در یک خط جا می‌شود.\nClear signposting saved the talk. — نشانه‌گذاری روشن ارائه را نجات داد.\nJargon hides a weak argument. — اصطلاح تخصصی استدلال ضعیف را پنهان می‌کند.\n## خطاهای رایج\nدر مجهول حال کامل، been لازم است: have been validated ✓ / have validated by ✗.\nby فقط برای فاعل عمل‌کننده است: validated by a lab ✓ / validated with a lab (معنای دیگر) ✗.\ntakeaway و signposting غیرقابل‌شمارشاند؛ a takeaway هم رایج است."
+    },
+    {
+      "id": "b2.career-decisions.lesson-01",
+      "level": "B2",
+      "title": "Career Decisions",
+      "titleFa": "تصمیم‌گیری دربارهٔ آیندهٔ شغلی",
+      "topic": "Work",
+      "estimatedMinutes": 9,
+      "order": 144,
+      "grammarTipFa": "## قاعده\nبرای پشیمانی از کاری که در گذشته انجام شده از wish + گذشتهٔ کامل استفاده کن: I wish I had asked more questions before accepting.\nبرای وضعیتی که همین حالا دوست داری متفاوت باشد، wish + گذشتهٔ ساده می‌آید: I wish the notice period were shorter.\nIf only همان معنی را با تأکید بیشتر می‌رساند: If only we had more time before deciding.\n## جدول\nI wish I had asked more questions before accepting. — کاش پیش از پذیرفتن، سؤال‌های بیشتری پرسیده بودم.\nI wish the notice period were shorter. — کاش مدت اخطار کوتاه‌تر بود.\nIf only we had more time before deciding. — ای کاش پیش از تصمیم‌گیری وقت بیشتری داشتیم.\n## مثال‌ها\nTeaching was her vocation, not a job. — تدریس رسالت او بود، نه یک شغل.\nA sabbatical gave him time to retrain. — مرخصی مطالعاتی به او وقت داد تا مهارت تازه بیاموزد.\nHe went freelance last spring. — بهار گذشته مستقل شد.\n## خطاهای رایج\nبرای پشیمانی از گذشته گذشتهٔ کامل لازم است: wish I had asked ✓ / wish I asked (برای گذشته) ✗.\nپس از wish فعل گذشتهٔ ساده می‌آید، نه حال: I wish the notice period were shorter ✓.\nnotice period غیرقابل‌شمارش نیست؛ با a یا the می‌آید: my notice period is one month."
+    },
+    {
+      "id": "b2.viewpoints.lesson-01",
+      "level": "B2",
+      "title": "Evaluating Different Viewpoints",
+      "titleFa": "تحلیل دیدگاه‌های مخالف",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 145,
+      "grammarTipFa": "## قاعده\nبرای مشخص کردن اینکه دقیقاً کدام دیدگاه را می‌سنجی، بند موصولی تعریفی بیاور: The view that the policy is unfair deserves an answer.\nبند غیرتعریفی با کاما و who/which می‌آید: The colleague, who had raised it twice, was right.\nدر جملهٔ غیرتعریفی that نمی‌آید: The colleague, who had raised it… ✓ / The colleague, that had raised it… ✗.\n## جدول\nThe view that the policy is unfair deserves an answer. — دیدگاهی که سیاست را ناعادلانه می‌داند پاسخ می‌خواهد.\nThe colleague who raised it was right. — همکاری که آن را مطرح کرد درست می‌گفت.\nThe argument that we cannot afford it has not been tested. — این استدلال که توان مالی نداریم آزموده نشده است.\n## مثال‌ها\nFrom her standpoint the risk is real. — از دیدگاه او ریسک واقعی است.\nEvery claim needs a counterpoint. — هر ادعایی به یک نقطهٔ مقابل نیاز دارد.\nA one-sided summary convinces nobody. — خلاصهٔ یک‌طرفه هیچ‌کس را قانع نمی‌کند.\n## خطاهای رایج\nthat در بند غیرتعریفی بعد از کاما نمی‌آید: , who raised it ✓ / , that raised it ✗.\nstandpoint با from می‌آید: from her standpoint.\none-sided صفت است؛ اسم آن one-sidedness است و کم به کار می‌رود."
+    },
+    {
+      "id": "c2.sociolinguistics.lesson-01",
+      "level": "C2",
+      "title": "Sociolinguistics",
+      "titleFa": "زبان‌شناسی اجتماعی",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 170,
+      "grammarTipFa": "## قاعده\nوقتی دربارهٔ شمار گویندگان حرف می‌زنی، فعل با هستهٔ عبارت مطابقت می‌کند: The number of speakers has fallen (نه have).\nبا a number of همیشه فعل جمع می‌آید: A number of dialects are disappearing.\nبرای تغییرات زبانی، گذشتهٔ ساده با used to طبیعی‌تر است: People used to say…\n## جدول\nThe number of speakers has fallen sharply. — شمار گویندگان به‌شدت کم شده است.\nA number of dialects are disappearing fast. — شماری از گونه‌ها به‌سرعت از میان می‌روند.\n## مثال‌ها\nHer idiolect is full of half-finished sentences. — گویش فردی او پر از جمله‌های نیمه‌تمام است.\nThe sociolect of the port workers has its own words for shifts. — گونهٔ گروهی کارگران بندر واژه‌های خودش را برای نوبت‌های کاری دارد.\nDiglossia keeps the written form formal and the spoken form local. — دوزبان‌گونگی شکل نوشتاری را رسمی و شکل گفتاری را محلی نگه می‌دارد.\n## خطاهای رایج\nThe number of speakers have fallen ✗ — هستهٔ عبارت number است، پس has.\nA number of dialects is disappearing ✗ — با a number of فعل جمع می‌آید.\nsociolect را با accent یکی نگیر: sociolect به گروه اجتماعی اشاره دارد، accent به تلفظ."
+    },
+    {
+      "id": "c2.discourse.lesson-01",
+      "level": "C2",
+      "title": "Discourse Analysis",
+      "titleFa": "تحلیل گفتمان",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 171,
+      "grammarTipFa": "## قاعده\nبرای برجسته کردن بخشی از جمله، آن را با وارونگی جلو می‌آوریم: Not only does the pronoun point back, but it also sets the topic.\nبعد از قید منفی در آغاز جمله، فعل کمکی پیش از فاعل می‌آید: Rarely does a paragraph hold together without it.\nاگر فعل کمکی در جمله نباشد، do/does/did می‌آید: Seldom do readers notice the shift.\n## جدول\nNot only does the pronoun point back, but it also sets the topic. — ضمیر نه‌تنها به عقب اشاره می‌کند، بلکه موضوع را هم تعیین می‌کند.\nRarely does a paragraph hold together without coherence. — به‌ندرت پاراگرافی بدون انسجام معنا می‌دهد.\n## مثال‌ها\nAnaphora holds the paragraph together when the pronoun points back. — ارجاع پس‌رو پاراگراف را به هم می‌چسباند وقتی ضمیر به عقب اشاره می‌کند.\nThe presupposition that the reader agrees does most of the work here. — پیش‌فرضِ اینکه خواننده موافق است بیشتر کار را انجام می‌دهد.\nTurn-taking in that interview was controlled by the host. — نوبت‌گیری در آن مصاحبه در اختیار مجری بود.\n## خطاهای رایج\nNot only the pronoun points back ✗ — پس از not only در آغاز جمله وارونگی لازم است.\nRarely a paragraph holds together ✗ — با rarely در آغاز، does می‌آید.\ncohesion و coherence یکی نیستند: cohesion ابزار زبانی است، coherence منطق متن."
+    },
+    {
+      "id": "c2.philosophy.lesson-01",
+      "level": "C2",
+      "title": "Philosophical Texts",
+      "titleFa": "تحلیل متون فلسفی",
+      "topic": "Books",
+      "estimatedMinutes": 9,
+      "order": 172,
+      "grammarTipFa": "## قاعده\nبرای پیوند گذشته و حال از شرطی مختلط استفاده کن: If the premise had held, the conclusion would follow now.\nوقتی شرط حال است و نتیجه در گذشته، ساختار برعکس می‌شود: If the argument were valid, the objection would have failed.\nwould have + قسمت سوم فعل فقط برای نتیجه‌ای است که در گذشته رخ نداده است.\n## جدول\nIf the premise had held, the conclusion would follow now. — اگر مقدمه برجا مانده بود، نتیجه اکنون درست می‌شد.\nIf the argument were valid, the objection would have failed. — اگر استدلال معتبر بود، ایراد وارد نمی‌شد.\n## مثال‌ها\nEpistemology asks what would count as evidence here. — شناخت‌شناسی می‌پرسد چه چیزی اینجا شاهد به حساب می‌آید.\n'Either it happens or it does not' is a tautology. — «یا رخ می‌دهد یا نمی‌دهد» یک همان‌گویی است.\nScepticism is a method, not a mood. — شک روش است، نه حال‌وهوا.\n## خطاهای رایج\nIf the premise had held, the conclusion would have followed now ✗ — نتیجه در حال است، پس would follow.\nwould of followed ✗ — شکل نوشتاری would have است، نه would of.\ntautology را با paradox یکی نگیر: همان‌گویی همیشه درست است، تناقض‌نما در ظاهر متناقض."
+    },
+    {
+      "id": "c2.speeches.lesson-01",
+      "level": "C2",
+      "title": "Interpreting Complex Speeches",
+      "titleFa": "تفسیر سخنرانی‌های پیچیده",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 173,
+      "grammarTipFa": "## قاعده\nدر تفسیر سخنرانی، مجهول با افعال وجهی می‌آید تا مسئولیت جمله معلوم نباشد: The main claim should be summarised first.\nساختار ثابت است: modal + be + قسمت سوم فعل — must be checked, can be interpreted, should be noted.\nبرای کاری که انجام نشده اما لازم بوده: should have been + قسمت سوم فعل — The figures should have been verified.\n## جدول\nThe main claim should be summarised first. — ادعای اصلی باید نخست خلاصه شود.\nA verbatim record must be checked against the recording. — متن کلمه‌به‌کلمه باید با ضبط مقابله شود.\n## مثال‌ها\nHer oratory carried the room without a single slide. — سخنوری او سالن را بدون یک اسلاید همراه کرد.\nInterpreting the gist matters more than matching every word. — رساندن نکتهٔ اصلی مهم‌تر از تطبیق هر واژه است.\nHis inflection turned a statement into a warning. — آهنگ صدای او یک جملهٔ خبری را به هشدار تبدیل کرد.\n## خطاهای رایج\nThe claim should summarise first ✗ — مجهول لازم است: should be summarised.\nThe figures should be verified yesterday ✗ — برای گذشتهٔ ازدست‌رفته: should have been verified.\ngist با the می‌آید: the gist of the speech، نه a gist."
+    },
+    {
+      "id": "c2.advanced-persuasion.lesson-01",
+      "level": "C2",
+      "title": "Advanced Persuasion",
+      "titleFa": "فنون اقناع پیشرفته",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 174,
+      "grammarTipFa": "## قاعده\nبرای برجسته کردن مزیت یک پیشنهاد، جمله را با not only آغاز کن و وارونگی بساز: Not only does the plan cut costs, but it also wins votes.\nبا rarely و seldom هم فعل کمکی پیش از فاعل می‌آید: Rarely does an audience remember a table of averages.\nاین ساختار سه جزء دارد: قید منفی + فعل کمکی + فاعل + فعل اصلی.\n## جدول\nNot only does the plan cut costs, but it also wins votes. — طرح نه‌تنها هزینه را کم می‌کند، بلکه رأی هم می‌آورد.\nRarely does an audience remember a table of averages. — مخاطب به‌ندرت جدولی از میانگین‌ها را به یاد می‌آورد.\n## مثال‌ها\nHer ethos came from years in the field, not from slides. — اعتبار او از سال‌ها کار میدانی می‌آمد، نه از اسلاید.\nThe pathos of the story did the work the data could not. — شور داستان کاری را کرد که داده نمی‌توانست.\nRepetition raises salience more than accuracy does. — تکرار برجستگی را بیشتر از دقت بالا می‌برد.\n## خطاهای رایج\nNot only the plan cuts costs ✗ — پس از not only در آغاز جمله وارونگی لازم است.\nNot only does the plan cuts costs ✗ — بعد از does فعل ساده می‌آید: cut.\nlogos را با لوگو اشتباه نگیر: logos استدلال است، نه نشان تجاری."
+    },
+    {
+      "id": "c2.academic-writing.lesson-01",
+      "level": "C2",
+      "title": "Advanced Academic Writing",
+      "titleFa": "نگارش دانشگاهی پیشرفته",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 175,
+      "grammarTipFa": "## قاعده\nدر نوشتار آکادمیک، کاری که پیش‌تر انجام شده با مجهول حال کامل بیان می‌شود: Studies have been conducted on both sides of the question.\nساختار: have/has been + قسمت سوم فعل؛ کنشگر معمولاً حذف می‌شود چون مهم نیست.\nبرای چیزی که پیش از یک نقطهٔ گذشته کامل شده: had been + قسمت سوم فعل — The caveat had been placed in a footnote.\n## جدول\nStudies have been conducted on both sides of the question. — پژوهش‌هایی در هر دو سوی مسئله انجام شده است.\nThe caveat has been placed in a footnote. — قید احتیاط در پانویس گذاشته شده است.\n## مثال‌ها\nThe thesis has to be arguable, not obvious. — پایان‌نامه/ادعای اصلی باید قابل بحث باشد، نه بدیهی.\nEvery citation has to match the reference list exactly. — هر ارجاع باید دقیقاً با فهرست منابع بخواند.\nHer precis of the report ran to one page. — چکیدهٔ او از گزارش به یک صفحه رسید.\n## خطاهای رایج\nStudies have conducted ✗ — مجهول لازم است: have been conducted.\nThe caveat has placed in a footnote ✗ — has been placed.\nthesis با فعل مفرد می‌آید؛ جمع آن theses است، نه thesisها."
+    },
+    {
+      "id": "c2.editing.lesson-01",
+      "level": "C2",
+      "title": "Professional Editing and Revision",
+      "titleFa": "ویرایش و بازنویسی حرفه‌ای",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 176,
+      "grammarTipFa": "## قاعده\nدر ویرایش، خطاهای مطابقت فاعل و فعل بیشتر از همه دیده می‌شوند: هر یک از دو گزارشی که بررسی شد، مفرد است.\nبا each of و neither of فعل مفرد می‌آید: Each of the reports was checked twice. / Neither of the drafts is ready.\nبا a number of فعل جمع می‌آید: A number of errors were fixed.\n## جدول\nEach of the reports was checked twice. — هر یک از گزارش‌ها دو بار بررسی شد.\nNeither of the drafts is ready. — هیچ‌یک از پیش‌نویس‌ها آماده نیست.\n## مثال‌ها\nRedundancy hides in pairs like free gift and past history. — افزون‌گویی در جفت‌واژه‌هایی مثل free gift پنهان می‌شود.\nConsistency matters more than which spelling you choose. — یکدستی مهم‌تر از انتخاب املاست.\nProofreading catches the errors that survive editing. — نمونه‌خوانی خطاهایی را می‌گیرد که از ویرایش جان سالم به در برده‌اند.\n## خطاهای رایج\nEach of the reports were checked ✗ — each of با فعل مفرد می‌آید.\nNeither of the drafts are ready ✗ — neither of هم مفرد است.\nproofreading و editing یکی نیستند: اولی سطحی و پایانی است، دومی معنا و ساختار را می‌سازد."
+    },
+    {
+      "id": "c2.synthesis.lesson-01",
+      "level": "C2",
+      "title": "Synthesizing Specialized Texts",
+      "titleFa": "خلاصه‌سازی متون تخصصی",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 177,
+      "grammarTipFa": "## قاعده\nدر خلاصه‌سازی، یافته‌های دیگران را با پرسش نقل‌شده گزارش می‌کنی: The review asked whether the effect was real.\nدر پرسش غیرمستقیم ترتیب جمله خبری است: asked whether the effect was real (نه was the effect).\nبرای چیزی که پیش از یک نقطهٔ گذشته رخ داده: asked when the data had been collected.\n## جدول\nThe review asked whether the effect was real. — مرور پرسید آیا اثر واقعی است.\nThe authors asked when the data had been collected. — نویسندگان پرسیدند داده‌ها چه زمانی گردآوری شده بود.\n## مثال‌ها\nA synthesis answers a question the sources did not ask. — ترکیب منابع به پرسشی پاسخ می‌دهد که منابع نپرسیده بودند.\nThe distillation loses the caveats, which is the risk. — فشرده‌سازی قیدهای احتیاط را از دست می‌دهد و خطر همین است.\nThe taxonomy separates errors of fact from errors of emphasis. — رده‌بندی خطاهای واقعیت را از خطاهای تأکید جدا می‌کند.\n## خطاهای رایج\nasked whether was the effect real ✗ — در پرسش نقل‌شده ترتیب خبری است.\nWhether ترجمهٔ «اگر» نیست؛ در این ساختار «آیا» است.\nsynthesis و summary یکی نیستند: خلاصه یک متن را کوتاه می‌کند، ترکیب چند متن را به هم می‌بندد."
+    },
+    {
+      "id": "c2.argument-analysis.lesson-01",
+      "level": "C2",
+      "title": "Critical Argument Analysis",
+      "titleFa": "تحلیل انتقادی استدلال‌ها",
+      "topic": "Debate",
+      "estimatedMinutes": 9,
+      "order": 178,
+      "grammarTipFa": "## قاعده\nبرای نقد کاری که در گذشته باید انجام می‌شد، از should have + past participle استفاده کن: The author should have defined the term.\nبا must have و could have درجهٔ اطمینان را نشان بده: The review must have missed the premise / could have noticed the equivocation.\nاین ساختار همیشه سه جزء دارد: فعل کمکی + have + قسمت سوم فعل؛ هرگز should has یا must to نیست.\n## جدول\nThe author should have defined the term. — نویسنده باید اصطلاح را تعریف می‌کرد.\nThe review must have missed the premise. — نقد حتماً مقدمه را جا انداخته است.\nThe reviewer could have tested the inference. — داور می‌توانست استنتاج را بیازماید.\n## مثال‌ها\nSoundness needs both a valid form and true premises. — درستی استدلال هم به شکل معتبر نیاز دارد و هم به مقدمه‌های راست.\nCircularity hides when the premise restates the conclusion. — دور استدلال وقتی پنهان می‌ماند که مقدمه همان نتیجه را تکرار کند.\nThe principle of charity answers the strongest version. — اصل خیرخواهی به قوی‌ترین نسخهٔ استدلال پاسخ می‌دهد.\n## خطاهای رایج\nThe author should has defined the term ✗ — پس از should همیشه have می‌آید.\nThe review must have miss the premise ✗ — پس از have قسمت سوم فعل لازم است.\nvalid را با sound یکی نگیر: استدلال می‌تواند معتبر باشد و باز هم نادرست بماند."
+    },
+    {
+      "id": "c2.dialects.lesson-01",
+      "level": "C2",
+      "title": "English Dialect Variation",
+      "titleFa": "تفاوت‌های گویشی انگلیسی",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 179,
+      "grammarTipFa": "## قاعده\nبرای عادت‌های گذشتهٔ دور از used to استفاده کن: People used to say that the r was always sounded.\nwould هم همین عادت را نشان می‌دهد، اما فقط با فعل کنشی و در بافت روایت: In that village they would speak patois at home.\nبرای وضعیتی که در گذشته بود و دیگر نیست، used to است، نه would: The town used to have two dialects.\n## جدول\nPeople used to say the r was always sounded. — مردم می‌گفتند r همیشه تلفظ می‌شود.\nIn that village they would speak patois at home. — در آن روستا در خانه patois حرف می‌زدند.\nThe town used to have two dialects. — شهر قبلاً دو گویش داشت.\n## مثال‌ها\nThe isogloss runs just north of the river. — مرز گویشی درست شمال رود می‌گذرد.\nA creole has native speakers; a pidgin does not. — کرئول گویشور بومی دارد؛ پیدگین ندارد.\nThe patois survives in the fishing villages. — این گویش محلی در روستاهای ماهیگیری زنده مانده است.\n## خطاهای رایج\nPeople would used to say ✗ — used to و would را با هم نیاور.\nThe town would have two dialects ✗ — برای وضعیت پایدار گذشته used to لازم است.\nپیدگین را با pigeon («کبوتر») اشتباه نگیر؛ ریشهٔ واژه متفاوت است."
+    },
+    {
+      "id": "c2.pragmatics.lesson-01",
+      "level": "C2",
+      "title": "Pragmatics",
+      "titleFa": "کاربردشناسی زبان",
+      "topic": "Language",
+      "estimatedMinutes": 9,
+      "order": 180,
+      "grammarTipFa": "## قاعده\nپرسش مستقیم را در نقل قول به پرسش غیرمستقیم بدل کن: \"Is the answer final?\" → She asked whether the answer was final.\nدر پرسش غیرمستقیم ترتیب فاعل و فعل برنمی‌گردد: He asked when the meeting would start (نه would the meeting start).\nبرای بله/خیر از whether یا if استفاده کن؛ برای پرسش‌های wh همان واژهٔ پرسشی را نگه دار.\n## جدول\nShe asked whether the answer was final. — او پرسید آیا پاسخ قطعی است.\nHe asked when the meeting would start. — او پرسید جلسه کِی شروع می‌شود.\nThey wanted to know if we had understood the implicature. — می‌خواستند بدانند آیا معنای ضمنی را گرفته‌ایم.\n## مثال‌ها\nThe implicature is that the answer is no. — معنای ضمنی این است که پاسخ خیر است.\nThe illocutionary force of that sentence is a warning. — نیروی کنشی آن جمله یک هشدار است.\nThe uptake was silence, which is an answer. — واکنش سکوت بود، و سکوت هم پاسخ است.\n## خطاهای رایج\nShe asked whether was the answer final ✗ — در پرسش غیرمستقیم جابه‌جایی فاعل و فعل نداریم.\nHe asked when would the meeting start ✗ — would پس از فاعل می‌آید.\nimplicature با implication را یکی نگیر: اولی در گفتگو ساخته می‌شود، دومی لازمهٔ منطقی است."
+    },
+    {
+      "id": "c2.culture-expressions.lesson-01",
+      "level": "C2",
+      "title": "Culture-specific Expressions",
+      "titleFa": "اصطلاحات فرهنگی",
+      "topic": "Culture",
+      "estimatedMinutes": 9,
+      "order": 181,
+      "grammarTipFa": "## قاعده\nحرف تعریف را با اسم غیرقابل‌شمارش و مفهوم کلی حذف کن: An idiom is the hardest part of a culture to borrow.\nوقتی از نمونهٔ مشخص حرف می‌زنی، the بیاور: The proverb loses its force in translation.\nاسم‌های قابل‌شمارش مفرد هرگز بی‌حرف نمی‌آیند؛ a calque یا the calque، نه calque تنها.\n## جدول\nAn idiom is the hardest part of a culture to borrow. — اصطلاح سخت‌ترین بخش فرهنگ برای قرض گرفتن است.\nThe proverb loses its force in translation. — ضرب‌المثل در ترجمه نیرویش را از دست می‌دهد.\nYoga is a loanword that kept its spelling. — yoga وامواژه‌ای است که املایش حفظ شده.\n## مثال‌ها\nThe title is an allusion to a nursery rhyme. — عنوان تلمیحی به یک ترانهٔ کودکانه است.\nThe calque sounds natural until you hear the original. — ترجمهٔ ساختاری طبیعی به نظر می‌رسد تا وقتی اصل را بشنوی.\nCulture shock came at the dinner table, not at the airport. — شوک فرهنگی سر میز شام آمد، نه در فرودگاه.\n## خطاهای رایج\nIdiom is hardest part of culture ✗ — اسم مفرد قابل‌شمارش حرف تعریف می‌خواهد: An idiom is the hardest part.\nHe made allusion to a rhyme ✗ — make an allusion to، با حرف تعریف نامعین.\nallusion را با illusion («توهم») اشتباه نگیر؛ ریشه یکی نیست."
+    },
+    {
+      "id": "c2.allusions.lesson-01",
+      "level": "C2",
+      "title": "Literary Allusions",
+      "titleFa": "کنایه‌های ادبی",
+      "topic": "Literature",
+      "estimatedMinutes": 9,
+      "order": 182,
+      "grammarTipFa": "## قاعده\nبرای افزودن توضیحی که حذف‌شدنی است، بند موصولی غیرتعریفی با which/who و دو ویرگول بساز: The epigraph, which quotes Blake, frames the novel.\nدر بند غیرتعریفی هرگز that نمی‌آید و ضمیر موصولی را نمی‌توان حذف کرد: the motif, which returns in chapter nine, …\nمی‌توانی به‌جای بند کامل، عبارت وصفی کوتاه بیاوری: the motif, returning in chapter nine, …\n## جدول\nThe epigraph, which quotes Blake, frames the novel. — سرلوحه، که از بلیک نقل شده، رمان را قاب می‌گیرد.\nThe motif, which returns in chapter nine, carries the theme. — بن‌مایه، که در فصل نهم برمی‌گردد، درون‌مایه را حمل می‌کند.\nHe borrows the ending, which is a risky homage. — پایان را وام می‌گیرد، که ادای احترامی پرخطر است.\n## مثال‌ها\nThe poem's archetype is the wanderer who comes home changed. — الگوی کهنِ شعر، آواره‌ای است که دگرگون به خانه برمی‌گردد.\nA motif returns until the reader stops counting it. — بن‌مایه آنقدر برمی‌گردد تا خواننده دیگر آن را نشمارد.\nThe pastiche flatters the style it copies. — تقلید سبک، سبکی را که می‌کپی‌د می‌ستاید.\n## خطاهای رایج\nThe epigraph, that quotes Blake, … ✗ — در بند غیرتعریفی that به کار نمی‌رود.\nThe motif, returns in chapter nine, … ✗ — ضمیر موصولی در بند غیرتعریفی حذف‌شدنی نیست.\narchetype را با stereotype یکی نگیر: archetype الگوی اولیه است، stereotype تصویر قالبی."
+    },
+    {
+      "id": "c2.paraphrasing.lesson-01",
+      "level": "C2",
+      "title": "Paraphrasing with Precision",
+      "titleFa": "بازنویسی با حفظ معنا",
+      "topic": "Writing",
+      "estimatedMinutes": 9,
+      "order": 183,
+      "grammarTipFa": "## قاعده\nدر بازنویسی کنشگر را جابه‌جا کن و مفعول را فاعل جمله کن: The committee rejected the plan → The plan was rejected.\nساختار مجهول: am/is/are/was/were + قسمت سوم فعل؛ کنشگر با by می‌آید و اگر روشن باشد حذف می‌شود.\nزمان را نگه دار: گذشتهٔ ساده → was/were + p.p.، حال ساده → is/are + p.p.\n## جدول\nThe plan was rejected by the committee. — طرح از سوی کمیته رد شد.\nHer claim is restated in the summary. — ادعای او در خلاصه بازگو می‌شود.\nThe term is glossed in a footnote. — اصطلاح در پانویس توضیح داده می‌شود.\n## مثال‌ها\nA rewording that keeps every claim is rare. — بازنویسی‌ای که همهٔ ادعاها را نگه دارد کم پیدا می‌شود.\nFidelity matters more than elegance in a summary. — در خلاصه، وفاداری از زیبایی مهم‌تر است.\nA small distortion can reverse the writer's position. — یک تحریف کوچک می‌تواند موضع نویسنده را برگرداند.\n## خطاهای رایج\nThe plan was reject ✗ — قسمت سوم فعل لازم است: rejected.\nThe plan was rejected by they ✗ — پس از by ضمیر مفعولی می‌آید: by them.\nrewording را با «خلاصه» یکی نگیر: بازنویسی طول را تقریباً نگه می‌دارد."
+    },
+    {
+      "id": "c2.translation.lesson-01",
+      "level": "C2",
+      "title": "Meaning-based Translation",
+      "titleFa": "ترجمهٔ مفهومی",
+      "topic": "Translation",
+      "estimatedMinutes": 9,
+      "order": 184,
+      "grammarTipFa": "## قاعده\nوقتی کنشگر مهم نیست، مجهول را با فعل کمکی بساز: modal + be + past participle.\nThe pun cannot be reproduced in Persian. — جناس را نمی‌توان در فارسی بازتولید کرد.\nبا have to و must هم همین ساختار می‌آید: The joke has to be explained in a footnote / Meaning must be kept.\n## جدول\nThe pun cannot be reproduced. — جناس بازتولیدشدنی نیست.\nThe joke has to be explained in a footnote. — شوخی باید در پانویس توضیح داده شود.\nThe title must be kept in the original. — عنوان باید به زبان اصلی بماند.\n## مثال‌ها\nA transliteration keeps the sound and loses the sense. — آوانویسی صدا را نگه می‌دارد و معنا را از دست می‌دهد.\nDomestication makes the text familiar to the reader. — بومی‌سازی متن را برای خواننده آشنا می‌کند.\nForeignization keeps the source culture visible. — بیگانه‌سازی فرهنگ مبدأ را دیدنی نگه می‌دارد.\n## خطاهای رایج\nThe pun cannot reproduce ✗ — مجهول لازم است: cannot be reproduced.\nThe joke has to explained ✗ — be جا افتاده: has to be explained.\nliteralism را با «سواد» اشتباه نگیر؛ ریشهٔ آن literal («لفظی») است."
+    },
+    {
+      "id": "c2.diplomacy.lesson-01",
+      "level": "C2",
+      "title": "Diplomatic Communication",
+      "titleFa": "ارتباطات دیپلماتیک",
+      "topic": "Communication",
+      "estimatedMinutes": 9,
+      "order": 185,
+      "grammarTipFa": "## قاعده\nبرای فرضی محترمانه و دور از قطعیت، were to + مصدر ساده به کار ببر: If we were to raise the issue now, it would look like pressure.\nدر جملهٔ نتیجه would یا could می‌آید: If the wording were softer, the other side could accept it.\nبا وارونگی، if حذف می‌شود و were به آغاز جمله می‌آید: Were the talks to fail, both sides would lose.\n## جدول\nIf we were to raise the issue now, it would look like pressure. — اگر حالا موضوع را مطرح کنیم، فشار به نظر می‌رسد.\nIf the wording were softer, the other side could accept it. — اگر عبارت نرم‌تر بود، طرف مقابل می‌توانست بپذیرد.\nWere the talks to fail, both sides would lose. — اگر مذاکرات شکست بخورد، هر دو طرف بازنده‌اند.\n## مثال‌ها\nTact is the difference between a warning and an insult. — ظرافت در گفتار تفاوت میان هشدار و توهین است.\nA non-paper lets an idea circulate without a signature. — سند غیررسمی می‌گذارد ایده بی‌امضا بچرخد.\nThe backchannel lets both sides talk without a record. — کانال غیررسمی می‌گذارد دو طرف بی‌سند گفتگو کنند.\n## خطاهای رایج\nIf we would raise the issue ✗ — در بند شرط would نمی‌آید: If we raised / If we were to raise.\nWere the talks to failing ✗ — پس از to مصدر ساده می‌آید: to fail.\ntact را با «تاکت» در موسیقی اشتباه نگیر؛ اینجا «ظرافت در رفتار» است."
+    },
+    {
+      "id": "c2.specialist-audiences.lesson-01",
+      "level": "C2",
+      "title": "Speaking to Specialist Audiences",
+      "titleFa": "سخنرانی برای مخاطبان تخصصی",
+      "topic": "Presentations",
+      "estimatedMinutes": 9,
+      "order": 186,
+      "grammarTipFa": "## قاعده\nوقتی جمله با قید منفی یا نیمه‌منفی (not only, rarely, seldom, hardly) آغاز شود، جای فعل و فاعل عوض می‌شود و فعل کمکی پیش از فاعل می‌آید: Not only does the method scale…\nاگر فعل کمکی در جمله نباشد، do/does/did را می‌آوریم و فعل اصلی به مصدر بی‌to برمی‌گردد: Rarely does a talk change a habit.\nاین ساخت Emphasis می‌سازد: شنوندهٔ متخصص سنگینیِ ادعا را حس می‌کند، پس آن را برای یک جمله در هر بخش نگه دار.\n## جدول\nNot only does the recap help the specialists, it also helps the beginners. — جمع‌بندی نه‌تنها به متخصص‌ها کمک می‌کند، به تازه‌کارها هم کمک می‌کند.\nRarely does a talk change how a specialist works. — به‌ندرت پیش می‌آید که یک سخنرانی شیوهٔ کار متخصص را عوض کند.\nSeldom have I seen a plenary so quiet. — کم پیش آمده نشست همگانی‌ای این‌قدر ساکت ببینم.\n## مثال‌ها\nThe talk opens with a slide a layperson can read. — سخنرانی با اسلایدی آغاز می‌شود که یک غیرمتخصص هم می‌تواند بخواند.\nA practitioner hears the method and asks how it works on Monday. — متخصصِ در عمل روش را می‌شنود و می‌پرسد دوشنبه چطور کار می‌کند.\nAbstraction hides the cost that the audience came to hear about. — انتزاع هزینه‌ای را پنهان می‌کند که مخاطب آمده بود بشنود.\nA run-through with two colleagues catches the half-built slide. — اجرای تمرینی با دو همکار، اسلاید نیمه‌کاره را لو می‌دهد.\n## خطاهای رایج\nNot only the method scales, … ✗ — پس از not only در آغاز جمله، فعل کمکی لازم است: Not only does the method scale…\nRarely a talk changes … ✗ — با rarely در آغاز، جای فاعل و کمکی عوض می‌شود: Rarely does a talk change…\nplenary را با seminar یکی نگیر: plenary نشست همگانیِ همهٔ حاضران است، seminar گروه کوچک‌تر."
+    },
+    {
+      "id": "c2.narrative.lesson-01",
+      "level": "C2",
+      "title": "Narrative Analysis",
+      "titleFa": "تحلیل روایت",
+      "topic": "Literature",
+      "estimatedMinutes": 9,
+      "order": 187,
+      "grammarTipFa": "## قاعده\nبرای رویدادی که پیش از نقطهٔ مرجعِ روایت رخ داده است، past perfect می‌آید: had + past participle.\nوقتی دو رویداد گذشته را کنار هم می‌گذاری، رویداد قدیمی‌تر past perfect می‌گیرد و رویداد تازه‌تر past simple می‌ماند: The narrator had hidden the letter before the police arrived.\nبا by the time و before، مرز زمانی روشن می‌شود و past perfect دیگر اختیاری نیست.\n## جدول\nThe narrator had already chosen the ending before the letter arrived. — راوی پیش از رسیدن نامه، پایان را انتخاب کرده بود.\nBy the time the reader reaches the last page, the question has been answered. — تا خواننده به صفحهٔ آخر برسد، پرسش پاسخ گرفته است.\nShe had left the village twice before the story begins. — پیش از آغاز داستان، دو بار روستا را ترک کرده بود.\n## مثال‌ها\nThe chronology breaks in the second chapter. — ترتیب زمانی در فصل دوم به هم می‌ریزد.\nThe focaliser is a child who does not understand the argument. — کانونِ دید کودکی است که بحث را نمی‌فهمد.\nThe backstory explains why she leaves in the last chapter. — پیشینه توضیح می‌دهد چرا در فصل آخر می‌رود.\nThe denouement answers the question the first chapter asked. — گره‌گشایی به پرسشی پاسخ می‌دهد که فصل اول پرسیده بود.\n## خطاهای رایج\nThe narrator had hid the letter … ✗ — قسمت سوم hide، hidden است: had hidden.\nBefore the police arrived, the narrator hid the letter. — درست است، اما اگر ترتیب زمانی مقصود باشد، had hidden روشن‌تر است.\nchronology را با timeline خلط نکن: chronology ترتیب روایت است، timeline نمودار زمانی."
+    },
+    {
+      "id": "c2.uncertainty.lesson-01",
+      "level": "C2",
+      "title": "Reasoning Under Uncertainty",
+      "titleFa": "استدلال در شرایط عدم قطعیت",
+      "topic": "Reasoning",
+      "estimatedMinutes": 9,
+      "order": 188,
+      "grammarTipFa": "## قاعده\nوقتی دربارهٔ احتمال حرف می‌زنیم، درجهٔ اطمینان را با فعل وجهی نشان می‌دهیم، نه با قید مطلق: must برای نتیجهٔ قطعی، might/could برای احتمال، may برای احتمال رسمی‌تر.\nmust به معنای «حتماً» استنباط است، نه اجبار؛ اجبار با have to می‌آید: That must be a rounding error (استنباط) در برابر You have to check it (اجبار).\nبرای رد کردن احتمال، can't be به کار می‌رود: The figure can't be final while two totals disagree.\n## جدول\nThe estimate might be too low, but the report does not say why. — برآورد ممکن است خیلی کم باشد، اما گزارش نمی‌گوید چرا.\nThat must be a rounding error, because the totals do not match. — آن باید خطای گرد کردن باشد، چون جمع‌ها نمی‌خوانند.\nThe posterior could move again after the next survey. — برآورد پسین ممکن است پس از نظرسنجی بعدی دوباره تغییر کند.\n## مثال‌ها\nI give the forecast low credence until the data arrive. — تا داده‌ها نرسند، به پیش‌بینی درجهٔ باور کمی می‌دهم.\nThe prior came from last year's survey. — باور پیشین از نظرسنجی سال گذشته آمده بود.\nWe check calibration against past forecasts. — همترازی پیش‌بینی‌ها را با پیش‌بینی‌های گذشته می‌سنجیم.\nThe robustness of the result means it holds when one assumption changes. — استحکام نتیجه یعنی با تغییر یک فرض هم برجا می‌ماند.\n## خطاهای رایج\nIt must to be a rounding error. ✗ — پس از must فعل بدون to می‌آید: must be.\nIt maybe is a rounding error. ✗ — maybe قید است؛ برای احتمال از may be یا might be استفاده کن.\ncredence را با confidence یکی نگیر: credence درجهٔ باور به یک گزاره است، confidence اعتماد به خودِ توانایی."
+    },
+    {
+      "id": "c2.sensitive.lesson-01",
+      "level": "C2",
+      "title": "Communication in Sensitive Situations",
+      "titleFa": "ارتباطات در شرایط حساس",
+      "topic": "Communication",
+      "estimatedMinutes": 9,
+      "order": 189,
+      "grammarTipFa": "## قاعده\nبرای پیشنهادِ محترمانه و فرضی از second conditional استفاده کن: If + past simple, would + base verb.\nدر این ساخت were برای همهٔ ضمیرها رسمی‌تر است، اما was در گفتار روزمره پذیرفته است: If I were in your position…\nاین ساخت فاصله می‌سازد و ادعا را نرم می‌کند؛ در موقعیت حساس همان فاصله لازم است، چون توصیه را به گزینه تبدیل می‌کند.\n## جدول\nIf I were in your position, I would wait a week. — اگر جای تو بودم، یک هفته صبر می‌کردم.\nIf the family heard the news today, would they want the details? — اگر خانواده امروز خبر را بشنود، آیا جزئیات را می‌خواهد؟\nIf we said nothing, the silence would speak for us. — اگر چیزی نمی‌گفتیم، سکوت به‌جای ما حرف می‌زد.\n## مثال‌ها\nWe open with condolence, not with facts. — با تسلیت آغاز می‌کنیم، نه با واقعیت‌ها.\nDiscretion means the name stays out of the email. — احتیاط در افشا یعنی نام در ایمیل نمی‌آید.\nSafeguarding goes to the trained officer. — صیانت از افراد آسیب‌پذیر به افسر آموزش‌دیده سپرده می‌شود.\nA face-saving line would soften it. — یک جملهٔ آبرومندانه آن را نرم می‌کند.\nCandour helps only after the family has been heard. — صراحت تنها پس از شنیده شدن خانواده سود می‌دهد.\n## خطاهای رایج\nIf I would be in your position… ✗ — در بند if فعل وجهی نمی‌آید: If I were in your position…\nIf the family hears the news, would they want the details? ✗ — در بند if حال ساده با would در جملهٔ اصلی هم‌نشین نمی‌شود؛ past simple لازم است.\ndiscretion را با secrecy یکی نگیر: discretion انتخاب آگاهانهٔ سکوت است، secrecy پنهان‌کاری."
+    },
+    {
+      "id": "c2.policy.lesson-01",
+      "level": "C2",
+      "title": "Policy and Decision Critique",
+      "titleFa": "نقد سیاست‌ها و تصمیم‌ها",
+      "topic": "Policy",
+      "estimatedMinutes": 9,
+      "order": 190,
+      "grammarTipFa": "## قاعده\nبرای نقد یک تصمیم گذشته که پیامدش امروز دیده می‌شود، mixed conditional می‌آید: If + past perfect, would + base verb.\nبند if گذشتهٔ کامل می‌گیرد (کاری که انجام نشد) و جملهٔ اصلی would + مصدر (نتیجه‌ای که امروز می‌بینیم): If the scheme had been piloted, the costs would be lower now.\nاگر جمله با Had آغاز شود، if حذف می‌شود و جای آن هیچ واژه‌ای نمی‌آید: Had the ministry consulted the unions, the plan would have kept its legitimacy.\n## جدول\nIf the review had counted the externalities, the choice would be different now. — اگر بازبینی هزینه‌های بیرونی را می‌شمرد، انتخاب امروز متفاوت بود.\nHad the ministry consulted the unions, the plan would have kept legitimacy. — اگر وزارت با اتحادیه‌ها مشورت کرده بود، طرح مشروعیتش را حفظ می‌کرد.\nIf the pilot had run for a month, the unintended effect would be visible by now. — اگر آزمون مقدماتی یک ماه اجرا می‌شد، اثر ناخواسته تا حالا دیده می‌شد.\n## مثال‌ها\nEvery option carries a trade-off between speed and safety. — هر گزینه بده‌بستانی میان سرعت و ایمنی دارد.\nCost is one criterion, not the only one. — هزینه یک معیار است، نه تنها معیار.\nA subsidy is an incentive, and incentives change behaviour. — یارانه یک انگیزهٔ اقتصادی است، و انگیزه‌ها رفتار را عوض می‌کنند.\nThe scheme lost legitimacy when the minutes were withheld. — طرح وقتی مشروعیتش را از دست داد که صورت‌جلسه‌ها بازداشته شد.\n## خطاهای رایج\nIf the scheme would have been piloted, … ✗ — در بند if فعل وجهی نمی‌آید: If the scheme had been piloted…\nIf the review had counted the externalities, the choice will be different now. ✗ — نتیجهٔ فرضی با will نمی‌آید: would be.\ncriterion مفرد است و criteria جمع؛ one criteria غلط است."
+    },
+    {
+      "id": "c2.legal.lesson-01",
+      "level": "C2",
+      "title": "Legal Text Analysis",
+      "titleFa": "تحلیل متون حقوقی",
+      "topic": "Law",
+      "estimatedMinutes": 9,
+      "order": 191,
+      "grammarTipFa": "## قاعده\nمتن حقوقی بیشتر از هر متنی مجهول می‌نویسد، چون فاعل مهم نیست و خودِ متن مرجع است: The notice has been served in writing.\nبرای کاری که تا امروز انجام شده و اثرش مانده است، present perfect passive می‌آید: has/have been + past participle.\nزمان دقیق را با since و for بیاور: The clause has been amended twice since the first draft.\n## جدول\nThe clause has been amended twice since the first draft. — بند از نخستین پیش‌نویس دو بار اصلاح شده است.\nThe exemption has been placed in a footnote by the drafter. — معافیت توسط تنظیم‌کننده در پانوشت گذاشته شده است.\nThe parties have been told the date in writing. — طرف‌ها تاریخ را کتباً آگاه شده‌اند.\n## مثال‌ها\nThe statute names the deadline, not the ministry. — قانون مهلت را نام می‌برد، نه وزارت.\nThe ruling follows a precedent from an earlier case. — حکم از رویهٔ قضایی پروندهٔ پیشین پیروی می‌کند.\nOne clause hides the exemption in a footnote. — یک بند معافیت را در پانوشت پنهان می‌کند.\nThe plaintiff read the clause twice and still missed it. — شاکی بند را دو بار خواند و باز آن را ندید.\nThe court has no jurisdiction over the second contract. — دادگاه بر قرارداد دوم صلاحیت ندارد.\n## خطاهای رایج\nThe clause has amended twice. ✗ — مجهول بودن در ساخت پنهان است: has been amended.\nprecedent را با precedence یکی نگیر: precedent رویهٔ قضایی است، precedence تقدم.\njurisdiction به معنای «صلاحیت» است، نه «قانون»؛ قانون statute است."
+    },
+    {
+      "id": "c2.audience.lesson-01",
+      "level": "C2",
+      "title": "Audience-sensitive Language Use",
+      "titleFa": "انتخاب سبک زبانی متناسب با مخاطب",
+      "topic": "Communication",
+      "estimatedMinutes": 9,
+      "order": 192,
+      "grammarTipFa": "## قاعده\nبرای نشان دادن اینکه دو چیز با هم بالا و پایین می‌روند، ساخت the + comparative, the + comparative می‌آید: The plainer the sentence, the more the reader trusts it.\nترتیب دو نیمه ثابت است: اول شرط، بعد نتیجه؛ هر دو نیمه با the آغاز می‌شوند و فعل در جای خود می‌ماند.\nاین ساخت برای انتخاب سبک هم به کار می‌آید: هرچه مخاطب تخصصی‌تر، اصطلاح بیشتر و توضیح کمتر.\n## جدول\nThe more technical the term, the fewer readers follow. — هرچه اصطلاح فنی‌تر، خوانندهٔ کمتری دنبال می‌کند.\nThe shorter the sentence, the better the reader remembers it. — هرچه جمله کوتاه‌تر، خواننده بهتر آن را به یاد می‌آورد.\nThe closer the example, the less the reader needs a definition. — هرچه نمونه نزدیک‌تر، خواننده کمتر به تعریف نیاز دارد.\n## مثال‌ها\nA patronising tone loses the reader in the first line. — لحن تحقیرآمیز خواننده را در همان خط اول از دست می‌دهد.\nCondescension costs more trust than a hard number does. — نگاه از بالا بیش از یک عدد سخت، اعتماد می‌گیرد.\nAn inclusive example names the reader's own situation. — نمونهٔ شمول‌گرا موقعیت خودِ خواننده را نام می‌برد.\nThe notice is written in plain English. — اطلاعیه به انگلیسی ساده نوشته شده است.\nIf you overexplain, the expert stops reading. — اگر بیش از حد توضیح دهی، متخصص خواندن را رها می‌کند.\n## خطاهای رایج\nThe more technical the term, the readers follow fewer. ✗ — ترتیب the + comparative در نیمهٔ دوم حفظ می‌شود: the fewer readers follow.\npatronising را با friendly یکی نگیر: patronising مخاطب را کوچک می‌کند، friendly او را همراه.\nplain English یعنی انگلیسی روشن و بی‌پیچش، نه انگلیسی کودکانه."
     }
   ]
 }

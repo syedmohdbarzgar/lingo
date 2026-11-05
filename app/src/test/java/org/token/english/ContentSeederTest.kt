@@ -49,6 +49,12 @@ class ContentSeederTest {
         override suspend fun ensureLessonState(lessonId: String) = Unit
         override suspend fun updateLessonIndex(lessonId: String, index: Int) = Unit
         override suspend fun markLessonCompleted(lessonId: String, at: Long) = Unit
+        override suspend fun updateLessonStage(
+            lessonId: String,
+            stage: String,
+            completed: String,
+            skipped: String,
+        ) = Unit
         override suspend fun getLessonState(lessonId: String): LessonStateEntity? = null
         override fun observeVocabulary(): Flow<List<VocabularyEntity>> = flowOf(vocabulary.values.sortedBy { it.word })
         override suspend fun getVocabularyByLesson(lessonId: String): List<VocabularyEntity> =

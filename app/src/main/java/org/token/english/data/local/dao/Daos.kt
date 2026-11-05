@@ -52,6 +52,12 @@ interface ContentDao {
     @Query("UPDATE lesson_state SET completed = 1, completedAt = :at WHERE lessonId = :lessonId")
     suspend fun markLessonCompleted(lessonId: String, at: Long)
 
+    @Query(
+        "UPDATE lesson_state SET stage = :stage, completedStages = :completed, " +
+            "skippedStages = :skipped WHERE lessonId = :lessonId",
+    )
+    suspend fun updateLessonStage(lessonId: String, stage: String, completed: String, skipped: String)
+
     @Query("SELECT * FROM lesson_state WHERE lessonId = :lessonId")
     suspend fun getLessonState(lessonId: String): LessonStateEntity?
 

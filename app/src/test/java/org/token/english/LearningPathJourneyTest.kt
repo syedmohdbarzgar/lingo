@@ -210,6 +210,14 @@ class LearningPathJourneyTest {
             indexes[lessonId] = index
         }
 
+        /** The journey walks the exercise path; the guided steps are not stored here. */
+        override suspend fun saveLessonStage(
+            lessonId: String,
+            stageId: String,
+            completedStages: Set<String>,
+            skippedStages: Set<String>,
+        ) = Unit
+
         override suspend fun getLessonState(lessonId: String): LessonState? =
             lessonStates.value.firstOrNull { it.lessonId == lessonId }
 

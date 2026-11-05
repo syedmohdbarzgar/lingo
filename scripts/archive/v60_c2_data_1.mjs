@@ -1,0 +1,435 @@
+// v60 content — C2 syllabus topics 27 (policy and decision critique) and 28
+// (legal text analysis). Read by `v60_c2_batch.mjs`; never run on its own.
+export default [
+  {
+    lesson: {
+      id: "c2.policy.lesson-01",
+      order: 190,
+      title: "Policy and Decision Critique",
+      titleFa: "نقد سیاست‌ها و تصمیم‌ها",
+      topic: "Policy",
+      tip: [
+        "## قاعده",
+        "برای نقد یک تصمیم گذشته که پیامدش امروز دیده می‌شود، mixed conditional می‌آید: If + past perfect, would + base verb.",
+        "بند if گذشتهٔ کامل می‌گیرد (کاری که انجام نشد) و جملهٔ اصلی would + مصدر (نتیجه‌ای که امروز می‌بینیم): If the scheme had been piloted, the costs would be lower now.",
+        "اگر جمله با Had آغاز شود، if حذف می‌شود و جای آن هیچ واژه‌ای نمی‌آید: Had the ministry consulted the unions, the plan would have kept its legitimacy.",
+        "## جدول",
+        "If the review had counted the externalities, the choice would be different now. — اگر بازبینی هزینه‌های بیرونی را می‌شمرد، انتخاب امروز متفاوت بود.",
+        "Had the ministry consulted the unions, the plan would have kept legitimacy. — اگر وزارت با اتحادیه‌ها مشورت کرده بود، طرح مشروعیتش را حفظ می‌کرد.",
+        "If the pilot had run for a month, the unintended effect would be visible by now. — اگر آزمون مقدماتی یک ماه اجرا می‌شد، اثر ناخواسته تا حالا دیده می‌شد.",
+        "## مثال‌ها",
+        "Every option carries a trade-off between speed and safety. — هر گزینه بده‌بستانی میان سرعت و ایمنی دارد.",
+        "Cost is one criterion, not the only one. — هزینه یک معیار است، نه تنها معیار.",
+        "A subsidy is an incentive, and incentives change behaviour. — یارانه یک انگیزهٔ اقتصادی است، و انگیزه‌ها رفتار را عوض می‌کنند.",
+        "The scheme lost legitimacy when the minutes were withheld. — طرح وقتی مشروعیتش را از دست داد که صورت‌جلسه‌ها بازداشته شد.",
+        "## خطاهای رایج",
+        "If the scheme would have been piloted, … ✗ — در بند if فعل وجهی نمی‌آید: If the scheme had been piloted…",
+        "If the review had counted the externalities, the choice will be different now. ✗ — نتیجهٔ فرضی با will نمی‌آید: would be.",
+        "criterion مفرد است و criteria جمع؛ one criteria غلط است.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.mixed-conditionals",
+    vocab: {
+      id: "vocab.policy-critique",
+      title: "Policy and Decision Critique",
+      titleFa: "نقد سیاست‌ها و تصمیم‌ها",
+      prerequisites: ["vocab.strategy-evaluation"],
+    },
+    words: [
+      {
+        slug: "externalities", w: "externalities", fa: "هزینه‌های بیرونی", ipa: "/ˌekstəˈnælətiz/", pos: "noun",
+        def: "the costs or benefits a decision pushes onto people who were not part of it",
+        ex: [
+          ["The review counts the externalities the budget left out.", "بازبینی هزینه‌های بیرونی‌ای را می‌شمارد که بودجه جا گذاشته بود."],
+          ["Pollution is the classic example of externalities.", "آلودگی نمونهٔ کلاسیک هزینه‌های بیرونی است."],
+        ],
+        col: ["negative externalities", "price the externalities"],
+        note: "جمع است؛ مفردش externality. در متن اقتصادی با فعل جمع می‌آید: the externalities are…",
+      },
+      {
+        slug: "trade-off", w: "trade-off", fa: "بده‌بستان", ipa: "/ˈtreɪd ɒf/", pos: "noun",
+        def: "the gain you give up in one place to get a gain somewhere else",
+        ex: [
+          ["Every option carries a trade-off between speed and safety.", "هر گزینه بده‌بستانی میان سرعت و ایمنی دارد."],
+          ["The trade-off is clear once the cost of delay is counted.", "بده‌بستان وقتی هزینهٔ تأخیر شمرده شود روشن است."],
+        ],
+        col: ["a clear trade-off", "accept the trade-off"],
+        note: "اسم مرکب با خط پیوند؛ فعلش off می‌گیرد: trade speed off against safety.",
+      },
+      {
+        slug: "unintended", w: "unintended", fa: "ناخواسته", ipa: "/ˌʌnɪnˈtendɪd/", pos: "adjective",
+        def: "happening as a side effect that nobody planned or wanted",
+        ex: [
+          ["The unintended effect was a longer queue at the clinic.", "اثر ناخواسته صف طولانی‌تری در درمانگاه بود."],
+          ["An unintended consequence is still a consequence.", "پیامد ناخواسته هم پیامد است."],
+        ],
+        col: ["unintended consequences", "an unintended effect"],
+        note: "unintended دربارهٔ نتیجه است؛ unintentional دربارهٔ خودِ کار: an unintentional slight.",
+      },
+      {
+        slug: "legitimacy", w: "legitimacy", fa: "مشروعیت", ipa: "/lɪˈdʒɪtɪməsi/", pos: "noun",
+        def: "the quality of being accepted as right and properly decided",
+        ex: [
+          ["The scheme lost legitimacy when the minutes were withheld.", "طرح وقتی مشروعیتش را از دست داد که صورت‌جلسه‌ها بازداشته شد."],
+          ["Legitimacy rests on who was in the room, not on the result.", "مشروعیت به این بستگی دارد که چه کسانی در جلسه بودند، نه به نتیجه."],
+        ],
+        col: ["democratic legitimacy", "question the legitimacy"],
+        note: "صفتش legitimate است؛ legitimate هم «قانونی» است هم «موجه».",
+      },
+      {
+        slug: "criterion", w: "criterion", fa: "معیار", ipa: "/kraɪˈtɪəriən/", pos: "noun",
+        def: "one standard used to judge or compare options",
+        ex: [
+          ["Cost is one criterion, not the only one.", "هزینه یک معیار است، نه تنها معیار."],
+          ["The committee agreed on one criterion before it began.", "کمیته پیش از آغاز بر یک معیار توافق کرد."],
+        ],
+        col: ["meet the criterion", "a single criterion"],
+        note: "مفرد criterion، جمع criteria؛ one criteria غلط است.",
+      },
+      {
+        slug: "incentive", w: "incentive", fa: "انگیزهٔ اقتصادی", ipa: "/ɪnˈsentɪv/", pos: "noun",
+        def: "something that makes a person or a firm act in a particular way",
+        ex: [
+          ["A subsidy is an incentive, and incentives change behaviour.", "یارانه یک انگیزهٔ اقتصادی است، و انگیزه‌ها رفتار را عوض می‌کنند."],
+          ["The incentive was designed for small firms, not for chains.", "این انگیزه برای شرکت‌های کوچک طراحی شده بود، نه زنجیره‌ها."],
+        ],
+        col: ["a tax incentive", "create an incentive"],
+        note: "incentive to do something می‌آید، نه incentive for doing در نگارش رسمی.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "externalities", gloss: "هزینه‌های بیرونی",
+        options: ["هزینه‌های بیرونی", "بده‌بستان", "مشروعیت", "معیار"],
+        note: "externalities هزینه‌هایی است که تصمیم به کسانی تحمیل می‌کند که در آن سهیم نبودند.",
+      },
+      {
+        k: "mcq", word: "trade-off", gloss: "بده‌بستان",
+        options: ["بده‌بستان", "انگیزهٔ اقتصادی", "اثر ناخواسته", "معیار"],
+        note: "trade-off یعنی دادن چیزی برای گرفتن چیز دیگر.",
+      },
+      {
+        k: "mcq", word: "legitimacy", gloss: "مشروعیت",
+        options: ["مشروعیت", "هزینه‌های بیرونی", "بده‌بستان", "انگیزهٔ اقتصادی"],
+        note: "legitimacy پذیرش یک تصمیم به‌عنوان درست و به‌جا است.",
+      },
+      {
+        k: "blank", sentence: "If the review had counted the externalities, the choice ___ different now.",
+        accepted: ["would be", "would look"], skill: "GRAMMAR",
+        note: "نتیجهٔ فرضی در زمان حال با would + مصدر می‌آید: would be / would look.",
+      },
+      {
+        k: "blank", sentence: "Had the ministry consulted the unions, the plan ___ legitimacy.",
+        accepted: ["would have kept", "would have gained"], skill: "GRAMMAR",
+        note: "با حذف if، جملهٔ اصلی همان would have + قسمت سوم می‌ماند.",
+      },
+      {
+        k: "recall", prompt: "بده‌بستان", accepted: ["trade-off"],
+        note: "بده‌بستان trade-off است؛ اسم مرکب با خط پیوند.",
+      },
+      {
+        k: "tr", prompt: "هر گزینه بده‌بستانی میان سرعت و ایمنی دارد.",
+        accepted: [
+          "every option carries a trade-off between speed and safety",
+          "each option carries a trade-off between speed and safety",
+        ],
+        note: "carry a trade-off between A and B: داشتن بده‌بستان میان دو چیز.",
+      },
+      {
+        k: "listen", text: "The unintended effect was a longer queue at the clinic.",
+        note: "به unintended گوش کنید: نتیجه‌ای که کسی قصدش را نداشت.",
+      },
+      {
+        k: "prod", prompt: "بگو هزینه یک معیار است، نه تنها معیار.",
+        mustUse: ["criterion"], minWords: 6,
+        accepted: ["Cost is one criterion, not the only one."],
+        hint: "با Cost is one criterion… شروع کن.",
+        note: "one criterion در برابر the only one: تقابل مفرد با صفت تعیین‌کننده.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو بازبینی هزینه‌های بیرونی را جا گذاشته است.",
+        question: "What did the review miss?",
+        questionFa: "بازبینی چه چیزی را جا گذاشت؟",
+        accepted: [
+          "It missed the externalities the budget left out.",
+          "The review left out the externalities.",
+        ],
+        note: "miss در این معنا یعنی جا گذاشتن، نه دلتنگ شدن.",
+      },
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو این همان بده‌بستانی است که باید نام ببریم.",
+        question: "Is speed worth the risk?",
+        questionFa: "سرعت ارزش این ریسک را دارد؟",
+        accepted: [
+          "That is the trade-off we have to name.",
+          "Every option carries a trade-off here.",
+        ],
+        note: "name a trade-off یعنی آن را آشکار گفتن، نه پنهان کردن.",
+      },
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو اثر ناخواسته بود، ولی قابل پیش‌بینی بود.",
+        question: "Was the effect intended?",
+        questionFa: "این اثر عمدی بود؟",
+        accepted: [
+          "It was unintended, but it was predictable.",
+          "The unintended effect was a longer queue.",
+        ],
+        note: "unintended با predictable در یک جمله، تفاوت «قصد» و «پیش‌بینی» را نشان می‌دهد.",
+      },
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو صورت‌جلسه‌های آشکار به طرح مشروعیت می‌دهد.",
+        question: "What gives the scheme legitimacy?",
+        questionFa: "چه چیزی به طرح مشروعیت می‌دهد؟",
+        accepted: [
+          "Open minutes give it legitimacy.",
+          "The scheme lost legitimacy when the minutes were withheld.",
+        ],
+        note: "withhold در برابر publish: بازداشتن اطلاعات در برابر انتشار آن.",
+      },
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو هزینه یک معیار است و معیار دومی هم لازم است.",
+        question: "Which criterion matters most?",
+        questionFa: "کدام معیار مهم‌تر است؟",
+        accepted: [
+          "Cost is one criterion, not the only one.",
+          "We need a second criterion besides cost.",
+        ],
+        note: "besides یعنی علاوه بر؛ beside یعنی کنارِ.",
+      },
+      {
+        scene: "کمیتهٔ بازبینی سیاست", partner: "عضو کمیته",
+        prompt: "بگو یارانه یک انگیزهٔ اقتصادی است و انگیزه‌ها رفتار را عوض می‌کنند.",
+        question: "Why offer a subsidy?",
+        questionFa: "چرا یارانه بدهیم؟",
+        accepted: [
+          "A subsidy is an incentive, and incentives change behaviour.",
+          "The incentive works better than a warning.",
+        ],
+        note: "incentive با فعل change behaviour جفت می‌شود: انگیزه رفتار را عوض می‌کند.",
+      },
+    ],
+  },
+  {
+    lesson: {
+      id: "c2.legal.lesson-01",
+      order: 191,
+      title: "Legal Text Analysis",
+      titleFa: "تحلیل متون حقوقی",
+      topic: "Law",
+      tip: [
+        "## قاعده",
+        "متن حقوقی بیشتر از هر متنی مجهول می‌نویسد، چون فاعل مهم نیست و خودِ متن مرجع است: The notice has been served in writing.",
+        "برای کاری که تا امروز انجام شده و اثرش مانده است، present perfect passive می‌آید: has/have been + past participle.",
+        "زمان دقیق را با since و for بیاور: The clause has been amended twice since the first draft.",
+        "## جدول",
+        "The clause has been amended twice since the first draft. — بند از نخستین پیش‌نویس دو بار اصلاح شده است.",
+        "The exemption has been placed in a footnote by the drafter. — معافیت توسط تنظیم‌کننده در پانوشت گذاشته شده است.",
+        "The parties have been told the date in writing. — طرف‌ها تاریخ را کتباً آگاه شده‌اند.",
+        "## مثال‌ها",
+        "The statute names the deadline, not the ministry. — قانون مهلت را نام می‌برد، نه وزارت.",
+        "The ruling follows a precedent from an earlier case. — حکم از رویهٔ قضایی پروندهٔ پیشین پیروی می‌کند.",
+        "One clause hides the exemption in a footnote. — یک بند معافیت را در پانوشت پنهان می‌کند.",
+        "The plaintiff read the clause twice and still missed it. — شاکی بند را دو بار خواند و باز آن را ندید.",
+        "The court has no jurisdiction over the second contract. — دادگاه بر قرارداد دوم صلاحیت ندارد.",
+        "## خطاهای رایج",
+        "The clause has amended twice. ✗ — مجهول بودن در ساخت پنهان است: has been amended.",
+        "precedent را با precedence یکی نگیر: precedent رویهٔ قضایی است، precedence تقدم.",
+        "jurisdiction به معنای «صلاحیت» است، نه «قانون»؛ قانون statute است.",
+      ].join("\n"),
+    },
+    grammarNode: "grammar.present-perfect-passive",
+    vocab: {
+      id: "vocab.legal-text",
+      title: "Legal Text Analysis",
+      titleFa: "تحلیل متون حقوقی",
+      prerequisites: ["vocab.academic-writing"],
+    },
+    words: [
+      {
+        slug: "statute", w: "statute", fa: "قانون مصوب", ipa: "/ˈstætʃuːt/", pos: "noun",
+        def: "a law written and passed by a legislature, as opposed to a rule or a custom",
+        ex: [
+          ["The statute names the deadline, not the ministry.", "قانون مهلت را نام می‌برد، نه وزارت."],
+          ["A statute can be read, quoted and challenged.", "قانون مصوب را می‌توان خواند، نقل کرد و به چالش کشید."],
+        ],
+        col: ["by statute", "the statute of limitations"],
+        note: "statute قانونِ مصوبِ مجلس است؛ regulation آیین‌نامه‌ای است که نهاد وضع می‌کند.",
+      },
+      {
+        slug: "precedent", w: "precedent", fa: "رویهٔ قضایی", ipa: "/ˈpresɪdənt/", pos: "noun",
+        def: "an earlier decision that later cases are expected to follow",
+        ex: [
+          ["The ruling follows a precedent from an earlier case.", "حکم از رویهٔ قضایی پروندهٔ پیشین پیروی می‌کند."],
+          ["A precedent binds the lower courts, not the statute.", "رویهٔ قضایی دادگاه‌های پایین‌تر را ملزم می‌کند، نه قانون را."],
+        ],
+        col: ["set a precedent", "follow a precedent"],
+        note: "اسم precedent با /ˈpresɪdənt/ و صفت precedent با /prɪˈsiːdənt/ خوانده می‌شود.",
+      },
+      {
+        slug: "clause", w: "clause", fa: "بند", ipa: "/klɔːz/", pos: "noun",
+        def: "one numbered part of a contract or a law",
+        ex: [
+          ["One clause hides the exemption in a footnote.", "یک بند معافیت را در پانوشت پنهان می‌کند."],
+          ["Read clause four before you sign anything.", "پیش از امضای هر چیزی بند چهار را بخوان."],
+        ],
+        col: ["a confidentiality clause", "clause four"],
+        note: "clause در دستور زبان هم به معنای «بند» است؛ در قرارداد یعنی مادهٔ شماره‌دار.",
+      },
+      {
+        slug: "plaintiff", w: "plaintiff", fa: "شاکی", ipa: "/ˈpleɪntɪf/", pos: "noun",
+        def: "the person who brings a case against someone in a civil court",
+        ex: [
+          ["The plaintiff read the clause twice and still missed it.", "شاکی بند را دو بار خواند و باز آن را ندید."],
+          ["The plaintiff carries the burden of proof.", "شاکی بار اثبات را بر دوش دارد."],
+        ],
+        col: ["the plaintiff's claim", "represent the plaintiff"],
+        note: "متضادش defendant است؛ در پروندهٔ کیفری معمولاً the prosecution گفته می‌شود.",
+      },
+      {
+        slug: "jurisdiction", w: "jurisdiction", fa: "صلاحیت قضایی", ipa: "/ˌdʒʊərɪsˈdɪkʃn/", pos: "noun",
+        def: "the legal power of a court to hear a particular case",
+        ex: [
+          ["The court has no jurisdiction over the second contract.", "دادگاه بر قرارداد دوم صلاحیت ندارد."],
+          ["Jurisdiction depends on where the contract was signed.", "صلاحیت بستگی دارد به جایی که قرارداد امضا شده است."],
+        ],
+        col: ["outside the jurisdiction", "have jurisdiction over"],
+        note: "حرف اضافه‌اش over است: jurisdiction over a case.",
+      },
+      {
+        slug: "testimony", w: "testimony", fa: "شهادت", ipa: "/ˈtestɪməni/", pos: "noun",
+        def: "the statement a witness makes under oath in a court",
+        ex: [
+          ["The testimony contradicts the date in the statute.", "شهادت با تاریخِ در قانون نمی‌خواند."],
+          ["Her testimony changed the shape of the case.", "شهادت او شکل پرونده را عوض کرد."],
+        ],
+        col: ["sworn testimony", "give testimony"],
+        note: "فعل ثابت آن give testimony است؛ testimony با evidence فرق دارد: شهادت گفتهٔ شاهد است.",
+      },
+    ],
+    exercises: [
+      {
+        k: "mcq", word: "statute", gloss: "قانون مصوب",
+        options: ["قانون مصوب", "رویهٔ قضایی", "صلاحیت قضایی", "شهادت"],
+        note: "statute قانونی است که نهاد قانون‌گذاری نوشته و تصویب کرده است.",
+      },
+      {
+        k: "mcq", word: "precedent", gloss: "رویهٔ قضایی",
+        options: ["رویهٔ قضایی", "بند", "شاکی", "قانون مصوب"],
+        note: "precedent تصمیم پیشینی است که پرونده‌های بعدی از آن پیروی می‌کنند.",
+      },
+      {
+        k: "mcq", word: "clause", gloss: "بند",
+        options: ["بند", "شهادت", "صلاحیت قضایی", "شاکی"],
+        note: "clause یک بخش شماره‌دار از قرارداد یا قانون است.",
+      },
+      {
+        k: "blank", sentence: "The clause ___ twice since the first draft.",
+        accepted: ["has been amended", "has been rewritten"], skill: "GRAMMAR",
+        note: "present perfect passive: has been + قسمت سوم.",
+      },
+      {
+        k: "blank", sentence: "The exemption ___ in a footnote by the drafter.",
+        accepted: ["has been hidden", "has been placed"], skill: "GRAMMAR",
+        note: "کنشگر با by می‌آید و فعل همچنان مجهول می‌ماند: has been hidden by the drafter.",
+      },
+      {
+        k: "recall", prompt: "صلاحیت قضایی", accepted: ["jurisdiction"],
+        note: "صلاحیت قضایی jurisdiction است؛ حرف اضافه‌اش over.",
+      },
+      {
+        k: "tr", prompt: "این بند دو بار اصلاح شده است.",
+        accepted: [
+          "the clause has been amended twice",
+          "this clause has been amended twice",
+        ],
+        note: "has been amended: مجهولِ حال کامل، بدون ذکر فاعل.",
+      },
+      {
+        k: "listen", text: "The plaintiff read the clause twice and still missed it.",
+        note: "به still missed گوش کنید: با وجود دو بار خواندن، معافیت دیده نشد.",
+      },
+      {
+        k: "prod", prompt: "بگو این حکم از یک رویهٔ قضایی پیشین پیروی می‌کند.",
+        mustUse: ["precedent"], minWords: 6,
+        accepted: ["The ruling follows a precedent from an earlier case."],
+        hint: "با The ruling follows a precedent… شروع کن.",
+        note: "follow a precedent ترکیب ثابت است، نه obey a precedent.",
+      },
+    ],
+    dialogue: [
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو مهلت در قانون آمده است، نه در نظر وزارت.",
+        question: "Where is the deadline?",
+        questionFa: "مهلت کجا آمده است؟",
+        accepted: [
+          "The statute names the deadline, not the ministry.",
+          "The deadline sits in the statute.",
+        ],
+        note: "name the deadline یعنی آن را صریح مشخص کردن.",
+      },
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو حکم از یک رویهٔ قضایی پیشین پیروی می‌کند.",
+        question: "Does the ruling follow a precedent?",
+        questionFa: "حکم از رویهٔ پیشین پیروی می‌کند؟",
+        accepted: [
+          "It follows a precedent from an earlier case.",
+          "There is a precedent for this ruling.",
+        ],
+        note: "precedent for a ruling: رویه‌ای که برای این حکم مرجع است.",
+      },
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو یک بند معافیت را در پانوشت پنهان کرده است.",
+        question: "Is the exemption visible?",
+        questionFa: "معافیت دیده می‌شود؟",
+        accepted: [
+          "One clause hides the exemption in a footnote.",
+          "The exemption sits in the last clause.",
+        ],
+        note: "hide something in a footnote: پنهان کردن در پانوشت.",
+      },
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو شاکی بند را دو بار خواند و باز آن را ندید.",
+        question: "Who brought the case?",
+        questionFa: "چه کسی شکایت کرد؟",
+        accepted: [
+          "The plaintiff read the clause twice.",
+          "The plaintiff missed the exemption.",
+        ],
+        note: "plaintiff فاعلِ پروندهٔ حقوقی است؛ defendant طرف مقابل.",
+      },
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو دادگاه بر قرارداد دوم صلاحیت ندارد.",
+        question: "Does this court have jurisdiction?",
+        questionFa: "این دادگاه صلاحیت دارد؟",
+        accepted: [
+          "The court has no jurisdiction over the second contract.",
+          "Jurisdiction stays with the first court.",
+        ],
+        note: "jurisdiction over: صلاحیت بر چیزی؛ با no نفی می‌شود.",
+      },
+      {
+        scene: "جلسهٔ بررسی قرارداد", partner: "مشاور حقوقی",
+        prompt: "بگو شهادت با تاریخِ در قانون نمی‌خواند.",
+        question: "What does the testimony show?",
+        questionFa: "شهادت چه چیزی را نشان می‌دهد؟",
+        accepted: [
+          "The testimony contradicts the date in the statute.",
+          "The testimony supports the earlier date.",
+        ],
+        note: "contradict یعنی ناسازگار بودن با؛ supports متضادش است.",
+      },
+    ],
+  },
+];
