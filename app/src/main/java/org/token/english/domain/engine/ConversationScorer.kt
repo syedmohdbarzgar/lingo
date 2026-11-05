@@ -189,12 +189,24 @@ object ConversationScorer {
     internal fun normalize(text: String): String =
         cleanTokens(text).let(::stripPoliteness).joinToString(" ")
 
-    /** Lowercased words, contractions expanded, punctuation dropped. */
+    /**
+     * Lowercased words, contractions expanded, punctuation dropped.
+     *
+     * A hyphen is how English *writes* two words — "twenty-five", "decision-making",
+     * "first-year" — while the recogniser hears two and its lexicon has no
+     * "twentyfive". Merging them dropped the token from the constrained grammar, so
+     * 41 authored answers (20 of them C2) could never be graded CORRECT however well
+     * the learner said them; splitting keeps both halves hearable and keeps grading
+     * comparing words with words. A quote at either edge of a word is a quote mark,
+     * not part of it: `'May' leaves discretion open` used to ask the grammar for
+     * `'may'`, which no lexicon contains.
+     */
     private fun cleanTokens(text: String): List<String> =
         text.lowercase()
             .replace(Regex("[\u2018\u2019`\u00b4]"), "'")
+            .replace(Regex("[-\u2010\u2011\u2012\u2013\u2014]"), " ")
             .split(Regex("\\s+"))
-            .map { word -> word.replace(Regex("[^a-z0-9']"), "") }
+            .map { word -> word.replace(Regex("[^a-z0-9']"), "").trim('\'') }
             // Stripping the brackets of the recogniser's `[unk]` leaves the word
             // "unk", which counted as something the learner said: it darkened
             // `similarity` for a take that was correct and pushed an item to

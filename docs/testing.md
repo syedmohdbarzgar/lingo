@@ -3,8 +3,11 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 527 tests / 63 classes as of
-  the v60 guided-lesson pass — the eight-step lesson (`GuidedLessonTest`: a lesson opens on its
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 529 tests / 63 classes as of
+  the v61 C2 review pass — its two new cases: a hyphenated answer (`twenty-five`,
+  `decision-making`) and a quoted word (`'May'`), both of which used to leave the recogniser's
+  grammar, so no amount of correct speech could be graded `CORRECT`) — the v60 guided-lesson pass
+  carrying the eight-step lesson (`GuidedLessonTest`: a lesson opens on its
   context step with no exercise yet, Continue walks the teaching steps and records each one,
   practice does not advance until its exercise is answered, Previous reopens a done step without
   erasing progress, an optional step can be skipped and is never counted as mastery, a required

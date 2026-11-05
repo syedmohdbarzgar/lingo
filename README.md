@@ -3,11 +3,14 @@
 [![CI](https://github.com/syedmohdbarzgar/lingo/actions/workflows/ci.yml/badge.svg)](https://github.com/syedmohdbarzgar/lingo/actions/workflows/ci.yml)
 
 > اپ اندروید **آفلاین‌محور** برای فارسی‌زبانانی که انگلیسی یاد می‌گیرند:
-> درس روزانه → تمرین → مرور فاصله‌دار → پیشرفت.
-> هستهٔ یادگیری کامل روی دستگاه کار می‌کند و بدون اینترنت هم باید کار کند.
+> درسِ قدم‌به‌قدم (هشت مرحله) → تمرین → گفت‌وگوی همان درس، که درس بعد را باز می‌کند
+> → مرور فاصله‌دار → پیشرفت. هستهٔ یادگیری کامل روی دستگاه کار می‌کند و بدون اینترنت
+> هم باید کار کند؛ نمره‌دهی گفتار هم با مدل روی دستگاه انجام می‌شود.
 
-An offline-first Android app for Persian speakers learning English (CEFR A1–C2):
-daily lessons → exercises → spaced-repetition review → progress.
+An offline-first Android app for Persian speakers learning English (CEFR A1–C2): an eight-step
+guided lesson → exercises → that lesson's own spoken conversation (which is what opens the next
+lesson) → spaced-repetition review → progress. Every one of the 180 syllabus topics ships, and
+the speech practice is graded on the device by a recogniser, not by a server.
 
 | | |
 |---|---|
@@ -16,7 +19,7 @@ daily lessons → exercises → spaced-repetition review → progress.
 | Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v7, exported) + DataStore Preferences |
+| Local storage | Room (schema v8, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -60,14 +63,23 @@ re-assert LTR, because the root layout is forced RTL.
   lesson resumes on the step the learner left. The plan is derived from each lesson's own content,
   so no lesson needed re-authoring. A wrong answer shows a short explanation and re-asks that same
   item once in the same session, so a miss is never just a score.
+- **The lesson's own conversation** — every lesson carries a dialogue in the situation it teaches
+  (a hotel desk, a policy review, an editing workshop) with the partner's line, its Persian gloss
+  and graded replies. It runs on the conversation screen with the on-device recogniser: the learner
+  speaks, the take is scored `CORRECT` / `NEAR` / `RETRY` against the accepted answers, and the
+  grammar the recogniser listens for is built from those answers, so what it can hear matches what
+  the content asks for. Nothing leaves the device. A finished lesson is **not** complete until this
+  dialogue has been walked to its last turn — the next lesson stays shut until then, because the
+  conversation is where the learner produces what the exercises only tested.
 - **Exercises** — `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
   `sentence_production`, `listening`. Multiple-choice options are shuffled deterministically per
   question id (fixed seed), so the answer position never leaks. `word_recall` names the English word
   from its Persian meaning with no options to recognize, and `sentence_production` makes the learner
   build the whole sentence — graded on the target structure (ordered anchors plus a word floor), so
-  an original correct sentence is not failed for phrasing it differently. `speaking` is real
-  self-assessed practice: the on-device TTS speaks the model, the learner records a take, plays it
-  back and compares, then moves on — nothing is graded, uploaded or recognised.
+  an original correct sentence is not failed for phrasing it differently. A `speaking` item *inside*
+  the lesson's stage session is shadowing: the on-device TTS speaks the model, the learner records a
+  take, plays it back and compares, then moves on. The graded speaking lives in the lesson's
+  dialogue, on the conversation screen (above), where the recogniser returns a verdict.
 - **Review** — SM-2-lite spaced repetition with a daily new-card cap (20) and calendar-day anchors
   instead of raw 24-hour multiples. Odd-numbered cards ask for active production: a Persian prompt,
   typed English answer. `AGAIN` re-queues inside the session (at most twice).
@@ -84,7 +96,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 
 - per **skill** (vocabulary, grammar, listening, speaking, reading, writing) — an exponentially
   weighted average, seeded by the first observation;
-- per **knowledge item** — 127 curriculum nodes carrying prerequisites, mastery, exposure counts and
+- per **knowledge item** — 233 curriculum nodes carrying prerequisites, mastery, exposure counts and
   their own review schedule. `KnowledgeGraph` orders and unlocks the graph; every graded lesson
   answer is attributed to the nodes its lesson teaches and written with an atomic
   read-modify-write.
@@ -98,7 +110,7 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 60)**
+**Content bundle (JSON `contentVersion` 61)**
 
 | | Count |
 |---|---|
@@ -108,8 +120,11 @@ alone, so a bar there would measure nothing.
 | Knowledge items | 233 |
 | Placement questions | 36 |
 
-The lesson plan behind those numbers is the 180-topic syllabus (30 topics per CEFR band) in
-[`docs/curriculum.md`](docs/curriculum.md) — it lists every topic and which ones ship today.
+The syllabus behind those numbers is the 180 topics (30 per CEFR band) in
+[`docs/curriculum.md`](docs/curriculum.md) — **all 180 ship as of v60**, so new material now means
+deepening a lesson rather than opening a topic. The C2 pass that produced v61 is recorded in
+[`docs/review-c2.md`](docs/review-c2.md): what was checked, what it found, and the ready-to-author
+items that would bring the four thinnest C2 lessons up to the standard.
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
 `contentVersion`, which is declared inside the files themselves.
@@ -343,7 +358,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-527 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
+529 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -420,7 +435,9 @@ Suspended — needs backend/server infrastructure, not just connectivity:
 - Downloadable content packages
 - Analytics upload
 
-Allowed but not built yet: on-device speech evaluation, remote crash reporting.
+Allowed but not built yet: remote crash reporting. On-device speech evaluation **is** built — the
+conversation screen grades each spoken turn with the bundled Vosk model, offline, and the model file
+is fetched once by `scripts/fetch_vosk_model.sh` rather than committed.
 
 Any new online feature must state which service it calls and why, must degrade gracefully when
 offline, and must not block the learning core.
@@ -457,9 +474,10 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   already do.
 - An error taxonomy so each miss is classified (vocabulary gap vs grammar vs comprehension) and
   drives what comes next — then adaptive difficulty on top of it.
-- `writing` and `conversation` exercise types (the exercise model already has room for them).
-- On-device pronunciation scoring for the `speaking` exercise (today it is record-and-compare, with
-  no judgement of the utterance).
+- A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
+  its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.
+- Pronunciation scoring **inside** the lesson's `speaking` item — record-and-compare today, while the
+  dialogue's turns are already scored. The gap is the stage session, not the recogniser.
 - Remote crash reporting — a deliberate provider and privacy decision, not a default.
 
 **Suspended until a backend exists**

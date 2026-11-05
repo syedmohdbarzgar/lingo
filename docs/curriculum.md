@@ -293,7 +293,9 @@ Goal: درک و تولید زبان بسیار دقیق، ظریف و متناس
 B1, B2 and C1 closed in v41–v54, C2 closed in v60 (1, 2, 3, 6, 7, 10 and 29 from the v5 bundle,
 v55's 4, 5, 8, 9, v56's 11–14, v57's 15–18, v58's 19–22, v59's 23–26 and v60's 27, 28 and 30).
 New material now means *deepening* an existing topic or shipping a lesson outside the list — not
-opening a new syllabus row. A topic is a *lesson*, never a half-lesson. Seven lessons sit outside
+opening a new syllabus row. [`review-c2.md`](review-c2.md) is where a deepening pass starts: it
+lists the C2 lessons that ship fewer than the standard nine exercises, the two item types each is
+missing, and ready-to-author items with fresh headwords checked against the bundle. A topic is a *lesson*, never a half-lesson. Seven lessons sit outside
 the list today: `b2.interview`, `b2.research`, `c1.phrasal-idioms`, `a2.restaurant`, `a2.directions`,
 `a2.past-simple` and the seven A1 grammar supplements that make A1 37 lessons. Some rows also ship
 under another id — B1's job interview as `b1.work`, personal finance as `b1.money`, plans as

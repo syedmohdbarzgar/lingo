@@ -1,5 +1,5 @@
 {
-  "contentVersion": 60,
+  "contentVersion": 61,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -1995,12 +1995,10 @@
       "order": 4,
       "sentence": "Critics saw the ending as an ___ of the protagonist's failure.",
       "accepted": [
-        "allegory",
-        "metaphor",
-        "foreshadowing"
+        "allegory"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "allegory یعنی «تمثیل» — تفسیر نمادین شکست شخصیت اصلی."
+      "explanationFa": "allegory یعنی «تمثیل» — تفسیر نمادین شکست شخصیت اصلی. با حرف تعریف an فقط allegory درست است؛ metaphor و foreshadowing با a می‌آیند."
     },
     {
       "id": "c2.literature.ex.05",
@@ -3779,7 +3777,7 @@
         "accept"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "take responsibility هم‌نشینی درستِ «مسئولیت پذیرفتن» است؛ do/make در این ترکیب نمی‌آید."
+      "explanationFa": "take responsibility و accept responsibility هر دو طبیعی‌اند؛ do/make در این ترکیب نمی‌آید."
     },
     {
       "id": "c2.collocation.ex.04",
@@ -18084,7 +18082,7 @@
       "type": "speaking",
       "sceneFa": "دفتر استاد ادبیات",
       "partnerFa": "استاد ادبیات",
-      "prompt": "تفکیک کن: ابزار در خدمت معنا یا جای آن.",
+      "prompt": "فرق بگذار: ابزار در خدمت معناست یا جای آن را گرفته است.",
       "question": "Is that manipulation or craft?",
       "questionFa": "این دستکاری است یا هنر؟",
       "accepted": [
@@ -18118,7 +18116,7 @@
       "type": "speaking",
       "sceneFa": "دفتر استاد ادبیات",
       "partnerFa": "استاد ادبیات",
-      "prompt": "بگو نسخهٔ میانه را، با دلیل.",
+      "prompt": "بگو نسخهٔ میانه را انتخاب می‌کنی و دلیلش را می‌گویی.",
       "question": "Which version would you publish?",
       "questionFa": "کدام نسخه را منتشر می‌کنی؟",
       "accepted": [
@@ -18203,7 +18201,7 @@
       "type": "speaking",
       "sceneFa": "کلاس ادبیات، بحث دربارهٔ یک رمان",
       "partnerFa": "استاد",
-      "prompt": "بگو فاصله و ابهام می‌سازد.",
+      "prompt": "بگو این فاصله‌ها ابهام می‌سازند، نه سرگردانی.",
       "question": "What does the silence of the narrator achieve?",
       "questionFa": "سکوت راوی چه کاری می‌کند؟",
       "accepted": [
@@ -18220,7 +18218,7 @@
       "type": "speaking",
       "sceneFa": "کلاس ادبیات، بحث دربارهٔ یک رمان",
       "partnerFa": "استاد",
-      "prompt": "تفکیک کن: ابهام عامدانه.",
+      "prompt": "فرق بگذار: ابهام عامدانه است، نه سهل‌انگاری.",
       "question": "Isn't that just vagueness?",
       "questionFa": "این فقط ابهام نیست؟",
       "accepted": [
@@ -18254,7 +18252,7 @@
       "type": "speaking",
       "sceneFa": "کلاس ادبیات، بحث دربارهٔ یک رمان",
       "partnerFa": "استاد",
-      "prompt": "بگو بله، با هشدار و زمینه.",
+      "prompt": "بگو بله، ولی با هشدار و زمینه.",
       "question": "Would you teach this book?",
       "questionFa": "این کتاب را درس می‌دهی؟",
       "accepted": [
@@ -21736,7 +21734,7 @@
       "order": 14,
       "sceneFa": "مناظرهٔ تلویزیونی",
       "partnerFa": "همتا در مناظره",
-      "prompt": "بگو ممنون از مناظرهٔ جدی.",
+      "prompt": "بگو از مناظرهٔ جدی ممنونم.",
       "question": "That's a decent note to end on.",
       "questionFa": "پایان قابل قبولی است.",
       "accepted": [

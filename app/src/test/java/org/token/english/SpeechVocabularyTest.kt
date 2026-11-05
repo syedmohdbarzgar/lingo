@@ -68,10 +68,15 @@ class SpeechVocabularyTest {
      * The flag has to come from the raw text before punctuation is stripped: an
      * answer can be two sentences ("Yes, please. It's Karimi."), and the capital
      * after the full stop is ordinary English, not a proper noun.
+     *
+     * Hyphens split, because that is what the recogniser hears: `twenty-five` is two
+     * words in its lexicon, and `ConversationScorer` splits them too. Checking the
+     * merged `twentyfive` would flag every hyphenated answer as unhearable.
      */
     private fun tokens(text: String): List<Pair<Boolean, String>> {
         var opens = true
         return text.replace(Regex("[\u2018\u2019`\u00b4]"), "'")
+            .replace(Regex("[-\u2010\u2011\u2012\u2013\u2014]"), " ")
             .split(Regex("\\s+"))
             .mapNotNull { raw ->
                 val word = raw.replace(Regex("[^A-Za-z0-9']"), "")

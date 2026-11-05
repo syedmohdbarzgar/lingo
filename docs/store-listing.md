@@ -43,9 +43,9 @@ actually search for.
 ### توضیح کوتاه
 
 ```text
-انگلیسی را قدم به قدم یاد بگیر؛ درس روزانه، مرور فاصله‌دار و همه‌چیز آفلاین.
+انگلیسی را قدم به قدم یاد بگیر؛ درس، گفت‌وگو، مرور فاصله‌دار و همه‌چیز آفلاین.
 ```
-76 characters (limit 80 on Play).
+78 characters (limit 80 on Play).
 
 ### توضیح بلند
 
@@ -59,6 +59,13 @@ Lingo برای فارسی‌زبانان ساخته شده است: رابط کا
 
 هر روز، کم و حساب‌شده
 درس کوتاه روزانه، تمرین‌های متنوع (انتخاب گزینه، جای خالی، نوشتن، شنیدن) و توضیح فارسی برای هر پاسخ اشتباه. غلط فقط امتیاز نیست: همان مورد دوباره می‌آید تا یاد بگیری.
+
+یک درس، هشت قدم، یک گفت‌وگو
+هر درس قدم‌به‌قدم جلو می‌رود — زمینه، گرامر، واژه، تمرین، شنیدن، نوشتن، گفتن و مرور — و هر بار فقط یک قدم جلوی چشمت است، پس گم نمی‌شوی.
+آخرِ هر درس، همان موقعیتی را که یاد گرفتی در یک گفت‌وگو تمرین می‌کنی: تو جواب می‌دهی، برنامه روی دستگاهت می‌شنود و ارزیابی می‌کند، و تا آن گفت‌وگو را تمام نکنی درس بعد باز نمی‌شود. صدا از گوشی بیرون نمی‌رود.
+
+از A1 تا C2، هر ۱۸۰ موضوع
+هر شش سطح کامل است: از الفبا و اعداد تا نقد حقوقی و ارتباط دیپلماتیک. ۱۹۲ درس، ۲۸۲۸ تمرین و ۱۱۵۴ واژه با مثال دوزبانه، از پیش نصب‌شده و بی‌نیاز از دانلود.
 
 واژه‌ها فراموش نمی‌شوند
 مرور فاصله‌دار واژه‌ها را درست در لحظهٔ فراموشی جلوی چانت می‌آورد، پس وقتت را صرف چیزهایی که بلدی نمی‌کنی.
@@ -89,9 +96,9 @@ Lingo — Learn English
 ### Short description
 
 ```text
-Learn English step by step: daily lessons, spaced review, fully offline.
+Learn English step by step: lessons, spoken practice, spaced review, offline.
 ```
-72 characters (Play limit 80).
+77 characters (Play limit 80).
 
 ### Full description
 
@@ -111,6 +118,18 @@ A little every day
 One short lesson, varied exercises (multiple choice, fill-in-the-blank, typing, listening)
 and a Persian explanation for every wrong answer. A miss is never just a score: the same
 item comes back once so it sticks.
+
+One lesson, eight steps, one conversation
+Each lesson walks a path — context, grammar, vocabulary, practice, listening, writing,
+speaking, review — and only the step you are on is on screen, so nothing sprawls.
+Every lesson ends in the situation it teaches: you answer out loud, the app listens and
+grades the take on the device, and the next lesson stays shut until that dialogue is
+spoken. Your voice never leaves the phone.
+
+A1 to C2, all 180 topics
+All six levels are complete: from the alphabet and numbers to legal-text analysis and
+diplomatic communication. 192 lessons, 2,828 exercises and 1,154 vocabulary entries with
+bilingual examples, installed with the app and needing no download.
 
 Words you don't forget
 Spaced repetition brings each vocabulary item back just before you would forget it, so your
@@ -142,7 +161,11 @@ claim that stops being true is a policy problem, not a copy problem.
 |---|---|
 | Free with the companion app | `CompanionOffer.isOffered` + `CompanionApp` (see [`billing.md`](billing.md)) |
 | 36 questions, six bands A1–C2 | `placement.json` + README placement section |
-| 192 lessons, 1154 vocabulary entries | `lessons.json`, `vocabulary.json` |
+| 192 lessons, 1154 vocabulary entries, 2828 exercises | `lessons.json`, `vocabulary.json`, `exercises.json` (the counts `validateContent` prints) |
+| All 180 syllabus topics ship | [`curriculum.md`](curriculum.md) — every row marked ✅ since v60 |
+| One lesson at a time, eight steps | `LearningStage` + `GuidedLessonTest` (only completed *required* steps count as progress) |
+| The next lesson waits for the dialogue | `owedConversation`/`canOpenLesson` in `LearningPlanner` + `GuidedLessonTest` |
+| Speaking is graded on the device | `ConversationScorer` + the Vosk recogniser; `ConversationScorerTest`, `ConversationPracticeViewModelTest` |
 | Fully offline learning core | [`connectivity.md`](connectivity.md) — the offline rule |
 | No account / no ads / no tracking | no auth, no ad SDK, no analytics dependency in `app/build.gradle.kts` |
 | Cancel any time via the store | [`billing.md`](billing.md) — subscription × 3 marketplaces |

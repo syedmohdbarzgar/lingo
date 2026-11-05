@@ -127,8 +127,8 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (527 tests / 63 classes as of the v60
-guided-lesson pass — one active stage at a time across the eight-step lesson, no trial on a fresh
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (529 tests / 63 classes as of the v61 C2
+review pass — the hyphen/quote split in `ConversationScorer` is what the two new ones pin — one active stage at a time across the eight-step lesson, no trial on a fresh
 install, the per-flavor «ارتباط با ناشر» store page, the
 per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut
 until that dialogue is spoken, and the Vosk verdict engine, whose recogniser half is device-only by

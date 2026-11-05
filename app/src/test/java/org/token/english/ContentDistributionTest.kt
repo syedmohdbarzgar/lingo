@@ -153,6 +153,7 @@ class ContentDistributionTest {
         "a1.days-months.ex.03" to "preposition for a day — only 'on' collocates with Friday in this frame",
         "a1.time.ex.03" to "clock-time preposition — only 'at' precedes a time on the clock",
         "a1.colors.ex.03" to "sky colour is fixed by the facts — only 'blue' is true here",
+        "c2.literature.ex.04" to "article frame — 'an ___' admits only a vowel-initial noun, and metaphor/foreshadowing need 'a'",
     )
 
     @Test

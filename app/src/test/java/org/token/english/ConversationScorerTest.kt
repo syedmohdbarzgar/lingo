@@ -222,6 +222,33 @@ class ConversationScorerTest {
     }
 
     @Test
+    fun `a hyphenated word is heard as the two words the recogniser knows`() {
+        // "twenty-five" is written with a hyphen; the lexicon holds twenty and five,
+        // never "twentyfive" — the merged token used to vanish from the grammar.
+        val grammar = ConversationScorer.speechGrammar(listOf("Twenty-five minutes."))
+        assertTrue("the merged token would be unknown to the recogniser: $grammar", grammar.contains("\"twenty five minutes\""))
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess("twenty five minutes", "Twenty-five minutes."),
+        )
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess("the decision making process is slow", "The decision-making process is slow."),
+        )
+    }
+
+    @Test
+    fun `quotes around a word are not part of the word`() {
+        // C2 nuance turns quote the word under discussion: 'May' / 'shall'.
+        val grammar = ConversationScorer.speechGrammar(listOf("'May' is right."))
+        assertTrue("a quote mark leaked into the grammar: $grammar", grammar.contains("\"may is right\""))
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess("may is right", "'May' is right."),
+        )
+    }
+
+    @Test
     fun `normalize strips punctuation and collapses whitespace`() {
         assertEquals(
             "bank is on the left next to the pharmacy",
