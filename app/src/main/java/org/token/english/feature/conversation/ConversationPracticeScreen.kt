@@ -13,11 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.VolumeUp
@@ -27,10 +30,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -40,6 +46,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -203,6 +214,11 @@ fun ConversationPracticeScreen(
                                 }
                             },
                             onEvent = vm::onEvent,
+                        )
+
+                        TypedAnswer(
+                            turnKey = state.index,
+                            onSend = { vm.onEvent(ConversationEvent.SubmitTyped(it)) },
                         )
                     }
                 }
@@ -371,9 +387,20 @@ private fun LearnerTake(state: ConversationUiState) {
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Outlined.MicNone, contentDescription = null, Modifier.size(20.dp))
+            // The icon and the label follow how the answer arrived: a typed reply
+            // under a microphone icon and "شما گفتید" claims something that did not
+            // happen.
+            Icon(
+                imageVector = if (state.answeredByTyping) Icons.Outlined.Keyboard else Icons.Outlined.MicNone,
+                contentDescription = null,
+                Modifier.size(20.dp),
+            )
             Text(
-                text = if (state.isListening) "شما (در حال صحبت…)" else "شما گفتید",
+                text = when {
+                    state.answeredByTyping -> "شما نوشتید"
+                    state.isListening -> "شما (در حال صحبت…)"
+                    else -> "شما گفتید"
+                },
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.padding(start = AppSpacing.xs),
             )
@@ -419,7 +446,11 @@ private fun Outcome(
         )
 
         verdict == SpeakingVerdict.NEAR -> InfoBanner(
-            message = "نزدیک بود! بیشترِ کلمه‌های کلیدی را گفتی.",
+            message = if (state.answeredByTyping) {
+                "نزدیک بود! بیشترِ کلمه‌های کلیدی را نوشتی."
+            } else {
+                "نزدیک بود! بیشترِ کلمه‌های کلیدی را گفتی."
+            },
         )
 
         // Neutral on purpose. The app cannot tell a wrong answer from a recogniser
@@ -427,11 +458,17 @@ private fun Outcome(
         // single most damaging thing this screen can do. What was heard stays in
         // the take card above, and moving on is always one tap away.
         verdict == SpeakingVerdict.RETRY -> InfoBanner(
-            message = "آنچه شنیدم با پاسخ این نوبت هم‌خوان نبود. اگر مطمئنی درست گفتی، ادامه بده؛ وگرنه یک بار دیگر بگو.",
+            message = if (state.answeredByTyping) {
+                "آنچه نوشتی با پاسخ این نوبت هم‌خوان نبود. اگر مطمئنی درست است، ادامه بده؛ وگرنه یک بار دیگر بنویس."
+            } else {
+                "آنچه شنیدم با پاسخ این نوبت هم‌خوان نبود. اگر مطمئنی درست گفتی، ادامه بده؛ وگرنه یک بار دیگر بگو."
+            },
         )
     }
 
-    if (permissionRefused && state.error == SpeechError.NONE) {
+    // A typed answer needs no microphone, so a missing permission is not a problem
+    // to report while the learner is using the keyboard.
+    if (permissionRefused && !state.answeredByTyping && state.error == SpeechError.NONE) {
         IncorrectBanner(
             message = "برای پاسخ دادن به میکروفون نیاز داریم. دسترسی را از تنظیمات برنامه بدهید.",
         )
@@ -462,6 +499,74 @@ private fun Outcome(
         }
     }
 }
+
+/**
+ * The keyboard path to the same answer, always under the microphone.
+ *
+ * Speaking stays the point of the exercise, but the recogniser needs a downloaded
+ * model and a working microphone; without either the learner used to be locked out
+ * of the conversation — and the conversation is what opens the next lesson. The
+ * field is LTR (the RTL root would otherwise type the sentence backwards) and the
+ * send action is a labelled button, not an unmarked icon. The text resets with the
+ * turn, so an old sentence can never be sent as the next answer.
+ */
+@Composable
+private fun TypedAnswer(
+    turnKey: Int,
+    onSend: (String) -> Unit,
+) {
+    var text by remember(turnKey) { mutableStateOf("") }
+
+    fun send() {
+        if (text.isBlank()) return
+        onSend(text)
+        text = ""
+    }
+
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Text(
+            text = "یا پاسخ را تایپ کن",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            OutlinedTextField(
+                value = text,
+                // A dialogue reply is one sentence: a paste cannot become a
+                // paragraph, and the cap is applied here so the field never greys
+                // out mid-sentence.
+                onValueChange = { typed -> if (typed.length <= TYPED_ANSWER_MAX) text = typed },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                placeholder = { Text("Type your answer in English") },
+                textStyle = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Text,
+                ),
+                keyboardActions = KeyboardActions(onDone = { send() }),
+                shape = MaterialTheme.shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                ),
+            )
+        }
+        OutlinedActionButton(
+            text = "فرستادن پاسخ",
+            onClick = { send() },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = text.isNotBlank(),
+        )
+    }
+}
+
+/** A dialogue reply is one sentence, not an essay. */
+private const val TYPED_ANSWER_MAX = 200
 
 @Composable
 private fun AnswerControls(

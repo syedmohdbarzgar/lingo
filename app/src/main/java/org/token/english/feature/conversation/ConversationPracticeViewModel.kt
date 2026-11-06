@@ -103,6 +103,8 @@ data class ConversationUiState(
      */
     val unheard: Boolean = false,
     val error: SpeechError = SpeechError.NONE,
+    /** This turn's answer came from the keyboard, so the transcript is not "what you said". */
+    val answeredByTyping: Boolean = false,
 ) {
     val current: DialogueTurn? get() = turns.getOrNull(index)
 
@@ -186,6 +188,13 @@ class ConversationPracticeViewModel(
     /** Last value of the recogniser's listening flag, to detect the end of a take. */
     private var wasListening = false
 
+    /**
+     * True while this turn's answer came from the keyboard. The mic is stopped when
+     * that happens, but a late emission from the service must neither overwrite the
+     * typed transcript nor grade itself over it.
+     */
+    private var typedThisTurn = false
+
     /** The finish write is once per session, not once per finished screen. */
     private var markedConversationDone = false
 
@@ -201,6 +210,13 @@ class ConversationPracticeViewModel(
      * take — when it ends.
      */
     private fun onSpeech(s: SpeechState) {
+        // A typed answer owns this turn: the recogniser's bookkeeping is stale from
+        // the moment the learner chose the keyboard, so it may not touch the state.
+        if (typedThisTurn) {
+            wasListening = false
+            return
+        }
+
         val takeEnded = wasListening && !s.isListening
         wasListening = s.isListening
 
@@ -358,8 +374,43 @@ class ConversationPracticeViewModel(
         )
     }
 
+    /**
+     * Grades an answer the learner **typed** instead of spoke.
+     *
+     * The keyboard is always there, not a rescue mode: the recogniser needs a
+     * downloaded model and a working microphone, and a learner without either was
+     * locked out of the lesson's conversation — which is what opens the next
+     * lesson. The text goes through the same [ConversationScorer.assessBest] gate as
+     * a take, so «درست / نزدیک / تلاش دوباره» means the same thing whichever way the
+     * sentence arrived, and [advance] records it exactly like a spoken turn.
+     */
+    private fun submitTyped(text: String) {
+        val turn = _state.value.current ?: return
+        val said = text.trim()
+        if (said.isEmpty()) return
+
+        // An open take would end later and grade itself over this answer.
+        stopRecognition()
+        wasListening = false
+        typedThisTurn = true
+
+        _state.update {
+            it.copy(
+                finalText = said,
+                partial = "",
+                answeredByTyping = true,
+                verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine),
+                unheard = false,
+                error = SpeechError.NONE,
+                isListening = false,
+                isPreparing = false,
+            )
+        }
+    }
+
     fun onEvent(event: ConversationEvent) {
         when (event) {
+            is ConversationEvent.SubmitTyped -> submitTyped(event.text)
             ConversationEvent.StartTake -> startTake()
             ConversationEvent.StopTake -> stopRecognition()
             // Retry is a NEW take, not a stop followed by a start: the stop/start
@@ -453,10 +504,12 @@ class ConversationPracticeViewModel(
     }
 
     private fun resetTake() {
+        typedThisTurn = false
         _state.update {
             it.copy(
                 partial = "",
                 finalText = "",
+                answeredByTyping = false,
                 verdict = null,
                 unheard = false,
                 error = SpeechError.NONE,
@@ -489,4 +542,7 @@ sealed interface ConversationEvent {
 
     /** Run the conversation again from the first exchange (the summary's action). */
     data object Restart : ConversationEvent
+
+    /** The keyboard path: an answer typed instead of spoken. */
+    data class SubmitTyped(val text: String) : ConversationEvent
 }

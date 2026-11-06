@@ -774,6 +774,130 @@ class ConversationPracticeViewModelTest {
         assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
     }
 
+    // ---- the keyboard path ----------------------------------------------------
+
+    @Test
+    fun `a typed answer is graded by the same gate as a spoken one`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue(
+                        "a1.one",
+                        "s1",
+                        "Where is the bank?",
+                        "The bank is on the left next to the pharmacy.",
+                    ),
+                ),
+            ),
+        )
+
+        vm.onEvent(ConversationEvent.SubmitTyped("The bank is on the left next to the pharmacy."))
+
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+        assertEquals(
+            "the typed sentence is the transcript, so Next records what was answered",
+            "The bank is on the left next to the pharmacy.",
+            vm.state.value.finalText,
+        )
+        assertTrue("the card must say it was written, not said", vm.state.value.answeredByTyping)
+        assertFalse("nothing is being listened to", vm.state.value.isListening)
+
+        // The same three verdicts, whichever way the sentence arrives: one
+        // substitution in a long sentence is "near", an unrelated one is "retry".
+        vm.onEvent(ConversationEvent.SubmitTyped("The bank is on the right next to the pharmacy."))
+        assertEquals(SpeakingVerdict.NEAR, vm.state.value.verdict)
+        vm.onEvent(ConversationEvent.SubmitTyped("I would like a coffee, please."))
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
+    }
+
+    @Test
+    fun `a typed answer is not overwritten by a late recogniser emission`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                ),
+            ),
+        )
+        // A take was open when the learner switched to the keyboard.
+        speech.value = SpeechState(isListening = true, partial = "i am")
+        vm.onEvent(ConversationEvent.SubmitTyped("I'm fine, thank you."))
+
+        // The service finishes its take a moment later with whatever it held.
+        speech.value = SpeechState(isListening = false, finalText = "i am")
+
+        assertEquals(
+            "a stale take must not grade itself over the typed answer",
+            SpeakingVerdict.CORRECT,
+            vm.state.value.verdict,
+        )
+        assertEquals("I'm fine, thank you.", vm.state.value.finalText)
+    }
+
+    @Test
+    fun `typed answers alone finish and record the conversation`() {
+        val lessons = repository(
+            lesson("a1.one", order = 1) to listOf(
+                dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                dialogue("a1.one", "s2", "Do you speak English?", "Yes, a little."),
+            ),
+        )
+        val conversations = FakeConversationRepository()
+        val vm = viewModel(lessons, conversations = conversations)
+
+        // No microphone is involved: this is the learner whose recogniser cannot
+        // start at all, and the conversation gate must still open.
+        listOf("I'm fine, thank you.", "Yes, a little.").forEach { typed ->
+            vm.onEvent(ConversationEvent.SubmitTyped(typed))
+            vm.onEvent(ConversationEvent.Next)
+        }
+
+        assertTrue(vm.state.value.isFinished)
+        assertEquals(setOf("a1.one"), conversations.doneFlow.value)
+        assertFalse(
+            "the next exchange is a fresh answer, not the previous typed one",
+            vm.state.value.answeredByTyping,
+        )
+    }
+
+    @Test
+    fun `a blank typed answer grades nothing`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                ),
+            ),
+        )
+
+        vm.onEvent(ConversationEvent.SubmitTyped("   "))
+
+        assertNull("an empty field is not an answer", vm.state.value.verdict)
+        assertFalse(vm.state.value.answeredByTyping)
+        assertEquals("", vm.state.value.finalText)
+    }
+
+    @Test
+    fun `retrying by voice clears a typed verdict and its transcript`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                ),
+            ),
+        )
+        vm.onEvent(ConversationEvent.SubmitTyped("the bank is on the left"))
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
+        starts = 0
+
+        vm.onEvent(ConversationEvent.Retry)
+
+        assertNull("the typed attempt is over", vm.state.value.verdict)
+        assertFalse(vm.state.value.answeredByTyping)
+        assertEquals("", vm.state.value.finalText)
+        assertEquals("and the microphone is what runs now", 1, starts)
+    }
+
     /** `onCleared` is protected; a subclass is how a test reaches it. */
     private fun clearCallsOf(vm: ConversationPracticeViewModel) {
         val method = androidx.lifecycle.ViewModel::class.java
