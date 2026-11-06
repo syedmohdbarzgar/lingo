@@ -75,6 +75,19 @@ class ReadingContentTest {
         val reused = comprehension.groupBy { it.getString("passage") }.values
         val lonely = reused.filter { it.size < 2 }.map { it.first().getString("id") }
         assertTrue("comprehension passage(s) used by fewer than two questions: $lonely", lonely.isEmpty())
+
+        // One passage per level was not enough evidence for the Reading track to say
+        // anything: v63 spread them across five lessons a level, so the floor is
+        // pinned here — a level that loses its passages fails the build, not the bar.
+        val passagesPerLevel = comprehension
+            .groupBy { levelOfLesson[it.getString("lessonId")] }
+            .mapValues { (_, items) -> items.map { it.getString("passage") }.distinct().size }
+        passagesPerLevel.forEach { (level, count) ->
+            assertTrue(
+                "$level carries only $count comprehension passages; five lessons per level ship one each",
+                count >= 5,
+            )
+        }
     }
 
     @Test

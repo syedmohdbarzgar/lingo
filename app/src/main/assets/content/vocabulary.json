@@ -1,5 +1,5 @@
 {
-  "contentVersion": 61,
+  "contentVersion": 63,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -20875,7 +20875,7 @@
         "break down into parts"
       ],
       "lessonId": "b2.phrasal-verbs.lesson-01",
-      "explanationFa": "break down برای ماشین و سیستم است؛ برای انسان به معناي از پا افتادن هم می‌آید."
+      "explanationFa": "break down برای ماشین و سیستم است؛ برای انسان به معنای از پا افتادن هم می‌آید."
     },
     {
       "id": "b2.intercultural.word.norm",
@@ -26975,7 +26975,7 @@
         "break a maxim"
       ],
       "lessonId": "c2.pragmatics.lesson-01",
-      "explanationFa": "maximهای گرایس: quantity، quality، relation و manner؛ شکستنشان معنای ضمنی می‌سازد."
+      "explanationFa": "maxim‌های گرایس: quantity، quality، relation و manner؛ شکستن‌شان معنای ضمنی می‌سازد."
     },
     {
       "id": "c2.pragmatics.word.indirectness",

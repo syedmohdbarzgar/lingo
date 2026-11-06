@@ -66,9 +66,13 @@
   everything after it. `HomeViewModel` exposes that lesson as `HomeUiState.dialogueDue`, so the
   next-lesson card offers the conversation instead of the lesson and says why — the button and the
   permission read the same rule and cannot disagree. Completion is written by
-  `ConversationPracticeViewModel` once every turn has been **answered** (a graded take, not a skip)
+  `ConversationPracticeViewModel` once every turn has been **answered** (a graded answer, not a skip)
   into `ConversationRepository`, one lesson id at a time; a lesson that ships no dialogue can never
-  gate the path.
+  gate the path. An answer may be **spoken or typed**: the recogniser needs a downloaded model and a
+  working microphone, and a learner without either used to be locked out of the conversation — and so
+  out of the path — so the keyboard is always available next to the mic, and both routes are graded by
+  the same `ConversationScorer` verdict. Typing is a second door to the same requirement, not a lower
+  one.
 - **A lesson is eight steps, not one page (v60).** `LearningStage` (pure, `domain/model`) fixes the
   authored order — context → grammar → vocabulary → practice → listening → writing → speaking →
   review — and `LessonStagePlan.of` derives the steps a lesson actually ships from the content that
@@ -163,8 +167,9 @@
   correct answer (mastery seeded at `FIRST_HIT_MASTERY`, 0.4) consolidated. `GetSkillProfilesUseCase` returns
   `emptyList()` when no content is seeded, and Home + Progress both render the shared
   `SkillTrackProgress` composable (Home compact), so the two screens cannot disagree. Node
-  accounting is not a clean partition and the tests say so: of the 89 nodes, GRAMMAR claims 49,
-  VOCABULARY 15 and READING 16, four nodes belong to two tracks
+  accounting is not a clean partition and the tests say so: of the **233** nodes, GRAMMAR claims 49,
+  VOCABULARY **159** and READING 16, four nodes belong to two tracks
   (`grammar.passive-simple`, `discourse.reason-cause`, `discourse.narrative-tenses`,
   `vocab.idioms-and-figurative`) and 13 belong to none (a node that only trains LISTENING or
-  PHONOLOGY).
+  PHONOLOGY). The arithmetic is checked against the bundle: 49 + 159 + 16 = 224 claims, the four
+  double-claimed nodes take it to 220 distinct, and 233 − 220 = 13.

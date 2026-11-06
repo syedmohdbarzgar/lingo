@@ -1,5 +1,5 @@
 {
-  "contentVersion": 61,
+  "contentVersion": 63,
   "lessons": [
     {
       "id": "a1.alphabet.lesson-01",
@@ -1749,7 +1749,7 @@
       "topic": "Language",
       "estimatedMinutes": 9,
       "order": 175,
-      "grammarTipFa": "## قاعده\nدر نوشتار آکادمیک، کاری که پیش‌تر انجام شده با مجهول حال کامل بیان می‌شود: Studies have been conducted on both sides of the question.\nساختار: have/has been + قسمت سوم فعل؛ کنشگر معمولاً حذف می‌شود چون مهم نیست.\nبرای چیزی که پیش از یک نقطهٔ گذشته کامل شده: had been + قسمت سوم فعل — The caveat had been placed in a footnote.\n## جدول\nStudies have been conducted on both sides of the question. — پژوهش‌هایی در هر دو سوی مسئله انجام شده است.\nThe caveat has been placed in a footnote. — قید احتیاط در پانویس گذاشته شده است.\n## مثال‌ها\nThe thesis has to be arguable, not obvious. — پایان‌نامه/ادعای اصلی باید قابل بحث باشد، نه بدیهی.\nEvery citation has to match the reference list exactly. — هر ارجاع باید دقیقاً با فهرست منابع بخواند.\nHer precis of the report ran to one page. — چکیدهٔ او از گزارش به یک صفحه رسید.\n## خطاهای رایج\nStudies have conducted ✗ — مجهول لازم است: have been conducted.\nThe caveat has placed in a footnote ✗ — has been placed.\nthesis با فعل مفرد می‌آید؛ جمع آن theses است، نه thesisها."
+      "grammarTipFa": "## قاعده\nدر نوشتار آکادمیک، کاری که پیش‌تر انجام شده با مجهول حال کامل بیان می‌شود: Studies have been conducted on both sides of the question.\nساختار: have/has been + قسمت سوم فعل؛ کنشگر معمولاً حذف می‌شود چون مهم نیست.\nبرای چیزی که پیش از یک نقطهٔ گذشته کامل شده: had been + قسمت سوم فعل — The caveat had been placed in a footnote.\n## جدول\nStudies have been conducted on both sides of the question. — پژوهش‌هایی در هر دو سوی مسئله انجام شده است.\nThe caveat has been placed in a footnote. — قید احتیاط در پانویس گذاشته شده است.\n## مثال‌ها\nThe thesis has to be arguable, not obvious. — پایان‌نامه/ادعای اصلی باید قابل بحث باشد، نه بدیهی.\nEvery citation has to match the reference list exactly. — هر ارجاع باید دقیقاً با فهرست منابع بخواند.\nHer precis of the report ran to one page. — چکیدهٔ او از گزارش به یک صفحه رسید.\n## خطاهای رایج\nStudies have conducted ✗ — مجهول لازم است: have been conducted.\nThe caveat has placed in a footnote ✗ — has been placed.\nthesis با فعل مفرد می‌آید؛ جمع آن theses است، نه thesis‌ها."
     },
     {
       "id": "c2.editing.lesson-01",

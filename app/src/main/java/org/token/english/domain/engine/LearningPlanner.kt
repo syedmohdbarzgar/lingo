@@ -96,8 +96,11 @@ class DefaultLearningPlanner(
         // Trained-but-weak skills first (worst score wins). Skills never
         // exercised yet are unproven — they count as weakest and fill the
         // remaining slots, so they DO appear in suggestions (checklist P6).
-        // SPEAKING has no exercises yet (speech evaluation not built), so it is never
-        // recommended — no dead-end suggestions.
+        // SPEAKING is never recommended, but not because it has no content: its
+        // 1052 turns are the lessons' own dialogues (graded by the recogniser on the
+        // conversation screen) and the lesson's speaking step is self-assessed, so
+        // neither writes a mastery signal. Recommending it would point the learner at
+        // a meter that cannot move — no dead-end suggestions.
         val trainable = Skill.entries.filter { it != Skill.SPEAKING }
         val trainedWeak = trainable
             .mapNotNull { skill -> masteryBySkill[skill]?.let { skill to it } }

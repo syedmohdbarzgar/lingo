@@ -1,5 +1,5 @@
 {
-  "contentVersion": 61,
+  "contentVersion": 63,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -15,7 +15,8 @@
         "لطفاً"
       ],
       "correctIndex": 0,
-      "explanationFa": "thank you برای تشکر است؛ ببخشید sorry و لطفاً please است."
+      "explanationFa": "thank you برای تشکر است؛ ببخشید sorry و لطفاً please است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.greetings.ex.02",
@@ -31,7 +32,8 @@
         "Good evening"
       ],
       "correctIndex": 1,
-      "explanationFa": "Good morning فقط برای صبح است؛ Good night هنگام خواب و Good evening شب به کار می‌رود."
+      "explanationFa": "Good morning فقط برای صبح است؛ Good night هنگام خواب و Good evening شب به کار می‌رود.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.greetings.ex.03",
@@ -65,7 +67,8 @@
         "glad",
         "hello"
       ],
-      "explanationFa": "عبارت ثابت Nice to meet you برای ابراز خوش‌حالی از آشنایی است."
+      "explanationFa": "عبارت ثابت Nice to meet you برای ابراز خوش‌حالی از آشنایی است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.greetings.ex.05",
@@ -76,7 +79,8 @@
       "accepted": [
         "thank you for your help"
       ],
-      "explanationFa": "عبارت تشکر: Thank you for your help — تکیهٔ جمله روی help است."
+      "explanationFa": "عبارت تشکر: Thank you for your help — تکیهٔ جمله روی help است.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.greetings.ex.06",
@@ -92,7 +96,8 @@
         "now"
       ],
       "correctIndex": 2,
-      "explanationFa": "please واژهٔ ادب در درخواست است؛ Give me بدون please خودخواهانه و بی‌ادبانه شنیده می‌شود."
+      "explanationFa": "please واژهٔ ادب در درخواست است؛ Give me بدون please خودخواهانه و بی‌ادبانه شنیده می‌شود.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.daily-routine.ex.01",
@@ -108,7 +113,8 @@
         "بیدار شدن"
       ],
       "correctIndex": 3,
-      "explanationFa": "wake up یعنی بیدار شدن؛ صبحانه خوردن have breakfast است."
+      "explanationFa": "wake up یعنی بیدار شدن؛ صبحانه خوردن have breakfast است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.daily-routine.ex.02",
@@ -138,7 +144,8 @@
         "Go I to work by bus."
       ],
       "correctIndex": 0,
-      "explanationFa": "برای کارهای روزمره زمان حال ساده به کار می‌رود: I go to work — فعل am با فعل اصلی جمع نمی‌شود."
+      "explanationFa": "برای کارهای روزمره زمان حال ساده به کار می‌رود: I go to work — فعل am با فعل اصلی جمع نمی‌شود.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.daily-routine.ex.04",
@@ -162,7 +169,8 @@
         "early",
         "never"
       ],
-      "explanationFa": "قید تکرار usually پیش از فعل اصلی می‌آید: I usually wake up."
+      "explanationFa": "قید تکرار usually پیش از فعل اصلی می‌آید: I usually wake up.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.daily-routine.ex.05",
@@ -173,7 +181,8 @@
       "accepted": [
         "we watch tv in the evening"
       ],
-      "explanationFa": "به /w/ در watch و واکهٔ بلند /iː/ در evening گوش کن."
+      "explanationFa": "به /w/ در watch و واکهٔ بلند /iː/ در evening گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.daily-routine.ex.06",
@@ -202,7 +211,8 @@
         "دختر"
       ],
       "correctIndex": 1,
-      "explanationFa": "sister یعنی خواهر؛ برادر brother است."
+      "explanationFa": "sister یعنی خواهر؛ برادر brother است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.family.ex.02",
@@ -218,7 +228,8 @@
         "waiter"
       ],
       "correctIndex": 2,
-      "explanationFa": "همسرِ مادر (mother's husband) پدر است؛ بقیهٔ گزینه‌ها نسبت خانوادگی را اشتباه می‌گویند."
+      "explanationFa": "همسرِ مادر (mother's husband) پدر است؛ بقیهٔ گزینه‌ها نسبت خانوادگی را اشتباه می‌گویند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.family.ex.03",
@@ -254,7 +265,8 @@
         "a",
         "the"
       ],
-      "explanationFa": "با فاعل I فعل have بدون s می‌آید: I have a brother."
+      "explanationFa": "با فاعل I فعل have بدون s می‌آید: I have a brother.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.family.ex.05",
@@ -265,7 +277,8 @@
       "accepted": [
         "my father works at a bank"
       ],
-      "explanationFa": "به /ɑː/ در father و /æ/ در bank گوش کن."
+      "explanationFa": "به /ɑː/ در father و /æ/ در bank گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.family.ex.06",
@@ -281,7 +294,8 @@
         "They have one son."
       ],
       "correctIndex": 3,
-      "explanationFa": "با فاعل they فعل have بدون s می‌آید و have با are جمع نمی‌شود: They have one son."
+      "explanationFa": "با فاعل they فعل have بدون s می‌آید و have با are جمع نمی‌شود: They have one son.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.airport.ex.01",
@@ -297,7 +311,8 @@
         "bill"
       ],
       "correctIndex": 0,
-      "explanationFa": "boarding pass کارت پرواز است که پیش از سوار شدن نشان داده می‌شود."
+      "explanationFa": "boarding pass کارت پرواز است که پیش از سوار شدن نشان داده می‌شود.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.airport.ex.02",
@@ -313,7 +328,8 @@
         "گیت"
       ],
       "correctIndex": 1,
-      "explanationFa": "departure یعنی حرکت/پرواز (خروج)؛ نقطهٔ مقابل آن arrival (ورود) است."
+      "explanationFa": "departure یعنی حرکت/پرواز (خروج)؛ نقطهٔ مقابل آن arrival (ورود) است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.airport.ex.03",
@@ -339,7 +355,8 @@
         "please show your passport",
         "show me your passport please"
       ],
-      "explanationFa": "درخواست مؤدبانه با please + فعل ساده: Please show me your passport."
+      "explanationFa": "درخواست مؤدبانه با please + فعل ساده: Please show me your passport.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.airport.ex.05",
@@ -351,7 +368,8 @@
         "where is gate 12",
         "where is gate twelve"
       ],
-      "explanationFa": "gate twelve با تکیه روی twelve و پیوند صداها تلفظ می‌شود."
+      "explanationFa": "gate twelve با تکیه روی twelve و پیوند صداها تلفظ می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.airport.ex.06",
@@ -367,7 +385,8 @@
         "departed"
       ],
       "correctIndex": 2,
-      "explanationFa": "برنامهٔ حرکت (timetable) با حال ساده بیان میشود و فاعل مفرد است: the flight departs. departed گذشته است و با tomorrow نمیخواند."
+      "explanationFa": "برنامهٔ حرکت (timetable) با حال ساده بیان میشود و فاعل مفرد است: the flight departs. departed گذشته است و با tomorrow نمیخواند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.restaurant.ex.01",
@@ -383,7 +402,8 @@
         "حساب"
       ],
       "correctIndex": 3,
-      "explanationFa": "bill صورت‌حساب رستوران است؛ menu فهرست غذاست."
+      "explanationFa": "bill صورت‌حساب رستوران است؛ menu فهرست غذاست.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.restaurant.ex.02",
@@ -399,7 +419,8 @@
         "I want bill."
       ],
       "correctIndex": 0,
-      "explanationFa": "درخواست مؤدبانه با Can we have …, please? ساخته می‌شود؛ Give the bill! امری و بی‌ادبانه است."
+      "explanationFa": "درخواست مؤدبانه با Can we have …, please? ساخته می‌شود؛ Give the bill! امری و بی‌ادبانه است.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.restaurant.ex.03",
@@ -425,7 +446,8 @@
         "this soup is delicious",
         "this soup is tasty"
       ],
-      "explanationFa": "this soup مفرد است، پس فعل is می‌گیرد: This soup is delicious."
+      "explanationFa": "this soup مفرد است، پس فعل is می‌گیرد: This soup is delicious.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.restaurant.ex.05",
@@ -437,7 +459,8 @@
         "can i see the menu please",
         "can i have the menu please"
       ],
-      "explanationFa": "در گفتار سریع can به /kən/ ضعیف تبدیل می‌شود."
+      "explanationFa": "در گفتار سریع can به /kən/ ضعیف تبدیل می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.restaurant.ex.06",
@@ -453,7 +476,8 @@
         "brother"
       ],
       "correctIndex": 1,
-      "explanationFa": "رزرو میز در رستوران reservation است؛ بقیهٔ گزینه‌ها با بافت رستوران نمی‌خوانند."
+      "explanationFa": "رزرو میز در رستوران reservation است؛ بقیهٔ گزینه‌ها با بافت رستوران نمی‌خوانند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.shopping.ex.01",
@@ -469,7 +493,8 @@
         "do"
       ],
       "correctIndex": 2,
-      "explanationFa": "فاعل جمع است (these shoes)، پس فعل are می‌آید و much برای مقدار غیرقابل‌شمارش به کار می‌رود."
+      "explanationFa": "فاعل جمع است (these shoes)، پس فعل are می‌آید و much برای مقدار غیرقابل‌شمارش به کار می‌رود.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.shopping.ex.02",
@@ -485,7 +510,8 @@
         "a"
       ],
       "correctIndex": 3,
-      "explanationFa": "a برای اسم قابل‌شمارش مفرد می‌آید: a kilo of apples."
+      "explanationFa": "a برای اسم قابل‌شمارش مفرد می‌آید: a kilo of apples.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a1.shopping.ex.03",
@@ -537,7 +563,8 @@
         "cost",
         "does"
       ],
-      "explanationFa": "پرسش قیمت با How much is …? ساخته می‌شود."
+      "explanationFa": "پرسش قیمت با How much is …? ساخته می‌شود.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.shopping.ex.06",
@@ -550,7 +577,8 @@
         "the supermarket is open until nine oclock",
         "the supermarket is open until nine o clock"
       ],
-      "explanationFa": "به تکیهٔ supermarket و پیوند until nine گوش کن."
+      "explanationFa": "به تکیهٔ supermarket و پیوند until nine گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.directions.ex.01",
@@ -566,7 +594,8 @@
         "up"
       ],
       "correctIndex": 0,
-      "explanationFa": "go straight ahead عبارت ثابتِ «مستقیم جلو برو» است."
+      "explanationFa": "go straight ahead عبارت ثابتِ «مستقیم جلو برو» است.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.directions.ex.02",
@@ -582,7 +611,8 @@
         "at"
       ],
       "correctIndex": 1,
-      "explanationFa": "between برای «بین دو چیز» به کار می‌رود و با and می‌آید."
+      "explanationFa": "between برای «بین دو چیز» به کار می‌رود و با and می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.directions.ex.03",
@@ -620,7 +650,8 @@
         "the bus stop is opposite the bank",
         "the bus stop is across from the bank"
       ],
-      "explanationFa": "opposite/across from یعنی «روبروی»: The bus stop is opposite the bank."
+      "explanationFa": "opposite/across from یعنی «روبروی»: The bus stop is opposite the bank.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.directions.ex.06",
@@ -632,7 +663,8 @@
         "take the second turning on the right",
         "take the second turn on the right"
       ],
-      "explanationFa": "به /ɜː/ در turning و تکیهٔ second گوش کن."
+      "explanationFa": "به /ɜː/ در turning و تکیهٔ second گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.health.ex.01",
@@ -648,7 +680,8 @@
         "took"
       ],
       "correctIndex": 2,
-      "explanationFa": "بعد از have to فعل ساده می‌آید: have to take this medicine."
+      "explanationFa": "بعد از have to فعل ساده می‌آید: have to take this medicine.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.health.ex.02",
@@ -664,7 +697,8 @@
         "was"
       ],
       "correctIndex": 3,
-      "explanationFa": "جمله گذشته است (stayed)، پس فعل to be نیز گذشته می‌آید و با she می‌شود was."
+      "explanationFa": "جمله گذشته است (stayed)، پس فعل to be نیز گذشته می‌آید و با she می‌شود was.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "a2.health.ex.03",
@@ -702,7 +736,8 @@
         "i went to the doctors yesterday",
         "yesterday i went to the doctor"
       ],
-      "explanationFa": "قید yesterday جمله را گذشته می‌کند، پس فعل گذشتهٔ ساده است: I went."
+      "explanationFa": "قید yesterday جمله را گذشته می‌کند، پس فعل گذشتهٔ ساده است: I went.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.health.ex.06",
@@ -713,7 +748,8 @@
       "accepted": [
         "take one pill after breakfast"
       ],
-      "explanationFa": "به /p/ در pill و /br/ در breakfast گوش کن."
+      "explanationFa": "به /p/ در pill و /br/ در breakfast گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.work.ex.01",
@@ -729,7 +765,8 @@
         "work"
       ],
       "correctIndex": 0,
-      "explanationFa": "since 2019 نقطهٔ شروع است و با حال کامل می‌آید: have worked."
+      "explanationFa": "since 2019 نقطهٔ شروع است و با حال کامل می‌آید: have worked.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.work.ex.02",
@@ -745,7 +782,8 @@
         "will finish"
       ],
       "correctIndex": 1,
-      "explanationFa": "در نقل‌قول غیرمستقیم گذشته فعل یک پله عقب می‌رود: finish → had finished."
+      "explanationFa": "در نقل‌قول غیرمستقیم گذشته فعل یک پله عقب می‌رود: finish → had finished.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.work.ex.03",
@@ -783,7 +821,8 @@
         "i left the company three years ago",
         "i quit this company three years ago"
       ],
-      "explanationFa": "three years ago نقطهٔ زمانی گذشته است و فعل گذشتهٔ ساده می‌گیرد: I left."
+      "explanationFa": "three years ago نقطهٔ زمانی گذشته است و فعل گذشتهٔ ساده می‌گیرد: I left.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.work.ex.06",
@@ -794,7 +833,8 @@
       "accepted": [
         "i have worked in this field for over ten years"
       ],
-      "explanationFa": "در گفتار سریع have به /əv/ ضعیف تبدیل می‌شود."
+      "explanationFa": "در گفتار سریع have به /əv/ ضعیف تبدیل می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.news.ex.01",
@@ -810,7 +850,8 @@
         "was passing"
       ],
       "correctIndex": 2,
-      "explanationFa": "مجهول گذشتهٔ ساده: was/were + قسمت سوم فعل — قانون مفعولِ عمل است، نه فاعل."
+      "explanationFa": "مجهول گذشتهٔ ساده: was/were + قسمت سوم فعل — قانون مفعولِ عمل است، نه فاعل.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.news.ex.02",
@@ -826,7 +867,8 @@
         "Due to"
       ],
       "correctIndex": 3,
-      "explanationFa": "due to + اسم (the heavy rain) رابطهٔ علت را نشان می‌دهد؛ although با یک جملهٔ کامل می‌آید."
+      "explanationFa": "due to + اسم (the heavy rain) رابطهٔ علت را نشان می‌دهد؛ although با یک جملهٔ کامل می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.news.ex.03",
@@ -862,7 +904,8 @@
         "this book was written by an iranian writer",
         "this book was written by an iranian author"
       ],
-      "explanationFa": "مجهول گذشته: was written by … — کتاب مفعولِ عمل است."
+      "explanationFa": "مجهول گذشته: was written by … — کتاب مفعولِ عمل است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.news.ex.06",
@@ -873,7 +916,8 @@
       "accepted": [
         "the new airport will be opened next year"
       ],
-      "explanationFa": "مجهول آینده در گفتار: will be opened با تکیه روی opened."
+      "explanationFa": "مجهول آینده در گفتار: will be opened با تکیه روی opened.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.plans.ex.01",
@@ -889,7 +933,8 @@
         "was having"
       ],
       "correctIndex": 0,
-      "explanationFa": "شرطی نوع دوم: در جملهٔ if فعل گذشتهٔ ساده و در نتیجه would + فعل ساده می‌آید."
+      "explanationFa": "شرطی نوع دوم: در جملهٔ if فعل گذشتهٔ ساده و در نتیجه would + فعل ساده می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.plans.ex.02",
@@ -905,7 +950,8 @@
         "am lying"
       ],
       "correctIndex": 1,
-      "explanationFa": "this time next week آیندهٔ در جریان را می‌رساند: will be lying."
+      "explanationFa": "this time next week آیندهٔ در جریان را می‌رساند: will be lying.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.plans.ex.03",
@@ -945,7 +991,8 @@
         "if the weather were nice we would go on a picnic",
         "if the weather is nice we will go on a picnic"
       ],
-      "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده."
+      "explanationFa": "شرطی نوع دوم: if + گذشتهٔ ساده، نتیجه با would + فعل ساده.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.plans.ex.06",
@@ -957,7 +1004,8 @@
         "we are going to move house next month",
         "we are going to move next month"
       ],
-      "explanationFa": "going to در گفتار سریع به gonna تبدیل می‌شود."
+      "explanationFa": "going to در گفتار سریع به gonna تبدیل می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.experiences.ex.01",
@@ -973,7 +1021,8 @@
         "has started"
       ],
       "correctIndex": 2,
-      "explanationFa": "by the time + گذشته، فعل بعدی ماضی بعید می‌شود: had started."
+      "explanationFa": "by the time + گذشته، فعل بعدی ماضی بعید می‌شود: had started.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.experiences.ex.02",
@@ -989,7 +1038,8 @@
         "was cooking"
       ],
       "correctIndex": 3,
-      "explanationFa": "while با گذشتهٔ استمراری می‌آید: was cooking، چون عمل ادامه داشت که تلفن زنگ زد."
+      "explanationFa": "while با گذشتهٔ استمراری می‌آید: was cooking، چون عمل ادامه داشت که تلفن زنگ زد.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b1.experiences.ex.03",
@@ -1025,7 +1075,8 @@
         "when i arrived they had left",
         "when i arrived they had gone"
       ],
-      "explanationFa": "عملی که پیش از رویداد گذشته کامل شده بود با ماضی بعید می‌آید: had left."
+      "explanationFa": "عملی که پیش از رویداد گذشته کامل شده بود با ماضی بعید می‌آید: had left.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.experiences.ex.06",
@@ -1036,7 +1087,8 @@
       "accepted": [
         "we were watching tv when the lights went out"
       ],
-      "explanationFa": "به پیوند watching TV و تکیهٔ lights گوش کن."
+      "explanationFa": "به پیوند watching TV و تکیهٔ lights گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.technology.ex.01",
@@ -1052,7 +1104,8 @@
         "what"
       ],
       "correctIndex": 0,
-      "explanationFa": "برای اشاره به یک شیء (the device) از that استفاده می‌شود، نه who که برای انسان است."
+      "explanationFa": "برای اشاره به یک شیء (the device) از that استفاده می‌شود، نه who که برای انسان است.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.technology.ex.02",
@@ -1068,7 +1121,8 @@
         "stores"
       ],
       "correctIndex": 1,
-      "explanationFa": "data غیرقابل‌شمارش و مفرد است، پس مجهول با is stored می‌آید."
+      "explanationFa": "data غیرقابل‌شمارش و مفرد است، پس مجهول با is stored می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.technology.ex.03",
@@ -1107,7 +1161,8 @@
         "this invention has transformed our daily life",
         "this invention has changed our daily life"
       ],
-      "explanationFa": "اثر تا امروز ادامه دارد، پس حال کامل: has transformed."
+      "explanationFa": "اثر تا امروز ادامه دارد، پس حال کامل: has transformed.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.technology.ex.06",
@@ -1118,7 +1173,8 @@
       "accepted": [
         "artificial intelligence is being used in almost every industry"
       ],
-      "explanationFa": "به تکیهٔ intelligence و industry گوش کن."
+      "explanationFa": "به تکیهٔ intelligence و industry گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.environment.ex.01",
@@ -1134,7 +1190,8 @@
         "should"
       ],
       "correctIndex": 2,
-      "explanationFa": "استنتاج منطقی از شواهد (بوی بد) با must بیان می‌شود: there must be a factory."
+      "explanationFa": "استنتاج منطقی از شواهد (بوی بد) با must بیان می‌شود: there must be a factory.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.environment.ex.02",
@@ -1150,7 +1207,8 @@
         "can't"
       ],
       "correctIndex": 3,
-      "explanationFa": "برای «غیرممکن بودن» از can't have + قسمت سوم استفاده می‌شود: can't have missed."
+      "explanationFa": "برای «غیرممکن بودن» از can't have + قسمت سوم استفاده می‌شود: can't have missed.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.environment.ex.03",
@@ -1191,7 +1249,8 @@
         "it seems the climate is changing",
         "it appears that the climate is changing"
       ],
-      "explanationFa": "It seems that + جمله برای «به نظر می‌رسد»؛ تغییر در جریان است: is changing."
+      "explanationFa": "It seems that + جمله برای «به نظر می‌رسد»؛ تغییر در جریان است: is changing.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.environment.ex.06",
@@ -1202,7 +1261,8 @@
       "accepted": [
         "recycling can help reduce the amount of waste"
       ],
-      "explanationFa": "به /riːˈsaɪklɪŋ/ و can ضعیف گوش کن."
+      "explanationFa": "به /riːˈsaɪklɪŋ/ و can ضعیف گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.interview.ex.01",
@@ -1218,7 +1278,8 @@
         "was finding"
       ],
       "correctIndex": 0,
-      "explanationFa": "در نقل‌قول غیرمستقیم گذشته، فعل یک پله عقب می‌رود: find → had found."
+      "explanationFa": "در نقل‌قول غیرمستقیم گذشته، فعل یک پله عقب می‌رود: find → had found.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.interview.ex.02",
@@ -1234,7 +1295,8 @@
         "up"
       ],
       "correctIndex": 1,
-      "explanationFa": "get along with یعنی «کنار آمدن و رابطهٔ خوب داشتن»."
+      "explanationFa": "get along with یعنی «کنار آمدن و رابطهٔ خوب داشتن».",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.interview.ex.03",
@@ -1271,7 +1333,8 @@
         "he asked why i was interested in the job",
         "she asked why i was interested in the job"
       ],
-      "explanationFa": "نقل‌قول غیرمستقیم: he asked why I was interested… — فعل یک پله عقب می‌رود."
+      "explanationFa": "نقل‌قول غیرمستقیم: he asked why I was interested… — فعل یک پله عقب می‌رود.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.interview.ex.06",
@@ -1283,7 +1346,8 @@
         "i was in charge of a team of fifteen people",
         "i was in charge of a team of 15 people"
       ],
-      "explanationFa": "to be in charge of یعنی «مسئول بودن» و در گفتار پیوسته تلفظ می‌شود."
+      "explanationFa": "to be in charge of یعنی «مسئول بودن» و در گفتار پیوسته تلفظ می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.media.ex.01",
@@ -1299,7 +1363,8 @@
         "will have"
       ],
       "correctIndex": 2,
-      "explanationFa": "wish + گذشتهٔ ساده برای حسرت در زمان حال: I wish I had more time."
+      "explanationFa": "wish + گذشتهٔ ساده برای حسرت در زمان حال: I wish I had more time.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.media.ex.02",
@@ -1315,7 +1380,8 @@
         "used to"
       ],
       "correctIndex": 3,
-      "explanationFa": "used to + فعل ساده عادت گذشته را نشان می‌دهد؛ is used to معنی دیگری دارد."
+      "explanationFa": "used to + فعل ساده عادت گذشته را نشان می‌دهد؛ is used to معنی دیگری دارد.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "b2.media.ex.03",
@@ -1354,7 +1420,8 @@
         "i wish i had seen this programme earlier",
         "i wish i had watched this program earlier"
       ],
-      "explanationFa": "wish + ماضی بعید برای حسرت گذشته: I wish I had watched…"
+      "explanationFa": "wish + ماضی بعید برای حسرت گذشته: I wish I had watched…",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.media.ex.06",
@@ -1365,7 +1432,8 @@
       "accepted": [
         "the newspaper has been published every day since 1850"
       ],
-      "explanationFa": "has been در گفتار به /həz bɪn/ ضعیف می‌شود."
+      "explanationFa": "has been در گفتار به /həz bɪn/ ضعیف می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.academic.ex.01",
@@ -1381,7 +1449,8 @@
         "noticed I"
       ],
       "correctIndex": 0,
-      "explanationFa": "پس از عبارت منفی در آغاز جمله (Not until …) فعل و فاعل جابه‌جا می‌شوند: did I notice."
+      "explanationFa": "پس از عبارت منفی در آغاز جمله (Not until …) فعل و فاعل جابه‌جا می‌شوند: did I notice.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.academic.ex.02",
@@ -1397,7 +1466,8 @@
         "would"
       ],
       "correctIndex": 1,
-      "explanationFa": "پس از فعل وجهی (must) مجهول با be + قسمت سوم ساخته می‌شود: must be interpreted."
+      "explanationFa": "پس از فعل وجهی (must) مجهول با be + قسمت سوم ساخته می‌شود: must be interpreted.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.academic.ex.03",
@@ -1435,7 +1505,8 @@
         "the hypothesis was questioned before the experiment",
         "the hypothesis had been questioned before the experiment"
       ],
-      "explanationFa": "مجهول گذشته: was questioned — فاعل خودِ فرضیه است."
+      "explanationFa": "مجهول گذشته: was questioned — فاعل خودِ فرضیه است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.academic.ex.06",
@@ -1446,7 +1517,8 @@
       "accepted": [
         "the findings have been subject to considerable debate"
       ],
-      "explanationFa": "be subject to یعنی «مورد ... قرار گرفتن»؛ تکیه روی considerable است."
+      "explanationFa": "be subject to یعنی «مورد ... قرار گرفتن»؛ تکیه روی considerable است.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.persuasion.ex.01",
@@ -1462,7 +1534,8 @@
         "I heard"
       ],
       "correctIndex": 2,
-      "explanationFa": "Rarely در آغاز جمله وارونگی می‌سازد: Rarely have I heard."
+      "explanationFa": "Rarely در آغاز جمله وارونگی می‌سازد: Rarely have I heard.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.persuasion.ex.02",
@@ -1478,7 +1551,8 @@
         "should"
       ],
       "correctIndex": 3,
-      "explanationFa": "should have + قسمت سوم برای سرزنش کاری که انجام نشده: should have told me."
+      "explanationFa": "should have + قسمت سوم برای سرزنش کاری که انجام نشده: should have told me.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.persuasion.ex.03",
@@ -1515,7 +1589,8 @@
         "i should never have missed that opportunity",
         "i should never have missed the opportunity"
       ],
-      "explanationFa": "should never have + قسمت سوم برای پشیمانی: I should never have missed…"
+      "explanationFa": "should never have + قسمت سوم برای پشیمانی: I should never have missed…",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.persuasion.ex.06",
@@ -1526,7 +1601,8 @@
       "accepted": [
         "had they known the cost they would have chosen differently"
       ],
-      "explanationFa": "شرطی نوع سوم با وارونگی: Had they known … در آغاز جمله."
+      "explanationFa": "شرطی نوع سوم با وارونگی: Had they known … در آغاز جمله.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.culture.ex.01",
@@ -1542,7 +1618,8 @@
         "have gone"
       ],
       "correctIndex": 0,
-      "explanationFa": "شرطی نوع سوم: if + ماضی بعید، نتیجه با would have + قسمت سوم."
+      "explanationFa": "شرطی نوع سوم: if + ماضی بعید، نتیجه با would have + قسمت سوم.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.culture.ex.02",
@@ -1558,7 +1635,8 @@
         "will be"
       ],
       "correctIndex": 1,
-      "explanationFa": "پس از if only برای آرزو، گذشتهٔ ساده می‌آید و were برای همهٔ فاعل‌ها به کار می‌رود."
+      "explanationFa": "پس از if only برای آرزو، گذشتهٔ ساده می‌آید و were برای همهٔ فاعل‌ها به کار می‌رود.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.culture.ex.03",
@@ -1596,7 +1674,8 @@
         "i wish i had started earlier",
         "i wish i had begun earlier"
       ],
-      "explanationFa": "if only + ماضی بعید برای حسرت گذشته: if only I had started earlier."
+      "explanationFa": "if only + ماضی بعید برای حسرت گذشته: if only I had started earlier.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.culture.ex.06",
@@ -1608,7 +1687,8 @@
         "the film was not as good as i had expected",
         "the movie was not as good as i had expected"
       ],
-      "explanationFa": "ساختار مقایسهٔ منفی: not as good as I had expected."
+      "explanationFa": "ساختار مقایسهٔ منفی: not as good as I had expected.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.phrasal-idioms.ex.01",
@@ -1624,7 +1704,8 @@
         "put up"
       ],
       "correctIndex": 2,
-      "explanationFa": "put off یعنی «به تعویق انداختن»؛ سایر ترکیب‌های put معنی متفاوتی دارند."
+      "explanationFa": "put off یعنی «به تعویق انداختن»؛ سایر ترکیب‌های put معنی متفاوتی دارند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.phrasal-idioms.ex.02",
@@ -1640,7 +1721,8 @@
         "make out"
       ],
       "correctIndex": 3,
-      "explanationFa": "make out یعنی «فهمیدن و تشخیص دادن»."
+      "explanationFa": "make out یعنی «فهمیدن و تشخیص دادن».",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.phrasal-idioms.ex.03",
@@ -1678,7 +1760,8 @@
         "we turned down the offer because it was impractical",
         "we turned down the offer because it was not practical"
       ],
-      "explanationFa": "turn down یعنی «رد کردن»: We turned down the offer."
+      "explanationFa": "turn down یعنی «رد کردن»: We turned down the offer.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.phrasal-idioms.ex.06",
@@ -1689,7 +1772,8 @@
       "accepted": [
         "he ended up becoming a famous writer"
       ],
-      "explanationFa": "end up یعنی «سر از جایی درآوردن»."
+      "explanationFa": "end up یعنی «سر از جایی درآوردن».",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.nuance.ex.01",
@@ -1705,7 +1789,8 @@
         "conclusive"
       ],
       "correctIndex": 0,
-      "explanationFa": "ambiguous یعنی «مبهم و دوپهلو» — همان چیزی که با «هیچ‌کس نفهمید چه می‌گوید» می‌آید."
+      "explanationFa": "ambiguous یعنی «مبهم و دوپهلو» — همان چیزی که با «هیچ‌کس نفهمید چه می‌گوید» می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.nuance.ex.02",
@@ -1721,7 +1806,8 @@
         "tradition"
       ],
       "correctIndex": 1,
-      "explanationFa": "distinction یعنی «تفاوت و تمایز» و با between می‌آید."
+      "explanationFa": "distinction یعنی «تفاوت و تمایز» و با between می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.nuance.ex.03",
@@ -1762,7 +1848,8 @@
         "there is a fine difference between these two words",
         "there is a subtle distinction between these two words"
       ],
-      "explanationFa": "subtle difference/distinction یعنی «تفاوت ظریف»."
+      "explanationFa": "subtle difference/distinction یعنی «تفاوت ظریف».",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.nuance.ex.06",
@@ -1773,7 +1860,8 @@
       "accepted": [
         "her remarks were deliberately vague"
       ],
-      "explanationFa": "deliberately یعنی «عمداً»؛ تکیهٔ جمله روی vague است."
+      "explanationFa": "deliberately یعنی «عمداً»؛ تکیهٔ جمله روی vague است.",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.rhetoric.ex.01",
@@ -1789,7 +1877,8 @@
         "surrender"
       ],
       "correctIndex": 2,
-      "explanationFa": "refute یعنی «رد کردن استدلال»؛ بقیهٔ گزینه‌ها با logic نمی‌خوانند."
+      "explanationFa": "refute یعنی «رد کردن استدلال»؛ بقیهٔ گزینه‌ها با logic نمی‌خوانند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.rhetoric.ex.02",
@@ -1805,7 +1894,8 @@
         "concision"
       ],
       "correctIndex": 3,
-      "explanationFa": "بعد از صفت ملکی its اسم می‌آید: its concision (فشردگی)."
+      "explanationFa": "بعد از صفت ملکی its اسم می‌آید: its concision (فشردگی).",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.rhetoric.ex.03",
@@ -1845,7 +1935,8 @@
         "the speech was so eloquent that it enchanted everyone",
         "the speech was so eloquent that it captivated them all"
       ],
-      "explanationFa": "so + صفت + that برای بیان نتیجه: so eloquent that it captivated everyone."
+      "explanationFa": "so + صفت + that برای بیان نتیجه: so eloquent that it captivated everyone.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.rhetoric.ex.06",
@@ -1856,7 +1947,8 @@
       "accepted": [
         "the senator's rhetoric masked a striking lack of substance"
       ],
-      "explanationFa": "mask یعنی «پنهان کردن»؛ تکیه روی striking است."
+      "explanationFa": "mask یعنی «پنهان کردن»؛ تکیه روی striking است.",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.science.ex.01",
@@ -1872,7 +1964,8 @@
         "resistant"
       ],
       "correctIndex": 0,
-      "explanationFa": "consistent with یعنی «سازگار با»؛ resistant/insistent این معنی را با with نمی‌دهند."
+      "explanationFa": "consistent with یعنی «سازگار با»؛ resistant/insistent این معنی را با with نمی‌دهند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.science.ex.02",
@@ -1888,7 +1981,8 @@
         "speculatively"
       ],
       "correctIndex": 1,
-      "explanationFa": "بعد از حرف اضافهٔ of اسم می‌آید: the subject of speculation."
+      "explanationFa": "بعد از حرف اضافهٔ of اسم می‌آید: the subject of speculation.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.science.ex.03",
@@ -1929,7 +2023,8 @@
         "this hypothesis needs more evidence",
         "this hypothesis requires more evidence"
       ],
-      "explanationFa": "فاعل this hypothesis مفرد است، پس فعل s می‌گیرد: needs more evidence."
+      "explanationFa": "فاعل this hypothesis مفرد است، پس فعل s می‌گیرد: needs more evidence.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.science.ex.06",
@@ -1940,7 +2035,8 @@
       "accepted": [
         "the results corroborate the initial hypothesis"
       ],
-      "explanationFa": "corroborate یعنی «تأیید کردن» — یافته‌ها فرضیهٔ اولیه را تأیید می‌کنند."
+      "explanationFa": "corroborate یعنی «تأیید کردن» — یافته‌ها فرضیهٔ اولیه را تأیید می‌کنند.",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.literature.ex.01",
@@ -1956,7 +2052,8 @@
         "unequivocal"
       ],
       "correctIndex": 2,
-      "explanationFa": "پایانِ بازِ رمان با ambiguous توصیف می‌شود؛ definite نقطهٔ مقابل آن است."
+      "explanationFa": "پایانِ بازِ رمان با ambiguous توصیف می‌شود؛ definite نقطهٔ مقابل آن است.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.literature.ex.02",
@@ -1972,7 +2069,8 @@
         "ironic"
       ],
       "correctIndex": 3,
-      "explanationFa": "لحنِ متناقض با ستایش ظاهری ironic است."
+      "explanationFa": "لحنِ متناقض با ستایش ظاهری ironic است.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c2.literature.ex.03",
@@ -2011,7 +2109,8 @@
         "the story's ending was ironic",
         "the ending was ironic"
       ],
-      "explanationFa": "ironic یعنی کنایه‌آمیز — صفت مناسب برای توصیف پایان داستان."
+      "explanationFa": "ironic یعنی کنایه‌آمیز — صفت مناسب برای توصیف پایان داستان.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.literature.ex.06",
@@ -2022,7 +2121,8 @@
       "accepted": [
         "the novel explores the ambiguity of memory"
       ],
-      "explanationFa": "ambiguity یعنی «ابهام»؛ تکیهٔ جمله روی explores است."
+      "explanationFa": "ambiguity یعنی «ابهام»؛ تکیهٔ جمله روی explores است.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.greetings.ex.07",
@@ -2603,7 +2703,8 @@
         "your",
         "are"
       ],
-      "explanationFa": "My name is … ساختار ثابت معرفی نام است."
+      "explanationFa": "My name is … ساختار ثابت معرفی نام است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.introductions.ex.05",
@@ -2615,7 +2716,8 @@
         "nice to meet you i am from iran",
         "nice to meet you im from iran"
       ],
-      "explanationFa": "به /aɪ/ در I و تکیهٔ Iran گوش کن."
+      "explanationFa": "به /aɪ/ در I و تکیهٔ Iran گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.introductions.ex.06",
@@ -2703,7 +2805,8 @@
         "hot",
         "are"
       ],
-      "explanationFa": "صفت پس از فعل be می‌آید: The weather is cold today."
+      "explanationFa": "صفت پس از فعل be می‌آید: The weather is cold today.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.weather.ex.05",
@@ -2715,7 +2818,8 @@
         "it is raining and the wind is strong",
         "its raining and the wind is strong"
       ],
-      "explanationFa": "به /eɪ/ در raining و /ɪ/ کوتاه در wind گوش کن."
+      "explanationFa": "به /eɪ/ در raining و /ɪ/ کوتاه در wind گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.weather.ex.06",
@@ -2803,7 +2907,8 @@
         "at",
         "the"
       ],
-      "explanationFa": "in my spare time یعنی «در وقت آزادم»."
+      "explanationFa": "in my spare time یعنی «در وقت آزادم».",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.hobbies.ex.05",
@@ -2815,7 +2920,8 @@
         "i am a member of a chess club",
         "im a member of a chess club"
       ],
-      "explanationFa": "به /tʃ/ در chess و تکیهٔ member گوش کن."
+      "explanationFa": "به /tʃ/ در chess و تکیهٔ member گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.hobbies.ex.06",
@@ -2902,7 +3008,8 @@
         "much",
         "too"
       ],
-      "explanationFa": "quiet/calm یعنی آرام؛ فاعل this neighbourhood مفرد است."
+      "explanationFa": "quiet/calm یعنی آرام؛ فاعل this neighbourhood مفرد است.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "a2.city-life.ex.05",
@@ -2914,7 +3021,8 @@
         "there is heavy traffic in the morning",
         "theres heavy traffic in the morning"
       ],
-      "explanationFa": "heavy traffic یعنی «ترافیک سنگین» و در گفتار پیوسته تلفظ می‌شود."
+      "explanationFa": "heavy traffic یعنی «ترافیک سنگین» و در گفتار پیوسته تلفظ می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.city-life.ex.06",
@@ -3001,7 +3109,8 @@
         "in",
         "for"
       ],
-      "explanationFa": "pay off یعنی «تسویه کردن» بدهی: paid off his debt."
+      "explanationFa": "pay off یعنی «تسویه کردن» بدهی: paid off his debt.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.money.ex.05",
@@ -3013,7 +3122,8 @@
         "rent is our biggest monthly expense",
         "rent is our biggest expense"
       ],
-      "explanationFa": "به تکیهٔ biggest و expense گوش کن."
+      "explanationFa": "به تکیهٔ biggest و expense گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.money.ex.06",
@@ -3047,7 +3157,7 @@
       ],
       "correctIndex": 1,
       "skill": "GRAMMAR",
-      "explanationFa": "بعد از should فعل بدون to می‌آید: should get — modalها خودشان نشانهٔ وجه‌اند و to نمی‌خواهند."
+      "explanationFa": "بعد از should فعل بدون to می‌آید: should get — modal‌ها خودشان نشانهٔ وجه‌اند و to نمی‌خواهند."
     },
     {
       "id": "b1.health-lifestyle.ex.02",
@@ -3102,7 +3212,8 @@
         "out",
         "all"
       ],
-      "explanationFa": "قید تکرار every day در پایان جمله می‌آید: I exercise every day."
+      "explanationFa": "قید تکرار every day در پایان جمله می‌آید: I exercise every day.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b1.health-lifestyle.ex.05",
@@ -3114,7 +3225,8 @@
         "most adults need eight hours of sleep",
         "most adults need 8 hours of sleep"
       ],
-      "explanationFa": "به /ɑː/ در adults و پیوند eight hours گوش کن."
+      "explanationFa": "به /ɑː/ در adults و پیوند eight hours گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b1.health-lifestyle.ex.06",
@@ -3203,7 +3315,8 @@
         "in",
         "for"
       ],
-      "explanationFa": "مجهول گذشته: was resolved within two days."
+      "explanationFa": "مجهول گذشته: was resolved within two days.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.problems.ex.05",
@@ -3215,7 +3328,8 @@
         "the item has not been delivered yet",
         "the item hasnt been delivered yet"
       ],
-      "explanationFa": "has not been در گفتار سریع به hasn't been تبدیل می‌شود."
+      "explanationFa": "has not been در گفتار سریع به hasn't been تبدیل می‌شود.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.problems.ex.06",
@@ -3304,7 +3418,8 @@
         "for",
         "from"
       ],
-      "explanationFa": "the evidence غیرقابل‌شمارش و مفرد است: does not support."
+      "explanationFa": "the evidence غیرقابل‌شمارش و مفرد است: does not support.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "b2.research.ex.05",
@@ -3316,7 +3431,8 @@
         "the findings may suggest a link but more data are needed",
         "the findings may suggest a link but more data is needed"
       ],
-      "explanationFa": "به تکیهٔ suggest و شکل جمعِ data گوش کن."
+      "explanationFa": "به تکیهٔ suggest و شکل جمعِ data گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "b2.research.ex.06",
@@ -3404,7 +3520,8 @@
         "should",
         "forgot"
       ],
-      "explanationFa": "must have + قسمت سوم برای استنتاج قطعی در گذشته: must have forgotten."
+      "explanationFa": "must have + قسمت سوم برای استنتاج قطعی در گذشته: must have forgotten.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.inference.ex.05",
@@ -3416,7 +3533,8 @@
         "the report does not say so but it implies a serious risk",
         "the report doesnt say so but it implies a serious risk"
       ],
-      "explanationFa": "به /ɪmˈplaɪz/ در implies و تکیهٔ serious گوش کن."
+      "explanationFa": "به /ɪmˈplaɪz/ در implies و تکیهٔ serious گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.inference.ex.06",
@@ -3505,7 +3623,8 @@
         "criticise",
         "by"
       ],
-      "explanationFa": "مجهول گذشته و بی‌طرف: was criticised — مناسب سبک رسمی."
+      "explanationFa": "مجهول گذشته و بی‌طرف: was criticised — مناسب سبک رسمی.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.register.ex.05",
@@ -3516,7 +3635,8 @@
       "accepted": [
         "we would be grateful for a formal reply at your earliest convenience"
       ],
-      "explanationFa": "at your earliest convenience عبارت رسمیِ «در اسرع وقت» است."
+      "explanationFa": "at your earliest convenience عبارت رسمیِ «در اسرع وقت» است.",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.register.ex.06",
@@ -3603,7 +3723,8 @@
         "therefore",
         "are"
       ],
-      "explanationFa": "however برای تضاد میان دو جمله می‌آید."
+      "explanationFa": "however برای تضاد میان دو جمله می‌آید.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c1.cohesion.ex.05",
@@ -3614,7 +3735,8 @@
       "accepted": [
         "however the evidence is far from conclusive"
       ],
-      "explanationFa": "far from conclusive یعنی «به‌هیچ‌وجه قاطع نیست»."
+      "explanationFa": "far from conclusive یعنی «به‌هیچ‌وجه قاطع نیست».",
+      "skill": "LISTENING"
     },
     {
       "id": "c1.cohesion.ex.06",
@@ -3702,7 +3824,8 @@
         "of",
         "in"
       ],
-      "explanationFa": "follow from یعنی «نتیجه گرفتن از»: does not follow from the premises."
+      "explanationFa": "follow from یعنی «نتیجه گرفتن از»: does not follow from the premises.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.argumentation.ex.05",
@@ -3713,7 +3836,8 @@
       "accepted": [
         "she conceded the point then moved on to the main issue"
       ],
-      "explanationFa": "concede یعنی «پذیرفتن» و move on to یعنی «پرداختن به»."
+      "explanationFa": "concede یعنی «پذیرفتن» و move on to یعنی «پرداختن به».",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.argumentation.ex.06",
@@ -3801,7 +3925,8 @@
         "alone",
         "come"
       ],
-      "explanationFa": "معنا از هم‌نشینی می‌آید، پس با not from the words alone تأکید می‌شود."
+      "explanationFa": "معنا از هم‌نشینی می‌آید، پس با not from the words alone تأکید می‌شود.",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.collocation.ex.05",
@@ -3812,7 +3937,8 @@
       "accepted": [
         "a strong collocation sounds natural to native speakers"
       ],
-      "explanationFa": "a strong collocation یعنی هم‌نشینی طبیعی واژه‌ها که برای natives طبیعی به گوش می‌رسد."
+      "explanationFa": "a strong collocation یعنی هم‌نشینی طبیعی واژه‌ها که برای natives طبیعی به گوش می‌رسد.",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.collocation.ex.06",
@@ -3900,7 +4026,8 @@
         "already",
         "knows"
       ],
-      "explanationFa": "subtext یعنی «معنای پنهان»: the subtext of this scene is that…"
+      "explanationFa": "subtext یعنی «معنای پنهان»: the subtext of this scene is that…",
+      "skill": "VOCABULARY"
     },
     {
       "id": "c2.irony.ex.05",
@@ -3912,7 +4039,8 @@
         "her self-deprecating humour put everyone at ease",
         "her self deprecating humour put everyone at ease"
       ],
-      "explanationFa": "self-deprecating یعنی طنز به خود؛ put everyone at ease یعنی «همه را آرام کردن»."
+      "explanationFa": "self-deprecating یعنی طنز به خود؛ put everyone at ease یعنی «همه را آرام کردن».",
+      "skill": "LISTENING"
     },
     {
       "id": "c2.irony.ex.06",
@@ -3940,7 +4068,8 @@
       "accepted": [
         "nice to meet you sara"
       ],
-      "explanationFa": "به کشش واکهٔ /iː/ در meet و /aɪ/ در nice گوش کن."
+      "explanationFa": "به کشش واکهٔ /iː/ در meet و /aɪ/ در nice گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.daily-routine.ex.08",
@@ -3951,7 +4080,8 @@
       "accepted": [
         "i wake up at seven and take a shower"
       ],
-      "explanationFa": "به واکهٔ دوهجایی /eɪ/ در wake و تکیهٔ usually در جمله گوش کن."
+      "explanationFa": "به واکهٔ دوهجایی /eɪ/ در wake و تکیهٔ usually در جمله گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.family.ex.08",
@@ -3962,7 +4092,8 @@
       "accepted": [
         "my sister lives with our father"
       ],
-      "explanationFa": "به تکیهٔ هجای اول در sister و father و /ə/ کوتاهِ -er گوش کن."
+      "explanationFa": "به تکیهٔ هجای اول در sister و father و /ə/ کوتاهِ -er گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.shopping.ex.08",
@@ -3973,7 +4104,8 @@
       "accepted": [
         "this shirt is cheap and that one is expensive"
       ],
-      "explanationFa": "به /iː/ بلند در cheap و expensive گوش کن."
+      "explanationFa": "به /iː/ بلند در cheap و expensive گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.introductions.ex.07",
@@ -3984,7 +4116,8 @@
       "accepted": [
         "my name is amir and i am from iran"
       ],
-      "explanationFa": "به /eɪ/ در name و تکیهٔ جمله روی name گوش کن."
+      "explanationFa": "به /eɪ/ در name و تکیهٔ جمله روی name گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.weather.ex.07",
@@ -3995,7 +4128,8 @@
       "accepted": [
         "it is cold and rainy this morning"
       ],
-      "explanationFa": "به /eɪ/ در rainy و واکهٔ کوتاه /ɒ/ در hot و /əʊ/ در cold گوش کن."
+      "explanationFa": "به /eɪ/ در rainy و واکهٔ کوتاه /ɒ/ در hot و /əʊ/ در cold گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.articles.ex.01",
@@ -4098,7 +4232,8 @@
       "accepted": [
         "the hotel is next to the bank"
       ],
-      "explanationFa": "به تلفظ the با صدای /ðə/ ضعیف و تکیهٔ hotel گوش کن."
+      "explanationFa": "به تلفظ the با صدای /ðə/ ضعیف و تکیهٔ hotel گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.articles.ex.08",
@@ -4220,7 +4355,8 @@
       "accepted": [
         "there are three children in the park"
       ],
-      "explanationFa": "به پایانِ /n/ در children و تکیهٔ جمله روی three گوش کن."
+      "explanationFa": "به پایانِ /n/ در children و تکیهٔ جمله روی three گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.plurals.ex.08",
@@ -4345,7 +4481,8 @@
       "accepted": [
         "we met them at the station"
       ],
-      "explanationFa": "به /ðəm/ کوتاه در them و تکیهٔ فعلِ met گوش کن."
+      "explanationFa": "به /ðəm/ کوتاه در them و تکیهٔ فعلِ met گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.pronouns.ex.08",
@@ -4466,7 +4603,8 @@
       "accepted": [
         "my father can cook very well"
       ],
-      "explanationFa": "به /kən/ ضعیفِ can در جملهٔ خبری و تکیهٔ cook گوش کن."
+      "explanationFa": "به /kən/ ضعیفِ can در جملهٔ خبری و تکیهٔ cook گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.can.ex.08",
@@ -4588,7 +4726,8 @@
       "accepted": [
         "please close the door"
       ],
-      "explanationFa": "به تکیهٔ close و آزادسازیِ پایانیِ /r/ در door گوش کن."
+      "explanationFa": "به تکیهٔ close و آزادسازیِ پایانیِ /r/ در door گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.imperatives.ex.08",
@@ -4709,7 +4848,8 @@
       "accepted": [
         "what time does the train leave"
       ],
-      "explanationFa": "به تکیهٔ what و time و آهنگ بالاروندهٔ پایان پرسش گوش کن."
+      "explanationFa": "به تکیهٔ what و time و آهنگ بالاروندهٔ پایان پرسش گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a1.question-words.ex.08",
@@ -4831,7 +4971,8 @@
       "accepted": [
         "we went to the coast last weekend"
       ],
-      "explanationFa": "به کششِ /eɪ/ در coast و تکیهٔ weekend گوش کن."
+      "explanationFa": "به کششِ /eɪ/ در coast و تکیهٔ weekend گوش کن.",
+      "skill": "LISTENING"
     },
     {
       "id": "a2.past-simple.ex.08",
@@ -5992,7 +6133,8 @@
         "second"
       ],
       "explanationFa": "برای اشاره به جایگاه یک حرف از the first letter استفاده کن؛ ترتیب جمله: A is the first letter.",
-      "order": 5
+      "order": 5,
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.alphabet.ex.06",
@@ -6004,7 +6146,8 @@
         "the english alphabet has 26 letters"
       ],
       "explanationFa": "به عدد twenty-six گوش کن و /s/ پایانی letters را بشنو — انتهای واژه‌ها در انگلیسی واضح‌تر از فارسی گفته می‌شود.",
-      "order": 6
+      "order": 6,
+      "skill": "LISTENING"
     },
     {
       "id": "a1.alphabet.ex.07",
@@ -6109,7 +6252,8 @@
         "is"
       ],
       "explanationFa": "پرسش ثابت How do you spell …? است؛ بعد از do فعل لخت می‌آید.",
-      "order": 12
+      "order": 12,
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.spelling.ex.05",
@@ -6120,7 +6264,8 @@
         "can you spell your surname please"
       ],
       "explanationFa": "به نام حروف داخل surname و مکث بین واژه‌ها گوش کن؛ هجی‌کردن حرف‌ها را جدا و روشن می‌گوید.",
-      "order": 13
+      "order": 13,
+      "skill": "LISTENING"
     },
     {
       "id": "a1.spelling.ex.06",
@@ -6267,7 +6412,8 @@
         "in"
       ],
       "explanationFa": "برای شمارش هم has و هم there are درست است؛ عدد پیش از اسم جمع می‌آید: twenty students.",
-      "order": 22
+      "order": 22,
+      "skill": "VOCABULARY"
     },
     {
       "id": "a1.numbers.ex.07",
@@ -6295,7 +6441,8 @@
         "there are twenty students in the class"
       ],
       "explanationFa": "به /tw/ در آغاز twenty و تکیه روی هجای اولش گوش کن؛ با twelve اشتباه نکن.",
-      "order": 24
+      "order": 24,
+      "skill": "LISTENING"
     },
     {
       "id": "a1.daily-routine.ex.12",
@@ -44461,6 +44608,1086 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "leave out یعنی حذف کردن؛ what to leave out بند اسمی می‌سازد."
+    },
+    {
+      "id": "a1.alphabet.read.01",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "passage": "My name is Sara. It starts with the letter S. My brother's name is Omar, and it starts with O. We both write our names with a capital letter.",
+      "question": "Which letter does Sara's name start with?",
+      "questionFa": "نام سارا با کدام حرف شروع می‌شود؟",
+      "options": [
+        "O",
+        "M",
+        "S",
+        "A"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "جملهٔ دوم را بخوان: «It starts with the letter S» — حرف اولِ نام، حرف S است."
+    },
+    {
+      "id": "a1.alphabet.read.02",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "My name is Sara. It starts with the letter S. My brother's name is Omar, and it starts with O. We both write our names with a capital letter.",
+      "question": "How do we write the first letter of a name?",
+      "questionFa": "حرف اولِ نام را چگونه می‌نویسیم؟",
+      "options": [
+        "با حرف کوچک",
+        "با عدد",
+        "اصلاً نمی‌نویسیم",
+        "با حرف بزرگ"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "capital letter یعنی «حرف بزرگ»؛ در انگلیسی حرف اولِ نام‌ها همیشه بزرگ نوشته می‌شود."
+    },
+    {
+      "id": "a1.articles.read.01",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 13,
+      "passage": "This is an apple and that is a banana. The apple is on the table. I want an egg, but the eggs are in the fridge.",
+      "question": "Which word comes before 'apple' in the first sentence?",
+      "questionFa": "در جملهٔ اول پیش از apple کدام واژه آمده است؟",
+      "options": [
+        "an",
+        "a",
+        "the",
+        "some"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "apple با صدای صدادار شروع می‌شود، پس an می‌گیرد: an apple."
+    },
+    {
+      "id": "a1.articles.read.02",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "This is an apple and that is a banana. The apple is on the table. I want an egg, but the eggs are in the fridge.",
+      "question": "Where are the eggs?",
+      "questionFa": "تخم‌مرغ‌ها کجا هستند؟",
+      "options": [
+        "روی میز",
+        "در یخچال",
+        "در کیف",
+        "در مغازه"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "جملهٔ آخر می‌گوید «the eggs are in the fridge» — fridge یعنی یخچال."
+    },
+    {
+      "id": "a1.days-months.read.01",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "My week starts on Saturday. I work from Saturday to Wednesday. On Thursday I study English, and on Friday I visit my family. My birthday is in May.",
+      "question": "When does the speaker study English?",
+      "questionFa": "گوینده کِی انگلیسی می‌خواند؟",
+      "options": [
+        "چهارشنبه",
+        "شنبه",
+        "پنجشنبه",
+        "جمعه"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«On Thursday I study English» — Thursday یعنی پنجشنبه."
+    },
+    {
+      "id": "a1.days-months.read.02",
+      "lessonId": "a1.days-months.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "My week starts on Saturday. I work from Saturday to Wednesday. On Thursday I study English, and on Friday I visit my family. My birthday is in May.",
+      "question": "Which month is the speaker's birthday in?",
+      "questionFa": "تولد گوینده در کدام ماه است؟",
+      "options": [
+        "March",
+        "August",
+        "July",
+        "May"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "جملهٔ آخر: «My birthday is in May» — May یعنی ماه مه (اردیبهشت)."
+    },
+    {
+      "id": "a1.food-drinks.read.01",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "For breakfast I eat bread, cheese and an egg. I drink tea, not coffee. At lunch I have rice with chicken. In the evening I only drink water.",
+      "question": "What does the speaker drink at breakfast?",
+      "questionFa": "گوینده در صبحانه چه می‌نوشد؟",
+      "options": [
+        "چای",
+        "قهوه",
+        "شیر",
+        "آب"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«I drink tea, not coffee» — tea یعنی چای؛ قهوه را صریحاً رد می‌کند."
+    },
+    {
+      "id": "a1.food-drinks.read.02",
+      "lessonId": "a1.food-drinks.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "For breakfast I eat bread, cheese and an egg. I drink tea, not coffee. At lunch I have rice with chicken. In the evening I only drink water.",
+      "question": "What is for lunch?",
+      "questionFa": "ناهار چیست؟",
+      "options": [
+        "نان و پنیر",
+        "برنج با مرغ",
+        "سوپ",
+        "میوه"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«At lunch I have rice with chicken» — rice برنج و chicken مرغ است."
+    },
+    {
+      "id": "a1.where-i-live.read.01",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "multiple_choice",
+      "order": 14,
+      "passage": "I live in a small flat near the park. My flat is on the second floor. There is a bakery under my flat, and a bus stop in front of the building. I walk to work every morning.",
+      "question": "Where is the bakery?",
+      "questionFa": "نانوایی کجاست؟",
+      "options": [
+        "طبقهٔ دوم",
+        "روبروی پارک",
+        "زیر آپارتمان",
+        "کنار محل کار"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«a bakery under my flat» — under یعنی زیر."
+    },
+    {
+      "id": "a1.where-i-live.read.02",
+      "lessonId": "a1.where-i-live.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "I live in a small flat near the park. My flat is on the second floor. There is a bakery under my flat, and a bus stop in front of the building. I walk to work every morning.",
+      "question": "How does the speaker go to work?",
+      "questionFa": "گوینده چگونه به سر کار می‌رود؟",
+      "options": [
+        "با اتوبوس",
+        "با ماشین",
+        "با دوچرخه",
+        "پیاده"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«I walk to work every morning» — walk یعنی پیاده رفتن؛ نزدیکی خانه دلیلش است."
+    },
+    {
+      "id": "a2.directions.read.01",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Go straight along this street and take the second turning on the right. The bank is next to the pharmacy. If you reach the roundabout, you have gone too far.",
+      "question": "Which turning should you take?",
+      "questionFa": "کدام پیچ را باید بگیرید؟",
+      "options": [
+        "دومین پیچ سمت راست",
+        "اولین پیچ سمت چپ",
+        "دومین پیچ سمت چپ",
+        "اولین پیچ سمت راست"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«the second turning on the right» — second دومین و on the right سمت راست است."
+    },
+    {
+      "id": "a2.directions.read.02",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Go straight along this street and take the second turning on the right. The bank is next to the pharmacy. If you reach the roundabout, you have gone too far.",
+      "question": "What does it mean if you reach the roundabout?",
+      "questionFa": "اگر به میدان برسید یعنی چه؟",
+      "options": [
+        "درست آمده‌اید",
+        "خیلی دور شده‌اید",
+        "باید برگردید و از اول بروید",
+        "به بانک رسیده‌اید"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«you have gone too far» یعنی از مقصد گذشته‌اید؛ این جمله‌ٔ هشدارِ راهنماست."
+    },
+    {
+      "id": "a2.plane-ticket.read.01",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "A return ticket to Istanbul costs 180 euros. A single is 100 euros. The morning flight leaves at 7:40, but you must be at the airport two hours before it. Check-in closes forty minutes before departure.",
+      "question": "How much does a single ticket cost?",
+      "questionFa": "بلیت یک‌طرفه چند است؟",
+      "options": [
+        "۱۸۰ یورو",
+        "۸۰ یورو",
+        "۱۰۰ یورو",
+        "۱۴۰ یورو"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«A single is 100 euros» — single یعنی یک‌طرفه؛ ۱۸۰ یورو بهای بلیت رفت‌وبرگشت است."
+    },
+    {
+      "id": "a2.plane-ticket.read.02",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "A return ticket to Istanbul costs 180 euros. A single is 100 euros. The morning flight leaves at 7:40, but you must be at the airport two hours before it. Check-in closes forty minutes before departure.",
+      "question": "When does check-in close?",
+      "questionFa": "پذیرش بلیت کِی بسته می‌شود؟",
+      "options": [
+        "دو ساعت پیش از پرواز",
+        "نیم ساعت پیش از پرواز",
+        "هفت و چهل دقیقه",
+        "چهل دقیقه پیش از پرواز"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«Check-in closes forty minutes before departure» — قبل از پرواز، چهل دقیقه."
+    },
+    {
+      "id": "a2.payments.read.01",
+      "lessonId": "a2.payments.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "You can pay by card or in cash. The shop does not accept cheques. If you pay by card, the machine asks for your PIN. Keep the receipt: you need it for a refund.",
+      "question": "Which way of paying is NOT accepted?",
+      "questionFa": "کدام روش پرداخت پذیرفته نمی‌شود؟",
+      "options": [
+        "چک",
+        "نقدی",
+        "کارت",
+        "پرداخت با دستگاه"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«The shop does not accept cheques» — cheque یعنی چک."
+    },
+    {
+      "id": "a2.payments.read.02",
+      "lessonId": "a2.payments.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "You can pay by card or in cash. The shop does not accept cheques. If you pay by card, the machine asks for your PIN. Keep the receipt: you need it for a refund.",
+      "question": "What do you need if you want your money back?",
+      "questionFa": "برای پس‌گرفتن پول به چه چیزی نیاز دارید؟",
+      "options": [
+        "رمز کارت",
+        "رسید",
+        "تلفن فروشگاه",
+        "مدرک شناسایی"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«Keep the receipt: you need it for a refund» — receipt رسید و refund بازگرداندن پول است."
+    },
+    {
+      "id": "a2.emails.read.01",
+      "lessonId": "a2.emails.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Start your email with 'Dear Mr Karimi'. Say why you are writing in the first sentence. Keep it short, and end with 'Best regards'. Read it once more before you send it.",
+      "question": "How should an email to Mr Karimi begin?",
+      "questionFa": "ایمیل به آقای کریمی با چه عبارتی شروع می‌شود؟",
+      "options": [
+        "Hi Karimi",
+        "Best regards",
+        "Dear Mr Karimi",
+        "To Karimi"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«Dear + Mr + family name» شکل رسمیِ آغاز ایمیل است؛ Best regards پایان نامه است."
+    },
+    {
+      "id": "a2.emails.read.02",
+      "lessonId": "a2.emails.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Start your email with 'Dear Mr Karimi'. Say why you are writing in the first sentence. Keep it short, and end with 'Best regards'. Read it once more before you send it.",
+      "question": "What should you do before sending?",
+      "questionFa": "پیش از فرستادن چه باید کرد؟",
+      "options": [
+        "نام خود را ننویسید",
+        "موضوع را حذف کنید",
+        "ایمیل را بلندتر بنویسید",
+        "ایمیل را یک بار دیگر بخوانید"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«Read it once more before you send it» — یک بار دیگر خواندن، اشتباه‌ها را پیش از ارسال پیدا می‌کند."
+    },
+    {
+      "id": "a2.everyday-problems.read.01",
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The tap in my kitchen was leaking, so I called a plumber. He came the same afternoon and changed a small washer. The bill was not as high as I expected.",
+      "question": "Why did the speaker call a plumber?",
+      "questionFa": "چرا گوینده لوله‌کش خبر کرد؟",
+      "options": [
+        "چون شیر آب چکه می‌کرد",
+        "چون آب گرم نداشت",
+        "چون لوله ترکیده بود",
+        "چون دستشویی خراب بود"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«The tap was leaking» — leak یعنی چکه کردن؛ tap شیر آب است."
+    },
+    {
+      "id": "a2.everyday-problems.read.02",
+      "lessonId": "a2.everyday-problems.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The tap in my kitchen was leaking, so I called a plumber. He came the same afternoon and changed a small washer. The bill was not as high as I expected.",
+      "question": "How was the bill compared with the speaker's expectation?",
+      "questionFa": "صورت‌حساب در مقایسه با انتظار گوینده چگونه بود؟",
+      "options": [
+        "بیشتر از انتظار",
+        "کمتر از انتظار",
+        "دقیقاً همان‌قدر",
+        "گوینده چیزی نمی‌گوید"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«not as high as I expected» یعنی از آنچه فکر می‌کرد، کمتر بود."
+    },
+    {
+      "id": "b1.news.read.01",
+      "lessonId": "b1.news.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "passage": "The city council approved the new metro line on Tuesday. Construction will begin in spring and should take four years. Officials said the line will serve about 200,000 passengers a day. Some residents complain that two neighbourhoods were left out of the plan.",
+      "question": "When will construction begin?",
+      "questionFa": "ساخت‌وساز کِی آغاز می‌شود؟",
+      "options": [
+        "پاییز",
+        "تابستان",
+        "بهار",
+        "بلافاصله پس از تصویب"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«Construction will begin in spring» — spring یعنی بهار."
+    },
+    {
+      "id": "b1.news.read.02",
+      "lessonId": "b1.news.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The city council approved the new metro line on Tuesday. Construction will begin in spring and should take four years. Officials said the line will serve about 200,000 passengers a day. Some residents complain that two neighbourhoods were left out of the plan.",
+      "question": "What are the residents complaining about?",
+      "questionFa": "ساکنان از چه شکایت دارند؟",
+      "options": [
+        "هزینهٔ بلیت",
+        "سرعت قطارها",
+        "مدت ساخت‌وساز",
+        "جا ماندن دو محله از طرح"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«two neighbourhoods were left out of the plan» — left out یعنی جا ماندن، حذف شدن."
+    },
+    {
+      "id": "b1.job-hunting.read.01",
+      "lessonId": "b1.job-hunting.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Since I lost my job in March, I have applied for more than thirty positions. Two companies invited me for an interview, but neither offered me the job. I now spend two hours a day improving my CV and practising answers.",
+      "question": "How many interviews did the speaker have?",
+      "questionFa": "گوینده چند مصاحبه داشت؟",
+      "options": [
+        "دو",
+        "یکی",
+        "سی",
+        "هیچ‌کدام"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«Two companies invited me for an interview» — تعداد شرکت‌ها دو بود."
+    },
+    {
+      "id": "b1.job-hunting.read.02",
+      "lessonId": "b1.job-hunting.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Since I lost my job in March, I have applied for more than thirty positions. Two companies invited me for an interview, but neither offered me the job. I now spend two hours a day improving my CV and practising answers.",
+      "question": "What does the speaker do every day now?",
+      "questionFa": "گوینده اکنون هر روز چه می‌کند؟",
+      "options": [
+        "کار تمام‌وقت می‌کند",
+        "روی رزومه و تمرین پاسخ‌ها کار می‌کند",
+        "در دو شرکت کار می‌کند",
+        "به دنبال خانه است"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«improving my CV and practising answers» — رزومه (CV) و تمرین پاسخ‌های مصاحبه."
+    },
+    {
+      "id": "b1.conflicts.read.01",
+      "lessonId": "b1.conflicts.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "When two colleagues disagree, the first step is to let each side finish without interrupting. Repeating the other person's point shows you have understood it. Only then should you look for a solution that both can accept.",
+      "question": "What is the first step when colleagues disagree?",
+      "questionFa": "نخستین گام هنگام اختلاف همکاران چیست؟",
+      "options": [
+        "پیدا کردن راه‌حل",
+        "داوری مدیر",
+        "گوش دادن بی‌وقفه به هر دو طرف",
+        "تغییر موضوع"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«let each side finish without interrupting» — interrupting یعنی میان حرف پریدن."
+    },
+    {
+      "id": "b1.conflicts.read.02",
+      "lessonId": "b1.conflicts.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "When two colleagues disagree, the first step is to let each side finish without interrupting. Repeating the other person's point shows you have understood it. Only then should you look for a solution that both can accept.",
+      "question": "Why repeat the other person's point?",
+      "questionFa": "چرا نکتهٔ طرف مقابل را تکرار می‌کنیم؟",
+      "options": [
+        "برای تغییر نظر او",
+        "برای طولانی‌تر شدن گفتگو",
+        "برای پایان دادن به بحث",
+        "برای نشان دادن اینکه فهمیده‌ایم"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«shows you have understood it» — تکرار، نشانهٔ فهم است، نه پذیرش."
+    },
+    {
+      "id": "b1.eating-habits.read.01",
+      "lessonId": "b1.eating-habits.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Ten years ago, my family ate rice with meat almost every evening. Since my father's heart operation, we have eaten vegetables three times a week. We still eat meat, but much less, and we walk together after dinner.",
+      "question": "What changed after the operation?",
+      "questionFa": "پس از عمل جراحی چه تغییر کرد؟",
+      "options": [
+        "سبزیجات سه بار در هفته به برنامه اضافه شد",
+        "خانواده گوشت را کنار گذاشت",
+        "آن‌ها دیگر شام نمی‌خورند",
+        "پدرشان آشپزی می‌کند"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«we have eaten vegetables three times a week» — سه بار در هفته؛ گوشت حذف نشده، کم شده است."
+    },
+    {
+      "id": "b1.eating-habits.read.02",
+      "lessonId": "b1.eating-habits.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Ten years ago, my family ate rice with meat almost every evening. Since my father's heart operation, we have eaten vegetables three times a week. We still eat meat, but much less, and we walk together after dinner.",
+      "question": "What does the family still do?",
+      "questionFa": "خانواده هنوز چه کاری می‌کند؟",
+      "options": [
+        "هر شب برنج و گوشت می‌خورد",
+        "گوشت می‌خورد، اما کمتر",
+        "پیاده‌روی را کنار گذاشته",
+        "سبزیجات نمی‌خورد"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«We still eat meat, but much less» — still یعنی هنوز."
+    },
+    {
+      "id": "b1.social-issues.read.01",
+      "lessonId": "b1.social-issues.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Rents in the city have risen faster than wages. Many young people now share flats with two or three friends. The mayor has promised to build cheap housing, but the first blocks are not expected before next year.",
+      "question": "Why do many young people share flats?",
+      "questionFa": "چرا بسیاری از جوانان آپارتمان مشترک می‌گیرند؟",
+      "options": [
+        "چون تنها زندگی کردن را دوست ندارند",
+        "چون آپارتمان‌ها خالی مانده‌اند",
+        "چون اجاره‌ها تندتر از دستمزد بالا رفته‌اند",
+        "چون شهردار این را خواسته است"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«Rents have risen faster than wages» — علت، فاصلهٔ اجاره و دستمزد است."
+    },
+    {
+      "id": "b1.social-issues.read.02",
+      "lessonId": "b1.social-issues.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Rents in the city have risen faster than wages. Many young people now share flats with two or three friends. The mayor has promised to build cheap housing, but the first blocks are not expected before next year.",
+      "question": "When are the first cheap housing blocks expected?",
+      "questionFa": "نخستین بلوک‌های مسکن ارزان کِی انتظار می‌رود؟",
+      "options": [
+        "امسال",
+        "هیچ‌وقت",
+        "ماه آینده",
+        "سال آینده"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«not expected before next year» — پیش از سال آینده انتظار نمی‌رود."
+    },
+    {
+      "id": "b2.interview.read.01",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The interviewer opened with a question I had not prepared: 'Tell me about a decision you regret.' I described a project I had rushed, and what I would do differently. She wrote something down, then asked how I handled the deadline.",
+      "question": "Which question surprised the candidate?",
+      "questionFa": "کدام پرسش نامزد را غافلگیر کرد؟",
+      "options": [
+        "پرسشی دربارهٔ تصمیمی که از آن پشیمان است",
+        "پرسشی دربارهٔ حقوق",
+        "پرسشی دربارهٔ ساعت کاری",
+        "پرسشی دربارهٔ مدرک تحصیلی"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«a question I had not prepared» دربارهٔ «a decision you regret» بود — پشیمانی."
+    },
+    {
+      "id": "b2.interview.read.02",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "multiple_choice",
+      "order": 18,
+      "passage": "The interviewer opened with a question I had not prepared: 'Tell me about a decision you regret.' I described a project I had rushed, and what I would do differently. She wrote something down, then asked how I handled the deadline.",
+      "question": "What did the interviewer ask next?",
+      "questionFa": "مصاحبه‌گر سپس چه پرسید؟",
+      "options": [
+        "دربارهٔ تحصیلات",
+        "دربارهٔ مدیریت مهلت",
+        "دربارهٔ تیم قبلی",
+        "دربارهٔ سفر"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«asked how I handled the deadline» — deadline یعنی مهلت نهایی."
+    },
+    {
+      "id": "b2.leadership.read.01",
+      "lessonId": "b2.leadership.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "A good team leader does not make every decision. She makes the goal clear, gives each person room to choose the method, and reviews the result rather than the steps. When something fails, she asks what the team learned before she asks who is to blame.",
+      "question": "What does the leader review?",
+      "questionFa": "رهبر چه چیزی را بررسی می‌کند؟",
+      "options": [
+        "مراحل کار",
+        "حضور و غیاب",
+        "نتیجه، نه مراحل",
+        "ساعت کاری افراد"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«reviews the result rather than the steps» — result بر steps ترجیح دارد."
+    },
+    {
+      "id": "b2.leadership.read.02",
+      "lessonId": "b2.leadership.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "A good team leader does not make every decision. She makes the goal clear, gives each person room to choose the method, and reviews the result rather than the steps. When something fails, she asks what the team learned before she asks who is to blame.",
+      "question": "What does she ask first after a failure?",
+      "questionFa": "پس از یک شکست نخست چه می‌پرسد؟",
+      "options": [
+        "چه کسی مقصر است",
+        "چه کسی تسلیم شد",
+        "چه‌قدر ضرر داشت",
+        "تیم چه آموخت"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«asks what the team learned before … who is to blame» — یادگیری پیش از سرزنش."
+    },
+    {
+      "id": "b2.education.read.01",
+      "lessonId": "b2.education.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Finland's schools start formal reading later than most countries, yet their results remain strong. Teachers there design their own lessons and are trusted to assess students. Critics argue that the model depends on small classes and well-trained staff, which poorer countries cannot afford.",
+      "question": "What do Finnish teachers do?",
+      "questionFa": "معلمان فنلاندی چه می‌کنند؟",
+      "options": [
+        "خودشان درس طراحی می‌کنند و دانش‌آموز را می‌سنجند",
+        "فقط کتاب درسی را می‌خوانند",
+        "آزمون سراسری برگزار می‌کنند",
+        "زودتر از همه نوشتن را شروع می‌کنند"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«design their own lessons and are trusted to assess students» — طراحی و سنجش، هر دو."
+    },
+    {
+      "id": "b2.education.read.02",
+      "lessonId": "b2.education.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Finland's schools start formal reading later than most countries, yet their results remain strong. Teachers there design their own lessons and are trusted to assess students. Critics argue that the model depends on small classes and well-trained staff, which poorer countries cannot afford.",
+      "question": "What is the critics' argument?",
+      "questionFa": "استدلال منتقدان چیست؟",
+      "options": [
+        "نتیجه‌ها ضعیف است",
+        "مدل به کلاس کوچک و معلم ورزیده وابسته است",
+        "خواندن دیر شروع می‌شود",
+        "معلمان آزادی زیادی ندارند"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«depends on small classes and well-trained staff» — وابستگی به شرایط پرهزینه."
+    },
+    {
+      "id": "b2.debate.read.01",
+      "lessonId": "b2.debate.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "In a formal debate, each speaker states a claim, supports it with evidence, and answers one question from the other side. Interrupting is not allowed. The judge scores the quality of the reasoning, not the loudness of the speaker.",
+      "question": "What must each speaker do?",
+      "questionFa": "هر سخنران باید چه کار کند؟",
+      "options": [
+        "فقط ادعا را بگوید",
+        "به همهٔ پرسش‌ها پاسخ دهد",
+        "ادعا، شواهد و پاسخ به یک پرسش",
+        "سخنران مقابل را قطع کند"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«states a claim, supports it with evidence, and answers one question» — سه کار با هم."
+    },
+    {
+      "id": "b2.debate.read.02",
+      "lessonId": "b2.debate.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "In a formal debate, each speaker states a claim, supports it with evidence, and answers one question from the other side. Interrupting is not allowed. The judge scores the quality of the reasoning, not the loudness of the speaker.",
+      "question": "What does the judge score?",
+      "questionFa": "داور چه چیزی را نمره می‌دهد؟",
+      "options": [
+        "بلندی صدا",
+        "سرعت سخن",
+        "تعداد کلمات",
+        "کیفیت استدلال"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«the quality of the reasoning, not the loudness» — استدلال، نه بلندی صدا."
+    },
+    {
+      "id": "b2.viewpoints.read.01",
+      "lessonId": "b2.viewpoints.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Before rejecting an argument, summarise it so well that its author would agree with your summary. Then check whether the evidence actually supports the conclusion. Many disagreements turn out to be about values, not facts.",
+      "question": "What should you do before rejecting an argument?",
+      "questionFa": "پیش از رد کردن یک استدلال چه باید کرد؟",
+      "options": [
+        "خلاصه‌ای نوشت که خودِ نویسنده بپذیرد",
+        "شواهد را نادیده گرفت",
+        "نویسنده را نقد کرد",
+        "به سراغ نتیجه رفت"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«summarise it so well that its author would agree» — خلاصهٔ منصفانه، پیش‌شرط نقد است."
+    },
+    {
+      "id": "b2.viewpoints.read.02",
+      "lessonId": "b2.viewpoints.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Before rejecting an argument, summarise it so well that its author would agree with your summary. Then check whether the evidence actually supports the conclusion. Many disagreements turn out to be about values, not facts.",
+      "question": "What are many disagreements really about?",
+      "questionFa": "بسیاری از اختلاف‌ها در واقع دربارهٔ چیست؟",
+      "options": [
+        "واقعیت‌ها",
+        "ارزش‌ها",
+        "آمار",
+        "تعریف واژه‌ها"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«about values, not facts» — ارزش‌ها، نه واقعیت‌ها."
+    },
+    {
+      "id": "c1.persuasion.read.01",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "A persuasive speaker rarely begins with the strongest claim. She first establishes common ground, concedes the part of the opposing case that is true, and only then introduces her evidence. The concession costs little and buys the audience's attention for what follows.",
+      "question": "Why does the speaker concede a point?",
+      "questionFa": "چرا سخنران بخشی از ادعای طرف مقابل را می‌پذیرد؟",
+      "options": [
+        "چون از موضع خود مطمئن نیست",
+        "چون شواهدی ندارد",
+        "چون هزینهٔ کمی دارد و توجه مخاطب را می‌خرد",
+        "چون بحث را می‌خواهد پایان دهد"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«costs little and buys the audience's attention» — امتیاز کوچک، اعتماد بزرگ‌تر."
+    },
+    {
+      "id": "c1.persuasion.read.02",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 18,
+      "passage": "A persuasive speaker rarely begins with the strongest claim. She first establishes common ground, concedes the part of the opposing case that is true, and only then introduces her evidence. The concession costs little and buys the audience's attention for what follows.",
+      "question": "When does she introduce her evidence?",
+      "questionFa": "شواهدش را کِی ارائه می‌کند؟",
+      "options": [
+        "در همان جملهٔ اول",
+        "هرگز",
+        "در پایان سخنرانی",
+        "پس از ایجاد زمینهٔ مشترک و امتیاز دادن"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«and only then introduces her evidence» — only then یعنی تنها پس از آن مراحل."
+    },
+    {
+      "id": "c1.policy.read.01",
+      "lessonId": "c1.policy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The proposal would cap short-term rentals at ninety nights a year. Supporters argue that it returns housing to long-term residents; opponents warn that it will reduce tourism revenue and is difficult to enforce. The committee has asked for a costed impact assessment before the second reading.",
+      "question": "What would the cap limit?",
+      "questionFa": "این سقف چه چیزی را محدود می‌کند؟",
+      "options": [
+        "اجارهٔ کوتاه‌مدت به نود شب در سال",
+        "قیمت هتل‌ها",
+        "تعداد گردشگران",
+        "مدت اجارهٔ بلندمدت"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«cap short-term rentals at ninety nights a year» — cap یعنی سقف گذاشتن."
+    },
+    {
+      "id": "c1.policy.read.02",
+      "lessonId": "c1.policy.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The proposal would cap short-term rentals at ninety nights a year. Supporters argue that it returns housing to long-term residents; opponents warn that it will reduce tourism revenue and is difficult to enforce. The committee has asked for a costed impact assessment before the second reading.",
+      "question": "What has the committee requested?",
+      "questionFa": "کمیته چه چیزی خواسته است؟",
+      "options": [
+        "قرائت دوم فوری",
+        "ارزیابی اثر همراه با برآورد هزینه",
+        "تعطیلی بازار اجاره",
+        "نظر دادگاه"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«a costed impact assessment» — ارزیابی اثر با هزینهٔ برآوردشده، پیش از قرائت دوم."
+    },
+    {
+      "id": "c1.statistics.read.01",
+      "lessonId": "c1.statistics.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "A survey of 400 readers found that 70% preferred the new layout. The sample was drawn from people who had already subscribed to the magazine, so the result describes subscribers, not readers in general. Reporting it as 'most readers' overstates what the data can support.",
+      "question": "What is the flaw in the claim?",
+      "questionFa": "ایراد این ادعا چیست؟",
+      "options": [
+        "هفتاد درصد عدد بالایی است",
+        "تعداد نمونه بسیار زیاد است",
+        "نمونه فقط مشترکان را نمایندگی می‌کند",
+        "طرح پرسشنامه نامشخص است"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«describes subscribers, not readers in general» — نمونه از جمعیت هدف گسترده‌تر گرفته نشده."
+    },
+    {
+      "id": "c1.statistics.read.02",
+      "lessonId": "c1.statistics.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "A survey of 400 readers found that 70% preferred the new layout. The sample was drawn from people who had already subscribed to the magazine, so the result describes subscribers, not readers in general. Reporting it as 'most readers' overstates what the data can support.",
+      "question": "Which wording would be accurate?",
+      "questionFa": "کدام بیان دقیق است؟",
+      "options": [
+        "همهٔ خوانندگان",
+        "هیچ‌کس",
+        "بیشتر مردم",
+        "بیشتر مشترکان"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "داده فقط دربارهٔ مشترکان است، پس «بیشتر مشترکان» ادعای درست است."
+    },
+    {
+      "id": "c1.org-culture.read.01",
+      "lessonId": "c1.org-culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "When a company rewards only individual output, employees stop helping each other. The behaviour is rational: helping costs time and earns no credit. Managers who want collaboration must therefore measure it, for example by asking teams what they learned from a colleague.",
+      "question": "Why do employees stop helping each other?",
+      "questionFa": "چرا کارمندان از کمک به هم دست می‌کشند؟",
+      "options": [
+        "چون کمک پاداش نمی‌گیرد و وقت می‌برد",
+        "چون از هم خوششان نمی‌آید",
+        "چون مدیران منع کرده‌اند",
+        "چون کارشان کم شده است"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«helping costs time and earns no credit» — credit یعنی اعتبار و پاداش."
+    },
+    {
+      "id": "c1.org-culture.read.02",
+      "lessonId": "c1.org-culture.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "When a company rewards only individual output, employees stop helping each other. The behaviour is rational: helping costs time and earns no credit. Managers who want collaboration must therefore measure it, for example by asking teams what they learned from a colleague.",
+      "question": "How can managers measure collaboration?",
+      "questionFa": "مدیران همکاری را چگونه می‌سنجند؟",
+      "options": [
+        "با شمارش ساعت حضور",
+        "با پرسیدن از تیم‌ها که از همکاران چه آموختند",
+        "با کاهش جلسات",
+        "با مقایسهٔ حقوق"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«asking teams what they learned from a colleague» — سنجش، نه فرض."
+    },
+    {
+      "id": "c1.specialist-presentations.read.01",
+      "lessonId": "c1.specialist-presentations.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "Specialists lose audiences for two reasons: they define terms the audience already knows, and they skip the step that links method to conclusion. A single slide that states the question, the method and the finding prevents both. Detail belongs in an appendix, not in the opening.",
+      "question": "What do specialists often skip?",
+      "questionFa": "متخصصان اغلب چه چیزی را جا می‌اندازند؟",
+      "options": [
+        "تعریف واژه‌ها",
+        "معرفی خودشان",
+        "پیوند میان روش و نتیجه",
+        "فهرست منابع"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«skip the step that links method to conclusion» — حلقهٔ گمشده میان روش و نتیجه."
+    },
+    {
+      "id": "c1.specialist-presentations.read.02",
+      "lessonId": "c1.specialist-presentations.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "Specialists lose audiences for two reasons: they define terms the audience already knows, and they skip the step that links method to conclusion. A single slide that states the question, the method and the finding prevents both. Detail belongs in an appendix, not in the opening.",
+      "question": "Where does detail belong?",
+      "questionFa": "جزئیات کجا باید باشد؟",
+      "options": [
+        "در آغاز ارائه",
+        "در پرسش‌وپاسخ شفاهی",
+        "در اسلاید اول",
+        "در پیوست"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«Detail belongs in an appendix, not in the opening» — پیوست، نه آغاز."
+    },
+    {
+      "id": "c2.nuance.read.01",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The report describes the delay as 'regrettable'. Regrettable acknowledges a problem without admitting fault; 'unacceptable' would assign blame, and 'unfortunate' would suggest chance. The choice of adjective is the report's argument.",
+      "question": "What does 'regrettable' avoid?",
+      "questionFa": "واژهٔ «regrettable» از چه چیزی پرهیز می‌کند؟",
+      "options": [
+        "پذیرش تقصیر",
+        "اعتراف به وجود مشکل",
+        "ذکر تأخیر",
+        "تعیین زمان"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«without admitting fault» — fault یعنی تقصیر؛ واژه مشکل را می‌پذیرد، تقصیر را نه."
+    },
+    {
+      "id": "c2.nuance.read.02",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The report describes the delay as 'regrettable'. Regrettable acknowledges a problem without admitting fault; 'unacceptable' would assign blame, and 'unfortunate' would suggest chance. The choice of adjective is the report's argument.",
+      "question": "What does the adjective choice reveal?",
+      "questionFa": "انتخاب این صفت چه چیزی را آشکار می‌کند؟",
+      "options": [
+        "نویسنده اطلاعات ندارد",
+        "استدلال پنهان گزارش",
+        "تأخیر بی‌اهمیت است",
+        "گزارش تاریخ ندارد"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«The choice of adjective is the report's argument» — بار ارزشی واژه، خودِ استدلال است."
+    },
+    {
+      "id": "c2.discourse.read.01",
+      "lessonId": "c2.discourse.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The speaker uses 'we' eleven times and 'they' only twice. In the transcript, every 'they' appears in a sentence about criticism. The pronoun pattern does the persuasive work that the argument never states openly.",
+      "question": "How is 'they' used?",
+      "questionFa": "ضمیر «they» چگونه به کار رفته است؟",
+      "options": [
+        "در همهٔ جمله‌ها",
+        "فقط در جملهٔ اول",
+        "فقط در جمله‌های انتقادی",
+        "هرگز"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«every 'they' appears in a sentence about criticism» — کاربرد ضمیر، منظم و جهت‌دار است."
+    },
+    {
+      "id": "c2.discourse.read.02",
+      "lessonId": "c2.discourse.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The speaker uses 'we' eleven times and 'they' only twice. In the transcript, every 'they' appears in a sentence about criticism. The pronoun pattern does the persuasive work that the argument never states openly.",
+      "question": "What does the pronoun pattern accomplish?",
+      "questionFa": "این الگوی ضمیر چه کاری می‌کند؟",
+      "options": [
+        "تعریف واژه‌های کلیدی",
+        "افزایش دقت آمار",
+        "کوتاه‌کردن متن",
+        "متقاعدسازی‌ای که آشکارا گفته نمی‌شود"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«does the persuasive work that the argument never states openly» — اثر بلاغی پنهان."
+    },
+    {
+      "id": "c2.argument-analysis.read.01",
+      "lessonId": "c2.argument-analysis.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The author attacks the funding body rather than the study's method. This is a circumstantial ad hominem: the funding may indeed be relevant, but relevance is not proof of error. The study could still be sound, and the author has not shown otherwise.",
+      "question": "Which fallacy does the author commit?",
+      "questionFa": "نویسنده مرتکب کدام مغالطه شده است؟",
+      "options": [
+        "حمله به منبع به‌جای نقد روش",
+        "تعمیم شتاب‌زده",
+        "مصادره به مطلوب",
+        "خلط علت و معلول"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«attacks the funding body rather than the study's method» — همان ad hominem موقعیتی است."
+    },
+    {
+      "id": "c2.argument-analysis.read.02",
+      "lessonId": "c2.argument-analysis.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The author attacks the funding body rather than the study's method. This is a circumstantial ad hominem: the funding may indeed be relevant, but relevance is not proof of error. The study could still be sound, and the author has not shown otherwise.",
+      "question": "What remains unproven?",
+      "questionFa": "چه چیزی اثبات نشده باقی می‌ماند؟",
+      "options": [
+        "منبع تأمین بودجه",
+        "خطا بودن مطالعه",
+        "وجود روش در مطالعه",
+        "نیت نویسنده"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«relevance is not proof of error» — بودنِ ارتباط، خطا بودن را ثابت نمی‌کند."
+    },
+    {
+      "id": "c2.translation.read.01",
+      "lessonId": "c2.translation.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "A literal translation of the proverb loses its rhythm but keeps its meaning. A freer version keeps the rhythm and replaces the image, so the reader feels the effect while the metaphor changes. Which is right depends on whether the reader needs the source culture or the effect.",
+      "question": "What does the freer version sacrifice?",
+      "questionFa": "نسخهٔ آزادتر چه چیزی را قربانی می‌کند؟",
+      "options": [
+        "ریتم متن",
+        "معنا",
+        "تصویر اصلی (استعاره)",
+        "اثر بر خواننده"
+      ],
+      "correctIndex": 2,
+      "skill": "READING",
+      "explanationFa": "«replaces the image» — تصویرِ استعاری تغییر می‌کند، هرچند اثر می‌ماند."
+    },
+    {
+      "id": "c2.translation.read.02",
+      "lessonId": "c2.translation.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "A literal translation of the proverb loses its rhythm but keeps its meaning. A freer version keeps the rhythm and replaces the image, so the reader feels the effect while the metaphor changes. Which is right depends on whether the reader needs the source culture or the effect.",
+      "question": "What decides which version is right?",
+      "questionFa": "چه چیزی درستیِ هر نسخه را تعیین می‌کند؟",
+      "options": [
+        "طول متن",
+        "زبان مقصد",
+        "نظر مترجم",
+        "نیاز خواننده: فرهنگ مبدأ یا اثر"
+      ],
+      "correctIndex": 3,
+      "skill": "READING",
+      "explanationFa": "«depends on whether the reader needs the source culture or the effect» — هدف خواننده تعیین‌کننده است."
+    },
+    {
+      "id": "c2.audience.read.01",
+      "lessonId": "c2.audience.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "passage": "The same finding reaches three audiences in three registers: 'the trial failed' for a lab, 'the trial did not meet its endpoint' for a journal, and 'the treatment did not work as hoped' for patients. Precision and kindness pull in opposite directions, and the author has to choose.",
+      "question": "How does the patient version differ?",
+      "questionFa": "نسخهٔ بیماران چه تفاوتی دارد؟",
+      "options": [
+        "ملایم‌تر است و امید را نگه می‌دارد",
+        "دقیق‌تر و فنی‌تر است",
+        "کوتاه‌تر است",
+        "به داده‌های آماری تکیه دارد"
+      ],
+      "correctIndex": 0,
+      "skill": "READING",
+      "explanationFa": "«did not work as hoped» — لحن ملایم‌تر و همراه با امید، در برابر دقت فنی."
+    },
+    {
+      "id": "c2.audience.read.02",
+      "lessonId": "c2.audience.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "passage": "The same finding reaches three audiences in three registers: 'the trial failed' for a lab, 'the trial did not meet its endpoint' for a journal, and 'the treatment did not work as hoped' for patients. Precision and kindness pull in opposite directions, and the author has to choose.",
+      "question": "What tension does the passage name?",
+      "questionFa": "متن کدام تنش را نام می‌برد؟",
+      "options": [
+        "سرعت در برابر هزینه",
+        "دقت در برابر ملاحظه",
+        "علم در برابر سیاست",
+        "متن در برابر تصویر"
+      ],
+      "correctIndex": 1,
+      "skill": "READING",
+      "explanationFa": "«Precision and kindness pull in opposite directions» — دقت و مهربانی، دو جهت مخالف."
     }
   ]
 }

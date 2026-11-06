@@ -161,7 +161,7 @@ claim that stops being true is a policy problem, not a copy problem.
 |---|---|
 | Free with the companion app | `CompanionOffer.isOffered` + `CompanionApp` (see [`billing.md`](billing.md)) |
 | 36 questions, six bands A1–C2 | `placement.json` + README placement section |
-| 192 lessons, 1154 vocabulary entries, 2828 exercises | `lessons.json`, `vocabulary.json`, `exercises.json` (the counts `validateContent` prints) |
+| 192 lessons, 1154 vocabulary entries, 2888 exercises | `lessons.json`, `vocabulary.json`, `exercises.json` (the counts `validateContent` prints) |
 | All 180 syllabus topics ship | [`curriculum.md`](curriculum.md) — every row marked ✅ since v60 |
 | One lesson at a time, eight steps | `LearningStage` + `GuidedLessonTest` (only completed *required* steps count as progress) |
 | The next lesson waits for the dialogue | `owedConversation`/`canOpenLesson` in `LearningPlanner` + `GuidedLessonTest` |

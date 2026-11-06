@@ -204,16 +204,24 @@ class RemediationJourneyTest {
         // learner drills the point rather than one arbitrary item.
         val drilledIds = drills.map { it.id }.toSet()
         assertTrue("every grammar item of the lesson is drilled", plan.exerciseIds.containsAll(drilledIds))
+        // Containment is checked against the lesson's own ids, not an "ex." prefix:
+        // a lesson's items are not all named `*.ex.NN` (the dialogue and reading
+        // items carry their own suffixes), and the prefix form failed the moment the
+        // content grew a `*.read.NN` item that belongs to this very lesson.
+        val lessonItemIds = exercisesByLesson.getValue(lessonId).map { it.id }.toSet()
         assertTrue(
             "and nothing outside the lesson leaks in",
-            plan.exerciseIds.all { it.startsWith("a1.articles.ex.") },
+            plan.exerciseIds.all { it in lessonItemIds },
         )
-        // An exercise that authors no skill counts as evidence for every node (the
-        // documented `skill ?: return true` rule in `plan()`), so the lesson's untagged
-        // listening item joins the grammar block. Pinned here so the behaviour is a
-        // decision, not an accident.
-        assertTrue(
-            "an untagged exercise counts as evidence for every node",
+        // This lesson ships only a GRAMMAR and a PHONOLOGY node. The listening item
+        // authors LISTENING, which maps to VOCABULARY (step 1) and unions with the
+        // PHONOLOGY node that lists LISTENING (step 2) — so it lands on the
+        // pronunciation node and never on the grammar one. Before the v63 batch
+        // tagged it, an untagged exercise counted as evidence for every node (the
+        // `skill ?: return true` wildcard in `plan()`); the retag replaced that
+        // wildcard with a precise route, which is why it is now pinned the other way.
+        assertFalse(
+            "a tagged listening item does not leak into a grammar block",
             "a1.articles.ex.07" in plan.exerciseIds,
         )
 

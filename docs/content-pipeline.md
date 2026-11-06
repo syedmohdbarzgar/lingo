@@ -17,7 +17,9 @@
   seeded into the `knowledge_item` table. Repositories/UI must not hard-code curriculum order.
 - `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
   `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
-  **inside the JSON** — there is no Kotlin constant to bump (technical spec §63).
+  **inside the JSON** — there is no Kotlin constant to bump (technical spec §63). A seed that throws
+  is recorded as an `Error` in `core/common/ContentStatus` rather than logged and dropped, and Home
+  renders that failure with a retry, so a broken seed cannot present itself as an empty curriculum.
   The five assets are **parsed concurrently** (one coroutine per file on `Dispatchers.Default`) and
   inserted in the same single transaction; the bundle keeps growing (1.5× from v27 to v28), so the
   decode — not the insert — is the stage that grows with it. Measured on the JVM: 87 ms → 41 ms for
@@ -32,7 +34,7 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 61):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 63):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
@@ -56,8 +58,10 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  2828 exercises
-  (8–19/lesson + reading passages + meaning items + A1 pronunciation drills + P2 recall/production
+  2888 exercises
+  (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which v63 added a shared
+  3–4 sentence passage with two comprehension questions to five lessons per level** + meaning items
+  + A1 pronunciation drills + P2 recall/production
   items + **a dialogue in every lesson: five or six turns at A2–C2, four at A1 — 1052 speaking
   turns**), 1154 vocabulary entries
   (6/lesson, 8 in the numbers lesson),
@@ -68,12 +72,13 @@
   speech + simple passive; C1 = inversion + mixed conditionals + modals in the past; C2 =
   nuance/precision vocabulary.
 - **Vocabulary depth (A-10):** every word carries **two** example sentences, each a bilingual object
-  `{"en": …, "fa": …}` authored in `vocabulary.json` (326 words × 2 = 652 English sentences, all
+  `{"en": …, "fa": …}` authored in `vocabulary.json` (1154 words × 2 = 2308 English sentences, all
   with Persian). The shape lives inside the existing `VocabularyEntity.examplesJson` TEXT column —
   the column type never changed, `ContentParser`/`RepositoriesImpl` accept the legacy plain-string
   shape, and `ContentSeeder` clear+inserts every row on the version bump — so **no Room schema
-  migration is needed**: Room stays at `version = 5` and `RoomMigrationTest` keeps proving the
-  existing path (a migration would rewrite nothing). `validateContent` and `VocabularyContentTest`
+  migration was ever needed for this**: the column type did not change (Room was at `version = 5`
+  when the two-example shape landed, and is at **8** today for unrelated reasons — see
+  [`debt.md`](debt.md)), and `RoomMigrationTest` keeps proving the existing path. `validateContent` and `VocabularyContentTest`
   both require ≥ 2 examples per word with a non-empty Persian `fa`, and the word-in-example rule is
   checked **per example**, not per entry.
 - **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–100 come
@@ -99,16 +104,23 @@
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the mastery
   engine uses, so a vocabulary-heavy lesson does not count as grammar practice. `GrammarCoverageTest`
   fails the build below the bar; add exercises to that topic's lessons.
+- **Every exercise names its skill (v63):** `exercise.skill` is now authored on **all 2888 items**;
+  the bundle's last 147 untagged ones (52 choice, 41 translation, 54 listening) got theirs, following
+  the corpus' own convention (translation is VOCABULARY, listening is LISTENING, a choice item is
+  READING with a passage and VOCABULARY/GRAMMAR otherwise). The tag is not cosmetic: it is what
+  attributes an answer to a Progress track and what `KnowledgeEvidence` uses to pick the nodes it
+  moves, so an untagged item fell back to "evidence for every node of the lesson" — the wildcard
+  that tagged content now replaces.
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 2828 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 2888 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any
   type ships with its explanation. Every **vocabulary** word additionally carries an authored
   Persian `explanationFa` (a short usage note): the SRS queue is vocabulary-only, so the review
   session shows it after a miss, exactly as the lesson screen does. It is a vocabulary column
-  (`VocabularyEntity.explanationFa`, Room v5) and a new word without one fails
+  (`VocabularyEntity.explanationFa`, present since Room v5 and unchanged at v8) and a new word without one fails
   `ExplanationCoverageTest`.
 - **A conversation per lesson (v33, lengthened in v35):** every lesson ships a `speaking` dialogue
   that makes one exchange in the situation the lesson teaches — **four turns at A1, five or six at
