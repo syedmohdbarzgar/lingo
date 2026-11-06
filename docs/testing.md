@@ -3,8 +3,12 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 529 tests / 63 classes as of
-  the v61 C2 review pass — its two new cases: a hyphenated answer (`twenty-five`,
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 543 tests / 64 classes as of
+  the v63 reading pass — its new class is `LoadFailureTest` (a throwing repository leaves a screen
+  `failed`, never spinning, and retry re-runs the load), and on the content side the v63 batch
+  reversed one assertion in `RemediationJourneyTest`: the listening item it pinned as wildcard
+  evidence now authors `LISTENING`, so it stays out of a grammar block. The v61 C2 review pass added
+  two cases: a hyphenated answer (`twenty-five`,
   `decision-making`) and a quoted word (`'May'`), both of which used to leave the recogniser's
   grammar, so no amount of correct speech could be graded `CORRECT`) — the v60 guided-lesson pass
   carrying the eight-step lesson (`GuidedLessonTest`: a lesson opens on its
@@ -139,14 +143,24 @@
   the following question, and a NEAR answer can still move on so one hard sentence is never a dead
   end; an authored alternative reply grades CORRECT rather than NEAR; the recogniser's grammar holds
   the current turn's own sentences and `[unk]`; a repeated question is REJECTED as an answer; leaving
-  stops the microphone), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
+  stops the microphone; **the keyboard route is the same gate** — a typed answer is graded
+  CORRECT/NEAR/RETRY by the same scorer and becomes the recorded transcript, a blank field grades
+  nothing, a late recogniser emission cannot overwrite or out-grade a typed answer, typed answers
+  alone finish and record the conversation, and retry by voice clears the typed verdict), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
   settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
   state and an empty bundle yields no tracks rather than empty bars), `PlacementViewModelTest` (adaptive stop after
   an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
   onboarding write), `VocabularyViewModelTest` (all words load; the query matches the English word
   case-insensitively and the Persian meaning; a blank query clears the filter; no matches is an
   empty list, not an error) and  `OnboardingViewModelTest` (skipping the test pins A1 and finishes
-  onboarding) — the billing double is `FakeBillingGateway` in the same file. They need
+  onboarding), `LoadFailureTest` (v63's failure surfaces: the `catchLoadFailure` operator reports a
+  throwing flow and still lets a `CancellationException` through, and a repository that throws on
+  read leaves Progress, Vocabulary, Review and Settings in `failed` — not `loading`, and not an
+  empty collection the screen would present as "nothing here yet" — with `retry()` re-running the
+  same read and clearing it; Settings also asserts it has no `settings` to show, because default
+  switches rendered as stored values is a wrong answer stated as fact. Home's own case, the failed
+  bundle write and its re-seed, is in `HomeViewModelTest` because it needs the container's seed
+  hook) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
   and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
   growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an

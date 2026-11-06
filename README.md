@@ -8,7 +8,7 @@
 > هم باید کار کند؛ نمره‌دهی گفتار هم با مدل روی دستگاه انجام می‌شود.
 
 An offline-first Android app for Persian speakers learning English (CEFR A1–C2): an eight-step
-guided lesson → exercises → that lesson's own spoken conversation (which is what opens the next
+guided lesson → exercises → that lesson's own conversation (spoken, or typed; it is what opens the next
 lesson) → spaced-repetition review → progress. Every one of the 180 syllabus topics ships, and
 the speech practice is graded on the device by a recogniser, not by a server.
 
@@ -110,12 +110,12 @@ answers, how accurate, how many curriculum nodes) rather than as a bare percenta
 speaking and writing are deliberately not shown as tracks of their own: no content answers to them
 alone, so a bar there would measure nothing.
 
-**Content bundle (JSON `contentVersion` 61)**
+**Content bundle (JSON `contentVersion` 63)**
 
 | | Count |
 |---|---|
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
-| Exercises | 2828 — including a dialogue in every lesson (five or six turns at A2 and above) |
+| Exercises | 2888 — including a dialogue in every lesson (five or six turns at A2 and above) and a reading passage with two comprehension questions in 43 lessons |
 | Vocabulary entries | 1154 |
 | Knowledge items | 233 |
 | Placement questions | 36 |
@@ -124,7 +124,11 @@ The syllabus behind those numbers is the 180 topics (30 per CEFR band) in
 [`docs/curriculum.md`](docs/curriculum.md) — **all 180 ship as of v60**, so new material now means
 deepening a lesson rather than opening a topic. The C2 pass that produced v61 is recorded in
 [`docs/review-c2.md`](docs/review-c2.md): what was checked, what it found, and the ready-to-author
-items that would bring the four thinnest C2 lessons up to the standard.
+items that would bring the four thinnest C2 lessons up to the standard. The v63 pass went the other
+way and **deepened** existing material instead of opening topics: a reading passage with two
+comprehension questions in five lessons per level (35 → 95 READING items in 43 lessons), and a
+`skill` tag on the last 147 exercises that had none, so every answer now moves a track and the
+bundle ships no untagged item at all.
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
 `contentVersion`, which is declared inside the files themselves.
@@ -337,7 +341,11 @@ Source of truth: `app/src/main/assets/content/`
 
 `ContentSeeder` runs at app start and re-seeds only when the JSON `contentVersion` differs from the
 stored one; the clear-and-insert runs in a single Room transaction, so a crash can never leave a
-half-seeded database.
+half-seeded database. A seed that fails anyway is **not silent**: `AppContainer` records the outcome
+in `ContentStatus`, and Home shows a card naming the failure with a «تلاش دوباره» button instead of
+an empty screen a fresh install cannot explain. The same `ContentStatus` is why no screen sits on a
+spinner forever — Home, Progress, Vocabulary, Review and Settings each separate `loading` from
+`failed`, and a failed load renders an explanation with a retry, not a bare empty state.
 
 `./gradlew validateContent` is the gate, and runs before every build. The JSON pipeline cannot see
 content mistakes at compile time, so without it a dangling `lessonId` silently orphans a lesson, an
@@ -358,7 +366,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-529 unit tests across 63 classes. The pure cores carry the most weight — review scheduling,
+543 unit tests across 64 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -437,7 +445,10 @@ Suspended — needs backend/server infrastructure, not just connectivity:
 
 Allowed but not built yet: remote crash reporting. On-device speech evaluation **is** built — the
 conversation screen grades each spoken turn with the bundled Vosk model, offline, and the model file
-is fetched once by `scripts/fetch_vosk_model.sh` rather than committed.
+is fetched once by `scripts/fetch_vosk_model.sh` rather than committed. The same window also accepts
+a **typed** answer, because the recogniser needs a downloaded model and a working microphone: without
+one the conversation — and with it the next lesson — used to be unreachable. Typed answers go through
+the same `ConversationScorer` gate, so the verdict means the same thing either way.
 
 Any new online feature must state which service it calls and why, must degrade gracefully when
 offline, and must not block the learning core.
