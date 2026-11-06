@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Insights
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +53,27 @@ fun ProgressScreen() {
                     .padding(padding),
                 contentAlignment = Alignment.Center,
             ) { CircularProgressIndicator() }
+            return@Scaffold
+        }
+
+        // Local data, local failure: say what happened and offer the retry — a bare
+        // spinner or a blank page would read as "the app is broken" or "no signal".
+        if (state.loadFailed) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center,
+            ) {
+                AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "پیشرفت خوانده نشد",
+                    subtitle = "آمار و مسیرها روی همین گوشی ذخیره شده‌اند، اما خواندنشان این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                )
+            }
             return@Scaffold
         }
 

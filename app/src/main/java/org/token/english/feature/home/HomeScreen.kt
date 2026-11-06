@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Settings
@@ -33,12 +34,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
+import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.CefrBadge
 import org.token.english.core.designsystem.component.EnglishText
@@ -107,6 +110,34 @@ fun HomeScreen(
                     .padding(padding),
                 contentAlignment = Alignment.Center,
             ) { CircularProgressIndicator() }
+            return@Scaffold
+        }
+
+        // An empty Home must say why it is empty. Both failures are local — the
+        // bundle ships in the APK and the progress lives in Room — so the copy never
+        // blames the connection (AGENTS §6), and the retry re-runs the same work.
+        if (state.hasLoadError) {
+            val contentMissing = state.contentStatus == ContentStatus.FAILED
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center,
+            ) {
+                AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = if (contentMissing) "محتوای درس‌ها آماده نشد" else "اطلاعات یادگیری خوانده نشد",
+                    subtitle = if (contentMissing) {
+                        "درس‌ها از بستهٔ آفلاین روی همین گوشی خوانده می‌شوند و آماده‌سازی آن‌ها کامل نشد. " +
+                            "این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
+                    } else {
+                        "پیشرفت و برنامه‌ٔ تو روی همین گوشی ذخیره شده است، اما خواندنشان این بار " +
+                            "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
+                    },
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                )
+            }
             return@Scaffold
         }
 

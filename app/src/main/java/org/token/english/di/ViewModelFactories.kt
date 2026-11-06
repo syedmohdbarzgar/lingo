@@ -38,6 +38,8 @@ fun homeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c 
         getSkillProfiles = c.getSkillProfiles,
         companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
+        contentStatus = c.contentStatus,
+        seedContent = { c.seedContent() },
     )
 }
 

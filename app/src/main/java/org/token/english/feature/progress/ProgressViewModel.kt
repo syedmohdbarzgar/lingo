@@ -2,10 +2,14 @@ package org.token.english.feature.progress
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.common.catchLoadFailure
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
@@ -34,6 +38,8 @@ data class ProgressUiState(
     val knowledgeTotal: Int = 0,
     /** Persian title of the weakest practised node, shown as a study hint. */
     val weakestKnowledge: String? = null,
+    /** A read threw — the screen says so instead of leaving the spinner up. */
+    val loadFailed: Boolean = false,
 )
 
 /** Progress screen state (checklist B-6): narrow, testable dependencies. */
@@ -56,51 +62,81 @@ class ProgressViewModel(
     private var knowledgeTitles: Map<String, String> = emptyMap()
     private var knowledgeTotal: Int = 0
 
+    /** Declared before `init` — Kotlin initialises properties in source order. */
+    private var loadJobs: List<Job> = emptyList()
+
     init {
-        viewModelScope.launch {
-            settingsRepository.settings.collect {
-                level = it.level
+        startLoading()
+    }
+
+    /**
+     * Starts the reads; [retry] re-runs this. Every collector is guarded, because a
+     * Room failure used to end the collector quietly and leave the spinner up: only
+     * the stats stream ever cleared `isLoading`.
+     */
+    private fun startLoading() {
+        loadJobs.forEach { it.cancel() }
+        loadJobs = listOf(
+            viewModelScope.launch {
+                settingsRepository.settings.catchLoadFailure(::onLoadFailure).collect {
+                    level = it.level
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                // Shared aggregate pipeline (P7) — same stream Home shows.
+                studyStats.catchLoadFailure(::onLoadFailure).collect {
+                    _state.value = _state.value.copy(isLoading = false, stats = it, mastery = _state.value.mastery)
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                progressRepository.observeMastery().catchLoadFailure(::onLoadFailure).collect {
+                    _state.value = _state.value.copy(mastery = it)
+                    rebuild()
+                    // A grade moves a track's mastery and its evidence together, so the
+                    // profile is rebuilt from the same signal (P2).
+                    refreshProfiles()
+                }
+            },
+            viewModelScope.launch {
+                lessonRepository.observeLessons().catchLoadFailure(::onLoadFailure).collect {
+                    totalLessons = it.size
+                    rebuild()
+                }
+            },
+            // Curriculum labels are authored content, read once — the graph is 70-odd
+            // rows and never changes during a session.
+            viewModelScope.launch {
+                val items = runCatchingCancellable { knowledgeRepository.allItems() }
+                    .getOrElse { error ->
+                        onLoadFailure(error)
+                        return@launch
+                    }
+                knowledgeTitles = items.associate { it.id to it.titleFa }
+                knowledgeTotal = items.size
                 rebuild()
-            }
-        }
-        viewModelScope.launch {
-            // Shared aggregate pipeline (P7) — same stream Home shows.
-            studyStats.collect {
-                _state.value = _state.value.copy(isLoading = false, stats = it, mastery = _state.value.mastery)
-                rebuild()
-            }
-        }
-        viewModelScope.launch {
-            progressRepository.observeMastery().collect {
-                _state.value = _state.value.copy(mastery = it)
-                rebuild()
-                // A grade moves a track's mastery and its evidence together, so the
-                // profile is rebuilt from the same signal (P2).
-                refreshProfiles()
-            }
-        }
-        viewModelScope.launch {
-            lessonRepository.observeLessons().collect {
-                totalLessons = it.size
-                rebuild()
-            }
-        }
-        // Curriculum labels are authored content, read once — the graph is 70-odd
-        // rows and never changes during a session.
-        viewModelScope.launch {
-            val items = knowledgeRepository.allItems()
-            knowledgeTitles = items.associate { it.id to it.titleFa }
-            knowledgeTotal = items.size
-            rebuild()
-        }
-        viewModelScope.launch {
-            knowledgeRepository.observeStates().collect {
-                knowledgeStates = it
-                rebuild()
-                // Lesson answers are the other half of a track's evidence.
-                refreshProfiles()
-            }
-        }
+            },
+            viewModelScope.launch {
+                knowledgeRepository.observeStates().catchLoadFailure(::onLoadFailure).collect {
+                    knowledgeStates = it
+                    rebuild()
+                    // Lesson answers are the other half of a track's evidence.
+                    refreshProfiles()
+                }
+            },
+        )
+    }
+
+    private fun onLoadFailure(error: Throwable) {
+        android.util.Log.w("ProgressViewModel", "progress read failed", error)
+        _state.update { it.copy(isLoading = false, loadFailed = true) }
+    }
+
+    /** The error state's action: re-subscribe to the reads (the data is local). */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        startLoading()
     }
 
     /**
@@ -109,7 +145,12 @@ class ProgressViewModel(
      */
     private fun refreshProfiles() {
         viewModelScope.launch {
-            profiles = getSkillProfiles()
+            val loaded = runCatchingCancellable { getSkillProfiles() }
+                .getOrElse { error ->
+                    onLoadFailure(error)
+                    return@launch
+                }
+            profiles = loaded
             rebuild()
         }
     }
@@ -129,6 +170,7 @@ class ProgressViewModel(
             knowledgePractised = knowledgeStates.size,
             knowledgeTotal = knowledgeTotal,
             weakestKnowledge = weakest,
+            loadFailed = _state.value.loadFailed,
         )
     }
 }

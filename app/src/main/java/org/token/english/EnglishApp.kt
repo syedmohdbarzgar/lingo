@@ -3,7 +3,6 @@ package org.token.english
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -46,16 +45,11 @@ class EnglishApp : Application() {
         })
 
         // Offline content bundle → Room, in the background. Screens that need
-        // content wait on container.contentSeeded instead of racing the seeder.
-        appScope.launch {
-            try {
-                container.contentSeeder.ensureSeeded()
-            } catch (t: Throwable) {
-                Log.e("EnglishApp", "content seeding failed", t)
-            } finally {
-                container.markContentSeeded()
-            }
-        }
+        // content wait on container.contentSeeded instead of racing the seeder, and a
+        // failed write becomes ContentStatus.FAILED — Home renders it with a retry
+        // (retrying from here used to log and continue, leaving a fresh install on an
+        // empty Home with nothing said).
+        appScope.launch { container.seedContent() }
         // Keep the hot sound flag in sync for the (non-suspend) audio helper,
         // and (un)schedule the daily reminder from its persisted flag — one
         // place for both normal starts and post-reboot re-application.

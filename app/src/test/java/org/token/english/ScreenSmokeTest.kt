@@ -19,6 +19,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.common.ContentStatus
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultLearningPlanner
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
@@ -117,6 +118,8 @@ class ScreenSmokeTest {
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,
             refreshCompanion = { companion.value == CompanionStatus.TRUSTED },
+            contentStatus = MutableStateFlow(ContentStatus.READY),
+            seedContent = {},
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
@@ -139,6 +142,53 @@ class ScreenSmokeTest {
         // N-3 at screen level: a Zaribar under an untrusted key must be told to
         // UPDATE it — the copy the ViewModel tests cannot see.
         compose.onNodeWithText("تأییدنشده", substring = true).assertIsDisplayed()
+    }
+
+    @Test
+    fun `a home whose bundle never landed says why and offers a retry`() {
+        val lessons = FakeLessonRepository()
+        val progress = FakeProgressRepository()
+        val reviews = FakeReviewRepository()
+        val knowledge = FakeKnowledgeRepository()
+        val companion = MutableStateFlow(CompanionStatus.ABSENT)
+        val planner = DefaultLearningPlanner()
+        val vm = HomeViewModel(
+            settingsRepository = FakeSettingsRepository(trial = liveTrial()),
+            lessonRepository = lessons,
+            conversationRepository = FakeConversationRepository(),
+            progressRepository = progress,
+            reviewRepository = reviews,
+            studyStats = progress.statsFlow,
+            planner = planner,
+            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge),
+            getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
+            getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
+            companionStatus = companion,
+            refreshCompanion = { false },
+            contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            seedContent = {},
+            accessTickMillis = 0,
+            dueTickMillis = 0,
+        )
+
+        compose.setContent {
+            AppTheme {
+                HomeScreen(
+                    vm = vm,
+                    onOpenLesson = {},
+                    onOpenSettings = {},
+                    onOpenReview = {},
+                    onOpenPaywall = {},
+                    onOpenConversation = { _ -> },
+                    onOpenFocus = { _, _ -> },
+                )
+            }
+        }
+
+        compose.onNodeWithText("محتوای درس‌ها آماده نشد", substring = true).assertIsDisplayed()
+        // The action exists, and the copy says the cause is local — never the network.
+        compose.onNodeWithText("تلاش دوباره", substring = true).assertIsDisplayed()
+        compose.onNodeWithText("این خطا به اینترنت مربوط نیست", substring = true).assertIsDisplayed()
     }
 
     @Test

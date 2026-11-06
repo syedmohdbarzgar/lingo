@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.Speaker
+import org.token.english.core.common.catchLoadFailure
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -21,6 +23,8 @@ data class VocabularyUiState(
     val query: String = "",
     val all: List<VocabularyItem> = emptyList(),
     val filtered: List<VocabularyItem> = emptyList(),
+    /** A read threw — shown as an error state, so the spinner cannot hang. */
+    val loadFailed: Boolean = false,
 )
 
 /** Vocabulary browser state (checklist B-6): just the repository it observes. */
@@ -32,14 +36,30 @@ class VocabularyViewModel(
     val state: StateFlow<VocabularyUiState> = _state.asStateFlow()
 
     init {
+        startLoading()
+    }
+
+    /** One collector, guarded: a Room failure becomes state instead of a hung spinner. */
+    private fun startLoading() {
         viewModelScope.launch {
-            vocabularyRepository.observeAll().collect { items ->
+            vocabularyRepository.observeAll().catchLoadFailure(::onLoadFailure).collect { items ->
                 _state.update { current ->
                     val filtered = filter(items, current.query)
-                    current.copy(isLoading = false, all = items, filtered = filtered)
+                    current.copy(isLoading = false, loadFailed = false, all = items, filtered = filtered)
                 }
             }
         }
+    }
+
+    private fun onLoadFailure(error: Throwable) {
+        android.util.Log.w("VocabularyViewModel", "vocabulary read failed", error)
+        _state.update { it.copy(isLoading = false, loadFailed = true) }
+    }
+
+    /** The error state's action: re-subscribe to the same local read. */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        startLoading()
     }
 
     fun onQueryChange(query: String) {
@@ -61,6 +81,8 @@ data class VocabularyDetailUiState(
     val reviewItem: ReviewItem? = null,
     val isPlaying: Boolean = false,
     val message: String? = null,
+    /** A read threw — the screen says so and offers a retry. */
+    val loadFailed: Boolean = false,
 )
 
 /** Vocabulary detail state (checklist B-6): the two repositories and the audio seam. */
@@ -75,13 +97,28 @@ class VocabularyDetailViewModel(
     val state: StateFlow<VocabularyDetailUiState> = _state.asStateFlow()
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
-            val item = vocabularyRepository.get(vocabId)
-            val review = reviewRepository.getItem(vocabId)
+            val loaded = runCatchingCancellable {
+                vocabularyRepository.get(vocabId) to reviewRepository.getItem(vocabId)
+            }.getOrElse { error ->
+                android.util.Log.w("VocabularyDetailViewModel", "vocabulary read failed", error)
+                _state.update { it.copy(isLoading = false, loadFailed = true) }
+                return@launch
+            }
             _state.update {
-                it.copy(isLoading = false, item = item, reviewItem = review)
+                it.copy(isLoading = false, loadFailed = false, item = loaded.first, reviewItem = loaded.second)
             }
         }
+    }
+
+    /** The error state's action: read the word again (it lives on this device). */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        load()
     }
 
     fun playWord() {

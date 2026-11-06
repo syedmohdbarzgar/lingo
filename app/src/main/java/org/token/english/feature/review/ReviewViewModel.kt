@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.ReviewItem
@@ -37,6 +38,8 @@ data class ReviewUiState(
     val answerCorrect: Boolean? = null,
     /** One edit away from the word (A-2): graded wrong, but shown as «تقریباً درست». */
     val answerAlmost: Boolean = false,
+    /** The due-queue read threw — shown as an error state instead of a spinner. */
+    val loadFailed: Boolean = false,
 ) {
     val currentItem: ReviewItem? get() = queue.getOrNull(index)
     val currentWord: VocabularyItem? get() = currentItem?.let { vocabulary[it.contentId] }
@@ -100,13 +103,23 @@ class ReviewViewModel(
         lastInteractionAtMs = System.currentTimeMillis()
         viewModelScope.launch {
             val now = System.currentTimeMillis()
-            val due = reviewRepository.getDue(now, limit = 100)
-            val vocab = due.mapNotNull { item ->
-                vocabularyRepository.get(item.contentId)?.let { item.contentId to it }
-            }.toMap()
+            // Guarded: the queue and its words come from Room, and a throw used to
+            // leave the screen on its spinner forever.
+            val (due, vocab) = runCatchingCancellable {
+                val queue = reviewRepository.getDue(now, limit = 100)
+                val words = queue.mapNotNull { item ->
+                    vocabularyRepository.get(item.contentId)?.let { item.contentId to it }
+                }.toMap()
+                queue to words
+            }.getOrElse { error ->
+                android.util.Log.w("ReviewViewModel", "review queue read failed", error)
+                _state.update { it.copy(isLoading = false, loadFailed = true) }
+                return@launch
+            }
             _state.update {
                 it.copy(
                     isLoading = false,
+                    loadFailed = false,
                     queue = due,
                     vocabulary = vocab,
                     index = 0,
@@ -120,6 +133,12 @@ class ReviewViewModel(
             }
             itemStartedAtMs = now
         }
+    }
+
+    /** The error state's action: read the due queue again (it is local data). */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        refresh()
     }
 
     /**

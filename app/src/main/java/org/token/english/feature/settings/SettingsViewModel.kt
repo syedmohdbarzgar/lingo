@@ -2,6 +2,7 @@ package org.token.english.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,8 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.common.catchLoadFailure
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
@@ -30,6 +33,8 @@ data class SettingsUiState(
     val accessReason: AccessReason = AccessReason.NONE,
     /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
     val companionStatus: CompanionStatus = CompanionStatus.ABSENT,
+    /** A read threw — the screen says so instead of showing default switches. */
+    val loadFailed: Boolean = false,
 )
 
 /** Settings screen state (checklist B-6): narrow, testable dependencies. */
@@ -49,27 +54,11 @@ class SettingsViewModel(
     private var trialAndSubscription: TrialAndSubscription? = null
     private var companion: CompanionStatus = CompanionStatus.ABSENT
 
+    /** Declared before `init` — Kotlin initialises properties in source order. */
+    private var loadJobs: List<Job> = emptyList()
+
     init {
-        viewModelScope.launch {
-            // Free companion grant: re-read the install state, then follow changes.
-            refreshCompanion()
-            companionStatus.collect { status ->
-                companion = status
-                recomputeAccess()
-            }
-        }
-        viewModelScope.launch {
-            settingsRepository.settings.collect {
-                // Keep the entitlement fields — this collector must not wipe them.
-                _state.update { s -> s.copy(isLoading = false, settings = it) }
-            }
-        }
-        viewModelScope.launch {
-            settingsRepository.observeTrialAndSubscription().collect { ts ->
-                trialAndSubscription = ts
-                recomputeAccess()
-            }
-        }
+        startLoading()
         if (accessTickMillis > 0) {
             viewModelScope.launch {
                 // The flow only emits on writes, so an expired subscription would
@@ -80,6 +69,48 @@ class SettingsViewModel(
                 }
             }
         }
+    }
+
+    /**
+     * Starts the reads; [retry] re-runs this. Guarded, because an unguarded throw
+     * left the screen showing default switches (sound on, reminder off) as if they
+     * were the stored values — a wrong answer presented as fact.
+     */
+    private fun startLoading() {
+        loadJobs.forEach { it.cancel() }
+        loadJobs = listOf(
+            viewModelScope.launch {
+                // Free companion grant: re-read the install state, then follow changes.
+                refreshCompanion()
+                companionStatus.catchLoadFailure(::onLoadFailure).collect { status ->
+                    companion = status
+                    recomputeAccess()
+                }
+            },
+            viewModelScope.launch {
+                settingsRepository.settings.catchLoadFailure(::onLoadFailure).collect {
+                    // Keep the entitlement fields — this collector must not wipe them.
+                    _state.update { s -> s.copy(isLoading = false, loadFailed = false, settings = it) }
+                }
+            },
+            viewModelScope.launch {
+                settingsRepository.observeTrialAndSubscription().catchLoadFailure(::onLoadFailure).collect { ts ->
+                    trialAndSubscription = ts
+                    recomputeAccess()
+                }
+            },
+        )
+    }
+
+    private fun onLoadFailure(error: Throwable) {
+        android.util.Log.w("SettingsViewModel", "settings read failed", error)
+        _state.update { it.copy(isLoading = false, loadFailed = true) }
+    }
+
+    /** The error state's action: re-read settings (they live on this device). */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        startLoading()
     }
 
     private fun recomputeAccess() {
@@ -125,10 +156,14 @@ class SettingsViewModel(
 
     fun resetProgress(onDone: () -> Unit) {
         viewModelScope.launch {
-            progressRepository.reset()
-            // Knowledge state is learner data and must go with the rest of it.
-            knowledgeRepository.reset()
-            onDone()
+            // Guarded so a failed wipe cannot kill the coroutine silently; a failure
+            // simply does not call back as success.
+            val reset = runCatchingCancellable {
+                progressRepository.reset()
+                // Knowledge state is learner data and must go with the rest of it.
+                knowledgeRepository.reset()
+            }
+            if (reset.isSuccess) onDone()
         }
     }
 }

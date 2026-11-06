@@ -16,6 +16,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -84,6 +85,18 @@ fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
                 state.isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
+
+                // A local read that failed is not "no words yet" — say it plainly
+                // and let the learner retry (AGENTS §6: never blame the network).
+                state.loadFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "واژه‌ها خوانده نشد",
+                    subtitle = "واژه‌ها روی همین گوشی ذخیره شده‌اند، اما خواندنشان این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                )
 
                 state.all.isEmpty() -> AppEmptyState(
                     icon = Icons.Default.MenuBook,
@@ -157,6 +170,16 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
         ) {
             when {
                 state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+
+                state.loadFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "این واژه خوانده نشد",
+                    subtitle = "این واژه در محتوای آفلاین گوشی هست، اما خواندنش این بار کامل نشد. " +
+                        "این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    modifier = Modifier.align(Alignment.Center),
+                )
 
                 state.item == null -> AppEmptyState(
                     icon = Icons.Default.MenuBook,

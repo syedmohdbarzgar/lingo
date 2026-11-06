@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -58,6 +59,7 @@ import org.token.english.core.designsystem.SheetShape
 import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
+import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.AppSwitch
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.levelTint
@@ -109,6 +111,27 @@ fun SettingsScreen(
             )
         },
     ) { padding ->
+        // Default switches are not "the stored settings": if the read failed, say so
+        // rather than presenting invented values as facts.
+        if (state.loadFailed) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center,
+            ) {
+                AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "تنظیمات خوانده نشد",
+                    subtitle = "تنظیمات تو روی همین گوشی ذخیره شده‌اند، اما خواندنشان این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                )
+            }
+            return@Scaffold
+        }
+
         val settings = state.settings
         Column(
             modifier = Modifier

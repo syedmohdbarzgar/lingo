@@ -15,6 +15,8 @@ import kotlinx.coroutines.withContext
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.TtsAudioPlayer
+import org.token.english.core.common.ContentStatus
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.data.content.ContentSeeder
 import org.token.english.data.local.AppDatabase
 import org.token.english.data.repository.ConversationRepositoryImpl
@@ -225,13 +227,35 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     }
 
     // Content
-    private val _contentSeeded = MutableStateFlow(false)
+    private val _contentStatus = MutableStateFlow(ContentStatus.LOADING)
 
-    /** True once this process finished writing the curriculum bundle to Room. */
-    val contentSeeded: StateFlow<Boolean> = _contentSeeded.asStateFlow()
+    /**
+     * Where the bundle write stands: still running, written, or failed. Home renders
+     * [ContentStatus.FAILED] as an error card with a retry, so a fresh install can
+     * never open on an empty screen with no explanation.
+     */
+    val contentStatus: StateFlow<ContentStatus> = _contentStatus.asStateFlow()
 
-    fun markContentSeeded() {
-        _contentSeeded.value = true
+    /**
+     * True once the write has finished — successful or not. Screens and the splash
+     * wait on this so a fresh install never paints "lesson missing" mid-write; the
+     * outcome itself is [contentStatus].
+     */
+    val contentSeeded: StateFlow<Boolean> = _contentStatus
+        .map { it != ContentStatus.LOADING }
+        .stateIn(appScope, SharingStarted.Eagerly, false)
+
+    /**
+     * Writes the curriculum bundle into Room and records the outcome. Never throws:
+     * a failure is state ([ContentStatus.FAILED]) that the UI can show and retry,
+     * not a crash in a background coroutine.
+     */
+    suspend fun seedContent(): Boolean {
+        _contentStatus.value = ContentStatus.LOADING
+        val result = runCatchingCancellable { contentSeeder.ensureSeeded() }
+        result.exceptionOrNull()?.let { android.util.Log.e("AppContainer", "content seeding failed", it) }
+        _contentStatus.value = if (result.isSuccess) ContentStatus.READY else ContentStatus.FAILED
+        return result.isSuccess
     }
 
     val contentSeeder: ContentSeeder by lazy {

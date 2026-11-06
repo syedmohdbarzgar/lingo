@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -114,6 +115,17 @@ fun ReviewScreen(
         ) {
             when {
                 state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+
+                // The queue is local (Room), so the copy never blames the network.
+                state.loadFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "مرور خوانده نشد",
+                    subtitle = "کارت‌های مرور روی همین گوشی ذخیره شده‌اند، اما خواندنشان این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    modifier = Modifier.align(Alignment.Center),
+                )
 
                 state.phase == ReviewPhase.SUMMARY && state.queue.isEmpty() -> AppEmptyState(
                     icon = Icons.Default.CheckCircle,

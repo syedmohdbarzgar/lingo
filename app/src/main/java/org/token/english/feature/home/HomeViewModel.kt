@@ -18,6 +18,8 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.common.ContentStatus
+import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.SkillProfile
@@ -73,7 +75,20 @@ data class HomeUiState(
     val accessReason: AccessReason = AccessReason.NONE,
     /** What the companion lookup found — only TRUSTED earns the free grant (N-3). */
     val companionStatus: CompanionStatus = CompanionStatus.ABSENT,
-)
+    /**
+     * Where the offline bundle stands. [ContentStatus.FAILED] is shown, never
+     * swallowed: the lessons are local, so an empty Home must say why it is empty.
+     */
+    val contentStatus: ContentStatus = ContentStatus.READY,
+    /** A content read threw — the screen states it instead of spinning forever. */
+    val loadFailed: Boolean = false,
+    /** True once the bundle put at least one lesson in Room. */
+    val hasContent: Boolean = false,
+) {
+    /** Nothing trustworthy on screen: offer the retry (never blame the network). */
+    val hasLoadError: Boolean
+        get() = loadFailed || (contentStatus == ContentStatus.FAILED && !hasContent)
+}
 
 /**
  * Home screen state. Takes exactly what it reads (checklist B-6) — the
@@ -94,6 +109,10 @@ class HomeViewModel(
     private val getSkillProfiles: GetSkillProfilesUseCase,
     private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
+    /** Where the offline bundle stands — a failed write is shown, not swallowed. */
+    private val contentStatus: StateFlow<ContentStatus>,
+    /** Re-runs the bundle → Room write from Home's retry action. */
+    private val seedContent: suspend () -> Unit,
     /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
     private val accessTickMillis: Long = ACCESS_TICK_MS,
     /** Re-check of the due count; tests pass 0 to read it once. */
@@ -118,9 +137,20 @@ class HomeViewModel(
     private var companion: CompanionStatus = CompanionStatus.ABSENT
     private var trialAndSubscription: TrialAndSubscription? = null
 
+    private var content: ContentStatus = ContentStatus.READY
+
+    /** Declared before `init` — Kotlin initialises properties in source order. */
+    private var loadJobs: List<Job> = emptyList()
+
     init {
         viewModelScope.launch {
-            settingsRepository.observeTrialAndSubscription().collect { ts ->
+            contentStatus.collect { status ->
+                content = status
+                rebuild()
+            }
+        }
+        viewModelScope.launch {
+            settingsRepository.observeTrialAndSubscription().catchLoadFailure(::onLoadFailure).collect { ts ->
                 trialAndSubscription = ts
                 recomputeAccess()
             }
@@ -144,65 +174,99 @@ class HomeViewModel(
                 }
             }
         }
-        viewModelScope.launch {
-            settingsRepository.settings.collect {
-                level = it.level
-                goalMinutes = it.dailyGoalMinutes
+        startLoading()
+    }
+
+    /**
+     * Starts the content reads. [retry] re-runs exactly this, and the previous set
+     * is cancelled first so a retry can never double-subscribe.
+     *
+     * Every collector is guarded by [catchLoadFailure]: a Room read that throws used
+     * to end its collector silently and leave `isLoading` true forever, which is the
+     * spinner the learner could never leave.
+     */
+    private fun startLoading() {
+        loadJobs.forEach { it.cancel() }
+        loadJobs = listOf(
+            viewModelScope.launch {
+                settingsRepository.settings.catchLoadFailure(::onLoadFailure).collect {
+                    level = it.level
+                    goalMinutes = it.dailyGoalMinutes
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                lessonRepository.observeLessons().catchLoadFailure(::onLoadFailure).collect {
+                    lessons = it
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                lessonRepository.observeLessonStates().catchLoadFailure(::onLoadFailure).collect {
+                    states = it
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                // Which lessons ship a dialogue — a lesson without one can never hold
+                // the path back, so the gate is inert until content exists for it.
+                dialogueLessonIds = runCatchingCancellable {
+                    lessonRepository.lessonIdsWithDialogue()
+                }.getOrDefault(emptySet())
                 rebuild()
-            }
-        }
+            },
+            viewModelScope.launch {
+                conversationRepository.observeCompleted().catchLoadFailure(::onLoadFailure).collect {
+                    conversationsDone = it
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                progressRepository.observeMastery().catchLoadFailure(::onLoadFailure).collect {
+                    mastery = it
+                    rebuild()
+                    refreshProfiles()
+                }
+            },
+            viewModelScope.launch {
+                // Shared aggregate pipeline (P7) — same stream Progress shows.
+                studyStats.catchLoadFailure(::onLoadFailure).collect {
+                    stats = it
+                    rebuild()
+                }
+            },
+            viewModelScope.launch {
+                // Room only re-emits when review_item changes; `now` must be refreshed
+                // too, otherwise newly-due cards stay invisible until the next write
+                // (checklist: fixed-now → minute ticker).
+                //
+                // Only a DIFFERENT count is news, though. Rebuilding on every tick
+                // re-emitted the whole Home once a minute — the plan card visibly
+                // redrew under the learner's eyes while they were reading it.
+                dueCountFlow().catchLoadFailure(::onLoadFailure).distinctUntilChanged().collect {
+                    dueCount = it
+                    rebuild()
+                }
+            },
+        )
+    }
+
+    private fun onLoadFailure(error: Throwable) {
+        android.util.Log.w("HomeViewModel", "content read failed", error)
+        _state.update { it.copy(isLoading = false, loadFailed = true) }
+    }
+
+    /**
+     * The error card's action: write the bundle again (idempotent — the seeder
+     * version-checks) and re-subscribe to the reads that failed. One action for both
+     * failures, because from the learner's side they are the same problem: the
+     * lesson data is not on screen, and it is local data, not the network.
+     */
+    fun retry() {
+        _state.update { it.copy(isLoading = true, loadFailed = false) }
         viewModelScope.launch {
-            lessonRepository.observeLessons().collect {
-                lessons = it
-                rebuild()
-            }
-        }
-        viewModelScope.launch {
-            lessonRepository.observeLessonStates().collect {
-                states = it
-                rebuild()
-            }
-        }
-        viewModelScope.launch {
-            // Which lessons ship a dialogue — a lesson without one can never hold
-            // the path back, so the gate is inert until content exists for it.
-            dialogueLessonIds = runCatchingCancellable {
-                lessonRepository.lessonIdsWithDialogue()
-            }.getOrDefault(emptySet())
-            rebuild()
-        }
-        viewModelScope.launch {
-            conversationRepository.observeCompleted().collect {
-                conversationsDone = it
-                rebuild()
-            }
-        }
-        viewModelScope.launch {
-            progressRepository.observeMastery().collect {
-                mastery = it
-                rebuild()
-                refreshProfiles()
-            }
-        }
-        viewModelScope.launch {
-            // Shared aggregate pipeline (P7) — same stream Progress shows.
-            studyStats.collect {
-                stats = it
-                rebuild()
-            }
-        }
-        viewModelScope.launch {
-            // Room only re-emits when review_item changes; `now` must be refreshed
-            // too, otherwise newly-due cards stay invisible until the next write
-            // (checklist: fixed-now → minute ticker).
-            //
-            // Only a DIFFERENT count is news, though. Rebuilding on every tick
-            // re-emitted the whole Home once a minute — the plan card visibly
-            // redrew under the learner's eyes while they were reading it.
-            dueCountFlow().distinctUntilChanged().collect {
-                dueCount = it
-                rebuild()
-            }
+            seedContent()
+            startLoading()
         }
     }
 
@@ -274,6 +338,11 @@ class HomeViewModel(
             levelComplete = levelComplete,
             nextLevel = nextLevel,
             dialogueDue = dialogueDue,
+            // Carried, not recomputed: a rebuild must not clear an error the reads
+            // reported, nor forget where the bundle stands.
+            contentStatus = content,
+            loadFailed = _state.value.loadFailed,
+            hasContent = lessons.isNotEmpty(),
         )
         // …then enrich it with the adaptive planner's ordered, justified actions
         // (checklist B-1), which need a suspend read of the knowledge graph.
@@ -323,7 +392,14 @@ class HomeViewModel(
     private fun refreshProfiles() {
         profilesJob?.cancel()
         profilesJob = viewModelScope.launch {
-            profiles = getSkillProfiles()
+            // Guarded like the collectors: this query reads the same tables, and an
+            // unguarded throw here would take the mastery collector down with it.
+            val loaded = runCatchingCancellable { getSkillProfiles() }
+                .getOrElse { error ->
+                    onLoadFailure(error)
+                    return@launch
+                }
+            profiles = loaded
             rebuild()
         }
     }

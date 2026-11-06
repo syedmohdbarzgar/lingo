@@ -5,6 +5,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
@@ -67,7 +68,11 @@ class FakeSettingsRepository(
     val settingsFlow = MutableStateFlow(initial)
     val trialFlow = MutableStateFlow(trial)
 
-    override val settings: Flow<AppSettings> = settingsFlow
+    /** Set to make the next settings read throw, so a load failure can be driven. */
+    var failSettingsWith: Throwable? = null
+
+    override val settings: Flow<AppSettings>
+        get() = failSettingsWith?.let { error -> flow { throw error } } ?: settingsFlow
     override fun observeTrialAndSubscription(): Flow<TrialAndSubscription> = trialFlow
 
     override suspend fun completeFirstLaunch() {
@@ -214,9 +219,15 @@ class FakeReviewRepository : ReviewRepository {
     /** Review-log totals the skill-profile use case folds into a track (P2). */
     var attemptStats: Map<ReviewContentType, AttemptStats> = emptyMap()
 
+    /** Set to make the next queue read throw, so a load failure can be driven. */
+    var failDueWith: Throwable? = null
+
     override fun observeDueCount(now: Long): Flow<Int> = dueFlow.map { it.size }
 
-    override suspend fun getDue(now: Long, limit: Int): List<ReviewItem> = dueFlow.value.take(limit)
+    override suspend fun getDue(now: Long, limit: Int): List<ReviewItem> {
+        failDueWith?.let { throw it }
+        return dueFlow.value.take(limit)
+    }
 
     override suspend fun countDue(now: Long): Int = dueFlow.value.size
 

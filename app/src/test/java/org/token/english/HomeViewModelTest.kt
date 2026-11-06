@@ -17,6 +17,7 @@ import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
+import org.token.english.core.common.ContentStatus
 import org.token.english.domain.engine.DefaultLearningPlanner
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
@@ -67,9 +68,11 @@ class HomeViewModelTest {
         val reviews: FakeReviewRepository,
         val knowledge: FakeKnowledgeRepository,
         val companion: MutableStateFlow<CompanionStatus>,
+        val contentStatus: MutableStateFlow<ContentStatus>,
     ) {
         val planner = DefaultLearningPlanner()
         val conversations = FakeConversationRepository()
+        var seedCalls = 0
         val vm = HomeViewModel(
             settingsRepository = settings,
             lessonRepository = lessons,
@@ -83,9 +86,14 @@ class HomeViewModelTest {
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,
             refreshCompanion = { companion.value == CompanionStatus.TRUSTED },
+            contentStatus = contentStatus,
+            seedContent = { seedCalls++ },
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
+
+        /** The bundle write Home's retry action asks the container to run again. */
+        val seedCount: Int get() = seedCalls
     }
 
     private fun harness(
@@ -95,7 +103,8 @@ class HomeViewModelTest {
         reviews: FakeReviewRepository = FakeReviewRepository(),
         knowledge: FakeKnowledgeRepository = FakeKnowledgeRepository(),
         companion: MutableStateFlow<CompanionStatus> = MutableStateFlow(CompanionStatus.ABSENT),
-    ): Harness = Harness(settings, lessons, progress, reviews, knowledge, companion)
+        contentStatus: MutableStateFlow<ContentStatus> = MutableStateFlow(ContentStatus.READY),
+    ): Harness = Harness(settings, lessons, progress, reviews, knowledge, companion, contentStatus)
 
     private fun lesson(id: String, level: LearningLevel) =
         Lesson(id, level, "Lesson", "درس", "topic", 5, 1)
@@ -245,5 +254,37 @@ class HomeViewModelTest {
             "the planned day never exceeds the goal it was budgeted against",
             plan.actions.sumOf { it.estimatedMinutes } <= plan.targetMinutes,
         )
+    }
+
+    @Test
+    fun `a failed bundle write shows on home and its retry seeds again`() {
+        val harness = harness(contentStatus = MutableStateFlow(ContentStatus.FAILED))
+
+        // The failure is state, not a log line: an install whose bundle never
+        // reached Room must say so instead of opening on an empty home.
+        assertTrue("the failed write is visible", harness.vm.state.value.hasLoadError)
+        assertEquals(ContentStatus.FAILED, harness.vm.state.value.contentStatus)
+        assertEquals("nothing was seeded twice by merely rendering", 0, harness.seedCount)
+
+        harness.vm.retry()
+
+        assertEquals("the retry asks the container to write the bundle again", 1, harness.seedCount)
+        assertFalse("the retry leaves the error state", harness.vm.state.value.loadFailed)
+    }
+
+    @Test
+    fun `home keeps its cards when a retry succeeds and lessons arrive`() {
+        val lessons = FakeLessonRepository()
+        val status = MutableStateFlow(ContentStatus.FAILED)
+        val harness = harness(lessons = lessons, contentStatus = status)
+        assertTrue(harness.vm.state.value.hasLoadError)
+
+        // The bundle lands (the container wrote it) and the learner retries.
+        lessons.lessonsFlow.value = listOf(lesson(lessonId, LearningLevel.A1))
+        status.value = ContentStatus.READY
+        harness.vm.retry()
+
+        assertFalse("content is back, so the error card is gone", harness.vm.state.value.hasLoadError)
+        assertEquals(lessonId, harness.vm.state.value.plan?.nextLesson?.id)
     }
 }
