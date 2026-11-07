@@ -65,7 +65,7 @@ Lingo برای فارسی‌زبانان ساخته شده است: رابط کا
 آخرِ هر درس، همان موقعیتی را که یاد گرفتی در یک گفت‌وگو تمرین می‌کنی: تو جواب می‌دهی، برنامه روی دستگاهت می‌شنود و ارزیابی می‌کند، و تا آن گفت‌وگو را تمام نکنی درس بعد باز نمی‌شود. صدا از گوشی بیرون نمی‌رود.
 
 از A1 تا C2، هر ۱۸۰ موضوع
-هر شش سطح کامل است: از الفبا و اعداد تا نقد حقوقی و ارتباط دیپلماتیک. ۱۹۲ درس، ۲۸۲۸ تمرین و ۱۱۵۴ واژه با مثال دوزبانه، از پیش نصب‌شده و بی‌نیاز از دانلود.
+هر شش سطح کامل است: از الفبا و اعداد تا نقد حقوقی و ارتباط دیپلماتیک. ۱۹۲ درس، ۲۸۸۸ تمرین و ۱۱۵۴ واژه با مثال دوزبانه، از پیش نصب‌شده و بی‌نیاز از دانلود.
 
 واژه‌ها فراموش نمی‌شوند
 مرور فاصله‌دار واژه‌ها را درست در لحظهٔ فراموشی جلوی چانت می‌آورد، پس وقتت را صرف چیزهایی که بلدی نمی‌کنی.
@@ -81,6 +81,14 @@ Lingo برای فارسی‌زبانان ساخته شده است: رابط کا
 
 همین حالا شروع کن — اولین درس چند دقیقه بیشتر طول نمی‌کشد.
 ```
+
+**Play listing: drop the companion sentence.** The line «اگر برنامهٔ «زریبار» را نصب داشته باشی،
+همهٔ درس‌ها بدون هیچ پرداختی باز است» belongs to the Bazaar and Myket listings only. Since v65 the
+`googlePlay` flavor ships with `EXTERNAL_COMPANION_OFFER = false` (N-4, section *Google Play ships
+no Bazaar link* in [`release.md`](release.md)): no
+screen shows the offer, so a Play listing that advertises it describes a door the build does not
+open. Remove it from the `fa` translation and from the English full description before publishing
+there.
 
 ---
 
@@ -144,7 +152,7 @@ No account, no ads, no behavioural tracking. Your learning data stays on your ph
 
 Subscription, only if it earns it
 Full access with a monthly or yearly subscription purchased through the store you
-installed from — cancel any time from the same store. If the Zaribar app is installed on
+installed from — cancel any time from the same store. (Bazaar/Myket only — see the note above.) If the Zaribar app is installed on
 the device, everything is unlocked at no cost.
 
 Start now: the first lesson takes a few minutes.

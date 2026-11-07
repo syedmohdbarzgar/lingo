@@ -106,13 +106,15 @@ android {
                 "\"https://play.google.com/store/apps/details?id=\"",
             )
             buildConfigField("String", "STORE_PACKAGE", "\"com.android.vending\"")
-            // N-4 (decided v14): the free-route offer opens Cafe Bazaar in every
-            // flavor while `googlePlay` is not published on Play. BEFORE THE FIRST
-            // PLAY RELEASE flip this to false — unless the external-content-links
-            // program is complied with. `PlayStoreLinkGateTest` proves every screen
-            // and `CompanionApp.openDownloadPage` honor the flag, and
-            // `docs/release.md` carries the re-decision point.
-            buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "true")
+            // N-4 (decided v14, executed v65): a Play build never points at Cafe
+            // Bazaar. Play's external-content-links program is US-only and requires
+            // enrollment plus destination disclosure, so the free route is gated out
+            // of this flavor rather than left to a policy read: no Play screen shows
+            // the offer and `CompanionApp.openDownloadPage` returns early, which is
+            // what keeps a Play review from seeing a link to another store.
+            // Re-enabling it means complying with that program first — the switch is
+            // this one value, and `PlayStoreLinkGateTest` fails if it flips back.
+            buildConfigField("boolean", "EXTERNAL_COMPANION_OFFER", "false")
         }
     }
 

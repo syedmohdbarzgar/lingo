@@ -47,19 +47,21 @@ Rules:
   three-way `CompanionStatus` (N-3): a device holding a Zaribar signed by an **untrusted** key is
   told to *update* it from the store — never granted, and never told to install what it already
   has.
-- **Store policy on the Bazaar link (N-4, checked Oct 2026).** The offer opens Cafe Bazaar in every
-  flavor today. Google Play: for US users, linking out to another store's app download is allowed
-  under the external-content-links program (enrollment, US-only links, destination disclosure —
+- **Store policy on the Bazaar link (N-4, checked Oct 2026, executed v65).** The offer opens Cafe
+  Bazaar from the `bazaar` and `myket` builds; the `googlePlay` flavor declares
+  `EXTERNAL_COMPANION_OFFER = false`, so it shows no offer and builds no store intent. Google Play:
+  for US users, linking out to another store's app download is allowed under the
+  external-content-links program (enrollment, US-only links, destination disclosure —
   support.google.com/googleplay/android-developer/answer/16470497); outside the US no blanket
   permission is established, so a `googlePlay` build must not ship the offer until that program is
-  met or the link is restricted — the switch is the flavor's `EXTERNAL_COMPANION_OFFER` build flag
-  (wired through `CompanionOffer.isOffered(storeLinkAllowed = …)` and `CompanionApp.openDownloadPage`,
-  proved by `PlayStoreLinkGateTest`; checklist v15 N-4). Myket: no published rule was found that prohibits pointing at a
+  met — the switch is the flavor's `EXTERNAL_COMPANION_OFFER` build flag (wired through
+  `CompanionOffer.isOffered(storeLinkAllowed = …)` and `CompanionApp.openDownloadPage`, proved by
+  `PlayStoreLinkGateTest`; checklist v15 N-4). Myket: no published rule was found that prohibits pointing at a
   competitor store (its clause 6.9 concerns paid-service payment routing) — keep the offer, and
   get written confirmation before a Myket release if the risk matters. **Decision (v14,
-  user-confirmed): keep the offer in all three flavors for now** — `googlePlay` is not published
-  on Play yet; the compliance question is re-opened in [`release.md`](release.md) before the first
-  Play release.
+  user-confirmed; actioned v65):** the offer stays in the two Iranian-store flavors and is gated
+  out of `googlePlay`. Turning it back on for Play is a policy decision — enroll in that program
+  first, and [`release.md`](release.md) carries the reasoning.
 - Gating: `AppNavGraph` redirects any non-exempt route to `Routes.PAYWALL` when LOCKED;
   exempt routes are onboarding/placement/settings. Home carries one small free-route card
   (shown only while `CompanionOffer.isOffered`, so a paying learner never sees it) and — when the

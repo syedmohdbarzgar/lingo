@@ -6,16 +6,19 @@ import org.junit.Test
 import java.io.File
 
 /**
- * Checklist v15 N-4: the free-route offer opens Cafe Bazaar in every flavor today
- * (decided v14, while `googlePlay` is not published on Play). Before the first
- * Play release the `EXTERNAL_COMPANION_OFFER` flag of that flavor flips to
- * `false` — and this test is what makes the flip forget-proof and provable:
+ * Checklist v15 N-4: the free-route offer opens Cafe Bazaar from the `bazaar` and
+ * `myket` builds, and is gated **out** of `googlePlay` (executed v65 — Play's
+ * external-content-links program is US-only and needs enrollment, so a link to
+ * another store is not something to leave to a policy read). This test is what
+ * makes both halves provable:
  *
  *  - every flavor declares the flag, so gating is one value, never a code change;
+ *  - `googlePlay` declares it `false` and the other two `true`, so neither a
+ *    forgotten revert nor a careless copy-paste can re-open the link in Play;
  *  - every surface that shows the offer or opens the store reads the flag, so a
  *    gated build cannot still link to Bazaar through a call site that ignores it;
- *  - `docs/release.md` names the flag, so the re-decision point survives doc
- *    rewrites and release-checklist edits.
+ *  - `docs/release.md` names the flag, so the rule survives doc rewrites and
+ *    release-checklist edits.
  */
 class PlayStoreLinkGateTest {
 
@@ -47,6 +50,38 @@ class PlayStoreLinkGateTest {
         )
     }
 
+    /**
+     * The `create("googlePlay") { … }` block, cut at the next flavor or at the
+     * signing-config section — the build script declares the flavors first, so one
+     * of those two markers always closes it.
+     */
+    private fun flavorBlock(name: String): String {
+        val text = buildScript().readText()
+        val start = text.indexOf("create(\"$name\")")
+        assertTrue("flavor '$name' must exist in the build script", start >= 0)
+        val candidates = listOf("create(\"", "signingConfigs", "buildTypes")
+            .map { text.indexOf(it, start + 1) }
+            .filter { it > start }
+        val end = candidates.minOrNull() ?: text.length
+        return text.substring(start, end)
+    }
+
+    @Test
+    fun `the Play build gates the Bazaar offer out and the other stores keep it`() {
+        assertTrue(
+            "the googlePlay flavor must declare EXTERNAL_COMPANION_OFFER false — a Play build " +
+                "that shows the offer links to another store (N-4, executed v65)",
+            flavorBlock("googlePlay").contains("\"EXTERNAL_COMPANION_OFFER\", \"false\""),
+        )
+        for (store in listOf("bazaar", "myket")) {
+            assertTrue(
+                "the $store flavor must keep EXTERNAL_COMPANION_OFFER true — the free route is " +
+                    "that flavor's offer, and Bazaar's policy allows it",
+                flavorBlock(store).contains("\"EXTERNAL_COMPANION_OFFER\", \"true\""),
+            )
+        }
+    }
+
     @Test
     fun `every surface that shows the offer or opens the store reads the flag`() {
         // Wiring proof: flipping the flag has to actually reach each call site —
@@ -68,10 +103,9 @@ class PlayStoreLinkGateTest {
 
     @Test
     fun `the Play re-decision is named in the release ritual`() {
-        // The flag is only safe because release.md re-opens the decision before
-        // the first Play release. If the doc stops naming the flag, the tripwire
-        // is gone and the flip would be forgotten — exactly the failure the
-        // checklist v15 N-4 item exists to prevent.
+        // If the doc stops naming the flag, the rule that Play never links out is
+        // only in a build script — and the next reader of the ritual cannot tell
+        // why the value differs per flavor.
         val doc = listOf(File("../docs/release.md"), File("docs/release.md"))
             .firstOrNull(File::exists)
             ?: error("docs/release.md not found — run tests from the repo root or app/")

@@ -63,14 +63,17 @@ prints this reminder (with the fallback) on every pre-flight, so the re-read can
 4 minutes — the cap stands as a confirmed product decision. Daily totals and streaks earned under
 the old auto-counting were left untouched, not corrected; the release notes should say so once.
 
-**Before the first Google Play release (N-4, decided v14).** The free-route offer opens Cafe
-Bazaar in **every flavor** today — confirmed to stay that way while `googlePlay` is not published
-on Play. Shipping it on Play requires either complying with Google's external-content-links
-program (US-only links, enrollment, destination disclosure) or gating the offer out of the
-`googlePlay` flavor — the gate is one value: flip `EXTERNAL_COMPANION_OFFER` to `false` in the
-`googlePlay` flavor of `app/build.gradle.kts`. Every offer surface and
-`CompanionApp.openDownloadPage` read that flag, and `PlayStoreLinkGateTest` proves it (it fails
-if a surface stops reading it, or if this paragraph stops naming it). Re-decide at that point
+**Google Play ships no Bazaar link (N-4, decided v14, executed v65).** The free-route offer opens
+Cafe Bazaar from the `bazaar` and `myket` builds, and the `googlePlay` flavor declares
+`EXTERNAL_COMPANION_OFFER = false` — the offer card is hidden on Home/Paywall/Settings/Onboarding
+and `CompanionApp.openDownloadPage` returns before it builds an intent, so a Play build neither
+shows the route nor reaches Bazaar if a future call site forgets the flag.
+
+That is the outcome of the v14 decision, not a new one: Play's external-content-links program is
+US-only and needs enrollment plus destination disclosure, so complying with it was the alternative
+and gating it out is what shipped. `PlayStoreLinkGateTest` fails if the Play flag flips back, if
+`bazaar`/`myket` lose the offer, if a surface stops reading the flag, or if this paragraph stops
+naming it. Re-enabling the offer in Play means enrolling in that program first
 ([`billing.md`](billing.md)).
 
 ## Readiness check (Phase 4, Nov 2026)

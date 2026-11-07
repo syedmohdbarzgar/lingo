@@ -71,11 +71,12 @@ object CompanionApp {
      * the store installed). Never throws — a failed launch is not user-visible
      * beyond nothing happening.
      *
-     * Shown in every flavor on purpose: the companion is published on Cafe Bazaar
-     * only, so even a Google Play install has no other way to get it — while N-4
-     * allows it (the `googlePlay` flag is on until that build is published on
-     * Play). The [BuildConfig.EXTERNAL_COMPANION_OFFER] gate lives here too, so a
-     * caller can never route around the flavor decision by invoking this directly.
+     * Shown from the `bazaar` and `myket` builds; gated out of `googlePlay` (N-4,
+     * executed v65), because a Play build that opens another store's page is
+     * steering under Google's payments policy. The
+     * [BuildConfig.EXTERNAL_COMPANION_OFFER] gate lives here as well as on every
+     * screen, so no caller — present or future — can route around the flavor
+     * decision by invoking this directly.
      */
     fun openDownloadPage(context: Context) {
         if (!BuildConfig.EXTERNAL_COMPANION_OFFER) return

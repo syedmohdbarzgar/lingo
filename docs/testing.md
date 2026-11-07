@@ -63,9 +63,10 @@
   (certificate normalization/matching, and the release gate's own view of the constant:
   `declaredValue`/`declarationIsConfigured` are asserted against the real source so a
   valid digest can never silently start failing the release build) + `PlayStoreLinkGateTest`
-  (v15 N-4: the `EXTERNAL_COMPANION_OFFER` flag is declared by all three flavors, every offer
-  surface and `CompanionApp.openDownloadPage` read it, and `docs/release.md` names it — so
-  flipping the Play gate reaches the screens and cannot be forgotten) + `DocCodeConsistencyTest`
+  (v15 N-4: the `EXTERNAL_COMPANION_OFFER` flag is declared by all three flavors, `googlePlay`
+  declares it `false` while `bazaar`/`myket` keep `true`, every offer surface and
+  `CompanionApp.openDownloadPage` read it, and `docs/release.md` names it — so the Play build
+  cannot link to Bazaar even if a surface forgets the flag, and the split cannot drift) + `DocCodeConsistencyTest`
   (v15 B-12: `docs/debt.md` states the production overlap floor the code actually grades with;
   the doc had drifted to "60%" while the constant said 0.5) + `SubscriptionRecoveryTest` (renewal
   boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
