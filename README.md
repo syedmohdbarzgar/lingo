@@ -19,7 +19,7 @@ the speech practice is graded on the device by a recogniser, not by a server.
 | Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v8, exported) + DataStore Preferences |
+| Local storage | Room (schema v9, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -298,11 +298,11 @@ app/src/main/java/org/token/english
 ├── domain/                      PURE KOTLIN — no Android, no Room, no Compose
 │   ├── model/                   Lesson, VocabularyItem, Exercise, KnowledgeItem, AnswerChecker
 │   ├── repository/              Repository interfaces (implemented in data/)
-│   ├── engine/                  ReviewScheduler, MasteryEngine, LearningPlanner,
+│   ├── engine/                  ReviewScheduler, MasteryEngine, LearningPlanner, LessonMastery,
 │   │                            KnowledgeGraph, KnowledgeEngine, KnowledgeEvidence
 │   └── usecase/                 SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, …
 ├── data/
-│   ├── local/                   Room: entities, DAOs, AppDatabase (v4, schemas exported)
+│   ├── local/                   Room: entities, DAOs, AppDatabase (v9, schemas exported)
 │   ├── content/                 ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/              Repository implementations + SettingsRepositoryImpl (DataStore)
 ├── di/AppContainer.kt           Manual DI container
@@ -449,8 +449,9 @@ authored would be vacuous, since an exemplar match short-circuits it).
 Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a content
 edit run them with `--rerun`, or they silently report `UP-TO-DATE`.
 
-Instrumented tests are still the Android Studio templates and are not maintained. UI changes rely on
-manual verification on a device.
+There is no instrumented suite — the Android Studio template was removed rather than kept as a
+false signal. UI changes rely on manual verification on a device, or on
+[`scripts/verify_device.sh`](scripts/verify_device.sh) for the install-and-launch half.
 
 ---
 
@@ -486,7 +487,7 @@ offline, and must not block the learning core.
 - `bazaarRsaKey` unset disables Poolakey verification — release builds refuse to ship in that state.
 - Persian UI strings live inline in composables; extracting them to `strings.xml` is open design
   debt until a second locale appears.
-- Room is at `version = 8` with exported schemas in `app/schemas`. Schema changes must ship a
+- Room is at `version = 9` with exported schemas in `app/schemas`. Schema changes must ship a
   migration; the container registers `AppDatabase.ALL_MIGRATIONS` wholesale, because a hand-picked
   list once omitted a step and crashed **upgrading** installs at open time while fresh installs
   stayed green.
