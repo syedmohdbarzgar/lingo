@@ -45,6 +45,7 @@ import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
+import org.token.english.domain.usecase.RecordConversationTurnUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 
@@ -269,6 +270,15 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     // Use cases
     val submitExercise: SubmitExerciseUseCase by lazy {
         SubmitExerciseUseCase(progressRepository, knowledgeRepository)
+    }
+
+    /**
+     * Writes a graded conversation turn to its own track — SPEAKING when it was
+     * spoken, WRITING when it was typed. One seam, so the screen cannot credit the
+     * wrong skill.
+     */
+    val recordConversationTurn: RecordConversationTurnUseCase by lazy {
+        RecordConversationTurnUseCase(progressRepository, knowledgeRepository)
     }
     val completeLesson: CompleteLessonUseCase by lazy {
         CompleteLessonUseCase(lessonRepository, progressRepository)

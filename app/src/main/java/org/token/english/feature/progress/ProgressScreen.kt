@@ -135,6 +135,18 @@ fun ProgressScreen() {
                                 modifier = Modifier.weight(1f),
                             )
                         }
+                        // Finished steps and known language are two claims. The second
+                        // one is earned by the lesson's own nodes, so it can lag — and
+                        // saying so is more useful than letting «تمام‌شده» imply "learned".
+                        if ((stats?.lessonsCompleted ?: 0) > 0) {
+                            Text(
+                                text = "مسلط: " +
+                                    persianCountPair(state.masteredLessons, stats?.lessonsCompleted ?: 0) +
+                                    " از درس‌های تمام‌شده — درسی که هیچ نودش به تمرین امروز نیاز ندارد.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
 

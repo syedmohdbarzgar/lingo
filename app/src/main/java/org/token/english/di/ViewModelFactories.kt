@@ -142,6 +142,7 @@ fun conversationPracticeViewModelFactory(
         lessonRepository = c.lessonRepository,
         lessonId = lessonId,
         conversationRepository = c.conversationRepository,
+        recordTurn = c.recordConversationTurn,
         speaker = c,
         contentSeeded = c.contentSeeded,
         speechState = c.conversationSpeech,

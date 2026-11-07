@@ -19,12 +19,14 @@ import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningStage
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.LessonStagePlan
 import org.token.english.domain.model.LessonStageProgress
 import org.token.english.domain.model.LessonStageState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.StageResume
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.model.shuffledForDisplay
 import org.token.english.domain.repository.LessonRepository
@@ -332,10 +334,15 @@ class LessonViewModel(
                 hasDialogue = hasDialogue,
             )
             val saved = lessonRepository.getLessonState(lessonId)
+            // The recorded answers (Phase 2), read once: they decide where a reopened
+            // step continues, and they hold the learner's own answers across a process
+            // death — the cursor alone only knew *how far*, not *what was answered*.
+            val history = runCatchingCancellable { lessonRepository.attempts(lessonId) }
+                .getOrDefault(emptyList())
             val restored = buildList {
                 saved?.completedStages.orEmpty()
                     .mapNotNull(LearningStage::fromId)
-                    .forEach { add(LessonStageProgress(it, completed = true)) }
+                    .forEach { add(LessonStageProgress(it, completed = true, completedAt = saved?.stageCompletedAt?.get(it.id))) }
                 saved?.skippedStages.orEmpty()
                     .mapNotNull(LearningStage::fromId)
                     .forEach { add(LessonStageProgress(it, skipped = true)) }
@@ -352,11 +359,24 @@ class LessonViewModel(
                     ?: plan.firstStage
             }
             val base = LessonStageState(plan = plan, progress = restored, active = startStage)
+            // Where a reopened step continues (Phase 2): the recorded answers decide,
+            // not the saved cursor. A learner who answered the last question and was
+            // killed before «ادامه», or a content update that reordered a step, both
+            // left a cursor that points at the wrong question — the answers did not.
+            // A lesson with no recorded answers (an install from before the log) keeps
+            // its saved cursor rather than pretending it starts from scratch.
+            val answeredHere = history
+                .filter { it.stageId == startStage.id }
+                .mapTo(mutableSetOf()) { it.exerciseId }
             val cursor = when {
                 focus != null -> 0
                 saved?.completed == true -> 0
-                saved?.stage == startStage -> saved.currentIndex
-                else -> 0
+                saved?.stage != startStage -> 0
+                answeredHere.isEmpty() -> saved.currentIndex
+                else -> StageResume.cursorFor(
+                    exerciseIds = plan.unitOf(startStage)?.exercises.orEmpty().map { it.id },
+                    answered = answeredHere,
+                )
             }
             _state.update {
                 it.copy(
@@ -453,7 +473,7 @@ class LessonViewModel(
         // so the bar reads 100% while the learner reads the result instead of
         // stalling one step short.
         val stageState = if (stage == LearningStage.REVIEW) {
-            base.withCompleted(stage).withActive(stage)
+            base.withCompleted(stage, at = System.currentTimeMillis()).withActive(stage)
         } else {
             base.withActive(stage)
         }
@@ -486,12 +506,18 @@ class LessonViewModel(
         val stageState = s.stageState ?: return
         val completed = stageState.progress.filter { it.completed }.map { it.stage.id }.toSet()
         val skipped = stageState.progress.filter { it.skipped }.map { it.stage.id }.toSet()
+        // When each finished step was finished (Phase 2) — a recorded fact, not an
+        // inference from the order the steps happen to be in.
+        val completedAt = stageState.progress
+            .mapNotNull { entry -> entry.completedAt?.let { entry.stage.id to it } }
+            .toMap()
         viewModelScope.launch {
             lessonRepository.saveLessonStage(
                 lessonId = lessonId,
                 stageId = stageState.active.id,
                 completedStages = completed,
                 skippedStages = skipped,
+                completedAt = completedAt,
             )
             lessonRepository.saveLessonIndex(lessonId, s.stageCursor)
         }
@@ -535,7 +561,25 @@ class LessonViewModel(
         submitting = true
         viewModelScope.launch {
             try {
-                val outcome = submitExercise(exercise, answer, System.currentTimeMillis())
+                val now = System.currentTimeMillis()
+                val outcome = submitExercise(exercise, answer, now)
+                // Phase 2: the answer itself is kept, with the step that asked it. It
+                // is written even when the day's claim refused it — a retry is history,
+                // and this row is what a reopened step resumes from. A failed write
+                // must not swallow a graded answer, so it is logged, not thrown.
+                val stageId = s.stageState?.active?.id ?: LearningStage.PRACTICE.id
+                runCatchingCancellable {
+                    lessonRepository.recordAttempt(
+                        LessonAttempt(
+                            lessonId = lessonId,
+                            stageId = stageId,
+                            exerciseId = exercise.id,
+                            answer = answer,
+                            correct = outcome.correct,
+                            at = now,
+                        ),
+                    )
+                }
                 // First try or repeat: the summary's «تثبیت‌شده» verdict is about
                 // the first pass only, so a fix on the repeat cannot hide a gap.
                 val firstTry = firstTries.add(exercise.id)
@@ -639,7 +683,7 @@ class LessonViewModel(
     /** Marks the active step done and opens the next one; the last one finishes. */
     private fun completeStage(stageState: LessonStageState) {
         val stage = stageState.active
-        val done = stageState.withCompleted(stage)
+        val done = stageState.withCompleted(stage, at = System.currentTimeMillis())
         val nextStage = done.plan.next(stage)
         if (nextStage == null) {
             _state.update { it.copy(stageState = done) }

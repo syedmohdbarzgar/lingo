@@ -9,6 +9,7 @@ import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
@@ -37,7 +38,18 @@ interface LessonRepository {
         stageId: String,
         completedStages: Set<String>,
         skippedStages: Set<String>,
+        /** Completion time per completed stage id (Phase 2); absent = never stamped. */
+        completedAt: Map<String, Long> = emptyMap(),
     )
+
+    /**
+     * Appends one answered question to the lesson's history (Phase 2). Append-only by
+     * design: a retry is a new row, so the record cannot quietly rewrite what happened.
+     */
+    suspend fun recordAttempt(attempt: LessonAttempt)
+
+    /** The recorded answers of one lesson, oldest first — what a reopened step resumes from. */
+    suspend fun attempts(lessonId: String): List<LessonAttempt>
 
     suspend fun getLessonState(lessonId: String): LessonState?
     suspend fun completeLesson(lessonId: String, at: Long)
@@ -122,6 +134,11 @@ interface KnowledgeRepository {
      * @param format the exercise shape the answer came through — the learner model
      *   records which formats confirmed a node (checklist 2.1), so it can tell
      *   "answered this shape five times" from "proven two ways".
+     *
+     * Whether the answer is *new* evidence is not decided here: the caller claims the
+     * exercise for the day first ([ProgressRepository.claimAnswer]) and only writes
+     * what it claimed. Splitting it that way keeps one rule for every caller, and the
+     * rule lives where the exercise id is known.
      */
     suspend fun recordAttempt(
         lessonId: String,
@@ -138,6 +155,23 @@ interface ProgressRepository {
     fun observeMastery(): Flow<Map<Skill, Float>>
     fun observeStats(): Flow<StudyStats>
     suspend fun applyAttempt(skill: Skill, correct: Boolean, source: String)
+
+    /**
+     * Claims today's evidence for one exercise, before anything is written from it.
+     *
+     * The learner model is a function of *questions answered*, not of taps: answering
+     * the item that was just answered correctly — from a retry, or by re-running a
+     * lesson the same day — used to push the EWMA and the streak again, so seven taps
+     * of one item crossed the "strong" bar. The claim is stored per exercise and day
+     * (Room v9), so it survives the process and cannot be re-earned by restarting.
+     *
+     * The one exception is a correction: a miss that is followed by a hit on the same
+     * exercise and day counts, because fixing it is real evidence.
+     *
+     * @return true when this answer is the day's first for this question, or turns
+     *   today's miss into a hit. `false` means nothing should be written from it.
+     */
+    suspend fun claimAnswer(lessonId: String, exerciseId: String, correct: Boolean, now: Long): Boolean
 
     /**
      * Per-dimension mastery folded across sessions (checklist B-1, Room v6) —

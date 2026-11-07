@@ -105,6 +105,11 @@ data class LessonStateEntity(
     @ColumnInfo(defaultValue = "") val stage: String = "",
     @ColumnInfo(defaultValue = "") val completedStages: String = "",
     @ColumnInfo(defaultValue = "") val skippedStages: String = "",
+    /**
+     * When each step was completed, as `stageId=millis` pairs (Room v9, Phase 2).
+     * Empty for a lesson finished before the column existed — no invented times.
+     */
+    @ColumnInfo(defaultValue = "") val stageCompletedAt: String = "",
 )
 
 /** Spaced-repetition state per content item (technical spec §15). */
@@ -154,6 +159,47 @@ data class SkillMasteryEntity(
 data class DimensionMasteryEntity(
     @PrimaryKey val dimension: String,
     val mastery: Float,
+)
+
+/**
+ * The day's answer for one exercise (Phase 1, Room v9).
+ *
+ * Exists for one question the model could not answer before: *has this question
+ * already moved the learner today?* Re-answering the item that was just answered —
+ * from a retry button, or by re-running a lesson — used to push mastery and the streak
+ * again, so the bar measured taps. One row per exercise is enough for that question;
+ * the history of every attempt is [LessonAttemptEntity], and this row does not try to
+ * be it.
+ */
+@Entity(tableName = "question_attempt")
+data class QuestionAttemptEntity(
+    @PrimaryKey val exerciseId: String,
+    val lessonId: String,
+    /** Compact day id, e.g. 20261001 — the same id `study_session` keys on. */
+    val dayKey: Int,
+    val correct: Boolean,
+    val at: Long,
+)
+
+/**
+ * One answered lesson question, append-only (Phase 2, Room v9).
+ *
+ * [QuestionAttemptEntity] above is the *claim* — "has this exercise already moved the
+ * model today" — and it is overwritten in place. This row is the history: every answer
+ * in every step, what the learner actually wrote or picked, and when. Two things read
+ * it: a reopened step resumes on the first question it has no answer for
+ * ([org.token.english.domain.model.StageResume]), and the session keeps the learner's
+ * own answers across a process death instead of only the cursor.
+ */
+@Entity(tableName = "lesson_attempt")
+data class LessonAttemptEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val lessonId: String,
+    val stageId: String,
+    val exerciseId: String,
+    val answer: String,
+    val correct: Boolean,
+    val at: Long,
 )
 
 /** One row per study day (streaks + daily goal). */

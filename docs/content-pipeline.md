@@ -34,7 +34,7 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 63):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 64):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
@@ -59,8 +59,10 @@
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
   2888 exercises
-  (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which v63 added a shared
-  3–4 sentence passage with two comprehension questions to five lessons per level** + meaning items
+  (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
+  3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
+  lessons, four in the six original ones
+  and 11 are single-sentence "what does this mean?" items** + meaning items
   + A1 pronunciation drills + P2 recall/production
   items + **a dialogue in every lesson: five or six turns at A2–C2, four at A1 — 1052 speaking
   turns**), 1154 vocabulary entries
@@ -111,6 +113,26 @@
   attributes an answer to a Progress track and what `KnowledgeEvidence` uses to pick the nodes it
   moves, so an untagged item fell back to "evidence for every node of the lesson" — the wildcard
   that tagged content now replaces.
+- **Semantic validation (v64, Phase 3):** the gate used to check structure only — ids, ranges, types,
+  coverage — so an item could be well-formed and still unusable. Seven rules now check meaning, all
+  in `ContentValidator` (so `validateContent` and `ContentValidationTest` share them) and each pinned
+  by a test that breaks exactly one:
+  1. **a choice item's stem cannot contain its correct option** (normalised, ≥ 4 characters) — the
+     question would spell the answer;
+  2. **every `accepted` answer must meet the item's own `minWords`** — otherwise the model shown
+     after a miss is an answer the item would reject;
+  3. **a `listening` item must accept what it says** — one `accepted` answer has to equal the spoken
+     `text` after normalisation (`26` = `twenty-six`), or a perfect transcription is marked wrong;
+  4. **no item is shipped twice** — same type, stem and options in two lessons is one item paid for
+     twice (speaking excluded: a repeated service greeting in two scenes is realistic);
+  5. **no recall question is asked twice** — same cue and same accepted word, whatever the ids;
+  6. **no entry repeats its own example**, and **no word shows the same example at two levels**
+     (70 words are taught twice, and the higher level exists to show a harder context);
+  7. comparisons run on a shared `normalize` (case, punctuation, hyphens, apostrophes stripped), so
+     `twenty-six`/`twenty six` and `'May'`/`May` never invent a finding.
+  `scripts/content_audit.mjs` is the reporting counterpart: it measures the bundle and lists what a
+  human should judge (short passages, a one-word dialogue turn), while the gate asserts only what
+  can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
   Coverage is **every one of the 2888 exercises** (grammar/fill-blank core plus vocabulary meaning,
@@ -167,7 +189,8 @@
 - **The JSON files are the source of truth, not the scripts (A-12).** Applied batches live in
   `scripts/archive/` (see its README) purely as the record of *how* a change was made — **never
   re-run one**, it would overwrite later hand edits. `scripts/` itself holds only what you still
-  run: `balance_answer_positions.mjs`, `install_debug.sh` and `release_check.sh`. After any content
+  run: `balance_answer_positions.mjs`, `content_audit.mjs`, `install_debug.sh` and `release_check.sh`.
+  After any content
   edit run `node scripts/balance_answer_positions.mjs`, then `validateContent` + the content tests
   with `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `word_recall`, `translation`,

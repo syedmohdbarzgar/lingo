@@ -127,9 +127,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (543 tests / 64 classes as of the v63
-reading pass — `LoadFailureTest` is the new class, pinning that a failed local read becomes a
-state the screen can show and retry rather than a spinner nobody can leave — one active stage at a time across the eight-step lesson, no trial on a fresh
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (580 tests / 67 classes as of the
+Phase-3 content pass, which added eight cases to `ContentValidationTest` — one fixture per new
+semantic rule in `ContentValidator`, plus a guard that a hyphen is never a finding; the last new
+classes were the Phase-2 persistence pass — `EvidenceRuleTest` pins that one answer per exercise per day is evidence,
+`LessonMasteryTest` that finished steps are not mastery, and `LearningPersistenceTest` that a
+reopened step resumes on the first *unanswered* question, that every graded answer is appended with
+its step, and that a finished step's completion time is recorded once and survives a restart;
+`LoadFailureTest` pins that a failed
+local read becomes a state the screen can show and retry rather than a spinner nobody can leave —
+one active stage at a time across the eight-step lesson, no trial on a fresh
 install, the per-flavor «ارتباط با ناشر» store page, the
 per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut
 until that dialogue is spoken, and the Vosk verdict engine, whose recogniser half is device-only by

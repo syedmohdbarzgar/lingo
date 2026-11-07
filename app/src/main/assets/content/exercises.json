@@ -1,5 +1,5 @@
 {
-  "contentVersion": 63,
+  "contentVersion": 64,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -4722,11 +4722,11 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "listening",
       "order": 7,
-      "text": "Please close the door.",
+      "text": "Please sit down and listen.",
       "accepted": [
-        "please close the door"
+        "please sit down and listen"
       ],
-      "explanationFa": "به تکیهٔ close و آزادسازیِ پایانیِ /r/ در door گوش کن.",
+      "explanationFa": "sit با /ɪ/ کوتاه و listen با تکیهٔ روی بخش اول /ˈlɪsən/ گفته می‌شود؛ حرف t در listen شنیده نمی‌شود.",
       "skill": "LISTENING"
     },
     {
@@ -6204,8 +6204,8 @@
       "id": "a1.spelling.ex.02",
       "lessonId": "a1.spelling.lesson-01",
       "type": "multiple_choice",
-      "question": "Which word has a double letter?",
-      "questionFa": "کدام واژه حرف تکراری دارد؟",
+      "question": "Which word has a repeated consonant?",
+      "questionFa": "کدام واژه یک حرف بی‌صدا را دو بار دارد؟",
       "options": [
         "letter",
         "name",
@@ -7380,7 +7380,7 @@
       "minWords": 6,
       "accepted": [
         "the new evidence corroborates the hypothesis",
-        "recent evidence corroborates the hypothesis"
+        "the recent evidence corroborates the hypothesis"
       ],
       "hintFa": "corroborate یعنی با شواهد تأیید کردن؛ با فاعل سوم‌شخص -s می‌گیرد.",
       "skill": "WRITING",
@@ -11922,12 +11922,12 @@
       "lessonId": "a2.symptoms.lesson-01",
       "type": "word_recall",
       "order": 6,
-      "prompt": "تب",
+      "prompt": "گلودرد",
       "accepted": [
-        "fever"
+        "sore throat"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "fever یعنی «تب»؛ fever قابل‌شمارش است: a fever؛ high fever شدت را نشان می‌دهد."
+      "explanationFa": "sore throat دو کلمه است: sore یعنی «دردناک» و throat یعنی «گلو»؛ همیشه با هم می‌آید: I have a sore throat."
     },
     {
       "id": "a2.symptoms.ex.07",
@@ -23424,12 +23424,12 @@
       "lessonId": "b1.friendship.lesson-01",
       "type": "word_recall",
       "order": 6,
-      "prompt": "همسایه",
+      "prompt": "اعتماد کردن",
       "accepted": [
-        "neighbour"
+        "trust"
       ],
       "skill": "VOCABULARY",
-      "explanationFa": "همسایه neighbour است و در آمریکایی neighbor نوشته می‌شود."
+      "explanationFa": "trust یعنی «اعتماد کردن» و هم فعل است و هم اسم؛ rely on یعنی «تکیه کردن» و کمی متفاوت است: You can trust a friend."
     },
     {
       "id": "b1.friendship.ex.07",

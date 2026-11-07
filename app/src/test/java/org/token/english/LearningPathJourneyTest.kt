@@ -31,6 +31,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningActionType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
@@ -102,6 +103,22 @@ class LearningPathJourneyTest {
 
         override fun observeMastery(): Flow<Map<Skill, Float>> = masteryFlow
         override fun observeStats(): Flow<StudyStats> = statsFlow
+
+        /** exercise id → (day key, correct), standing in for the v9 claim row. */
+        private val claims = mutableMapOf<String, Pair<Int, Boolean>>()
+
+        override suspend fun claimAnswer(
+            lessonId: String,
+            exerciseId: String,
+            correct: Boolean,
+            now: Long,
+        ): Boolean {
+            val dayKey = org.token.english.core.common.TimeUtil.dateKey(now)
+            val existing = claims[exerciseId]
+            if (existing != null && existing.first == dayKey && (existing.second || !correct)) return false
+            claims[exerciseId] = dayKey to correct
+            return true
+        }
 
         override suspend fun applyAttempt(skill: Skill, correct: Boolean, source: String) {
             val current = masteryFlow.value[skill] ?: 0f
@@ -216,7 +233,12 @@ class LearningPathJourneyTest {
             stageId: String,
             completedStages: Set<String>,
             skippedStages: Set<String>,
+            completedAt: Map<String, Long>,
         ) = Unit
+
+        override suspend fun recordAttempt(attempt: LessonAttempt) = Unit
+
+        override suspend fun attempts(lessonId: String): List<LessonAttempt> = emptyList()
 
         override suspend fun getLessonState(lessonId: String): LessonState? =
             lessonStates.value.firstOrNull { it.lessonId == lessonId }

@@ -15,11 +15,13 @@ import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
 import org.token.english.domain.engine.ReviewScheduler
 import org.token.english.domain.engine.SkillEvidence
+import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.engine.SkillProfileEngine
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
@@ -64,24 +66,93 @@ class SubmitExerciseUseCase(
         val verdict = AnswerChecker.grade(exercise, answer)
         val correct = verdict == AnswerChecker.Verdict.CORRECT
         val skill = AnswerChecker.skillOf(exercise)
-        progress.applyAttempt(skill, correct, source = "lesson")
-        // The same answer is also evidence about the curriculum nodes the lesson
-        // teaches (audit §4/§19) — this is what turns exercise results into a
-        // learner model instead of a score. A lesson the graph does not know (the
-        // placement test) simply yields no nodes.
-        knowledge.recordAttempt(
-            lessonId = exercise.lessonId,
-            skill = skill,
-            format = AnswerChecker.formatOf(exercise),
-            correct = correct,
-            now = now,
-        )
+        val format = AnswerChecker.formatOf(exercise)
+        // One answer per exercise per day is evidence; a retry of the same item is a
+        // tap. The claim comes first, so a repeated answer writes nothing at all — not
+        // the skill meter, not the graph — and the two can never disagree about what was
+        // learned. A failed claim still advances the lesson cursor; only the model is
+        // left alone.
+        if (progress.claimAnswer(exercise.lessonId, exercise.id, correct, now)) {
+            // The same answer is also evidence about the curriculum nodes the lesson
+            // teaches (audit §4/§19) — this is what turns exercise results into a
+            // learner model instead of a score. A lesson the graph does not know (the
+            // placement test) simply yields no nodes.
+            knowledge.recordAttempt(
+                lessonId = exercise.lessonId,
+                skill = skill,
+                format = format,
+                correct = correct,
+                now = now,
+            )
+            progress.applyAttempt(skill, correct, source = "lesson")
+            // A written sentence is writing evidence *as well as* evidence about what
+            // it was about: the item's `skill` says which knowledge the answer tests,
+            // the format says how the learner produced it. Crediting only the tagged
+            // skill left WRITING with four items in the whole bundle and no way to
+            // reach it, while 156 authored productions went to vocabulary.
+            if (format == ExerciseFormat.SENTENCE_PRODUCTION && skill != Skill.WRITING) {
+                progress.applyAttempt(Skill.WRITING, correct, source = "lesson-writing")
+            }
+        }
         return ExerciseOutcome(
             correct = correct,
             correctAnswer = AnswerChecker.correctAnswerText(exercise),
             skill = skill,
             almostCorrect = verdict == AnswerChecker.Verdict.ALMOST,
         )
+    }
+}
+
+/**
+ * One graded conversation turn, as evidence in its own track.
+ *
+ * The dialogue is the only place the learner *produces* language and gets a verdict
+ * on it, and it used to leave no trace at all: the conversation screen graded every
+ * turn and wrote nothing, so Speaking could never be shown to move and the planner
+ * kept excluding it. Splitting the evidence is the point of this class — *how* the
+ * answer arrived decides *which* track it feeds:
+ *
+ * - spoken, graded by the recogniser → [Skill.SPEAKING];
+ * - typed on the keyboard → [Skill.WRITING]. A written sentence is writing evidence,
+ *   and the turn is still the same query, the same scorer and the same threshold.
+ *
+ * A [SpeakingVerdict.RETRY] writes nothing on purpose. The app cannot tell a wrong
+ * answer from a recogniser error, and the screen already refuses to accuse the
+ * learner of one; turning that doubt into a mastery penalty (or a broken streak)
+ * would be the same accusation, only harder to see. [SpeakingVerdict.NEAR] counts as
+ * a hit: the scorer accepts key-word coverage, and "the meaning came across" is what
+ * this track measures.
+ */
+class RecordConversationTurnUseCase(
+    private val progress: ProgressRepository,
+    private val knowledge: KnowledgeRepository,
+) {
+    /** @return whether the turn counted as evidence (see [ProgressRepository.claimAnswer]). */
+    suspend operator fun invoke(
+        lessonId: String?,
+        exerciseId: String,
+        verdict: SpeakingVerdict,
+        spoken: Boolean,
+        now: Long,
+    ): Boolean {
+        if (verdict == SpeakingVerdict.RETRY) return false
+        val skill = if (spoken) Skill.SPEAKING else Skill.WRITING
+        val format = if (spoken) ExerciseFormat.SPEAKING else ExerciseFormat.SENTENCE_PRODUCTION
+        // The turn *is* an exercise: claiming it by id is what stops a re-played
+        // dialogue from raising the speaking bar six times for six taps.
+        if (!progress.claimAnswer(lessonId.orEmpty(), exerciseId, correct = true, now)) return false
+        // A null lesson (the practice opened before the bundle landed) has no dialogue
+        // graph, so only the skill track is credited; the repository ignores an unknown
+        // lesson rather than inventing nodes for it.
+        knowledge.recordAttempt(
+            lessonId = lessonId.orEmpty(),
+            skill = skill,
+            format = format,
+            correct = true,
+            now = now,
+        )
+        progress.applyAttempt(skill, correct = true, source = if (spoken) "conversation" else "conversation-typed")
+        return true
     }
 }
 

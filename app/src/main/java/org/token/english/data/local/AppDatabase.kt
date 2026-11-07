@@ -12,11 +12,13 @@ import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.KnowledgeStateEntity
+import org.token.english.data.local.entity.LessonAttemptEntity
 import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.ReviewAttemptEntity
 import org.token.english.data.local.entity.ReviewItemEntity
 import org.token.english.data.local.entity.SkillMasteryEntity
+import org.token.english.data.local.entity.QuestionAttemptEntity
 import org.token.english.data.local.entity.StudySessionEntity
 import org.token.english.data.local.entity.VocabularyEntity
 
@@ -26,7 +28,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 8
+internal const val DATABASE_VERSION = 9
 
 @Database(
     entities = [
@@ -41,6 +43,8 @@ internal const val DATABASE_VERSION = 8
         SkillMasteryEntity::class,
         DimensionMasteryEntity::class,
         StudySessionEntity::class,
+        QuestionAttemptEntity::class,
+        LessonAttemptEntity::class,
     ],
     version = DATABASE_VERSION,
     exportSchema = true,
@@ -142,6 +146,35 @@ abstract class AppDatabase : RoomDatabase() {
                 "ALTER TABLE lesson_state ADD COLUMN completedStages TEXT NOT NULL DEFAULT ''",
                 "ALTER TABLE lesson_state ADD COLUMN skippedStages TEXT NOT NULL DEFAULT ''",
             ),
+            // v8 → v9: learning persistence (Phase 1 claim + Phase 2 history).
+            //   • question_attempt is the day's answer per exercise, so re-answering
+            //     an item cannot raise mastery or the streak a second time;
+            //   • lesson_attempt is the append-only history every answered question
+            //     writes, which is what lets a reopened step resume on the first
+            //     question it has no answer for;
+            //   • stageCompletedAt stamps each step's completion, so "when" is a
+            //     recorded fact rather than something derived from the order.
+            // Both tables are additive and arrive empty, and the stamp column is
+            // defaulted: an upgrading install keeps every progress row it had, with
+            // no invented timestamps.
+            "8->9" to listOf(
+                "CREATE TABLE IF NOT EXISTS question_attempt (" +
+                    "exerciseId TEXT NOT NULL, " +
+                    "lessonId TEXT NOT NULL, " +
+                    "dayKey INTEGER NOT NULL, " +
+                    "correct INTEGER NOT NULL, " +
+                    "at INTEGER NOT NULL, " +
+                    "PRIMARY KEY(exerciseId))",
+                "CREATE TABLE IF NOT EXISTS lesson_attempt (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "lessonId TEXT NOT NULL, " +
+                    "stageId TEXT NOT NULL, " +
+                    "exerciseId TEXT NOT NULL, " +
+                    "answer TEXT NOT NULL, " +
+                    "correct INTEGER NOT NULL, " +
+                    "at INTEGER NOT NULL)",
+                "ALTER TABLE lesson_state ADD COLUMN stageCompletedAt TEXT NOT NULL DEFAULT ''",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
@@ -151,6 +184,7 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_5_6 = migration(5, 6)
         val MIGRATION_6_7 = migration(6, 7)
         val MIGRATION_7_8 = migration(7, 8)
+        val MIGRATION_8_9 = migration(8, 9)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
@@ -162,6 +196,7 @@ abstract class AppDatabase : RoomDatabase() {
                 MIGRATION_5_6,
                 MIGRATION_6_7,
                 MIGRATION_7_8,
+                MIGRATION_8_9,
             )
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {

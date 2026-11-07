@@ -14,6 +14,8 @@ import org.token.english.data.local.entity.LessonEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.ReviewAttemptEntity
 import org.token.english.data.local.entity.ReviewItemEntity
+import org.token.english.data.local.entity.LessonAttemptEntity
+import org.token.english.data.local.entity.QuestionAttemptEntity
 import org.token.english.data.local.entity.SkillMasteryEntity
 import org.token.english.data.local.entity.StudySessionEntity
 import org.token.english.data.local.entity.VocabularyEntity
@@ -54,12 +56,30 @@ interface ContentDao {
 
     @Query(
         "UPDATE lesson_state SET stage = :stage, completedStages = :completed, " +
-            "skippedStages = :skipped WHERE lessonId = :lessonId",
+            "skippedStages = :skipped, stageCompletedAt = :completedAt WHERE lessonId = :lessonId",
     )
-    suspend fun updateLessonStage(lessonId: String, stage: String, completed: String, skipped: String)
+    suspend fun updateLessonStage(
+        lessonId: String,
+        stage: String,
+        completed: String,
+        skipped: String,
+        completedAt: String,
+    )
 
     @Query("SELECT * FROM lesson_state WHERE lessonId = :lessonId")
     suspend fun getLessonState(lessonId: String): LessonStateEntity?
+
+    // The learner's own answer history (Phase 2, Room v9): append-only, one row per
+    // answer given, so a reopened step can resume on the first question it has no
+    // answer for and the answers themselves outlive the process.
+    @Insert
+    suspend fun insertLessonAttempt(item: LessonAttemptEntity)
+
+    @Query("SELECT * FROM lesson_attempt WHERE lessonId = :lessonId ORDER BY at ASC, id ASC")
+    suspend fun getLessonAttempts(lessonId: String): List<LessonAttemptEntity>
+
+    @Query("DELETE FROM lesson_attempt")
+    suspend fun clearLessonAttempts()
 
     // Vocabulary
     @Query("SELECT * FROM vocabulary ORDER BY word ASC")
@@ -272,6 +292,51 @@ interface ProgressDao {
     /** Today's study seconds — day id computed by SQLite at query time. */
     @Query("SELECT seconds FROM study_session WHERE dateKey = CAST(strftime('%Y%m%d','now','localtime') AS INTEGER)")
     fun observeTodaySeconds(): Flow<Long?>
+
+    // The day's answer per exercise (Phase 1, Room v9): what makes "already answered
+    // today" a stored fact instead of a session memory that dies with the process.
+    @Query("SELECT * FROM question_attempt WHERE exerciseId = :exerciseId")
+    suspend fun getAttempt(exerciseId: String): QuestionAttemptEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAttempt(item: QuestionAttemptEntity)
+
+    @Query("DELETE FROM question_attempt")
+    suspend fun clearAttempts()
+
+
+
+    /**
+     * Claims today's evidence for one exercise, atomically.
+     *
+     * Returns `true` when this answer is the first of the day for this question, or
+     * when it turns the day's miss into a hit: a learner who got it wrong and then
+     * fixed it has earned the correction. A second *hit* the same day returns `false`
+     * and leaves the stored row alone, which is what keeps a re-answer from moving
+     * mastery again.
+     */
+    @Transaction
+    suspend fun claimAttempt(
+        exerciseId: String,
+        lessonId: String,
+        dayKey: Int,
+        correct: Boolean,
+        at: Long,
+    ): Boolean {
+        val existing = getAttempt(exerciseId)
+        val sameDay = existing?.dayKey == dayKey
+        if (sameDay && (existing?.correct == true || !correct)) return false
+        upsertAttempt(
+            QuestionAttemptEntity(
+                exerciseId = exerciseId,
+                lessonId = lessonId,
+                dayKey = dayKey,
+                correct = correct,
+                at = at,
+            ),
+        )
+        return true
+    }
 
     @Query("DELETE FROM skill_mastery")
     suspend fun clearMastery()

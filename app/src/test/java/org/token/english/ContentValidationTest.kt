@@ -248,4 +248,140 @@ class ContentValidationTest {
         )
         assertFails(dir, "lesson has no exercises", "lesson has no vocabulary", "no knowledge item teaches this lesson")
     }
+
+    // --- Phase 3: the semantic rules -------------------------------------
+
+    /**
+     * Swaps the fixture's one choice item for [json] (one or more items), keeping the
+     * four dialogue turns the coverage rule requires. Injecting into the written bundle
+     * keeps each fixture to the rule it breaks.
+     */
+    private fun replaceFirstExercise(dir: File, json: String) {
+        val file = dir.resolve("exercises.json")
+        val original = file.readText()
+        val start = original.indexOf("{\"id\": \"l1.ex.01\"")
+        val end = original.indexOf("}, ", start).let {
+            if (it >= 0) it + 1 else original.indexOf("},\n", start) + 1
+        }
+        require(start >= 0 && end > start) { "fixture exercise not found" }
+        file.writeText(original.substring(0, start) + json + original.substring(end))
+    }
+
+    @Test
+    fun `an accepted model under the item's own word floor fails`() {
+        val dir = writeValidBundle()
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "sentence_production", "order": 6, "prompt": "این جمله را بنویس.", "mustUse": ["evidence"], "minWords": 6, "accepted": ["the evidence holds"], "skill": "WRITING", "explanationFa": "توضیح"}""",
+        )
+        assertFails(dir, "under minWords 6")
+    }
+
+    @Test
+    fun `a listening item whose accepted answers ignore the spoken text fails`() {
+        val dir = writeValidBundle()
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "text": "Close the door.", "accepted": ["shut the door"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
+        )
+        assertFails(dir, "no accepted answer matches the spoken text")
+    }
+
+    @Test
+    fun `a hyphen and a number are the same answer`() {
+        val dir = writeValidBundle()
+        // "twenty-six" vs "twenty six" must not be a finding: the rule compares the
+        // sentence, not its punctuation.
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "text": "The alphabet has twenty-six letters.", "accepted": ["the alphabet has twenty six letters"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
+        )
+        val report = ContentValidator.validate(dir)
+        assertTrue(
+            "a hyphenated word and its spaced form are the same answer: ${report.errors}",
+            report.errors.none { it.contains("no accepted answer matches") },
+        )
+    }
+
+    @Test
+    fun `a question that already contains its own answer fails`() {
+        val dir = writeValidBundle()
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "question": "Which word is right?", "options": ["right", "left", "up", "down"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+        )
+        assertFails(dir, "question already contains the correct option")
+    }
+
+    @Test
+    fun `the same recall question twice in the bundle fails`() {
+        val dir = writeValidBundle()
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "word_recall", "order": 6, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
+                """{"id": "l1.ex.02", "lessonId": "l1", "type": "word_recall", "order": 7, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+        )
+        assertFails(dir, "the same recall question is asked twice")
+    }
+
+    @Test
+    fun `one entry cannot ship the same example twice`() {
+        val dir = writeValidBundle()
+        dir.resolve("vocabulary.json").writeText(
+            """
+            {"contentVersion": 1, "vocabulary": [
+              {"id": "l1.word.hello", "lessonId": "l1", "word": "hello", "translation": "سلام",
+               "level": "A1",
+               "examples": [
+                 {"en": "Hello there.", "fa": "سلام."},
+                 {"en": "Hello there.", "fa": "سلام."}
+               ]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "repeats an earlier example of the same word")
+    }
+
+    @Test
+    fun `the same word cannot show the same example at two levels`() {
+        val dir = writeValidBundle()
+        // Two lessons, two entries for "menu", one sentence: the A2 entry exists to show
+        // a harder context, so reusing the A1 sentence leaves that slot empty.
+        dir.resolve("vocabulary.json").writeText(
+            """
+            {"contentVersion": 1, "vocabulary": [
+              {"id": "l1.word.menu", "lessonId": "l1", "word": "menu", "translation": "منو",
+               "level": "A1",
+               "examples": [
+                 {"en": "Can I see the menu, please?", "fa": "می‌شود منو را ببینم؟"},
+                 {"en": "The menu is on the table.", "fa": "منو روی میز است."}
+               ]},
+              {"id": "l1.word.dish", "lessonId": "l1", "word": "dish", "translation": "غذا",
+               "level": "A1",
+               "examples": [
+                 {"en": "This dish is hot.", "fa": "این غذا تند است."},
+                 {"en": "The dish costs ten dollars.", "fa": "این غذا ده دالر است."}
+               ]},
+              {"id": "l1.word.menu2", "lessonId": "l1", "word": "menu", "translation": "منو",
+               "level": "A2",
+               "examples": [
+                 {"en": "Can I see the menu, please?", "fa": "می‌شود منو را ببینم؟"},
+                 {"en": "The menu lists the drinks.", "fa": "منو نوشیدنی‌ها را دارد."}
+               ]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "repeats the one in l1.word.menu for the same word")
+    }
+
+    @Test
+    fun `one item shipped in two lessons fails`() {
+        val dir = writeValidBundle()
+        replaceFirstExercise(
+            dir,
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
+                """{"id": "l1.ex.02", "lessonId": "l1", "type": "multiple_choice", "order": 7, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+        )
+        assertFails(dir, "the same item is shipped 2 times")
+    }
 }

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 63,
+  "contentVersion": 64,
   "vocabulary": [
     {
       "id": "a1.greetings.word.hello",
@@ -599,8 +599,8 @@
       "partOfSpeech": "noun",
       "examples": [
         {
-          "en": "Can I see the menu, please?",
-          "fa": "لطفاً منو را نشانم بدهید؟"
+          "en": "The menu is in English and Persian.",
+          "fa": "منو هم انگلیسی است هم فارسی."
         },
         {
           "en": "The menu has both meat and vegetable dishes.",
@@ -698,8 +698,8 @@
       "partOfSpeech": "noun",
       "examples": [
         {
-          "en": "Can we have the bill, please?",
-          "fa": "لطفاً صورتحساب را بیاورید؟"
+          "en": "The bill came to forty dollars.",
+          "fa": "صورت‌حساب چهل دالر شد."
         },
         {
           "en": "I paid the bill with a card.",
@@ -6919,8 +6919,8 @@
       "partOfSpeech": "noun",
       "examples": [
         {
-          "en": "My name is Sara.",
-          "fa": "اسم من سارا است."
+          "en": "Spell your name for me, please.",
+          "fa": "اسمت را برایم هجی کن، لطفاً."
         },
         {
           "en": "Write your name at the top of the page.",

@@ -22,6 +22,7 @@ import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.KnowledgeStateEntity
 import org.token.english.data.local.entity.LessonEntity
+import org.token.english.data.local.entity.LessonAttemptEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.ReviewAttemptEntity
 import org.token.english.data.local.entity.ReviewItemEntity
@@ -38,6 +39,7 @@ import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
@@ -93,6 +95,8 @@ class KnowledgeRepositoryImpl(
         correct: Boolean,
         now: Long,
     ) {
+        // The caller has already claimed this exercise for the day; anything written
+        // here is new evidence by construction (see ProgressRepository.claimAnswer).
         KnowledgeEvidence.itemsFor(itemsForLesson(lessonId), skill).forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
                 engine.applyAttempt(item.id, existing?.toDomain(), correct, now, format).toEntity()
@@ -193,6 +197,7 @@ class LessonRepositoryImpl(
         stageId: String,
         completedStages: Set<String>,
         skippedStages: Set<String>,
+        completedAt: Map<String, Long>,
     ) {
         contentDao.ensureLessonState(lessonId)
         contentDao.updateLessonStage(
@@ -200,8 +205,38 @@ class LessonRepositoryImpl(
             stage = stageId,
             completed = completedStages.sorted().joinToString(","),
             skipped = skippedStages.sorted().joinToString(","),
+            // `/` cannot appear in a stage id or a millis value, so the pairs stay
+            // unambiguous without a JSON dependency for two columns.
+            completedAt = completedAt.entries
+                .sortedBy { it.key }
+                .joinToString(",") { (stage, at) -> "$stage=$at" },
         )
     }
+
+    override suspend fun recordAttempt(attempt: LessonAttempt) {
+        contentDao.insertLessonAttempt(
+            LessonAttemptEntity(
+                lessonId = attempt.lessonId,
+                stageId = attempt.stageId,
+                exerciseId = attempt.exerciseId,
+                answer = attempt.answer,
+                correct = attempt.correct,
+                at = attempt.at,
+            ),
+        )
+    }
+
+    override suspend fun attempts(lessonId: String): List<LessonAttempt> =
+        contentDao.getLessonAttempts(lessonId).map {
+            LessonAttempt(
+                lessonId = it.lessonId,
+                stageId = it.stageId,
+                exerciseId = it.exerciseId,
+                answer = it.answer,
+                correct = it.correct,
+                at = it.at,
+            )
+        }
 
     override suspend fun getLessonState(lessonId: String): LessonState? =
         contentDao.getLessonState(lessonId)?.toDomain()
@@ -377,6 +412,19 @@ class ProgressRepositoryImpl(
         }
     }
 
+    override suspend fun claimAnswer(
+        lessonId: String,
+        exerciseId: String,
+        correct: Boolean,
+        now: Long,
+    ): Boolean = progressDao.claimAttempt(
+        exerciseId = exerciseId,
+        lessonId = lessonId,
+        dayKey = TimeUtil.dateKey(now),
+        correct = correct,
+        at = now,
+    )
+
     override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
         progressDao.upsertDimension(DimensionMasteryEntity(dimension.name, mastery))
     }
@@ -402,6 +450,11 @@ class ProgressRepositoryImpl(
         progressDao.clearMastery()
         progressDao.clearDimensions()
         progressDao.clearSessions()
+        // A reset is a fresh learner: yesterday's answers must not come back as claims
+        // on the exercises of the new attempt, and the recorded history of answers
+        // (Phase 2) must not be read back as "this step was already answered".
+        progressDao.clearAttempts()
+        contentDao.clearLessonAttempts()
         reviewDao.clearItems()
         reviewDao.clearAttempts()
         contentDao.clearLessonStates()
@@ -542,6 +595,15 @@ private fun LessonStateEntity.toDomain() = LessonState(
     stageId = stage.takeIf { it.isNotBlank() },
     completedStages = completedStages.split(',').filter { it.isNotBlank() }.toSet(),
     skippedStages = skippedStages.split(',').filter { it.isNotBlank() }.toSet(),
+    // A pair written by a newer build with an id this one does not know is dropped,
+    // not guessed: the step list is the authority on which ids exist.
+    stageCompletedAt = stageCompletedAt.split(',')
+        .mapNotNull { pair ->
+            val parts = pair.split('=')
+            val at = parts.getOrNull(1)?.toLongOrNull() ?: return@mapNotNull null
+            parts.first().takeIf { it.isNotBlank() }?.let { it to at }
+        }
+        .toMap(),
 )
 
 private fun VocabularyEntity.toDomain() = VocabularyItem(

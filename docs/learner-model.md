@@ -8,6 +8,41 @@
   `DefaultLearningPlanner`, plus the knowledge layer — `KnowledgeGraph` (prerequisite ordering and
   unlocking) and `DefaultKnowledgeEngine` (how one graded answer moves a node's mastery and review
   date). The UI must never learn how intervals/mastery are computed (technical spec §19).
+- **One answer is evidence once (Phase 1, Room v9).** `ProgressRepository.claimAnswer` stores the
+  day's answer per exercise in `question_attempt` *before* anything is written, and the use cases
+  write the skill meter and the graph only from a claimed answer. Re-answering the question that was
+  just answered — the retry button, or re-running the lesson — therefore moves nothing: without the
+  claim the EWMA (+0.2 a step) crossed the `STRONG_MASTERY` bar on seven taps of one question, and
+  the streak grew with them. The claim is keyed on the **exercise**, not its format, because a
+  remediation block drills several different questions that share a shape and every one of them is
+  real work. One exception is deliberate: a miss followed by a hit on the same question the same day
+  counts (fixing it is the evidence), while a hit followed by another miss does not punish twice.
+  `question_attempt` deliberately keeps only the day's answer (one row per exercise, overwritten);
+  the *history* is a separate, append-only table — see the persistence bullet below.
+- **A step remembers what was answered, not just how far (Phase 2, Room v9).** `lesson_attempt` is
+  append-only: every graded answer is written with the step that asked it, the text the learner
+  typed or picked, the verdict and the time — a retry is a second row, never a rewrite. Two things
+  read it. First, resume: `StageResume.cursorFor` opens a reopened step on the **first question with
+  no recorded answer**, because the one-integer cursor could not tell "answered question 4" from "was
+  on question 4 when the process died", and a content update that reordered a step silently moved
+  it onto a different question. A lesson with no recorded answers (an install from before the log)
+  keeps its saved cursor rather than restarting. Second, the step's own completion: `lesson_state
+  .stageCompletedAt` stores `stageId=millis` per finished step, stamped the **first** time it is
+  completed — revisiting a done step does not rewrite when it was done — so "when" is a recorded
+  fact. `ProgressRepository.reset()` clears the log with the rest of the learner's state.
+- **A graded answer feeds the track it actually evidences (Phase 1).** The item's `skill` says which
+  knowledge the answer is *about*; how it was produced decides the rest. A `sentence_production`
+  answer credits `WRITING` as well as its own skill (`SubmitExerciseUseCase`), a conversation turn
+  credits `SPEAKING` when it was spoken and `WRITING` when it was typed
+  (`RecordConversationTurnUseCase`), and a `RETRY` verdict writes nothing — the app cannot tell a
+  wrong answer from a recogniser error, and turning that doubt into a penalty is what the
+  conversation screen refuses to do. Speaking lands on the lesson's `PHONOLOGY` nodes through the
+  same `KnowledgeEvidence` rule the exercises use.
+- **Finished steps are not mastery (Phase 1).** `LessonMastery` turns lesson state plus node evidence
+  into `NOT_STARTED → IN_PROGRESS → COMPLETED → MASTERED`. `COMPLETED` means the required steps have
+  been walked; `MASTERED` means every node the lesson teaches passes `KnowledgeGates.isSecured` (no
+  node needs today's practice). Progress shows the second as a subset of the first, so «درس تمام‌شده»
+  can no longer read as "learned". The 30-day claim stays `isLongTermMastered`.
 - The adaptive layer on top of that graph is also pure and tested: `PrerequisiteEngine`
   (readiness / remediation / dependency depth), `AdaptiveLearningPlanner` (the ordered, justified
   "what to study now and why"), `DefaultMasteryProfileEngine` (mastery split by dimension —
@@ -90,13 +125,15 @@
   skipping writes `LessonStageProgress.skipped`, never `completed`, so
   `LessonStageState.percent` (completed **required** steps over required steps) cannot be inflated
   by a skip. Progress is persisted per lesson in `lesson_state.stage` / `completedStages` /
-  `skippedStages` (Room v8, comma-joined ids, empty by default), so an interrupted lesson resumes
-  where it stopped.
+  `skippedStages` (comma-joined ids, empty by default) plus `stageCompletedAt` (Phase 2, Room v9),
+  so an interrupted lesson resumes where it stopped and knows when each finished step was finished.
 - **Resume is derived, not guessed.** On open the session rebuilds the plan from the lesson's own
   content, restores the completed/skipped sets, and opens the saved step **only while it still
-  exists in this plan and is not already done** — otherwise the first step. A focused drill (B-1)
-  short-circuits that and opens on the exercises the engine picked. Progress comes from stage
-  status alone, so merely opening a step moves nothing.
+  exists in this plan and is not already done** — otherwise the first step. Inside that step the
+  cursor comes from the recorded answers, not from the saved index: the first question with no
+  answer is the one shown (Phase 2, above). A focused drill (B-1) short-circuits all of it and opens
+  on the exercises the engine picked. Progress comes from stage status alone, so merely opening a
+  step moves nothing.
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
@@ -173,3 +210,7 @@
   `vocab.idioms-and-figurative`) and 13 belong to none (a node that only trains LISTENING or
   PHONOLOGY). The arithmetic is checked against the bundle: 49 + 159 + 16 = 224 claims, the four
   double-claimed nodes take it to 220 distinct, and 233 − 220 = 13.
+  **What the tracks can actually collect is a content fact, measured in
+  [`review-v64.md`](review-v64.md):** READING is reachable in 43 of 192 lessons (a passage in 36) and
+  WRITING only through the 156 `sentence_production` items — so those two bars move slower than
+  GRAMMAR and VOCABULARY on the same effort, and the dome is honest about it rather than mis-wired.

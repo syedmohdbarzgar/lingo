@@ -14,10 +14,12 @@ import org.junit.Before
 import org.junit.Test
 import org.token.english.domain.engine.SkillStatus
 import org.token.english.domain.model.AttemptStats
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
@@ -75,13 +77,14 @@ class ProgressViewModelTest {
         states: List<KnowledgeState>,
         mastery: Map<Skill, Float> = emptyMap(),
         reviewStats: Map<ReviewContentType, AttemptStats> = emptyMap(),
+        lessons: List<LessonState> = emptyList(),
     ): ProgressViewModel {
         val knowledge = FakeKnowledgeRepository(items).apply { statesFlow.value = states }
         val progress = FakeProgressRepository().apply { masteryFlow.value = mastery }
         val reviews = FakeReviewRepository().apply { attemptStats = reviewStats }
         return ProgressViewModel(
             settingsRepository = FakeSettingsRepository(),
-            lessonRepository = FakeLessonRepository(),
+            lessonRepository = FakeLessonRepository().apply { statesFlow.value = lessons },
             progressRepository = progress,
             knowledgeRepository = knowledge,
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
@@ -130,6 +133,45 @@ class ProgressViewModelTest {
         assertEquals(SkillStatus.BUILDING, reading.status)
         assertEquals("no vocabulary work yet", 0, vocabulary.evidence)
         assertNull(vocabulary.accuracy)
+    }
+
+    @Test
+    fun `a completed lesson is only mastered once its own nodes are secured`() = runTest {
+        val items = listOf(node("g1", Skill.GRAMMAR))
+        val finished = LessonState(
+            lessonId = "l.g1",
+            currentIndex = 0,
+            completed = true,
+            completedAt = 1_790_000_000_000L,
+        )
+        val taught = state("g1", 0.4f, attempts = 2, misses = 0)
+        // Secured: strong, a broken-free streak, two shapes, and a delayed retest — the
+        // same bar the planner uses, so the screen cannot be more generous than the plan.
+        val secured = taught.copy(
+            mastery = 0.92f,
+            consecutiveCorrect = 3,
+            repetitions = 3,
+            intervalDays = 3,
+            lastReviewedAt = 1_790_086_000_000L,
+            firstCorrectAt = 1_790_000_000_000L,
+            distinctTypesCorrect = ExerciseFormat.FILL_BLANK.bit or ExerciseFormat.TRANSLATION.bit,
+        )
+
+        assertEquals(
+            "finished steps alone are not mastery",
+            0,
+            viewModel(items, listOf(taught), lessons = listOf(finished)).state.value.masteredLessons,
+        )
+        assertEquals(
+            1,
+            viewModel(items, listOf(secured), lessons = listOf(finished)).state.value.masteredLessons,
+        )
+        assertEquals(
+            "evidence without the finished steps is not a mastered lesson",
+            0,
+            viewModel(items, listOf(secured), lessons = listOf(finished.copy(completed = false)))
+                .state.value.masteredLessons,
+        )
     }
 
     @Test

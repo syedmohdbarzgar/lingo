@@ -3,17 +3,25 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
-- **The guided lesson persists stage progress, not each step's answers (v60).** The eight-step walk
-  ships (`LearningStage` → `LessonStagePlan` → `LessonStageState`, rendered by `LessonScreen`,
-  persisted per lesson in `lesson_state.stage` / `completedStages` / `skippedStages`), so the plan,
-  the done/skipped split and the resume point all survive a restart. What is deliberately *not*
-  stored is finer grain: there is no per-stage completion timestamp (the summary reads the
-  lesson-level study ticks), and "Previous" reopens a completed step **from its first exercise**
-  rather than replaying the answers already given inside it — the step's completion is kept, its
-  in-step answer sheet is not. Accepting that is cheaper than a second table keyed by
-  (lesson, stage, exercise) that nothing else reads yet; revisit if a step ever needs to resume
-  mid-way. Re-answering on a revisit is a normal graded attempt, not double counting:
-  `firstTries` already refuses to recount it as a first pass.
+- **Settled (Phase 2): the step resumes on the question, not the index.** `lesson_attempt` (Room v9)
+  records every graded answer with its step, and `StageResume` opens a reopened step on the first
+  question with no recorded answer; `lesson_state.stageCompletedAt` records when each step was
+  finished (first completion wins, so a revisit cannot rewrite it). What is still *not* stored is a
+  rendered answer sheet: "Previous" reopens a completed step from its first exercise rather than
+  replaying the answers given inside it — the step's completion and its recorded answers are kept,
+  but the screen does not pre-fill them, because a completed step is shown to *re-read*, and a
+  finished step's answers would tempt a re-tap that the claim (`question_attempt`) would refuse.
+  A revisit's answer is claimed like any other: re-answering the *same* exercise on the same day
+  writes nothing to mastery, and `firstTries` refuses to recount it as a first pass.
+
+- **`question_attempt` is the claim, `lesson_attempt` is the history (Phase 1 + 2, Room v9).**
+  `question_attempt` keeps one row per exercise, overwritten: its only question is "has this
+  exercise already moved the learner today", and a second row per exercise would have to be summed
+  anyway. The history lives in `lesson_attempt`, append-only and unbounded — one row per answer for
+  the life of the install, since a learner answering 30 questions a day is ~11k rows a year and every
+  read is `WHERE lessonId = ?` against an index-free table that size handles fine. Revisit if a
+  screen ever reads the log across all lessons (a "what did I get wrong yesterday" view), which
+  would want an index on `at` and probably a retention window.
 
 - **Settled (B-1): mastery by dimension now crosses sessions (Room v6).** `dimension_mastery`
   stores the per-dimension fold as answers arrive, and a lesson session seeds its `MasteryProfile`
@@ -58,7 +66,8 @@
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
   Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
-- Room is at `version = 8` with exported schemas (`app/schemas`). Schema changes must ship a
+- Room is at `version = 9` (`lesson_attempt`, `question_attempt`) with exported schemas
+  (`app/schemas`). Schema changes must ship a
   migration; registration is no longer a step anyone can forget, because `AppContainer` takes
   `AppDatabase.ALL_MIGRATIONS` as a whole (`RoomMigrationTest` fails if a hand-picked list comes
   back). That was not always so: v60 listed the steps one by one, v7→v8 was added to the database
@@ -93,8 +102,13 @@
 - **Conversation practice ships its recogniser inside the APK.** The Vosk model is ~40 MB of
   assets (`scripts/fetch_vosk_model.sh`; not committed, but packaged), so the APK grows to roughly
   83 MB (measured on the unsigned `googlePlay` release APK, Oct 2026 — 67.6 MB of that is the model
-  tree; the debug APKs are ~107 MB) and every install pays for a recogniser whether or not the
-  learner ever opens the screen. The release gate in `app/build.gradle.kts` refuses to build
+  tree; the three-ABI debug APKs are ~98 MiB since the Phase-4 ABI trimming, before that ~107 MB)
+  and every install pays for a recogniser whether or not the learner ever opens the screen. Three
+  ABIs of `libvosk.so` plus JNA are ~30 MB of that — a release bundle with ABI splits would deliver
+  one, and is the first thing to reach for if content growth pushes the fat APK past a store's
+  100 MB ceiling. Also still open from Phase 4: the 16 KB alignment is verified, but the
+  recogniser itself (model load, a spoken take, a verdict) has never run on hardware from this
+  checkout — `scripts/verify_device.sh` is the check to run on the next attached phone. The release gate in `app/build.gradle.kts` refuses to build
   `assemble*`/`bundle*` `Release` when that tree is fetched-but-missing, so a release cannot ship the
   dead screen by accident.
   Accepted for now because a downloadable model (Play Asset Delivery, a content package) needs the

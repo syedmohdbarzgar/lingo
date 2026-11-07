@@ -138,6 +138,12 @@ data class LessonStageProgress(
     val stage: LearningStage,
     val completed: Boolean = false,
     val skipped: Boolean = false,
+    /**
+     * When this step was completed, epoch millis (Phase 2), or null for a step that was
+     * finished before the stamp existed — the absence is kept, because an invented time
+     * would be a claim the app did not observe.
+     */
+    val completedAt: Long? = null,
 ) {
     /** Only a completed stage counts toward progress; a skip or a visit does not. */
     val countsAsDone: Boolean get() = completed
@@ -189,8 +195,18 @@ data class LessonStageState(
     fun withActive(stage: LearningStage): LessonStageState =
         copy(active = stage, visited = visited + stage)
 
-    fun withCompleted(stage: LearningStage): LessonStageState =
-        copy(progress = upsert(LessonStageProgress(stage, completed = true)))
+    /**
+     * Marks [stage] done. The **first** completion is the one stamped: revisiting a
+     * finished step (the back arrow, a restart) must not rewrite when it was finished.
+     */
+    fun withCompleted(stage: LearningStage, at: Long? = null): LessonStageState {
+        val known = statusOf(stage).completedAt
+        return copy(
+            progress = upsert(
+                LessonStageProgress(stage, completed = true, completedAt = known ?: at),
+            ),
+        )
+    }
 
     fun withSkipped(stage: LearningStage): LessonStageState =
         copy(progress = upsert(LessonStageProgress(stage, skipped = true)))

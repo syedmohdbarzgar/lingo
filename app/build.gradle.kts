@@ -33,6 +33,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Only ABIs that exist on a device the app can run on. Without this the
+        // APK carried JNA's armeabi/mips/mips64 natives (dead since 2018) plus a
+        // 32-bit x86 copy of libvosk — ~10 MB of payload nobody can load. arm64
+        // covers current phones, armeabi-v7a old ones, x86_64 the emulator.
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+        }
     }
 
     // One build per marketplace; each embeds its own billing SDK (AGENTS.md §4).

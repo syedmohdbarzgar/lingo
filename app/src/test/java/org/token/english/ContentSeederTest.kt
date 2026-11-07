@@ -12,6 +12,7 @@ import org.token.english.data.local.dao.ContentDao
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
 import org.token.english.data.local.entity.LessonEntity
+import org.token.english.data.local.entity.LessonAttemptEntity
 import org.token.english.data.local.entity.LessonStateEntity
 import org.token.english.data.local.entity.VocabularyEntity
 import org.token.english.domain.model.AppSettings
@@ -54,8 +55,12 @@ class ContentSeederTest {
             stage: String,
             completed: String,
             skipped: String,
+            completedAt: String,
         ) = Unit
         override suspend fun getLessonState(lessonId: String): LessonStateEntity? = null
+        override suspend fun insertLessonAttempt(item: LessonAttemptEntity) = Unit
+        override suspend fun getLessonAttempts(lessonId: String): List<LessonAttemptEntity> = emptyList()
+        override suspend fun clearLessonAttempts() = Unit
         override fun observeVocabulary(): Flow<List<VocabularyEntity>> = flowOf(vocabulary.values.sortedBy { it.word })
         override suspend fun getVocabularyByLesson(lessonId: String): List<VocabularyEntity> =
             vocabulary.values.filter { it.lessonId == lessonId }

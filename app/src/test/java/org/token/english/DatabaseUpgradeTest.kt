@@ -248,15 +248,33 @@ class DatabaseUpgradeTest {
                 if (rs.next()) rs.getString(1) else null
             }
             assertNull("a pre-existing word has no usage note yet", explanation)
+            val stamps = query(db, "SELECT stageCompletedAt FROM lesson_state") { rs ->
+                if (rs.next()) rs.getString(1) else null
+            }
+            assertEquals(
+                "a lesson finished before the stamp existed must not be given one",
+                "",
+                stamps,
+            )
 
             // 3. Tables introduced by later steps exist and arrive empty — the
             //    seeder fills content, the learner fills state (v6 adds the
-            //    cross-session dimension rows, which arrive with no evidence).
+            //    cross-session dimension rows, v9 the per-exercise claim row; both
+            //    arrive with no evidence).
             val after = entities(DATABASE_VERSION)
             val added = after.keys - tables.keys
             assertEquals(
-                "the graph and cross-session steps introduce exactly the known tables",
-                setOf("knowledge_item", "knowledge_state", "dimension_mastery"),
+                "the graph, cross-session and learning-evidence steps introduce exactly " +
+                    "the known tables",
+                setOf(
+                    "knowledge_item",
+                    "knowledge_state",
+                    "dimension_mastery",
+                    // v9: today's claim per exercise, and the append-only answer log
+                    // a reopened step resumes from (Phase 1 + Phase 2).
+                    "question_attempt",
+                    "lesson_attempt",
+                ),
                 added,
             )
             added.forEach { table ->

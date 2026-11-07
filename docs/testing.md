@@ -3,8 +3,34 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 543 tests / 64 classes as of
-  the v63 reading pass — its new class is `LoadFailureTest` (a throwing repository leaves a screen
+- **The evidence rule (Phase 1)** is pinned in two new classes. `EvidenceRuleTest`: one answer per
+  exercise per day moves the model — a repeat writes nothing (neither the skill meter nor the
+  graph), a *different* exercise in the same shape still counts (a remediation block's questions are
+  not taps), the same exercise the next day counts again, a corrected miss counts while a miss after
+  a hit does not punish twice, a fresh use case over the same stored claim writes nothing (so a
+  restart cannot re-earn it), and a `sentence_production` credits `WRITING` alongside its own skill
+  while a multiple choice never does. `LessonMasteryTest`: finished steps are not mastery —
+  not-started versus in-progress, completed versus mastered, one weak node holding a lesson back, a
+  lesson the graph does not know that can never be mastered, and a mastered count that can never
+  exceed the completed one. `ProgressViewModelTest` adds the same distinction through the real
+  ViewModel, `ConversationPracticeViewModelTest` adds the spoken-versus-typed routing plus the
+  retry/unheard cases, and `DatabaseUpgradeTest` expects `question_attempt` and `lesson_attempt`
+  among the tables a v1 install gains (empty) and `lesson_state.stageCompletedAt` to arrive as `''`
+  for a lesson finished before the column existed, so the `8->9` step is executed against real
+  SQLite like every other.
+
+- **Learning persistence (Phase 2)** is pinned in `LearningPersistenceTest`: the pure rule first
+  (`StageResume` resumes on the first question with no recorded answer, a fully answered step stays
+  on its last question instead of running past the end, an empty step has nowhere to resume), then
+  the wiring — a half-done step reopens on the unanswered question even when the saved cursor points
+  at the first one, a lesson with no recorded answers keeps its saved cursor, an answer recorded
+  under another step cannot move this step's cursor, every graded answer is appended with its step,
+  answer text and verdict (a miss stays a miss), finishing a step stamps the time and the stamp
+  survives a restart, and revisiting a finished step does not rewrite when it was finished.
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 580 tests / 67 classes as of
+  the Phase-3 content pass, whose eight new cases live in `ContentValidationTest` (no new class: one
+  fixture per new semantic rule plus a guard that a hyphenated answer is never a finding); the
+  load-failure pass's new class is `LoadFailureTest` (a throwing repository leaves a screen
   `failed`, never spinning, and retry re-runs the load), and on the content side the v63 batch
   reversed one assertion in `RemediationJourneyTest`: the listening item it pinned as wildcard
   evidence now authors `LISTENING`, so it stays out of a grammar block. The v61 C2 review pass added
@@ -47,7 +73,12 @@
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
   `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ContentValidationTest`
   (the content gate itself: the shared buildSrc `ContentValidator` on the real bundle, plus
-  mutation fixtures proving each rule fails), `DialogueContentTest` (the dialogue turns the practice
+  mutation fixtures proving each rule fails — and, since v64, one fixture per semantic rule: an item
+  whose stem spells its own answer, an `accepted` model under the item's own `minWords`, a listening
+  item that accepts something other than what it says, the same item and the same recall question
+  shipped twice, an entry repeating its own example, and the same word showing the same example at
+  two levels — each beside a negative case that a hyphen (`twenty-six` / `twenty six`) must never be
+  a finding), `DialogueContentTest` (the dialogue turns the practice
   screen consumes: every `speaking` item still parses, a `question` is English and always carries a
   Persian `questionFa`, a question is never its own answer, **every lesson has at least four turns**,
   every turn names its `sceneFa` and the partner's `partnerFa`, and the authored spread still reaches

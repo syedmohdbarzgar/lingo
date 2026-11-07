@@ -10,9 +10,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
+import org.token.english.domain.engine.LessonMastery
 import org.token.english.domain.engine.SkillProfile
+import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.repository.KnowledgeRepository
@@ -33,6 +36,11 @@ data class ProgressUiState(
      */
     val profiles: List<SkillProfile> = emptyList(),
     val totalLessons: Int = 0,
+    /**
+     * Completed lessons whose language is also known — no node of theirs needs today's
+     * practice. Always a subset of the completed count, never a separate tally of taps.
+     */
+    val masteredLessons: Int = 0,
     /** Curriculum nodes touched at least once, and how many the bundle ships. */
     val knowledgePractised: Int = 0,
     val knowledgeTotal: Int = 0,
@@ -61,6 +69,9 @@ class ProgressViewModel(
     private var knowledgeStates: List<KnowledgeState> = emptyList()
     private var knowledgeTitles: Map<String, String> = emptyMap()
     private var knowledgeTotal: Int = 0
+    /** The graph itself, for the lesson→nodes mapping the mastered count asks for. */
+    private var knowledgeItems: List<KnowledgeItem> = emptyList()
+    private var lessonStates: List<LessonState> = emptyList()
 
     /** Declared before `init` — Kotlin initialises properties in source order. */
     private var loadJobs: List<Job> = emptyList()
@@ -105,6 +116,14 @@ class ProgressViewModel(
                     rebuild()
                 }
             },
+            // Which lessons are finished — the half of the standing that is not
+            // evidence. Without it "completed" and "mastered" could only ever agree.
+            viewModelScope.launch {
+                lessonRepository.observeLessonStates().catchLoadFailure(::onLoadFailure).collect {
+                    lessonStates = it
+                    rebuild()
+                }
+            },
             // Curriculum labels are authored content, read once — the graph is 70-odd
             // rows and never changes during a session.
             viewModelScope.launch {
@@ -114,6 +133,7 @@ class ProgressViewModel(
                         return@launch
                     }
                 knowledgeTitles = items.associate { it.id to it.titleFa }
+                knowledgeItems = items
                 knowledgeTotal = items.size
                 rebuild()
             },
@@ -160,6 +180,15 @@ class ProgressViewModel(
         val weakest = knowledgeStates
             .minByOrNull { it.mastery }
             ?.let { knowledgeTitles[it.itemId] }
+        val completedIds = lessonStates.filter { it.completed }.mapTo(mutableSetOf()) { it.lessonId }
+        val nodesByLesson = knowledgeItems
+            .flatMap { item -> item.lessonIds.map { it to item } }
+            .groupBy({ it.first }, { it.second })
+        val mastered = LessonMastery.masteredCount(
+            completed = completedIds,
+            nodesByLesson = nodesByLesson,
+            states = knowledgeStates.associateBy { it.itemId },
+        )
         _state.value = ProgressUiState(
             isLoading = false,
             level = level,
@@ -167,6 +196,7 @@ class ProgressViewModel(
             mastery = _state.value.mastery,
             profiles = profiles,
             totalLessons = totalLessons,
+            masteredLessons = mastered,
             knowledgePractised = knowledgeStates.size,
             knowledgeTotal = knowledgeTotal,
             weakestKnowledge = weakest,

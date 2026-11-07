@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
+import org.token.english.core.common.TimeUtil
 import org.token.english.core.billing.BillingGateway
 import org.token.english.core.billing.ProductIds
 import org.token.english.core.billing.PurchaseOutcome
@@ -23,6 +24,7 @@ import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
@@ -123,6 +125,10 @@ class FakeLessonRepository(
     val savedStages = mutableMapOf<String, String>()
     val savedCompleted = mutableMapOf<String, Set<String>>()
     val savedSkipped = mutableMapOf<String, Set<String>>()
+    /** Completion stamps written by the session, per lesson (Phase 2). */
+    val savedCompletedAt = mutableMapOf<String, Map<String, Long>>()
+    /** The append-only answer log (Phase 2), in write order. */
+    val attemptsLog = mutableListOf<LessonAttempt>()
 
     override fun observeLessons(): Flow<List<Lesson>> = lessonsFlow
     override fun observeLessonStates(): Flow<List<LessonState>> = statesFlow
@@ -145,11 +151,20 @@ class FakeLessonRepository(
         stageId: String,
         completedStages: Set<String>,
         skippedStages: Set<String>,
+        completedAt: Map<String, Long>,
     ) {
         savedStages[lessonId] = stageId
         savedCompleted[lessonId] = completedStages
         savedSkipped[lessonId] = skippedStages
+        savedCompletedAt[lessonId] = completedAt
     }
+
+    override suspend fun recordAttempt(attempt: LessonAttempt) {
+        attemptsLog += attempt
+    }
+
+    override suspend fun attempts(lessonId: String): List<LessonAttempt> =
+        attemptsLog.filter { it.lessonId == lessonId }
 
     /** The guided-step writes are part of the saved state, so a restart sees them. */
     override suspend fun getLessonState(lessonId: String): LessonState? {
@@ -163,6 +178,7 @@ class FakeLessonRepository(
             stageId = stage,
             completedStages = savedCompleted[lessonId].orEmpty(),
             skippedStages = savedSkipped[lessonId].orEmpty(),
+            stageCompletedAt = savedCompletedAt[lessonId].orEmpty(),
         )
     }
 
@@ -267,6 +283,22 @@ class FakeProgressRepository : ProgressRepository {
     override fun observeMastery(): Flow<Map<Skill, Float>> = masteryFlow
     override fun observeStats(): Flow<StudyStats> = statsFlow
 
+    /** exercise id → (day key, correct) claimed, mirroring the v9 `question_attempt` row. */
+    val claimed = mutableMapOf<String, Pair<Int, Boolean>>()
+
+    override suspend fun claimAnswer(
+        lessonId: String,
+        exerciseId: String,
+        correct: Boolean,
+        now: Long,
+    ): Boolean {
+        val dayKey = TimeUtil.dateKey(now)
+        val existing = claimed[exerciseId]
+        if (existing != null && existing.first == dayKey && (existing.second || !correct)) return false
+        claimed[exerciseId] = dayKey to correct
+        return true
+    }
+
     override suspend fun applyAttempt(skill: Skill, correct: Boolean, source: String) {
         attempts += skill to correct
         val current = masteryFlow.value.toMutableMap()
@@ -302,6 +334,9 @@ class FakeKnowledgeRepository(
     val statesFlow = MutableStateFlow<List<KnowledgeState>>(emptyList())
     val recorded = mutableListOf<Pair<String, Boolean>>()
 
+    /** Which track (skill) and shape each answer was attributed to. */
+    val recordedSkills = mutableListOf<Pair<Skill, ExerciseFormat>>()
+
     /**
      * When set, [allItems] suspends on it — lets a test cancel a ViewModel while a
      * use case is mid-lookup (checklist B-9: cancellation must not be swallowed).
@@ -327,6 +362,7 @@ class FakeKnowledgeRepository(
         now: Long,
     ) {
         recorded += lessonId to correct
+        recordedSkills += skill to format
     }
 
     override suspend fun reset() {

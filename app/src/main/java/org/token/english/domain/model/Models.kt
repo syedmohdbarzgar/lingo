@@ -59,6 +59,8 @@ data class LessonState(
     val completedStages: Set<String> = emptySet(),
     /** Ids of the optional steps the learner chose to skip. Never counted as done. */
     val skippedStages: Set<String> = emptySet(),
+    /** When each completed step was finished, keyed by [LearningStage.id] (Phase 2). */
+    val stageCompletedAt: Map<String, Long> = emptyMap(),
 ) {
     /** The saved step, resolved; null when nothing was saved or the id is unknown. */
     val stage: LearningStage? get() = stageId?.let(LearningStage::fromId)

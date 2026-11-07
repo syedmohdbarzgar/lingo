@@ -13,7 +13,13 @@ robolectric = "4.17"       # Compose screen smoke tests on the host JVM (checkli
 # On-device speech recognition for conversation practice (docs/connectivity.md:
 # "an on-device recognizer needs no server"). Vosk ships its own native libs per ABI;
 # JNA is required by vosk-android and must be the @aar artifact.
-vosk = "0.3.47"
+#
+# 0.3.75, not 0.3.47: 16 KB page size (Android 15+ devices that boot with 16 KB pages).
+# 0.3.47's arm64/x86_64 libvosk.so has LOAD align 0x1000, which the Android 16 KB
+# loader refuses (dlopen fails → conversation practice dies on new hardware);
+# 0.3.75's 64-bit libs are aligned 0x4000. Verified with llvm-readelf, see
+# docs/release.md. Do not "tidy" this back to an older tag.
+vosk = "0.3.75"
 jna = "5.13.0"
 
 junitVersion = "1.3.0"

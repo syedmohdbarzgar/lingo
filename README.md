@@ -107,15 +107,30 @@ engine as the skill meters, so "known" cannot mean two different things in two s
 On the Progress screen those per-skill numbers are grouped into the three axes the app can actually
 teach and act on — Grammar, Vocabulary and Reading — each shown with the evidence behind it (how many
 answers, how accurate, how many curriculum nodes) rather than as a bare percentage. Listening,
-speaking and writing are deliberately not shown as tracks of their own: no content answers to them
-alone, so a bar there would measure nothing.
+speaking and writing are still not bars of their own: nothing in the bundle answers to them *alone*.
+They are no longer unwritten, though — a spoken conversation turn moves `SPEAKING`, a typed one and
+every `sentence_production` move `WRITING`, so the numbers now exist behind the scenes even though
+the screen chooses not to show a meter that a single format could fill.
 
-**Content bundle (JSON `contentVersion` 63)**
+An answer is counted once. `question_attempt` (Room v9) stores the day's answer per exercise and
+`claimAnswer` guards every write, so re-answering the question just answered — a retry, or a re-run
+of the lesson — moves neither mastery nor the streak; the claim is per *exercise*, so a remediation
+block's several questions still each count. And a lesson is only «مسلط» when the nodes it teaches
+need no more practice today, which is a different claim from its steps being finished.
+
+What that claim deliberately does *not* keep is the answer itself, so the session records it: every
+graded answer is appended to `lesson_attempt` (which step asked it, what was typed or picked, right or
+wrong, when), and each finished step stamps its completion time. A lesson interrupted mid-step
+therefore reopens on the first question of that step it has **no** answer for — the saved cursor says
+how far, the log says what was actually done — and a lesson from before the log keeps its saved
+cursor instead of pretending it starts over.
+
+**Content bundle (JSON `contentVersion` 64)**
 
 | | Count |
 |---|---|
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
-| Exercises | 2888 — including a dialogue in every lesson (five or six turns at A2 and above) and a reading passage with two comprehension questions in 43 lessons |
+| Exercises | 2888 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
 | Vocabulary entries | 1154 |
 | Knowledge items | 233 |
 | Placement questions | 36 |
@@ -126,9 +141,18 @@ deepening a lesson rather than opening a topic. The C2 pass that produced v61 is
 [`docs/review-c2.md`](docs/review-c2.md): what was checked, what it found, and the ready-to-author
 items that would bring the four thinnest C2 lessons up to the standard. The v63 pass went the other
 way and **deepened** existing material instead of opening topics: a reading passage with two
-comprehension questions in five lessons per level (35 → 95 READING items in 43 lessons), and a
+comprehension questions in five lessons per level (35 → 95 READING items in 43 lessons — 84 of
+them built on a shared passage in 36 lessons, 11 single-sentence meaning items across 7 more), and a
 `skill` tag on the last 147 exercises that had none, so every answer now moves a track and the
 bundle ships no untagged item at all.
+
+The v64 pass audited the result rather than adding to it, and is recorded in
+[`docs/review-v64.md`](docs/review-v64.md): the measured skill split (READING 3.3%, WRITING 0.1%
+of the bundle), seven real defects fixed — an item whose question spelled its own answer, a
+listening pair shipped twice, a production model under the item's own word floor, two recall
+questions already asked at A1, and three A2 examples repeating their A1 sentence — and seven new
+rules in `validateContent` so each class of defect blocks a build. `node scripts/content_audit.mjs`
+reprints every number behind that report.
 
 The bundle is authored data only: extending it needs **no Kotlin change**, just JSON plus a bump of
 `contentVersion`, which is declared inside the files themselves.
@@ -366,7 +390,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-543 unit tests across 64 classes. The pure cores carry the most weight — review scheduling,
+580 unit tests across 67 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)

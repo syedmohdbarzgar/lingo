@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.common.persianCountPair
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.core.audio.Speaker
 import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.SpeakingVerdict
@@ -18,6 +19,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.LessonRepository
+import org.token.english.domain.usecase.RecordConversationTurnUseCase
 
 /**
  * One exchange of the practice conversation: the partner (the device) says
@@ -174,6 +176,12 @@ class ConversationPracticeViewModel(
     private val lessonId: String? = null,
     /** Records the finished dialogue, which is what opens the next lesson. */
     private val conversationRepository: ConversationRepository,
+    /**
+     * Writes each graded turn to a skill track ([RecordConversationTurnUseCase]):
+     * SPEAKING for a spoken take, WRITING for a typed answer. The screen itself never
+     * decides what mastery means — this seam does.
+     */
+    private val recordTurn: RecordConversationTurnUseCase,
     private val speaker: Speaker,
     /** Flipped once the JSON bundle has reached Room; turns read after it. */
     private val contentSeeded: StateFlow<Boolean>,
@@ -244,11 +252,29 @@ class ConversationPracticeViewModel(
             _state.update { it.copy(unheard = true, verdict = null) }
             return
         }
-        _state.update {
-            it.copy(
-                verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine),
-                unheard = false,
-            )
+        val verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine)
+        _state.update { it.copy(verdict = verdict, unheard = false) }
+        recordEvidence(turn.exerciseId, verdict, spoken = true)
+    }
+
+    /**
+     * Writes a graded turn as evidence, without letting a failed write reach the
+     * learner: the dialogue is not the transcript of a database, and a turn that was
+     * graded on screen stays graded. The failure is logged, not swallowed silently.
+     */
+    private fun recordEvidence(exerciseId: String, verdict: SpeakingVerdict, spoken: Boolean) {
+        viewModelScope.launch {
+            runCatchingCancellable {
+                recordTurn(
+                    lessonId = _state.value.lessonId,
+                    exerciseId = exerciseId,
+                    verdict = verdict,
+                    spoken = spoken,
+                    now = System.currentTimeMillis(),
+                )
+            }.onFailure { error ->
+                android.util.Log.w("ConversationPracticeViewModel", "turn evidence not recorded", error)
+            }
         }
     }
 
@@ -394,18 +420,22 @@ class ConversationPracticeViewModel(
         wasListening = false
         typedThisTurn = true
 
+        val verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine)
         _state.update {
             it.copy(
                 finalText = said,
                 partial = "",
                 answeredByTyping = true,
-                verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine),
+                verdict = verdict,
                 unheard = false,
                 error = SpeechError.NONE,
                 isListening = false,
                 isPreparing = false,
             )
         }
+        // A typed turn is writing evidence, not speaking: the same sentence, produced
+        // a different way, must not be able to raise a speaking bar.
+        recordEvidence(turn.exerciseId, verdict, spoken = false)
     }
 
     fun onEvent(event: ConversationEvent) {

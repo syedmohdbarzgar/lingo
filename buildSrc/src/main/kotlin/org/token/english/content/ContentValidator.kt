@@ -113,6 +113,22 @@ object ContentValidator {
 
         fun number(o: JSONObject, key: String): Int? = (o.opt(key) as? Number)?.toInt()
 
+        /**
+         * Comparison form for the semantic rules below. Case, punctuation, hyphens and
+         * apostrophes carry no meaning when the question is "is this the same sentence?",
+         * and treating "twenty-six" as different from "twenty six" is how a check
+         * invents findings instead of catching them (Phase 3).
+         */
+        fun normalize(value: String): String = value
+            .lowercase()
+            .replace(Regex("[’'`]"), "")
+            .replace(Regex("[-–—]"), " ")
+            .replace(Regex("[.,!?;:\"“”«»()]"), "")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+
+        fun wordCount(value: String): Int = normalize(value).split(' ').count { it.isNotEmpty() }
+
         fun array(o: JSONObject, key: String): List<Any?> {
             val json = o.opt(key) as? JSONArray ?: return emptyList()
             return (0 until json.length()).map { json.get(it) }
@@ -160,6 +176,13 @@ object ContentValidator {
                     // A-5: an authored reading passage (optional) must not be empty.
                     if (o.has("passage") && text(o, "passage").isEmpty()) report(id, "blank passage")
                     checkChoiceAnswer(id, o)
+                    // The answer cannot be part of the stem: a learner who read the
+                    // question has already been told which option to tap (Phase 3).
+                    val options = array(o, "options").map { it.toString() }
+                    val correct = options.getOrNull(number(o, "correctIndex") ?: -1).orEmpty()
+                    if (correct.length >= 4 && normalize(text(o, "question")).contains(normalize(correct))) {
+                        report(id, "question already contains the correct option — the answer is given away")
+                    }
                 }
                 "fill_blank" -> {
                     val sentence = text(o, "sentence")
@@ -210,10 +233,28 @@ object ContentValidator {
                             report(id, "minWords $minWords is below the $anchorWords anchor word(s) — nothing to type")
                         }
                     }
+                    // An accepted model the item itself would reject is worse than no
+                    // model: after a miss the learner is shown an answer that does not
+                    // meet the bar they were held to (Phase 3).
+                    if (minWords > 0) {
+                        array(o, "accepted").map { it.toString() }.filter { it.isNotBlank() }.forEach { answer ->
+                            val count = wordCount(answer)
+                            if (count < minWords) {
+                                report(id, "accepted answer \"$answer\" has $count words, under minWords $minWords")
+                            }
+                        }
+                    }
                 }
                 "listening" -> {
                     if (text(o, "text").isEmpty()) report(id, "blank text")
                     if (array(o, "accepted").isEmpty()) report(id, "no accepted answers")
+                    // What is heard must be gradable as written: if no accepted answer
+                    // equals the spoken text, a correct transcription is marked wrong
+                    // (Phase 3). Numbers are the usual cause — "26" for "twenty-six".
+                    val heard = normalize(text(o, "text"))
+                    if (heard.isNotEmpty() && array(o, "accepted").none { normalize(it.toString()) == heard }) {
+                        report(id, "no accepted answer matches the spoken text — the learner would type what they did not hear")
+                    }
                 }
                 // Speaking practice is graded on-device against the first accepted
                 // answer, so it must exist and be English (a Persian sentence cannot
@@ -297,6 +338,8 @@ object ContentValidator {
         val vocabulary = items(roots["vocabulary.json"], "vocabulary", "vocabulary.json")
         collectIds(vocabulary, "vocabulary")
         val seenWords = mutableListOf<String>()
+        /** `word::sentence` → the entry that already uses it, across lessons. */
+        val seenExamplesByWord = mutableMapOf<String, String>()
         vocabulary.forEachIndexed { index, word ->
             val id = text(word, "id").ifEmpty { "vocabulary[$index]" }
             if (text(word, "word").isEmpty()) report(id, "blank word")
@@ -304,6 +347,7 @@ object ContentValidator {
             if (text(word, "level") !in LEVELS) report(id, "invalid level \"${text(word, "level")}\"")
             val examples = array(word, "examples")
             if (examples.size < 2) report(id, "needs at least 2 examples (has ${examples.size})")
+            val seenExamples = mutableSetOf<String>()
             examples.forEachIndexed { ei, raw ->
                 val example = raw as? JSONObject
                 if (example == null) {
@@ -311,6 +355,21 @@ object ContentValidator {
                     return@forEachIndexed
                 }
                 if (text(example, "en").isEmpty()) report(id, "example[$ei] has no English sentence")
+                // Two identical examples are one example: the entry promises two
+                // different contexts for the word (Phase 3).
+                val sentence = normalize(text(example, "en"))
+                if (sentence.isNotEmpty() && !seenExamples.add(sentence)) {
+                    report(id, "example[$ei] repeats an earlier example of the same word")
+                }
+                // The same word can be taught at two levels (70 of them are), and each
+                // entry exists because the higher level shows a harder context. Reusing
+                // the A1 sentence at A2 means one of those slots is empty (Phase 3).
+                val wordKey = "${text(word, "word").lowercase()}::$sentence"
+                if (sentence.isNotEmpty()) {
+                    val previous = seenExamplesByWord[wordKey]
+                    if (previous == null) seenExamplesByWord[wordKey] = id
+                    else if (previous != id) report(id, "example[$ei] repeats the one in $previous for the same word")
+                }
                 val fa = text(example, "fa")
                 if (fa.isEmpty()) report(id, "example[$ei] has no Persian translation")
                 else if (fa.none { it in '\u0600'..'\u06FF' }) report(id, "example[$ei] translation has no Persian characters")
@@ -340,6 +399,36 @@ object ContentValidator {
         ordersPerLesson.forEach { (lessonId, orders) ->
             orders.groupingBy { it }.eachCount().filterValues { it > 1 }.keys.sorted()
                 .forEach { report(lessonId, "exercise order $it is used twice") }
+        }
+
+        // --- no item is shipped twice (Phase 3) ------------------------------
+        // A learner who meets the identical question in two lessons has paid two
+        // lesson slots for one item, and one of those lessons is teaching it at the
+        // wrong level. Dialogue openers ("How can I help you?") are excluded on
+        // purpose: the same service greeting in different scenes is realistic.
+        val itemKeys = mutableMapOf<String, MutableList<String>>()
+        val recallKeys = mutableMapOf<String, MutableList<String>>()
+        exercises.forEach { exercise ->
+            val type = text(exercise, "type")
+            val id = text(exercise, "id")
+            if (type == "speaking") return@forEach
+            val stem = text(exercise, "question")
+                .ifEmpty { text(exercise, "prompt") }
+                .ifEmpty { text(exercise, "sentence") }
+                .ifEmpty { text(exercise, "text") }
+            val options = array(exercise, "options").joinToString("|") { normalize(it.toString()) }
+            itemKeys.getOrPut("$type::${normalize(stem)}::$options") { mutableListOf() } += id
+            if (type == "word_recall") {
+                val cue = normalize(text(exercise, "prompt")) + "::" +
+                    normalize(array(exercise, "accepted").firstOrNull()?.toString().orEmpty())
+                recallKeys.getOrPut(cue) { mutableListOf() } += id
+            }
+        }
+        itemKeys.values.filter { it.size > 1 }.forEach { ids ->
+            report("exercises", "the same item is shipped ${ids.size} times: ${ids.joinToString(", ")}")
+        }
+        recallKeys.values.filter { it.size > 1 }.forEach { ids ->
+            report("exercises", "the same recall question is asked twice: ${ids.joinToString(", ")}")
         }
 
         // --- placement ------------------------------------------------------

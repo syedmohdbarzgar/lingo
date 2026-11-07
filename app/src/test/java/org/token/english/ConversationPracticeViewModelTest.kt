@@ -18,7 +18,9 @@ import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.Skill
+import org.token.english.domain.usecase.RecordConversationTurnUseCase
 import org.token.english.feature.conversation.ConversationEvent
 import org.token.english.feature.conversation.ConversationPracticeViewModel
 import org.token.english.feature.conversation.SpeechBus
@@ -43,6 +45,10 @@ class ConversationPracticeViewModelTest {
     private val speaker = RecordingSpeaker()
     private var starts = 0
     private var stops = 0
+
+    /** The two tracks the screen feeds, so a test can see *which* one a turn moved. */
+    private val progress = FakeProgressRepository()
+    private val knowledge = FakeKnowledgeRepository()
 
     @Before
     fun setUp() {
@@ -110,6 +116,7 @@ class ConversationPracticeViewModelTest {
             lessonRepository = lessonRepository,
             lessonId = lessonId,
             conversationRepository = conversations,
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = speaker,
             contentSeeded = MutableStateFlow(true),
             speechState = speech,
@@ -271,6 +278,7 @@ class ConversationPracticeViewModelTest {
         val vm = ConversationPracticeViewModel(
             lessonRepository = repository,
             conversationRepository = FakeConversationRepository(),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = speaker,
             contentSeeded = seeded,
             speechState = speech,
@@ -560,6 +568,7 @@ class ConversationPracticeViewModelTest {
                     listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
             ),
             conversationRepository = FakeConversationRepository(),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = slowSpeaker,
             contentSeeded = MutableStateFlow(true),
             speechState = speech,
@@ -896,6 +905,94 @@ class ConversationPracticeViewModelTest {
         assertFalse(vm.state.value.answeredByTyping)
         assertEquals("", vm.state.value.finalText)
         assertEquals("and the microphone is what runs now", 1, starts)
+    }
+
+    // ---- evidence: which track a turn feeds -------------------------------------
+
+    @Test
+    fun `a spoken correct turn moves speaking, never writing`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you")
+
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+        assertEquals(
+            "the verdict is speaking evidence, and only speaking",
+            listOf(Skill.SPEAKING to true),
+            progress.attempts,
+        )
+        assertEquals(
+            "attributed to the lesson's phonology node in the speaking shape",
+            listOf(Skill.SPEAKING to ExerciseFormat.SPEAKING),
+            knowledge.recordedSkills,
+        )
+    }
+
+    @Test
+    fun `a typed correct turn moves writing, never speaking`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        vm.onEvent(ConversationEvent.SubmitTyped("I'm fine, thank you."))
+
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+        assertEquals(
+            "a written sentence is writing evidence — the speaking bar must not move",
+            listOf(Skill.WRITING to true),
+            progress.attempts,
+        )
+        assertEquals(
+            listOf(Skill.WRITING to ExerciseFormat.SENTENCE_PRODUCTION),
+            knowledge.recordedSkills,
+        )
+    }
+
+    @Test
+    fun `a retry is not written as a miss`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        vm.onEvent(ConversationEvent.SubmitTyped("I would like a coffee, please."))
+
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.verdict)
+        assertTrue(
+            "the app cannot tell a wrong answer from a bad take, so a retry is not a miss",
+            progress.attempts.isEmpty(),
+        )
+        assertTrue(knowledge.recordedSkills.isEmpty())
+    }
+
+    @Test
+    fun `a take the recogniser never heard is not written as a miss`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "")
+
+        assertTrue(vm.state.value.unheard)
+        assertTrue(
+            "a take with no words is not evidence about the learner",
+            progress.attempts.isEmpty(),
+        )
+        assertTrue(knowledge.recordedSkills.isEmpty())
     }
 
     /** `onCleared` is protected; a subclass is how a test reaches it. */
