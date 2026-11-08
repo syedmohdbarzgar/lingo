@@ -136,7 +136,7 @@ spoken. Your voice never leaves the phone.
 
 A1 to C2, all 180 topics
 All six levels are complete: from the alphabet and numbers to legal-text analysis and
-diplomatic communication. 192 lessons, 2,828 exercises and 1,154 vocabulary entries with
+diplomatic communication. 192 lessons, 2,888 exercises and 1,154 vocabulary entries with
 bilingual examples, installed with the app and needing no download.
 
 Words you don't forget
