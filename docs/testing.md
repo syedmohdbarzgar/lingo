@@ -27,8 +27,43 @@
   under another step cannot move this step's cursor, every graded answer is appended with its step,
   answer text and verdict (a miss stays a miss), finishing a step stamps the time and the stamp
   survives a restart, and revisiting a finished step does not rewrite when it was finished.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 580 tests / 67 classes as of
-  the Phase-3 content pass, whose eight new cases live in `ContentValidationTest` (no new class: one
+- **One graded result is one transaction (checklist 0.1)** is pinned on real Room, not on a fake:
+  `AnswerTransactionTest` (Robolectric, in-memory database) writes the production shape of an answer —
+  the graded exercise plus its history row — inside `ProgressRepository.inTransaction`, throws at the
+  worst moment (both writes done, nothing committed) and asserts that all four tables are back to
+  empty: no `lesson_attempt`, no `knowledge_state`, no `skill_mastery`, and the day's claim still
+  unspent, so the question is unanswered rather than half-recorded. Two more cases keep the happy
+  path honest (everything lands together, and a repeated answer adds history while crediting the
+  model once). The test was checked against its own regression: dropping the transaction makes the
+  rollback case fail. `LessonViewModelTest` adds the wiring — the session submits an answer inside
+  exactly one transaction, and a transaction that cannot open still produces a verdict with nothing
+  written, instead of swallowing the tap.
+  `EvidenceTransactionTest` covers the other two graded results the same way: a **review grade**
+  (schedule, attempt log, skill meter) and a **conversation turn** (day's claim, graph, track) each
+  roll back whole — the card keeps its old due date and repetition count, the turn stays unclaimed so
+  the learner can answer it again, and neither meter moved — with the committed counterparts pinning
+  that all three rows do land together.
+  `LessonCompletionTransactionTest` does the same for **finishing a lesson** (completion stamp,
+  the lesson's words entering the review queue, cursor reset): a failing last write leaves the
+  lesson unfinished at its old cursor with no card queued, and `PlacementSeedTransactionTest` for
+  the **placement test**, whose answers fold into the skill meters — a crash on the third answer
+  leaves no meter seeded at all, where a partial seed used to describe a learner the test never
+  measured. Both newer classes inject the crash as a
+  failing *last* write inside the use case's own transaction (a decorated repository), so what rolls
+  the earlier rows back is the production code, not a transaction opened by the test. Neutering
+  `inTransaction` fails all four rollback cases (lesson answer, review, turn, completion), so they
+  cannot pass by accident. `TransactionCoverageTest` keeps the rule from decaying: it reads the
+  repository interfaces for every non-read `suspend fun`, scans `domain/usecase/` for classes that
+  call two or more of them, and fails unless each one either wraps the writes in `inTransaction` or
+  is registered as caller-wrapped with a reason (`SubmitExerciseUseCase`, whose transaction the
+  lesson session opens around the answer's history). A rename of a registered use case fails too, so
+  coverage cannot vanish silently, and the behaviour check invokes each owner through a
+  transaction-counting repository to prove it really opens exactly one. Both halves were checked
+  against a real regression: removing `inTransaction` from a registered use case and adding an
+  unregistered multi-write class each fail the class.
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 600 tests / 72 classes as of
+  the atomic-evidence pass (above), after the Phase-3 content pass, whose eight new cases live in
+  `ContentValidationTest` (no new class: one
   fixture per new semantic rule plus a guard that a hyphenated answer is never a finding); the
   load-failure pass's new class is `LoadFailureTest` (a throwing repository leaves a screen
   `failed`, never spinning, and retry re-runs the load), and on the content side the v63 batch
@@ -68,7 +103,15 @@
   `CompanionApp.openDownloadPage` read it, and `docs/release.md` names it — so the Play build
   cannot link to Bazaar even if a surface forgets the flag, and the split cannot drift) + `DocCodeConsistencyTest`
   (v15 B-12: `docs/debt.md` states the production overlap floor the code actually grades with;
-  the doc had drifted to "60%" while the constant said 0.5) + `SubscriptionRecoveryTest` (renewal
+  the doc had drifted to "60%" while the constant said 0.5 — plus, since v65, the Room schema
+  number quoted in README and the bundle counts quoted in README *and* both listing languages,
+  all computed from the shipped files, because those three facts had drifted to v8 and 2,828;
+  and, since the `transactions` job landed, the job list is checked in both directions: every id
+  under `jobs:` in `.github/workflows/ci.yml` must appear backticked in AGENTS.md, README and
+  `docs/release.md`, and every job name those docs bold must still exist there — so neither a new
+  job nor a deleted one can ship while three documents describe a different pipeline; those docs and
+  `ci.yml` are inputs of `:app:docGuard`, the filtered run of this one class) +
+  `SubscriptionRecoveryTest` (renewal
   boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
   `flatPeriodExpiry` reinstall restore — 30/365 flat days from the owned purchase time), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
@@ -206,10 +249,17 @@
   the paywall really renders the free-route card next to the price. They need
   `unitTests.isIncludeAndroidResources = true`, `ui-test-junit4` (v2 rule) + `ui-test-manifest`
   (debugImplementation) and `@Config(sdk = [35])`.
-- `.github/workflows/ci.yml` runs the same two gates (validate + unit tests) plus `lintBazaarDebug`
-  and the three flavor assemblies (the last only on schedule/manual dispatch/tags).
+- `.github/workflows/ci.yml` runs three jobs on every push and pull request — `verify` (content
+  validation + unit tests + the B-9 grep), `transactions` (the atomic-evidence classes:
+  `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`,
+  `PlacementSeedTransactionTest`, `TransactionCoverageTest`) and `lint` — plus `assemble` (the three
+  flavor APKs) only on a schedule, a manual dispatch or a tag, and only after `transactions`.
 - Content tests read the assets through `File`, so Gradle cannot see them as inputs — after a
-  content edit run them with `--rerun` or they silently report UP-TO-DATE.
+  content edit run them with `--rerun` or they silently report UP-TO-DATE. The file-reading doc
+  guard does not share that rule: `./gradlew :app:docGuard` runs only `DocCodeConsistencyTest`
+  (seconds) with `AGENTS.md`, `README.md`, `docs/` and `.github/workflows/ci.yml` as its inputs, and
+  `check` depends on it while every `test*UnitTest` run finalizes with it — the wiring is
+  discovered, not named, so a new flavor is covered without touching the build script.
 - There is **no instrumented suite**: the Android Studio template was removed rather than kept
   as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
   Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.

@@ -84,7 +84,7 @@ assertion of intent:
 | Gate | Command | Result |
 | --- | --- | --- |
 | Content | `./gradlew validateContent --rerun` | pass |
-| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **580 tests / 67 classes, 0 failures** |
+| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **600 tests / 72 classes, 0 failures** |
 | Lint | `./gradlew :app:lintBazaarDebug` | **0 errors**, 28 warnings (9 `UnusedResources`, 5 `ObsoleteSdkInt`, 4 `UseKtx`, the rest version nags) |
 | Flavors | `assembleBazaarDebug`, `assembleMyketDebug`, `assembleGooglePlayDebug` | 3/3 build; the only permission difference is the marketplace billing one |
 | DB upgrade | `DatabaseUpgradeTest`, `RoomMigrationTest` (in the unit suite) | v1→v9 chain executed on real SQLite with learner rows; every value survives, the v9 tables arrive empty |
@@ -132,10 +132,17 @@ sweep — and exits 0 as a no-op when nothing is attached.
 
 ## CI
 
-`.github/workflows/ci.yml` runs the same two fast gates (content validation + unit tests) and
-`lintBazaarDebug` on every push/PR; the three flavor assemblies only on schedule/manual
-dispatch/tags. There is no emulator or device job. Only per-flavor unit-test tasks exist
-(`testDebugUnitTest` is not a task under AGP 9's `onlyEnableUnitTestForTheTestedBuildType`).
+`.github/workflows/ci.yml` runs three jobs on every push and pull request: **`verify`** (content
+validation + unit tests + the B-9 `runCatching` grep), **`transactions`** and **`lint`**
+(`lintBazaarDebug`). **`transactions`** runs only the atomic-evidence classes —
+`AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`,
+`PlacementSeedTransactionTest`, `TransactionCoverageTest` — so a data-integrity regression is named in
+the checks list instead of hiding inside the ~600-case suite. It is a *filtered* run of the same
+`testBazaarDebugUnitTest` task, not a second suite: the tests still run in `verify` too (they are part
+of the count in AGENTS §8). **`assemble`** (the three flavor APKs) runs only on a schedule, a manual
+dispatch or a tag, and lists `transactions` under `needs:`, so no release build runs without it.
+There is no emulator or device job; only per-flavor unit-test tasks exist (`testDebugUnitTest` is not
+a task under AGP 9's `onlyEnableUnitTestForTheTestedBuildType`).
 
 ## Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 

@@ -258,9 +258,14 @@ scripts/install_debug.sh --list-devices
 ./gradlew :app:assembleGooglePlayDebug  # Google Play APK
 ```
 
-**CI** (`.github/workflows/ci.yml`) runs the two fast gates (content validation + unit tests) and
-`lintBazaarDebug` on every push and pull request; the three flavor assemblies run on a schedule,
-manual dispatch or a tag, because building every flavor on every commit buys nothing.
+**CI** (`.github/workflows/ci.yml`) runs three jobs on every push and pull request:
+**`verify`** (content validation + unit tests + the B-9 `runCatching` grep), **`transactions`** (the
+atomic-evidence classes, filtered out of the same suite) and **`lint`** (`lintBazaarDebug`). The
+`transactions` job proves every multi-write learner flow — lesson answer, review grade, conversation
+turn, lesson completion, placement calibration — commits as one Room transaction, and fails if a new
+use case does not. **`assemble`** (the three flavor APKs) runs only on a schedule, a manual dispatch
+or a tag, and waits for `transactions`, because building every flavor on every commit buys nothing.
+There is no emulator or device job.
 
 ### Toolchain
 
@@ -390,7 +395,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-580 unit tests across 67 classes. The pure cores carry the most weight — review scheduling,
+600 unit tests across 72 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
@@ -524,7 +529,10 @@ in place for each.
 
 **Infrastructure**
 
-- CI that runs the unit-test gate and `validateContent` on every push (there is none today).
+- A device/emulator job. CI covers the JVM gates (unit tests, `validateContent`, lint) and the
+  `transactions` gate on every push, but nothing runs the app on hardware — install, cold start,
+  seeding and the recogniser stay manual via `scripts/verify_device.sh`, and there is no instrumented
+  suite to run.
 
 ---
 

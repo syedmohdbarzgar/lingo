@@ -49,7 +49,11 @@ scripts/install_debug.sh                 # builds+installs only when a device is
 ```
 
 Release points, the fail-closed gates, the toolchain facts and the CI shape are in
-[`docs/release.md`](docs/release.md); the Definition of Done is §9 below.
+[`docs/release.md`](docs/release.md); the Definition of Done is §9 below. In short, CI runs three
+jobs on every push and pull request — **`verify`** (content validation + unit tests + the B-9
+`runCatching` grep), **`transactions`** (the atomic-evidence classes, filtered out of the same suite)
+and **`lint`** — plus **`assemble`** (the three flavor APKs) only on a schedule, a manual dispatch or
+a tag, after `transactions`.
 
 ## 3. Architecture (single module, layered packages)
 
@@ -127,10 +131,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (580 tests / 67 classes as of the
-Phase-3 content pass, which added eight cases to `ContentValidationTest` — one fixture per new
-semantic rule in `ContentValidator`, plus a guard that a hyphen is never a finding; the last new
-classes were the Phase-2 persistence pass — `EvidenceRuleTest` pins that one answer per exercise per day is evidence,
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (600 tests / 72 classes as of the
+atomic-evidence pass: `AnswerTransactionTest` proves on real Room that a crash inside a lesson
+answer rolls back the claim, the graph, the meter and the history together, `EvidenceTransactionTest`
+does the same for a review grade and a conversation turn, `LessonCompletionTransactionTest` for
+finishing a lesson (stamp, queued words, cursor), `PlacementSeedTransactionTest` for the placement
+calibration, `TransactionCoverageTest` fails when a use case writes several tables without
+`inTransaction`, and two cases in `LessonViewModelTest` pin
+the wiring; before it, the Phase-3 content pass had added eight cases to
+`ContentValidationTest` — one fixture per new
+semantic rule in `ContentValidator`, plus a guard that a hyphen is never a finding; the Phase-2
+persistence pass had added — `EvidenceRuleTest` pins that one answer per exercise per day is evidence,
 `LessonMasteryTest` that finished steps are not mastery, and `LearningPersistenceTest` that a
 reopened step resumes on the first *unanswered* question, that every graded answer is appended with
 its step, and that a finished step's completion time is recorded once and survives a restart;
@@ -143,6 +154,13 @@ until that dialogue is spoken, and the Vosk verdict engine, whose recogniser hal
 nature); the full inventory and ViewModel/fake conventions are in
 [`docs/testing.md`](docs/testing.md). Content tests read assets through `File`, so run them with
 `--rerun`. There is no instrumented suite (the template was removed, not kept as a false signal).
+`DocCodeConsistencyTest` also reads files: it fails when a `ci.yml` job is not named in this file,
+`README.md` and `docs/release.md`, and when a job name those docs bold has already been deleted from
+`jobs:` — a CI change cannot ship undocumented in either direction. Those docs and `ci.yml` are
+inputs of `:app:docGuard`, a filtered run of that one class on the unit-test classpath: a docs edit
+re-runs seconds instead of the whole suite, and `check` plus every `test*UnitTest` run the guard, so
+no `--rerun` is needed for a doc change. The content assets are not declared inputs and
+keep their `--rerun` rule.
 
 ## 9. Conventions & Definition of Done
 

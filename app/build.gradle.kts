@@ -256,6 +256,70 @@ tasks.named("preBuild") {
     dependsOn(validateContent)
 }
 
+// `DocCodeConsistencyTest` reads AGENTS.md, README.md, docs/ and
+// .github/workflows/ci.yml through `File`, which Gradle cannot see — so after a doc
+// or workflow edit the unit-test task reported UP-TO-DATE and the guard silently did
+// not run. `:app:docGuard` is that one class on the same unit-test classpath: its
+// inputs are those files, so a doc edit re-runs seconds of work instead of the whole
+// ~600-test suite. The content tests keep their own `--rerun` rule: their assets are
+// already covered by `validateContent` on every build.
+//
+// No variant is named here. The per-flavor unit-test tasks (`test*UnitTest`) are
+// discovered as AGP creates them — a fourth flavor, or a second tested build type,
+// is guarded with no edit to this file — and the guard borrows the classpath of the
+// first one reported after configuration, because every flavor compiles the same shared `src/test`, which is
+// where this class lives. A flavor-specific test class would need its own guard task:
+// one task has one classpath.
+val docGuard = tasks.register<Test>("docGuard") {
+    group = "verification"
+    description = "Docs + ci.yml consistency (DocCodeConsistencyTest) on the unit-test classpath."
+    inputs.files(
+        rootProject.file("AGENTS.md"),
+        rootProject.file("README.md"),
+        rootProject.file("docs"),
+        rootProject.file(".github/workflows/ci.yml"),
+    ).withPropertyName("docsAndWorkflow")
+    filter { includeTestsMatching("org.token.english.DocCodeConsistencyTest") }
+    testLogging { events("failed") }
+    // Without a unit-test variant to borrow from, the test runner would fail on an
+    // empty classpath with «no tests found-ish» noise; name the real cause instead.
+    doFirst {
+        if (testClassesDirs.isEmpty) {
+            throw GradleException(
+                "docGuard has no classpath: :app has no `test*UnitTest` task to borrow one from. " +
+                    "Keep at least one unit-tested variant, or give docGuard its own testClassesDirs.",
+            )
+        }
+    }
+}
+// `preBuild` cannot depend on it: `docGuard` needs the compiled unit-test classpath,
+// and `preBuild` sits above compilation, which made a task cycle. So `check` depends on
+// it directly, and every unit-test task finalizes with it — that way CI's plain
+// `:app:testBazaarDebugUnitTest` runs the guard even when the test task itself is
+// UP-TO-DATE after a docs-only edit.
+tasks.named("check") { dependsOn(docGuard) }
+// Which variant the guard borrows from is settled once, here, and not inside a
+// `configureEach` of the test tasks: at that point AGP has not yet assigned their
+// `testClassesDirs`, so a snapshot taken there stayed empty and the guard ran
+// NO-SOURCE. After configuration, every variant task exists and is final.
+afterEvaluate {
+    val unitTests = tasks.withType<Test>().matching {
+        it.name.startsWith("test") && it.name.endsWith("UnitTest")
+    }
+    // One is enough, and borrowing all of them would make a docs edit compile every
+    // flavor's test sources: each variant compiles the same shared `src/test`, which is
+    // where this class lives.
+    unitTests.firstOrNull()?.let { unitTest ->
+        docGuard.configure {
+            testClassesDirs = unitTest.testClassesDirs
+            classpath = unitTest.classpath
+        }
+    }
+    // Every variant finalizes with it, so CI's plain `:app:testBazaarDebugUnitTest`
+    // still runs the guard when the test task itself is UP-TO-DATE after a docs edit.
+    unitTests.configureEach { finalizedBy(docGuard) }
+}
+
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.core.ktx)
