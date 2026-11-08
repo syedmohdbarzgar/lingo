@@ -18,8 +18,12 @@
 - `ContentSeeder` runs at app start; re-seeds when the JSON `contentVersion` changes (settings key
   `content_version`). Content tables: `lesson`, `vocabulary`, `exercise`. The version is authored
   **inside the JSON** — there is no Kotlin constant to bump (technical spec §63). A seed that throws
-  is recorded as an `Error` in `core/common/ContentStatus` rather than logged and dropped, and Home
-  renders that failure with a retry, so a broken seed cannot present itself as an empty curriculum.
+  is recorded as `ContentStatus.FAILED` rather than logged and dropped, and every screen that reads
+  the bundle (`Home`, the lesson, the placement test, conversation practice) renders that failure as
+  a named, re-seeding retry — so a broken seed cannot present itself as an empty curriculum, an
+  empty lesson or an empty conversation. A retry after `FAILED` re-runs the write before the read,
+  and a read that throws is a separate, also-retryable state (the data is local: neither is a
+  connectivity error).
   The five assets are **parsed concurrently** (one coroutine per file on `Dispatchers.Default`) and
   inserted in the same single transaction; the bundle keeps growing (1.5× from v27 to v28), so the
   decode — not the insert — is the stage that grows with it. Measured on the JVM: 87 ms → 41 ms for
@@ -205,7 +209,10 @@
       the learner must know what was asked; a gloss without a question is rejected too.
     Without `question` the item stays a repeat-the-model turn. `validateContent` enforces all of
     this, the validator also requires a Persian `prompt`, at least one English `accepted` answer and
-    a declared `skill`, and the app never moves mastery from speaking practice.
+    a declared `skill`. The self-assessed speaking card on the lesson screen moves no mastery; the
+    one speaking surface that does is the lesson's own dialogue — a **spoken** turn is graded by the
+    recogniser and credits `SPEAKING` (`RecordConversationTurnUseCase`), a typed one credits
+    `WRITING`.
 - **Retrieval and production, not just recognition (P2).** Two shapes close the hole that every
   vocabulary item was multiple choice and the only "say something" item (`translation`) shipped a
   word bank in 21 of its 41 items:
@@ -241,6 +248,14 @@
   `VOCABULARY` (a typo gets the hint), form blanks are `GRAMMAR` (no hint). Tagging them honestly
   left 13 grammar topics under the six-exercise bar, so `scripts/archive/p1_grammar_topup.mjs` added
   real form practice rather than letting a fallback define the bar.
+- **Neither variety of English is a wrong answer (P1-4).** The bundle teaches British English
+  (`neighbour`, `practise`, `favourite`, `grey`), so before this a US learner who spelled correctly
+  was shown a miss. `AnswerChecker` now folds a curated US/UK table word-by-word on **both** sides
+  of the comparison (`readings`), so `neighbour` ≡ `neighbor`, `organise` ≡ `organize`, `grey` ≡
+  `gray`, `travelling` ≡ `traveling`, `licence` ≡ `license`, inside a sentence and next to a
+  contraction too. Only same-meaning pairs are listed (and every inflection explicitly), so it
+  cannot turn a different word into the right one — and it is a matching rule, not a spell-check:
+  `practiceing` is still `ALMOST`, never `CORRECT`.
 - Typed-answer grading (A-2): digits normalize to words (0–20 + tens), so `3` ≡ `three`; a single
   word ≥ 5 letters that is one edit from an accepted answer is graded wrong but shown as
   «تقریباً درست — املای کلمه را بررسی کن» (`AnswerChecker.grade`). ALMOST is a **spelling** signal,

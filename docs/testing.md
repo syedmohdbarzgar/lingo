@@ -61,8 +61,19 @@
   transaction-counting repository to prove it really opens exactly one. Both halves were checked
   against a real regression: removing `inTransaction` from a registered use case and adding an
   unregistered multi-write class each fail the class.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 600 tests / 72 classes as of
-  the atomic-evidence pass (above), after the Phase-3 content pass, whose eight new cases live in
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 625 tests / 73 classes as of
+  the content-status pass — its cases pin that a failed bundle write ends the lesson's, the placement
+  test's and the conversation's wait in `contentFailed`, that each retry re-runs the seed, and that a
+  dialogue read which throws becomes `loadFailed` with a retry (no new class) —
+  then the B-4 reminder pass, whose new class is `DailyReminderTest` (the alarm lands on the chosen hour
+  and at the top of it, never in the past and never more than a day out; 19 stays the default; an
+  out-of-range hour is clamped instead of being rolled into another day by `Calendar`; and the
+  notification's copy follows the data it can see — the real due count through the app's bidi number
+  rule, «امروز مروری نداری» at zero, and a claim-free generic line when the count cannot be read)
+  plus one case
+  in `SettingsViewModelTest` (the reminder hour is persisted and rendered, 19 until changed) — and
+  before it the P1-4 fairness pass (US/UK spellings graded equal on both typed and spoken answers),
+  then the atomic-evidence pass (above), after the Phase-3 content pass, whose eight new cases live in
   `ContentValidationTest` (no new class: one
   fixture per new semantic rule plus a guard that a hyphenated answer is never a finding); the
   load-failure pass's new class is `LoadFailureTest` (a throwing repository leaves a screen
@@ -180,8 +191,10 @@
   bundle lists is never a miss), `please` / `thank you` is stripped so "just water" answers "Just
   water, thank you", recogniser homophones (to/too/two, four/for) are folded on both sides, a single
   edit on a long word is forgiven while short words must match exactly, a take that repeats the
-  partner's question is not an answer — and the speech grammar lists every accepted phrase plus
-  `[unk]`),
+  partner's question is not an answer, and the speech grammar lists every accepted phrase plus
+  `[unk]` — plus P1-4: a take in the other spelling of English (`my favorite color is gray` for an
+  authored `My favourite colour is grey.`) is still CORRECT, while the grammar keeps the authored
+  spelling so what the learner is asked to say does not change),
   `ReviewLifecycleTest` (pinned SRS lifecycle numbers), `LearningSimulationTest`.
 - **The guided lesson (v60)** splits `LessonViewModelTest`'s territory in two: `GuidedLessonTest`
   drives the eight-step walk itself (see above), while `LessonViewModelTest` keeps the exercise
@@ -196,7 +209,11 @@
   and the session still ends; a device without an English voice reports `audioUnavailable`; a fresh
   lesson keeps the authored order while an untested dimension is front-loaded; a focused session
   drills only the node's evidence; cancelling the scope mid-`getFocusPlan` loads nothing — B-9;
-  study time follows interactions, so an idle lesson stops crediting — P7),
+  study time follows interactions, so an idle lesson stops crediting — P7; a lesson read that
+  throws ends in the screen's own error state with a retry that really loads it, a failed
+  dimension fold still renders the learner's verdict — P1-7, and a bundle write that failed ends
+  the wait in `contentFailed` — not the spinner under `activeStage == null` — with a retry that
+  re-runs the seed and then loads),
   `ReviewViewModelTest` (GOOD records the schedule and finishes; AGAIN re-queues the item in the
   same session; study ticks credit only while the learner is recently active and never while the
   app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
@@ -205,8 +222,9 @@
   `ConversationGateTest` (the lesson gate: a lesson still in progress owes nothing; the first
   completed lesson without its dialogue blocks the next one; finishing the conversation opens it;
   the oldest owed conversation wins; a lesson with no authored dialogue never gates),
-  `ConversationPracticeViewModelTest` (turns wait for the content seeder instead of reading an empty
-  table; a session runs ONE lesson's dialogue rather than a pool of every lesson, the requested
+  `ConversationPracticeViewModelTest` (turns wait for the bundle write instead of reading an empty
+  table, a failed write is `contentFailed` rather than the empty state and its retry re-seeds, and a
+  read that throws lands in `loadFailed` with a retry that loads; a session runs ONE lesson's dialogue rather than a pool of every lesson, the requested
   lesson wins, the scene and the partner's role come from the authored turn; finishing every turn
   records the conversation while a skipped turn leaves it unrecorded; an
   authored `question` becomes the partner's line with its Persian gloss while an echo item has none;
@@ -221,11 +239,14 @@
   stops the microphone; **the keyboard route is the same gate** — a typed answer is graded
   CORRECT/NEAR/RETRY by the same scorer and becomes the recorded transcript, a blank field grades
   nothing, a late recogniser emission cannot overwrite or out-grade a typed answer, typed answers
-  alone finish and record the conversation, and retry by voice clears the typed verdict), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state, a
-  settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
+  alone finish and record the conversation, and retry by voice clears the typed verdict), `SettingsViewModelTest` (each switch persists, reset clears progress *and* knowledge state *and*
+  the finished dialogues the preferences file holds *and* the recorded take — the two halves a Room
+  wipe could not reach —, a settings write never wipes the access status), `ProgressViewModelTest` (the three tracks reach the
   state and an empty bundle yields no tracks rather than empty bars), `PlacementViewModelTest` (adaptive stop after
-  an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, and the
-  onboarding write), `VocabularyViewModelTest` (all words load; the query matches the English word
+  an unwinnable band, the band-based level, C2 on a perfect run, mastery calibration, the
+  onboarding write, a read that throws landing in the empty state with a retry that loads it, and
+  a failed bundle write becoming `contentFailed` instead of an empty state that blames a read it
+  never ran, with a retry that re-runs the seed), `VocabularyViewModelTest` (all words load; the query matches the English word
   case-insensitively and the Persian meaning; a blank query clears the filter; no matches is an
   empty list, not an error) and  `OnboardingViewModelTest` (skipping the test pins A1 and finishes
   onboarding), `LoadFailureTest` (v63's failure surfaces: the `catchLoadFailure` operator reports a
@@ -235,7 +256,8 @@
   same read and clearing it; Settings also asserts it has no `settings` to show, because default
   switches rendered as stored values is a wrong answer stated as fact. Home's own case, the failed
   bundle write and its re-seed, is in `HomeViewModelTest` because it needs the container's seed
-  hook) — the billing double is `FakeBillingGateway` in the same file. They need
+  hook; the lesson and the placement test do the same through an injected status and seed hook,
+  because those two used to wait on a boolean a failed write never flipped) — the billing double is `FakeBillingGateway` in the same file. They need
   `testOptions { unitTests.isReturnDefaultValues = true }` (the ViewModels read `android.os.SystemClock`)
   and `Dispatchers.setMain(UnconfinedTestDispatcher())`. Future ViewModel tests: keep the fake layer
   growing rather than mocking, and derive display-shuffled indices from the VM state — never assume an
@@ -259,7 +281,10 @@
   guard does not share that rule: `./gradlew :app:docGuard` runs only `DocCodeConsistencyTest`
   (seconds) with `AGENTS.md`, `README.md`, `docs/` and `.github/workflows/ci.yml` as its inputs, and
   `check` depends on it while every `test*UnitTest` run finalizes with it — the wiring is
-  discovered, not named, so a new flavor is covered without touching the build script.
+  discovered, not named, so a new flavor is covered without touching the build script. Three cases in
+  the same class read `app/build.gradle.kts` and pin that wiring — the filter names this class, the
+  four inputs are declared, an empty classpath throws instead of running nothing, and no variant is
+  hard-coded — so the fast path cannot report green after it stopped checking anything.
 - There is **no instrumented suite**: the Android Studio template was removed rather than kept
   as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
   Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.

@@ -131,7 +131,10 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (600 tests / 72 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (625 tests / 73 classes as of the
+content-status pass, where a failed bundle write stops being an endless spinner or a false empty
+state on the lesson, the placement test and conversation practice and becomes a named, re-seeding
+retry; before it the
 atomic-evidence pass: `AnswerTransactionTest` proves on real Room that a crash inside a lesson
 answer rolls back the claim, the graph, the meter and the history together, `EvidenceTransactionTest`
 does the same for a review grade and a conversation turn, `LessonCompletionTransactionTest` for
@@ -146,7 +149,10 @@ persistence pass had added — `EvidenceRuleTest` pins that one answer per exerc
 reopened step resumes on the first *unanswered* question, that every graded answer is appended with
 its step, and that a finished step's completion time is recorded once and survives a restart;
 `LoadFailureTest` pins that a failed
-local read becomes a state the screen can show and retry rather than a spinner nobody can leave —
+local read becomes a state the screen can show and retry rather than a spinner nobody can leave (and
+two cases in `LessonViewModelTest` and one in `PlacementViewModelTest` extend that to the lesson
+and the placement test, the two screens whose loads had no guard at all, plus a dimension write
+that fails without eating the verdict) —
 one active stage at a time across the eight-step lesson, no trial on a fresh
 install, the per-flavor «ارتباط با ناشر» store page, the
 per-lesson dialogue with its scene and roles, the conversation gate that keeps the next lesson shut
@@ -159,7 +165,10 @@ nature); the full inventory and ViewModel/fake conventions are in
 `jobs:` — a CI change cannot ship undocumented in either direction. Those docs and `ci.yml` are
 inputs of `:app:docGuard`, a filtered run of that one class on the unit-test classpath: a docs edit
 re-runs seconds instead of the whole suite, and `check` plus every `test*UnitTest` run the guard, so
-no `--rerun` is needed for a doc change. The content assets are not declared inputs and
+no `--rerun` is needed for a doc change. Three cases in that same class pin the guard's own wiring —
+the class it filters on, the four files it watches, the loud failure when no `test*UnitTest` exists,
+and the variant-agnostic attachment — so a guard that would run nothing fails instead of reporting
+green. The content assets are not declared inputs and
 keep their `--rerun` rule.
 
 ## 9. Conventions & Definition of Done

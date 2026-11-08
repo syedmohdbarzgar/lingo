@@ -94,8 +94,16 @@
   exercised by an install that already holds data.
 - Due counts capture `now` at collection time; a long-running session won't see newly-due items
   until the ViewModel is recreated.
-- The daily reminder is pinned to 19:00 local (`DailyReminder.REMINDER_HOUR`); the time is not
-  learner-configurable yet (checklist B-4).
+- **Settled (B-4): the reminder hour is a setting.** 19:00 is only the default
+  (`AppSettings.DEFAULT_REMINDER_HOUR`); Settings has a «ساعت یادآوری» row that opens a
+  `TimePicker`, and the stored value is `daily_reminder_hour` in the settings record. The alarm is
+  scheduled from the record in one place — `EnglishApp`'s settings collector — so turning it on and
+  changing the hour both reach the alarm, and the post-reboot path re-reads the same hour instead
+  of the constant. Out-of-range values are clamped in the repository and again in
+  `DailyReminder.nextReminderMillis`, because `Calendar` accepts hour 25 by rolling it into the
+  next day (`DailyReminderTest` pins both). Still not configurable, deliberately: the *minute*
+  (a reminder at 19:07 buys nothing a whole hour does not) and a per-weekday schedule (reminders
+  are daily by definition here).
 - The ALMOST hint is suppressed for GRAMMAR items but cannot tell "one edit away from a *different*
   word" (A-2c/A-2b: `affect`/`effect`) from a typo without a dictionary — on a vocabulary target the
   learner is still told to check the spelling. Accepted: the banner shows the correct answer
@@ -161,6 +169,62 @@
   device measurement rather than a guess. The backup rule now excludes `filesDir/vosk/` — that one
   was data loss, not a trade-off: the extracted model alone exceeded Auto Backup's 25 MB cap and
   cancelled the whole backup.
+- **Open: the backup rules and the finished-dialogue set disagree.** Auto Backup excludes
+  `datastore/` from both cloud backup and device-to-device transfer (`backup_rules.xml` for API < 31,
+  `data_extraction_rules.xml` for 31+), and that exclusion is right: `app_settings.preferences_pb`
+  carries the subscription mirror (`subscription_until`) and the legacy trial checkpoint, and a
+  restored entitlement is a purchase that never happened. But the same file also holds
+  `conversations_done`, the lessons whose dialogue the learner has finished
+  (`ConversationRepositoryImpl`, one id per line) — that is learner progress, not an entitlement.
+  Every other half of the *same event* survives a restore, because it is in Room: the lesson is still
+  completed (`lesson_state`), its answers are still in `lesson_attempt`, and the conversation's own
+  spoken turns are still claimed (`question_attempt`) and still count towards the skill meter
+  (`skill_mastery`). Only the “this dialogue is done” flag is lost.
+  What the learner meets after a restore or a phone-to-phone transfer: `owedConversation` finds the
+  highest completed lesson with no done id, so Home offers «گفتگوی این درس را تمرین کن» for a
+  dialogue they practised days ago, and `canOpenLesson` keeps every later lesson shut until they do
+  it again — a wall built from a fact the app forgot, not from learning. It heals the moment they
+  re-practise that one dialogue (the owed lesson stays open precisely so they can), which is why
+  this is debt and not a defect: nothing crashes, nothing is mis-graded, and the sentence they owe is
+  one they have already said. It is still wrong in the sense this project cares about — two stores
+  disagree about one event, and the store that forgets is the one the learner cannot inspect.
+  **Options, with what each costs and what it risks:**
+  1. **Move the done-set into Room** (table `conversation_done`, Room v9→v10). Cost: one migration, a
+     DAO, the repository implementation, and the matching `DatabaseUpgradeTest` / `RoomMigrationTest`
+     cases — all offline work, no content or UI. Risk: the project's own scar, a migration that
+     exists but is not registered, which crashed every *upgrading* install at v7→v8;
+     `AppDatabase.ALL_MIGRATIONS` is what now prevents that, so the risk is a wrong migration body,
+     caught only by an upgrade test with real learner rows. Gain beyond the bug: the mark becomes
+     transactional with the turn that earned it (today a crash between the two leaves the turn
+     claimed and the dialogue unmarked). Verdict: the honest fix.
+  2. **Split the file: `entitlements` (excluded) and `learner` (backed up).** Cost: a second
+     `preferencesDataStore`, a one-time move of `conversations_done` (and of any other learner flag
+     that should travel), both XML rule files updated. Risk: the split is a policy boundary kept by
+     hand — one entitlement key written into the backed-up store turns a restore into a free
+     subscription, and every future key needs the same decision made again. Verdict: the right
+     shape, but more to get wrong than 1, and it leaves progress flags in a store whose name says
+     “settings”.
+  3. **Narrow the exclusion to the entitlement keys.** Not available: Auto Backup, device transfer
+     and `data-extraction-rules` work on files and domains, never on preference keys, so the only way
+     to exclude one key is to give it its own file — which is option 2. Recorded so it is not
+     attempted again as an easy fix.
+  4. **Leave it, accept the re-practise.** Cost: this entry. Risk: the app cannot tell “restored” from
+     “never done”, so a learner who moved phones reads a finished dialogue being due as a bug; and
+     the gate is a *blocking* wall today, so the cost of being wrong is a learner who cannot reach
+     the next lesson without redoing work they remember doing. Verdict: acceptable only while the
+     dialogue is the only gate; if anything else is ever gated on it, this moves up the list.
+  If this is picked up, option 1 is the one to do, and option 4 stays the interim (no code change
+  now). The exclusion itself must not be loosened to fix this: a restored subscription is worse than
+  a re-practised sentence.
+- **The splash hand-off still calls the deprecated transition API (the one compiler warning left).**
+  `SplashActivity.openApp` uses `overridePendingTransition(R.anim.fade_in, R.anim.fade_out)`, which
+  API 34 deprecated in favour of `overrideActivityTransition(OVERRIDE_TRANSITION_OPEN/CLOSE, …)`.
+  The warning pass that took the other thirteen to zero left this one on purpose: the fade is the
+  frame the device run already had to fix (the black gap between the starting window and Compose's
+  first frame), and the replacement sets an *open* and a *close* override rather than one pair — a
+  behaviour change on API 34+ that no host-JVM test can observe. Revisit on an attached phone:
+  record the current transition with `scripts/install_debug.sh`, then swap both branches behind
+  `Build.VERSION.SDK_INT >= 34` and compare. Until then the old call still works on every API.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

@@ -84,10 +84,25 @@ assertion of intent:
 | Gate | Command | Result |
 | --- | --- | --- |
 | Content | `./gradlew validateContent --rerun` | pass |
-| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **600 tests / 72 classes, 0 failures** |
-| Lint | `./gradlew :app:lintBazaarDebug` | **0 errors**, 28 warnings (9 `UnusedResources`, 5 `ObsoleteSdkInt`, 4 `UseKtx`, the rest version nags) |
+| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **625 tests / 73 classes, 0 failures** |
+| Lint | `./gradlew :app:lintBazaarDebug` | **0 errors**, 7 warnings (6 version nags + 1 `CustomSplashScreen`); `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` are all zero |
 | Flavors | `assembleBazaarDebug`, `assembleMyketDebug`, `assembleGooglePlayDebug` | 3/3 build; the only permission difference is the marketplace billing one |
 | DB upgrade | `DatabaseUpgradeTest`, `RoomMigrationTest` (in the unit suite) | v1→v9 chain executed on real SQLite with learner rows; every value survives, the v9 tables arrive empty |
+
+The rehearsal is worth running on a tree that has changed since the last release point: it is how
+the `InlinedApi` finding surfaced (`SpeechRecognitionService` passed the microphone foreground type
+from API 29, though the constant only exists from 30; now gated at `R`, so 29 falls back to the
+manifest's own declaration). The resource pass took the nine `UnusedResources` warnings to zero:
+`values/colors.xml` now holds only the entries the theme and splash window read, and the two
+orphan `drawable/ic_launcher_*` vectors are gone — the adaptive icon takes its background from
+`@color/ic_launcher_background` and its foreground from the `mipmap-*` webps. The warning pass then
+cleared the rest of the code-level noise: the five `ObsoleteSdkInt` were `tools:targetApi="l"`
+metadata that minSdk 24 already outlives (removed; the `s` attributes stay, since they are real),
+the four `UseKtx` became `String.toUri()` in `StorePage`/`CompanionApp`, and the one `EmptySuperCall`
+was a `super.onCleared()` that only called the framework's empty base. What is left is accepted
+noise, named so a new warning stands out: `CustomSplashScreen`, the deliberately blank system splash
+whose brand field `SplashActivity` draws, and the six version nags, which are dependency updates
+rather than defects.
 
 APKs: `bazaar` 102,213,988 B, `myket` 102,417,951 B, `googlePlay` 102,963,716 B (~98 MiB each,
 debug), all three shipping exactly `arm64-v8a`, `armeabi-v7a`, `x86_64`. `INTERNET` is still the

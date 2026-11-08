@@ -24,10 +24,18 @@ Merged-manifest permissions per flavor (verified Oct 2026 — re-check after SDK
 All flavors also carry `POST_NOTIFICATIONS` (declared in the main manifest — the daily reminder
 posts a local notification on API 33+; without the declaration the Settings request is a no-op and
 `lintBazaarDebug` fails with `MissingPermission`), `RECEIVE_BOOT_COMPLETED` (the reminder is re-armed
-after a reboot), `RECORD_AUDIO`, `FOREGROUND_SERVICE` + `FOREGROUND_SERVICE_MICROPHONE` (the practice
+after a reboot, at the hour the learner chose rather than the shipped 19:00 — B-4), `RECORD_AUDIO`, `FOREGROUND_SERVICE` + `FOREGROUND_SERVICE_MICROPHONE` (the practice
 service's `microphone` type — targetSdk 37 requires both the declaration and the type passed to
-`startForeground`, and drops the type silently if only one is present) and
+`startForeground`, and drops the type silently if only one is present; the type is passed from
+**API 30** up, the version the constant was added in, so an Android 10 device gets 0 = "use the
+manifest's declaration" instead of a type number its platform does not define) and
 `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (system-generated, not a real app permission).
+
+The reminder's copy follows the data it can actually see (`DailyReminder.copyFor`): it states the
+due count, says there is nothing to review when the count is zero, and claims neither when the count
+cannot be read. A local notification is the one screen the app shows unasked, so it is also the one
+place a reassuring sentence would be a lie the learner cannot check. Its count is a local Room read
+no network — the same rule the rest of the learning core lives by.
 
 `RECORD_AUDIO` serves **two local-only** features, and neither ever uploads audio:
 
@@ -46,6 +54,33 @@ service's `microphone` type — targetSdk 37 requires both the declaration and t
 manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar/poolakey`,
 `ir/myket/billingclient`, `com/android/billingclient` — zero cross-flavor leakage).
 
+**What the microphone path keeps, and what deletes it** (the P0 privacy checklist asks this
+explicitly, so here is the answer read off the code rather than the store copy):
+
+| Artefact | Where it lives | Lifetime |
+|---|---|---|
+| The raw PCM take (conversation practice) | never written — read from `AudioRecord`, fed to the in-process `Recognizer`, then dropped | the take |
+| The recognised text | memory only (`SpeechBus`, the screen state) | the take / the turn |
+| The verdict of a turn | `conversation_turn`-style evidence row: lesson id, exercise id, verdict, a `spoken` flag, a timestamp — **no transcript** | reset |
+| The voice note (lesson speaking item) | `cacheDir/voice_take.m4a` | replaced by the next recording, deleted by reset, may be cleared by the OS |
+| The extracted Vosk model | `filesDir/vosk/…` | a copy of the APK asset — not user data, excluded from backup, never deleted |
+
+Nothing on that path calls the network: the app has **no HTTP client of its
+own** (only the billing SDKs talk to a store), so an upload was never a
+one-line change away. No learner content — no transcript, no typed answer, no
+voice file path — is written to `Log`; the log lines in `feature/` name the
+operation that failed and nothing else.
+
+Deletion is `Settings → «پاک‌سازی پیشرفت و شروع دوباره»`, and it now covers the
+four places learner data actually lives: the Room tables
+(`ProgressRepository.reset()` + `KnowledgeRepository.reset()`), the finished
+dialogues (`ConversationRepository.reset()` — a set in the settings preferences
+file, which the Room wipe could not reach and which used to keep the lesson gate
+open for lessons the wipe had just erased), and the recorded take
+(`VoiceNote.discardTake()`). The settings themselves (level, theme, goal, sound,
+reminder) and the subscription mirror survive: the learner asked to restart the
+course, not to reset the app. `SettingsViewModelTest` pins both halves.
+
 ## Active (must keep working offline)
 
 - Bundled A1–C2 lessons, vocabulary, exercises, placement test (assets/content)
@@ -61,7 +96,9 @@ manifest and that each APK dex contains only its own billing SDK (`ir/cafebazaar
 - Opening the app's own page in that store — Settings → «درباره و قوانین» → «ارتباط با ناشر»
   (`core/support/StorePage.kt`). A plain `ACTION_VIEW` to the flavor's documented deep link with the
   public store page as fallback: the app itself makes no request, needs no permission, and nothing
-  in the learning core depends on it.
+  in the learning core depends on it. The same page is the **support path out of a critical error**:
+  Home's and Lesson's failure states offer «تلاش دوباره» first and «ارتباط با پشتیبانی» second, so a
+  learner whose content will not load is never left with a dead end (checklist P1-7).
 
 ## Suspended — needs backend/server infrastructure (do NOT implement yet)
 
