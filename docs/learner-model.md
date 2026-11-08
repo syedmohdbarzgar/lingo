@@ -137,6 +137,9 @@
 - **The learner model is per knowledge item, not per exercise or per skill.** Every graded answer
   is attributed to the curriculum nodes its lesson teaches (`KnowledgeEvidence`, a pure tested rule)
   and written to `knowledge_state` with an atomic read-modify-write, exactly like skill mastery.
+  That write, the day's claim, the skill meter and the answer's history are **one transaction**
+  (checklist 0.1): an answer either lands whole or not at all, so a crash mid-answer cannot credit
+  knowledge the history has no answer for.
   `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
 - **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at

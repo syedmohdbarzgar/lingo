@@ -562,23 +562,37 @@ class LessonViewModel(
         viewModelScope.launch {
             try {
                 val now = System.currentTimeMillis()
-                val outcome = submitExercise(exercise, answer, now)
-                // Phase 2: the answer itself is kept, with the step that asked it. It
-                // is written even when the day's claim refused it — a retry is history,
-                // and this row is what a reopened step resumes from. A failed write
-                // must not swallow a graded answer, so it is logged, not thrown.
                 val stageId = s.stageState?.active?.id ?: LearningStage.PRACTICE.id
-                runCatchingCancellable {
-                    lessonRepository.recordAttempt(
-                        LessonAttempt(
-                            lessonId = lessonId,
-                            stageId = stageId,
-                            exerciseId = exercise.id,
-                            answer = answer,
-                            correct = outcome.correct,
-                            at = now,
-                        ),
-                    )
+                // ONE answer is several rows: the day's claim, the skill meter, the
+                // curriculum nodes and the answer's own history. They are written as one
+                // transaction (checklist 0.1), so a crash between them rolls the whole
+                // answer back and the question counts as unanswered — never as half a
+                // fact (evidence with no answer to resume from, or the reverse).
+                //
+                // The history row is written even when the day's claim refused the answer:
+                // a retry is history, and this row is what a reopened step resumes from.
+                val outcome = runCatchingCancellable {
+                    progressRepository.inTransaction {
+                        submitExercise(exercise, answer, now).also { graded ->
+                            lessonRepository.recordAttempt(
+                                LessonAttempt(
+                                    lessonId = lessonId,
+                                    stageId = stageId,
+                                    exerciseId = exercise.id,
+                                    answer = answer,
+                                    correct = graded.correct,
+                                    at = now,
+                                ),
+                            )
+                        }
+                    }
+                }.getOrElse {
+                    // Nothing reached the disk (the transaction rolled back as a whole),
+                    // but the tap must still get a verdict: grade it with no evidence
+                    // instead of leaving the learner staring at their own answer. The
+                    // answer is not pretended to be saved — the step asks it again, which
+                    // is the honest state after a failed write.
+                    submitExercise.grade(exercise, answer)
                 }
                 // First try or repeat: the summary's «تثبیت‌شده» verdict is about
                 // the first pass only, so a fix on the repeat cannot hide a gap.

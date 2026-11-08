@@ -23,6 +23,24 @@
   screen ever reads the log across all lessons (a "what did I get wrong yesterday" view), which
   would want an index on `at` and probably a retention window.
 
+- **One graded result is one transaction; the dimension fold stays outside it (checklist 0.1).**
+  Five flows write several learner rows per result and commit them as one Room transaction through
+  `ProgressRepository.inTransaction`: a lesson answer (the claim, the skill meter, the curriculum
+  nodes and the answer's history), a review grade (the card's next schedule, the attempt log and the
+  meter), a conversation turn (its claim, the graph and the track), finishing a lesson (the
+  completion stamp, its words entering the review queue and the cursor reset) and the placement test
+  (one fold per answer into its skill meter). A crash therefore leaves the result undone rather than
+  half-recorded — the question still unanswered, the card still due, the turn still unclaimed, the
+  lesson still unfinished with its words unqueued, the profile uncalibrated rather than partly so
+  (`AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest` and
+  `PlacementSeedTransactionTest` prove the rollback on Room, and `TransactionCoverageTest` fails when
+  a use case writes several tables without the seam). The follow-up write that folds the answer into `dimension_mastery` is deliberately *not* in
+  that transaction: it is session input for the next session's selector rather than evidence about
+  what was learned, and losing it costs
+  one stale seed — the next answer in that dimension folds again — while a contradiction between the
+  model and the history cannot happen. Folding it in would mean the answer's transaction keys a
+  dimension, which the ViewModel owns, not the repository.
+
 - **Settled (B-1): mastery by dimension now crosses sessions (Room v6).** `dimension_mastery`
   stores the per-dimension fold as answers arrive, and a lesson session seeds its `MasteryProfile`
   from those rows before the first exercise — so the selector and the weakest-dimension read work

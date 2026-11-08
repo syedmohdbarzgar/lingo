@@ -120,6 +120,9 @@ class LearningPathJourneyTest {
             return true
         }
 
+        /** One answer, one transaction (checklist 0.1) — a fake has nothing to roll back. */
+        override suspend fun <T> inTransaction(block: suspend () -> T): T = block()
+
         override suspend fun applyAttempt(skill: Skill, correct: Boolean, source: String) {
             val current = masteryFlow.value[skill] ?: 0f
             masteryFlow.value = masteryFlow.value + (skill to masteryEngine.update(current, correct))

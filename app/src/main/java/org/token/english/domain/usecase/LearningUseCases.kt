@@ -58,14 +58,32 @@ class SubmitExerciseUseCase(
     private val progress: ProgressRepository,
     private val knowledge: KnowledgeRepository,
 ) {
+    /**
+     * The verdict for one answer, with no writes at all.
+     *
+     * Split out because the answer and its evidence are written in one transaction
+     * (checklist 0.1): when that transaction cannot be written, the learner still
+     * gets a verdict — an accurate grade with no evidence is honest, a tap that
+     * does nothing is not.
+     */
+    fun grade(exercise: Exercise, answer: String): ExerciseOutcome {
+        val verdict = AnswerChecker.grade(exercise, answer)
+        return ExerciseOutcome(
+            correct = verdict == AnswerChecker.Verdict.CORRECT,
+            correctAnswer = AnswerChecker.correctAnswerText(exercise),
+            skill = AnswerChecker.skillOf(exercise),
+            almostCorrect = verdict == AnswerChecker.Verdict.ALMOST,
+        )
+    }
+
     suspend operator fun invoke(
         exercise: Exercise,
         answer: String,
         now: Long,
     ): ExerciseOutcome {
-        val verdict = AnswerChecker.grade(exercise, answer)
-        val correct = verdict == AnswerChecker.Verdict.CORRECT
-        val skill = AnswerChecker.skillOf(exercise)
+        val outcome = grade(exercise, answer)
+        val correct = outcome.correct
+        val skill = outcome.skill
         val format = AnswerChecker.formatOf(exercise)
         // One answer per exercise per day is evidence; a retry of the same item is a
         // tap. The claim comes first, so a repeated answer writes nothing at all — not
@@ -94,12 +112,7 @@ class SubmitExerciseUseCase(
                 progress.applyAttempt(Skill.WRITING, correct, source = "lesson-writing")
             }
         }
-        return ExerciseOutcome(
-            correct = correct,
-            correctAnswer = AnswerChecker.correctAnswerText(exercise),
-            skill = skill,
-            almostCorrect = verdict == AnswerChecker.Verdict.ALMOST,
-        )
+        return outcome
     }
 }
 
@@ -138,21 +151,33 @@ class RecordConversationTurnUseCase(
         if (verdict == SpeakingVerdict.RETRY) return false
         val skill = if (spoken) Skill.SPEAKING else Skill.WRITING
         val format = if (spoken) ExerciseFormat.SPEAKING else ExerciseFormat.SENTENCE_PRODUCTION
-        // The turn *is* an exercise: claiming it by id is what stops a re-played
-        // dialogue from raising the speaking bar six times for six taps.
-        if (!progress.claimAnswer(lessonId.orEmpty(), exerciseId, correct = true, now)) return false
-        // A null lesson (the practice opened before the bundle landed) has no dialogue
-        // graph, so only the skill track is credited; the repository ignores an unknown
-        // lesson rather than inventing nodes for it.
-        knowledge.recordAttempt(
-            lessonId = lessonId.orEmpty(),
-            skill = skill,
-            format = format,
-            correct = true,
-            now = now,
-        )
-        progress.applyAttempt(skill, correct = true, source = if (spoken) "conversation" else "conversation-typed")
-        return true
+        // The turn's whole fact — the claim, the graph and the skill track — is ONE
+        // transaction (checklist 0.1). Written separately, a crash after the claim left
+        // the turn spent for the day while Speaking never moved: the dialogue would have
+        // been answered and silently credited to nobody.
+        return progress.inTransaction {
+            // The turn *is* an exercise: claiming it by id is what stops a re-played
+            // dialogue from raising the speaking bar six times for six taps.
+            if (!progress.claimAnswer(lessonId.orEmpty(), exerciseId, correct = true, now)) {
+                return@inTransaction false
+            }
+            // A null lesson (the practice opened before the bundle landed) has no dialogue
+            // graph, so only the skill track is credited; the repository ignores an unknown
+            // lesson rather than inventing nodes for it.
+            knowledge.recordAttempt(
+                lessonId = lessonId.orEmpty(),
+                skill = skill,
+                format = format,
+                correct = true,
+                now = now,
+            )
+            progress.applyAttempt(
+                skill,
+                correct = true,
+                source = if (spoken) "conversation" else "conversation-typed",
+            )
+            true
+        }
     }
 }
 
@@ -161,9 +186,17 @@ class CompleteLessonUseCase(
     private val progress: ProgressRepository,
 ) {
     suspend operator fun invoke(lessonId: String, now: Long) {
-        lessons.completeLesson(lessonId, now)
-        lessons.enqueueLessonVocabulary(lessonId, now)
-        lessons.saveLessonIndex(lessonId, 0)
+        // Finishing a lesson is three rows — the completion stamp, its vocabulary
+        // entering the review queue and the cursor going back to the start — and they
+        // are one transaction (checklist 0.1). Written separately, a crash in the middle
+        // could leave a lesson marked done whose words never reached review (the learner
+        // would never be asked them again), or a queue that grew for a lesson the app
+        // does not consider finished.
+        progress.inTransaction {
+            lessons.completeLesson(lessonId, now)
+            lessons.enqueueLessonVocabulary(lessonId, now)
+            lessons.saveLessonIndex(lessonId, 0)
+        }
     }
 }
 
@@ -179,35 +212,46 @@ class SubmitReviewUseCase(
         now: Long,
         responseTimeMs: Long,
     ) {
+        // One grade writes three rows — the card's next schedule, the attempt log and
+        // the skill meter — and they are ONE transaction (checklist 0.1). Written
+        // separately, a crash between them could store a new interval with no attempt
+        // behind it, or move the skill and leave the card due (so the same card is asked
+        // again and again until a schedule finally lands).
         val schedule = scheduler.schedule(item, result, now)
-        reviews.schedule(
-            item.copy(
-                state = schedule.state,
-                dueAt = schedule.nextReviewAt,
-                intervalDays = schedule.intervalDays,
-                easeFactor = scheduler.nextEase(item.easeFactor, result),
-                repetitions = if (result == ReviewResult.AGAIN) item.repetitions else item.repetitions + 1,
-                lapses = if (result == ReviewResult.AGAIN) item.lapses + 1 else item.lapses,
-                lastReviewedAt = now,
-            ),
-        )
-        reviews.recordAttempt(
-            ReviewAttempt(
-                contentId = item.contentId,
-                timestamp = now,
-                result = result,
-                responseTimeMs = responseTimeMs,
+        progress.inTransaction {
+            reviews.schedule(
+                item.copy(
+                    state = schedule.state,
+                    dueAt = schedule.nextReviewAt,
+                    intervalDays = schedule.intervalDays,
+                    easeFactor = scheduler.nextEase(item.easeFactor, result),
+                    repetitions = if (result == ReviewResult.AGAIN) {
+                        item.repetitions
+                    } else {
+                        item.repetitions + 1
+                    },
+                    lapses = if (result == ReviewResult.AGAIN) item.lapses + 1 else item.lapses,
+                    lastReviewedAt = now,
+                ),
+            )
+            reviews.recordAttempt(
+                ReviewAttempt(
+                    contentId = item.contentId,
+                    timestamp = now,
+                    result = result,
+                    responseTimeMs = responseTimeMs,
+                    source = "review",
+                ),
+            )
+            progress.applyAttempt(
+                // One definition of the mapping (domain/model): the code that *counts*
+                // review evidence into a skill track reads the same helper, so the grade
+                // and the track it credits can never disagree.
+                skill = item.contentType.skill(),
+                correct = result != ReviewResult.AGAIN,
                 source = "review",
-            ),
-        )
-        progress.applyAttempt(
-            // One definition of the mapping (domain/model): the code that *counts*
-            // review evidence into a skill track reads the same helper, so the grade
-            // and the track it credits can never disagree.
-            skill = item.contentType.skill(),
-            correct = result != ReviewResult.AGAIN,
-            source = "review",
-        )
+            )
+        }
     }
 }
 
@@ -481,7 +525,14 @@ class AssessPlacementUseCase(
     private val engine: PlacementAssessmentEngine = PlacementAssessmentEngine(),
 ) {
     suspend operator fun invoke(answers: List<PlacementAnswer>): PlacementAssessment {
-        answers.forEach { progress.applyAttempt(it.skill, it.correct, source = "placement") }
+        // The whole calibration is one transaction: every answer seeds its skill's
+        // meter through the EWMA, so a crash half-way used to leave a profile seeded
+        // from some of the test and silently missing the rest — the learner would look
+        // weaker (or stronger) than the test they actually took. Either the test
+        // calibrates the profile or it changes nothing (checklist 0.1).
+        progress.inTransaction {
+            answers.forEach { progress.applyAttempt(it.skill, it.correct, source = "placement") }
+        }
         return engine(answers)
     }
 }

@@ -286,6 +286,22 @@ class FakeProgressRepository : ProgressRepository {
     /** exercise id → (day key, correct) claimed, mirroring the v9 `question_attempt` row. */
     val claimed = mutableMapOf<String, Pair<Int, Boolean>>()
 
+    /** How many times a whole answer was submitted as one transaction (checklist 0.1). */
+    var transactions = 0
+
+    /**
+     * When set, [inTransaction] refuses to open: nothing inside runs and the caller
+     * sees the failure, exactly like a transaction that could not be written. The
+     * fake keeps no partial rows, because a real one would have rolled them back.
+     */
+    var transactionError: Throwable? = null
+
+    override suspend fun <T> inTransaction(block: suspend () -> T): T {
+        transactions++
+        transactionError?.let { throw it }
+        return block()
+    }
+
     override suspend fun claimAnswer(
         lessonId: String,
         exerciseId: String,

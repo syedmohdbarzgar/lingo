@@ -1,6 +1,8 @@
 package org.token.english.data.repository
 
 import android.content.Context
+import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -353,6 +355,12 @@ class ProgressRepositoryImpl(
     private val reviewDao: ReviewDao,
     private val progressDao: ProgressDao,
     private val masteryEngine: MasteryEngine,
+    /**
+     * The database itself, for the one call that spans a whole answer. The DAOs
+     * cannot open a transaction across each other, and an answer is written by
+     * three of them (checklist 0.1).
+     */
+    private val database: RoomDatabase,
 ) : ProgressRepository {
 
     override fun observeMastery(): Flow<Map<Skill, Float>> =
@@ -424,6 +432,15 @@ class ProgressRepositoryImpl(
         correct = correct,
         at = now,
     )
+
+    /**
+     * Room's own transaction, so a crash (or an exception) inside [block] rolls back
+     * every row it wrote. Nested calls join the outer transaction instead of opening
+     * a second one, which is why the DAO-level `@Transaction` helpers ([claimAnswer],
+     * `updateMasteryAtomic`) work unchanged inside it.
+     */
+    override suspend fun <T> inTransaction(block: suspend () -> T): T =
+        database.withTransaction { block() }
 
     override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
         progressDao.upsertDimension(DimensionMasteryEntity(dimension.name, mastery))

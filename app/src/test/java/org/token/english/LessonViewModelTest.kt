@@ -353,6 +353,37 @@ class LessonViewModelTest {
     }
 
     @Test
+    fun `an answer and its history are written in one transaction`() {
+        val h = Harness().withOneExercise()
+        val vm = h.build()
+
+        answerCorrectly(vm)
+
+        assertEquals("one answer, one transaction (checklist 0.1)", 1, h.progress.transactions)
+        assertEquals("the answer itself is on record", 1, h.lessonRepo.attemptsLog.size)
+        assertEquals(
+            vm.state.value.currentExercise?.id,
+            h.lessonRepo.attemptsLog.first().exerciseId,
+        )
+    }
+
+    @Test
+    fun `a refused transaction still grades the answer instead of swallowing the tap`() {
+        val h = Harness().withOneExercise()
+        // A database that cannot write: nothing inside the transaction runs, and the
+        // session sees the failure (a real one rolls back, see AnswerTransactionTest).
+        h.progress.transactionError = IllegalStateException("database unavailable")
+        val vm = h.build()
+
+        answerCorrectly(vm)
+
+        assertEquals("the tap still produces a verdict", true, vm.state.value.outcome?.correct)
+        assertTrue("no history row is pretended", h.lessonRepo.attemptsLog.isEmpty())
+        assertTrue("no evidence is credited", h.progress.attempts.isEmpty())
+        assertTrue("the graph is untouched", h.knowledge.recorded.isEmpty())
+    }
+
+    @Test
     fun `a missed exercise is re-asked once and the lesson ends on the second pass`() {
         val h = Harness().withOneExercise()
         val vm = h.build()

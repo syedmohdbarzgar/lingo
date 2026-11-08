@@ -174,6 +174,22 @@ interface ProgressRepository {
     suspend fun claimAnswer(lessonId: String, exerciseId: String, correct: Boolean, now: Long): Boolean
 
     /**
+     * Runs [block] as **one database transaction**: either every write inside it
+     * lands or none of it does (checklist 0.1).
+     *
+     * One graded answer is four rows — the day's claim, the skill meter, the
+     * curriculum nodes and the answer's own history — and writing them as separate
+     * statements meant a process death between two of them left the model
+     * disagreeing with itself: evidence credited for a question the history has no
+     * answer for, or an answer on record that never moved the model. Wrapping the
+     * whole answer turns a crash into a no-op instead of a partial fact.
+     *
+     * A repeated answer inside the block is harmless: [claimAnswer] refuses it, so
+     * nothing it guards is written twice.
+     */
+    suspend fun <T> inTransaction(block: suspend () -> T): T
+
+    /**
      * Per-dimension mastery folded across sessions (checklist B-1, Room v6) —
      * what a new lesson session seeds its `MasteryProfile` from, so the exercise
      * selector can steer the FIRST exercise instead of waiting for an in-session

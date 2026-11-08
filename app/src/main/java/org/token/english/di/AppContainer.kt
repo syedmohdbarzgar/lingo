@@ -99,6 +99,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
             reviewDao = database.reviewDao(),
             progressDao = database.progressDao(),
             masteryEngine = masteryEngine,
+            database = database,
         )
     }
 
