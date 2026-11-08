@@ -74,6 +74,18 @@ interface ConversationRepository {
 
     /** Marks the lesson's dialogue as practised. Idempotent. */
     suspend fun markCompleted(lessonId: String)
+
+    /**
+     * Forgets every finished dialogue — the reset path's half of «پاک‌سازی پیشرفت».
+     *
+     * This set is learning data like any other, but it lives in the settings
+     * preferences file rather than Room, so `ProgressRepository.reset()` never saw
+     * it: after a wipe the learner model, the review queue and the lesson states
+     * were gone while every dialogue still counted as spoken, which left the gate
+     * open for lessons the learner had not done. The rows and this set have to fall
+     * together or the app disagrees with its own reset.
+     */
+    suspend fun reset()
 }
 
 interface VocabularyRepository {
@@ -213,5 +225,11 @@ interface SettingsRepository : org.token.english.core.billing.SubscriptionStore 
     suspend fun setSoundEnabled(enabled: Boolean)
     /** Toggles the daily review reminder; the caller also (un)schedules the alarm. */
     suspend fun setDailyReminderEnabled(enabled: Boolean)
+    /**
+     * The hour (0–23 local) the reminder fires at (checklist B-4). The caller also
+     * reschedules, so a changed hour must reach the alarm, not just the record.
+     * Out-of-range values are clamped by the implementation.
+     */
+    suspend fun setDailyReminderHour(hour: Int)
     suspend fun setContentVersion(version: Int)
 }

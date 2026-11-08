@@ -101,6 +101,10 @@ class FakeSettingsRepository(
         settingsFlow.value = settingsFlow.value.copy(dailyReminderEnabled = enabled)
     }
 
+    override suspend fun setDailyReminderHour(hour: Int) {
+        settingsFlow.value = settingsFlow.value.copy(dailyReminderHour = hour.coerceIn(0, 23))
+    }
+
     override suspend fun setContentVersion(version: Int) {
         settingsFlow.value = settingsFlow.value.copy(contentVersion = version)
     }
@@ -133,10 +137,22 @@ class FakeLessonRepository(
     override fun observeLessons(): Flow<List<Lesson>> = lessonsFlow
     override fun observeLessonStates(): Flow<List<LessonState>> = statesFlow
 
-    override suspend fun getLesson(lessonId: String): Lesson? =
-        lessonsFlow.value.firstOrNull { it.id == lessonId }
+    /**
+     * When set, the lesson reads throw — a read that cannot reach the disk (a corrupt
+     * file, a migration the installed build cannot walk). Clearing it models a retry
+     * that works, which is what the lesson and placement error states offer.
+     */
+    var readError: Throwable? = null
 
-    override suspend fun getExercises(lessonId: String): List<Exercise> = exercises[lessonId].orEmpty()
+    override suspend fun getLesson(lessonId: String): Lesson? {
+        readError?.let { throw it }
+        return lessonsFlow.value.firstOrNull { it.id == lessonId }
+    }
+
+    override suspend fun getExercises(lessonId: String): List<Exercise> {
+        readError?.let { throw it }
+        return exercises[lessonId].orEmpty()
+    }
 
     override suspend fun getVocabulary(lessonId: String): List<VocabularyItem> = vocabulary[lessonId].orEmpty()
 
@@ -207,6 +223,10 @@ class FakeConversationRepository(
 
     override suspend fun markCompleted(lessonId: String) {
         doneFlow.value = doneFlow.value + lessonId
+    }
+
+    override suspend fun reset() {
+        doneFlow.value = emptySet()
     }
 }
 
@@ -326,7 +346,11 @@ class FakeProgressRepository : ProgressRepository {
 
     override suspend fun getDimensionMastery(): Map<MasteryDimension, Float> = dimensionFlow.value
 
+    /** When set, the dimension fold fails — session input, not evidence (debt.md). */
+    var dimensionError: Throwable? = null
+
     override suspend fun setDimensionMastery(dimension: MasteryDimension, mastery: Float) {
+        dimensionError?.let { throw it }
         dimensionWrites += dimension to mastery
         dimensionFlow.value = dimensionFlow.value + (dimension to mastery)
     }
@@ -488,6 +512,10 @@ class FakeVoiceNote(
     var released = false
         private set
 
+    /** True once the reset path asked for the take to be deleted. */
+    var discarded = false
+        private set
+
     override fun hasMicrophonePermission(): Boolean = permission
 
     override fun startRecording(): Boolean {
@@ -516,6 +544,11 @@ class FakeVoiceNote(
     override fun stopPlayback() {
         stopPlaybackCalls += 1
         _isPlaying.value = false
+    }
+
+    override fun discardTake() {
+        discarded = true
+        _hasTake.value = false
     }
 
     override fun release() {

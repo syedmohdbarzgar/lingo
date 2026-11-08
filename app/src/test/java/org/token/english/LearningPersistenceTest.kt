@@ -14,6 +14,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.ContentStatus
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.model.Exercise
@@ -138,7 +139,8 @@ class LearningPersistenceTest {
         knowledge: FakeKnowledgeRepository = FakeKnowledgeRepository(),
     ) = LessonViewModel(
         lessonId = lessonId,
-        contentSeeded = MutableStateFlow(true),
+        contentStatus = MutableStateFlow(ContentStatus.READY),
+        seedContent = { true },
         lessonRepository = repo,
         progressRepository = progress,
         submitExercise = SubmitExerciseUseCase(progress, knowledge),

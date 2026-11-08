@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.EmojiEvents
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,12 +30,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianCountPair
 import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
@@ -83,6 +87,11 @@ data class PlacementUiState(
     val resultLevel: LearningLevel = LearningLevel.A1,
     /** Per-skill read of the same answers (null until the test finishes). */
     val assessment: PlacementAssessment? = null,
+    /**
+     * The bundle write failed, so the questions are not in Room yet — the empty
+     * state names that instead of «آزمون در دسترس نیست» and its retry reseeds.
+     */
+    val contentFailed: Boolean = false,
 ) {
     val correctCount: Int get() = answers.count { it.correct }
     val total: Int get() = questions.size
@@ -98,7 +107,9 @@ sealed interface PlacementEvent {
 }
 
 class PlacementViewModel(
-    private val contentSeeded: StateFlow<Boolean>,
+    private val contentStatus: StateFlow<ContentStatus>,
+    /** Re-runs the bundle write; the retry needs it when the write failed. */
+    private val seedContent: suspend () -> Boolean,
     private val lessonRepository: LessonRepository,
     private val assessPlacement: AssessPlacementUseCase,
     private val settingsRepository: SettingsRepository,
@@ -107,21 +118,61 @@ class PlacementViewModel(
     private val _state = MutableStateFlow(PlacementUiState())
     val state: StateFlow<PlacementUiState> = _state.asStateFlow()
 
+    /** The load job, so a retry replaces it instead of racing it. */
+    private var loadJob: Job? = null
+
     init {
-        viewModelScope.launch {
-            // Hold the spinner until seeding finished — on a fresh install the
-            // placement questions do not exist in Room for a moment.
-            contentSeeded.first { it }
-            val questions = lessonRepository
-                .getExercises(ContentParser.PLACEMENT_LESSON_ID)
-                // Display-time shuffle: option order derives from the question id,
-                // so the authored answer position can never be guessed (P1). A
-                // typed item carries no options and passes through unchanged.
-                .map { question ->
-                    if (question is Exercise.MultipleChoice) question.shuffledForDisplay() else question
+        startLoading()
+    }
+
+    /**
+     * Loads the questions. Guarded for the same reason as [LessonViewModel]: the read
+     * sat bare in `init`'s launch, so a throw (a database that cannot be opened)
+     * ended the coroutine with `isLoading` still true — a spinner nobody can close on
+     * the **onboarding** path, where the learner has not even reached a lesson yet
+     * (checklist P1-7). A failure now lands in the existing «آزمون در دسترس نیست»
+     * state, which offers a retry and a way back.
+     */
+    private fun startLoading(reseed: Boolean = false) {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            try {
+                // A retry after a failed write runs the write itself.
+                if (reseed) seedContent()
+                // Hold the spinner while seeding runs — on a fresh install the
+                // placement questions do not exist in Room for a moment. The wait is
+                // on the STATUS: a failed write also ends it, and the old boolean made
+                // that indistinguishable from success, so the onboarding path could
+                // only say «آزمون در دسترس نیست» with a retry that never could.
+                val status = contentStatus.first { it != ContentStatus.LOADING }
+                if (status == ContentStatus.FAILED) {
+                    _state.update { it.copy(isLoading = false, contentFailed = true) }
+                    return@launch
                 }
-            _state.update { it.copy(isLoading = false, questions = questions) }
+                val questions = lessonRepository
+                    .getExercises(ContentParser.PLACEMENT_LESSON_ID)
+                    // Display-time shuffle: option order derives from the question id,
+                    // so the authored answer position can never be guessed (P1). A
+                    // typed item carries no options and passes through unchanged.
+                    .map { question ->
+                        if (question is Exercise.MultipleChoice) question.shuffledForDisplay() else question
+                    }
+                _state.update { it.copy(isLoading = false, questions = questions) }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (t: Throwable) {
+                android.util.Log.w("PlacementViewModel", "placement questions not read", t)
+                _state.update { it.copy(isLoading = false, questions = emptyList()) }
+            }
         }
+    }
+
+    /** The empty state's retry: the same local read, plus the write when it failed. */
+    fun retry() {
+        if (_state.value.isLoading) return
+        val reseed = _state.value.contentFailed
+        _state.update { it.copy(isLoading = true, questions = emptyList(), contentFailed = false) }
+        startLoading(reseed)
     }
 
     fun onEvent(event: PlacementEvent) {
@@ -260,12 +311,37 @@ fun PlacementScreen(
             when {
                 state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
 
+                // The bundle write failed, so the questions were never written:
+                // this is not a read that failed. It used to fall into the empty
+                // state below and blame a read that never ran, with a retry that
+                // could only wait again on the same write — this branch names the
+                // write and the retry below runs it.
+                state.contentFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "محتوای آزمون آماده نشد",
+                    subtitle = "سؤال‌های تعیین سطح از بستهٔ آفلاین روی همین گوشی خوانده " +
+                        "می‌شوند و آماده‌سازی آن‌ها کامل نشد. این خطا به اینترنت مربوط نیست؛ " +
+                        "«تلاش دوباره» همان آماده‌سازی را از نو اجرا می‌کند.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    // The way out stays, so a bundle that really cannot be written
+                    // never traps the learner before their first lesson.
+                    secondaryActionText = "بازگشت",
+                    onSecondaryAction = onBack,
+                    modifier = Modifier.align(Alignment.Center),
+                )
+
                 state.questions.isEmpty() -> AppEmptyState(
                     icon = Icons.Outlined.EmojiEvents,
                     title = "آزمون در دسترس نیست",
-                    subtitle = "محتوای آفلاین هنوز آماده نشده است. دوباره تلاش کن.",
-                    actionText = "بازگشت",
-                    onAction = onBack,
+                    subtitle = "محتوای آفلاین روی همین گوشی ذخیره شده است، اما خواندنش این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    // The way out stays: retrying a bundle that really has no
+                    // questions must not trap the learner on onboarding.
+                    secondaryActionText = "بازگشت",
+                    onSecondaryAction = onBack,
                     modifier = Modifier.align(Alignment.Center),
                 )
 

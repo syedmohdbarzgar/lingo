@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.audio.VoiceNote
 import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
@@ -19,6 +20,7 @@ import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.SettingsRepository
@@ -42,6 +44,17 @@ class SettingsViewModel(
     private val settingsRepository: SettingsRepository,
     private val progressRepository: ProgressRepository,
     private val knowledgeRepository: KnowledgeRepository,
+    /**
+     * The finished dialogues — learner data outside Room, so only this screen's
+     * reset can clear it (see [ConversationRepository.reset]).
+     */
+    private val conversationRepository: ConversationRepository,
+    /**
+     * The recorded take, deleted with the rest of the learner's data: the privacy
+     * page promises the reset removes it, and a voice recording is the most
+     * sensitive thing the app stores.
+     */
+    private val voiceNote: VoiceNote,
     private val companionStatus: StateFlow<CompanionStatus>,
     private val refreshCompanion: suspend () -> Boolean,
     /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
@@ -150,6 +163,15 @@ class SettingsViewModel(
         viewModelScope.launch { settingsRepository.setDailyReminderEnabled(enabled) }
     }
 
+    /**
+     * Persists the reminder hour (checklist B-4). The alarm follows the record:
+     * EnglishApp's collector reschedules on every settings emission, so the same
+     * change that moves the stored hour moves the notification.
+     */
+    fun setDailyReminderHour(hour: Int) {
+        viewModelScope.launch { settingsRepository.setDailyReminderHour(hour) }
+    }
+
     fun setLevel(level: LearningLevel) {
         viewModelScope.launch { settingsRepository.setLevel(level) }
     }
@@ -162,6 +184,12 @@ class SettingsViewModel(
                 progressRepository.reset()
                 // Knowledge state is learner data and must go with the rest of it.
                 knowledgeRepository.reset()
+                // Neither of these lives in Room, so the two calls above left them
+                // behind: the finished dialogues stayed marked (the lesson gate kept
+                // every lesson they unlocked open after the wipe) and the recorded
+                // take stayed in the cache dir.
+                conversationRepository.reset()
+                voiceNote.discardTake()
             }
             if (reset.isSuccess) onDone()
         }

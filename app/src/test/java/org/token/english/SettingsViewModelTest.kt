@@ -43,12 +43,16 @@ class SettingsViewModelTest {
         val settings = FakeSettingsRepository()
         val progress = FakeProgressRepository()
         val knowledge = FakeKnowledgeRepository()
+        val conversations = FakeConversationRepository()
+        val voiceNote = FakeVoiceNote()
         val companionFlow = MutableStateFlow(companion)
 
         fun build(): SettingsViewModel = SettingsViewModel(
             settingsRepository = settings,
             progressRepository = progress,
             knowledgeRepository = knowledge,
+            conversationRepository = conversations,
+            voiceNote = voiceNote,
             companionStatus = companionFlow,
             refreshCompanion = { companionFlow.value == CompanionStatus.TRUSTED },
             accessTickMillis = 0,
@@ -65,6 +69,21 @@ class SettingsViewModelTest {
 
         assertTrue("persisted", h.settings.settingsFlow.value.dailyReminderEnabled)
         assertTrue("and rendered", vm.state.value.settings!!.dailyReminderEnabled)
+    }
+
+    @Test
+    fun `the reminder hour is persisted, and 19 is the default`() {
+        // Checklist B-4: the hour used to be a constant in DailyReminder, so a
+        // learner whose evening ends late had to switch the reminder off instead of
+        // moving it.
+        val h = Harness()
+        val vm = h.build()
+        assertEquals(19, vm.state.value.settings!!.dailyReminderHour)
+
+        vm.setDailyReminderHour(8)
+
+        assertEquals("persisted", 8, h.settings.settingsFlow.value.dailyReminderHour)
+        assertEquals("and rendered", 8, vm.state.value.settings!!.dailyReminderHour)
     }
 
     @Test
@@ -104,6 +123,36 @@ class SettingsViewModelTest {
         assertTrue("the learner is told when it is over", done)
         assertTrue("skill mastery is gone", h.progress.masteryFlow.value.isEmpty())
         assertTrue("the learner model goes with it", h.knowledge.statesFlow.value.isEmpty())
+    }
+
+    @Test
+    fun `resetting progress clears the finished dialogues the settings file holds`() {
+        // Both of these live outside Room, so `progressRepository.reset()` never
+        // touched them: the wipe reported success while the gate stayed open for
+        // lessons the learner had just lost.
+        val h = Harness()
+        h.conversations.doneFlow.value = setOf("a1-family")
+        val vm = h.build()
+
+        vm.resetProgress {}
+
+        assertTrue(
+            "a dialogue that no longer counts must not keep unlocking its lesson",
+            h.conversations.doneFlow.value.isEmpty(),
+        )
+    }
+
+    @Test
+    fun `resetting progress deletes the recorded take`() {
+        val h = Harness()
+        h.voiceNote.startRecording()
+        h.voiceNote.stopRecording()
+        val vm = h.build()
+
+        vm.resetProgress {}
+
+        assertTrue("the only recording of the learner's voice is gone", h.voiceNote.discarded)
+        assertFalse("and the card no longer offers to play it", h.voiceNote.hasTake.value)
     }
 
     @Test

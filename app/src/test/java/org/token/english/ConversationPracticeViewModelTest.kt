@@ -13,6 +13,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianCountPair
 import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.model.Exercise
@@ -118,7 +119,8 @@ class ConversationPracticeViewModelTest {
             conversationRepository = conversations,
             recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = speaker,
-            contentSeeded = MutableStateFlow(true),
+            contentStatus = MutableStateFlow(ContentStatus.READY),
+            seedContent = { true },
             speechState = speech,
             startRecognition = { starts++ },
             stopRecognition = { stops++ },
@@ -269,18 +271,19 @@ class ConversationPracticeViewModelTest {
     }
 
     @Test
-    fun `turns wait for the content seeder instead of reading an empty table`() {
+    fun `turns wait for the bundle write instead of reading an empty table`() {
         val repository = repository(
             lesson("a1.one", order = 1) to
                 listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
         )
-        val seeded = MutableStateFlow(false)
+        val status = MutableStateFlow(ContentStatus.LOADING)
         val vm = ConversationPracticeViewModel(
             lessonRepository = repository,
             conversationRepository = FakeConversationRepository(),
             recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = speaker,
-            contentSeeded = seeded,
+            contentStatus = status,
+            seedContent = { true },
             speechState = speech,
             startRecognition = { starts++ },
             stopRecognition = { stops++ },
@@ -290,9 +293,67 @@ class ConversationPracticeViewModelTest {
         // permanent "no turns" state.
         assertTrue(vm.state.value.isLoading)
 
-        seeded.value = true
+        status.value = ContentStatus.READY
 
         assertFalse(vm.state.value.isLoading)
+        assertEquals(listOf("s1"), vm.state.value.turns.map { it.exerciseId })
+    }
+
+    @Test
+    fun `a failed bundle write is a retryable error, not an empty conversation`() {
+        // The wait used to be on a boolean: a write that failed left it false
+        // forever, and the screen fell through to «هنوز گفتگویی برای تمرین نداریم»
+        // — true of the table, wrong about why, and with no action to press.
+        val repository = repository(
+            lesson("a1.one", order = 1) to
+                listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+        )
+        val status = MutableStateFlow(ContentStatus.FAILED)
+        var seeds = 0
+        val vm = ConversationPracticeViewModel(
+            lessonRepository = repository,
+            conversationRepository = FakeConversationRepository(),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
+            speaker = speaker,
+            contentStatus = status,
+            seedContent = {
+                seeds++
+                status.value = ContentStatus.READY
+                true
+            },
+            speechState = speech,
+            startRecognition = { starts++ },
+            stopRecognition = { stops++ },
+        )
+
+        assertFalse("a failed write ends the wait", vm.state.value.isLoading)
+        assertTrue("and the screen can name the write", vm.state.value.contentFailed)
+        assertFalse("and it is not the empty state", vm.state.value.isEmpty)
+
+        vm.retry()
+
+        assertEquals("the retry runs the bundle write again", 1, seeds)
+        assertFalse(vm.state.value.contentFailed)
+        assertEquals("then the dialogue really loads", listOf("s1"), vm.state.value.turns.map { it.exerciseId })
+    }
+
+    @Test
+    fun `a dialogue read that throws offers a retry instead of a spinner`() {
+        val repository = repository(
+            lesson("a1.one", order = 1) to
+                listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+        )
+        repository.readError = IllegalStateException("database cannot be opened")
+        val vm = viewModel(repository)
+
+        assertFalse("no spinner nobody can leave", vm.state.value.isLoading)
+        assertTrue("the screen can say the read failed", vm.state.value.loadFailed)
+        assertFalse("and it is not an empty conversation", vm.state.value.isEmpty)
+
+        repository.readError = null
+        vm.retry()
+
+        assertFalse(vm.state.value.loadFailed)
         assertEquals(listOf("s1"), vm.state.value.turns.map { it.exerciseId })
     }
 
@@ -570,7 +631,8 @@ class ConversationPracticeViewModelTest {
             conversationRepository = FakeConversationRepository(),
             recordTurn = RecordConversationTurnUseCase(progress, knowledge),
             speaker = slowSpeaker,
-            contentSeeded = MutableStateFlow(true),
+            contentStatus = MutableStateFlow(ContentStatus.READY),
+            seedContent = { true },
             speechState = speech,
             startRecognition = { starts++ },
             stopRecognition = { stops++ },

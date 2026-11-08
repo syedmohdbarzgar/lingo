@@ -1,5 +1,7 @@
 package org.token.english.domain.engine
 
+import org.token.english.domain.model.AnswerChecker
+
 /**
  * Grades one recognised utterance against the practice target — pure Kotlin, no
  * Android, no Vosk: the screen feeds it text and gets a verdict back.
@@ -179,7 +181,9 @@ object ConversationScorer {
      * family" compare as the same sentence. Latin only: the take is English and a
      * Persian character slipping in should count as noise, not as content.
      *
-     * Contraction expansion is a fairness rule, not a nicety. A recogniser is free
+     * Contraction expansion and the dialect fold are fairness rules, not niceties,
+     * and they live here rather than in [cleanTokens] so [speechGrammar] can still
+     * offer the recogniser the spelling the learner is asked to say. A recogniser is free
      * to return either form ("I'm" / "I am"), and a learner is *supposed* to speak
      * the contracted one — comparing them literally docked a correct answer for
      * writing style. Both sides go through this function, so the two forms meet in
@@ -187,7 +191,15 @@ object ConversationScorer {
      * ASCII one, so they are unified first.
      */
     internal fun normalize(text: String): String =
-        cleanTokens(text).let(::stripPoliteness).joinToString(" ")
+        cleanTokens(text)
+            .let(::stripPoliteness)
+            // The same US/UK fold typed answers get (checklist P1-4), from the same
+            // table: the bundle teaches British English (`favourite`, `practise`,
+            // `neighbour`), while the recogniser is free to return the American
+            // spelling of what it heard — and neither is a wrong answer. Both sides
+            // go through this, so the two spellings meet in the middle.
+            .map(AnswerChecker::unifyDialect)
+            .joinToString(" ")
 
     /**
      * Lowercased words, contractions expanded, punctuation dropped.

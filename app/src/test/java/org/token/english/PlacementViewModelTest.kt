@@ -13,6 +13,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.ContentStatus
 import org.token.english.data.content.ContentParser
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
@@ -65,14 +66,22 @@ class PlacementViewModelTest {
         val progress = FakeProgressRepository()
         // A fresh install: onboarding is still open, so `finish` must close it.
         val settings = FakeSettingsRepository(testSettings().copy(isFirstLaunch = true))
-        val contentSeeded = MutableStateFlow(true)
+        val contentStatus = MutableStateFlow(ContentStatus.READY)
+
+        /** How many times the retry re-ran the bundle write (the FAILED path's repair). */
+        var seeds = 0
 
         init {
             lessonRepo.exercises[ContentParser.PLACEMENT_LESSON_ID] = questions
         }
 
         fun build(): PlacementViewModel = PlacementViewModel(
-            contentSeeded = contentSeeded,
+            contentStatus = contentStatus,
+            seedContent = {
+                seeds++
+                contentStatus.value = ContentStatus.READY
+                true
+            },
             lessonRepository = lessonRepo,
             assessPlacement = AssessPlacementUseCase(progress),
             settingsRepository = settings,
@@ -103,6 +112,49 @@ class PlacementViewModelTest {
         assertEquals(bandSize * bandCount, vm.state.value.questions.size)
         assertEquals(0, vm.state.value.index)
         assertNotNull(vm.state.value.current)
+    }
+
+    @Test
+    fun `a placement read that throws lands in the empty state, and retry loads it`() {
+        // Same shape as the lesson's guard (P1-7): the read used to sit bare in
+        // `init`'s launch, so a throw left the spinner up forever — on onboarding,
+        // before the learner can reach a single lesson.
+        val h = Harness(questions())
+        h.lessonRepo.readError = IllegalStateException("database cannot be opened")
+        val vm = h.build()
+
+        assertFalse("no spinner nobody can close", vm.state.value.isLoading)
+        assertTrue("the screen's own empty state is shown", vm.state.value.questions.isEmpty())
+
+        h.lessonRepo.readError = null
+        vm.retry()
+
+        assertFalse(vm.state.value.isLoading)
+        assertEquals("the retry reads the questions", bandSize * bandCount, vm.state.value.questions.size)
+    }
+
+    @Test
+    fun `a failed bundle write ends the wait as a retryable error, and the retry reseeds`() {
+        // The wait used to be on "is it seeded yet": a write that failed left it
+        // false forever, so onboarding sat on a spinner nobody could leave. The
+        // wait is now on the status, which FAILED also ends.
+        val h = Harness(questions())
+        h.contentStatus.value = ContentStatus.FAILED
+        val vm = h.build()
+
+        assertFalse("a failed write ends the wait", vm.state.value.isLoading)
+        assertTrue("and the screen can name the write, not a read", vm.state.value.contentFailed)
+        assertTrue("no questions were invented", vm.state.value.questions.isEmpty())
+
+        vm.retry()
+
+        assertEquals("the retry runs the bundle write again", 1, h.seeds)
+        assertFalse("and the error is behind it", vm.state.value.contentFailed)
+        assertEquals(
+            "the questions are there once the write lands",
+            bandSize * bandCount,
+            vm.state.value.questions.size,
+        )
     }
 
     @Test

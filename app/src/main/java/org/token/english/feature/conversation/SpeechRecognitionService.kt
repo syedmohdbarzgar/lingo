@@ -476,11 +476,18 @@ class SpeechRecognitionService : Service() {
      */
     private fun enterForeground(): Boolean = try {
         // The type is what grants mic access in the background on API 34+.
+        //
+        // Gated at R, not Q (lint `InlinedApi`): the microphone type constant was
+        // added in API 30, while `ServiceCompat.startForeground(…, type)` starts
+        // forwarding a type at 29 — so the Q branch handed Android 10 a type the
+        // platform does not define. 0 is "use the manifest's own declaration",
+        // which is exactly what a 29 device can act on. Nothing is lost: the type
+        // only begins to matter at 34, and every version from 30 up still gets it.
         ServiceCompat.startForeground(
             this,
             NOTIFICATION_ID,
             buildNotification(),
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
             } else {
                 0

@@ -51,6 +51,17 @@ interface VoiceNote {
     /** Mic permission is granted — the card offers recording instead of only listening. */
     fun hasMicrophonePermission(): Boolean
 
+    /**
+     * Deletes the take for good — the reset path, not the lesson path.
+     *
+     * The privacy page promises «پاک‌سازی پیشرفت» removes the learner's data, and
+     * a recording of their voice is the most sensitive thing this app ever writes
+     * to disk. The take normally disappears on the next recording and the system
+     * may clear the cache dir on its own, but neither is a deletion the learner
+     * asked for, so the wipe has to say so explicitly.
+     */
+    fun discardTake()
+
     fun release()
 }
 
@@ -155,6 +166,16 @@ class AndroidVoiceNote(private val context: Context) : VoiceNote {
         if (!_isPlaying.value) return
         releasePlayer()
         _isPlaying.value = false
+    }
+
+    override fun discardTake() {
+        // A take still being recorded is closed first: deleting the file under an
+        // open MediaRecorder leaves it writing into a deleted inode.
+        if (_isRecording.value) stopRecording()
+        stopPlayback()
+        takeFile.delete()
+        _hasTake.value = false
+        _error.value = false
     }
 
     override fun release() {

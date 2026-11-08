@@ -2,6 +2,8 @@ package org.token.english.feature.lesson
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.VoiceNote
+import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
@@ -49,6 +52,11 @@ import kotlin.random.Random
 data class LessonUiState(
     val isLoading: Boolean = true,
     val error: String? = null,
+    /**
+     * The bundle write failed, so this lesson does not exist yet — a different fact
+     * from "the read threw", and the only one the retry can actually repair.
+     */
+    val contentFailed: Boolean = false,
     val lesson: Lesson? = null,
     val vocabulary: List<VocabularyItem> = emptyList(),
     /** Which of the eight steps this lesson actually has, in the authored order. */
@@ -201,7 +209,10 @@ sealed interface LessonEvent {
  */
 class LessonViewModel(
     private val lessonId: String,
-    private val contentSeeded: StateFlow<Boolean>,
+    /** Where the offline bundle stands — not a bare "ready or not" (see [loadSession]). */
+    private val contentStatus: StateFlow<ContentStatus>,
+    /** Re-runs the bundle write; the error's retry needs it when the write failed. */
+    private val seedContent: suspend () -> Boolean,
     private val lessonRepository: LessonRepository,
     private val progressRepository: ProgressRepository,
     private val submitExercise: SubmitExerciseUseCase,
@@ -278,124 +289,193 @@ class LessonViewModel(
                 if (failed) _state.update { it.copy(recordingFailed = true, isRecording = false) }
             }
         }
-        viewModelScope.launch {
-            // Hold the screen until the curriculum bundle is in Room — a fresh
-            // install seeds in the background and must not show "lesson missing".
-            contentSeeded.first { it }
-            // Cross-session mastery (checklist B-1, Room v6): a returning learner's
-            // session starts from the persisted per-dimension fold, so the selector
-            // and the weakest-dimension read work from the FIRST exercise instead
-            // of only after an in-session answer. An empty table (fresh install or
-            // reset) leaves the profile exactly as before: no evidence, no steering.
-            val persistedDimensions = progressRepository.getDimensionMastery()
-            if (persistedDimensions.isNotEmpty()) {
-                profile = MasteryProfile(byDimension = persistedDimensions)
-            }
-            val lesson = lessonRepository.getLesson(lessonId)
-            // Display-time shuffles: option order and word-bank order derive from
-            // the exercise id — stable per question, never gameable (P1/P4).
-            val exercises = lessonRepository.getExercises(lessonId)
-                // A dialogue turn is not a lesson exercise: it belongs to the
-                // lesson's conversation, which asks, listens and grades the reply.
-                // Inline it would only be a card the learner reads out loud once.
-                .filterNot { it is Exercise.Speaking && it.question != null }
-                .map { exercise ->
-                when {
-                    exercise is Exercise.MultipleChoice -> exercise.shuffledForDisplay()
-                    exercise is Exercise.Translation && exercise.bank.isNotEmpty() ->
-                        exercise.copy(bank = exercise.bank.shuffled(Random(exercise.id.hashCode())))
+        startLoading()
+    }
 
-                    else -> exercise
-                }
+    /** The load job, so a retry replaces it instead of racing it. */
+    private var loadJob: Job? = null
+
+    /**
+     * Starts (or restarts) the load of this session.
+     *
+     * These reads used to sit directly in `init`'s `launch` with no guard at all:
+     * a throw from any of them (a corrupt database file, a migration the installed
+     * build cannot walk) ended the coroutine and left [LessonUiState.isLoading]
+     * true forever — a spinner with no button, on the screen the learner cannot
+     * study without (checklist P1-7). Every other screen had that guard through
+     * `catchLoadFailure`; the lesson, the one screen that matters most, did not.
+     */
+    private fun startLoading(reseed: Boolean = false) {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            try {
+                // A retry after a failed write runs the write itself: waiting again on
+                // the same flag could only ever wait for a seed nobody starts.
+                if (reseed) seedContent()
+                loadSession()
+            } catch (cancelled: CancellationException) {
+                // A cancelled screen is not an error (B-9).
+                throw cancelled
+            } catch (t: Throwable) {
+                onLoadFailure(t)
             }
-            // Focused practice (checklist B-1): when the learner arrived from the
-            // engine's weak-spot card, the remediation engine decides which of the
-            // lesson's exercises are evidence about that node and the session shows
-            // only those, in the authored order. A subset, not a reshuffle.
-            // runCatchingCancellable, not runCatching (checklist B-9): a cancelled
-            // session must stop, not carry on and write state.
-            val focus = focusItemId?.let { runCatchingCancellable { getFocusPlan(it) }.getOrNull() }
-            val focusedIds = focus?.exerciseIds.orEmpty()
-            val sessionExercises = exercises.filter { it.id in focusedIds }.ifEmpty { exercises }
-            if (lesson == null || sessionExercises.isEmpty()) {
-                _state.update {
-                    it.copy(isLoading = false, error = "درس در دسترس نیست. محتوای ذخیره‌شده را بررسی کنید.")
-                }
-                return@launch
+        }
+    }
+
+    /**
+     * The error state's action: run the same local load again.
+     *
+     * Nothing was written before the failure, so this is the identical work rather
+     * than a repair — a second attempt is exactly what a transient read wants, and
+     * a failing one ends in the same honest state instead of a spinner.
+     */
+    fun retry() {
+        if (_state.value.isLoading) return
+        val reseed = _state.value.contentFailed
+        _state.update { it.copy(isLoading = true, error = null, contentFailed = false) }
+        startLoading(reseed)
+    }
+
+    private fun onLoadFailure(error: Throwable) {
+        // Never silent: the learner gets the state, the log gets the cause.
+        android.util.Log.w("LessonViewModel", "lesson read failed", error)
+        _state.update {
+            it.copy(
+                isLoading = false,
+                error = "این درس خوانده نشد. درس‌ها و پیشرفت روی همین گوشی ذخیره شده‌اند؛ " +
+                    "این خطا به اینترنت مربوط نیست. یک بار دیگر تلاش کن.",
+            )
+        }
+    }
+
+    /** The load itself — one suspend chain, so a failure has exactly one place to land. */
+    private suspend fun loadSession() {
+        // Hold the screen while the curriculum bundle is being written into Room — a
+        // fresh install seeds in the background and must not show "lesson missing".
+        //
+        // Wait on the STATUS, not on "seeded": a failed write also ends the wait, so
+        // the old boolean handed a seeded==false screen a lesson that was never
+        // written, and the only thing it could say was «درس در دسترس نیست» — true,
+        // unhelpful, and impossible to retry into success because nothing re-ran the
+        // write. FAILED now stops here, names itself, and its retry reseeds.
+        val status = contentStatus.first { it != ContentStatus.LOADING }
+        if (status == ContentStatus.FAILED) {
+            _state.update { it.copy(isLoading = false, contentFailed = true) }
+            return
+        }
+        // Cross-session mastery (checklist B-1, Room v6): a returning learner's
+        // session starts from the persisted per-dimension fold, so the selector
+        // and the weakest-dimension read work from the FIRST exercise instead
+        // of only after an in-session answer. An empty table (fresh install or
+        // reset) leaves the profile exactly as before: no evidence, no steering.
+        val persistedDimensions = progressRepository.getDimensionMastery()
+        if (persistedDimensions.isNotEmpty()) {
+            profile = MasteryProfile(byDimension = persistedDimensions)
+        }
+        val lesson = lessonRepository.getLesson(lessonId)
+        // Display-time shuffles: option order and word-bank order derive from
+        // the exercise id — stable per question, never gameable (P1/P4).
+        val exercises = lessonRepository.getExercises(lessonId)
+            // A dialogue turn is not a lesson exercise: it belongs to the
+            // lesson's conversation, which asks, listens and grades the reply.
+            // Inline it would only be a card the learner reads out loud once.
+            .filterNot { it is Exercise.Speaking && it.question != null }
+            .map { exercise ->
+            when {
+                exercise is Exercise.MultipleChoice -> exercise.shuffledForDisplay()
+                exercise is Exercise.Translation && exercise.bank.isNotEmpty() ->
+                    exercise.copy(bank = exercise.bank.shuffled(Random(exercise.id.hashCode())))
+
+                else -> exercise
             }
-            val vocabulary = lessonRepository.getVocabulary(lessonId)
-            val hasDialogue = runCatchingCancellable {
-                lessonRepository.lessonIdsWithDialogue()
-            }.getOrDefault(emptySet()).contains(lessonId)
-            val plan = LessonStagePlan.of(
+        }
+        // Focused practice (checklist B-1): when the learner arrived from the
+        // engine's weak-spot card, the remediation engine decides which of the
+        // lesson's exercises are evidence about that node and the session shows
+        // only those, in the authored order. A subset, not a reshuffle.
+        // runCatchingCancellable, not runCatching (checklist B-9): a cancelled
+        // session must stop, not carry on and write state.
+        val focus = focusItemId?.let { runCatchingCancellable { getFocusPlan(it) }.getOrNull() }
+        val focusedIds = focus?.exerciseIds.orEmpty()
+        val sessionExercises = exercises.filter { it.id in focusedIds }.ifEmpty { exercises }
+        if (lesson == null || sessionExercises.isEmpty()) {
+            _state.update {
+                it.copy(isLoading = false, error = "درس در دسترس نیست. محتوای ذخیره‌شده را بررسی کنید.")
+            }
+            return
+        }
+        val vocabulary = lessonRepository.getVocabulary(lessonId)
+        val hasDialogue = runCatchingCancellable {
+            lessonRepository.lessonIdsWithDialogue()
+        }.getOrDefault(emptySet()).contains(lessonId)
+        val plan = LessonStagePlan.of(
+            lesson = lesson,
+            vocabulary = vocabulary,
+            exercises = sessionExercises,
+            hasDialogue = hasDialogue,
+        )
+        val saved = lessonRepository.getLessonState(lessonId)
+        // The recorded answers (Phase 2), read once: they decide where a reopened
+        // step continues, and they hold the learner's own answers across a process
+        // death — the cursor alone only knew *how far*, not *what was answered*.
+        val history = runCatchingCancellable { lessonRepository.attempts(lessonId) }
+            .getOrDefault(emptyList())
+        val restored = buildList {
+            saved?.completedStages.orEmpty()
+                .mapNotNull(LearningStage::fromId)
+                .forEach { add(LessonStageProgress(it, completed = true, completedAt = saved?.stageCompletedAt?.get(it.id))) }
+            saved?.skippedStages.orEmpty()
+                .mapNotNull(LearningStage::fromId)
+                .forEach { add(LessonStageProgress(it, skipped = true)) }
+        }
+        // A focused block is a drill, not a first teach: it opens on the
+        // exercises the engine picked. Otherwise the saved step wins, but only
+        // when that step still exists in this plan and is not already done.
+        val startStage = when {
+            focus != null -> sessionExercises.firstOrNull()?.let(LearningStage::of)
+                ?: LearningStage.PRACTICE
+            saved?.completed == true -> plan.firstStage
+            else -> saved?.stage
+                ?.takeIf { plan.indexOf(it) >= 0 && saved.completedStages.contains(it.id).not() }
+                ?: plan.firstStage
+        }
+        val base = LessonStageState(plan = plan, progress = restored, active = startStage)
+        // Where a reopened step continues (Phase 2): the recorded answers decide,
+        // not the saved cursor. A learner who answered the last question and was
+        // killed before «ادامه», or a content update that reordered a step, both
+        // left a cursor that points at the wrong question — the answers did not.
+        // A lesson with no recorded answers (an install from before the log) keeps
+        // its saved cursor rather than pretending it starts from scratch.
+        val answeredHere = history
+            .filter { it.stageId == startStage.id }
+            .mapTo(mutableSetOf()) { it.exerciseId }
+        val cursor = when {
+            focus != null -> 0
+            saved?.completed == true -> 0
+            saved?.stage != startStage -> 0
+            answeredHere.isEmpty() -> saved.currentIndex
+            else -> StageResume.cursorFor(
+                exerciseIds = plan.unitOf(startStage)?.exercises.orEmpty().map { it.id },
+                answered = answeredHere,
+            )
+        }
+        _state.update {
+            it.copy(
+                isLoading = false,
                 lesson = lesson,
                 vocabulary = vocabulary,
-                exercises = sessionExercises,
-                hasDialogue = hasDialogue,
+                plan = plan,
+                focus = focus?.let { plan2 ->
+                    FocusBanner(
+                        titleFa = plan2.titleFa,
+                        reasonFa = plan2.reasonFa,
+                        masteryPercent = (plan2.mastery * 100).toInt(),
+                        targetPercent = (plan2.reassessThreshold * 100).toInt(),
+                    )
+                },
             )
-            val saved = lessonRepository.getLessonState(lessonId)
-            // The recorded answers (Phase 2), read once: they decide where a reopened
-            // step continues, and they hold the learner's own answers across a process
-            // death — the cursor alone only knew *how far*, not *what was answered*.
-            val history = runCatchingCancellable { lessonRepository.attempts(lessonId) }
-                .getOrDefault(emptyList())
-            val restored = buildList {
-                saved?.completedStages.orEmpty()
-                    .mapNotNull(LearningStage::fromId)
-                    .forEach { add(LessonStageProgress(it, completed = true, completedAt = saved?.stageCompletedAt?.get(it.id))) }
-                saved?.skippedStages.orEmpty()
-                    .mapNotNull(LearningStage::fromId)
-                    .forEach { add(LessonStageProgress(it, skipped = true)) }
-            }
-            // A focused block is a drill, not a first teach: it opens on the
-            // exercises the engine picked. Otherwise the saved step wins, but only
-            // when that step still exists in this plan and is not already done.
-            val startStage = when {
-                focus != null -> sessionExercises.firstOrNull()?.let(LearningStage::of)
-                    ?: LearningStage.PRACTICE
-                saved?.completed == true -> plan.firstStage
-                else -> saved?.stage
-                    ?.takeIf { plan.indexOf(it) >= 0 && saved.completedStages.contains(it.id).not() }
-                    ?: plan.firstStage
-            }
-            val base = LessonStageState(plan = plan, progress = restored, active = startStage)
-            // Where a reopened step continues (Phase 2): the recorded answers decide,
-            // not the saved cursor. A learner who answered the last question and was
-            // killed before «ادامه», or a content update that reordered a step, both
-            // left a cursor that points at the wrong question — the answers did not.
-            // A lesson with no recorded answers (an install from before the log) keeps
-            // its saved cursor rather than pretending it starts from scratch.
-            val answeredHere = history
-                .filter { it.stageId == startStage.id }
-                .mapTo(mutableSetOf()) { it.exerciseId }
-            val cursor = when {
-                focus != null -> 0
-                saved?.completed == true -> 0
-                saved?.stage != startStage -> 0
-                answeredHere.isEmpty() -> saved.currentIndex
-                else -> StageResume.cursorFor(
-                    exerciseIds = plan.unitOf(startStage)?.exercises.orEmpty().map { it.id },
-                    answered = answeredHere,
-                )
-            }
-            _state.update {
-                it.copy(
-                    isLoading = false,
-                    lesson = lesson,
-                    vocabulary = vocabulary,
-                    plan = plan,
-                    focus = focus?.let { plan2 ->
-                        FocusBanner(
-                            titleFa = plan2.titleFa,
-                            reasonFa = plan2.reasonFa,
-                            masteryPercent = (plan2.mastery * 100).toInt(),
-                            targetPercent = (plan2.reassessThreshold * 100).toInt(),
-                        )
-                    },
-                )
-            }
-            enterStage(base, startStage, cursor)
         }
+        enterStage(base, startStage, cursor)
     }
 
     fun onEvent(event: LessonEvent) {
@@ -605,8 +685,14 @@ class LessonViewModel(
                 profile = updatedProfile
                 // Cross-session (B-1, Room v6): persist the dimension this answer
                 // moved so the NEXT session seeds from it instead of starting blind.
+                //
+                // Guarded on purpose: the fold is session *input*, not evidence about
+                // what was learned (docs/debt.md), so losing it costs one stale seed —
+                // while an unguarded throw here killed the coroutine before the verdict
+                // was rendered, leaving the learner staring at their own answer with a
+                // button that did nothing (checklist P1-7).
                 updatedProfile.byDimension[moved]?.let { mastery ->
-                    progressRepository.setDimensionMastery(moved, mastery)
+                    runCatchingCancellable { progressRepository.setDimensionMastery(moved, mastery) }
                 }
                 _state.update {
                     it.copy(

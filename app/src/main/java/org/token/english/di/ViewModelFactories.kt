@@ -49,7 +49,8 @@ fun lessonViewModelFactory(
 ): ViewModelProvider.Factory = appViewModelFactory { c ->
     LessonViewModel(
         lessonId = lessonId,
-        contentSeeded = c.contentSeeded,
+        contentStatus = c.contentStatus,
+        seedContent = { c.seedContent() },
         lessonRepository = c.lessonRepository,
         progressRepository = c.progressRepository,
         submitExercise = c.submitExercise,
@@ -106,6 +107,8 @@ fun settingsViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory 
         settingsRepository = c.settingsRepository,
         progressRepository = c.progressRepository,
         knowledgeRepository = c.knowledgeRepository,
+        conversationRepository = c.conversationRepository,
+        voiceNote = c.voiceNote,
         companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
     )
@@ -123,7 +126,8 @@ fun paywallViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory {
 
 fun placementViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c ->
     PlacementViewModel(
-        contentSeeded = c.contentSeeded,
+        contentStatus = c.contentStatus,
+        seedContent = { c.seedContent() },
         lessonRepository = c.lessonRepository,
         assessPlacement = c.assessPlacement,
         settingsRepository = c.settingsRepository,
@@ -144,7 +148,8 @@ fun conversationPracticeViewModelFactory(
         conversationRepository = c.conversationRepository,
         recordTurn = c.recordConversationTurn,
         speaker = c,
-        contentSeeded = c.contentSeeded,
+        contentStatus = c.contentStatus,
+        seedContent = { c.seedContent() },
         speechState = c.conversationSpeech,
         startRecognition = { c.startConversationRecognition() },
         stopRecognition = { c.stopConversationRecognition() },

@@ -31,9 +31,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.billing.StorePage
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
@@ -78,6 +80,7 @@ fun HomeScreen(
     onOpenFocus: (String, String) -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -136,6 +139,11 @@ fun HomeScreen(
                     },
                     actionText = "تلاش دوباره",
                     onAction = vm::retry,
+                    // P1-7: a core that will not load is the critical case, so the
+                    // error state also offers the publisher page — the only support
+                    // channel this app has, and the one the About page names.
+                    secondaryActionText = "ارتباط با پشتیبانی",
+                    onSecondaryAction = { StorePage.open(context) },
                 )
             }
             return@Scaffold

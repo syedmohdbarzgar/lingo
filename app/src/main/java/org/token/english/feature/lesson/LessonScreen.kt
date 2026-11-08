@@ -28,7 +28,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
@@ -63,6 +63,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
+import org.token.english.core.billing.StorePage
 import org.token.english.core.common.persianCountPair
 import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
@@ -107,6 +108,9 @@ fun LessonScreen(
     vm: LessonViewModel = viewModel(factory = lessonViewModelFactory(lessonId, focusItemId)),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
+    // The publisher page is this app's support channel, so the error state can hand
+    // the learner a way to report a lesson that will not open.
+    val context = LocalContext.current
 
     // Study time is sampled only while THIS screen is resumed (P7): a lesson
     // left on the back stack never credits a second, and ticking stops the
@@ -174,12 +178,36 @@ fun LessonScreen(
             when {
                 state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
 
+                // A lesson that cannot be read at all is the critical case of P1-7:
+                // the learner cannot study without it. Retry is the first action (the
+                // data is local, so it is the same read again), and the publisher page
+                // is the second — a dead end with only «بازگشت» left them with nowhere
+                // to say it happened. The top bar still offers the way out.
                 state.error != null -> AppEmptyState(
                     icon = Icons.Outlined.ErrorOutline,
                     title = "مشکلی پیش آمد",
                     subtitle = state.error.orEmpty(),
-                    actionText = "بازگشت",
-                    onAction = onExit,
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    secondaryActionText = "ارتباط با پشتیبانی",
+                    onSecondaryAction = { StorePage.open(context) },
+                    modifier = Modifier.align(Alignment.Center),
+                )
+
+                // The bundle write failed, so this lesson was never written: the
+                // read below never ran. This is the state that used to fall through
+                // to the spinner under `activeStage == null` and wait forever for a
+                // seed nobody would start; the retry now runs the write itself.
+                state.contentFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "محتوای درس‌ها آماده نشد",
+                    subtitle = "این درس از بستهٔ آفلاین روی همین گوشی خوانده می‌شود و " +
+                        "آماده‌سازی آن کامل نشد. این خطا به اینترنت مربوط نیست؛ «تلاش دوباره» " +
+                        "همان آماده‌سازی را از نو اجرا می‌کند.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    secondaryActionText = "ارتباط با پشتیبانی",
+                    onSecondaryAction = { StorePage.open(context) },
                     modifier = Modifier.align(Alignment.Center),
                 )
 
@@ -470,52 +498,52 @@ private fun ExerciseContent(
                 }
             }
 
-            if (state.outcome != null) {
-                val outcome = state.outcome
-                if (outcome != null) {
-                    // Speaking is self-assessed: no recogniser ran, so a green
-                    // "correct" banner would claim evidence the app does not have.
-                    if (outcome.correct && exercise !is Exercise.Speaking) {
-                        CorrectBanner(Modifier.fillMaxWidth())
-                        // A production item has many valid sentences, so passing
-                        // only means *a* valid wording — show the authored model
-                        // answer too, pass or fail (checklist B-10).
-                        if (exercise is Exercise.SentenceProduction) {
-                            ModelAnswer(outcome.correctAnswer)
+            // Read the outcome once: a second null check on the same state was
+            // dead (the compiler said so) and hid which branch actually runs.
+            val outcome = state.outcome
+            if (outcome != null) {
+                // Speaking is self-assessed: no recogniser ran, so a green
+                // "correct" banner would claim evidence the app does not have.
+                if (outcome.correct && exercise !is Exercise.Speaking) {
+                    CorrectBanner(Modifier.fillMaxWidth())
+                    // A production item has many valid sentences, so passing
+                    // only means *a* valid wording — show the authored model
+                    // answer too, pass or fail (checklist B-10).
+                    if (exercise is Exercise.SentenceProduction) {
+                        ModelAnswer(outcome.correctAnswer)
+                    }
+                } else if (outcome.correct) {
+                    // Speaking: nothing to show — the card already holds the
+                    // model sentence and the compare hint.
+                } else {
+                    IncorrectBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        message = if (outcome.almostCorrect) {
+                            // A-2: one edit away — actionable spelling feedback
+                            // instead of a bare miss (still graded wrong).
+                            "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
+                        } else {
+                            "پاسخ درست: ${outcome.correctAnswer}"
+                        },
+                    )
+                    // A short explanation after a miss: the authored one if the
+                    // content has it, otherwise the lesson's grammar tip (P4).
+                    val explanation = exercise.explanation
+                        // First section only — the multi-section A-8 text must not
+                        // be dumped wholesale after a miss (summary = rule section).
+                        ?: state.lesson?.grammarSummary?.takeIf {
+                            AnswerChecker.skillOf(exercise) == Skill.GRAMMAR
                         }
-                    } else if (outcome.correct) {
-                        // Speaking: nothing to show — the card already holds the
-                        // model sentence and the compare hint.
-                    } else {
-                        IncorrectBanner(
-                            modifier = Modifier.fillMaxWidth(),
-                            message = if (outcome.almostCorrect) {
-                                // A-2: one edit away — actionable spelling feedback
-                                // instead of a bare miss (still graded wrong).
-                                "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
-                            } else {
-                                "پاسخ درست: ${outcome.correctAnswer}"
-                            },
+                    explanation?.let { tip ->
+                        Text(
+                            text = "نکته: $tip",
+                            // Long mixed tips wrap across lines — keep the
+                            // paragraph pinned to RTL for stable bidi wrapping.
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        // A short explanation after a miss: the authored one if the
-                        // content has it, otherwise the lesson's grammar tip (P4).
-                        val explanation = exercise.explanation
-                            // First section only — the multi-section A-8 text must not
-                            // be dumped wholesale after a miss (summary = rule section).
-                            ?: state.lesson?.grammarSummary?.takeIf {
-                                AnswerChecker.skillOf(exercise) == Skill.GRAMMAR
-                            }
-                        explanation?.let { tip ->
-                            Text(
-                                text = "نکته: $tip",
-                                // Long mixed tips wrap across lines — keep the
-                                // paragraph pinned to RTL for stable bidi wrapping.
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                                ),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
                     }
                 }
             }
@@ -923,7 +951,7 @@ private fun VocabularyCard(state: LessonUiState, onEvent: (LessonEvent) -> Unit)
                         onClick = { onEvent(LessonEvent.SpeakText(item.word)) },
                     ) {
                         Icon(
-                            Icons.Default.VolumeUp,
+                            Icons.AutoMirrored.Filled.VolumeUp,
                             contentDescription = "پخش تلفظ",
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(28.dp),

@@ -7,8 +7,10 @@ enum class LearningLevel { A1, A2, B1, B2, C1, C2 }
  * Skill dimensions tracked per learner (methodology spec §19).
  * PRONUNCIATION and FLUENCY were removed: they need speech evaluation, which is
  * suspended until speech evaluation exists (AGENTS.md), and advertising a skill the app cannot
- * train would make mastery/recommendations dishonest. SPEAKING stays only as
- * the suspended exercise placeholder.
+ * train would make mastery/recommendations dishonest. SPEAKING stays because it *is*
+ * measured now: a spoken dialogue turn graded by the recogniser credits it
+ * (`RecordConversationTurnUseCase`), and its knowledge lands on the lesson's
+ * PHONOLOGY nodes.
  */
 enum class Skill {
     VOCABULARY,
@@ -540,6 +542,16 @@ data class AppSettings(
     val trialStartedAt: Long,
     /** Subscription validity end (epoch millis), 0 = none. */
     val subscriptionUntil: Long,
-    /** Daily 19:00 local review reminder (checklist P9); off by default. */
+    /** Daily local review reminder (checklist P9); off by default. */
     val dailyReminderEnabled: Boolean = false,
-)
+    /**
+     * Hour of the daily reminder, 0–23 local (checklist B-4). 19 is the shipped
+     * default: an evening nudge, after the day's work rather than before it.
+     */
+    val dailyReminderHour: Int = 19,
+) {
+    companion object {
+        /** The hour the reminder ships with, and the fallback for a bad stored value. */
+        const val DEFAULT_REMINDER_HOUR = 19
+    }
+}

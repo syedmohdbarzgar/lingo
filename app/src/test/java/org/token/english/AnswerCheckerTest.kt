@@ -289,4 +289,55 @@ class AnswerCheckerTest {
             ),
         )
     }
+
+    // --- P1-4: neither variety of English is "the wrong spelling" ------------
+
+    @Test
+    fun `a US spelling is accepted for a UK answer and the reverse`() {
+        // The bundle teaches British English (`neighbour`, `practise`, `favourite`,
+        // `grey`), so before this the American learner who spelled correctly was
+        // shown a miss — the worst mistake a grader can make.
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("neighbour"), "neighbor"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("color"), "colour"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("practise"), "practice"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("organized"), "organised"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("grey"), "gray"))
+        assertEquals(AnswerChecker.Verdict.CORRECT, AnswerChecker.grade(listOf("travelling"), "traveling"))
+    }
+
+    @Test
+    fun `dialect folding works inside a sentence, next to a contraction`() {
+        assertTrue(
+            AnswerChecker.matchesAny(
+                listOf("My favourite colour isn't grey."),
+                "my favorite color is not gray",
+            ),
+        )
+        assertTrue(
+            AnswerChecker.matchesAny(
+                listOf("My neighbor organized the neighbourhood party."),
+                "my neighbour organised the neighbourhood party",
+            ),
+        )
+    }
+
+    @Test
+    fun `folding a dialect pair never accepts a different word`() {
+        // The table only ever joins forms with the same meaning, so it cannot turn
+        // a wrong answer into a right one: these share no entry.
+        assertFalse(AnswerChecker.matchesAny(listOf("neighbour"), "stranger"))
+        assertFalse(AnswerChecker.matchesAny(listOf("colour"), "collar"))
+        // Inflections are listed explicitly, so an unlisted form is not guessed.
+        assertFalse(AnswerChecker.matchesAny(listOf("practice"), "practical"))
+    }
+
+    @Test
+    fun `a dialect word that is only one letter off is still ALMOST, not CORRECT`() {
+        // Canonicalising is a matching rule, not a spell-check: `practiceing` is not
+        // a valid inflection of either variety and must not pass.
+        assertEquals(
+            AnswerChecker.Verdict.ALMOST,
+            AnswerChecker.grade(listOf("practicing"), "practiceing"),
+        )
+    }
 }

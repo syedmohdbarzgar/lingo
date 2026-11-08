@@ -2,7 +2,7 @@ package org.token.english.core.billing
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import org.token.english.BuildConfig
 
 /**
@@ -57,13 +57,13 @@ object StorePage {
      */
     fun open(context: Context, packageId: String = BuildConfig.APPLICATION_ID) {
         val marketPackage = BuildConfig.STORE_PACKAGE
-        val deepLink = Intent(Intent.ACTION_VIEW, Uri.parse(deepLink(packageId)))
+        val deepLink = Intent(Intent.ACTION_VIEW, deepLink(packageId).toUri())
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .apply { if (marketPackage.isNotBlank()) setPackage(marketPackage) }
         if (runCatching { context.startActivity(deepLink) }.isSuccess) return // runCatching-ok: not a suspend call (B-9)
         runCatching {
             context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse(webUrl(packageId)))
+                Intent(Intent.ACTION_VIEW, webUrl(packageId).toUri())
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             )
         }

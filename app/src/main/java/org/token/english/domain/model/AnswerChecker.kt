@@ -3,8 +3,11 @@ package org.token.english.domain.model
 /**
  * Normalizes and compares free-text answers (fill-blank / translation / listening
  * / review production). Pure Kotlin — unit tested. Comparison is case-insensitive,
- * punctuation-tolerant, Persian/Arabic character-normalizing and
- * contraction-tolerant (`I'm` ≡ `I am`, curly `’` ≡ straight `'`).
+ * punctuation-tolerant, Persian/Arabic character-normalizing,
+ * contraction-tolerant (`I'm` ≡ `I am`, curly `’` ≡ straight `'`) and
+ * dialect-tolerant (`neighbour` ≡ `neighbor`, `practise` ≡ `practice`), so a
+ * learner is never marked wrong for spelling a word the way their own variety of
+ * English does (checklist P1-4).
  */
 object AnswerChecker {
 
@@ -152,6 +155,149 @@ object AnswerChecker {
             Regex("\\b" + Regex.escape(contraction) + "\\b") to forms
         }
 
+    /**
+     * British → American spellings, folded onto one canonical form (checklist P1-4).
+     *
+     * The content teaches British English (`neighbour`, `practise`, `favourite`,
+     * `grey`), so an American learner who spelled the same word the way their own
+     * course taught it was graded **wrong** — a correct answer marked as a mistake,
+     * which is the one thing a grader must never do. Both sides are folded onto the
+     * American form here, so the equivalence is symmetric and does not depend on
+     * which spelling the author happened to write.
+     *
+     * Deliberately a **curated table**, not a rule: a blanket `-ise` → `-ize`
+     * rewrite would also mangle `exercise`, `advise`, `surprise`, `promise` and
+     * `raise`, none of which are `-ize` verbs in any dialect. Every entry is a pair
+     * with the same meaning, so folding two of them together can only accept a
+     * correct answer — never a different word. Inflected forms are listed explicitly
+     * because the right inflection is not always base + suffix (`practise` + `ing` is
+     * `practicing`, not `practiceing`). Adding a dialect pair a lesson ships is one
+     * line here.
+     */
+    private val dialectCanonical: Map<String, String> = mapOf(
+        // -our → -or
+        "colour" to "color", "colours" to "colors", "coloured" to "colored",
+        "colourful" to "colorful", "colouring" to "coloring",
+        "favour" to "favor", "favours" to "favors", "favoured" to "favored",
+        "favourite" to "favorite", "favourites" to "favorites",
+        "behaviour" to "behavior", "behaviours" to "behaviors",
+        "flavour" to "flavor", "flavours" to "flavors",
+        "honour" to "honor", "honours" to "honors", "honoured" to "honored",
+        "humour" to "humor", "labour" to "labor",
+        "neighbour" to "neighbor", "neighbours" to "neighbors",
+        "neighbourhood" to "neighborhood", "neighbourhoods" to "neighborhoods",
+        "rumour" to "rumor", "rumours" to "rumors",
+        "harbour" to "harbor", "armour" to "armor", "vapour" to "vapor",
+        "endeavour" to "endeavor",
+        // -re → -er
+        "centre" to "center", "centres" to "centers",
+        "theatre" to "theater", "theatres" to "theaters",
+        "metre" to "meter", "metres" to "meters",
+        "litre" to "liter", "litres" to "liters",
+        "fibre" to "fiber", "fibres" to "fibers", "sombre" to "somber",
+        // -ce → -se
+        "defence" to "defense", "defences" to "defenses",
+        "offence" to "offense", "offences" to "offenses",
+        "pretence" to "pretense", "licence" to "license", "licences" to "licenses",
+        // practise (BrE verb) / practice (AmE verb and noun)
+        "practise" to "practice", "practises" to "practices",
+        "practised" to "practiced", "practising" to "practicing",
+        // -ise → -ize, only where -ise really is the British spelling
+        "organise" to "organize", "organises" to "organizes",
+        "organised" to "organized", "organising" to "organizing",
+        "organisation" to "organization", "organisations" to "organizations",
+        "realise" to "realize", "realises" to "realizes",
+        "realised" to "realized", "realising" to "realizing",
+        "recognise" to "recognize", "recognises" to "recognizes",
+        "recognised" to "recognized", "recognising" to "recognizing",
+        "apologise" to "apologize", "apologised" to "apologized",
+        "criticise" to "criticize", "criticised" to "criticized",
+        "emphasise" to "emphasize", "emphasised" to "emphasized",
+        "memorise" to "memorize", "memorised" to "memorized",
+        "summarise" to "summarize", "summarised" to "summarized",
+        "prioritise" to "prioritize", "prioritised" to "prioritized",
+        "specialise" to "specialize", "specialised" to "specialized",
+        "standardise" to "standardize", "standardised" to "standardized",
+        "visualise" to "visualize", "visualised" to "visualized",
+        "minimise" to "minimize", "minimised" to "minimized",
+        "maximise" to "maximize", "maximised" to "maximized",
+        "normalise" to "normalize", "normalised" to "normalized",
+        "socialise" to "socialize", "socialised" to "socialized",
+        "sympathise" to "sympathize", "sympathised" to "sympathized",
+        "characterise" to "characterize", "characterised" to "characterized",
+        "categorise" to "categorize", "categorised" to "categorized",
+        "mobilise" to "mobilize", "mobilised" to "mobilized",
+        "stabilise" to "stabilize", "stabilised" to "stabilized",
+        "utilise" to "utilize", "utilised" to "utilized",
+        "globalise" to "globalize", "globalised" to "globalized",
+        "industrialise" to "industrialize", "industrialised" to "industrialized",
+        // -yse → -yze
+        "analyse" to "analyze", "analyses" to "analyzes",
+        "analysed" to "analyzed", "analysing" to "analyzing",
+        "paralyse" to "paralyze", "paralysed" to "paralyzed",
+        "catalyse" to "catalyze", "catalysed" to "catalyzed",
+        // doubled consonant → single
+        "travelled" to "traveled", "travelling" to "traveling",
+        "traveller" to "traveler", "travellers" to "travelers",
+        "cancelled" to "canceled", "cancelling" to "canceling",
+        "modelled" to "modeled", "modelling" to "modeling",
+        "labelled" to "labeled", "labelling" to "labeling",
+        "signalled" to "signaled", "signalling" to "signaling",
+        "fuelled" to "fueled", "fuelling" to "fueling",
+        "levelled" to "leveled", "levelling" to "leveling",
+        "marvellous" to "marvelous", "jewellery" to "jewelry",
+        // everything else
+        "grey" to "gray", "greyer" to "grayer", "greyest" to "grayest",
+        "programme" to "program", "programmes" to "programs",
+        "catalogue" to "catalog", "catalogues" to "catalogs",
+        "judgement" to "judgment", "judgements" to "judgments",
+        "acknowledgement" to "acknowledgment",
+        "aluminium" to "aluminum",
+        "sceptical" to "skeptical", "sceptic" to "skeptic",
+        "manoeuvre" to "maneuver", "manoeuvres" to "maneuvers",
+        "plough" to "plow", "ploughs" to "plows",
+        "tyre" to "tire", "tyres" to "tires",
+        "kerb" to "curb", "kerbs" to "curbs",
+        "cheque" to "check", "cheques" to "checks",
+        "cosy" to "cozy", "moustache" to "mustache", "pyjamas" to "pajamas",
+        "aeroplane" to "airplane", "aeroplanes" to "airplanes",
+        "storey" to "story", "storeys" to "stories",
+    )
+
+    /**
+     * The table's canonical (US) form of one already-normalized word, or the word
+     * itself when the table does not know it. Exposed so every grader that compares
+     * English text — typed answers here, the recogniser's transcript in
+     * [org.token.english.domain.engine.ConversationScorer] — folds the same pairs
+     * from the same list instead of each keeping its own idea of "the same word".
+     */
+    fun unifyDialect(word: String): String = dialectCanonical[word] ?: word
+
+    /**
+     * Every spelling of [normalized] under the US/UK table: the text as typed plus
+     * each variant with one dialect word canonicalised.
+     *
+     * Word-by-word rather than regex-by-regex so the cross-product stays small (a
+     * sentence carries at most a couple of dialect words); a token the table does
+     * not know — including a protected decimal like `3.5` — is left untouched.
+     */
+    private fun dialectVariants(normalized: String): Set<String> {
+        val words = normalized.split(' ')
+        if (words.none { it in dialectCanonical }) return setOf(normalized)
+        var variants = listOf(words)
+        words.forEachIndexed { index, word ->
+            val canonical = dialectCanonical[word] ?: return@forEachIndexed
+            variants = variants.flatMap { variant ->
+                listOf(variant, variant.toMutableList().also { it[index] = canonical })
+            }
+        }
+        return variants.map { it.joinToString(" ") }.toSet()
+    }
+
+    /** Every reading of an answer: contractions expanded, dialect spellings folded. */
+    private fun readings(normalized: String): Set<String> =
+        expansionVariants(normalized).flatMapTo(mutableSetOf()) { dialectVariants(it) }
+
     fun normalize(raw: String): String {
         val stripped = raw
             .trim()
@@ -201,14 +347,17 @@ object AnswerChecker {
         return variants
     }
 
-    /** True when [answer] matches any accepted variant, contractions included. */
+    /**
+     * True when [answer] matches any accepted variant — contractions expanded on
+     * both sides, and US/UK spellings folded together (checklist P1-4).
+     */
     fun matchesAny(accepted: List<String>, answer: String): Boolean {
         val normalized = normalize(answer)
         if (normalized.isEmpty()) return false
-        val answerVariants = expansionVariants(normalized)
+        val answerVariants = readings(normalized)
         return accepted.any { candidate ->
             val norm = normalize(candidate)
-            norm in answerVariants || expansionVariants(norm).any { it in answerVariants }
+            norm in answerVariants || readings(norm).any { it in answerVariants }
         }
     }
 

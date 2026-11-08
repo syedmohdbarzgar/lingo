@@ -7,7 +7,7 @@
         <item name="colorSecondary">@color/primary_400</item>
         <item name="colorSecondaryVariant">@color/primary_700</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/primary_600</item>
+        <item name="android:statusBarColor">@color/primary_600</item>
     </style>
 
     <!-- Launch theme: the system splash is a bare brand field — brand color
@@ -24,7 +24,7 @@
              android-namespaced form, not from the library attrs above: API 31+
              reads the three splash attrs, every release reads windowBackground.
              Same brand blue, same empty icon, same 0ms. -->
-        <item name="android:windowBackground" tools:targetApi="l">@color/ic_launcher_background</item>
+        <item name="android:windowBackground">@color/ic_launcher_background</item>
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/ic_launcher_background</item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/splash_icon_empty</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">0</item>
@@ -38,6 +38,6 @@
     <!-- SplashActivity's own window background: the brand blue unconditionally,
          day and night, so the launch is one continuous field. -->
     <style name="Theme.English.SplashHost" parent="Theme.English">
-        <item name="android:windowBackground" tools:targetApi="l">@color/ic_launcher_background</item>
+        <item name="android:windowBackground">@color/ic_launcher_background</item>
     </style>
 </resources>

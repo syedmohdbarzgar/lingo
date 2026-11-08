@@ -14,8 +14,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Grade
-import androidx.compose.material.icons.outlined.MenuBook
-import androidx.compose.material.icons.outlined.TrendingUp
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
+import androidx.compose.material.icons.automirrored.outlined.TrendingUp
 import androidx.compose.material.icons.outlined.WorkspacePremium
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -52,7 +52,7 @@ private data class OnboardingPage(
 
 private val pages = listOf(
     OnboardingPage(
-        icon = Icons.Outlined.MenuBook,
+        icon = Icons.AutoMirrored.Outlined.MenuBook,
         brand = true,
         title = "انگلیسی را قدم به قدم یاد بگیر.",
         subtitle = "مسیر یادگیری بر اساس سطح CEFR، با درس‌های کوتاه و روزانه — همه روی دستگاه خودت.",
@@ -63,7 +63,7 @@ private val pages = listOf(
         subtitle = "مرور فاصله‌دار واژه‌ها باعث می‌شود آنچه یاد گرفته‌ای فراموش نشود.",
     ),
     OnboardingPage(
-        icon = Icons.Outlined.TrendingUp,
+        icon = Icons.AutoMirrored.Outlined.TrendingUp,
         title = "مهارت واقعی بساز.",
         subtitle = "شنیدن، خواندن و تولید زبان در موقعیت‌های واقعی، نه فقط حفظ کردن.",
     ),

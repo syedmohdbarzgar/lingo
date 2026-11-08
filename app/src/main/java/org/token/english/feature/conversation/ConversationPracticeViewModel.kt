@@ -2,12 +2,15 @@ package org.token.english.feature.conversation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianCountPair
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.core.audio.Speaker
@@ -68,6 +71,13 @@ data class AnsweredTurn(
 
 data class ConversationUiState(
     val isLoading: Boolean = true,
+    /**
+     * The bundle write failed, so no dialogue reached Room. A different fact from
+     * "this bundle has no dialogues" — and the only one the retry can repair.
+     */
+    val contentFailed: Boolean = false,
+    /** The dialogue read itself threw (a database that cannot be opened). Retryable. */
+    val loadFailed: Boolean = false,
     val turns: List<DialogueTurn> = emptyList(),
     /** The lesson whose dialogue this is — the whole practice belongs to it. */
     val lessonId: String? = null,
@@ -111,7 +121,7 @@ data class ConversationUiState(
     val current: DialogueTurn? get() = turns.getOrNull(index)
 
     /** No speaking item exists in the bundle — an empty state, not an error. */
-    val isEmpty: Boolean get() = !isLoading && turns.isEmpty()
+    val isEmpty: Boolean get() = !isLoading && !contentFailed && !loadFailed && turns.isEmpty()
 
     val isFinished: Boolean get() = !isLoading && turns.isNotEmpty() && index >= turns.size
 
@@ -183,8 +193,10 @@ class ConversationPracticeViewModel(
      */
     private val recordTurn: RecordConversationTurnUseCase,
     private val speaker: Speaker,
-    /** Flipped once the JSON bundle has reached Room; turns read after it. */
-    private val contentSeeded: StateFlow<Boolean>,
+    /** Where the offline bundle stands — not a bare "ready or not" (see [startLoading]). */
+    private val contentStatus: StateFlow<ContentStatus>,
+    /** Re-runs the bundle write; the error's retry needs it when the write failed. */
+    private val seedContent: suspend () -> Boolean,
     speechState: StateFlow<SpeechState>,
     private val startRecognition: () -> Unit,
     private val stopRecognition: () -> Unit,
@@ -206,11 +218,41 @@ class ConversationPracticeViewModel(
     /** The finish write is once per session, not once per finished screen. */
     private var markedConversationDone = false
 
+    /** The load job, so a retry replaces it instead of racing it. */
+    private var loadJob: Job? = null
+
+    /**
+     * A load that threw becomes a state the screen can show and retry.
+     *
+     * This read used to sit bare in `init`'s launch and wait on a boolean
+     * (`contentSeeded`): a write that failed left that boolean false forever, so the
+     * screen never left its spinner — and a throw ended the coroutine the same way,
+     * with nothing left to press. A handler keeps the failure on the state instead;
+     * cancellation still bypasses it, because a cancelled screen is not an error (B-9).
+     */
+    private val loadFailure = CoroutineExceptionHandler { _, error ->
+        android.util.Log.w("ConversationPracticeViewModel", "dialogue not read", error)
+        _state.update { it.copy(isLoading = false, loadFailed = true) }
+    }
+
     init {
         loadTurns()
         viewModelScope.launch {
             speechState.collect { onSpeech(it) }
         }
+    }
+
+    /**
+     * The error state's action: the write when it failed, then the same local read.
+     *
+     * Nothing was written before a read failure, so that case is the identical work
+     * again; a failed *seed* is the only failure this can actually repair.
+     */
+    fun retry() {
+        if (_state.value.isLoading) return
+        val reseed = _state.value.contentFailed
+        _state.update { it.copy(isLoading = true, contentFailed = false, loadFailed = false) }
+        loadTurns(reseed)
     }
 
     /**
@@ -283,13 +325,27 @@ class ConversationPracticeViewModel(
      * never a pool of turns from every lesson in the bundle. A conversation is the
      * last step of a lesson, so it has that lesson's topic, scene and roles.
      */
-    private fun loadTurns() {
-        viewModelScope.launch {
+    private fun loadTurns(reseed: Boolean = false) {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch(loadFailure) {
+            // A retry after a failed write runs the write itself: waiting again on
+            // the same status could only ever wait for a seed nobody starts.
+            if (reseed) seedContent()
             // The seeder runs in the background at app start. Reading the table
             // before it lands returns an empty lesson list, which would show the
             // empty state for a bundle that has turns — and nothing re-emits,
             // because the read below takes a single snapshot.
-            contentSeeded.first { it }
+            //
+            // The wait is on the STATUS, not on "seeded": a failed write also ends
+            // it, so the old boolean handed this screen an empty table and the only
+            // thing it could say was «هنوز گفتگویی برای تمرین نداریم» — true of the
+            // table, wrong about why, and impossible to retry into success because
+            // nothing re-ran the write.
+            val status = contentStatus.first { it != ContentStatus.LOADING }
+            if (status == ContentStatus.FAILED) {
+                _state.update { it.copy(isLoading = false, contentFailed = true) }
+                return@launch
+            }
             // `first()` takes one emission and closes the flow — a bare `collect`
             // would keep the lesson observation alive for the screen's lifetime.
             val lessons = lessonRepository.observeLessons().first().sortedBy { it.order }
@@ -554,7 +610,6 @@ class ConversationPracticeViewModel(
         speaker.stop()
         stopRecognition()
         SpeechBus.reset()
-        super.onCleared()
     }
 }
 

@@ -17,6 +17,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.ContentStatus
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -38,7 +39,10 @@ import org.token.english.feature.lesson.LessonViewModel
 
 /**
  * LessonViewModel tests (checklist B-6): the requeue-once-on-a-miss rule and the
- * TTS-unavailable fallback, both driven through in-memory fakes.
+ * TTS-unavailable fallback, both driven through in-memory fakes — plus the two
+ * failure paths of P1-7: a read that throws must become a state with a retry
+ * (never a spinner nobody can leave) and a failed dimension fold must not take
+ * the learner's verdict down with it.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class LessonViewModelTest {
@@ -97,7 +101,10 @@ class LessonViewModelTest {
         val progress = FakeProgressRepository()
         val audio = FakeAudioPlayer(available)
         val speaker = RecordingSpeaker()
-        val contentSeeded = MutableStateFlow(true)
+        val contentStatus = MutableStateFlow(ContentStatus.READY)
+
+        /** How many times the retry re-ran the bundle write (the FAILED path's repair). */
+        var seeds = 0
         val knowledge = FakeKnowledgeRepository()
 
         val submit = SubmitExerciseUseCase(progress, knowledge)
@@ -112,7 +119,12 @@ class LessonViewModelTest {
         fun build(focusItemId: String? = null, atContext: Boolean = false): LessonViewModel {
             val vm = LessonViewModel(
                 lessonId = lessonId,
-                contentSeeded = contentSeeded,
+                contentStatus = contentStatus,
+                seedContent = {
+                    seeds++
+                    contentStatus.value = ContentStatus.READY
+                    true
+                },
                 lessonRepository = lessonRepo,
                 progressRepository = progress,
                 submitExercise = submit,
@@ -134,6 +146,75 @@ class LessonViewModelTest {
     private fun Harness.withOneExercise(): Harness {
         lessonRepo.exercises[lessonId] = listOf(choice())
         return this
+    }
+
+    @Test
+    fun `a lesson whose read throws offers a retry instead of a spinner`() {
+        // Before the guard, the reads sat bare in `init`'s launch: a throw ended the
+        // coroutine and `isLoading` stayed true forever, on the one screen the
+        // learner cannot study without.
+        val h = Harness()
+        h.lessonRepo.readError = IllegalStateException("database file is corrupt")
+        val vm = h.build()
+
+        assertFalse("no spinner nobody can leave", vm.state.value.isLoading)
+        assertNotNull("the screen can say the lesson failed", vm.state.value.error)
+        assertTrue(
+            "the message says the data is local, not that the network failed",
+            vm.state.value.error.orEmpty().contains("همین گوشی"),
+        )
+
+        h.lessonRepo.readError = null
+        h.withOneExercise()
+        vm.retry()
+
+        assertNull("the retry clears the error", vm.state.value.error)
+        assertNotNull("the lesson is loaded", vm.state.value.lesson)
+        vm.onEvent(LessonEvent.StartExercises)
+        assertNotNull("and the session is really usable", vm.state.value.currentExercise)
+    }
+
+    @Test
+    fun `a failed dimension fold still shows the verdict`() {
+        // debt.md: the fold is session input, so losing it costs one stale seed. An
+        // unguarded throw here killed the coroutine before the verdict was rendered,
+        // leaving the learner looking at their own answer with a button that did
+        // nothing.
+        val h = Harness().withOneExercise()
+        h.progress.dimensionError = IllegalStateException("dimension write failed")
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.SelectOption(0))
+        vm.onEvent(LessonEvent.Submit)
+
+        val outcome = vm.state.value.outcome
+        assertNotNull("the learner still gets their verdict", outcome)
+        // The verdict comes from the exercise, not from whether the fold landed.
+        assertEquals("and it counts as answered", 1, vm.state.value.askedCount)
+        assertTrue("nothing was written to the dimension table", h.progress.dimensionWrites.isEmpty())
+    }
+
+    @Test
+    fun `a failed bundle write becomes a retryable error, and the retry reseeds`() {
+        // The page used to wait for "seeded": a write that failed left it false
+        // forever, so the lesson sat on the spinner under `activeStage == null`
+        // with nothing to press.
+        val h = Harness()
+        h.contentStatus.value = ContentStatus.FAILED
+        val vm = h.build(atContext = true)
+
+        assertFalse("a failed write ends the wait", vm.state.value.isLoading)
+        assertTrue("the screen can name the write", vm.state.value.contentFailed)
+        assertNull("and it is not reported as a failed read", vm.state.value.error)
+
+        h.withOneExercise()
+        vm.retry()
+
+        assertEquals("the retry runs the bundle write again", 1, h.seeds)
+        assertFalse(vm.state.value.contentFailed)
+        assertNotNull("then the lesson really loads", vm.state.value.lesson)
+        vm.onEvent(LessonEvent.StartExercises)
+        assertNotNull("and the session is usable", vm.state.value.currentExercise)
     }
 
     private fun Harness.with(vararg exercises: Exercise): Harness {

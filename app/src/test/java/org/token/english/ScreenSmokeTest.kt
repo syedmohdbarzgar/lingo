@@ -200,7 +200,8 @@ class ScreenSmokeTest {
         val knowledge = FakeKnowledgeRepository()
         val vm = LessonViewModel(
             lessonId = lessonId,
-            contentSeeded = MutableStateFlow(true),
+            contentStatus = MutableStateFlow(ContentStatus.READY),
+            seedContent = { true },
             lessonRepository = lessonRepo,
             progressRepository = progress,
             submitExercise = SubmitExerciseUseCase(progress, knowledge),

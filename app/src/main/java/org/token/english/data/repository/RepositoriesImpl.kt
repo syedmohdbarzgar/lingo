@@ -500,6 +500,7 @@ class SettingsRepositoryImpl(
         val DAILY_GOAL = intPreferencesKey("daily_goal_minutes")
         val SOUND = booleanPreferencesKey("sound_enabled")
         val DAILY_REMINDER = booleanPreferencesKey("daily_reminder_enabled")
+        val REMINDER_HOUR = intPreferencesKey("daily_reminder_hour")
         val CONTENT_VERSION = intPreferencesKey("content_version")
         val TRIAL_STARTED = longPreferencesKey("trial_started_at")
         val TRIAL_CONSUMED = longPreferencesKey("trial_consumed_ms")
@@ -518,6 +519,12 @@ class SettingsRepositoryImpl(
             dailyGoalMinutes = prefs[Keys.DAILY_GOAL] ?: 15,
             soundEnabled = prefs[Keys.SOUND] ?: true,
             dailyReminderEnabled = prefs[Keys.DAILY_REMINDER] ?: false,
+            // A stored value outside 0–23 is a corrupted record, not an hour: fall
+            // back to the shipped default rather than hand `Calendar` a value it
+            // would silently roll into another day.
+            dailyReminderHour = prefs[Keys.REMINDER_HOUR]
+                ?.takeIf { it in 0..23 }
+                ?: AppSettings.DEFAULT_REMINDER_HOUR,
             contentVersion = prefs[Keys.CONTENT_VERSION] ?: 0,
             trialStartedAt = prefs[Keys.TRIAL_STARTED] ?: 0L,
             subscriptionUntil = prefs[Keys.SUBSCRIPTION_UNTIL] ?: 0L,
@@ -565,6 +572,10 @@ class SettingsRepositoryImpl(
         context.dataStore.edit { it[Keys.DAILY_REMINDER] = enabled }
     }
 
+    override suspend fun setDailyReminderHour(hour: Int) {
+        context.dataStore.edit { it[Keys.REMINDER_HOUR] = hour.coerceIn(0, 23) }
+    }
+
     override suspend fun setContentVersion(version: Int) {
         context.dataStore.edit { it[Keys.CONTENT_VERSION] = version }
     }
@@ -591,6 +602,15 @@ class ConversationRepositoryImpl(
             val done = parseDoneLessonIds(prefs[CONVERSATIONS_DONE]) + lessonId
             prefs[CONVERSATIONS_DONE] = done.joinToString("\n")
         }
+    }
+
+    /**
+     * Removes the whole set, not a blank value: an absent key reads back as "no
+     * dialogue finished", and a key holding an empty string would be rewritten on
+     * the next mark anyway. The settings themselves are untouched.
+     */
+    override suspend fun reset() {
+        context.dataStore.edit { prefs -> prefs.remove(CONVERSATIONS_DONE) }
     }
 }
 

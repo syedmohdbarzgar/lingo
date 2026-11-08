@@ -19,11 +19,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.VolumeUp
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -151,6 +152,37 @@ fun ConversationPracticeScreen(
                         .padding(AppSpacing.lg),
                     contentAlignment = Alignment.Center,
                 ) { CircularProgressIndicator() }
+
+                // The bundle write failed, so no dialogue was ever written: the
+                // read below never ran. It used to be impossible to tell apart
+                // from "this bundle has no dialogues", and the state it fell into
+                // had no action at all.
+                state.contentFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "محتوای گفتگوها آماده نشد",
+                    subtitle = "گفتگوها از بستهٔ آفلاین روی همین گوشی خوانده می‌شوند و " +
+                        "آماده‌سازی آن‌ها کامل نشد. این خطا به اینترنت مربوط نیست؛ «تلاش دوباره» " +
+                        "همان آماده‌سازی را از نو اجرا می‌کند.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    // The way out stays: this step gates the next lesson, and a
+                    // bundle that cannot be written must not trap the learner.
+                    secondaryActionText = "بازگشت",
+                    onSecondaryAction = onBack,
+                )
+
+                // The read threw (a database that cannot be opened). Same retry,
+                // no blame on the network.
+                state.loadFailed -> AppEmptyState(
+                    icon = Icons.Outlined.ErrorOutline,
+                    title = "گفتگو خوانده نشد",
+                    subtitle = "گفتگوها روی همین گوشی ذخیره شده‌اند، اما خواندنشان این بار " +
+                        "کامل نشد. این خطا به اینترنت مربوط نیست.",
+                    actionText = "تلاش دوباره",
+                    onAction = vm::retry,
+                    secondaryActionText = "بازگشت",
+                    onSecondaryAction = onBack,
+                )
 
                 state.isEmpty -> AppEmptyState(
                     icon = Icons.Outlined.MicNone,
@@ -331,7 +363,7 @@ private fun PartnerTurn(
             )
             IconButton(onClick = onReplay, enabled = replayEnabled) {
                 Icon(
-                    imageVector = Icons.Outlined.VolumeUp,
+                    imageVector = Icons.AutoMirrored.Outlined.VolumeUp,
                     contentDescription = "شنیدن دوباره",
                 )
             }

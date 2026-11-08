@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import org.token.english.BuildConfig
 
 /**
@@ -80,12 +80,12 @@ object CompanionApp {
      */
     fun openDownloadPage(context: Context) {
         if (!BuildConfig.EXTERNAL_COMPANION_OFFER) return
-        val deepLink = Intent(Intent.ACTION_VIEW, Uri.parse(bazaarDeepLink()))
+        val deepLink = Intent(Intent.ACTION_VIEW, bazaarDeepLink().toUri())
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (runCatching { context.startActivity(deepLink) }.isSuccess) return
         runCatching {
             context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse(bazaarWebUrl()))
+                Intent(Intent.ACTION_VIEW, bazaarWebUrl().toUri())
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             )
         }

@@ -387,4 +387,35 @@ class ConversationScorerTest {
         assertTrue("duplicate answer not removed: $grammar", grammar.split("fine thanks").size == 2)
         assertTrue("unknown token missing: $grammar", grammar.contains("\"[unk]\""))
     }
+
+    // ---- neither variety of English is a wrong answer (P1-4) ------------------
+
+    @Test
+    fun `a take in the other spelling of English is still the target`() {
+        // The bundle teaches British English, so a learner who *says* the American
+        // spelling — or a recogniser that returns it — used to be marked down for it.
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess(
+                spoken = "my favorite color is gray",
+                target = "My favourite colour is grey.",
+            ),
+        )
+        assertEquals(
+            SpeakingVerdict.CORRECT,
+            ConversationScorer.assess(
+                spoken = "i organised the neighbourhood party",
+                target = "I organized the neighborhood party.",
+            ),
+        )
+    }
+
+    @Test
+    fun `the fold is a grading rule, so the grammar keeps the authored spelling`() {
+        // What the learner is asked to say stays as authored: only the comparison
+        // folds. Handing the recogniser the US spelling instead would change what
+        // the turn sounds like, not just how it is graded.
+        val grammar = ConversationScorer.speechGrammar(listOf("My favourite colour is grey."))
+        assertTrue("authored spelling lost: $grammar", grammar.contains("\"my favourite colour is grey\""))
+    }
 }

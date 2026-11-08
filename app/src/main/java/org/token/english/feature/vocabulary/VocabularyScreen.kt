@@ -13,9 +13,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -99,7 +99,7 @@ fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
                 )
 
                 state.all.isEmpty() -> AppEmptyState(
-                    icon = Icons.Default.MenuBook,
+                    icon = Icons.AutoMirrored.Filled.MenuBook,
                     title = "هنوز واژه‌ای ذخیره نشده",
                     subtitle = "محتوای آفلاین در حال آماده‌سازی است. کمی بعد دوباره سر بزن.",
                     modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -182,7 +182,7 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
                 )
 
                 state.item == null -> AppEmptyState(
-                    icon = Icons.Default.MenuBook,
+                    icon = Icons.AutoMirrored.Filled.MenuBook,
                     title = "واژه پیدا نشد",
                     subtitle = "این واژه در محتوای ذخیره‌شده وجود ندارد.",
                     actionText = "بازگشت",
@@ -221,7 +221,7 @@ fun VocabularyDetailScreen(vocabId: String, onBack: () -> Unit) {
                                     item.partOfSpeech?.let { AppChip(label = it) }
                                     IconButton(onClick = vm::playWord) {
                                         Icon(
-                                            Icons.Default.VolumeUp,
+                                            Icons.AutoMirrored.Filled.VolumeUp,
                                             contentDescription = "پخش تلفظ",
                                             tint = MaterialTheme.colorScheme.primary,
                                         )

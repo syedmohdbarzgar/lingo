@@ -163,6 +163,9 @@ class LoadFailureTest {
             settingsRepository = settings,
             progressRepository = FakeProgressRepository(),
             knowledgeRepository = FakeKnowledgeRepository(),
+            // Unused here: a failed read never reaches the reset path.
+            conversationRepository = FakeConversationRepository(),
+            voiceNote = FakeVoiceNote(),
             companionStatus = MutableStateFlow(CompanionStatus.ABSENT),
             refreshCompanion = { false },
             accessTickMillis = 0,

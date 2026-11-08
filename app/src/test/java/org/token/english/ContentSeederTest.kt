@@ -138,6 +138,7 @@ class ContentSeederTest {
         override suspend fun setDailyGoalMinutes(minutes: Int) = Unit
         override suspend fun setSoundEnabled(enabled: Boolean) = Unit
         override suspend fun setDailyReminderEnabled(enabled: Boolean) = Unit
+        override suspend fun setDailyReminderHour(hour: Int) = Unit
 
         override suspend fun setContentVersion(version: Int) {
             contentVersionValue = version

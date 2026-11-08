@@ -57,7 +57,9 @@ class EnglishApp : Application() {
             container.settingsRepository.settings.collect {
                 container.soundEnabled = it.soundEnabled
                 if (it.dailyReminderEnabled) {
-                    DailyReminder.schedule(this@EnglishApp)
+                    // Scheduled on every settings emission, so a changed hour reaches
+                    // the alarm: setInexactRepeating replaces the pending intent.
+                    DailyReminder.schedule(this@EnglishApp, it.dailyReminderHour)
                 } else {
                     DailyReminder.cancel(this@EnglishApp)
                 }

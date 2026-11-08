@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -28,7 +30,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -68,6 +72,7 @@ import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.settingsViewModelFactory
+import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ThemeMode
 
@@ -81,6 +86,7 @@ fun SettingsScreen(
     val vm: SettingsViewModel = viewModel(factory = settingsViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
     var showResetDialog by remember { mutableStateOf(false) }
+    var showReminderTimeDialog by remember { mutableStateOf(false) }
     var infoPage by remember { mutableStateOf<InfoPage?>(null) }
     val context = LocalContext.current
     // API 33+: notifications need an explicit grant, requested the first time
@@ -201,38 +207,69 @@ fun SettingsScreen(
                 }
             }
 
+            val reminderHour = settings?.dailyReminderHour ?: AppSettings.DEFAULT_REMINDER_HOUR
             AppCard(Modifier.fillMaxWidth()) {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        Text("یادآوری روزانه مرور", style = MaterialTheme.typography.titleSmall)
-                        Text(
-                            text = "هر روز ساعت ${bidiNumber(19)} یک یادآوری محلی نشان می‌دهد — " +
-                                "بدون اینترنت و سرویس ابری.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            Text("یادآوری روزانه مرور", style = MaterialTheme.typography.titleSmall)
+                            Text(
+                                text = "هر روز ساعت ${bidiNumber(reminderHour)} یک یادآوری محلی " +
+                                    "نشان می‌دهد — بدون اینترنت و سرویس ابری.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        AppSwitch(
+                            checked = settings?.dailyReminderEnabled ?: false,
+                            onCheckedChange = { enable ->
+                                when {
+                                    !enable -> vm.setDailyReminderEnabled(false)
+                                    Build.VERSION.SDK_INT >= 33 &&
+                                        ContextCompat.checkSelfPermission(
+                                            context,
+                                            Manifest.permission.POST_NOTIFICATIONS,
+                                        ) != PackageManager.PERMISSION_GRANTED -> {
+                                        notificationPermissionLauncher.launch(
+                                            Manifest.permission.POST_NOTIFICATIONS,
+                                        )
+                                    }
+                                    else -> vm.setDailyReminderEnabled(true)
+                                }
+                            },
                         )
                     }
-                    AppSwitch(
-                        checked = settings?.dailyReminderEnabled ?: false,
-                        onCheckedChange = { enable ->
-                            when {
-                                !enable -> vm.setDailyReminderEnabled(false)
-                                Build.VERSION.SDK_INT >= 33 &&
-                                    ContextCompat.checkSelfPermission(
-                                        context,
-                                        Manifest.permission.POST_NOTIFICATIONS,
-                                    ) != PackageManager.PERMISSION_GRANTED -> {
-                                    notificationPermissionLauncher.launch(
-                                        Manifest.permission.POST_NOTIFICATIONS,
-                                    )
-                                }
-                                else -> vm.setDailyReminderEnabled(true)
-                            }
-                        },
-                    )
+                    // The hour is a setting, not a constant (checklist B-4): a
+                    // reminder that arrives when the learner is asleep is a reason
+                    // to switch reminders off, which is the one thing it must not do.
+                    // Whole rows are the touch target, and the row stays available
+                    // with the reminder off, so a time can be picked before enabling.
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = TouchTargetMin)
+                            .clickable { showReminderTimeDialog = true },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = "ساعت یادآوری",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Text(
+                            text = "${bidiNumber(reminderHour)}:۰۰",
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Spacer(Modifier.width(AppSpacing.sm))
+                        Text(
+                            text = "تغییر",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                    }
                 }
             }
 
@@ -329,6 +366,39 @@ fun SettingsScreen(
         }
     }
 
+    if (showReminderTimeDialog) {
+        val initialHour = state.settings?.dailyReminderHour ?: AppSettings.DEFAULT_REMINDER_HOUR
+        // Re-read on every open: the dialog is created fresh, so it always starts
+        // from the stored hour rather than a stale remembered one.
+        val picker = rememberTimePickerState(initialHour = initialHour, initialMinute = 0, is24Hour = true)
+        AlertDialog(
+            onDismissRequest = { showReminderTimeDialog = false },
+            shape = DialogShape,
+            title = { Text("ساعت یادآوری") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    Text(
+                        text = "یادآوری هر روز در این ساعت می‌رسد.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    TimePicker(state = picker)
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showReminderTimeDialog = false
+                        vm.setDailyReminderHour(picker.hour)
+                    },
+                ) { Text("ذخیره") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showReminderTimeDialog = false }) { Text("انصراف") }
+            },
+        )
+    }
+
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
@@ -337,7 +407,11 @@ fun SettingsScreen(
             shape = DialogShape,
             title = { Text("پیشرفت پاک شود؟") },
             text = {
-                Text("درس‌ها، واژه‌های در حال مرور و آمار یادگیری از دستگاه حذف می‌شوند. این عمل قابل بازگشت نیست.")
+                // The list is what the wipe actually removes: the dialogues became
+                // part of it when `ConversationRepository.reset()` landed, and a
+                // dialog that names three of the four things deleted is the kind of
+                // half-truth a reset cannot afford.
+                Text("درس‌ها، گفتگوهای تمرین‌شده، واژه‌های در حال مرور و آمار یادگیری از دستگاه حذف می‌شوند. این عمل قابل بازگشت نیست.")
             },
             confirmButton = {
                 TextButton(
@@ -554,7 +628,7 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "برای حذف کامل دادهٔ یادگیری، از گزینهٔ «پاک‌سازی پیشرفت و شروع دوباره» در همین صفحه استفاده کنید.",
+                    text = "برای حذف کامل دادهٔ یادگیری، از گزینهٔ «پاک‌سازی پیشرفت و شروع دوباره» در همین صفحه استفاده کنید؛ نمونهٔ صدای ضبط‌شده و گفتگوهای انجام‌شده هم با همان گزینه پاک می‌شوند.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }

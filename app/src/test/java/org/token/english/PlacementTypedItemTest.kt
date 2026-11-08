@@ -12,6 +12,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.token.english.core.common.ContentStatus
 import org.token.english.data.content.ContentParser
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
@@ -130,7 +131,8 @@ class PlacementTypedItemTest {
         )
 
         val vm = PlacementViewModel(
-            contentSeeded = MutableStateFlow(true),
+            contentStatus = MutableStateFlow(ContentStatus.READY),
+            seedContent = { true },
             lessonRepository = lessonRepo,
             assessPlacement = AssessPlacementUseCase(progress),
             settingsRepository = FakeSettingsRepository(),

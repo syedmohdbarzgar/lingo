@@ -11,11 +11,11 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.MenuBook
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Replay
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material3.Icon
@@ -117,7 +117,12 @@ private data class Tab(
 private val tabs = listOf(
     Tab(Routes.HOME, "خانه", Icons.Filled.Home, Icons.Outlined.Home),
     Tab(Routes.REVIEW, "مرور", Icons.Filled.Replay, Icons.Outlined.Replay),
-    Tab(Routes.VOCABULARY, "واژگان", Icons.Filled.MenuBook, Icons.Outlined.MenuBook),
+    Tab(
+        Routes.VOCABULARY,
+        "واژگان",
+        Icons.AutoMirrored.Filled.MenuBook,
+        Icons.AutoMirrored.Outlined.MenuBook,
+    ),
     Tab(Routes.PROGRESS, "پیشرفت", Icons.Filled.BarChart, Icons.Outlined.BarChart),
 )
 

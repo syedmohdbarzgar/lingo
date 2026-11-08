@@ -13,7 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -240,7 +240,7 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                         }
                         IconButton(onClick = { vm.onEvent(ReviewEvent.PlayWord) }) {
                             Icon(
-                                Icons.Default.VolumeUp,
+                                Icons.AutoMirrored.Filled.VolumeUp,
                                 contentDescription = "پخش تلفظ",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(32.dp),
