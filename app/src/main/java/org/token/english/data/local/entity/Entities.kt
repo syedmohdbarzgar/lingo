@@ -202,6 +202,25 @@ data class LessonAttemptEntity(
     val at: Long,
 )
 
+/**
+ * A lesson whose dialogue the learner has finished (Room v10).
+ *
+ * This used to live in the settings preferences file, and that was the bug: Auto Backup
+ * and device-to-device transfer exclude `datastore/` — correctly, because the same file
+ * carries the subscription mirror — so after a restore the lesson was still completed,
+ * its answers were still in `lesson_attempt` and its spoken turns still claimed, while
+ * the "this dialogue is done" mark was gone. The app then owed a dialogue the learner
+ * had already practised and kept the next lesson shut. A progress fact belongs in the
+ * table that holds the rest of the progress, not in the store that is excluded.
+ *
+ * One row per lesson and no timestamp: the mark's only question is "has this dialogue
+ * been practised", and an imported row would have no honest date to carry.
+ */
+@Entity(tableName = "conversation_done")
+data class ConversationDoneEntity(
+    @PrimaryKey val lessonId: String,
+)
+
 /** One row per study day (streaks + daily goal). */
 @Entity(tableName = "study_session")
 data class StudySessionEntity(

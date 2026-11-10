@@ -15,13 +15,19 @@ import org.junit.Test
 import org.token.english.domain.engine.SkillStatus
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.ExerciseFormat
+import org.token.english.domain.model.GradedCard
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.ReviewContentType
+import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.Skill
+import org.token.english.domain.engine.MissCategory
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.feature.progress.ProgressViewModel
 
@@ -78,16 +84,28 @@ class ProgressViewModelTest {
         mastery: Map<Skill, Float> = emptyMap(),
         reviewStats: Map<ReviewContentType, AttemptStats> = emptyMap(),
         lessons: List<LessonState> = emptyList(),
+        answers: List<LessonAttempt> = emptyList(),
+        exercises: Map<String, List<Exercise>> = emptyMap(),
+        cards: List<GradedCard> = emptyList(),
     ): ProgressViewModel {
         val knowledge = FakeKnowledgeRepository(items).apply { statesFlow.value = states }
         val progress = FakeProgressRepository().apply { masteryFlow.value = mastery }
-        val reviews = FakeReviewRepository().apply { attemptStats = reviewStats }
+        val reviews = FakeReviewRepository().apply {
+            attemptStats = reviewStats
+            gradedCards += cards
+        }
+        val lessonsRepo = FakeLessonRepository().apply {
+            statesFlow.value = lessons
+            attemptsLog += answers
+            exercises.forEach { (lessonId, list) -> this.exercises[lessonId] = list }
+        }
         return ProgressViewModel(
             settingsRepository = FakeSettingsRepository(),
-            lessonRepository = FakeLessonRepository().apply { statesFlow.value = lessons },
+            lessonRepository = lessonsRepo,
             progressRepository = progress,
             knowledgeRepository = knowledge,
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
+            getMissProfile = GetMissProfileUseCase(lessonsRepo, reviews),
             studyStats = progress.statsFlow,
         )
     }
@@ -172,6 +190,142 @@ class ProgressViewModelTest {
             viewModel(items, listOf(secured), lessons = listOf(finished.copy(completed = false)))
                 .state.value.masteredLessons,
         )
+    }
+
+    @Test
+    fun `recent misses reach the state classified by what they asked about`() = runTest {
+        // The error taxonomy: the screen has to say *what* goes wrong, not only how much
+        // is known. Five answers is the evidence bar; below it the card stays hidden.
+        val lessonId = "a1.miss.lesson-01"
+        val vocab = Exercise.MultipleChoice(
+            id = "v.1",
+            lessonId = lessonId,
+            question = "Choose",
+            questionFa = null,
+            options = listOf("book", "desk"),
+            correctIndex = 0,
+            skill = Skill.VOCABULARY,
+        )
+        val grammar = Exercise.MultipleChoice(
+            id = "g.1",
+            lessonId = lessonId,
+            question = "Choose",
+            questionFa = null,
+            options = listOf("is", "are"),
+            correctIndex = 0,
+            skill = Skill.GRAMMAR,
+        )
+        fun answer(exercise: Exercise, correct: Boolean, at: Long) = LessonAttempt(
+            lessonId = lessonId,
+            stageId = "practice",
+            exerciseId = exercise.id,
+            answer = if (correct) "ok" else "wrong",
+            correct = correct,
+            at = at,
+        )
+
+        val answers = listOf(
+            answer(vocab, true, 1),
+            answer(vocab, false, 2),
+            answer(grammar, false, 3),
+            answer(grammar, false, 4),
+        )
+        val vm = viewModel(
+            items = emptyList(),
+            states = emptyList(),
+            answers = answers,
+            exercises = mapOf(lessonId to listOf(vocab, grammar)),
+        )
+        assertNull("four answers is not a pattern yet", vm.state.value.missProfile)
+
+        val withFive = viewModel(
+            items = emptyList(),
+            states = emptyList(),
+            answers = answers + answer(vocab, true, 5),
+            exercises = mapOf(lessonId to listOf(vocab, grammar)),
+        )
+        val profile = withFive.state.value.missProfile!!
+
+        assertEquals(5, profile.attempts)
+        assertEquals("one vocabulary and two grammar answers went wrong", 3, profile.misses)
+        assertEquals(MissCategory.GRAMMAR, profile.weakest?.category)
+    }
+
+    @Test
+    fun `review cards feed the miss mix, so a review-only week still moves it`() = runTest {
+        // A mature learner's practice is mostly the SRS queue, which never touches a
+        // lesson; a profile that only read lessons would freeze after the first week.
+        val vm = viewModel(
+            items = emptyList(),
+            states = emptyList(),
+            cards = (1..5).map { index ->
+                GradedCard(
+                    result = if (index <= 3) ReviewResult.AGAIN else ReviewResult.GOOD,
+                    type = ReviewContentType.VOCABULARY,
+                    at = index.toLong(),
+                )
+            },
+        )
+        val profile = vm.state.value.missProfile!!
+
+        assertEquals(5, profile.attempts)
+        assertEquals("HARD and AGAIN are not hits", 3, profile.misses)
+        assertEquals(MissCategory.VOCABULARY, profile.weakest?.category)
+    }
+
+    @Test
+    fun `lessons and cards share one window, so neither source crowds the other out`() = runTest {
+        val lessonId = "a1.test.lesson-01"
+        val grammar = Exercise.MultipleChoice(
+            id = "g.1",
+            lessonId = lessonId,
+            question = "Choose",
+            questionFa = null,
+            options = listOf("is", "are"),
+            correctIndex = 0,
+            skill = Skill.GRAMMAR,
+        )
+        val lessonAnswers = (1..4).map { at ->
+            LessonAttempt(
+                lessonId = lessonId,
+                stageId = "practice",
+                exerciseId = grammar.id,
+                answer = "wrong",
+                correct = false,
+                at = at.toLong(),
+            )
+        }
+        val vm = viewModel(
+            items = emptyList(),
+            states = emptyList(),
+            answers = lessonAnswers,
+            exercises = mapOf(lessonId to listOf(grammar)),
+            cards = listOf(
+                GradedCard(ReviewResult.GOOD, ReviewContentType.VOCABULARY, 10),
+                GradedCard(ReviewResult.GOOD, ReviewContentType.VOCABULARY, 11),
+            ),
+        )
+        val profile = vm.state.value.missProfile!!
+
+        assertEquals("four lesson answers and two cards are one pool", 6, profile.attempts)
+        assertEquals(
+            listOf(MissCategory.VOCABULARY, MissCategory.GRAMMAR),
+            profile.categories.map { it.category },
+        )
+        assertEquals(MissCategory.GRAMMAR, profile.weakest?.category)
+    }
+
+    @Test
+    fun `a card whose item left the queue is dropped instead of guessed into a category`() = runTest {
+        val vm = viewModel(
+            items = emptyList(),
+            states = emptyList(),
+            cards = (1..5).map { index ->
+                GradedCard(result = ReviewResult.AGAIN, type = null, at = index.toLong())
+            },
+        )
+
+        assertNull("five unclassifiable grades are not a pattern", vm.state.value.missProfile)
     }
 
     @Test

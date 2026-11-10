@@ -215,9 +215,6 @@ class ConversationPracticeViewModel(
      */
     private var typedThisTurn = false
 
-    /** The finish write is once per session, not once per finished screen. */
-    private var markedConversationDone = false
-
     /** The load job, so a retry replaces it instead of racing it. */
     private var loadJob: Job? = null
 
@@ -305,14 +302,24 @@ class ConversationPracticeViewModel(
      * graded on screen stays graded. The failure is logged, not swallowed silently.
      */
     private fun recordEvidence(exerciseId: String, verdict: SpeakingVerdict, spoken: Boolean) {
+        // The last graded turn is what finishes the dialogue, so the "finished" mark
+        // is written by that turn's own transaction rather than by a second write
+        // after the screen moved on (where a crash could reopen a dialogue every one
+        // of whose turns had already been credited). A skipped turn is not the last
+        // one: the transcript keeps it, and the mark waits for the real end.
+        val st = _state.value
+        val completesDialogue = st.turns.isNotEmpty() &&
+            st.index == st.turns.lastIndex &&
+            st.history.size == st.turns.lastIndex
         viewModelScope.launch {
             runCatchingCancellable {
                 recordTurn(
-                    lessonId = _state.value.lessonId,
+                    lessonId = st.lessonId,
                     exerciseId = exerciseId,
                     verdict = verdict,
                     spoken = spoken,
                     now = System.currentTimeMillis(),
+                    completesDialogue = completesDialogue,
                 )
             }.onFailure { error ->
                 android.util.Log.w("ConversationPracticeViewModel", "turn evidence not recorded", error)
@@ -558,25 +565,7 @@ class ConversationPracticeViewModel(
 
         clearTake()
         _state.update { it.copy(index = it.index + 1, history = it.history + answered) }
-        markFinishedConversation()
         speakPartner()
-    }
-
-    /**
-     * Closes the lesson's dialogue once every turn has been answered.
-     *
-     * "Answered" is a graded take, not a skipped one: a turn the learner walked
-     * past without speaking is exactly the turn that taught nothing, so the
-     * conversation — and with it the next lesson — stays closed until the whole
-     * exchange has actually been spoken.
-     */
-    private fun markFinishedConversation() {
-        val st = _state.value
-        val id = st.lessonId ?: return
-        if (st.turns.isEmpty() || st.history.size < st.turns.size) return
-        if (markedConversationDone) return
-        markedConversationDone = true
-        viewModelScope.launch { conversationRepository.markCompleted(id) }
     }
 
     /** A take that is not on screen must not stay on screen as if it happened. */

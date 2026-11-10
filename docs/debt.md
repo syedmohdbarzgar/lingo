@@ -27,7 +27,8 @@
   Five flows write several learner rows per result and commit them as one Room transaction through
   `ProgressRepository.inTransaction`: a lesson answer (the claim, the skill meter, the curriculum
   nodes and the answer's history), a review grade (the card's next schedule, the attempt log and the
-  meter), a conversation turn (its claim, the graph and the track), finishing a lesson (the
+  meter), a conversation turn (its claim, the graph and the track — plus, on the last one, the
+  dialogue's finished mark), finishing a lesson (the
   completion stamp, its words entering the review queue and the cursor reset) and the placement test
   (one fold per answer into its skill meter). A crash therefore leaves the result undone rather than
   half-recorded — the question still unanswered, the card still due, the turn still unclaimed, the
@@ -84,7 +85,7 @@
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
   Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
-- Room is at `version = 9` (`lesson_attempt`, `question_attempt`) with exported schemas
+- Room is at `version = 10` (`lesson_attempt`, `question_attempt`, `conversation_done`) with exported schemas
   (`app/schemas`). Schema changes must ship a
   migration; registration is no longer a step anyone can forget, because `AppContainer` takes
   `AppDatabase.ALL_MIGRATIONS` as a whole (`RoomMigrationTest` fails if a hand-picked list comes
@@ -92,8 +93,20 @@
   and not to the list, and every *upgrading* install — not a fresh one — crashed at open time with
   «A migration from 7 to 8 was required but not found». The lesson: a migration path is only
   exercised by an install that already holds data.
-- Due counts capture `now` at collection time; a long-running session won't see newly-due items
-  until the ViewModel is recreated.
+- **The review screen re-reads on resume, not on a ticker.** Home's due count has had a minute
+  ticker since the fixed-`now` pass, and it rebuilds only when the number actually differs. The
+  review screen's two reads (the card queue and `GetDueKnowledgeReviewsUseCase`) run in `init` and
+  now again whenever the screen is resumed — returning from the focused drill, or from another tab —
+  which is when they can actually have gone stale. Three limits are deliberate. A resume never
+  touches a **session in progress** (a read that lands late must not yank the learner back to card 0,
+  and the graph half is not grafted onto a running queue), and it never shows a spinner — the current
+  content stays until the fresh read lands. And a screen left continuously in the foreground does
+  **not** re-read: a queue that reorders and regrows under the learner's eyes while they read it is
+  worse than a count that waits for the next visit. The residual follows from that: a card that
+  becomes due while the summary is on screen appears when the screen is next opened, not before.
+  The finished-session screen used to be the other dead end — the cards were done, the graph still
+  owed reviews, and the list was two phases back — so `ReviewEvent.ShowDue` (and a «مرور هدفمند»
+  action shown only when nodes are actually owed) returns to the summary.
 - **Settled (B-4): the reminder hour is a setting.** 19:00 is only the default
   (`AppSettings.DEFAULT_REMINDER_HOUR`); Settings has a «ساعت یادآوری» row that opens a
   `TimePicker`, and the stored value is `daily_reminder_hour` in the settings record. The alarm is
@@ -169,62 +182,137 @@
   device measurement rather than a guess. The backup rule now excludes `filesDir/vosk/` — that one
   was data loss, not a trade-off: the extracted model alone exceeded Auto Backup's 25 MB cap and
   cancelled the whole backup.
-- **Open: the backup rules and the finished-dialogue set disagree.** Auto Backup excludes
-  `datastore/` from both cloud backup and device-to-device transfer (`backup_rules.xml` for API < 31,
-  `data_extraction_rules.xml` for 31+), and that exclusion is right: `app_settings.preferences_pb`
-  carries the subscription mirror (`subscription_until`) and the legacy trial checkpoint, and a
-  restored entitlement is a purchase that never happened. But the same file also holds
-  `conversations_done`, the lessons whose dialogue the learner has finished
-  (`ConversationRepositoryImpl`, one id per line) — that is learner progress, not an entitlement.
-  Every other half of the *same event* survives a restore, because it is in Room: the lesson is still
-  completed (`lesson_state`), its answers are still in `lesson_attempt`, and the conversation's own
-  spoken turns are still claimed (`question_attempt`) and still count towards the skill meter
-  (`skill_mastery`). Only the “this dialogue is done” flag is lost.
-  What the learner meets after a restore or a phone-to-phone transfer: `owedConversation` finds the
-  highest completed lesson with no done id, so Home offers «گفتگوی این درس را تمرین کن» for a
-  dialogue they practised days ago, and `canOpenLesson` keeps every later lesson shut until they do
-  it again — a wall built from a fact the app forgot, not from learning. It heals the moment they
-  re-practise that one dialogue (the owed lesson stays open precisely so they can), which is why
-  this is debt and not a defect: nothing crashes, nothing is mis-graded, and the sentence they owe is
-  one they have already said. It is still wrong in the sense this project cares about — two stores
-  disagree about one event, and the store that forgets is the one the learner cannot inspect.
-  **Options, with what each costs and what it risks:**
-  1. **Move the done-set into Room** (table `conversation_done`, Room v9→v10). Cost: one migration, a
-     DAO, the repository implementation, and the matching `DatabaseUpgradeTest` / `RoomMigrationTest`
-     cases — all offline work, no content or UI. Risk: the project's own scar, a migration that
-     exists but is not registered, which crashed every *upgrading* install at v7→v8;
-     `AppDatabase.ALL_MIGRATIONS` is what now prevents that, so the risk is a wrong migration body,
-     caught only by an upgrade test with real learner rows. Gain beyond the bug: the mark becomes
-     transactional with the turn that earned it (today a crash between the two leaves the turn
-     claimed and the dialogue unmarked). Verdict: the honest fix.
-  2. **Split the file: `entitlements` (excluded) and `learner` (backed up).** Cost: a second
-     `preferencesDataStore`, a one-time move of `conversations_done` (and of any other learner flag
-     that should travel), both XML rule files updated. Risk: the split is a policy boundary kept by
-     hand — one entitlement key written into the backed-up store turns a restore into a free
-     subscription, and every future key needs the same decision made again. Verdict: the right
-     shape, but more to get wrong than 1, and it leaves progress flags in a store whose name says
-     “settings”.
-  3. **Narrow the exclusion to the entitlement keys.** Not available: Auto Backup, device transfer
-     and `data-extraction-rules` work on files and domains, never on preference keys, so the only way
-     to exclude one key is to give it its own file — which is option 2. Recorded so it is not
-     attempted again as an easy fix.
-  4. **Leave it, accept the re-practise.** Cost: this entry. Risk: the app cannot tell “restored” from
-     “never done”, so a learner who moved phones reads a finished dialogue being due as a bug; and
-     the gate is a *blocking* wall today, so the cost of being wrong is a learner who cannot reach
-     the next lesson without redoing work they remember doing. Verdict: acceptable only while the
-     dialogue is the only gate; if anything else is ever gated on it, this moves up the list.
-  If this is picked up, option 1 is the one to do, and option 4 stays the interim (no code change
-  now). The exclusion itself must not be loosened to fix this: a restored subscription is worse than
-  a re-practised sentence.
-- **The splash hand-off still calls the deprecated transition API (the one compiler warning left).**
-  `SplashActivity.openApp` uses `overridePendingTransition(R.anim.fade_in, R.anim.fade_out)`, which
-  API 34 deprecated in favour of `overrideActivityTransition(OVERRIDE_TRANSITION_OPEN/CLOSE, …)`.
-  The warning pass that took the other thirteen to zero left this one on purpose: the fade is the
-  frame the device run already had to fix (the black gap between the starting window and Compose's
-  first frame), and the replacement sets an *open* and a *close* override rather than one pair — a
-  behaviour change on API 34+ that no host-JVM test can observe. Revisit on an attached phone:
-  record the current transition with `scripts/install_debug.sh`, then swap both branches behind
-  `Build.VERSION.SDK_INT >= 34` and compare. Until then the old call still works on every API.
+- **A database Room cannot open is rebuilt only on the learner's word (content recovery, P1).**
+  The seeding path fails loudly instead of crashing: every failure below `AppContainer.seedContent()`
+  becomes `ContentStatus.FAILED`, so the lesson, placement and conversation screens render a named,
+  re-seeding error rather than a spinner nobody can leave (`ContentRecoveryTest` pins it with a path
+  SQLite cannot open). The failure is then *classified* — `ContentFailure` — because the two cases
+  need different answers. An unreadable asset or a parse that threw is `OTHER`: the retry is the right
+  move and a rebuild would throw away a readable progress file for nothing. Room refusing to open
+  `english.db` at all is `DATABASE_UNREADABLE`: there the retry is honest but terminal, so Home — and
+  only Home — offers a third action, «ساخت دوبارهٔ پایگاه داده», behind a confirmation that names what
+  is lost.
+  What the repair does, and does not do: it **moves** the file (with its `-wal`/`-shm` companions)
+  into `noBackupFilesDir/corrupt-database/` and restarts the process so Room builds a fresh database —
+  every repository holds a DAO from the closed handle, so re-wiring them in place would be a second,
+  larger change. It never deletes: the damaged file is off the backup path (it neither travels to
+  another phone nor counts against the 25 MB quota) and still reachable by support with `run-as`. If
+  nothing could be moved, `repairUnreadableDatabase()` returns false, the app is *not* restarted, and
+  the card says the file could not be set aside — a rebuild that silently claims success is worse than
+  one that admits it failed. A relaunch that cannot be queued (no launcher activity) is the third
+  outcome, and it is neither of those: the file *was* rebuilt, so the card drops the retry and the
+  rebuild — both would be dead buttons once this process's handle is closed and the file is gone —
+  and asks the learner to close and reopen the app, which is the same promise the confirmation made. The accepted trade-off is the one the confirmation spells out: the new
+  database is empty, so completed lessons, review schedules, streak and answered history do not come
+  back, and the lessons and words are re-seeded from the bundle. The alternative — `fallbackToDestructiveMigration`
+  or an automatic rebuild — was rejected because it would destroy progress without asking, and a
+  backup that restores a broken file would then loop. One test-side limit: Robolectric opens a garbage
+  `english.db` as a fresh database, so a *corrupt file* cannot be reproduced in the JVM suite; what the
+  suite proves is the path it cannot open, the classification, the move-aside and the successful seed
+  of the container that follows. Real corruption (bad restore, killed write, full disk) still needs a
+  device, where the expected behaviour is this card and this confirmation.
+- **Closed: the finished-dialogue set moved out of the excluded file (Room v9→v10).** Auto Backup
+  excludes `datastore/` from cloud backup and device-to-device transfer
+  (`backup_rules.xml` for API < 31, `data_extraction_rules.xml` for 31+), and that exclusion stays —
+  `app_settings.preferences_pb` carries the subscription mirror and the legacy trial checkpoint, and
+  a restored entitlement would be a purchase that never happened. The mistake was living there:
+  `conversations_done` is learner progress, not an entitlement, so a restore kept every half of the
+  same event (the completed lesson in `lesson_state`, its answers in `lesson_attempt`, the turns'
+  claims in `question_attempt`) and dropped only the “this dialogue is done” flag — Home then owed a
+  dialogue the learner had already practised and `canOpenLesson` kept the next lesson shut. The mark
+  now lives in its own table, `conversation_done`, restored with the rest of the progress.
+  Two consequences worth knowing. First, the mark is written **inside the final turn's transaction**
+  (`RecordConversationTurnUseCase`), so a crash can no longer leave the turn claimed and the dialogue
+  unmarked. Second, the migration is additive and empty: the old preference key is read **once** on
+  the first read of the stream (`ConversationRepositoryImpl.importLegacyOnce`) and then removed, so an
+  upgrading install keeps every dialogue it has finished. That import is the residual trade-off: the
+  rows carry no date (there is no honest one to carry), `reset()` clears the legacy key with the
+  table so a wipe cannot be undone by the import, and a failed import retries on the next read
+  rather than blocking the screen — the table, not the old key, is the authority. The exclusion must
+  still never be loosened to "fix" a future progress bug: a restored subscription is worse than a
+  re-practised sentence.
+- **The splash hand-off is ported to `overrideActivityTransition`; the visual comparison is still
+  owed on a phone.** Until this pass the fade was declared only by `overridePendingTransition(R.anim.fade_in,
+  R.anim.fade_out)` in the finishing splash, which API 34 deprecated. The replacement is not a rename:
+  its *open* override belongs to the activity being **entered**, so the pair is now declared by
+  `MainActivity.onCreate` (`OVERRIDE_TRANSITION_OPEN`: enter for Home, exit for the splash) and only
+  below 34 does the splash still declare it — doing both would put two overrides on one transition.
+  The decision lives in `SplashHandOff.usesNewApi`, and `SplashHandOffTest` pins the 33/34 boundary,
+  which is the half a compiler cannot check. It is a boolean rather than an enum because the call
+  sites have to *guard* the new API and lint only recognises a guard it can see through: a plain
+  `sdk >= 34` helper produced two findings (`NewApi` on the call, `InlinedApi` on the constant) from
+  correct code, and `@ChecksSdkIntAtLeast(parameter = 0, api = 34)` is the contract that makes the
+  helper readable. The alternative — an `@Suppress("NewApi")` or a budget entry — would have hidden
+  a real check for a self-inflicted reason; the annotation leaves the check on. Verified: the lint
+  report has no `NewApi`/`InlinedApi` entry and the budget still shows its seven.
+  What is **not** proven yet: the pixels. The fade is the frame the device run already had to fix (the
+  black gap between the starting window and Compose's first frame), and no host-JVM test can watch a
+  transition, so the old behaviour was kept as the fallback rather than removed. The check still owed
+  is the one this entry used to prescribe: record the hand-off with `scripts/install_debug.sh` on an
+  attached phone before and after, and compare for a black frame or a dropped fade on an API 34+
+  device (some OEM builds ignore an open override and fall back to the platform's default animation —
+  acceptable, but it has to be *seen* rather than assumed). The pre-34 call is kept under
+  `@Suppress("DEPRECATION")` behind the version guard; that suppression is the version gate itself,
+  not a way to silence a finding.
+  A forced full recompile of the main sources (`compileBazaarDebugKotlin --rerun`) now reports **no
+  Kotlin warnings at all** — the last one was this deprecation — which is a measurement, not a claim.
+- **A review card is recall evidence, never a format confirmation (review→graph pass).**
+  `SubmitReviewUseCase` now folds a grade into the reviewed word's curriculum node inside the same
+  transaction, so the graph finally sees the practice a mature learner spends most of their time on.
+  What it deliberately does **not** do is set a bit in `distinctTypesCorrect`: the mask is the
+  *transfer* claim (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), and a card is one word recalled, not an
+  exercise shape. A `REVIEW` format would have let a single card buy the second format the gate
+  wants — "proven two ways" about one way — so `recordRecall` passes `format = null` and the engine
+  records mastery and the node's own schedule only. Consequence, accepted: a learner who only
+  reviews can raise a node's mastery but can never make it *secured*; the two formats must still
+  come from lesson exercises. The other direction is now served (review→graph, second pass):
+  `GetDueKnowledgeReviewsUseCase` lists the due, unsecured nodes and the review screen opens each
+  one as the focused drill. Two choices are accepted debt rather than intended design. First, the
+  queue is still `review_item` over vocabulary — a due node is **not** queued as a card, so serving it
+  costs one tap into its lesson and the node's exercises never appear inside the card session; a
+  queue that mixes the two would need a card type that carries an exercise. Second, the read probes
+  the focused drill for at most `MAX_PROBES` (8) of the most overdue nodes and shows `DEFAULT_LIMIT`
+  (3) rows: each probe re-reads the graph through `GetFocusPlanUseCase`, so the bound is what keeps a
+  tab switch a short read rather than a scan of the bundle. A learner with more than three due nodes
+  sees three — the rest wait, and they are the *most* overdue that can actually be drilled.
+- **The error taxonomy reads the log, not a stored label (roadmap).** `lesson_attempt` records
+  which exercise was asked and whether it was right; it does **not** record the skill, so
+  `GetMissProfileUseCase` joins the id to the authored exercise and classifies by
+  `AnswerChecker.skillOf`. Three limits follow, all accepted. First, **a review card can only be
+  labelled vocabulary or grammar**: a card carries its item's content type and no exercise, so
+  `MissTaxonomy.classify(cards)` can never produce comprehension or production however the card goes.
+  That is a coarse label, not a wrong one (a recall card does test a word or a rule), and the
+  alternative was worse — keeping review out meant the mix stopped moving once a learner's practice
+  moved to the queue, which is what a mature learner's week looks like. The finer fix is a card type
+  that carries its exercise (the same thing the focused drill lacks). Second, the profile is a
+  **window** (`MissTaxonomy.WINDOW = 200` newest answers) rather than the archive, because the point
+  is what to fix now; lesson answers and cards are **pooled and then trimmed** to that window, so a
+  burst of review cannot crowd the lessons out (or the reverse) the way two windows would. The window
+  is a `LIMIT` over an unindexed `lesson_attempt` scan plus a `review_attempt ⋈ review_item` read —
+  both tables are small by design (tens of thousands of rows at most, see the `lesson_attempt` entry
+  above), so a single-screen read is fine. Third, the use case **caches each lesson's exercises for
+  the process** (bounded at 64 lessons): content is static once seeded, and the read runs on every
+  mastery emission — without it one answer would re-parse the bundle's exercises for every lesson in
+  the window. A re-seed mid-process would leave stale ids in that cache; the effect is a miss that
+  silently is not classified, never a wrong label. What the mix does *not* do yet is change the plan:
+  the second half of the roadmap item (adaptive difficulty driven by the weakest category) is still
+  open, and Progress only reports.
+- **The lint budget is a decision list, not a clean zero (P2 triage, Nov 2026).** Seven warnings are
+  accepted, and each one is written into `scripts/lint_budget.mjs` **with its reason**; the CI `lint`
+  job runs that script after the lint task and fails when the report disagrees with the list in any
+  direction — a new rule (nobody decided), more of a rule than allowed (an old finding growing), or
+  fewer (a stale entry: the budget has to shrink when something is fixed, or the slack becomes
+  permission to regress). The seven, and what each one actually means:
+  `CustomSplashScreen` is the real finding — a hand-drawn launch screen, deliberate, with its two open
+  halves in the entry above. `AndroidGradlePluginVersion` ×2 (Gradle 9.8.2, AGP 9.5.1) and
+  `NewerVersionAvailable` ×3 (jna 5.19.1, the two Kotlin plugins at 2.4.21 vs 2.2.10) are freshness,
+  not risk: AGP 9 ships built-in Kotlin, so Gradle, AGP and Kotlin move together in one toolchain pass
+  and never as a side effect of a feature commit. `UseTomlInstead` is a **false positive and must not
+  be "fixed"**: `app/build.gradle.kts` writes `net.java.dev.jna:jna:${libs.versions.jna.get()}@aar`,
+  so the version *does* come from the catalog — the coordinate is spelled out only because a catalog
+  entry cannot carry the `@aar` packaging, and the catalog form resolves to the jar and breaks the
+  native Vosk loader at runtime. Keeping the list short is the point: the pass that took
+  `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` to zero did not add them here.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

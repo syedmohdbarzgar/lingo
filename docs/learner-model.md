@@ -57,9 +57,24 @@
 - **A focused session (B-1) is the engine's decision, not a screen's.** It shows only the lesson's
   exercises that are evidence about the node (the same `KnowledgeEvidence` rule that writes the
   learner model), keeps their authored order, leads with the engine's reason, and reports the
-  node's mastery against `FocusPlan.reassessThreshold`. Only a node the engine itself calls weak
-  (mastery below `RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD`, with evidence) gets a block; a node
-  the learner never studied is *taught*, not drilled, so `GetFocusPlanUseCase` returns `null` for it.
+  node's mastery against `FocusPlan.reassessThreshold`. A node is drilled for one of three reasons:
+  the engine calls it weak (mastery below `RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD`, with
+  evidence); an explicit request names a strong-but-unsecured node for a **retest**; or an explicit
+  request names a node whose own **schedule is due** (`KnowledgeGates.isDue`, the same date
+  `nextReviewAt` the lesson writes). A node the learner never studied is *taught*, not drilled, and a
+  secured node is refused even when its date has passed, so `GetFocusPlanUseCase` returns `null` for
+  both.
+- **The due node is served, not just scheduled (review→graph pass).** `GetDueKnowledgeReviewsUseCase`
+  reads the node states, keeps the due ones the gates do not call secured, and asks
+  `GetFocusPlanUseCase` for each node's drill — so a row exists only where the focused session will
+  actually run, and it carries that session's lesson id. The review screen renders them in a
+  "مرور هدفمند" card beside the word queue (the two halves are separate: an empty card queue can
+  still owe graph reviews), and a failed read of this half degrades to "nothing due" instead of
+  blanking the screen the cards already populate. Both reads run again whenever the screen is
+  **resumed** — never mid-session, and without a spinner — and the finished card session offers a
+  «مرور هدفمند» return, so work completed in the drill is no longer still listed, and work still owed
+  is no longer two phases out of reach. Probes are bounded (`MAX_PROBES`, most overdue
+  first, `DEFAULT_LIMIT` rows), because each probe re-reads the graph through the focus use case.
 - **The remediation bar is one bar (v9 B-1).** `RemediationEngine.DEFAULT_REASSESS_THRESHOLD` equals
   `DEFAULT_WEAKNESS_THRESHOLD` (0.5), and `RemediationEngine.assess` decides from the node's
   **stored** `knowledge_state.mastery` (not the session profile, which seeds an untouched dimension
@@ -142,6 +157,15 @@
   knowledge the history has no answer for.
   `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
+- **A review grade is graph evidence too (review→graph pass).** `SubmitReviewUseCase` writes the
+  reviewed word's node in the card's own transaction (`KnowledgeRepository.recordRecall`), attributed
+  by the same `KnowledgeEvidence` rule a lesson answer uses, so a vocabulary card and a vocabulary
+  exercise can never disagree about which node they prove. Before this the graph was blind to the
+  practice a mature learner spends most time on: cards moved the skill meters while every node stayed
+  at the mastery of its last lesson answer. Two deliberate limits: **no exercise format** is recorded
+  (a card is recall, not a *transfer* claim — see the entry in [`docs/debt.md`](debt.md)), and the
+  queue itself is still the card queue: a node's own exercises are not yet re-served from its due
+  date, which is the other half of the roadmap item.
 - **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at
   `DefaultKnowledgeEngine.FIRST_HIT_MASTERY` (0.4), not 1.0 — one tap is evidence, not proof, and
   seeding it at full made a just-met node look learned to the planner and to the skill meters.
@@ -217,3 +241,20 @@
   [`review-v64.md`](review-v64.md):** READING is reachable in 43 of 192 lessons (a passage in 36) and
   WRITING only through the 156 `sentence_production` items — so those two bars move slower than
   GRAMMAR and VOCABULARY on the same effort, and the dome is honest about it rather than mis-wired.
+- **The error taxonomy answers a different question than the tracks (roadmap).** A track says how
+  much is known; `MissTaxonomy` (pure, in `domain/engine`) says what the answers that went wrong
+  were *about*: `VOCABULARY`, `GRAMMAR`, `COMPREHENSION` (reading + listening) and `PRODUCTION`
+  (writing + speaking items — building a sentence is not knowing a rule). The category comes from
+  the exercise's own authored skill (`AnswerChecker.skillOf`), never from a guess about why the
+  learner picked an answer, which the app cannot observe. `GetMissProfileUseCase` joins the recent
+  answer log to the authored exercises by id and folds it into `MissProfile`; Progress renders the
+  mix and names the category with the **most misses** (count, not rate: one miss out of two is not
+  a pattern), only once the window holds `MIN_ATTEMPTS = 5` answers. Content the bundle no longer
+  ships is skipped rather than classified. **Review cards are classified too**, by the item's own
+  content type: a card can say vocabulary or grammar — the only two things a recall card can train —
+  and never comprehension or production. GOOD and EASY are hits, HARD and AGAIN are not (the same
+  `ReviewResult.isSuccess` rule the tracks read), and a card whose item has left the queue is dropped
+  rather than guessed, so a review-only week keeps the mix moving instead of freezing it at the first
+  lesson. Both sources are pooled and then trimmed to the one window, so neither can crowd the other
+  out. What is left of the roadmap item is the *adaptive* half: nothing yet steers what comes next
+  from this mix (the plan still steers from the graph).

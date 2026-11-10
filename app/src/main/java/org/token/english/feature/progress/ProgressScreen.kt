@@ -36,6 +36,7 @@ import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.progressViewModelFactory
+import org.token.english.domain.engine.MissCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -170,6 +171,59 @@ fun ProgressScreen() {
                     }
                 }
 
+                // The error taxonomy (roadmap): how much is known is one card, what the
+                // misses are *about* is another. It stays hidden until the window has
+                // enough answers for the mix to mean something (`MissTaxonomy`).
+                state.missProfile?.let { miss ->
+                    AppCard {
+                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
+                            SectionHeader("اشتباه‌ها چه می‌گویند؟")
+                            Text(
+                                text = "از ${persianMeasure(miss.attempts, "پاسخ")} اخیر، " +
+                                    "${persianMeasure(miss.misses, "پاسخ")} نادرست بود. اگر بیشتر " +
+                                    "اشتباه‌ها از یک نوع باشد، تمرین همان زودتر جواب می‌دهد.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            miss.categories.forEach { category ->
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                ) {
+                                    Text(
+                                        text = missCategoryLabel(category.category),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                    )
+                                    Text(
+                                        text = persianCountPair(category.misses, category.attempts),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = if (category.category == miss.weakest?.category) {
+                                            MaterialTheme.colorScheme.error
+                                        } else {
+                                            MaterialTheme.colorScheme.onSurfaceVariant
+                                        },
+                                    )
+                                }
+                            }
+                            miss.weakest?.let { weakest ->
+                                Text(
+                                    text = "بیشترین اشتباه: ${missCategoryLabel(weakest.category)} — " +
+                                        missCategoryHint(weakest.category),
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                            Text(
+                                // Cards are counted too, but a card knows only whether it
+                                // was a word or a rule — so review can never show up under
+                                // comprehension or production, however it goes.
+                                text = "پاسخ‌های درس و کارت‌های مرور با هم شمرده می‌شوند؛ کارت فقط می‌تواند در «واژگان» یا «گرامر» بیفتد.",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+
                 if (state.knowledgeTotal > 0) {
                     AppCard {
                         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
@@ -192,6 +246,21 @@ fun ProgressScreen() {
             }
         }
     }
+}
+
+private fun missCategoryLabel(category: MissCategory): String = when (category) {
+    MissCategory.VOCABULARY -> "واژگان"
+    MissCategory.GRAMMAR -> "گرامر"
+    MissCategory.COMPREHENSION -> "درک مطلب"
+    MissCategory.PRODUCTION -> "ساختن جمله"
+}
+
+/** One line of advice per kind of miss — a category with no action would be trivia. */
+private fun missCategoryHint(category: MissCategory): String = when (category) {
+    MissCategory.VOCABULARY -> "واژه‌ها را در مرور و تمرین واژگان محکم کن."
+    MissCategory.GRAMMAR -> "ساختار جمله‌ها را با تمرین گره‌های گرامری مرور کن."
+    MissCategory.COMPREHENSION -> "بیشتر بخوان و بشنو؛ متن و شنیداری درس‌ها را دوباره ببین."
+    MissCategory.PRODUCTION -> "خودت جمله بساز و بگو؛ شناختن پاسخ کافی نیست."
 }
 
 @Composable

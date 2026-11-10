@@ -55,7 +55,7 @@ class DatabaseUpgradeTest {
             ) { rs ->
                 rs.next()
                 ((rs.getObject(1) as? Number)?.toLong()) to rs.getInt(2)
-            } as Pair<Long?, Int>
+            }
 
             assertNull("a legacy node must not be given a made-up first-correct date", row.first)
             assertEquals("and starts with no confirmed format", 0, row.second)
@@ -145,7 +145,13 @@ class DatabaseUpgradeTest {
         }
     }
 
-    private fun query(db: Connection, sql: String, read: (ResultSet) -> Any?): Any? =
+    /**
+     * One row-reader, typed by what the caller reads out of it. Generic on purpose:
+     * the untyped version forced `as Pair<…>` / `as? Int` at every call site, which
+     * is one unchecked cast per query — a compiler warning each, hiding among the
+     * `@Suppress` that made the last one invisible.
+     */
+    private fun <T> query(db: Connection, sql: String, read: (ResultSet) -> T): T =
         try {
             db.createStatement().use { statement -> statement.executeQuery(sql).use(read) }
         } catch (e: SQLException) {
@@ -153,13 +159,12 @@ class DatabaseUpgradeTest {
         }
 
     /** Table names that exist in the open database. */
-    @Suppress("UNCHECKED_CAST")
     private fun tablesIn(db: Connection): List<String> =
         query(db, "SELECT name FROM sqlite_master WHERE type='table'") { rs ->
             val names = mutableListOf<String>()
             while (rs.next()) names += rs.getString(1)
             names
-        } as? List<String> ?: emptyList()
+        }
 
     /** One generated value per column, deterministic and type-appropriate. */
     private fun valueFor(table: String, column: String, affinity: String): Any = when (affinity) {
@@ -185,7 +190,7 @@ class DatabaseUpgradeTest {
 
     private fun count(db: Connection, table: String): Int = query(db, "SELECT COUNT(*) FROM $table") { rs ->
         if (rs.next()) rs.getInt(1) else 0
-    } as? Int ?: 0
+    }
 
     @Test
     fun `learner data survives every upgrade step from the oldest schema to the shipped one`() {
@@ -274,6 +279,9 @@ class DatabaseUpgradeTest {
                     // a reopened step resumes from (Phase 1 + Phase 2).
                     "question_attempt",
                     "lesson_attempt",
+                    // v10: the finished-dialogue mark, moved out of the settings file
+                    // Auto Backup excludes and into the progress database it restores.
+                    "conversation_done",
                 ),
                 added,
             )

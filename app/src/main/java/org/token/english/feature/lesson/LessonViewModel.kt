@@ -395,7 +395,9 @@ class LessonViewModel(
         // only those, in the authored order. A subset, not a reshuffle.
         // runCatchingCancellable, not runCatching (checklist B-9): a cancelled
         // session must stop, not carry on and write state.
-        val focus = focusItemId?.let { runCatchingCancellable { getFocusPlan(it) }.getOrNull() }
+        val focus = focusItemId?.let { item ->
+            runCatchingCancellable { getFocusPlan(item, System.currentTimeMillis()) }.getOrNull()
+        }
         val focusedIds = focus?.exerciseIds.orEmpty()
         val sessionExercises = exercises.filter { it.id in focusedIds }.ifEmpty { exercises }
         if (lesson == null || sessionExercises.isEmpty()) {

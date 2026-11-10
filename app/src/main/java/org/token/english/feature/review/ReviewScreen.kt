@@ -72,6 +72,12 @@ fun ReviewScreen(
     onBrowseVocabulary: () -> Unit,
     onGoHome: () -> Unit,
     /**
+     * Opens the focused drill for one due curriculum node (review→graph pass). The row
+     * the learner taps and the session it opens are the same decision: the row came
+     * from that use case's own plan, lesson id included.
+     */
+    onOpenFocus: (lessonId: String, itemId: String) -> Unit = { _, _ -> },
+    /**
      * Screen-level seam (checklist v15 B-6): the smoke tests inject a ViewModel
      * built from fakes; production omits this and gets the container-wired one.
      */
@@ -99,6 +105,10 @@ fun ReviewScreen(
         }
     }
     LaunchedEffect(isResumed) {
+        // Both queues are local reads; returning from the focused drill (or another
+        // tab) is exactly when they may have gone stale. The ViewModel ignores the
+        // first resume and any resume mid-session.
+        if (isResumed) vm.onScreenResumed()
         while (isResumed) {
             delay(StudyTimePolicy.TICK_MILLIS)
             vm.onStudyTick()
@@ -127,7 +137,8 @@ fun ReviewScreen(
                     modifier = Modifier.align(Alignment.Center),
                 )
 
-                state.phase == ReviewPhase.SUMMARY && state.queue.isEmpty() -> AppEmptyState(
+                state.phase == ReviewPhase.SUMMARY &&
+                    state.queue.isEmpty() && state.dueReviews.isEmpty() -> AppEmptyState(
                     icon = Icons.Default.CheckCircle,
                     title = "امروز مروری در کار نیست",
                     subtitle = "همه موارد سررسید را مرور کردی. ادامه یادگیری را از خانه شروع کن.",
@@ -136,18 +147,22 @@ fun ReviewScreen(
                     modifier = Modifier.align(Alignment.Center),
                 )
 
-                state.phase == ReviewPhase.SUMMARY -> SummaryContent(state, vm)
+                state.phase == ReviewPhase.SUMMARY -> SummaryContent(state, vm, onOpenFocus)
 
                 state.phase == ReviewPhase.SESSION -> SessionContent(state, vm)
 
-                state.phase == ReviewPhase.DONE -> DoneContent(state, onGoHome, onBrowseVocabulary, Modifier.align(Alignment.Center))
+                state.phase == ReviewPhase.DONE -> DoneContent(state, vm, onGoHome, onBrowseVocabulary, Modifier.align(Alignment.Center))
             }
         }
     }
 }
 
 @Composable
-private fun SummaryContent(state: ReviewUiState, vm: ReviewViewModel) {
+private fun SummaryContent(
+    state: ReviewUiState,
+    vm: ReviewViewModel,
+    onOpenFocus: (lessonId: String, itemId: String) -> Unit,
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -155,27 +170,65 @@ private fun SummaryContent(state: ReviewUiState, vm: ReviewViewModel) {
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
-        AppCard {
-            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
-                SectionHeader("مرور امروز")
-                Text(
-                    text = persianMeasure(state.queue.size, "مورد"),
-                    style = MaterialTheme.typography.displaySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    text = "واژگان: ${bidiNumber(state.queue.size)}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                InfoBanner(
-                    message = "مرور فاصله‌دار بر اساس عملکرد تو زمان هر مورد را تعیین می‌کند. پاسخ صادقانه بهترین نتیجه را می‌دهد.",
-                )
-                PrimaryButton(
-                    text = "شروع مرور",
-                    onClick = { vm.onEvent(ReviewEvent.Start) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+        // The card queue can be empty while the graph still owes reviews, so the two
+        // halves are separate cards rather than one number that could read "0" while
+        // there is work on this very screen.
+        if (state.queue.isNotEmpty()) {
+            AppCard {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    SectionHeader("مرور امروز")
+                    Text(
+                        text = persianMeasure(state.queue.size, "مورد"),
+                        style = MaterialTheme.typography.displaySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                    Text(
+                        text = "واژگان: ${bidiNumber(state.queue.size)}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    InfoBanner(
+                        message = "مرور فاصله‌دار بر اساس عملکرد تو زمان هر مورد را تعیین می‌کند. پاسخ صادقانه بهترین نتیجه را می‌دهد.",
+                    )
+                    PrimaryButton(
+                        text = "شروع مرور",
+                        onClick = { vm.onEvent(ReviewEvent.Start) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
+        }
+
+        // The graph half (review→graph pass): a node whose own schedule is due is
+        // practised through its own exercises, not through a word card.
+        if (state.dueReviews.isNotEmpty()) {
+            AppCard {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.md)) {
+                    SectionHeader("مرور هدفمند")
+                    Text(
+                        text = "این گره‌های برنامهٔ درسی وقت مرورشان رسیده است. هر بخش فقط تمرین‌های خودش را می‌پرسد.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    state.dueReviews.forEach { review ->
+                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            Text(
+                                text = review.titleFa,
+                                style = MaterialTheme.typography.titleSmall,
+                            )
+                            Text(
+                                text = review.reasonFa,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            SecondaryButton(
+                                text = "مرور این بخش",
+                                onClick = { onOpenFocus(review.lessonId, review.itemId) },
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -417,6 +470,7 @@ private fun GradeButton(
 @Composable
 private fun DoneContent(
     state: ReviewUiState,
+    vm: ReviewViewModel,
     onGoHome: () -> Unit,
     onBrowseVocabulary: () -> Unit,
     modifier: Modifier = Modifier,
@@ -438,6 +492,16 @@ private fun DoneContent(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
+            )
+        }
+        // The card session can end while the graph still owes reviews. Without this
+        // action that work was reachable only by re-opening the screen — the summary
+        // that lists it was two phases back.
+        if (state.dueReviews.isNotEmpty()) {
+            SecondaryButton(
+                text = "مرور هدفمند: ${persianMeasure(state.dueReviews.size, "بخش")}",
+                onClick = { vm.onEvent(ReviewEvent.ShowDue) },
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         PrimaryButton(text = "بازگشت به خانه", onClick = onGoHome, modifier = Modifier.fillMaxWidth())

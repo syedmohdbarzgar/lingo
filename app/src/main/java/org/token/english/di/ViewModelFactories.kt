@@ -39,7 +39,10 @@ fun homeViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { c 
         companionStatus = c.companionStatus,
         refreshCompanion = { c.refreshCompanionInstalled() },
         contentStatus = c.contentStatus,
+        contentFailure = c.contentFailure,
         seedContent = { c.seedContent() },
+        rebuildDatabase = { c.repairUnreadableDatabase() },
+        restartApp = { c.restartProcess() },
     )
 }
 
@@ -72,6 +75,7 @@ fun reviewViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory { 
         vocabularyRepository = c.vocabularyRepository,
         progressRepository = c.progressRepository,
         submitReview = c.submitReview,
+        getDueKnowledgeReviews = c.getDueKnowledgeReviews,
         audioPlayer = c.audioPlayer,
         speaker = c,
         isAppInForeground = { c.isAppInForeground },
@@ -85,6 +89,7 @@ fun progressViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory 
         progressRepository = c.progressRepository,
         knowledgeRepository = c.knowledgeRepository,
         getSkillProfiles = c.getSkillProfiles,
+        getMissProfile = c.getMissProfile,
         studyStats = c.studyStats,
     )
 }

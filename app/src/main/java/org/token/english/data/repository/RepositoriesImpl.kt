@@ -1,6 +1,7 @@
 package org.token.english.data.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.room.withTransaction
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -11,14 +12,22 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.token.english.core.common.TimeUtil
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.data.content.ContentParser
 import org.json.JSONArray
 import org.token.english.data.local.dao.ContentDao
+import org.token.english.data.local.dao.ConversationDao
 import org.token.english.data.local.dao.KnowledgeDao
 import org.token.english.data.local.dao.ProgressDao
 import org.token.english.data.local.dao.ReviewDao
+import org.token.english.data.local.entity.ConversationDoneEntity
 import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
@@ -36,6 +45,7 @@ import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.ExerciseFormat
+import org.token.english.domain.model.GradedCard
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -102,6 +112,24 @@ class KnowledgeRepositoryImpl(
         KnowledgeEvidence.itemsFor(itemsForLesson(lessonId), skill).forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
                 engine.applyAttempt(item.id, existing?.toDomain(), correct, now, format).toEntity()
+            }
+        }
+    }
+
+    override suspend fun recordRecall(
+        lessonId: String?,
+        skill: Skill,
+        correct: Boolean,
+        now: Long,
+    ) {
+        // No lesson, no attribution: the repository never invents nodes for a card it
+        // cannot place (the same rule as an unknown lesson in `recordAttempt`).
+        val lesson = lessonId ?: return
+        KnowledgeEvidence.itemsFor(itemsForLesson(lesson), skill).forEach { item ->
+            knowledgeDao.updateAtomic(item.id) { existing ->
+                // format = null on purpose: review is recall, not a transfer claim (see
+                // the contract in `KnowledgeRepository.recordRecall`).
+                engine.applyAttempt(item.id, existing?.toDomain(), correct, now, format = null).toEntity()
             }
         }
     }
@@ -240,6 +268,18 @@ class LessonRepositoryImpl(
             )
         }
 
+    override suspend fun recentAttempts(limit: Int): List<LessonAttempt> =
+        contentDao.getRecentLessonAttempts(limit).map {
+            LessonAttempt(
+                lessonId = it.lessonId,
+                stageId = it.stageId,
+                exerciseId = it.exerciseId,
+                answer = it.answer,
+                correct = it.correct,
+                at = it.at,
+            )
+        }
+
     override suspend fun getLessonState(lessonId: String): LessonState? =
         contentDao.getLessonState(lessonId)?.toDomain()
 
@@ -341,6 +381,19 @@ class ReviewRepositoryImpl(
                 ?: return@mapNotNull null
             type to AttemptStats(attempts = row.total, misses = row.total - row.correct)
         }.toMap()
+
+    override suspend fun recentCards(limit: Int): List<GradedCard> =
+        reviewDao.recentGrades(limit).mapNotNull { row ->
+            // A grade this build cannot name (a legacy result string) is dropped: the
+            // taxonomy classifies known grades or says nothing, never guesses.
+            val result = ReviewResult.entries.firstOrNull { it.name == row.result }
+                ?: return@mapNotNull null
+            GradedCard(
+                result = result,
+                type = ReviewContentType.entries.firstOrNull { it.name == row.contentType },
+                at = row.timestamp,
+            )
+        }
 
     override suspend fun reset() {
         reviewDao.clearItems()
@@ -582,35 +635,88 @@ class SettingsRepositoryImpl(
 }
 
 /**
- * Finished conversations, kept in the same preferences file as the settings: it
- * is one small set of lesson ids, written once per dialogue, and it must survive a
- * restart or the gate would reopen by itself. Stored as a newline-joined string
- * rather than a `stringSet` so the value has a stable, readable shape.
+ * Finished conversations (Room v10).
+ *
+ * These used to live in the settings preferences file. That file is excluded from
+ * Auto Backup because it also carries the subscription mirror, so the mark — which
+ * is learning data, not settings — vanished on a restore while the completed lesson
+ * it unlocks survived: the gate then demanded a dialogue already spoken, and the
+ * next lesson stayed shut. Progress belongs in the progress table, and the mark is
+ * written inside the final turn's own transaction (see
+ * [org.token.english.domain.usecase.RecordConversationTurnUseCase]).
+ *
+ * The legacy preference key is read **once** and then removed: an install that
+ * upgrades keeps every dialogue it has already finished instead of being sent back
+ * through them, and the settings file stops being a second, silent source of truth.
  */
 class ConversationRepositoryImpl(
+    private val dao: ConversationDao,
     private val context: Context,
 ) : ConversationRepository {
 
-    override fun observeCompleted(): Flow<Set<String>> =
-        context.dataStore.data.map { prefs ->
-            parseDoneLessonIds(prefs[CONVERSATIONS_DONE])
-        }
+    /** Single-flight, so two collectors of the stream cannot both import. */
+    private val importLock = Mutex()
+
+    @Volatile
+    private var legacyImported = false
+
+    override fun observeCompleted(): Flow<Set<String>> = flow {
+        importLegacyOnce()
+        emitAll(dao.observeDone().map { it.toSet() })
+    }
 
     override suspend fun markCompleted(lessonId: String) {
         if (lessonId.isBlank()) return
-        context.dataStore.edit { prefs ->
-            val done = parseDoneLessonIds(prefs[CONVERSATIONS_DONE]) + lessonId
-            prefs[CONVERSATIONS_DONE] = done.joinToString("\n")
-        }
+        dao.insert(ConversationDoneEntity(lessonId))
     }
 
     /**
-     * Removes the whole set, not a blank value: an absent key reads back as "no
-     * dialogue finished", and a key holding an empty string would be rewritten on
-     * the next mark anyway. The settings themselves are untouched.
+     * Room's own delete: an empty table is "no dialogue finished", nothing left to
+     * re-read.
+     *
+     * The legacy key goes with the rows. A wipe that left it behind would be undone by
+     * the next read of the stream, which imports whatever the old preference set still
+     * holds — progress the learner had just asked to delete.
      */
     override suspend fun reset() {
-        context.dataStore.edit { prefs -> prefs.remove(CONVERSATIONS_DONE) }
+        dao.clear()
+        runCatchingCancellable {
+            context.dataStore.edit { it.remove(CONVERSATIONS_DONE) }
+        }
+        legacyImported = true
+    }
+
+    /**
+     * Imports the old preference set into Room the first time the stream is read.
+     *
+     * Idempotent by construction: the rows are `INSERT OR IGNORE`, so a crash after
+     * the write but before the key is removed simply repeats it next launch. A failed
+     * import leaves the flag unset (it retries) and never breaks the caller: the
+     * stream still emits what Room holds, which is the authority from now on.
+     */
+    private suspend fun importLegacyOnce() {
+        if (legacyImported) return
+        importLock.withLock {
+            if (legacyImported) return
+            val done = runCatchingCancellable {
+                val raw = context.dataStore.data.first()[CONVERSATIONS_DONE]
+                val ids = parseDoneLessonIds(raw)
+                if (ids.isEmpty()) {
+                    true
+                } else {
+                    dao.insertAll(ids.map(::ConversationDoneEntity))
+                    // Written first, then cleared: the mark now lives in the table that
+                    // backup restores with the rest of the progress.
+                    context.dataStore.edit { it.remove(CONVERSATIONS_DONE) }
+                    true
+                }
+            }
+            if (done.isSuccess) {
+                legacyImported = true
+            } else {
+                Log.w("ConversationRepository", "legacy dialogue import failed", done.exceptionOrNull())
+            }
+        }
     }
 }
 

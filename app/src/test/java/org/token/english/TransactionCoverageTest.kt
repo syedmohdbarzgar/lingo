@@ -91,7 +91,8 @@ class TransactionCoverageTest {
         .filterNot { name ->
             name.startsWith("get") || name.startsWith("observe") || name.startsWith("count") ||
                 name.startsWith("items") || name.startsWith("all") || name.startsWith("find") ||
-                name.startsWith("is") || name.startsWith("has") || name.startsWith("load")
+                name.startsWith("is") || name.startsWith("has") || name.startsWith("load") ||
+                name.startsWith("recent")
         }
         .toSet()
 
@@ -175,15 +176,21 @@ class TransactionCoverageTest {
 
         val invocations: Map<String, suspend (ProgressRepository) -> Unit> = mapOf(
             "SubmitReviewUseCase" to { progress ->
-                SubmitReviewUseCase(FakeReviewRepository(), Sm2ReviewScheduler(), progress)(
+                SubmitReviewUseCase(
+                    FakeReviewRepository(),
+                    Sm2ReviewScheduler(),
+                    progress,
+                    FakeKnowledgeRepository(),
+                )(
                     card,
                     ReviewResult.GOOD,
                     NOW,
                     responseTimeMs = 800L,
+                    lessonId = "a1.guard.lesson-01",
                 )
             },
             "RecordConversationTurnUseCase" to { progress ->
-                RecordConversationTurnUseCase(progress, FakeKnowledgeRepository())(
+                RecordConversationTurnUseCase(progress, FakeKnowledgeRepository(), FakeConversationRepository())(
                     "a1.guard.lesson-01",
                     "a1.guard.lesson-01.sp.01",
                     org.token.english.domain.engine.SpeakingVerdict.CORRECT,

@@ -45,15 +45,23 @@ review → progress. Specs in `files/` are **design intent, not proof**.
 ./gradlew :app:testBazaarDebugUnitTest   # unit tests + typechecks main sources (the fast gate)
 ./gradlew validateContent --rerun        # content gate (also runs in preBuild)
 ./gradlew :app:lintBazaarDebug           # lint (also a CI job)
+node scripts/lint_budget.mjs             # the accepted warnings, after a lint run (also in CI)
 scripts/install_debug.sh                 # builds+installs only when a device is attached (else no-op)
 ```
+
+A lint warning is never "just a warning" and never added to `scripts/lint_budget.mjs` to get green:
+each accepted one carries its reason there, and the budget fails when a rule appears, grows, or goes
+away without the list shrinking (`docs/debt.md` has the decisions).
 
 Release points, the fail-closed gates, the toolchain facts and the CI shape are in
 [`docs/release.md`](docs/release.md); the Definition of Done is §9 below. In short, CI runs three
 jobs on every push and pull request — **`verify`** (content validation + unit tests + the B-9
 `runCatching` grep), **`transactions`** (the atomic-evidence classes, filtered out of the same suite)
-and **`lint`** — plus **`assemble`** (the three flavor APKs) only on a schedule, a manual dispatch or
-a tag, after `transactions`.
+and **`lint`** — plus **`assemble`** (the three flavor APKs) and **`device`** (one emulator boot
+running `scripts/verify_device.sh bazaar --require-device`: install, airplane mode on, two timed cold
+starts, seed line, crash sweep) only on a schedule, a manual dispatch or a tag, after `transactions`.
+The `device` job is a launch smoke, not an instrumented suite: it proves the app starts and seeds on
+Android, and `--require-device` makes a dead emulator a red job rather than a green no-op.
 
 ## 3. Architecture (single module, layered packages)
 
@@ -131,7 +139,49 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (625 tests / 73 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (663 tests / 76 classes as of the
+miss-taxonomy card pass, where the taxonomy stopped being lesson-only: a review card is classified by
+its item's content type (vocabulary or grammar — the only two things a recall card can train), GOOD
+and EASY are the hits via one `ReviewResult.isSuccess`, a grade whose item left the queue is dropped
+rather than guessed, and both sources are pooled and trimmed to one window so a review-only week
+keeps the mix moving — three cases in `MissTaxonomyTest` and three in `ProgressViewModelTest`
+(cards reach the state, cards alone move it, lessons and cards are one window). `TransactionCoverageTest`
+also had to learn that a `recent*` repository method is a read, not a write. Before it the
+review→graph pass, where a review grade is finally folded into the reviewed word's curriculum node
+inside the card's own transaction — with **no** exercise format, because a card is recall and not the
+*transfer* claim the format mask means; `EvidenceTransactionTest` proves the rollback of the node write
+and `ReviewViewModelTest` the wiring. The same pass closed the other direction: a due node's own
+exercises are now served, listed on the review screen through `GetDueKnowledgeReviewsUseCase` and
+opened as the focused drill — four cases in `FocusPlanTest` (due middle band drilled, secured node
+refused, the list's filters and order, a graph still inside its intervals), one in
+`ReviewViewModelTest` (the node sits beside the cards) and one in `ScreenSmokeTest` (the row and its
+CTA). The same pass then made that work stay current: the review summary re-reads both queues on
+resume (never mid-session — three `ReviewViewModelTest` cases pin the re-read, the untouched session
+and `ShowDue` returning the finished screen to the due list) and the finished screen offers that
+return only when nodes are actually owed. Before it, the error-taxonomy pass started the roadmap's
+next item: the new `MissTaxonomy` engine classifies each recent lesson answer by its exercise's
+skill (vocabulary, grammar, comprehension, production) and `GetMissProfileUseCase` folds the window
+into a mix Progress renders — six cases in `MissTaxonomyTest` (the skill mapping, the counts, the
+miss-count "weakest" rule, absent categories, stale content, the five-answer bar) and one in
+`ProgressViewModelTest` (the mix reaches the state). Before it the splash-hand-off pass, whose new class
+`SplashHandOffTest` pins the API 34 boundary of the fade — below
+34 the finishing splash declares it, from 34 the entered activity does, and declaring both would
+fight over one transition; the pixels are still a device check (`docs/debt.md`). Before it the
+database-rebuild pass, where a seed failure is classified — `ContentFailure` — and Home offers the
+rebuild only for the one case a retry cannot fix: four cases in `HomeViewModelTest` (offered only
+for the database, restart after a move, an honest failure when nothing moved, and a relaunch that
+cannot be queued leaving a manual-restart message instead of a dead button) and one in
+`ScreenSmokeTest` (the action, its confirmation, and the dismiss that does nothing). Before it the
+content-recovery pass, where `ContentSeederTest` covers the failures around the bundle write — an
+unreadable asset, a malformed one, a crash between the content transaction and its stamp — and
+`ContentRecoveryTest` proves that a database file which cannot be opened ends the seed in `FAILED`
+rather than a crash or a `LOADING` no screen can leave, that the failure is `DATABASE_UNREADABLE`,
+and that the repair moves the file aside so the next container seeds; before it the
+conversation-mark pass, where the finished-dialogue set leaves the backup-excluded preferences file
+for Room (`conversation_done`, schema v9→v10) and is written inside the final turn's own
+transaction — a case in `EvidenceTransactionTest` proves a crash there leaves the dialogue unmarked,
+and `DatabaseUpgradeTest`/`RoomMigrationTest` cover the step and its one-time import of the old
+key; before it the
 content-status pass, where a failed bundle write stops being an endless spinner or a false empty
 state on the lesson, the placement test and conversation practice and becomes a named, re-seeding
 retry; before it the

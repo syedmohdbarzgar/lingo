@@ -84,10 +84,27 @@ assertion of intent:
 | Gate | Command | Result |
 | --- | --- | --- |
 | Content | `./gradlew validateContent --rerun` | pass |
-| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **625 tests / 73 classes, 0 failures** |
-| Lint | `./gradlew :app:lintBazaarDebug` | **0 errors**, 7 warnings (6 version nags + 1 `CustomSplashScreen`); `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` are all zero |
+| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **641 tests / 75 classes, 0 failures** |
+| Lint | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | **0 errors**, 7 warnings, all accepted by the budget (6 version nags + 1 `CustomSplashScreen`, one of them a documented false positive); `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` are all zero |
 | Flavors | `assembleBazaarDebug`, `assembleMyketDebug`, `assembleGooglePlayDebug` | 3/3 build; the only permission difference is the marketplace billing one |
-| DB upgrade | `DatabaseUpgradeTest`, `RoomMigrationTest` (in the unit suite) | v1→v9 chain executed on real SQLite with learner rows; every value survives, the v9 tables arrive empty |
+| DB upgrade | `DatabaseUpgradeTest`, `RoomMigrationTest` (in the unit suite) | v1→v10 chain executed on real SQLite with learner rows; every value survives, the tables each step introduces arrive empty |
+
+One gate is deliberately absent from that table because it did not run here: the hardware half. This
+machine has no attached phone and its emulator cannot boot (HAXM is not installed), so
+`scripts/verify_device.sh` was exercised only in its no-device mode (exit 0 by default, exit 1 with
+`--require-device`). The `device` job runs it in CI; until the first scheduled or tagged run, that
+job is written and reviewed but unexecuted, and should be treated that way.
+
+The lint row is a budget, not a wish: `scripts/lint_budget.mjs` fails on an unbudgeted rule, on a
+rule that grew past its allowance, and on an entry that was fixed but left in the list. The
+reason behind each accepted warning is in `docs/debt.md`, next to the splash entry it belongs to.
+The Kotlin compiler is held to the same rule: a forced recompile of the main sources now reports
+**no warnings at all** — the last one, the deprecated splash transition, is version-gated (the
+pre-34 branch is the only place the old call survives, under `@Suppress("DEPRECATION")` behind
+`SplashHandOff.usesNewApi`, whose `@ChecksSdkIntAtLeast` is what lets lint keep the `NewApi` check
+on rather than being silenced) — and the budget script refuses to run on a lint report whose numbers
+drifted from that decision list. The transition's *pixels* are a device check, not a compiler one:
+see the splash entry in `docs/debt.md`.
 
 The rehearsal is worth running on a tree that has changed since the last release point: it is how
 the `InlinedApi` finding surfaced (`SpeechRecognitionService` passed the microphone foreground type
@@ -143,7 +160,8 @@ these were **not** run: an install/upgrade on real hardware, the recogniser itse
 model, a spoken take, a verdict), and the 16 KB load path on a 16 KB device. `scripts/verify_device.sh`
 performs the hardware half deliberately — install, clear data, **airplane mode on**, cold start
 (timed, seeding), second cold start, the seeder's own `seeded vN in … ms` line, and a logcat crash
-sweep — and exits 0 as a no-op when nothing is attached.
+sweep — and exits 0 as a no-op when nothing is attached (add `--require-device` to make a missing
+device a failure, which is what the `device` job does).
 
 ## CI
 
@@ -154,10 +172,22 @@ validation + unit tests + the B-9 `runCatching` grep), **`transactions`** and **
 `PlacementSeedTransactionTest`, `TransactionCoverageTest` — so a data-integrity regression is named in
 the checks list instead of hiding inside the ~600-case suite. It is a *filtered* run of the same
 `testBazaarDebugUnitTest` task, not a second suite: the tests still run in `verify` too (they are part
-of the count in AGENTS §8). **`assemble`** (the three flavor APKs) runs only on a schedule, a manual
-dispatch or a tag, and lists `transactions` under `needs:`, so no release build runs without it.
-There is no emulator or device job; only per-flavor unit-test tasks exist (`testDebugUnitTest` is not
-a task under AGP 9's `onlyEnableUnitTestForTheTestedBuildType`).
+of the count in AGENTS §8). **`assemble`** (the three flavor APKs) and **`device`** run only on a
+schedule, a manual dispatch or a tag, and both list `transactions` under `needs:`, so neither a release
+build nor a hardware run happens without the atomicity gate.
+
+**`device`** boots one emulator (API 35, `google_apis`, x86_64) with KVM enabled and runs
+`scripts/verify_device.sh bazaar --require-device`: install the bazaar debug APK, clear its data,
+turn airplane mode on, cold start (timed, seeding), reach `MainActivity`, assert the seeder's own
+completion line, sweep logcat for crashes, then cold start again. The `--require-device` flag is what
+keeps it honest — the script's laptop behaviour (no device attached = no-op, exit 0) would make a
+dead emulator look green, which is the "suite that proves nothing" this project removed once already.
+Two limits are deliberate. It is a **launch smoke**, not an instrumented suite (there is still none —
+no `androidTest` source set, so `testDebugUnitTest`-style naming traps do not apply here either), and
+it does not cover the recogniser, per-screen behaviour, or an upgrade from an installed older build:
+those stay on a real phone. On Linux runners the job adds the `/dev/kvm` udev rule the emulator needs;
+the action is pinned to the v2 line that runs on Node 24 (v2.38.0), for the same reason every other
+action here carries a major newer than its Node 20 release.
 
 ## Toolchain facts (verified Oct 2026 — do not "fix" these casually)
 

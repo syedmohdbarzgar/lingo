@@ -73,7 +73,7 @@ class RemediationJourneyTest {
     private val exercisesByLesson: Map<String, List<Exercise>> =
         lessons.associate { it.id to ContentParser.parseExercises(exercisesJson, it.id).map { it.second } }
 
-    private fun newApp() = App(lessons, knowledgeItems, exercisesByLesson)
+    private fun newApp() = App(lessons, knowledgeItems, exercisesByLesson, now)
 
     // ------------------------------------------------------------------ fakes
 
@@ -102,8 +102,26 @@ class RemediationJourneyTest {
             format: ExerciseFormat,
             correct: Boolean,
             now: Long,
+        ) = fold(lessonId, skill, correct, now, format)
+
+        override suspend fun recordRecall(
+            lessonId: String?,
+            skill: Skill,
+            correct: Boolean,
+            now: Long,
         ) {
-            val lessonItems = itemsForLesson(lessonId)
+            val lesson = lessonId ?: return
+            fold(lesson, skill, correct, now, format = null)
+        }
+
+        private fun fold(
+            lessonId: String,
+            skill: Skill,
+            correct: Boolean,
+            now: Long,
+            format: ExerciseFormat?,
+        ) {
+            val lessonItems = items.filter { lessonId in it.lessonIds }
             val byId = statesFlow.value.associateBy { it.itemId }
             KnowledgeEvidence.itemsFor(lessonItems, skill).forEach { item ->
                 val updated = engine.applyAttempt(item.id, byId[item.id], correct, now, format)
@@ -121,13 +139,17 @@ class RemediationJourneyTest {
         allLessons: List<Lesson>,
         allKnowledge: List<KnowledgeItem>,
         allExercises: Map<String, List<Exercise>>,
+        private val clock: Long,
     ) {
         val knowledge = JourneyKnowledge(allKnowledge)
         val lessons = FakeLessonRepository(allLessons).apply {
             allExercises.forEach { (lessonId, list) -> exercises[lessonId] = list }
         }
         val submit = SubmitExerciseUseCase(FakeProgressRepository(), knowledge)
-        val focusPlan = GetFocusPlanUseCase(knowledge, lessons)
+        private val focusPlanUseCase = GetFocusPlanUseCase(knowledge, lessons)
+
+        /** The block for a named node, or the weakest one when none is named. */
+        suspend fun focusPlan(itemId: String? = null) = focusPlanUseCase(itemId, clock)
     }
 
     // ------------------------------------------------------------------ helpers

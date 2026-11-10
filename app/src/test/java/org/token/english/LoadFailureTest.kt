@@ -25,6 +25,9 @@ import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.repository.VocabularyRepository
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.progress.ProgressViewModel
@@ -108,11 +111,22 @@ class LoadFailureTest {
         val reviews = FakeReviewRepository()
         reviews.dueFlow.value = emptyList()
         reviews.failDueWith = IllegalStateException("cannot read the queue")
+        val knowledge = FakeKnowledgeRepository()
+        val lessons = FakeLessonRepository()
         val vm = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = FakeVocabularyRepository(),
             progressRepository = FakeProgressRepository(),
-            submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), FakeProgressRepository()),
+            submitReview = SubmitReviewUseCase(
+                reviews,
+                Sm2ReviewScheduler(),
+                FakeProgressRepository(),
+                knowledge,
+            ),
+            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
+                knowledge,
+                GetFocusPlanUseCase(knowledge, lessons),
+            ),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },
@@ -135,12 +149,14 @@ class LoadFailureTest {
         }
         val progress = FakeProgressRepository()
         val knowledge = FakeKnowledgeRepository()
+        val lessons = FakeLessonRepository()
         val vm = ProgressViewModel(
             settingsRepository = settings,
-            lessonRepository = FakeLessonRepository(),
+            lessonRepository = lessons,
             progressRepository = progress,
             knowledgeRepository = knowledge,
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, FakeReviewRepository()),
+            getMissProfile = GetMissProfileUseCase(lessons, FakeReviewRepository()),
             studyStats = progress.statsFlow,
         )
 

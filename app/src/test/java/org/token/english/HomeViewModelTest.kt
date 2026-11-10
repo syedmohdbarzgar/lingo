@@ -17,6 +17,7 @@ import org.token.english.core.billing.AccessLevel
 import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionOffer
 import org.token.english.core.billing.CompanionStatus
+import org.token.english.core.common.ContentFailure
 import org.token.english.core.common.ContentStatus
 import org.token.english.domain.engine.DefaultLearningPlanner
 import org.token.english.domain.model.Exercise
@@ -69,10 +70,17 @@ class HomeViewModelTest {
         val knowledge: FakeKnowledgeRepository,
         val companion: MutableStateFlow<CompanionStatus>,
         val contentStatus: MutableStateFlow<ContentStatus>,
+        val contentFailure: MutableStateFlow<ContentFailure?>,
+        /** What the repair reports back: true when a file was actually moved aside. */
+        val repairMoves: Boolean,
+        /** Whether the process can relaunch itself after the move. */
+        val restartWorks: Boolean,
     ) {
         val planner = DefaultLearningPlanner()
         val conversations = FakeConversationRepository()
         var seedCalls = 0
+        var repairCalls = 0
+        var restarts = 0
         val vm = HomeViewModel(
             settingsRepository = settings,
             lessonRepository = lessons,
@@ -87,7 +95,10 @@ class HomeViewModelTest {
             companionStatus = companion,
             refreshCompanion = { companion.value == CompanionStatus.TRUSTED },
             contentStatus = contentStatus,
+            contentFailure = contentFailure,
             seedContent = { seedCalls++ },
+            rebuildDatabase = { repairCalls++; repairMoves },
+            restartApp = { restarts++; restartWorks },
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
@@ -104,7 +115,13 @@ class HomeViewModelTest {
         knowledge: FakeKnowledgeRepository = FakeKnowledgeRepository(),
         companion: MutableStateFlow<CompanionStatus> = MutableStateFlow(CompanionStatus.ABSENT),
         contentStatus: MutableStateFlow<ContentStatus> = MutableStateFlow(ContentStatus.READY),
-    ): Harness = Harness(settings, lessons, progress, reviews, knowledge, companion, contentStatus)
+        contentFailure: MutableStateFlow<ContentFailure?> = MutableStateFlow(null),
+        repairMoves: Boolean = true,
+        restartWorks: Boolean = true,
+    ): Harness = Harness(
+        settings, lessons, progress, reviews, knowledge, companion, contentStatus, contentFailure,
+        repairMoves, restartWorks,
+    )
 
     private fun lesson(id: String, level: LearningLevel) =
         Lesson(id, level, "Lesson", "درس", "topic", 5, 1)
@@ -270,6 +287,76 @@ class HomeViewModelTest {
 
         assertEquals("the retry asks the container to write the bundle again", 1, harness.seedCount)
         assertFalse("the retry leaves the error state", harness.vm.state.value.loadFailed)
+    }
+
+    @Test
+    fun `only an unopenable database offers the rebuild`() {
+        val failure = MutableStateFlow<ContentFailure?>(null)
+        val harness = harness(contentStatus = MutableStateFlow(ContentStatus.FAILED), contentFailure = failure)
+
+        // A failed write without the database being the culprit: the retry is the
+        // honest answer, and a rebuild here would throw away readable progress.
+        assertFalse("a failed asset is not a rebuild", harness.vm.state.value.canRepairDatabase)
+
+        failure.value = ContentFailure.DATABASE_UNREADABLE
+
+        assertTrue("the database itself is the reason, so the rebuild is offered", harness.vm.state.value.canRepairDatabase)
+        assertEquals("nothing was moved by merely offering it", 0, harness.repairCalls)
+        assertEquals("and nothing restarted", 0, harness.restarts)
+    }
+
+    @Test
+    fun `a rebuild that moved the file restarts the app`() {
+        val harness = harness(
+            contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            contentFailure = MutableStateFlow(ContentFailure.DATABASE_UNREADABLE),
+        )
+
+        harness.vm.repairDatabase()
+
+        assertEquals("the move ran once", 1, harness.repairCalls)
+        // Every repository still points at the closed handle, so the restart is part
+        // of the repair, not an optional extra.
+        assertEquals("the process restarts so Room builds a readable database", 1, harness.restarts)
+        assertFalse("a moved file is not a failure", harness.vm.state.value.repairFailed)
+    }
+
+    @Test
+    fun `a rebuild that moved nothing says so instead of claiming success`() {
+        val harness = harness(
+            contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            contentFailure = MutableStateFlow(ContentFailure.DATABASE_UNREADABLE),
+            repairMoves = false,
+        )
+
+        harness.vm.repairDatabase()
+
+        assertEquals(1, harness.repairCalls)
+        assertEquals("nothing was repaired, so nothing is restarted", 0, harness.restarts)
+        assertTrue("the screen must be able to say the rebuild did not happen", harness.vm.state.value.repairFailed)
+        assertFalse("the button is not stuck in its busy state", harness.vm.state.value.isRepairing)
+        assertTrue(harness.vm.state.value.canRepairDatabase)
+    }
+
+    @Test
+    fun `a rebuild whose relaunch fails asks for a manual restart instead of leaving a dead button`() {
+        val harness = harness(
+            contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            contentFailure = MutableStateFlow(ContentFailure.DATABASE_UNREADABLE),
+            restartWorks = false,
+        )
+
+        harness.vm.repairDatabase()
+
+        val state = harness.vm.state.value
+        assertEquals("the move happened", 1, harness.repairCalls)
+        assertEquals("the relaunch was attempted", 1, harness.restarts)
+        // The database was rebuilt, so "it failed" would be a lie and "it did not happen"
+        // would send the learner back to a button that has nothing left to move.
+        assertFalse(state.repairFailed)
+        assertTrue("the screen must ask the learner to reopen the app", state.needsManualRestart)
+        assertFalse("nothing is in flight any more", state.isRepairing)
+        assertFalse("the rebuild is not offered twice — the file is already gone", state.canRepairDatabase)
     }
 
     @Test

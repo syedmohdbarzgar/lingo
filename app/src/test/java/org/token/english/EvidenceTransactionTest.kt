@@ -16,6 +16,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.token.english.data.local.AppDatabase
 import org.token.english.data.local.entity.KnowledgeItemEntity
+import org.token.english.data.repository.ConversationRepositoryImpl
 import org.token.english.data.repository.KnowledgeRepositoryImpl
 import org.token.english.data.repository.ProgressRepositoryImpl
 import org.token.english.data.repository.ReviewRepositoryImpl
@@ -27,6 +28,7 @@ import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
+import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.usecase.RecordConversationTurnUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
@@ -56,11 +58,15 @@ class EvidenceTransactionTest {
     private lateinit var progress: ProgressRepositoryImpl
     private lateinit var knowledge: KnowledgeRepositoryImpl
     private lateinit var reviews: ReviewRepositoryImpl
+    private lateinit var conversations: ConversationRepositoryImpl
     private lateinit var submitReview: SubmitReviewUseCase
     private lateinit var recordTurn: RecordConversationTurnUseCase
 
     private val lessonId = "a1.tx.dialogue-01"
     private val itemId = "phonology.tx.1"
+    /** The lesson a reviewed word came from — the card's route into the graph. */
+    private val wordLesson = "a1.tx.vocab-01"
+    private val vocabItemId = "vocab.tx.1"
     private val turnId = "$lessonId.sp.01"
     private val now = 1_760_000_000_000L
 
@@ -90,6 +96,25 @@ class EvidenceTransactionTest {
         }
     }
 
+    /**
+     * Dies **after** the node was written — the last write of a review grade, and the
+     * one whose rollback is the point: the card, the log, the meter and the node all
+     * have to be gone, not just the three before it.
+     */
+    private class CrashingAfterGraph(
+        private val delegate: KnowledgeRepositoryImpl,
+    ) : KnowledgeRepository by delegate {
+        override suspend fun recordRecall(
+            lessonId: String?,
+            skill: Skill,
+            correct: Boolean,
+            now: Long,
+        ) {
+            delegate.recordRecall(lessonId, skill, correct, now)
+            throw IllegalStateException("process died after the node was written")
+        }
+    }
+
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(
@@ -105,8 +130,12 @@ class EvidenceTransactionTest {
         )
         knowledge = KnowledgeRepositoryImpl(db.contentDao(), db.knowledgeDao())
         reviews = ReviewRepositoryImpl(db.reviewDao())
-        submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress)
-        recordTurn = RecordConversationTurnUseCase(progress, knowledge)
+        conversations = ConversationRepositoryImpl(
+            db.conversationDao(),
+            RuntimeEnvironment.getApplication(),
+        )
+        submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress, knowledge)
+        recordTurn = RecordConversationTurnUseCase(progress, knowledge, conversations)
     }
 
     @After
@@ -140,10 +169,11 @@ class EvidenceTransactionTest {
                 reviews,
                 Sm2ReviewScheduler(),
                 CrashingOnMeter(progress),
+                knowledge,
             )
 
             val died = runCatching {
-                crashing(card, ReviewResult.GOOD, now, responseTimeMs = 900L)
+                crashing(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
             }
             assertTrue("the failed write must reach the caller", died.isFailure)
 
@@ -162,7 +192,7 @@ class EvidenceTransactionTest {
     fun `a committed grade writes the schedule, the log and the meter together`() = runBlocking {
         reviews.schedule(card)
 
-        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L)
+        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
 
         val after = reviews.getItem(card.contentId)!!
         assertEquals(1, after.repetitions)
@@ -172,10 +202,83 @@ class EvidenceTransactionTest {
         assertTrue(progress.observeMastery().first().containsKey(Skill.VOCABULARY))
     }
 
+    /** The authored vocabulary node a reviewed word is evidence about. */
+    private suspend fun seedVocabulary() {
+        db.contentDao().insertKnowledgeItems(
+            listOf(
+                KnowledgeItemEntity(
+                    id = vocabItemId,
+                    type = "VOCABULARY",
+                    title = "Everyday words",
+                    titleFa = "واژه‌های روزمره",
+                    level = "A1",
+                    prerequisitesJson = "[]",
+                    lessonIdsJson = "[\"$wordLesson\"]",
+                    skillsJson = "[\"VOCABULARY\"]",
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `a committed grade is evidence for the word's node without claiming a format`() = runBlocking {
+        seedVocabulary()
+        reviews.schedule(card)
+
+        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
+
+        val node = knowledge.getState(vocabItemId)!!
+        assertEquals("the recall counted as exposure", 1, node.exposureCount)
+        assertEquals(now, node.lastReviewedAt)
+        assertTrue("a hit seeds mastery instead of a bare number", node.mastery > 0f)
+        assertEquals(
+            "a card is recall, not a transfer claim — no exercise format may be bought by it",
+            0,
+            node.distinctTypeCount,
+        )
+    }
+
+    @Test
+    fun `a crash on the graph write leaves the card, the log, the meter and the node undone`() =
+        runBlocking {
+            seedVocabulary()
+            reviews.schedule(card)
+            val crashing = SubmitReviewUseCase(
+                reviews,
+                Sm2ReviewScheduler(),
+                progress,
+                CrashingAfterGraph(knowledge),
+            )
+
+            val died = runCatching {
+                crashing(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
+            }
+            assertTrue("the failed write must reach the caller", died.isFailure)
+
+            assertNull("the node write was rolled back with the rest", knowledge.getState(vocabItemId))
+            assertTrue("no grade is on record", reviews.getAttempts(card.contentId).isEmpty())
+            assertEquals("the card was not rescheduled", card.dueAt, reviews.getItem(card.contentId)!!.dueAt)
+            assertFalse(
+                "the review did not reach the skill meter either",
+                progress.observeMastery().first().containsKey(Skill.VOCABULARY),
+            )
+        }
+
+    @Test
+    fun `a card with no lesson is still graded and simply has nothing to attribute`() = runBlocking {
+        seedVocabulary()
+        reviews.schedule(card)
+
+        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = null)
+
+        assertEquals("the card's own schedule still lands", 1, reviews.getAttempts(card.contentId).size)
+        assertNull("the graph was not touched", knowledge.getState(vocabItemId))
+    }
+
     @Test
     fun `a crash mid-turn leaves the turn unclaimed and Speaking unmoved`() = runBlocking {
         seedPhonology()
-        val crashing = RecordConversationTurnUseCase(CrashingOnMeter(progress), knowledge)
+        val crashing = RecordConversationTurnUseCase(CrashingOnMeter(progress), knowledge, conversations)
 
         val died = runCatching {
             crashing(lessonId, turnId, SpeakingVerdict.CORRECT, spoken = true, now = now)
@@ -203,5 +306,39 @@ class EvidenceTransactionTest {
         assertTrue(progress.observeMastery().first().containsKey(Skill.SPEAKING))
         // A replayed dialogue cannot raise the bar twice for the same turn.
         assertFalse(progress.claimAnswer(lessonId, turnId, correct = true, now))
+    }
+
+    /**
+     * The dialogue's "finished" mark (P0) is part of the final turn's transaction.
+     *
+     * It used to be a second write after the screen advanced, so a process death
+     * between the two credited every turn of the dialogue and forgot that it was
+     * finished — the learner sat through the whole exchange again. A crash at the
+     * last write must leave the dialogue exactly as `markCompleted` never ran.
+     */
+    @Test
+    fun `a crash on the final turn leaves the dialogue unmarked`() = runBlocking {
+        seedPhonology()
+        val crashing = RecordConversationTurnUseCase(CrashingOnMeter(progress), knowledge, conversations)
+
+        val died = runCatching {
+            crashing(
+                lessonId,
+                turnId,
+                SpeakingVerdict.CORRECT,
+                spoken = true,
+                now = now,
+                completesDialogue = true,
+            )
+        }
+        assertTrue("the failed write must reach the caller", died.isFailure)
+        assertTrue(
+            "the dialogue was not marked finished",
+            db.conversationDao().observeDone().first().isEmpty(),
+        )
+
+        // The same turn, committed, marks it — in the one transaction that writes it.
+        assertTrue(recordTurn(lessonId, turnId, SpeakingVerdict.CORRECT, spoken = true, now = now, completesDialogue = true))
+        assertEquals(listOf(lessonId), db.conversationDao().observeDone().first())
     }
 }

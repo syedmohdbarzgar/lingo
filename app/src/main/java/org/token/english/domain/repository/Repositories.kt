@@ -5,6 +5,7 @@ import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.ExerciseFormat
+import org.token.english.domain.model.GradedCard
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
@@ -51,6 +52,13 @@ interface LessonRepository {
     /** The recorded answers of one lesson, oldest first — what a reopened step resumes from. */
     suspend fun attempts(lessonId: String): List<LessonAttempt>
 
+    /**
+     * The newest answers across every lesson, capped at [limit] — the miss taxonomy's
+     * window. Read only for that classification; the per-lesson history above stays the
+     * read a session needs.
+     */
+    suspend fun recentAttempts(limit: Int): List<LessonAttempt>
+
     suspend fun getLessonState(lessonId: String): LessonState?
     suspend fun completeLesson(lessonId: String, at: Long)
     /** Ensures every vocabulary item of the lesson exists in the SRS queue. */
@@ -78,12 +86,10 @@ interface ConversationRepository {
     /**
      * Forgets every finished dialogue — the reset path's half of «پاک‌سازی پیشرفت».
      *
-     * This set is learning data like any other, but it lives in the settings
-     * preferences file rather than Room, so `ProgressRepository.reset()` never saw
-     * it: after a wipe the learner model, the review queue and the lesson states
-     * were gone while every dialogue still counted as spoken, which left the gate
-     * open for lessons the learner had not done. The rows and this set have to fall
-     * together or the app disagrees with its own reset.
+     * This set is learning data like any other (Room v10, table `conversation_done`),
+     * so a wipe has to clear it with the lessons it unlocks: a reset that left it
+     * behind kept every dialogue open while the learner model, the review queue and
+     * the lesson states were gone, and the app disagreed with its own reset.
      */
     suspend fun reset()
 }
@@ -113,6 +119,14 @@ interface ReviewRepository {
      * a well-built vocabulary number with no evidence behind it.
      */
     suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats>
+
+    /**
+     * The last [limit] grades, newest first, each with the kind of content it reviewed
+     * (null when the item has left the queue). Review is where most of a mature
+     * learner's practice happens, so a miss profile built only from lessons would
+     * describe the first week and then stop changing.
+     */
+    suspend fun recentCards(limit: Int): List<GradedCard>
 
     suspend fun reset()
 }
@@ -156,6 +170,34 @@ interface KnowledgeRepository {
         lessonId: String,
         skill: Skill,
         format: ExerciseFormat,
+        correct: Boolean,
+        now: Long,
+    )
+
+    /**
+     * Records one graded **review card** against the nodes it is evidence about.
+     *
+     * Same attribution rule as [recordAttempt] — `KnowledgeEvidence` decides which
+     * nodes of the card's lesson a graded answer speaks for — so the review queue and
+     * the lesson path cannot disagree about what a vocabulary answer proves. Before
+     * this, review was the one body of practice the graph could not see: a learner who
+     * spent a month on cards moved the skill meters while every node sat at the mastery
+     * of its last lesson answer, and the planner kept treating those nodes as unpractised.
+     *
+     * Deliberately no [ExerciseFormat]: a card is recall of a word, not a *transfer*
+     * claim, and the format mask is exactly that claim ([KnowledgeGates]
+     * `MIN_FORMATS_TO_SECURE`). Letting a card set a bit would buy the second format
+     * without ever answering in it — the gate would say "proven two ways" about one way.
+     * Review therefore moves mastery and the node's own schedule, and leaves the
+     * transfer evidence to the lesson.
+     *
+     * @param lessonId the lesson that taught the reviewed content (a card from a lesson
+     *   that no longer exists, or one opened before the bundle landed, has none — then
+     *   there is nothing to attribute and nothing is written).
+     */
+    suspend fun recordRecall(
+        lessonId: String?,
+        skill: Skill,
         correct: Boolean,
         now: Long,
     )

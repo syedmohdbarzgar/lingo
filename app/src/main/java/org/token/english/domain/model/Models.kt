@@ -270,7 +270,25 @@ enum class ReviewState { NEW, LEARNING, REVIEW, RELEARNING, MASTERED }
 /** Review grading buttons (technical spec §18). */
 enum class ReviewResult { AGAIN, HARD, GOOD, EASY }
 
+/**
+ * The grades that claim the card is known: GOOD and EASY. HARD and AGAIN are
+ * "not-yet-known", which is how the skill tracks and the miss taxonomy both read the
+ * log — one definition, so a grade cannot be a hit in one place and a miss in another.
+ */
+val ReviewResult.isSuccess: Boolean get() = this == ReviewResult.GOOD || this == ReviewResult.EASY
+
 enum class ReviewContentType { VOCABULARY, GRAMMAR }
+
+/**
+ * One graded card with the kind of content it reviewed — the review log's half of the
+ * miss taxonomy. [type] is null when the item it graded is no longer in the queue (a
+ * word the bundle dropped): the grade happened, but there is nothing left to classify.
+ */
+data class GradedCard(
+    val result: ReviewResult,
+    val type: ReviewContentType?,
+    val at: Long,
+)
 
 /**
  * The skill a graded review exercises. One definition, shared by the code that

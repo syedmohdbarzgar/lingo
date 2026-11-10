@@ -22,6 +22,7 @@ import org.token.english.navigation.Routes
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        applySplashHandOff()
         enableEdgeToEdge()
         setContent {
             val app = application as EnglishApp
@@ -38,6 +39,25 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    /**
+     * The splash → Home cross-fade, on the side API 34+ reads it from.
+     *
+     * From Android 14 the pair is declared by the activity being *opened*
+     * (`OVERRIDE_TRANSITION_OPEN`: enter for this screen, exit for the one that is
+     * finishing), which is why [SplashActivity] only calls the deprecated
+     * `overridePendingTransition` below 34. Same two fades, same 300ms, declared where
+     * the platform now looks for them — see `docs/debt.md` for the device comparison
+     * that is still owed.
+     */
+    private fun applySplashHandOff() {
+        if (!SplashHandOff.usesNewApi(android.os.Build.VERSION.SDK_INT)) return
+        overrideActivityTransition(
+            android.app.Activity.OVERRIDE_TRANSITION_OPEN,
+            R.anim.fade_in,
+            R.anim.fade_out,
+        )
     }
 }
 

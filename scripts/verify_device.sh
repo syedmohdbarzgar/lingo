@@ -24,8 +24,14 @@
 # Usage:
 #   scripts/verify_device.sh [bazaar|myket|googlePlay]   # default: bazaar
 #   scripts/verify_device.sh --list-devices
+#   scripts/verify_device.sh bazaar --require-device      # CI: no device is a failure
 #
 # Exit codes: 0 = checked (or nothing attached), 1 = the check failed.
+#
+# `--require-device` (or `EXPECT_DEVICE=1`) exists for the `device` CI job: the
+# no-op-on-a-laptop behaviour is right for a human, and a false green in CI when
+# the emulator never booted is exactly the "suite that proves nothing" this
+# project refuses to keep.
 set -uo pipefail
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -74,14 +80,20 @@ if [ "${1:-}" = "--list-devices" ]; then
   exit 0
 fi
 
-FLAVOR="${1:-bazaar}"
-case "$FLAVOR" in
-  bazaar|myket|googlePlay) ;;
-  *) echo "unknown flavour: '$FLAVOR' (expected bazaar, myket or googlePlay)" >&2; exit 2 ;;
-esac
+FLAVOR=""
+REQUIRE_DEVICE="${EXPECT_DEVICE:-0}"
+for arg in "$@"; do
+  case "$arg" in
+    --require-device) REQUIRE_DEVICE=1 ;;
+    bazaar|myket|googlePlay) FLAVOR="$arg" ;;
+    *) echo "unknown argument: '$arg' (expected a flavour, --require-device or --list-devices)" >&2; exit 2 ;;
+  esac
+done
+FLAVOR="${FLAVOR:-bazaar}"
 
 if ! ADB="$(find_adb)"; then
   echo "Android platform-tools not found — nothing to verify on hardware."
+  [ "$REQUIRE_DEVICE" = "1" ] && { echo "FAILED: --require-device was set."; exit 1; }
   exit 0
 fi
 
@@ -92,6 +104,11 @@ if [ -z "$connected" ]; then
   if [ -n "$unauthorized" ]; then
     echo "Device connected but not authorised: $(echo "$unauthorized" | tr '\n' ' ')"
     echo "Accept the 'Allow USB debugging?' prompt on the phone, then re-run."
+  elif [ "$REQUIRE_DEVICE" = "1" ]; then
+    # CI reached here with --require-device, so the emulator that should have
+    # booted did not: report that, instead of the laptop's "nothing to do".
+    echo "FAILED: --require-device was set but no device is attached (the emulator never came up)."
+    exit 1
   else
     echo "No device attached — the hardware check did not run (this is not a failure)."
     echo "Plug in a phone with USB debugging enabled, then run: scripts/verify_device.sh $FLAVOR"

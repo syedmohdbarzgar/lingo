@@ -60,6 +60,7 @@ class ContentSeederTest {
         override suspend fun getLessonState(lessonId: String): LessonStateEntity? = null
         override suspend fun insertLessonAttempt(item: LessonAttemptEntity) = Unit
         override suspend fun getLessonAttempts(lessonId: String): List<LessonAttemptEntity> = emptyList()
+        override suspend fun getRecentLessonAttempts(limit: Int): List<LessonAttemptEntity> = emptyList()
         override suspend fun clearLessonAttempts() = Unit
         override fun observeVocabulary(): Flow<List<VocabularyEntity>> = flowOf(vocabulary.values.sortedBy { it.word })
         override suspend fun getVocabularyByLesson(lessonId: String): List<VocabularyEntity> =
@@ -113,6 +114,9 @@ class ContentSeederTest {
         private var contentVersionValue = 0
         var writes = 0
 
+        /** Set to fail the next version write, i.e. die between the content and its stamp. */
+        var failNextVersionWrite = false
+
         private val state = kotlinx.coroutines.flow.MutableStateFlow(
             AppSettings(
                 isFirstLaunch = true,
@@ -141,6 +145,10 @@ class ContentSeederTest {
         override suspend fun setDailyReminderHour(hour: Int) = Unit
 
         override suspend fun setContentVersion(version: Int) {
+            if (failNextVersionWrite) {
+                failNextVersionWrite = false
+                throw IllegalStateException("the preferences file could not be written")
+            }
             contentVersionValue = version
             writes++
             state.value = state.value.copy(contentVersion = version)
@@ -184,6 +192,86 @@ class ContentSeederTest {
         settings.setContentVersion(0)
         seeder.ensureSeeded()
         assertTrue("re-seeds after a version change", dao.insertCalls > insertsAfterFirst)
+    }
+
+    // ---- recovery paths (checklist P1) ---------------------------------------
+
+    @Test
+    fun `a bundle that cannot be read writes nothing and stamps no version`() = runBlocking {
+        val dao = FakeContentDao()
+        val settings = FakeSettings()
+        val seeder = ContentSeeder(
+            dao = dao,
+            readAsset = { path -> throw IllegalStateException("asset missing: $path") },
+            settingsRepository = settings,
+        )
+
+        val thrown = runCatching { seeder.ensureSeeded() }
+
+        assertTrue("the failure must reach the caller, which turns it into a state", thrown.isFailure)
+        assertEquals("nothing was written", 0, dao.insertCalls)
+        assertTrue(dao.lessons.isEmpty())
+        assertEquals(
+            "a failed seed must not claim the bundle was written",
+            0,
+            settings.storedVersion,
+        )
+    }
+
+    @Test
+    fun `a malformed asset is not half-written`() = runBlocking {
+        val dao = FakeContentDao()
+        val settings = FakeSettings()
+        val seeder = ContentSeeder(
+            dao = dao,
+            readAsset = { path ->
+                // An array where the parser expects the bundle object: a truncated or
+                // damaged asset used to be indistinguishable from an empty one here.
+                if (path == "content/vocabulary.json") "[]" else assetReader(path)
+            },
+            settingsRepository = settings,
+        )
+
+        val thrown = runCatching { seeder.ensureSeeded() }
+
+        assertTrue("a parse failure must reach the caller", thrown.isFailure)
+        assertEquals("no partial bundle is visible", 0, dao.insertCalls)
+        assertEquals("and it is not stamped as seeded", 0, settings.storedVersion)
+    }
+
+    /**
+     * The seed writes the content in one transaction and the stamp afterwards, so the
+     * crash window is between the two — not in the middle of the rows. What must hold:
+     * the bundle is either complete or absent, and the next run finishes the job
+     * instead of duplicating it.
+     */
+    @Test
+    fun `a seed interrupted before the stamp leaves a complete bundle and the retry finishes it`() = runBlocking {
+        val dao = FakeContentDao()
+        val settings = FakeSettings()
+        val seeder = ContentSeeder(dao, ::assetReader, settings)
+        settings.failNextVersionWrite = true
+
+        val thrown = runCatching { seeder.ensureSeeded() }
+
+        assertTrue("the failed stamp reaches the caller", thrown.isFailure)
+        assertEquals("the content itself committed", 0, settings.storedVersion)
+        val lessons = dao.lessons.size
+        val vocabulary = dao.vocabulary.size
+        val exercises = dao.exercises.size
+        assertTrue("the bundle is complete, not half-written", lessons >= 38 && vocabulary >= 228)
+
+        // The retry: the version still differs, so the seeder runs again and stamps it.
+        seeder.ensureSeeded()
+
+        assertEquals(
+            "the stamp now matches the bundle",
+            ContentParser.bundleVersion(assetReader("content/lessons.json")),
+            settings.storedVersion,
+        )
+        assertEquals("re-seeding replaces rather than appends", lessons, dao.lessons.size)
+        assertEquals("re-seeding replaces rather than appends", vocabulary, dao.vocabulary.size)
+        assertEquals("re-seeding replaces rather than appends", exercises, dao.exercises.size)
     }
 
     @Test

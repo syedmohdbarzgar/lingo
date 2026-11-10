@@ -5,9 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.token.english.data.local.dao.ContentDao
+import org.token.english.data.local.dao.ConversationDao
 import org.token.english.data.local.dao.KnowledgeDao
 import org.token.english.data.local.dao.ProgressDao
 import org.token.english.data.local.dao.ReviewDao
+import org.token.english.data.local.entity.ConversationDoneEntity
 import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
@@ -28,7 +30,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 9
+internal const val DATABASE_VERSION = 10
 
 @Database(
     entities = [
@@ -45,6 +47,7 @@ internal const val DATABASE_VERSION = 9
         StudySessionEntity::class,
         QuestionAttemptEntity::class,
         LessonAttemptEntity::class,
+        ConversationDoneEntity::class,
     ],
     version = DATABASE_VERSION,
     exportSchema = true,
@@ -54,6 +57,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun reviewDao(): ReviewDao
     abstract fun progressDao(): ProgressDao
     abstract fun knowledgeDao(): KnowledgeDao
+    abstract fun conversationDao(): ConversationDao
 
     companion object {
         /**
@@ -175,6 +179,18 @@ abstract class AppDatabase : RoomDatabase() {
                     "at INTEGER NOT NULL)",
                 "ALTER TABLE lesson_state ADD COLUMN stageCompletedAt TEXT NOT NULL DEFAULT ''",
             ),
+            // v9 → v10: the finished dialogues move out of the settings preferences
+            // file and into progress (checklist P0). That file is excluded from Auto
+            // Backup — correctly, because it also carries the subscription mirror —
+            // so after a restore the lesson was still completed while the "this
+            // dialogue is spoken" mark was gone: the gate re-opened a dialogue the
+            // learner had already done and kept the next lesson shut. Additive and
+            // empty here; the repository imports the old set once on first read.
+            "9->10" to listOf(
+                "CREATE TABLE IF NOT EXISTS conversation_done (" +
+                    "lessonId TEXT NOT NULL, " +
+                    "PRIMARY KEY(lessonId))",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
@@ -185,6 +201,7 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_6_7 = migration(6, 7)
         val MIGRATION_7_8 = migration(7, 8)
         val MIGRATION_8_9 = migration(8, 9)
+        val MIGRATION_9_10 = migration(9, 10)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
@@ -197,6 +214,7 @@ abstract class AppDatabase : RoomDatabase() {
                 MIGRATION_6_7,
                 MIGRATION_7_8,
                 MIGRATION_8_9,
+                MIGRATION_9_10,
             )
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {

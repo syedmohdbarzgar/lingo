@@ -20,6 +20,7 @@ import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.ExerciseFormat
+import org.token.english.domain.model.GradedCard
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
@@ -182,6 +183,10 @@ class FakeLessonRepository(
     override suspend fun attempts(lessonId: String): List<LessonAttempt> =
         attemptsLog.filter { it.lessonId == lessonId }
 
+    /** The whole log, newest first — the miss taxonomy's window. */
+    override suspend fun recentAttempts(limit: Int): List<LessonAttempt> =
+        attemptsLog.sortedByDescending { it.at }.take(limit)
+
     /** The guided-step writes are part of the saved state, so a restart sees them. */
     override suspend fun getLessonState(lessonId: String): LessonState? {
         val base = statesFlow.value.firstOrNull { it.lessonId == lessonId }
@@ -283,6 +288,12 @@ class FakeReviewRepository : ReviewRepository {
         attempts.filter { it.contentId == contentId }
 
     override suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats> = attemptStats
+
+    /** Grades the miss taxonomy reads, newest first like the DAO's query. */
+    val gradedCards = mutableListOf<GradedCard>()
+
+    override suspend fun recentCards(limit: Int): List<GradedCard> =
+        gradedCards.sortedByDescending { it.at }.take(limit)
 
     override suspend fun reset() {
         dueFlow.value = emptyList()
@@ -403,6 +414,18 @@ class FakeKnowledgeRepository(
     ) {
         recorded += lessonId to correct
         recordedSkills += skill to format
+    }
+
+    /** Review grades that reached the graph: (lesson, skill, correct). */
+    val recalled = mutableListOf<Triple<String?, Skill, Boolean>>()
+
+    override suspend fun recordRecall(
+        lessonId: String?,
+        skill: Skill,
+        correct: Boolean,
+        now: Long,
+    ) {
+        recalled += Triple(lessonId, skill, correct)
     }
 
     override suspend fun reset() {

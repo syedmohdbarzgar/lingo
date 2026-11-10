@@ -18,6 +18,7 @@ import org.token.english.core.billing.AccessReason
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.EntitlementPolicy
 import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.common.ContentFailure
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
@@ -84,6 +85,23 @@ data class HomeUiState(
     val loadFailed: Boolean = false,
     /** True once the bundle put at least one lesson in Room. */
     val hasContent: Boolean = false,
+    /**
+     * Room cannot open the database at all, so the retry can only fail the same way.
+     * The screen offers the rebuild instead of pretending the retry is the way out.
+     */
+    val canRepairDatabase: Boolean = false,
+    /** The rebuild is moving the damaged file; the actions are disabled while it runs. */
+    val isRepairing: Boolean = false,
+    /** The rebuild did not move anything — the screen says so instead of pretending. */
+    val repairFailed: Boolean = false,
+    /**
+     * The rebuild moved the file but the app could not relaunch itself (no launcher
+     * activity), so the next start is the learner's job. The screen says exactly that:
+     * the database is ready, close the app and open it again. Offering the retry or the
+     * rebuild here would be a dead button — the handle this process holds is closed and
+     * the file is already gone.
+     */
+    val needsManualRestart: Boolean = false,
 ) {
     /** Nothing trustworthy on screen: offer the retry (never blame the network). */
     val hasLoadError: Boolean
@@ -111,8 +129,22 @@ class HomeViewModel(
     private val refreshCompanion: suspend () -> Boolean,
     /** Where the offline bundle stands — a failed write is shown, not swallowed. */
     private val contentStatus: StateFlow<ContentStatus>,
+    /** Why the write failed — only an unopenable database earns the rebuild. */
+    private val contentFailure: StateFlow<ContentFailure?>,
     /** Re-runs the bundle → Room write from Home's retry action. */
     private val seedContent: suspend () -> Unit,
+    /**
+     * Moves an unreadable database aside (see `AppContainer.repairUnreadableDatabase`).
+     * Returns false when there was nothing to move, so the screen can say the rebuild
+     * did not happen instead of claiming it did.
+     */
+    private val rebuildDatabase: suspend () -> Boolean,
+    /**
+     * Starts the process again — the container's database handle is only reset that way.
+     * Returns false when there is nothing to relaunch, so Home can ask the learner to
+     * reopen the app instead of leaving a button that can only fail.
+     */
+    private val restartApp: () -> Boolean,
     /** Entitlement re-check tick (a subscription can lapse mid-session); tests pass 0. */
     private val accessTickMillis: Long = ACCESS_TICK_MS,
     /** Re-check of the due count; tests pass 0 to read it once. */
@@ -138,6 +170,7 @@ class HomeViewModel(
     private var trialAndSubscription: TrialAndSubscription? = null
 
     private var content: ContentStatus = ContentStatus.READY
+    private var failure: ContentFailure? = null
 
     /** Declared before `init` — Kotlin initialises properties in source order. */
     private var loadJobs: List<Job> = emptyList()
@@ -146,6 +179,12 @@ class HomeViewModel(
         viewModelScope.launch {
             contentStatus.collect { status ->
                 content = status
+                rebuild()
+            }
+        }
+        viewModelScope.launch {
+            contentFailure.collect { reason ->
+                failure = reason
                 rebuild()
             }
         }
@@ -263,10 +302,48 @@ class HomeViewModel(
      * lesson data is not on screen, and it is local data, not the network.
      */
     fun retry() {
-        _state.update { it.copy(isLoading = true, loadFailed = false) }
+        _state.update { it.copy(isLoading = true, loadFailed = false, repairFailed = false) }
         viewModelScope.launch {
             seedContent()
             startLoading()
+        }
+    }
+
+    /**
+     * The way out of a database Room cannot open — the only failure a retry cannot
+     * fix. The confirmation (and the copy that names what is lost) lives on the screen;
+     * this runs the move and, when it happened, restarts the process so Room builds a
+     * fresh database instead of reusing the closed handle every repository still holds.
+     *
+     * Nothing is deleted: the damaged file is moved into `noBackupFilesDir`, which Auto
+     * Backup ignores, so it neither travels to another phone nor counts against the
+     * quota.
+     */
+    fun repairDatabase() {
+        if (_state.value.isRepairing) return
+        _state.update {
+            it.copy(isRepairing = true, repairFailed = false, needsManualRestart = false)
+        }
+        viewModelScope.launch {
+            if (!rebuildDatabase()) {
+                _state.update { it.copy(isRepairing = false, repairFailed = true) }
+                return@launch
+            }
+            // The restart is the repair's second half; until the process goes, every
+            // read still points at the closed database, so there is no state worth
+            // publishing on the success path.
+            if (!restartApp()) {
+                // Published directly rather than through rebuild(): the flag also has to
+                // clear the rebuild action in the same emission, or the card would offer
+                // a tap that can only report there is nothing left to move.
+                _state.update {
+                    it.copy(
+                        isRepairing = false,
+                        needsManualRestart = true,
+                        canRepairDatabase = false,
+                    )
+                }
+            }
         }
     }
 
@@ -343,6 +420,18 @@ class HomeViewModel(
             contentStatus = content,
             loadFailed = _state.value.loadFailed,
             hasContent = lessons.isNotEmpty(),
+            // A rebuild is only offered for the failure it can fix, and the two
+            // flags below are owned by the repair itself so a rebuild of the state
+            // never resets the button mid-move.
+            canRepairDatabase = content == ContentStatus.FAILED &&
+                failure == ContentFailure.DATABASE_UNREADABLE &&
+                lessons.isEmpty() &&
+                // The file is already gone once the relaunch was queued: a second
+                // "rebuild" would only report that there was nothing to move.
+                !_state.value.needsManualRestart,
+            isRepairing = _state.value.isRepairing,
+            repairFailed = _state.value.repairFailed,
+            needsManualRestart = _state.value.needsManualRestart,
         )
         // …then enrich it with the adaptive planner's ordered, justified actions
         // (checklist B-1), which need a suspend read of the knowledge graph.
@@ -376,7 +465,9 @@ class HomeViewModel(
             val weakSpot = full.actions
                 .firstOrNull { it.type == LearningActionType.REMEDIATE }
                 ?.itemId
-            val focus = runCatchingCancellable { getFocusPlan(weakSpot) }.getOrNull()
+            val focus = runCatchingCancellable {
+                getFocusPlan(weakSpot, System.currentTimeMillis())
+            }.getOrNull()
             if (_state.value.focus != focus) {
                 _state.update { current -> current.copy(focus = focus) }
             }

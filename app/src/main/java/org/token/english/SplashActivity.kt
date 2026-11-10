@@ -1,6 +1,7 @@
 package org.token.english
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.activity.ComponentActivity
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -40,6 +42,30 @@ import kotlinx.coroutines.withTimeoutOrNull
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.AppTheme
 import org.token.english.core.designsystem.component.EnglishText
+
+/**
+ * Which side declares the splash → Home cross-fade, per platform level.
+ *
+ * `overridePendingTransition` is deprecated from API 34: its replacement,
+ * `overrideActivityTransition`, is declared by the activity that is *entered*
+ * (`OVERRIDE_TRANSITION_OPEN` in [MainActivity]'s `onCreate`), not by the one that
+ * starts it. So below 34 the finishing splash owns the pair, and from 34 the
+ * entered activity does — the same two fades, declared by a different side, and
+ * never both (two overrides would fight over one transition).
+ *
+ * [usesNewApi] carries `@ChecksSdkIntAtLeast` so **lint** knows the call below it is
+ * guarded: a plain `sdk >= 34` helper is opaque to the `NewApi` check, which then
+ * flags the new call and the inlined `OVERRIDE_TRANSITION_OPEN` constant. The switch
+ * is also pure, so `SplashHandOffTest` can pin the boundary on the JVM.
+ */
+internal object SplashHandOff {
+    /** Where `overrideActivityTransition` first exists (Android 14). */
+    const val NEW_API_LEVEL = 34
+
+    /** True when this platform declares the hand-off from the entered activity. */
+    @ChecksSdkIntAtLeast(parameter = 0, api = NEW_API_LEVEL)
+    fun usesNewApi(sdk: Int): Boolean = sdk >= NEW_API_LEVEL
+}
 
 /**
  * Custom launch screen (checklist P8).
@@ -78,8 +104,22 @@ class SplashActivity : ComponentActivity() {
     private fun openApp() {
         startActivity(Intent(this, MainActivity::class.java))
         // Fade out the splash window as Home fades in (checklist P8 animation).
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        // Only the pre-34 path: `MainActivity` declares the same pair through the API
+        // that replaced this one, and declaring both would fight over one transition.
+        if (!SplashHandOff.usesNewApi(Build.VERSION.SDK_INT)) {
+            legacyHandOff()
+        }
         finish()
+    }
+
+    /**
+     * The pre-34 declaration, kept exactly as it was — the fade the device run already
+     * tuned. Deprecated from 34, and suppressed only because the guard above is what
+     * decides whether it runs at all.
+     */
+    @Suppress("DEPRECATION")
+    private fun legacyHandOff() {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private companion object {

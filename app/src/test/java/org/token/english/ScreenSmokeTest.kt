@@ -3,6 +3,7 @@ package org.token.english
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,6 +21,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.token.english.core.billing.CompanionStatus
 import org.token.english.core.billing.TrialAndSubscription
+import org.token.english.core.common.ContentFailure
 import org.token.english.core.common.ContentStatus
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultLearningPlanner
@@ -29,6 +32,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
@@ -119,7 +123,10 @@ class ScreenSmokeTest {
             companionStatus = companion,
             refreshCompanion = { companion.value == CompanionStatus.TRUSTED },
             contentStatus = MutableStateFlow(ContentStatus.READY),
+            contentFailure = MutableStateFlow(null),
             seedContent = {},
+            rebuildDatabase = { true },
+            restartApp = { true },
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
@@ -166,7 +173,10 @@ class ScreenSmokeTest {
             companionStatus = companion,
             refreshCompanion = { false },
             contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            contentFailure = MutableStateFlow(null),
             seedContent = {},
+            rebuildDatabase = { true },
+            restartApp = { true },
             accessTickMillis = 0,
             dueTickMillis = 0,
         )
@@ -189,6 +199,66 @@ class ScreenSmokeTest {
         // The action exists, and the copy says the cause is local — never the network.
         compose.onNodeWithText("تلاش دوباره", substring = true).assertIsDisplayed()
         compose.onNodeWithText("این خطا به اینترنت مربوط نیست", substring = true).assertIsDisplayed()
+        // A failed asset is not a broken file: the rebuild must not be offered here,
+        // or a learner would wipe readable progress over a bundle that a retry fixes.
+        compose.onNodeWithText("ساخت دوبارهٔ پایگاه داده", substring = true).assertDoesNotExist()
+    }
+
+    @Test
+    fun `a database room cannot open offers the rebuild behind a confirmation`() {
+        val lessons = FakeLessonRepository()
+        val progress = FakeProgressRepository()
+        val reviews = FakeReviewRepository()
+        val knowledge = FakeKnowledgeRepository()
+        val companion = MutableStateFlow(CompanionStatus.ABSENT)
+        val planner = DefaultLearningPlanner()
+        var restarts = 0
+        val vm = HomeViewModel(
+            settingsRepository = FakeSettingsRepository(trial = liveTrial()),
+            lessonRepository = lessons,
+            conversationRepository = FakeConversationRepository(),
+            progressRepository = progress,
+            reviewRepository = reviews,
+            studyStats = progress.statsFlow,
+            planner = planner,
+            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge),
+            getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
+            getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
+            companionStatus = companion,
+            refreshCompanion = { false },
+            contentStatus = MutableStateFlow(ContentStatus.FAILED),
+            contentFailure = MutableStateFlow(ContentFailure.DATABASE_UNREADABLE),
+            seedContent = {},
+            rebuildDatabase = { true },
+            restartApp = { restarts++; true },
+            accessTickMillis = 0,
+            dueTickMillis = 0,
+        )
+
+        compose.setContent {
+            AppTheme {
+                HomeScreen(
+                    vm = vm,
+                    onOpenLesson = {},
+                    onOpenSettings = {},
+                    onOpenReview = {},
+                    onOpenPaywall = {},
+                    onOpenConversation = { _ -> },
+                    onOpenFocus = { _, _ -> },
+                )
+            }
+        }
+
+        // The only failure a retry cannot fix gets the rebuild…
+        compose.onNodeWithText("ساخت دوبارهٔ پایگاه داده", substring = true).assertIsDisplayed()
+
+        // …behind a confirmation that names what is lost, and nothing happens until it
+        // is accepted (the tap that dismisses must not restart the app).
+        compose.onNodeWithText("ساخت دوبارهٔ پایگاه داده", substring = true).performClick()
+        compose.onNodeWithText("پایگاه داده از نو ساخته شود؟", substring = true).assertIsDisplayed()
+        compose.onNodeWithText("انصراف", substring = true).performClick()
+        assertEquals("dismissing the dialog repairs nothing", 0, restarts)
+        compose.onNodeWithText("پایگاه داده از نو ساخته شود؟", substring = true).assertDoesNotExist()
     }
 
     @Test
@@ -232,11 +302,21 @@ class ScreenSmokeTest {
     @Test
     fun `an empty review queue says so instead of showing a blank screen`() {
         val reviews = FakeReviewRepository()
+        val knowledge = FakeKnowledgeRepository()
         val vm = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = FakeVocabularyRepository(),
             progressRepository = FakeProgressRepository(),
-            submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), FakeProgressRepository()),
+            submitReview = SubmitReviewUseCase(
+                reviews,
+                Sm2ReviewScheduler(),
+                FakeProgressRepository(),
+                knowledge,
+            ),
+            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
+                knowledge,
+                GetFocusPlanUseCase(knowledge, FakeLessonRepository()),
+            ),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },
@@ -249,6 +329,87 @@ class ScreenSmokeTest {
         }
 
         compose.onNodeWithText("امروز مروری در کار نیست", substring = true).assertIsDisplayed()
+    }
+
+    @Test
+    fun `a due curriculum node is a row on the review screen and opens its drill`() {
+        val reviews = FakeReviewRepository()
+        val knowledge = FakeKnowledgeRepository()
+        val lessons = FakeLessonRepository()
+        val lessonId = "a1.test.lesson-01"
+        knowledge.itemsFlow.value = listOf(
+            org.token.english.domain.model.KnowledgeItem(
+                id = "grammar.test",
+                type = org.token.english.domain.model.KnowledgeType.GRAMMAR,
+                title = "Verb be",
+                titleFa = "فعل be",
+                level = LearningLevel.A1,
+                prerequisites = emptyList(),
+                lessonIds = listOf(lessonId),
+                skills = listOf(Skill.GRAMMAR),
+            ),
+        )
+        knowledge.statesFlow.value = listOf(
+            org.token.english.domain.model.KnowledgeState(
+                itemId = "grammar.test",
+                mastery = 0.7f,
+                exposureCount = 2,
+                consecutiveCorrect = 1,
+                consecutiveIncorrect = 0,
+                intervalDays = 0,
+                easeFactor = 2.5f,
+                repetitions = 1,
+                lapses = 0,
+                lastReviewedAt = 0L,
+                nextReviewAt = 0L,
+            ),
+        )
+        lessons.exercises[lessonId] = listOf(
+            Exercise.MultipleChoice(
+                id = "$lessonId.ex.01",
+                lessonId = lessonId,
+                question = "Choose",
+                questionFa = null,
+                options = listOf("is", "are"),
+                correctIndex = 0,
+                skill = Skill.GRAMMAR,
+            ),
+        )
+        val vm = ReviewViewModel(
+            reviewRepository = reviews,
+            vocabularyRepository = FakeVocabularyRepository(),
+            progressRepository = FakeProgressRepository(),
+            submitReview = SubmitReviewUseCase(
+                reviews,
+                Sm2ReviewScheduler(),
+                FakeProgressRepository(),
+                knowledge,
+            ),
+            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
+                knowledge,
+                GetFocusPlanUseCase(knowledge, lessons),
+            ),
+            audioPlayer = FakeAudioPlayer(),
+            speaker = RecordingSpeaker(),
+            isAppInForeground = { true },
+        )
+        var opened: Pair<String, String>? = null
+
+        compose.setContent {
+            AppTheme {
+                ReviewScreen(
+                    onBrowseVocabulary = {},
+                    onGoHome = {},
+                    onOpenFocus = { lesson, item -> opened = lesson to item },
+                    vm = vm,
+                )
+            }
+        }
+
+        compose.onNodeWithText("مرور هدفمند", substring = true).assertIsDisplayed()
+        compose.onNodeWithText("مرور این بخش", substring = true).performScrollTo().performClick()
+
+        assertEquals(lessonId to "grammar.test", opened)
     }
 
     @Test

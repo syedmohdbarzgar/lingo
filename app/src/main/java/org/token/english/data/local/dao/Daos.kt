@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+import org.token.english.data.local.entity.ConversationDoneEntity
 import org.token.english.data.local.entity.DimensionMasteryEntity
 import org.token.english.data.local.entity.ExerciseEntity
 import org.token.english.data.local.entity.KnowledgeItemEntity
@@ -29,6 +30,13 @@ data class AttemptAggregate(val total: Int, val correct: Int)
  * rather than guessing which track a grade belongs to.
  */
 data class AttemptsByContentType(val contentType: String, val total: Int, val correct: Int)
+
+/**
+ * One graded card joined to the kind of content it reviewed (miss taxonomy). The type
+ * is nullable because the join is a LEFT join: a grade whose item has since left the
+ * queue still happened and must not be dropped from the window.
+ */
+data class GradedCardRow(val timestamp: Long, val result: String, val contentType: String?)
 
 @Dao
 interface ContentDao {
@@ -77,6 +85,12 @@ interface ContentDao {
 
     @Query("SELECT * FROM lesson_attempt WHERE lessonId = :lessonId ORDER BY at ASC, id ASC")
     suspend fun getLessonAttempts(lessonId: String): List<LessonAttemptEntity>
+
+    // The whole log, newest first, bounded by the caller (the miss taxonomy's window).
+    // A full scan of `lesson_attempt` — tens of thousands of rows at most, no index —
+    // which is what `docs/debt.md` already allows for single-screen reads.
+    @Query("SELECT * FROM lesson_attempt ORDER BY at DESC, id DESC LIMIT :limit")
+    suspend fun getRecentLessonAttempts(limit: Int): List<LessonAttemptEntity>
 
     @Query("DELETE FROM lesson_attempt")
     suspend fun clearLessonAttempts()
@@ -230,6 +244,19 @@ interface ReviewDao {
     )
     suspend fun attemptStatsByContentType(): List<AttemptsByContentType>
 
+    /**
+     * The most recent grades with their item's content type — the review half of the
+     * miss taxonomy. `LEFT JOIN` keeps a grade whose item is gone; [GradedCardRow]
+     * carries the null and the taxonomy skips it, which is honest about knowing a
+     * card was graded without pretending to know what it trained.
+     */
+    @Query(
+        "SELECT a.timestamp AS timestamp, a.result AS result, i.contentType AS contentType " +
+            "FROM review_attempt a LEFT JOIN review_item i ON i.contentId = a.contentId " +
+            "ORDER BY a.timestamp DESC, a.id DESC LIMIT :limit",
+    )
+    suspend fun recentGrades(limit: Int): List<GradedCardRow>
+
     @Query("SELECT COUNT(*) FROM review_item WHERE lastReviewedAt IS NOT NULL")
     fun observeWordsLearnedCount(): Flow<Int>
 
@@ -343,6 +370,30 @@ interface ProgressDao {
 
     @Query("DELETE FROM study_session")
     suspend fun clearSessions()
+}
+
+/**
+ * Lessons whose dialogue has been practised (Room v10).
+ *
+ * This is learner progress, so it lives with the rest of the progress: a fact in
+ * the settings preferences file was excluded from Auto Backup along with the
+ * subscription mirror, so a restore kept the finished lesson and forgot the
+ * dialogue that unlocked it. [insert] ignores a repeat, which is what makes the
+ * mark idempotent when a dialogue is replayed.
+ */
+@Dao
+interface ConversationDao {
+    @Query("SELECT lessonId FROM conversation_done")
+    fun observeDone(): Flow<List<String>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(item: ConversationDoneEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(items: List<ConversationDoneEntity>)
+
+    @Query("DELETE FROM conversation_done")
+    suspend fun clear()
 }
 
 @Dao

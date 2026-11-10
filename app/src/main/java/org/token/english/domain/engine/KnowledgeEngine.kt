@@ -102,8 +102,8 @@ class DefaultKnowledgeEngine(
     fun isLongTermMastered(state: KnowledgeState): Boolean =
         KnowledgeGates.isLongTermMastered(state)
 
-    /** True when the node is due to come back (used by the daily plan, next slice). */
-    fun isDue(state: KnowledgeState, now: Long): Boolean = state.nextReviewAt <= now
+    /** True when the node is due to come back (see [KnowledgeGates.isDue]). */
+    fun isDue(state: KnowledgeState, now: Long): Boolean = KnowledgeGates.isDue(state, now)
 
     companion object {
         /**
@@ -214,6 +214,17 @@ object KnowledgeGates {
         val last = state.lastReviewedAt ?: return false
         return now - last >= MIN_RETEST_SPAN_MS
     }
+
+    /**
+     * Is the node's own scheduled review due?
+     *
+     * This is the *schedule* clock, not the plan's bar: a node can need practice today
+     * because it has been mastered-but-not-secured (the retest case) or simply because
+     * the interval it earned has run out. Defined once here because two readers ask it —
+     * the focused drill (a due node is a legitimate reason to serve its exercises, see
+     * `GetFocusPlanUseCase`) and the review screen's due list.
+     */
+    fun isDue(state: KnowledgeState, now: Long): Boolean = state.nextReviewAt <= now
 
     /**
      * Long-term: [isSecured], plus the retention evidence — [MIN_RECALLS] recalls and

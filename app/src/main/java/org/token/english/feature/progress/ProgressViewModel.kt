@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LessonMastery
+import org.token.english.domain.engine.MissProfile
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -22,6 +23,7 @@ import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.SettingsRepository
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 
 data class ProgressUiState(
@@ -46,6 +48,12 @@ data class ProgressUiState(
     val knowledgeTotal: Int = 0,
     /** Persian title of the weakest practised node, shown as a study hint. */
     val weakestKnowledge: String? = null,
+    /**
+     * What the recent answers went wrong about (the error taxonomy). Null until there is
+     * enough evidence to say anything, and null again if the read itself fails — that
+     * insight is an addition to the screen, never a reason to blank it.
+     */
+    val missProfile: MissProfile? = null,
     /** A read threw — the screen says so instead of leaving the spinner up. */
     val loadFailed: Boolean = false,
 )
@@ -57,6 +65,7 @@ class ProgressViewModel(
     private val progressRepository: ProgressRepository,
     private val knowledgeRepository: KnowledgeRepository,
     private val getSkillProfiles: GetSkillProfilesUseCase,
+    private val getMissProfile: GetMissProfileUseCase,
     private val studyStats: StateFlow<StudyStats>,
 ) : ViewModel() {
 
@@ -66,6 +75,7 @@ class ProgressViewModel(
     private var totalLessons: Int = 0
     private var level: LearningLevel = LearningLevel.A1
     private var profiles: List<SkillProfile> = emptyList()
+    private var missProfile: MissProfile? = null
     private var knowledgeStates: List<KnowledgeState> = emptyList()
     private var knowledgeTitles: Map<String, String> = emptyMap()
     private var knowledgeTotal: Int = 0
@@ -171,6 +181,13 @@ class ProgressViewModel(
                     return@launch
                 }
             profiles = loaded
+            // Same signal, second question: the mastery writes are exactly when the
+            // answer log changes, so the miss mix is recomputed here rather than on a
+            // stream of its own. Its failure is contained — see the state property.
+            missProfile = runCatchingCancellable { getMissProfile() }.getOrElse { error ->
+                android.util.Log.w("ProgressViewModel", "miss profile read failed", error)
+                missProfile
+            }
             rebuild()
         }
     }
@@ -200,6 +217,7 @@ class ProgressViewModel(
             knowledgePractised = knowledgeStates.size,
             knowledgeTotal = knowledgeTotal,
             weakestKnowledge = weakest,
+            missProfile = missProfile,
             loadFailed = _state.value.loadFailed,
         )
     }

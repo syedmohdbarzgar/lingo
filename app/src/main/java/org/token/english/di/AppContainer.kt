@@ -1,6 +1,7 @@
 package org.token.english.di
 
 import android.content.Context
+import android.content.Intent
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,9 +13,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import java.io.File
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.TtsAudioPlayer
+import org.token.english.core.common.ContentFailure
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.data.content.ContentSeeder
@@ -40,7 +43,9 @@ import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.CompleteLessonUseCase
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.AssessPlacementUseCase
@@ -68,7 +73,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
 
     // Data
     val database: AppDatabase by lazy {
-        Room.databaseBuilder(appContext, AppDatabase::class.java, "english.db")
+        Room.databaseBuilder(appContext, AppDatabase::class.java, DATABASE_NAME)
             // Every migration must be registered here: Room throws at open time when
             // a path from the installed version is missing, which would crash an
             // upgrading install before the seeder ever runs. Taken as a whole from
@@ -91,7 +96,7 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     }
     /** Which lessons' dialogues are finished — the lesson gate reads it. */
     val conversationRepository: ConversationRepository by lazy {
-        ConversationRepositoryImpl(appContext)
+        ConversationRepositoryImpl(database.conversationDao(), appContext)
     }
     val progressRepository: ProgressRepository by lazy {
         ProgressRepositoryImpl(
@@ -238,6 +243,17 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
      */
     val contentStatus: StateFlow<ContentStatus> = _contentStatus.asStateFlow()
 
+    private val _contentFailure = MutableStateFlow<ContentFailure?>(null)
+
+    /**
+     * Why the last write failed, when it did — `null` while it succeeded or is running.
+     *
+     * The screens need the difference: a retry is the right answer to a bad asset, and
+     * a lie when Room cannot open the database at all. Only the second one offers the
+     * rebuild, and a rebuild is not something to offer on a guess.
+     */
+    val contentFailure: StateFlow<ContentFailure?> = _contentFailure.asStateFlow()
+
     /**
      * True once the write has finished — successful or not. Screens and the splash
      * wait on this so a fresh install never paints "lesson missing" mid-write; the
@@ -256,8 +272,90 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         _contentStatus.value = ContentStatus.LOADING
         val result = runCatchingCancellable { contentSeeder.ensureSeeded() }
         result.exceptionOrNull()?.let { android.util.Log.e("AppContainer", "content seeding failed", it) }
+        _contentFailure.value = if (result.isSuccess) null else classifyFailure()
         _contentStatus.value = if (result.isSuccess) ContentStatus.READY else ContentStatus.FAILED
         return result.isSuccess
+    }
+
+    /**
+     * Asks the database itself, instead of reading the exception: an asset that failed to
+     * parse and a file that is not a database both arrive here as a throwable, and only
+     * one of them is worth a rebuild. Opening it is the question.
+     */
+    private suspend fun classifyFailure(): ContentFailure = withContext(Dispatchers.IO) {
+        val openable = runCatching { database.openHelper.writableDatabase }.isSuccess
+        if (openable) ContentFailure.OTHER else ContentFailure.DATABASE_UNREADABLE
+    }
+
+    /**
+     * Moves an unreadable `english.db` out of the way so the next start can build a fresh
+     * one — the only way out of [ContentFailure.DATABASE_UNREADABLE], where every retry
+     * fails the same way.
+     *
+     * Nothing is deleted: the damaged file (with its `-wal` and `-shm` companions) is
+     * renamed into `noBackupFilesDir/corrupt-database/`, a directory Auto Backup and
+     * device transfer both ignore, so it neither rides along in a restore nor counts
+     * against the backup quota — and support can still pull it with `run-as`.
+     *
+     * The repository graph holds DAOs from this database, so the caller **must** restart
+     * the process afterwards; until then every read would still hit the closed handle.
+     *
+     * @return true when a file was moved (the caller restarts), false when there was
+     *   nothing to move — in which case the screen says the rebuild did not happen
+     *   rather than pretending it did.
+     */
+    suspend fun repairUnreadableDatabase(): Boolean = withContext(Dispatchers.IO) {
+        val moved = runCatchingCancellable {
+            // Closing a database whose open failed throws on some paths and not on
+            // others; neither outcome is allowed to block the move.
+            runCatching { database.close() }
+            val stamp = System.currentTimeMillis()
+            val aside = File(appContext.noBackupFilesDir, CORRUPT_DATABASE_DIR).apply { mkdirs() }
+            val base = appContext.getDatabasePath(DATABASE_NAME).absolutePath
+            var any = false
+            listOf("", "-wal", "-shm").forEach { suffix ->
+                val from = File(base + suffix)
+                if (from.exists()) {
+                    any = from.renameTo(File(aside, "$DATABASE_NAME.$stamp$suffix")) || any
+                }
+            }
+            any
+        }
+        if (moved.isFailure) {
+            android.util.Log.e("AppContainer", "database repair could not move the file", moved.exceptionOrNull())
+        }
+        moved.getOrDefault(false)
+    }
+
+    /**
+     * The repair's second half: starts the app again from its launcher and exits this
+     * process.
+     *
+     * Every repository in the graph holds DAOs bound to the database object that was
+     * just closed and moved aside, so rebuilding the graph inside a live process would
+     * mean re-creating the container underneath ViewModels that already captured it.
+     * A relaunch is the honest equivalent, and it is also what the confirmation on
+     * Home tells the learner will happen — so the promise and the behaviour match even
+     * on an OEM that defers the start.
+     *
+     * @return false when there is nothing to relaunch (no launcher activity, e.g. a
+     *   build without one). The file has already been moved by then, so the caller must
+     *   not pretend either that nothing happened or that the app will come back by
+     *   itself: the screen says the rebuild is done and asks the learner to reopen the
+     *   app. Returning true means the relaunch was queued and this process is going.
+     */
+    fun restartProcess(): Boolean {
+        val launch = appContext.packageManager.getLaunchIntentForPackage(appContext.packageName)
+        if (launch == null) {
+            android.util.Log.w("AppContainer", "no launcher intent after the database repair")
+            return false
+        }
+        launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        appContext.startActivity(launch)
+        // Queued with the system first, then this process goes: killing it before the
+        // request would leave the learner staring at the launcher.
+        android.os.Process.killProcess(android.os.Process.myPid())
+        return true
     }
 
     val contentSeeder: ContentSeeder by lazy {
@@ -279,13 +377,21 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
      * wrong skill.
      */
     val recordConversationTurn: RecordConversationTurnUseCase by lazy {
-        RecordConversationTurnUseCase(progressRepository, knowledgeRepository)
+        RecordConversationTurnUseCase(
+            progress = progressRepository,
+            knowledge = knowledgeRepository,
+            conversations = conversationRepository,
+        )
     }
     val completeLesson: CompleteLessonUseCase by lazy {
         CompleteLessonUseCase(lessonRepository, progressRepository)
     }
-    val submitReview: SubmitReviewUseCase by lazy {
-        SubmitReviewUseCase(reviewRepository, reviewScheduler, progressRepository)
+    val submitReview: SubmitReviewUseCase by lazy {            SubmitReviewUseCase(
+                reviewRepository,
+                reviewScheduler,
+                progressRepository,
+                knowledgeRepository,
+            )
     }
     val getTodayPlan: GetTodayPlanUseCase by lazy {
         GetTodayPlanUseCase(
@@ -306,6 +412,15 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     }
 
     /**
+     * The review screen's graph half (review→graph pass): which curriculum nodes are
+     * due, via the focused drill that will serve them — so the row it shows and the
+     * session it opens are the same decision.
+     */
+    val getDueKnowledgeReviews: GetDueKnowledgeReviewsUseCase by lazy {
+        GetDueKnowledgeReviewsUseCase(knowledgeRepository, getFocusPlan)
+    }
+
+    /**
      * The three independent skill tracks (P2): mastery plus the evidence behind it,
      * combined from the learner model and the review log. Home and Progress both read
      * it so neither can define a track its own way.
@@ -314,10 +429,27 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         GetSkillProfilesUseCase(knowledgeRepository, progressRepository, reviewRepository)
     }
 
+    /**
+     * The error taxonomy's read (roadmap): recent misses classified by the kind of
+     * knowing that failed, so Progress can say what to fix rather than only how much
+     * is known.
+     */
+    val getMissProfile: GetMissProfileUseCase by lazy {
+        GetMissProfileUseCase(lessonRepository, reviewRepository)
+    }
+
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }
 
     /** Placement as a skill assessment (P1-1): scores *and* calibrates mastery. */
     val assessPlacement: AssessPlacementUseCase by lazy {
         AssessPlacementUseCase(progressRepository)
+    }
+
+    companion object {
+        /** The one file the learner's progress lives in — and the one a repair moves. */
+        const val DATABASE_NAME = "english.db"
+
+        /** Where an unreadable database is kept after a repair (never backed up). */
+        const val CORRUPT_DATABASE_DIR = "corrupt-database"
     }
 }

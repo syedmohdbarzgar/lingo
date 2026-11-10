@@ -340,6 +340,11 @@ private fun NavGraphBuilder.review(navController: NavHostController) {
         ReviewScreen(
             onBrowseVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onGoHome = { navController.navigate(Routes.HOME) },
+            // A due node opens the focused drill of its own exercises — the same
+            // destination Home's weak-spot card uses.
+            onOpenFocus = { lessonId, itemId ->
+                navController.navigate(Routes.focusLesson(lessonId, itemId))
+            },
         )
     }
 }

@@ -11,6 +11,7 @@ import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 
 /**
@@ -52,18 +53,35 @@ class FocusPlanTest {
         skill = skill,
     )
 
-    private fun state(itemId: String, mastery: Float) = KnowledgeState(
+    /**
+     * The clock every call passes explicitly. A state is **not** due by default:
+     * `nextReviewAt` sits in the future unless a test is about the schedule, so a
+     * weakness test cannot pass by accident through the due branch.
+     */
+    private val now = 1_000_000L
+
+    private fun state(
+        itemId: String,
+        mastery: Float,
+        nextReviewAt: Long = Long.MAX_VALUE,
+        consecutiveCorrect: Int = 0,
+        distinctTypesCorrect: Int = 0,
+        firstCorrectAt: Long? = null,
+        lastReviewedAt: Long? = null,
+    ) = KnowledgeState(
         itemId = itemId,
         mastery = mastery,
         exposureCount = 2,
-        consecutiveCorrect = 0,
-        consecutiveIncorrect = 1,
+        consecutiveCorrect = consecutiveCorrect,
+        consecutiveIncorrect = if (consecutiveCorrect == 0) 1 else 0,
         intervalDays = 0,
         easeFactor = 2.5f,
         repetitions = 0,
         lapses = 0,
-        lastReviewedAt = null,
-        nextReviewAt = 0L,
+        lastReviewedAt = lastReviewedAt,
+        nextReviewAt = nextReviewAt,
+        firstCorrectAt = firstCorrectAt,
+        distinctTypesCorrect = distinctTypesCorrect,
     )
 
     private fun repositories(
@@ -88,7 +106,7 @@ class FocusPlanTest {
             items = listOf(grammar, vocabulary),
             states = listOf(state("grammar.test", 0.2f)),
         )
-        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test")!!
+        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test", now)!!
 
         assertEquals("grammar.test", plan.itemId)
         assertEquals(lessonId, plan.lessonId)
@@ -115,7 +133,7 @@ class FocusPlanTest {
             items = listOf(grammar, vocabulary),
             states = listOf(state("grammar.test", 0.2f)),
         )
-        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test")!!
+        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test", now)!!
 
         assertEquals(
             "a short block holds exactly the matching exercises — never padded, never dropped",
@@ -133,7 +151,7 @@ class FocusPlanTest {
     @Test
     fun `a node the learner never studied is taught, not drilled`() = runTest {
         val (knowledge, lessons) = repositories(listOf(grammar, vocabulary))
-        assertNull(GetFocusPlanUseCase(knowledge, lessons)("grammar.test"))
+        assertNull(GetFocusPlanUseCase(knowledge, lessons)("grammar.test", now))
     }
 
     @Test
@@ -142,7 +160,7 @@ class FocusPlanTest {
             items = listOf(grammar, vocabulary),
             states = listOf(state("grammar.test", 0.9f), state("vocab.test", 0.3f)),
         )
-        val plan = GetFocusPlanUseCase(knowledge, lessons)(null)!!
+        val plan = GetFocusPlanUseCase(knowledge, lessons)(null, now)!!
 
         assertEquals("vocab.test", plan.itemId)
         assertEquals(0.3f, plan.mastery, 0.0001f)
@@ -156,7 +174,7 @@ class FocusPlanTest {
             items = listOf(grammar, blocked),
             states = listOf(state("grammar.test", 0.2f)),
         )
-        val plan = GetFocusPlanUseCase(knowledge, lessons)(null)!!
+        val plan = GetFocusPlanUseCase(knowledge, lessons)(null, now)!!
 
         assertEquals("grammar.test", plan.itemId)
         assertEquals("one node stays locked behind it", 1, plan.blockedCount)
@@ -168,12 +186,88 @@ class FocusPlanTest {
             items = listOf(grammar),
             states = listOf(state("grammar.test", 0.9f)),
         )
-        assertNull(GetFocusPlanUseCase(knowledge, lessons)(null))
+        assertNull(GetFocusPlanUseCase(knowledge, lessons)(null, now))
     }
 
     @Test
     fun `an empty curriculum yields no block`() = runTest {
         val (knowledge, lessons) = repositories(items = emptyList())
-        assertNull(GetFocusPlanUseCase(knowledge, lessons)(null))
+        assertNull(GetFocusPlanUseCase(knowledge, lessons)(null, now))
+    }
+
+    @Test
+    fun `a due node in the middle band is drilled, not refused`() = runTest {
+        // The review screen sends the learner here for a node whose own schedule is
+        // due. Such a node is often neither weak (< threshold) nor strong (≥ 0.85),
+        // so without the due branch it would be refused and the due row would open a
+        // whole lesson instead of the node's own exercises.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(state("grammar.test", 0.7f, nextReviewAt = now - 1)),
+        )
+        val plan = GetFocusPlanUseCase(knowledge, lessons)("grammar.test", now)
+
+        assertEquals("grammar.test", plan?.itemId)
+        assertEquals(setOf("$lessonId.ex.01"), plan?.exerciseIds)
+    }
+
+    @Test
+    fun `a secured node is not drilled even when its date is due`() = runTest {
+        // The gate's "needs no more practice today" stays the one bar: a date in the
+        // past cannot reopen a node the planner considers secured.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state(
+                    "grammar.test",
+                    mastery = 0.95f,
+                    nextReviewAt = now - 1,
+                    consecutiveCorrect = 3,
+                    distinctTypesCorrect = 0b11,
+                    firstCorrectAt = now - 30 * 3_600_000L,
+                    lastReviewedAt = now - 60_000L,
+                ),
+            ),
+        )
+
+        assertNull(GetFocusPlanUseCase(knowledge, lessons)("grammar.test", now))
+    }
+
+    @Test
+    fun `only due, unsecured nodes with a real drill reach the review list`() = runTest {
+        // The review screen must not offer a row that opens a whole lesson, and must
+        // not contradict the planner about a secured node.
+        // A node whose lessons the bundle no longer teaches: no exercise, no row.
+        val noDrill = item("vocab.extra", KnowledgeType.VOCABULARY, listOf(Skill.READING))
+            .copy(lessonIds = emptyList())
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary, noDrill),
+            states = listOf(
+                state("grammar.test", 0.7f, nextReviewAt = now - 3_000L),
+                state("vocab.test", 0.2f, nextReviewAt = now - 1_000L),
+                state("vocab.extra", 0.3f, nextReviewAt = now - 2_000L),
+            ),
+        )
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))(now)
+
+        assertEquals(
+            "most overdue first, and no row without a drillable exercise",
+            listOf("grammar.test", "vocab.test"),
+            due.map { it.itemId },
+        )
+        assertEquals(lessonId, due.first().lessonId)
+        assertEquals(now - 3_000L, due.first().dueAt)
+    }
+
+    @Test
+    fun `a graph still inside its intervals yields no due reviews`() = runTest {
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar),
+            states = listOf(state("grammar.test", 0.7f)),
+        )
+
+        assertTrue(
+            GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))(now).isEmpty(),
+        )
     }
 }

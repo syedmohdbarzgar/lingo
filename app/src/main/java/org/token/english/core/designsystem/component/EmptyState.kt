@@ -26,6 +26,10 @@ import org.token.english.core.designsystem.AppSpacing
  * the first thing to try, and reaching the publisher is the second, so the two must
  * not compete for the same emphasis (checklist P1-7: a critical error needs a
  * support path, not only a button that re-runs the same failing read).
+ *
+ * [extraActionText] is the third, rarest one: a *different* action that belongs below
+ * the retry because it is neither the default nor a way to ask for help — the database
+ * rebuild on Home is the only user today. Both quiet actions keep a 48dp target.
  */
 @Composable
 fun AppEmptyState(
@@ -37,6 +41,8 @@ fun AppEmptyState(
     onAction: (() -> Unit)? = null,
     secondaryActionText: String? = null,
     onSecondaryAction: (() -> Unit)? = null,
+    extraActionText: String? = null,
+    onExtraAction: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -76,6 +82,12 @@ fun AppEmptyState(
                 onClick = onSecondaryAction,
                 modifier = Modifier.heightIn(min = 48.dp),
             ) { Text(secondaryActionText) }
+        }
+        if (extraActionText != null && onExtraAction != null) {
+            TextButton(
+                onClick = onExtraAction,
+                modifier = Modifier.heightIn(min = 48.dp),
+            ) { Text(extraActionText) }
         }
     }
 }

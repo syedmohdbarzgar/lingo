@@ -12,6 +12,10 @@ import org.junit.Before
 import org.junit.Test
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.engine.StudyTimePolicy
+import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.KnowledgeItem
+import org.token.english.domain.model.KnowledgeState
+import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
@@ -19,6 +23,8 @@ import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.VocabularyItem
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.review.ReviewEvent
 import org.token.english.feature.review.ReviewPhase
@@ -72,6 +78,8 @@ class ReviewViewModelTest {
         val reviews = FakeReviewRepository()
         val vocabulary = FakeVocabularyRepository()
         val progress = FakeProgressRepository()
+        val knowledge = FakeKnowledgeRepository()
+        val lessons = FakeLessonRepository()
         val audio = FakeAudioPlayer()
         val speaker = RecordingSpeaker()
 
@@ -79,7 +87,11 @@ class ReviewViewModelTest {
             reviewRepository = reviews,
             vocabularyRepository = vocabulary,
             progressRepository = progress,
-            submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress),
+            submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress, knowledge),
+            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
+                knowledge,
+                GetFocusPlanUseCase(knowledge, lessons),
+            ),
             audioPlayer = audio,
             speaker = speaker,
             isAppInForeground = foreground,
@@ -89,6 +101,50 @@ class ReviewViewModelTest {
     private fun Harness.withDueCard(): Harness {
         reviews.dueFlow.value = listOf(card)
         vocabulary.allFlow.value = listOf(word)
+        return this
+    }
+
+    /** One curriculum node whose own schedule is due, with a drillable exercise. */
+    private fun Harness.withDueNode(itemId: String = "grammar.test"): Harness {
+        val lessonId = word.lessonId!!
+        knowledge.itemsFlow.value = listOf(
+            KnowledgeItem(
+                id = itemId,
+                type = KnowledgeType.GRAMMAR,
+                title = "Verb be",
+                titleFa = "فعل be",
+                level = LearningLevel.A1,
+                prerequisites = emptyList(),
+                lessonIds = listOf(lessonId),
+                skills = listOf(Skill.GRAMMAR),
+            ),
+        )
+        knowledge.statesFlow.value = listOf(
+            KnowledgeState(
+                itemId = itemId,
+                mastery = 0.7f,
+                exposureCount = 2,
+                consecutiveCorrect = 1,
+                consecutiveIncorrect = 0,
+                intervalDays = 0,
+                easeFactor = 2.5f,
+                repetitions = 1,
+                lapses = 0,
+                lastReviewedAt = 0L,
+                nextReviewAt = 0L,
+            ),
+        )
+        lessons.exercises[lessonId] = listOf(
+            Exercise.MultipleChoice(
+                id = "a1.test.ex.01",
+                lessonId = lessonId,
+                question = "Choose",
+                questionFa = null,
+                options = listOf("is", "are"),
+                correctIndex = 0,
+                skill = Skill.GRAMMAR,
+            ),
+        )
         return this
     }
 
@@ -107,6 +163,77 @@ class ReviewViewModelTest {
         assertEquals(ReviewResult.GOOD, h.reviews.attempts.first().result)
         assertTrue("the next schedule is persisted", h.reviews.scheduled.isNotEmpty())
         assertTrue("a GOOD grade moves the vocabulary meter", h.progress.attempts.contains(Skill.VOCABULARY to true))
+        assertEquals(
+            "the grade reaches the graph through the word's own lesson",
+            listOf(Triple(word.lessonId, Skill.VOCABULARY, true)),
+            h.knowledge.recalled,
+        )
+    }
+
+    @Test
+    fun `a due curriculum node is offered beside the cards, not instead of them`() {
+        // review→graph pass: the node's own schedule is read too, so a due node whose
+        // exercises exist is served by the focused drill — while the word cards on
+        // screen stay exactly what they were.
+        val h = Harness().withDueCard().withDueNode()
+
+        val vm = h.build()
+
+        assertEquals(listOf("grammar.test"), vm.state.value.dueReviews.map { it.itemId })
+        assertEquals("the row opens the drill in the node's own lesson", word.lessonId, vm.state.value.dueReviews.single().lessonId)
+        assertEquals("the cards are still there", 1, vm.state.value.queue.size)
+    }
+
+    @Test
+    fun `a resumed summary re-reads both queues`() {
+        // Both reads only ran in `init`; work finished elsewhere (the focused drill, a
+        // card graded on another tab) left the screen showing what was already done.
+        val h = Harness()
+        val vm = h.build()
+        assertTrue("nothing due at first", vm.state.value.queue.isEmpty())
+        assertTrue(vm.state.value.dueReviews.isEmpty())
+
+        h.withDueCard().withDueNode()
+        vm.onScreenResumed()
+
+        assertEquals("the cards are read again", 1, vm.state.value.queue.size)
+        assertEquals(listOf("grammar.test"), vm.state.value.dueReviews.map { it.itemId })
+    }
+
+    @Test
+    fun `resuming mid-session never resets the card the learner is on`() {
+        val h = Harness().withDueCard()
+        val vm = h.build()
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.Reveal)
+
+        // The disk says otherwise — a completed drill, an empty queue — but the session
+        // on screen is the learner's, so a resume must not touch it.
+        h.reviews.dueFlow.value = emptyList()
+        h.withDueNode()
+        vm.onScreenResumed()
+
+        assertEquals(ReviewPhase.SESSION, vm.state.value.phase)
+        assertTrue("the revealed card stays revealed", vm.state.value.revealed)
+        assertEquals(1, vm.state.value.queue.size)
+        assertTrue("the graph half is not grafted onto a running session", vm.state.value.dueReviews.isEmpty())
+    }
+
+    @Test
+    fun `the finished session returns to the due list instead of stranding it`() {
+        val h = Harness().withDueCard().withDueNode()
+        val vm = h.build()
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.Reveal)
+        vm.onEvent(ReviewEvent.Grade(ReviewResult.GOOD))
+        assertEquals(ReviewPhase.DONE, vm.state.value.phase)
+        assertEquals("the node is still owed after the cards", 1, vm.state.value.dueReviews.size)
+
+        vm.onEvent(ReviewEvent.ShowDue)
+
+        assertEquals(ReviewPhase.SUMMARY, vm.state.value.phase)
+        assertEquals(listOf("grammar.test"), vm.state.value.dueReviews.map { it.itemId })
     }
 
     @Test

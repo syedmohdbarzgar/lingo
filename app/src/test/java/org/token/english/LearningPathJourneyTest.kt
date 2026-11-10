@@ -26,6 +26,7 @@ import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.AttemptStats
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.ExerciseFormat
+import org.token.english.domain.model.GradedCard
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningActionType
@@ -191,6 +192,24 @@ class LearningPathJourneyTest {
             format: ExerciseFormat,
             correct: Boolean,
             now: Long,
+        ) = fold(lessonId, skill, correct, now, format)
+
+        override suspend fun recordRecall(
+            lessonId: String?,
+            skill: Skill,
+            correct: Boolean,
+            now: Long,
+        ) {
+            val lesson = lessonId ?: return
+            fold(lesson, skill, correct, now, format = null)
+        }
+
+        private suspend fun fold(
+            lessonId: String,
+            skill: Skill,
+            correct: Boolean,
+            now: Long,
+            format: ExerciseFormat?,
         ) {
             val lessonItems = itemsForLesson(lessonId)
             val byId = statesFlow.value.associateBy { it.itemId }
@@ -242,6 +261,8 @@ class LearningPathJourneyTest {
         override suspend fun recordAttempt(attempt: LessonAttempt) = Unit
 
         override suspend fun attempts(lessonId: String): List<LessonAttempt> = emptyList()
+
+        override suspend fun recentAttempts(limit: Int): List<LessonAttempt> = emptyList()
 
         override suspend fun getLessonState(lessonId: String): LessonState? =
             lessonStates.value.firstOrNull { it.lessonId == lessonId }
@@ -306,6 +327,9 @@ class LearningPathJourneyTest {
         /** Review evidence for the P2 skill tracks — this journey does not read them. */
         override suspend fun attemptStatsByType(): Map<ReviewContentType, AttemptStats> = emptyMap()
 
+        /** This journey watches the curriculum path, not the miss taxonomy. */
+        override suspend fun recentCards(limit: Int) = emptyList<GradedCard>()
+
         override suspend fun reset() {
             items.clear()
             attempts.clear()
@@ -366,7 +390,7 @@ class LearningPathJourneyTest {
         val lessonsRepo = FakeLessons(lessons, vocabulary, exercisesJson, reviews, progress)
         val submitExercise = SubmitExerciseUseCase(progress, knowledge)
         val completeLesson = CompleteLessonUseCase(lessonsRepo, progress)
-        val submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress)
+        val submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress, knowledge)
         val assessPlacement = AssessPlacementUseCase(progress)
         val todayPlan = GetTodayPlanUseCase(
             lessons = lessonsRepo,
@@ -535,7 +559,7 @@ class LearningPathJourneyTest {
                 source = "review",
             ),
         )
-        app.submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900)
+        app.submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900, lessonId = lessonWords.first().lessonId)
         app.progress.recordReviewResult(ReviewResult.GOOD)
 
         val scheduled = app.reviews.getItem(card.contentId)!!

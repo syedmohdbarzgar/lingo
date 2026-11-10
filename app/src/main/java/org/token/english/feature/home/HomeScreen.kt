@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,9 +26,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +45,7 @@ import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.DialogShape
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppChip
@@ -121,6 +127,10 @@ fun HomeScreen(
         // blames the connection (AGENTS §6), and the retry re-runs the same work.
         if (state.hasLoadError) {
             val contentMissing = state.contentStatus == ContentStatus.FAILED
+            // The rebuild is confirmed first: it does not delete anything, but it is the
+            // one action that ends this session (the app restarts), so it must never
+            // fire from a single stray tap under the retry button.
+            var confirmRepair by remember { mutableStateOf(false) }
             Box(
                 Modifier
                     .fillMaxSize()
@@ -129,21 +139,67 @@ fun HomeScreen(
             ) {
                 AppEmptyState(
                     icon = Icons.Outlined.ErrorOutline,
-                    title = if (contentMissing) "محتوای درس‌ها آماده نشد" else "اطلاعات یادگیری خوانده نشد",
-                    subtitle = if (contentMissing) {
-                        "درس‌ها از بستهٔ آفلاین روی همین گوشی خوانده می‌شوند و آماده‌سازی آن‌ها کامل نشد. " +
-                            "این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
-                    } else {
-                        "پیشرفت و برنامه‌ٔ تو روی همین گوشی ذخیره شده است، اما خواندنشان این بار " +
-                            "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
+                    title = when {
+                        // The rebuild worked but the app could not come back by itself.
+                        state.needsManualRestart -> "یک قدم مانده"
+                        contentMissing -> "محتوای درس‌ها آماده نشد"
+                        else -> "اطلاعات یادگیری خوانده نشد"
                     },
-                    actionText = "تلاش دوباره",
-                    onAction = vm::retry,
+                    subtitle = when {
+                        // Nothing here can be retried: the handle this process holds is
+                        // closed, so the honest next step is the learner's own relaunch.
+                        state.needsManualRestart ->
+                            "پایگاه دادهٔ تازه ساخته شد. برنامه را کامل ببند و دوباره باز کن تا " +
+                                "درس‌ها از بستهٔ آفلاین خوانده شوند."
+                        // The rebuild itself failed: say that, instead of showing the
+                        // same explanation again as if the tap had done nothing.
+                        state.repairFailed ->
+                            "فایل خراب جابه‌جا نشد، برای همین هنوز چیزی خواندنی نیست. یک بار دیگر " +
+                                "تلاش کن؛ اگر باز هم نشد با پشتیبانی تماس بگیر."
+                        contentMissing ->
+                            "درس‌ها از بستهٔ آفلاین روی همین گوشی خوانده می‌شوند و آماده‌سازی آن‌ها کامل نشد. " +
+                                "این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
+                        else ->
+                            "پیشرفت و برنامهٔ تو روی همین گوشی ذخیره شده است، اما خواندنشان این بار " +
+                                "کامل نشد. این خطا به اینترنت مربوط نیست؛ یک بار دیگر تلاش کن."
+                    },
+                    actionText = if (state.needsManualRestart) null else "تلاش دوباره",
+                    onAction = if (state.needsManualRestart) null else vm::retry,
                     // P1-7: a core that will not load is the critical case, so the
                     // error state also offers the publisher page — the only support
                     // channel this app has, and the one the About page names.
                     secondaryActionText = "ارتباط با پشتیبانی",
                     onSecondaryAction = { StorePage.open(context) },
+                    // Only Room refusing to open the database offers the rebuild: for a
+                    // bad asset the retry above is the right answer, and a rebuild there
+                    // would wipe a perfectly readable progress file for nothing.
+                    extraActionText = if (state.canRepairDatabase) "ساخت دوبارهٔ پایگاه داده" else null,
+                    onExtraAction = if (state.canRepairDatabase) ({ confirmRepair = true }) else null,
+                )
+            }
+            if (confirmRepair) {
+                AlertDialog(
+                    onDismissRequest = { confirmRepair = false },
+                    shape = DialogShape,
+                    title = { Text("پایگاه داده از نو ساخته شود؟") },
+                    text = {
+                        Text(
+                            "فایل اطلاعاتی که باز نمی‌شود کنار گذاشته می‌شود و برنامه از نو باز می‌شود. " +
+                                "درس‌های تمام‌شده، مرورها و آمار یادگیری روی این گوشی بازنمی‌گردند، اما " +
+                                "درس‌ها و واژه‌ها دوباره از بستهٔ آفلاین ساخته می‌شوند. فایل خراب پاک نمی‌شود.",
+                        )
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                confirmRepair = false
+                                vm.repairDatabase()
+                            },
+                        ) { Text("بساز") }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { confirmRepair = false }) { Text("انصراف") }
+                    },
                 )
             }
             return@Scaffold

@@ -117,7 +117,7 @@ class ConversationPracticeViewModelTest {
             lessonRepository = lessonRepository,
             lessonId = lessonId,
             conversationRepository = conversations,
-            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge, conversations),
             speaker = speaker,
             contentStatus = MutableStateFlow(ContentStatus.READY),
             seedContent = { true },
@@ -280,7 +280,7 @@ class ConversationPracticeViewModelTest {
         val vm = ConversationPracticeViewModel(
             lessonRepository = repository,
             conversationRepository = FakeConversationRepository(),
-            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = speaker,
             contentStatus = status,
             seedContent = { true },
@@ -313,7 +313,7 @@ class ConversationPracticeViewModelTest {
         val vm = ConversationPracticeViewModel(
             lessonRepository = repository,
             conversationRepository = FakeConversationRepository(),
-            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = speaker,
             contentStatus = status,
             seedContent = {
@@ -629,7 +629,7 @@ class ConversationPracticeViewModelTest {
                     listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
             ),
             conversationRepository = FakeConversationRepository(),
-            recordTurn = RecordConversationTurnUseCase(progress, knowledge),
+            recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = slowSpeaker,
             contentStatus = MutableStateFlow(ContentStatus.READY),
             seedContent = { true },

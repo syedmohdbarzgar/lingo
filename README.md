@@ -19,7 +19,7 @@ the speech practice is graded on the device by a recogniser, not by a server.
 | Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v9, exported) + DataStore Preferences |
+| Local storage | Room (schema v10, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -86,8 +86,9 @@ re-assert LTR, because the root layout is forced RTL.
 - **Listening** — read aloud by the on-device Android TTS engine. No audio files, no network.
 - **Vocabulary browser** — search with escaped `LIKE` patterns.
 - **Progress** — three independent skill tracks (Grammar, Vocabulary, Reading), each with its
-  mastery, the evidence behind it and a status; plus streaks, review accuracy and knowledge-node
-  coverage.
+  mastery, the evidence behind it and a status; plus streaks, review accuracy, knowledge-node
+  coverage, and an error taxonomy that reads the recent answers and says what the misses were
+  *about* (vocabulary, grammar, comprehension, production) and which one to fix first.
 - **Daily reminder** — inexact daily alarm; asks for `POST_NOTIFICATIONS` on Android 13+.
 
 **Learner model**
@@ -263,9 +264,12 @@ scripts/install_debug.sh --list-devices
 atomic-evidence classes, filtered out of the same suite) and **`lint`** (`lintBazaarDebug`). The
 `transactions` job proves every multi-write learner flow — lesson answer, review grade, conversation
 turn, lesson completion, placement calibration — commits as one Room transaction, and fails if a new
-use case does not. **`assemble`** (the three flavor APKs) runs only on a schedule, a manual dispatch
-or a tag, and waits for `transactions`, because building every flavor on every commit buys nothing.
-There is no emulator or device job.
+use case does not. **`assemble`** (the three flavor APKs) and **`device`** (one emulator boot running
+`scripts/verify_device.sh` — install, airplane mode on, two timed cold starts, seed line, crash sweep)
+run only on a schedule, a manual dispatch or a tag, and wait for `transactions`, because building
+every flavor or booting an emulator on every commit buys nothing. `device` passes `--require-device`,
+so an emulator that never came up fails the job instead of passing as a no-op; it is a launch smoke,
+not an instrumented suite.
 
 ### Toolchain
 
@@ -307,7 +311,7 @@ app/src/main/java/org/token/english
 │   │                            KnowledgeGraph, KnowledgeEngine, KnowledgeEvidence
 │   └── usecase/                 SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, …
 ├── data/
-│   ├── local/                   Room: entities, DAOs, AppDatabase (v9, schemas exported)
+│   ├── local/                   Room: entities, DAOs, AppDatabase (v10, schemas exported)
 │   ├── content/                 ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/              Repository implementations + SettingsRepositoryImpl (DataStore)
 ├── di/AppContainer.kt           Manual DI container
@@ -395,11 +399,11 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-625 unit tests across 73 classes. The pure cores carry the most weight — review scheduling,
+663 unit tests across 76 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
-and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector)
-has its own tests. `LearningPathJourneyTest` runs the whole learner journey on the real bundle with
+and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
+miss taxonomy) has its own tests. `LearningPathJourneyTest` runs the whole learner journey on the real bundle with
 in-memory repositories, so the pieces are proven to compose, not just to work alone. The first
 ViewModel tests (B-6) drive `Home`/`Lesson`/`Review` through in-memory fakes — companion gating, the
 requeue-once-on-a-miss rule, the TTS-unavailable fallback and the review lifecycle — with no
@@ -492,13 +496,15 @@ offline, and must not block the learning core.
 - `bazaarRsaKey` unset disables Poolakey verification — release builds refuse to ship in that state.
 - Persian UI strings live inline in composables; extracting them to `strings.xml` is open design
   debt until a second locale appears.
-- Room is at `version = 9` with exported schemas in `app/schemas`. Schema changes must ship a
+- Room is at `version = 10` with exported schemas in `app/schemas`. Schema changes must ship a
   migration; the container registers `AppDatabase.ALL_MIGRATIONS` wholesale, because a hand-picked
   list once omitted a step and crashed **upgrading** installs at open time while fresh installs
   stayed green.
-- Due counts capture `now` when the collection starts, so a long-running session will not see newly
-  due items until the ViewModel is recreated.
-- Studied seconds are credited on screen close/finish (best effort), not by a foreground timer.
+- Due counts are read stale-on-open by design: Home re-reads them on a minute ticker but rebuilds only
+  when the number changes, and the review summary re-reads on resume (never mid-session). A queue that
+  grows while the screen is continuously visible waits for the next visit.
+- Study time is credited by an interaction-based ticker (30-second samples, stopped after 4 minutes of
+  idling), not merely for having the app open — see [`docs/learner-model.md`](docs/learner-model.md).
 - A streak day requires at least 60 seconds of study.
 - Single `:app` module; split it when build times or ownership demand it.
 
@@ -510,11 +516,19 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 
 **Buildable offline (no backend required)**
 
-- Move the spaced-repetition queue onto the knowledge graph — schedule and re-serve each due
-  curriculum node's own exercises, and feed review grades into node mastery the way lesson answers
-  already do.
-- An error taxonomy so each miss is classified (vocabulary gap vs grammar vs comprehension) and
-  drives what comes next — then adaptive difficulty on top of it.
+- Finish moving the spaced-repetition queue onto the knowledge graph. Both directions now exist: a
+  review grade **feeds the reviewed word's node** — mastery and that node's own next review date,
+  inside the card's transaction, and never an exercise-format confirmation (a card is recall, not
+  transfer; see [`docs/debt.md`](docs/debt.md)) — and a due **node** is re-served through its own
+  exercises, listed on the review screen and opened as the focused drill. What is still missing is
+  the reverse *convenience*: a due node still costs one tap into its lesson, and the node's
+  exercises are not yet queued as cards.
+- Finish the error taxonomy. The classification shipped: `MissTaxonomy` labels every recent lesson
+  answer by the skill its exercise is authored for (vocabulary, grammar, comprehension, production)
+  and every review card by its content type (vocabulary or grammar — a card knows nothing finer),
+  and Progress shows the pooled mix and the category carrying the most misses. What is still missing
+  is the second half — **driving what comes next** from that mix (adaptive difficulty, a drill chosen
+  by the weakest category).
 - A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
   its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.
 - Pronunciation scoring **inside** the lesson's `speaking` item — record-and-compare today, while the
@@ -529,10 +543,10 @@ in place for each.
 
 **Infrastructure**
 
-- A device/emulator job. CI covers the JVM gates (unit tests, `validateContent`, lint) and the
-  `transactions` gate on every push, but nothing runs the app on hardware — install, cold start,
-  seeding and the recogniser stay manual via `scripts/verify_device.sh`, and there is no instrumented
-  suite to run.
+- Deeper device coverage. The `device` job now proves launch, seeding and a second cold start on an
+  emulator, but it stops there: no instrumented suite exists, so per-screen behaviour, the upgrade
+  path from an installed older build, the recogniser (mic) and the splash transition still need a real
+  phone via `scripts/verify_device.sh` and the manual pass in [`docs/testing.md`](docs/testing.md).
 
 ---
 

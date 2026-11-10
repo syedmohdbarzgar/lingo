@@ -10,6 +10,8 @@ import org.token.english.domain.engine.PrerequisiteEngine
 import org.token.english.domain.engine.RemediationEngine
 import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.nextLessonFor
+import org.token.english.domain.engine.MissProfile
+import org.token.english.domain.engine.MissTaxonomy
 import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
@@ -32,6 +34,7 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.model.skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.TodayPlan
+import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
@@ -139,15 +142,23 @@ class SubmitExerciseUseCase(
 class RecordConversationTurnUseCase(
     private val progress: ProgressRepository,
     private val knowledge: KnowledgeRepository,
+    private val conversations: ConversationRepository,
 ) {
-    /** @return whether the turn counted as evidence (see [ProgressRepository.claimAnswer]). */
+    /**
+     * @param completesDialogue true when this turn is the dialogue's last graded one:
+     *   the "finished" mark is then written in this turn's own transaction (see below).
+     * @return whether the turn counted as evidence (see [ProgressRepository.claimAnswer]).
+     */
     suspend operator fun invoke(
         lessonId: String?,
         exerciseId: String,
         verdict: SpeakingVerdict,
         spoken: Boolean,
         now: Long,
+        completesDialogue: Boolean = false,
     ): Boolean {
+        // A retry is not a finished turn: the learner was asked to say it again, so
+        // the dialogue is not closed by it and nothing is written.
         if (verdict == SpeakingVerdict.RETRY) return false
         val skill = if (spoken) Skill.SPEAKING else Skill.WRITING
         val format = if (spoken) ExerciseFormat.SPEAKING else ExerciseFormat.SENTENCE_PRODUCTION
@@ -156,6 +167,15 @@ class RecordConversationTurnUseCase(
         // the turn spent for the day while Speaking never moved: the dialogue would have
         // been answered and silently credited to nobody.
         return progress.inTransaction {
+            // The mark belongs to this transaction: written after it, a crash in
+            // between reopened a dialogue whose every turn was already credited (and
+            // the learner had to sit through it again); written before it, the app
+            // could open the next lesson for a dialogue whose last answer never
+            // landed. Either both facts stand or neither does.
+            // It is written before the claim can return early on purpose: a dialogue
+            // replayed on a day its turns are already claimed is still finished, and
+            // the mark is `INSERT OR IGNORE`, so a repeat is free.
+            if (completesDialogue) conversations.markCompleted(lessonId.orEmpty())
             // The turn *is* an exercise: claiming it by id is what stops a re-played
             // dialogue from raising the speaking bar six times for six taps.
             if (!progress.claimAnswer(lessonId.orEmpty(), exerciseId, correct = true, now)) {
@@ -205,18 +225,27 @@ class SubmitReviewUseCase(
     private val reviews: ReviewRepository,
     private val scheduler: ReviewScheduler,
     private val progress: ProgressRepository,
+    private val knowledge: KnowledgeRepository,
 ) {
+    /**
+     * @param lessonId the lesson that taught the reviewed content — how the grade
+     *   reaches the curriculum node (see [KnowledgeRepository.recordRecall]). Null when
+     *   the card cannot be placed; the card is still graded, the graph simply has
+     *   nothing to attribute it to.
+     */
     suspend operator fun invoke(
         item: ReviewItem,
         result: ReviewResult,
         now: Long,
         responseTimeMs: Long,
+        lessonId: String?,
     ) {
-        // One grade writes three rows — the card's next schedule, the attempt log and
-        // the skill meter — and they are ONE transaction (checklist 0.1). Written
-        // separately, a crash between them could store a new interval with no attempt
-        // behind it, or move the skill and leave the card due (so the same card is asked
-        // again and again until a schedule finally lands).
+        // One grade writes four rows — the card's next schedule, the attempt log, the
+        // skill meter and the curriculum node — and they are ONE transaction
+        // (checklist 0.1). Written separately, a crash between them could store a new
+        // interval with no attempt behind it, move the skill and leave the card due (so
+        // the same card is asked again and again until a schedule finally lands), or
+        // credit a node for a review the log has no grade for.
         val schedule = scheduler.schedule(item, result, now)
         progress.inTransaction {
             reviews.schedule(
@@ -250,6 +279,14 @@ class SubmitReviewUseCase(
                 skill = item.contentType.skill(),
                 correct = result != ReviewResult.AGAIN,
                 source = "review",
+            )
+            // The graph last, so the learner model and the cards never disagree: before
+            // this, review was practice the curriculum could not see at all.
+            knowledge.recordRecall(
+                lessonId = lessonId,
+                skill = item.contentType.skill(),
+                correct = result != ReviewResult.AGAIN,
+                now = now,
             )
         }
     }
@@ -362,7 +399,12 @@ class GetFocusPlanUseCase(
     private val lessons: LessonRepository,
     private val weaknessThreshold: Float = RemediationEngine.DEFAULT_WEAKNESS_THRESHOLD,
 ) {
-    suspend operator fun invoke(itemId: String? = null): FocusPlan? {
+    /**
+     * @param now the clock, used for exactly one question: whether an explicitly
+     *   requested node's own schedule is **due** (see the retest/review branch below).
+     *   No default — a hidden clock would decide that question for the caller.
+     */
+    suspend operator fun invoke(itemId: String? = null, now: Long): FocusPlan? {
         val items = knowledge.allItems()
         if (items.isEmpty()) return null
         val graph = DefaultKnowledgeGraph(items)
@@ -389,17 +431,25 @@ class GetFocusPlanUseCase(
         val mastery = state.mastery
         // A node the learner has never studied is *taught*, not drilled — and one the
         // gate calls secured has nothing left to fix, so the auto-pick never chooses
-        // either (checklist B-1). An **explicit** request is different: the daily plan
-        // sends the learner here with a RETEST action for exactly the node the gate has
-        // not yet secured, and that session is a short retest of it (chapter 1) —
-        // refusing it would drop the learner into the whole lesson instead. A node that
-        // is merely "not weak" (0.5..0.85) is still not a retest: it has not earned the
-        // strong claim the retest is testing, so it keeps the old "nothing to drill"
-        // answer.
-        val retest = itemId != null &&
-            mastery >= STRONG_MASTERY &&
-            !KnowledgeGates.isSecured(state)
-        if (mastery >= weaknessThreshold && !retest) return null
+        // either (checklist B-1). An **explicit** request is different, for two reasons
+        // that are both about the caller having decided already:
+        //
+        // - the daily plan sends the learner here with a RETEST action for exactly the
+        //   node the gate has not yet secured, and that session is a short retest of it
+        //   (chapter 1) — refusing it would drop the learner into the whole lesson;
+        // - the review screen sends the learner here for a node whose **own schedule is
+        //   due** (review→graph pass). That node can sit in the middle band (0.5..0.85)
+        //   where it is neither weak enough to auto-pick nor strong enough to retest, and
+        //   refusing it would leave the due list with entries that open a whole lesson
+        //   instead of the node's exercises — the exact fallback this change exists to
+        //   remove.
+        //
+        // A due-but-secured node is still refused: the gate's "needs no more practice
+        // today" stays the one bar (the long-term claim is what covers its retention).
+        val secured = KnowledgeGates.isSecured(state)
+        val retest = itemId != null && mastery >= STRONG_MASTERY && !secured
+        val dueReview = itemId != null && !secured && KnowledgeGates.isDue(state, now)
+        if (mastery >= weaknessThreshold && !retest && !dueReview) return null
         item.lessonIds.forEach { exercisesOf(it) }
 
         val plan = engine.plan(targetId, loaded) ?: return null
@@ -427,6 +477,87 @@ class GetFocusPlanUseCase(
             remainingAttempts = plan.remainingAttempts,
             blockedCount = graph.items.count { item.id in it.prerequisites },
         )
+    }
+}
+
+/**
+ * One curriculum node whose **own** review is due, with the block that serves it.
+ *
+ * [lessonId] and [exerciseIds] come from the focused drill, not from a guess here, so
+ * the review screen can only offer rows the lesson screen will actually run as a drill.
+ */
+data class DueKnowledgeReview(
+    val itemId: String,
+    val titleFa: String,
+    val lessonId: String,
+    /** The node's `nextReviewAt` — how long it has been owed. */
+    val dueAt: Long,
+    val mastery: Float,
+    /** Persian "why this node, why now", written by the remediation engine. */
+    val reasonFa: String,
+)
+
+/**
+ * The other direction of the review queue (review→graph pass): which **knowledge
+ * nodes** are due, not which cards.
+ *
+ * The card queue is words; a node's schedule is the curriculum's own. Until this read
+ * existed, `nextReviewAt` on a node was written by lessons and reviews and read by
+ * nothing — a date that scheduled work and never served it. Today's answer is the
+ * focused drill that already exists (`GetFocusPlanUseCase` → the lesson screen with
+ * `focusItemId`), so this use case does not invent a new exercise surface: it finds the
+ * due nodes and asks that use case for the block, keeping exactly the nodes it can serve.
+ *
+ * Two deliberate filters:
+ *
+ * - **Not secured.** [KnowledgeGates.isSecured] is the one "needs no more practice
+ *   today" bar; a secured node's due date is covered by its long-term claim, and
+ *   offering it would let the review screen contradict the planner.
+ * - **A real drill only.** A due node the focused drill refuses (no evidence-bearing
+ *   exercise in any of its lessons) is dropped rather than offered as a row that opens a
+ *   whole lesson instead.
+ *
+ * The probes are bounded: only the most overdue [MAX_PROBES] nodes are asked, and the
+ * result stops at [limit]. Each probe re-reads the graph through the focus use case, so
+ * the bound is what keeps this a screen-local read rather than a scan of the bundle.
+ */
+class GetDueKnowledgeReviewsUseCase(
+    private val knowledge: KnowledgeRepository,
+    private val focus: GetFocusPlanUseCase,
+) {
+    suspend operator fun invoke(
+        now: Long,
+        limit: Int = DEFAULT_LIMIT,
+    ): List<DueKnowledgeReview> {
+        val candidates = knowledge.observeStates().first()
+            .filter { state ->
+                KnowledgeGates.isDue(state, now) && !KnowledgeGates.isSecured(state)
+            }
+            .sortedBy { it.nextReviewAt }
+            .take(MAX_PROBES)
+
+        val reviews = mutableListOf<DueKnowledgeReview>()
+        for (state in candidates) {
+            if (reviews.size >= limit) break
+            val plan = focus(state.itemId, now) ?: continue
+            reviews += DueKnowledgeReview(
+                itemId = plan.itemId,
+                titleFa = plan.titleFa,
+                lessonId = plan.lessonId,
+                dueAt = state.nextReviewAt,
+                mastery = plan.mastery,
+                reasonFa = plan.reasonFa,
+            )
+        }
+        return reviews
+    }
+
+    companion object {
+        /** Rows the review screen shows: a short block, not another wall of work. */
+        const val DEFAULT_LIMIT = 3
+
+        /** How many of the most overdue nodes are asked for a drill before giving up. */
+        const val MAX_PROBES = 8
     }
 }
 
@@ -534,5 +665,56 @@ class AssessPlacementUseCase(
             answers.forEach { progress.applyAttempt(it.skill, it.correct, source = "placement") }
         }
         return engine(answers)
+    }
+}
+
+/**
+ * The error taxonomy's read (roadmap): what the learner's recent answers went wrong
+ * *about*, classified by the skill each exercise is authored for.
+ *
+ * The log stores which exercise was asked, not its skill, so the authored exercises are
+ * read here and joined on id. Two deliberate narrowings:
+ *
+ * - **A window, not the archive** ([MissTaxonomy.WINDOW] newest answers), because the
+ *   point is what the learner should fix *now*. Both sources are pooled and then the
+ *   newest [window] are kept, so a burst of review cannot crowd the lessons out of the
+ *   window (or the other way round) the way two separate windows would.
+ * - **Cards are labelled by content type.** A recall card knows it is a word or a rule
+ *   and nothing finer, so review can only ever land in [MissCategory.VOCABULARY] or
+ *   [MissCategory.GRAMMAR] — never comprehension or production. That limit is in
+ *   `docs/debt.md`.
+ *
+ * Exercises are cached per lesson for the life of the process: content is static once
+ * seeded, and this read runs on every mastery emission — without the cache a single
+ * answer would re-parse the bundle's exercises for every lesson in the window.
+ */
+class GetMissProfileUseCase(
+    private val lessons: LessonRepository,
+    private val reviews: ReviewRepository,
+) {
+    private val exercisesByLesson = mutableMapOf<String, Map<String, Exercise>>()
+
+    suspend operator fun invoke(window: Int = MissTaxonomy.WINDOW): MissProfile? {
+        val attempts = lessons.recentAttempts(window)
+        val cards = reviews.recentCards(window)
+        if (attempts.isEmpty() && cards.isEmpty()) return null
+        // A bundle with hundreds of lessons could not all be cached at once; the window
+        // only ever names a handful, so the cap is a guard against a long-lived process
+        // accumulating lessons, not a normal exit.
+        if (exercisesByLesson.size > MAX_CACHED_LESSONS) exercisesByLesson.clear()
+        val byId = mutableMapOf<String, Exercise>()
+        attempts.map { it.lessonId }.distinct().forEach { lessonId ->
+            val exercises = exercisesByLesson[lessonId] ?: lessons.getExercises(lessonId)
+                .associateBy { it.id }
+                .also { exercisesByLesson[lessonId] = it }
+            byId += exercises
+        }
+        val pooled = MissTaxonomy.classify(attempts, byId) + MissTaxonomy.classify(cards)
+        // Newest-first over the merged set, so the window is one window and not two.
+        return MissTaxonomy.profile(pooled.sortedByDescending { it.at }.take(window))
+    }
+
+    private companion object {
+        const val MAX_CACHED_LESSONS = 64
     }
 }

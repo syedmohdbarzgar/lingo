@@ -42,7 +42,10 @@
   (schedule, attempt log, skill meter) and a **conversation turn** (day's claim, graph, track) each
   roll back whole — the card keeps its old due date and repetition count, the turn stays unclaimed so
   the learner can answer it again, and neither meter moved — with the committed counterparts pinning
-  that all three rows do land together.
+  that all three rows do land together. A third case covers the dialogue's **finished mark** (Room
+  v10): when the *final* turn's last write dies, `conversation_done` stays empty, so the gate cannot
+  ask the learner to sit through an exchange every turn of which was already credited; the committed
+  turn writes the mark in that same transaction.
   `LessonCompletionTransactionTest` does the same for **finishing a lesson** (completion stamp,
   the lesson's words entering the review queue, cursor reset): a failing last write leaves the
   lesson unfinished at its old cursor with no card queued, and `PlacementSeedTransactionTest` for
@@ -61,8 +64,74 @@
   transaction-counting repository to prove it really opens exactly one. Both halves were checked
   against a real regression: removing `inTransaction` from a registered use case and adding an
   unregistered multi-write class each fail the class.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 625 tests / 73 classes as of
-  the content-status pass — its cases pin that a failed bundle write ends the lesson's, the placement
+- **Content recovery paths (checklist P1).** The seeding path is covered from both ends.
+  `ContentSeederTest` holds the failure modes that happen *around* the bundle write: an asset that
+  cannot be read writes nothing and stamps no version; a malformed asset (`[]` where the parser wants
+  the bundle object) reaches the caller instead of becoming a silent empty bundle; and a crash
+  **between** the committed content transaction and its stamp leaves a complete bundle with the old
+  version, so the next run finishes the job by replacing, never by appending. The partial-write case
+  belongs to the `@Transaction` on `ContentDao.replaceContent`, which Room enforces, not to a fake.
+  The outermost failure — **the database file itself cannot be opened** — is `ContentRecoveryTest`
+  (Robolectric): the path is made unusable, `AppContainer.seedContent()` returns `false`, and
+  `contentStatus` ends at `FAILED` rather than in `LOADING`, so no screen can wait forever on a
+  bundle that will never arrive. The test asserts the bundled assets *are* readable first, so it
+  cannot pass because of an asset read instead. The failure is classified
+  (`ContentFailure.DATABASE_UNREADABLE`) and a retry is pinned to fail the same way — the app never
+  replaces a learner's file by itself. Then the repair is proven end to end: the file is moved into
+  `noBackupFilesDir/corrupt-database/` (kept, not deleted), the database path is free, and a *second*
+  `AppContainer` — the one the restart builds — seeds to `READY`, which is what makes the rebuild a
+  way out rather than a second dead end. Robolectric cannot reproduce a genuinely corrupt SQLite
+  *file* — a garbage `english.db` was opened as a fresh database there — so the test uses a path
+  SQLite cannot open at all; both end at the same `FAILED`, but only a device can produce the real
+  corruption.
+  Home's half is `HomeViewModelTest` (three cases): the rebuild is offered only when the reason is
+  the database and Home has no lessons to show, a successful move restarts the process, and a move
+  that moved nothing leaves the button offered, the app running and `repairFailed` set. One
+  `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
+  `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 663 tests / 76 classes as of
+  the miss-taxonomy card pass (three `MissTaxonomyTest` cases for the card labels, hits and the
+  dropped grade, plus three `ProgressViewModelTest` cases for the pooled window), after
+  the review→graph pass, which added three cases to `EvidenceTransactionTest` — a committed review
+  writes the reviewed word's node inside the card's transaction, the node records no exercise format
+  (a card is recall, not transfer), and a crash *after* the node write rolls the node back together
+  with the card, the log and the meter; a fourth pins the null-lesson path as "graded, nothing to
+  attribute". `ReviewViewModelTest` proves the wiring: the grade carries the word's own lesson, and
+  `TransactionCoverageTest`'s invocation now passes the graph through the same use case. The same
+  pass then closed the other direction, the due node: `FocusPlanTest` gained four cases — a due node in
+  the middle band is drilled instead of refused, a secured node is refused even with a past date, the
+  due list keeps only nodes whose drill really exists (most overdue first), and a graph inside its
+  intervals yields no rows — while `ReviewViewModelTest` pins that a due node is offered *beside* the
+  cards (the queue is untouched and the row carries the drill's lesson) and one `ScreenSmokeTest` case
+  renders the "مرور هدفمند" row and proves its CTA opens `(lessonId, itemId)`. Three more then pin the
+  freshness around it: a resumed summary re-reads both queues, a resume mid-session never resets the
+  card the learner is on or grafts the graph half onto a running queue, and the finished session
+  returns to the due list (`ShowDue`) instead of stranding it. The next pass then started the
+  roadmap's error taxonomy: `MissTaxonomyTest` (new class, nine cases) pins every skill's category
+  (writing/speaking are production, not grammar), the per-category counts and the miss-count rule
+  for "weakest", a category with no answers staying absent, content the bundle no longer ships being
+  skipped, and the five-answer evidence bar. The card half then closed the gap the first pass left:
+  a card speaks only for vocabulary or grammar, GOOD/EASY are hits while HARD/AGAIN are not, and a
+  card whose item left the queue is dropped instead of guessed — plus three `ProgressViewModelTest`
+  cases proving the mix reaches the screen state, that cards alone move it, and that lessons and
+  cards are one pooled window (a review-only week no longer freezes the profile). Before it
+  the splash-hand-off pass, whose new class `SplashHandOffTest` pins the API 34 boundary of the
+  splash → Home fade: below 34 the finishing splash declares it with the deprecated call, from 34 the
+  entered activity declares it with `overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, …)`, and no
+  screen test can see which side wins — only the decision, which is pure; a third case pins the
+  guard against the constant itself (`NEW_API_LEVEL - 1` vs `NEW_API_LEVEL`), so moving the boundary
+  cannot leave the two in disagreement. The transition's pixels stay a device check. Before it the database-rebuild pass — five cases, in the classes that already owned the paths: four in
+  `HomeViewModelTest` (offered only for the database failure, restart on success, honest failure when
+  nothing moved, and a relaunch that cannot be queued leaving a manual-restart message rather than a
+  dead button) and one in `ScreenSmokeTest` (the action, its confirmation and the dismiss that does
+  nothing); `ContentRecoveryTest`'s existing case grew the classification, the working repair and
+  a retry pressed four times that never leaves the failure state.
+  Before it the content-recovery pass, where `ContentRecoveryTest` was the new class and
+  `ContentSeederTest` gained three failure cases; before that the conversation-mark pass added one case to
+  `EvidenceTransactionTest` (on real Room: a crash on a dialogue's final turn leaves the finished
+  mark unwritten with the claim, while the committed turn writes both) and taught
+  `DatabaseUpgradeTest` to expect the v10 table to arrive empty on an upgraded install —
+  before it the content-status pass, whose cases pin that a failed bundle write ends the lesson's, the placement
   test's and the conversation's wait in `contentFailed`, that each retry re-runs the seed, and that a
   dialogue read which throws becomes `loadFailed` with a retry (no new class) —
   then the B-4 reminder pass, whose new class is `DailyReminderTest` (the alarm lands on the chosen hour
@@ -165,7 +234,9 @@
   correct answer does not fix a weak node"),
   `FocusPlanTest` (the weak-spot decision: one node, its evidence subset, its blocked dependents —
   and, v15 B-1, that a node with a single matching exercise still yields a short honest block:
-  exactly that exercise, a real reassess bar, stated attempts),
+  exactly that exercise, a real reassess bar, stated attempts; review→graph, that an explicitly
+  named due node is drilled even in the middle band while a secured one is refused, and that
+  `GetDueKnowledgeReviewsUseCase` keeps only due, unsecured, drillable nodes in due order),
   `SkillProfileEngineTest` (P2: the three tracks fold curriculum + review evidence, mastery is read
   rather than recomputed, the status is evidence-gated so a single correct answer cannot read as
   consolidated, and — on the **real bundle** — all three tracks are funded while the four nodes two
@@ -214,9 +285,16 @@
   dimension fold still renders the learner's verdict — P1-7, and a bundle write that failed ends
   the wait in `contentFailed` — not the spinner under `activeStage == null` — with a retry that
   re-runs the seed and then loads),
+  `MissTaxonomyTest` (the classification: one category per authored skill, the mix folded from the
+  pooled lesson answers and review cards, GOOD/EASY the only hits, a card limited to vocabulary or
+  grammar, a grade whose item left the queue dropped, stale content skipped, and the weakest category
+  chosen by miss count) and three `ProgressViewModelTest` cases that carry the mix into the screen
+  state, move it with cards alone, and prove the two sources share one window,
   `ReviewViewModelTest` (GOOD records the schedule and finishes; AGAIN re-queues the item in the
-  same session; study ticks credit only while the learner is recently active and never while the
-  app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
+  same session; a due curriculum node appears beside the cards and carries its drill's lesson;
+  a resumed summary re-reads both queues while a resume mid-session leaves the session and its
+  revealed card alone; the finished session returns to the due list; study ticks credit only while
+  the learner is recently active and never while the app is backgrounded), `PaywallViewModelTest` (priced/unpriced plans, unreachable store, purchase
   cancelled/failed/succeeded, a checkout that throws, restore active/none/store-failure, the
   companion grant, and the storefront reaching the state so the wording can match the market),
   `ConversationGateTest` (the lesson gate: a lesson still in progress owes nothing; the first
@@ -288,6 +366,15 @@
 - There is **no instrumented suite**: the Android Studio template was removed rather than kept
   as a false signal (it asserted nothing and ran in no CI). UI changes get their baseline from the
   Robolectric screen smoke tests above; beyond that, rely on manual device verification, as below.
+- **The launch path does run on Android automatically — the `device` CI job** (schedule, manual
+  dispatch or tag; see [`release.md`](release.md)). It boots one emulator and runs
+  `scripts/verify_device.sh bazaar --require-device`, so what is checked on a real Android runtime is:
+  the APK installs, the app starts with airplane mode on, the splash hands off to `MainActivity`, the
+  seeder logs its completion line, nothing crashes, and a second cold start does not regress. That is
+  a smoke, not coverage: no screen is asserted, and the recogniser, the upgrade path from an installed
+  older build and the splash transition still need the manual passes in this file. `--require-device`
+  matters — without it the script's no-op-on-a-laptop rule would turn a dead emulator into a green
+  job, which is the kind of false signal the instrumented template was deleted for.
 - **Conversation practice is engine-tested, transport-untested.** `ConversationScorer` (the verdict),
   `ConversationPracticeViewModel` (the turns, when a take is graded, what an unheard take means, the
   grammar it hands the recogniser) and `DialogueContentTest` (the authored turns) run as normal unit
@@ -342,3 +429,45 @@ before calling a conversation-practice change done:
     unaffected.
 12. **No network.** Airplane mode on: 1–11 behave identically. If anything differs, an online call
     crept into the feature and the offline rule is broken.
+
+## Manual device pass — schema v10, restore and the dialogue mark
+
+This is the half of the P0 task that a JVM test cannot reach: `DatabaseUpgradeTest` runs the chain on
+real SQLite and `RoomMigrationTest` checks it against the exported schemas, but only an install that
+already holds data exercises Room's own open path, and only a real backup round-trip proves what
+travels between devices.
+
+1. **Upgrade with real data.** Install the previous build (schema v9), finish a lesson and speak its
+   dialogue through to the recap, then install the new build over it (same signing key — `adb install
+   -r`, never `adb uninstall`). Home must not offer «گفتگوی این درس را تمرین کن» for that dialogue and
+   the next lesson must already be open: the old preference set was imported into the
+   `conversation_done` table on the first read. Then confirm the old key is gone rather than merely
+   copied — `adb shell run-as org.token.english strings
+   files/datastore/app_settings.preferences_pb | grep conversations_done` prints nothing.
+2. **A wipe cannot be undone by the import.** Settings → «پاک‌سازی پیشرفت» on a *fresh* install that
+   has not opened a lesson yet (so the legacy key was never imported), then open the lesson screen:
+   nothing is owed and no old dialogue comes back. `reset()` clears the legacy key with the table.
+3. **Backup and restore.** With Auto Backup enabled, `adb shell bmgr backupnow org.token.english`
+   (or use device-to-device transfer to a second phone), then restore on the clean device. The
+   finished dialogue must stay finished and the completed lesson must still be completed — that is
+   the whole point of the move. The subscription must **not** travel: the paywall shows the same
+   state as before the restore and no entitlement is granted. If a restored install reads as pro,
+   the `datastore/` exclusion (`data_extraction_rules.xml`, `backup_rules.xml`) has been loosened and
+   a restore has become a free subscription.
+
+## Manual device pass — rebuilding an unreadable database
+
+The JVM suite skips the one thing that cannot be faked: a genuinely corrupt SQLite **file** (Robolectric
+opens garbage as a fresh database). Reproduce it on a debug install and check the whole offer:
+
+1. `adb shell run-as org.token.english rm -f databases/english.db databases/english.db-wal
+   databases/english.db-shm`, then create a *directory* where the file should be
+   (`mkdir databases/english.db`), and force-stop and reopen the app. Home must show «محتوای درس‌ها
+   آماده نشد» with «تلاش دوباره», **«ساخت دوبارهٔ پایگاه داده»** and «ارتباط با پشتیبانی» — the third
+   action appears for no other failure, so a bundle-only error must not show it.
+2. Tap «ساخت دوبارهٔ پایگاه داده»: a confirmation names what is lost (completed lessons, reviews,
+   streak) and says the broken file is kept. «انصراف» leaves the app running and repairs nothing.
+3. Confirm: the app should return by itself (launcher intent, then its own process exits) and land on
+   a working Home with the bundle re-seeded. Then `adb shell run-as org.token.english ls
+   noBackupFilesDir/corrupt-database` still holds the old `english.db.<stamp>` — and
+   `adb shell bmgr backupnow org.token.english` must not fail its 25 MB quota because of it.

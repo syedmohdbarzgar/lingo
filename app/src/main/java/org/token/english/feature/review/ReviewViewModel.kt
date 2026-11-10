@@ -18,6 +18,8 @@ import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.VocabularyRepository
+import org.token.english.domain.usecase.DueKnowledgeReview
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 
 enum class ReviewPhase { SUMMARY, SESSION, DONE }
@@ -40,6 +42,12 @@ data class ReviewUiState(
     val answerAlmost: Boolean = false,
     /** The due-queue read threw — shown as an error state instead of a spinner. */
     val loadFailed: Boolean = false,
+    /**
+     * Curriculum nodes whose **own** review is due, with the drill that serves each one
+     * (review→graph pass). Empty is normal: a fresh install, or a graph still inside its
+     * intervals. A failed read of this *half* never blanks the cards — see [refresh].
+     */
+    val dueReviews: List<DueKnowledgeReview> = emptyList(),
 ) {
     val currentItem: ReviewItem? get() = queue.getOrNull(index)
     val currentWord: VocabularyItem? get() = currentItem?.let { vocabulary[it.contentId] }
@@ -61,6 +69,8 @@ sealed interface ReviewEvent {
     data object Reset : ReviewEvent
     data class AnswerChanged(val value: String) : ReviewEvent
     data object CheckAnswer : ReviewEvent
+    /** From the finished-session screen back to the summary, where due nodes wait. */
+    data object ShowDue : ReviewEvent
 }
 
 /**
@@ -76,6 +86,7 @@ class ReviewViewModel(
     private val vocabularyRepository: VocabularyRepository,
     private val progressRepository: ProgressRepository,
     private val submitReview: SubmitReviewUseCase,
+    private val getDueKnowledgeReviews: GetDueKnowledgeReviewsUseCase,
     private val audioPlayer: AudioPlayer,
     private val speaker: Speaker,
     private val isAppInForeground: () -> Boolean,
@@ -95,11 +106,34 @@ class ReviewViewModel(
     /** Last time the learner acted here — study time stops crediting when this goes stale (P7). */
     private var lastInteractionAtMs: Long = System.currentTimeMillis()
 
+    /** True once the first read has landed — a resume before that would double-read. */
+    private var hasLoaded: Boolean = false
+
     init {
         refresh()
     }
 
+    /**
+     * The screen came back to the foreground (returning from a focused drill, or from
+     * another tab). Both queues are local reads that only ever ran in `init`, so a
+     * session finished elsewhere — the drill just completed, a card graded — used to
+     * leave the screen showing work that was already done.
+     *
+     * Deliberately narrow: only the summary re-reads, never a session in progress, and
+     * never with a spinner — the current content stays until the fresh read lands.
+     */
+    fun onScreenResumed() {
+        if (!hasLoaded) return
+        val current = _state.value
+        if (current.phase != ReviewPhase.SUMMARY || current.isLoading || current.loadFailed) return
+        load(resumeOnly = true)
+    }
+
     fun refresh() {
+        load(resumeOnly = false)
+    }
+
+    private fun load(resumeOnly: Boolean) {
         lastInteractionAtMs = System.currentTimeMillis()
         viewModelScope.launch {
             val now = System.currentTimeMillis()
@@ -116,18 +150,30 @@ class ReviewViewModel(
                 _state.update { it.copy(isLoading = false, loadFailed = true) }
                 return@launch
             }
-            _state.update {
-                it.copy(
+            // The graph half is read separately and its failure is *contained*: a broken
+            // node read must not turn a working card queue into an error screen, so it
+            // degrades to "nothing due in the graph" and only logs.
+            val dueNodes = runCatchingCancellable { getDueKnowledgeReviews(now) }.getOrElse { error ->
+                android.util.Log.w("ReviewViewModel", "due node read failed", error)
+                emptyList()
+            }
+            hasLoaded = true
+            _state.update { current ->
+                // A resume read that finishes after the learner already started a session
+                // must not yank them back to card 0; an explicit refresh always applies.
+                if (resumeOnly && current.phase != ReviewPhase.SUMMARY) return@update current
+                current.copy(
                     isLoading = false,
                     loadFailed = false,
                     queue = due,
                     vocabulary = vocab,
+                    dueReviews = dueNodes,
                     index = 0,
                     revealed = false,
                     typedAnswer = "",
                     answerCorrect = null,
                     answerAlmost = false,
-                    phase = if (due.isEmpty()) ReviewPhase.SUMMARY else it.phase.takeIf { p -> p != ReviewPhase.DONE }
+                    phase = if (due.isEmpty()) ReviewPhase.SUMMARY else current.phase.takeIf { p -> p != ReviewPhase.DONE }
                         ?: ReviewPhase.SUMMARY,
                 )
             }
@@ -183,6 +229,8 @@ class ReviewViewModel(
 
             ReviewEvent.Reset -> refresh()
 
+            ReviewEvent.ShowDue -> _state.update { it.copy(phase = ReviewPhase.SUMMARY) }
+
             is ReviewEvent.AnswerChanged -> _state.update {
                 if (it.revealed) it else it.copy(typedAnswer = event.value)
             }
@@ -223,6 +271,10 @@ class ReviewViewModel(
                     result = result,
                     now = now,
                     responseTimeMs = now - itemStartedAtMs,
+                    // The card's own word carries the lesson that taught it, which is how
+                    // the grade reaches a curriculum node — a card from a lesson the
+                    // bundle no longer has simply has none, and the graph stays as it was.
+                    lessonId = s.currentWord?.lessonId,
                 )
                 // Relearning: an AGAIN card comes back later in THIS session with
                 // its fresh schedule already stored — capped so the queue ends.
