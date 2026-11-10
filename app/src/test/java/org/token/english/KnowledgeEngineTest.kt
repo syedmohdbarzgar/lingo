@@ -437,6 +437,20 @@ class KnowledgeEngineTest {
     }
 
     @Test
+    fun `a lesson that owns two vocabulary nodes is credited twice, by design`() {
+        // Three shipped lessons own two vocabulary nodes each (`c1.phrasal-idioms`,
+        // `c2.nuance`, `c2.collocation`), so a card there moves both. It is a bounded,
+        // documented over-credit rather than a silent one — see docs/debt.md — and this
+        // pins it, because `itemsForCard` is a filter and a filter returns all matches.
+        val first = item("v1", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
+        val second = item("v2", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY, Skill.LISTENING))
+        assertEquals(
+            listOf("v1", "v2"),
+            KnowledgeEvidence.itemsForCard(listOf(first, second), Skill.VOCABULARY).map { it.id },
+        )
+    }
+
+    @Test
     fun `a card ignores a node that merely lists its skill`() {
         // The by-skill axis is what exercises use to reach a differently-typed node.
         // For a card it selects the very nodes this rule excludes: the shipped grammar

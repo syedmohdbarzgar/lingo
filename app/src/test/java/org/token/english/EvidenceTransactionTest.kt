@@ -276,6 +276,45 @@ class EvidenceTransactionTest {
     }
 
     @Test
+    fun `all three passes count as hits on the node`() = runBlocking {
+        seedVocabulary()
+        reviews.schedule(card)
+
+        // The card's own path: each pass reschedules it, and each must reach the graph.
+        // GOOD, EASY and HARD differ in the interval they set, not in whether the learner
+        // knew the word — so the node has to see three hits, not one.
+        var current = card
+        listOf(ReviewResult.GOOD, ReviewResult.EASY, ReviewResult.HARD).forEach { result ->
+            submitReview(current, result, now, responseTimeMs = 800L, lessonId = wordLesson)
+            current = reviews.getItem(card.contentId)!!
+        }
+
+        val node = knowledge.getState(vocabItemId)!!
+        assertEquals("three passes, three exposures", 3, node.exposureCount)
+        assertEquals("each counted as a hit", 3, node.consecutiveCorrect)
+        assertTrue("and mastery was seeded rather than left at zero", node.mastery > 0f)
+    }
+
+    @Test
+    fun `AGAIN is a miss on the node while the card is still graded`() = runBlocking {
+        seedVocabulary()
+        reviews.schedule(card)
+
+        submitReview(card, ReviewResult.AGAIN, now, responseTimeMs = 2_400L, lessonId = wordLesson)
+
+        val node = knowledge.getState(vocabItemId)!!
+        assertEquals("the miss reached the node", 1, node.consecutiveIncorrect)
+        assertEquals("a miss is not a hit", 0, node.consecutiveCorrect)
+        assertEquals("and the node is not left ungraded", 1, node.exposureCount)
+
+        // The card is still graded: a wrong answer reschedules it, it does not vanish.
+        val after = reviews.getItem(card.contentId)!!
+        assertEquals(now, after.lastReviewedAt)
+        assertEquals("the lapse is counted on the card", 1, after.lapses)
+        assertEquals(1, reviews.getAttempts(card.contentId).size)
+    }
+
+    @Test
     fun `a card never raises a node of another knowledge type`() = runBlocking {
         // The shipped shape that used to mis-attribute: the lesson that taught the word
         // has no VOCABULARY node, and its grammar node lists VOCABULARY in `skills`, so

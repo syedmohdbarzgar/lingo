@@ -145,12 +145,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (685 tests / 78 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (688 tests / 78 classes as of the
 vocabulary-node pass, where the 35 lessons that shipped words with no VOCABULARY node got one each —
 titled by their own lesson, chained onto the vocabulary node of the lesson before them in their level
 (and a level's first lesson onto the level below) — so a card from those lessons finally moves the
 node it is evidence about instead of grading into nothing, with `ContentDistributionTest` failing the
-build when a lesson ships words and no node. Before it the miss-driven-plan pass, where the error
+build when a lesson ships words and no node. Three cases then closed the attribution block: one in
+`KnowledgeEngineTest` for a lesson that owns **two** vocabulary nodes (credited twice — the bounded
+over-credit `docs/debt.md` accepts) and two in `EvidenceTransactionTest` on real Room for the grades
+(GOOD, EASY and HARD are three hits on the node; AGAIN is a miss that still reschedules the card).
+Before it the miss-driven-plan pass, where the error
 taxonomy stopped being a report and started steering the day:
 `GetTodayPlanUseCase` reads the mix through `GetMissProfileUseCase` and `AdaptiveLearningPlanner`
 orders the plan *within one priority* by the weakest category and names the gap on the action that
