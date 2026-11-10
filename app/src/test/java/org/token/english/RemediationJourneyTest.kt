@@ -123,7 +123,7 @@ class RemediationJourneyTest {
         ) {
             val lessonItems = items.filter { lessonId in it.lessonIds }
             val byId = statesFlow.value.associateBy { it.itemId }
-            KnowledgeEvidence.itemsFor(lessonItems, skill).forEach { item ->
+            KnowledgeEvidence.itemsForCard(lessonItems, skill).forEach { item ->
                 val updated = engine.applyAttempt(item.id, byId[item.id], correct, now, format)
                 statesFlow.value = statesFlow.value.filterNot { it.itemId == item.id } + updated
             }

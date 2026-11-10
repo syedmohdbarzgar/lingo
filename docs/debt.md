@@ -275,6 +275,19 @@
   (3) rows: each probe re-reads the graph through `GetFocusPlanUseCase`, so the bound is what keeps a
   tab switch a short read rather than a scan of the bundle. A learner with more than three due nodes
   sees three — the rest wait, and they are the *most* overdue that can actually be drilled.
+- **A card credits its lesson's vocabulary node(s), which is two for three lessons.** Now that a card
+  is attributed by type alone (`KnowledgeEvidence.itemsForCard` — see
+  [`docs/learner-model.md`](learner-model.md), which also explains why the by-skill and whole-lesson
+  passes are wrong here), the remaining granularity question is decided by the content graph: nodes
+  are **topic**-granular (6–8 words each), a word carries no node id, and 157 lessons own vocabulary
+  nodes. 154 of them own exactly one, so a card moves exactly its topic. `c1.phrasal-idioms`,
+  `c2.nuance` and `c2.collocation` own two (`vocab.phrasal-verbs` + `vocab.idioms-and-figurative`,
+  `vocab.semantic-precision` + `vocab.connotation`, `vocab.collocation-strength` +
+  `vocab.delexical-verbs`), so reviewing «give up» also moves `vocab.idioms-and-figurative`. That is a
+  real over-credit, bounded to those three lessons and to nodes of the same type; it is accepted
+  because the alternative is a per-word node id in the bundle (1154 words), and because the graph
+  itself says those lessons teach both topics. The narrower fix would be a `nodeId` on a word, which
+  is a schema change to `vocabulary.json` and earns its own content version.
 - **The error taxonomy reads the log, not a stored label (roadmap).** `lesson_attempt` records
   which exercise was asked and whether it was right; it does **not** record the skill, so
   `GetMissProfileUseCase` joins the id to the authored exercise and classifies by
@@ -294,9 +307,16 @@
   the process** (bounded at 64 lessons): content is static once seeded, and the read runs on every
   mastery emission — without it one answer would re-parse the bundle's exercises for every lesson in
   the window. A re-seed mid-process would leave stale ids in that cache; the effect is a miss that
-  silently is not classified, never a wrong label. What the mix does *not* do yet is change the plan:
-  the second half of the roadmap item (adaptive difficulty driven by the weakest category) is still
-  open, and Progress only reports.
+  silently is not classified, never a wrong label. **The adaptive half now ships (miss-driven plan
+  pass)**: the planner reorders within one priority by the weakest category and names the gap on the
+  action that answers it (see [`learner-model.md`](learner-model.md)). What it still cannot do is
+  change *difficulty*, which is what the roadmap item literally asked for: an exercise carries no
+  authored difficulty, so "harder vocabulary" has nothing to sort by, and the honest substitute is
+  urgency (which node, in which order) rather than level. That is why the steering stays inside the
+  plan and never touches exercise selection — until the bundle carries a difficulty, a "harder" item
+  would be a guess dressed as adaptation. Two smaller limits are accepted with it: the ordering only
+  bites where two actions share a priority (a broken prerequisite still wins, by design), and the
+  profile read on Home's plan path is best-effort — a failure logs nothing and steers nothing.
 - **The lint budget is a decision list, not a clean zero (P2 triage, Nov 2026).** Seven warnings are
   accepted, and each one is written into `scripts/lint_budget.mjs` **with its reason**; the CI `lint`
   job runs that script after the lint task and fails when the report disagrees with the list in any
@@ -313,6 +333,18 @@
   entry cannot carry the `@aar` packaging, and the catalog form resolves to the jar and breaks the
   native Vosk loader at runtime. Keeping the list short is the point: the pass that took
   `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` to zero did not add them here.
+- **Motion is asserted as decisions, not frames (motion pass).** `AppMotionTest` runs the tab rule
+  and the reveal's window arithmetic on the JVM, and `AppNavGraph`'s transitions cannot run outside an
+  emulator — so nothing in CI measures a transition, a cold start or a dropped frame: there is no
+  `benchmark` module, no `JankStats` and no `FrameTimingMetric`, and the `device` job is a launch
+  smoke. What this pass can honestly claim is work *removed*, not a measured frame rate: the focus
+  plan stops loading every candidate lesson's exercises on Home's first frame (it used to parse the
+  whole bundle on a fresh install for an answer that was always `null`), the page reveal is one
+  `Animatable` per page instead of two per card plus a coroutine each, and a tab move no longer
+  animates two full screens horizontally. The check still owed is a profiler run on a phone — frame
+  time on Home's first frame and across a tab change — recorded beside the splash hand-off that is
+  already owed (the entry above). If it is ever automated it belongs in a `benchmark` module, not the
+  unit suite: a timing assertion in CI is a flake that reports a pass.
 - Single `:app` module; split into `:core:*` / `:feature:*` when build times or ownership demand it.
 - Persian UI strings are inline in composables instead of `strings.xml` (single-locale MVP) —
   extract when a second locale lands.

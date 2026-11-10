@@ -1,6 +1,7 @@
 package org.token.english.domain.usecase
 
 import kotlinx.coroutines.flow.first
+import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveLearningPlanner
 import org.token.english.domain.engine.DefaultKnowledgeGraph
 import org.token.english.domain.engine.ExerciseDimension
@@ -299,6 +300,8 @@ class GetTodayPlanUseCase(
     private val settingsRepository: SettingsRepository,
     private val planner: LearningPlanner,
     private val knowledge: KnowledgeRepository,
+    /** The recent miss mix, which used to be reported and never used (roadmap). */
+    private val missProfile: GetMissProfileUseCase,
 ) {
     suspend operator fun invoke(now: Long): TodayPlan {
         val settings: AppSettings = settingsRepository.settings.first()
@@ -330,6 +333,11 @@ class GetTodayPlanUseCase(
             val lesson = allLessons.firstOrNull { it.id in item.lessonIds }
             item.id to (lesson?.estimatedMinutes ?: AdaptiveLearningPlanner.DEFAULT_ITEM_MINUTES)
         }
+        // The mix is a nudge, not an input the day depends on. A profile read that
+        // fails (an unreadable log, a lesson whose exercises are gone) leaves the
+        // graph-driven plan exactly as it was; it must not be able to turn Home into an
+        // error screen over a hint. Same rule the Progress screen uses for its half.
+        val missMix = runCatchingCancellable { missProfile() }.getOrNull()
         val decision = if (items.isEmpty() || focusItems.isEmpty() && due == 0) {
             null
         } else {
@@ -345,6 +353,7 @@ class GetTodayPlanUseCase(
                 todayStudySeconds = stats.todayStudySeconds,
                 now = now,
                 estimatedMinutesByItem = minutesByItem,
+                missProfile = missMix,
             )
         }
 
@@ -417,10 +426,21 @@ class GetFocusPlanUseCase(
             loaded[lessonId] ?: lessons.getExercises(lessonId).also { loaded[lessonId] = it }
 
         val targetId = itemId ?: run {
-            // The weakest node is only meaningful among nodes that could be weak.
+            // The weakest node is only meaningful among nodes that could be weak *and
+            // that the learner has actually met*. Both halves matter:
+            //
+            // - `findWeakness` needs a stored state (a node never studied is taught,
+            //   not drilled), so stateless nodes can never be chosen;
+            // - their lessons must therefore not be loaded either. This used to load
+            //   the exercises of *every* candidate lesson before asking the engine,
+            //   and on a fresh install every node is a candidate — so Home parsed the
+            //   JSON of all 192 lessons' exercises on the main thread to produce an
+            //   answer that was guaranteed to be null. On a mature account it loaded
+            //   the course again for a single weak node. Now the read is proportional
+            //   to what the learner has answered, not to the size of the bundle.
             val candidates = graph.items.filter { item ->
-                val state = states[item.id]
-                state == null || state.mastery < weaknessThreshold
+                val state = states[item.id] ?: return@filter false
+                state.mastery < weaknessThreshold
             }
             if (candidates.isEmpty()) return null
             candidates.flatMap { it.lessonIds }.distinct().forEach { exercisesOf(it) }

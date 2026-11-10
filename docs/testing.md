@@ -89,8 +89,34 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 663 tests / 76 classes as of
-  the miss-taxonomy card pass (three `MissTaxonomyTest` cases for the card labels, hits and the
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 684 tests / 78 classes as of
+  the miss-driven-plan pass, where the error taxonomy's report finally steers work: the new
+  `MissDrivenPlanTest` carries three cases at the use-case level — a vocabulary gap reaches
+  `GetTodayPlanUseCase` through `GetMissProfileUseCase` and puts the vocabulary node first with
+  «ضعف اخیر: واژگان» on it, an empty log leaves the graph's plan exactly as written, and a profile
+  read that throws leaves that same plan standing instead of blanking Home — while
+  `AdaptiveLearningPlannerTest` gained four: the reorder among equal priorities, the gap named on
+  exactly one action, a clean window (five right answers) steering nothing, and a due review block
+  still leading. Before it the motion pass, where the transitions stopped being ten per-route copies of one lambda and the page
+  reveal stopped being one timer per card: `isSiblingMove` (the four bottom-bar tabs cross-fade
+  instead of sliding) and `PageReveal`'s window arithmetic are pure, and the new `AppMotionTest`
+  carries eight cases. Four for the moves: two tabs are siblings, leaving a tab for anything deeper
+  is not, coming back from a detail to a tab keeps its direction, and the first screen has no previous
+  route so it is never a sibling. Four for the reveal: a settled page is opaque and in place, the
+  first frame is invisible, a later slot never overtakes an earlier one mid-clock (the ordering the
+  timer-per-card version could lose when a card appeared above another), and a page with more cards
+  than slots still settles inside `REVEAL_TOTAL_MS`; the tab rule reaches `AppNavGraph` through
+  the `NavHost`'s own transitions, which no unit test can run — only the decision is tested, the
+  pixels are a device check. Before it the card-attribution pass, where a review card stopped being credited to its lesson's unrelated
+  nodes: `KnowledgeEvidence.itemsForCard` is type-only — no by-skill pass, no whole-lesson fallback —
+  which is what the 35 lessons shipping words without a VOCABULARY node needed, since their grammar
+  nodes list `VOCABULARY` in `skills`. Three `KnowledgeEngineTest` cases pin the rule (only same-type
+  nodes, never the fallback, the by-skill node refused while `itemsFor` still reaches it), one
+  `EvidenceTransactionTest` case proves it on real Room (the grammar node stays unwritten while the
+  card, the log and the meter still land), `LearningPathJourneyTest` asserts the recall landed on the
+  lesson's vocabulary node, and `FocusPlanTest` gained the missing due-node case — a due node with no
+  exercise about it is skipped rather than offered as a row that opens a whole lesson — after (the
+  miss-taxonomy card pass: three `MissTaxonomyTest` cases for the card labels, hits and the
   dropped grade, plus three `ProgressViewModelTest` cases for the pooled window), after
   the review→graph pass, which added three cases to `EvidenceTransactionTest` — a committed review
   writes the reviewed word's node inside the card's transaction, the node records no exercise format

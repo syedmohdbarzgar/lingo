@@ -102,6 +102,20 @@ object MissTaxonomy {
     }
 
     /**
+     * The Persian name of a category — the one spelling every surface uses.
+     *
+     * It lives beside the enum rather than in a screen because two callers now name the
+     * same gap: Progress lists the mix, and the planner says which gap an action answers.
+     * Two copies of «گرامر» is how a learner reads two different names for one weakness.
+     */
+    fun labelFa(category: MissCategory): String = when (category) {
+        MissCategory.VOCABULARY -> "واژگان"
+        MissCategory.GRAMMAR -> "گرامر"
+        MissCategory.COMPREHENSION -> "درک مطلب"
+        MissCategory.PRODUCTION -> "ساختن جمله"
+    }
+
+    /**
      * Which category a review card speaks for. A card carries its item's content type
      * and nothing finer, so these are the only two answers it can give.
      */

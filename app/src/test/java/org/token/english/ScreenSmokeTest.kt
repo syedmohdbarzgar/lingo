@@ -35,6 +35,7 @@ import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
@@ -117,7 +118,10 @@ class ScreenSmokeTest {
             reviewRepository = reviews,
             studyStats = progress.statsFlow,
             planner = planner,
-            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, settings, planner, knowledge),
+            getTodayPlan = GetTodayPlanUseCase(
+                lessons, reviews, progress, settings, planner, knowledge,
+                GetMissProfileUseCase(lessons, reviews),
+            ),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,
@@ -167,7 +171,10 @@ class ScreenSmokeTest {
             reviewRepository = reviews,
             studyStats = progress.statsFlow,
             planner = planner,
-            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge),
+            getTodayPlan = GetTodayPlanUseCase(
+                lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge,
+                GetMissProfileUseCase(lessons, reviews),
+            ),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,
@@ -221,7 +228,10 @@ class ScreenSmokeTest {
             reviewRepository = reviews,
             studyStats = progress.statsFlow,
             planner = planner,
-            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge),
+            getTodayPlan = GetTodayPlanUseCase(
+                lessons, reviews, progress, FakeSettingsRepository(), planner, knowledge,
+                GetMissProfileUseCase(lessons, reviews),
+            ),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,

@@ -5,9 +5,13 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.domain.engine.AdaptiveLearningPlanner
+import org.token.english.domain.engine.ClassifiedAnswer
 import org.token.english.domain.engine.DefaultKnowledgeEngine
 import org.token.english.domain.engine.DefaultKnowledgeGraph
 import org.token.english.domain.engine.KnowledgeGates
+import org.token.english.domain.engine.MissCategory
+import org.token.english.domain.engine.MissProfile
+import org.token.english.domain.engine.MissTaxonomy
 import org.token.english.domain.engine.PrerequisiteEngine
 import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
@@ -24,7 +28,11 @@ import org.token.english.domain.model.Skill
  */
 class AdaptiveLearningPlannerTest {
 
-    private fun item(id: String, prerequisites: List<String> = emptyList()) = KnowledgeItem(
+    private fun item(
+        id: String,
+        prerequisites: List<String> = emptyList(),
+        skills: List<Skill> = listOf(Skill.GRAMMAR),
+    ) = KnowledgeItem(
         id = id,
         type = KnowledgeType.GRAMMAR,
         title = id,
@@ -32,7 +40,7 @@ class AdaptiveLearningPlannerTest {
         level = LearningLevel.A1,
         prerequisites = prerequisites,
         lessonIds = listOf("l1"),
-        skills = listOf(Skill.GRAMMAR),
+        skills = skills,
     )
 
     private val hour = 3_600_000L
@@ -85,6 +93,7 @@ class AdaptiveLearningPlannerTest {
         focus: List<KnowledgeItem> = emptyList(),
         todayStudySeconds: Long = 0L,
         now: Long = 30 * hour,
+        missProfile: MissProfile? = null,
     ) = planner.plan(
         states = states,
         dueReviewCount = due,
@@ -92,7 +101,17 @@ class AdaptiveLearningPlannerTest {
         targetMinutes = 15,
         todayStudySeconds = todayStudySeconds,
         now = now,
+        missProfile = missProfile,
     )
+
+    /** A profile built through the real fold, so these tests read the same window logic. */
+    private fun mix(misses: Int, category: MissCategory, hits: Int = 0): MissProfile? =
+        MissTaxonomy.profile(
+            buildList {
+                repeat(misses) { add(ClassifiedAnswer(category, correct = false, at = 0L)) }
+                repeat(hits) { add(ClassifiedAnswer(category, correct = true, at = 0L)) }
+            },
+        )
 
     // --- scenario 4: good knowledge, long absence ------------------------------
 
@@ -475,5 +494,71 @@ class AdaptiveLearningPlannerTest {
         assertEquals(LearningActionType.REVIEW, decision.actions.first().type)
         assertTrue(decision.actions.size <= 3)
         assertTrue(decision.estimatedTotalMinutes <= 12)
+    }
+
+    // --- roadmap: the miss mix steers, inside one priority ----------------------
+
+    private val vocab = item("v", skills = listOf(Skill.VOCABULARY))
+    private val grammarNode = item("g", skills = listOf(Skill.GRAMMAR))
+    private val skillsGraph = DefaultKnowledgeGraph(listOf(grammarNode, vocab))
+    private val skillsPlanner = AdaptiveLearningPlanner(skillsGraph, PrerequisiteEngine(skillsGraph))
+
+    private fun twoSkillsPlan(missProfile: MissProfile?, due: Int = 0) = skillsPlanner.plan(
+        states = listOf(state("g", 0.5f), state("v", 0.5f)),
+        dueReviewCount = due,
+        // Authored order puts the grammar node first, and so does the id tie-break.
+        focusItems = listOf(grammarNode, vocab),
+        targetMinutes = 15,
+        todayStudySeconds = 0L,
+        now = 30 * hour,
+        missProfile = missProfile,
+    )
+
+    @Test
+    fun `a vocabulary gap puts the vocabulary node first among equally urgent work`() {
+        val steered = twoSkillsPlan(mix(misses = 4, category = MissCategory.VOCABULARY, hits = 1))
+        val unsteered = twoSkillsPlan(null)
+
+        assertEquals("0.5 mastery, so both are practice", unsteered.actions.map { it.itemId }, listOf("g", "v"))
+        assertEquals(
+            "the gap is the only thing separating two equally urgent actions",
+            listOf("v", "g"),
+            steered.actions.map { it.itemId },
+        )
+    }
+
+    @Test
+    fun `the promoted action names the gap, and no other action does`() {
+        val decision = twoSkillsPlan(mix(misses = 4, category = MissCategory.VOCABULARY, hits = 1))
+        val promoted = decision.actions.first { it.itemId == "v" }
+
+        assertTrue(
+            "the learner should read why this one moved up: ${promoted.reasonFa}",
+            promoted.reasonFa.endsWith("ضعف اخیر: واژگان"),
+        )
+        assertEquals(1, decision.actions.count { it.reasonFa.contains("ضعف اخیر") })
+    }
+
+    @Test
+    fun `a window with no miss in it steers nothing`() {
+        // "Weakest" of a clean window is not a weakness: five right answers must leave
+        // the plan exactly as the graph wrote it.
+        val clean = twoSkillsPlan(mix(misses = 0, category = MissCategory.VOCABULARY, hits = 5))
+
+        assertEquals(listOf("g", "v"), clean.actions.map { it.itemId })
+        assertTrue(clean.actions.none { it.reasonFa.contains("ضعف اخیر") })
+    }
+
+    @Test
+    fun `the mix orders the day only after the graph's urgency`() {
+        // A due review block still leads and a broken prerequisite still outranks
+        // practice: the mix decides the order *within* a priority, never across one.
+        val decision = twoSkillsPlan(
+            missProfile = mix(misses = 9, category = MissCategory.GRAMMAR),
+            due = 6,
+        )
+
+        assertEquals(LearningActionType.REVIEW, decision.actions.first().type)
+        assertTrue(decision.actions.drop(1).all { it.type == LearningActionType.PRACTISE })
     }
 }

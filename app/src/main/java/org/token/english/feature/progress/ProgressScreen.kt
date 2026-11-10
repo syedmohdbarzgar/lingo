@@ -37,6 +37,7 @@ import org.token.english.core.designsystem.component.SkillProgressBar
 import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.progressViewModelFactory
 import org.token.english.domain.engine.MissCategory
+import org.token.english.domain.engine.MissTaxonomy
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -248,12 +249,8 @@ fun ProgressScreen() {
     }
 }
 
-private fun missCategoryLabel(category: MissCategory): String = when (category) {
-    MissCategory.VOCABULARY -> "واژگان"
-    MissCategory.GRAMMAR -> "گرامر"
-    MissCategory.COMPREHENSION -> "درک مطلب"
-    MissCategory.PRODUCTION -> "ساختن جمله"
-}
+/** The taxonomy owns the name — the planner names the same category in its reasons. */
+private fun missCategoryLabel(category: MissCategory): String = MissTaxonomy.labelFa(category)
 
 /** One line of advice per kind of miss — a category with no action would be trivia. */
 private fun missCategoryHint(category: MissCategory): String = when (category) {

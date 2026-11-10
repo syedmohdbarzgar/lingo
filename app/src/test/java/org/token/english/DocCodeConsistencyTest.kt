@@ -260,6 +260,46 @@ class DocCodeConsistencyTest {
         )
     }
 
+    /**
+     * The suite size the docs quote must be the suite that exists, counted from the
+     * annotations themselves rather than from a Gradle report (which is partial while
+     * tests run). Four documents quoted different numbers in one pass — 641 in
+     * `docs/release.md` while the suite had moved on — and the only visible symptom was
+     * a reader trusting a figure nothing had checked.
+     */
+    @Test
+    fun `the test counts quoted in the docs match the sources`() {
+        val testRoot = sequenceOf("../app/src/test", "app/src/test")
+            .map(::File)
+            .firstOrNull(File::exists)
+            ?: error("no app/src/test — run tests from the repo root or app/")
+        // Line-anchored so a string literal that mentions the annotation does not count.
+        val annotation = Regex("""(?m)^\s*@Test\b""")
+        var classes = 0
+        var tests = 0
+        testRoot.walkTopDown().filter { it.isFile && it.extension == "kt" }.forEach { file ->
+            val found = annotation.findAll(file.readText()).count()
+            if (found > 0) classes++
+            tests += found
+        }
+        assertTrue("the source scan found no tests at all — the parser broke", tests > 0)
+
+        val expected = listOf(
+            "README.md" to "$tests unit tests across $classes classes",
+            "AGENTS.md" to "($tests tests / $classes classes",
+            "docs/testing.md" to "$tests tests / $classes classes",
+            "docs/release.md" to "**$tests tests / $classes classes, 0 failures**",
+        )
+        expected.forEach { (path, claim) ->
+            val doc = repoFile("../$path", path).readText()
+            assertTrue(
+                "$path must quote '$claim' — the suite is $tests tests in $classes classes, so a " +
+                    "stale count is a doc that describes a build nobody ran",
+                doc.contains(claim),
+            )
+        }
+    }
+
     @Test
     fun `every unit-test task is finalised by the guard, and no variant is named`() {
         val code = codeLines()

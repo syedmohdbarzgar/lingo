@@ -58,6 +58,7 @@ import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.ProgressRing
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.StaggeredReveal
+import org.token.english.core.designsystem.component.rememberPageReveal
 import org.token.english.core.designsystem.component.SkillTrackProgress
 import org.token.english.di.homeViewModelFactory
 import org.token.english.domain.model.LearningLevel
@@ -214,17 +215,18 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
         ) {
             // The page assembles itself in reading order instead of appearing all at
-            // once ("every card at the same time" was the complaint): each slot is
-            // 55ms after the one above it. See StaggeredReveal.
+            // once ("every card at the same time" was the complaint): one clock, and
+            // each slot reads its own window out of it. See StaggeredReveal.
+            val reveal = rememberPageReveal()
             var slot = 0
 
-            StaggeredReveal(slot++) { LevelHeroCard(state.level) }
+            StaggeredReveal(reveal, slot++) { LevelHeroCard(state.level) }
 
-            StaggeredReveal(slot++) { DailyGoalCard(state) }
+            StaggeredReveal(reveal, slot++) { DailyGoalCard(state) }
 
             val nextLevel = state.nextLevel
             if (state.levelComplete && nextLevel != null) {
-                StaggeredReveal(slot++) {
+                StaggeredReveal(reveal, slot++) {
                     LevelUpCard(
                         currentLevel = state.level,
                         nextLevel = nextLevel,
@@ -238,7 +240,7 @@ fun HomeScreen(
             CompanionFreeBanner(state)
 
             state.plan?.let { plan ->
-                StaggeredReveal(slot++) {
+                StaggeredReveal(reveal, slot++) {
                     TodayPlanCard(
                         plan = plan,
                         onOpenReview = onOpenReview,
@@ -246,7 +248,7 @@ fun HomeScreen(
                         onOpenFocus = onOpenFocus,
                     )
                 }
-                StaggeredReveal(slot++) {
+                StaggeredReveal(reveal, slot++) {
                     TodayLessonCard(
                         plan = plan,
                         dialogueDue = state.dialogueDue,
@@ -258,7 +260,7 @@ fun HomeScreen(
             }
 
             state.focus?.let { focus ->
-                StaggeredReveal(slot++) {
+                StaggeredReveal(reveal, slot++) {
                     FocusSpotCard(
                         focus = focus,
                         onStart = { onOpenFocus(focus.lessonId, focus.itemId) },
@@ -266,14 +268,14 @@ fun HomeScreen(
                 }
             }
 
-            StaggeredReveal(slot++) {
+            StaggeredReveal(reveal, slot++) {
                 ConversationCard(
                     lessonTitleFa = state.dialogueDue?.titleFa,
                     onStart = { onOpenConversation(state.dialogueDue?.id) },
                 )
             }
 
-            StaggeredReveal(slot++) { SkillsCard(profiles = state.profiles) }
+            StaggeredReveal(reveal, slot++) { SkillsCard(profiles = state.profiles) }
 
             state.stats?.let { stats ->
                 if (stats.streakDays > 0) {

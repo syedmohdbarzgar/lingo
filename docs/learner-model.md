@@ -63,7 +63,12 @@
   request names a node whose own **schedule is due** (`KnowledgeGates.isDue`, the same date
   `nextReviewAt` the lesson writes). A node the learner never studied is *taught*, not drilled, and a
   secured node is refused even when its date has passed, so `GetFocusPlanUseCase` returns `null` for
-  both.
+  both. Because of that rule the candidate set is built from nodes that **have a stored state**, not
+  from every node the graph contains: the engine needs a state to call a node weak, so a stateless
+  node could never be chosen, yet its lesson's exercises were still being loaded first. On a fresh
+  install that meant parsing every lesson in the bundle to answer a question whose answer was
+  guaranteed `null`, on Home's thread, on the first frame; on a mature account it re-read the course
+  for a single weak node. The read is now proportional to what the learner has answered.
 - **The due node is served, not just scheduled (review→graph pass).** `GetDueKnowledgeReviewsUseCase`
   reads the node states, keeps the due ones the gates do not call secured, and asks
   `GetFocusPlanUseCase` for each node's drill — so a row exists only where the focused session will
@@ -158,14 +163,23 @@
   `DefaultKnowledgeEngine` reuses `Sm2ReviewScheduler` for intervals/ease and `MasteryEngine` for
   mastery, so "known" means one thing everywhere. Surfaced on the Progress screen.
 - **A review grade is graph evidence too (review→graph pass).** `SubmitReviewUseCase` writes the
-  reviewed word's node in the card's own transaction (`KnowledgeRepository.recordRecall`), attributed
-  by the same `KnowledgeEvidence` rule a lesson answer uses, so a vocabulary card and a vocabulary
-  exercise can never disagree about which node they prove. Before this the graph was blind to the
-  practice a mature learner spends most time on: cards moved the skill meters while every node stayed
-  at the mastery of its last lesson answer. Two deliberate limits: **no exercise format** is recorded
-  (a card is recall, not a *transfer* claim — see the entry in [`docs/debt.md`](debt.md)), and the
-  queue itself is still the card queue: a node's own exercises are not yet re-served from its due
-  date, which is the other half of the roadmap item.
+  reviewed word's node in the card's own transaction (`KnowledgeRepository.recordRecall`). Before
+  this the graph was blind to the practice a mature learner spends most time on: cards moved the
+  skill meters while every node stayed at the mastery of its last lesson answer.
+  Attribution for a card is **type-only** (`KnowledgeEvidence.itemsForCard`), deliberately narrower
+  than the exercise rule: same-type nodes, no by-skill pass and no last-resort fallback. It has to
+  be, because the two broader passes are not narrowings here — the 35 lessons that ship words but no
+  VOCABULARY node (`a2.airport`, `b1.plans`, `b2.environment`, …) have grammar nodes that *list*
+  `VOCABULARY` in `skills`, so both passes select exactly the nodes a card must not touch. Under the
+  exercise rule, reviewing «airport» raised `grammar.future-will` while the recalled word had no node
+  to move at all. A card's node set is therefore the lesson's nodes of its own type, which is one
+  topic node for 154 of the 157 vocabulary lessons and two for `c1.phrasal-idioms`, `c2.nuance` and
+  `c2.collocation` (see [`docs/debt.md`](debt.md)); when the lesson owns none, an empty set is the
+  answer — the card is still graded (schedule, log, meter) and the graph stays out of a claim it
+  cannot support. Two deliberate limits remain: **no exercise format** is recorded (a card is recall,
+  not a *transfer* claim — see [`docs/debt.md`](debt.md)), and the queue itself is still the card
+  queue: a node's own exercises are not re-served from its due date, which is the other half of the
+  roadmap item.
 - **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at
   `DefaultKnowledgeEngine.FIRST_HIT_MASTERY` (0.4), not 1.0 — one tap is evidence, not proof, and
   seeding it at full made a just-met node look learned to the planner and to the skill meters.
@@ -256,5 +270,16 @@
   `ReviewResult.isSuccess` rule the tracks read), and a card whose item has left the queue is dropped
   rather than guessed, so a review-only week keeps the mix moving instead of freezing it at the first
   lesson. Both sources are pooled and then trimmed to the one window, so neither can crowd the other
-  out. What is left of the roadmap item is the *adaptive* half: nothing yet steers what comes next
-  from this mix (the plan still steers from the graph).
+  out. **The adaptive half ships with it.** `GetTodayPlanUseCase` reads the mix through
+  `GetMissProfileUseCase` (the same instance Progress uses, so its per-lesson cache serves both) and
+  passes it to `AdaptiveLearningPlanner`, which may do exactly two things with it: order the day
+  *within one priority* — a node whose `skills` map to the weakest category sorts before its equals,
+  so a vocabulary gap puts the vocabulary node first among the day's equally urgent work — and name
+  the gap in the reason of the first action that answers it (`… · ضعف اخیر: واژگان`). It never
+  invents, drops or re-prioritises an action: urgency stays the graph's, because a miss count is one
+  window of evidence and a broken prerequisite is a fact. A window with no miss at all steers
+  nothing — "weakest" of five right answers is not a weakness — and a profile read that throws
+  degrades to the unsteered plan rather than blanking Home, the same rule Progress already uses for
+  its half. Pinned by four `AdaptiveLearningPlannerTest` cases (the reorder, the one named action, the
+  clean window, review still leading) and three in `MissDrivenPlanTest` that prove the mix actually
+  travels from the use case into the planner and that a failed read leaves the plan standing.

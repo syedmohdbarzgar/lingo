@@ -66,6 +66,12 @@ class AdaptiveLearningPlanner(
          */
         now: Long,
         estimatedMinutesByItem: Map<String, Int> = emptyMap(),
+        /**
+         * The recent miss mix, when the caller has one (roadmap: the error taxonomy's
+         * adaptive half). Optional because it changes only *which* of the day's equally
+         * urgent actions comes first and what one of them says — never what exists.
+         */
+        missProfile: MissProfile? = null,
     ): LearningDecision {
         val byId: Map<String, KnowledgeState> = states.associateBy { it.itemId }
         val actions = mutableListOf<LearningAction>()
@@ -181,8 +187,34 @@ class AdaptiveLearningPlanner(
             }
         }
 
-        // 4. Deterministic order: urgency first, then id so equal priorities are stable.
-        val sorted = actions.sortedWith(compareBy({ it.priority }, { it.itemId ?: "" }))
+        // 4. Deterministic order: urgency first, then the miss mix, then id so equal
+        //    priorities are stable.
+        //
+        //    The mix is the only input here that is about the answers that went *wrong*
+        //    rather than about what is known. It is allowed to do exactly two things:
+        //    order the day *within one priority* (a vocabulary gap puts the vocabulary
+        //    node first among equally urgent work) and add one sentence to the reason of
+        //    the action it promoted. It never invents an action, drops one, or changes a
+        //    priority — urgency is still the graph's, because a miss count is a window's
+        //    worth of evidence and a prerequisite is a fact. A mix whose weakest
+        //    category has no miss at all (everything answered right) steers nothing:
+        //    "weakest" of a clean window is not a weakness.
+        val weakestMiss = missProfile?.weakest?.takeIf { it.misses > 0 }?.category
+        val missRank: Map<String, Int> = if (weakestMiss == null) {
+            emptyMap()
+        } else {
+            graph.items.associate { node ->
+                val trainsIt = node.skills.any { MissTaxonomy.categoryOf(it) == weakestMiss }
+                node.id to if (trainsIt) 0 else 1
+            }
+        }
+        val sorted = actions.sortedWith(
+            compareBy(
+                { it.priority },
+                { missRank[it.itemId] ?: 1 },
+                { it.itemId ?: "" },
+            ),
+        )
 
         // 5. Budget enforcement: keep actions in priority order until the daily time
         //    budget or the action cap is exhausted. todayStudySeconds already spent
@@ -225,13 +257,37 @@ class AdaptiveLearningPlanner(
         }
 
         return LearningDecision(
-            actions = budgeted,
+            actions = withMissReason(budgeted, weakestMiss, missRank),
             dueReviewCount = dueReviewCount,
             targetMinutes = targetMinutes,
             todayStudySeconds = todayStudySeconds,
             estimatedTotalMinutes = budgeted.sumOf { it.estimatedMinutes },
             remainingMinutes = (availableMinutes - usedMinutes).coerceAtLeast(0),
         )
+    }
+
+    /**
+     * Names the gap on the first action that answers it, and on nothing else.
+     *
+     * One sentence, not a badge on every row: the plan is already a list of reasons, and
+     * a line repeated on five cards tells the learner nothing about where to start.
+     */
+    private fun withMissReason(
+        actions: List<LearningAction>,
+        weakest: MissCategory?,
+        missRank: Map<String, Int>,
+    ): List<LearningAction> {
+        if (weakest == null) return actions
+        val index = actions.indexOfFirst { action ->
+            action.itemId != null && missRank[action.itemId] == 0
+        }
+        if (index < 0) return actions
+        val promoted = actions[index]
+        return actions.toMutableList().also { list ->
+            list[index] = promoted.copy(
+                reasonFa = "${promoted.reasonFa} · ضعف اخیر: ${MissTaxonomy.labelFa(weakest)}",
+            )
+        }
     }
 
     private fun remediationReason(item: KnowledgeItem, report: PrerequisiteReport): String = when {

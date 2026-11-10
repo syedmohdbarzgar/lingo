@@ -401,6 +401,8 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
             settingsRepository = settingsRepository,
             planner = learningPlanner,
             knowledge = knowledgeRepository,
+            // The same instance Progress reads, so its per-lesson cache serves both.
+            missProfile = getMissProfile,
         )
     }
     /**

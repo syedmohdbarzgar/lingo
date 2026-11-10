@@ -276,6 +276,42 @@ class EvidenceTransactionTest {
     }
 
     @Test
+    fun `a card never raises a node of another knowledge type`() = runBlocking {
+        // The shipped shape that used to mis-attribute: the lesson that taught the word
+        // has no VOCABULARY node, and its grammar node lists VOCABULARY in `skills`, so
+        // the exercise rule credited it. Reviewing «airport» moved `grammar.future-will`
+        // while the word itself had no node to move.
+        db.contentDao().insertKnowledgeItems(
+            listOf(
+                KnowledgeItemEntity(
+                    id = "grammar.tx.future",
+                    type = "GRAMMAR",
+                    title = "future will",
+                    titleFa = "آینده با will",
+                    level = "A1",
+                    prerequisitesJson = "[]",
+                    lessonIdsJson = "[\"$wordLesson\"]",
+                    skillsJson = "[\"GRAMMAR\",\"VOCABULARY\"]",
+                ),
+            ),
+        )
+        reviews.schedule(card)
+
+        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
+
+        assertNull(
+            "recall of one word is not evidence about the lesson's grammar",
+            knowledge.getState("grammar.tx.future"),
+        )
+        assertEquals("the card was still graded", 1, reviews.getAttempts(card.contentId).size)
+        assertEquals(1, reviews.getItem(card.contentId)!!.repetitions)
+        assertTrue(
+            "and its skill meter still moved — the grade is not lost, only the graph claim is",
+            progress.observeMastery().first().containsKey(Skill.VOCABULARY),
+        )
+    }
+
+    @Test
     fun `a crash mid-turn leaves the turn unclaimed and Speaking unmoved`() = runBlocking {
         seedPhonology()
         val crashing = RecordConversationTurnUseCase(CrashingOnMeter(progress), knowledge, conversations)

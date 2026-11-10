@@ -125,7 +125,7 @@ class KnowledgeRepositoryImpl(
         // No lesson, no attribution: the repository never invents nodes for a card it
         // cannot place (the same rule as an unknown lesson in `recordAttempt`).
         val lesson = lessonId ?: return
-        KnowledgeEvidence.itemsFor(itemsForLesson(lesson), skill).forEach { item ->
+        KnowledgeEvidence.itemsForCard(itemsForLesson(lesson), skill).forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
                 // format = null on purpose: review is recall, not a transfer claim (see
                 // the contract in `KnowledgeRepository.recordRecall`).

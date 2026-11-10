@@ -177,12 +177,12 @@ interface KnowledgeRepository {
     /**
      * Records one graded **review card** against the nodes it is evidence about.
      *
-     * Same attribution rule as [recordAttempt] — `KnowledgeEvidence` decides which
-     * nodes of the card's lesson a graded answer speaks for — so the review queue and
-     * the lesson path cannot disagree about what a vocabulary answer proves. Before
-     * this, review was the one body of practice the graph could not see: a learner who
-     * spent a month on cards moved the skill meters while every node sat at the mastery
-     * of its last lesson answer, and the planner kept treating those nodes as unpractised.
+     * Narrower than [org.token.english.domain.engine.KnowledgeEvidence.itemsFor] on
+     * purpose: a card is one word, so it may only move its lesson's node of its own
+     * knowledge type and never the lesson's unrelated nodes — not even with a by-skill
+     * pass, because the shipped grammar nodes list VOCABULARY in their `skills`. Before
+     * this rule the 35 lessons with words but no VOCABULARY node credited every card to
+     * their grammar nodes.
      *
      * Deliberately no [ExerciseFormat]: a card is recall of a word, not a *transfer*
      * claim, and the format mask is exactly that claim ([KnowledgeGates]

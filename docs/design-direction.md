@@ -47,10 +47,25 @@ sheet came up as a capsule until both call sites were given their own shape (v31
 (`shapes.extraLarge = 50%`). **Shadow:** 10dp elevation at 8% ink (`AppCard`) — the shadow is what
 stops a card reading as paper; a hairline alone never did.
 
-**Motion** (`component/Reveal.kt`): each card on an opening screen fades in (240ms) and rises 26dp
-(320ms) with `FastOutSlowInEasing`, 55ms after the card above it. The first card never waits, the
-end state is the only state after ~0.5s, and because the motion is a `graphicsLayer` the layout never
-shifts and nothing is hidden if animation is off. A new conversation turn reveals the same way.
+**Motion** (`core/designsystem/Motion.kt` + `component/Reveal.kt`). Every duration in the app is a
+token in `AppMotion`, so "how long does this take" has one answer; nothing in the system exceeds
+0.26s for a route change or 0.18s for a change inside a screen.
+
+| Move | What it looks like |
+|---|---|
+| Forward / back (`SCREEN_MS` 260) | The outgoing screen slides 1/12 of the width in the direction of travel and fades; the incoming one arrives from 1/5 of the opposite edge and fades in. Below 34 the splash hand-off is the same idea, declared by the activity (see `SplashActivity`). |
+| Sibling tabs (Home → Review → Vocabulary → Progress) | **Cross-fade only** (`SCREEN_MS / 2`). The four bottom-bar tabs are the same level, so sliding them sideways claimed a depth the move does not have — and it was the heaviest transition, paid on the most frequent move. The rule is `isSiblingMove(from, to)`, declared once on the `NavHost`. |
+| In-screen step (`STEP_MS` 180, `STEP_SHIFT_DP` 8) | The next lesson question, the next review card, the next teaching page and a new conversation turn fade and rise a few dp, keyed on the thing that changed so grading a card never re-plays it. |
+| Page reveal (`REVEAL_*`) | Each card fades in (240ms) and rises 26dp (300ms) with `FastOutSlowInEasing`, 40ms after the card above it, over at most **8 slots** — so the whole page settles in 580ms (`REVEAL_TOTAL_MS`) however many cards it has. The first card never waits. |
+
+The reveal runs on **one clock** (`rememberPageReveal` + a single `Animatable`), and every card reads
+its own window out of that clock inside `graphicsLayer`. The earlier version gave each card its own
+coroutine and delay, which cost 2N animatables on a page and captured the delay at first composition —
+a card appearing above another (the plan or the focus card arriving a moment later) left the slots
+below on the old timing, so the page could reveal out of order. Order is now a property of the layout,
+not of when each card started. Because the motion is a `graphicsLayer`, layout never shifts, the
+scroll range never changes mid-animation, and nothing is hidden if animation is off. `AppMotionTest`
+pins the sibling rule and the ordering property; the pixels stay a device check.
 
 ## What stays (non-negotiable)
 

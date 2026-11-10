@@ -34,6 +34,7 @@ import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.feature.home.HomeViewModel
 
@@ -89,7 +90,10 @@ class HomeViewModelTest {
             reviewRepository = reviews,
             studyStats = progress.statsFlow,
             planner = planner,
-            getTodayPlan = GetTodayPlanUseCase(lessons, reviews, progress, settings, planner, knowledge),
+            getTodayPlan = GetTodayPlanUseCase(
+                lessons, reviews, progress, settings, planner, knowledge,
+                GetMissProfileUseCase(lessons, reviews),
+            ),
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessons),
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             companionStatus = companion,

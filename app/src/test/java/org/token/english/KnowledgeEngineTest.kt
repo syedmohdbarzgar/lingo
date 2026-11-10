@@ -409,5 +409,46 @@ class KnowledgeEngineTest {
     @Test
     fun `a lesson with no knowledge items attributes nothing instead of failing`() {
         assertTrue(KnowledgeEvidence.itemsFor(emptyList(), Skill.GRAMMAR).isEmpty())
+        assertTrue(KnowledgeEvidence.itemsForCard(emptyList(), Skill.VOCABULARY).isEmpty())
+    }
+
+    @Test
+    fun `a card is evidence only for a node of its own type`() {
+        val grammar = item("g", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR, Skill.VOCABULARY))
+        val vocab = item("v", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
+        // The grammar node *lists* VOCABULARY, so the exercise rule would union it in.
+        // A card names one word, so only the vocabulary node may move.
+        assertEquals(
+            listOf("v"),
+            KnowledgeEvidence.itemsForCard(listOf(grammar, vocab), Skill.VOCABULARY).map { it.id },
+        )
+    }
+
+    @Test
+    fun `a card never falls back to the lesson's other nodes`() {
+        // 35 shipped lessons look like this: words, and only grammar nodes. The
+        // exercise rule credits the whole lesson; a card must credit nothing.
+        val grammar = item("g", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR))
+        val discourse = item("d", KnowledgeType.DISCOURSE, listOf(Skill.READING))
+        assertTrue(
+            "a word is not evidence about the lesson's grammar",
+            KnowledgeEvidence.itemsForCard(listOf(grammar, discourse), Skill.VOCABULARY).isEmpty(),
+        )
+    }
+
+    @Test
+    fun `a card ignores a node that merely lists its skill`() {
+        // The by-skill axis is what exercises use to reach a differently-typed node.
+        // For a card it selects the very nodes this rule excludes: the shipped grammar
+        // nodes declare VOCABULARY in `skills`.
+        val tagged = item("t", KnowledgeType.DISCOURSE, listOf(Skill.VOCABULARY))
+        assertTrue(
+            KnowledgeEvidence.itemsForCard(listOf(tagged), Skill.VOCABULARY).isEmpty(),
+        )
+        // …while the exercise rule still reaches it, so the two cannot be confused.
+        assertEquals(
+            listOf("t"),
+            KnowledgeEvidence.itemsFor(listOf(tagged), Skill.VOCABULARY).map { it.id },
+        )
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -80,6 +81,8 @@ import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
+import org.token.english.core.designsystem.component.StepChange
+import org.token.english.core.designsystem.component.stepChange
 import org.token.english.di.lessonViewModelFactory
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
@@ -279,10 +282,14 @@ private fun ExerciseContent(
     } else {
         null
     }
+    // A new question starts at the top. The card fades in, so it must not fade in at
+    // the offset the reader had scrolled the previous question to — the animation would
+    // be revealing a line they cannot see the start of.
+    val scroll = remember(exercise.id) { ScrollState(0) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scroll)
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
@@ -297,7 +304,9 @@ private fun ExerciseContent(
 
         state.focus?.let { FocusCard(it) }
 
-        AppCard {
+        // The next question is a step change, not a new screen: a short fade and a
+        // few dp of rise, keyed on the exercise id so grading it never re-plays.
+        AppCard(modifier = Modifier.stepChange(exercise.id)) {
             when (exercise) {
                 is Exercise.MultipleChoice -> {
                     // A-5: a comprehension item shows its reading text first — the
@@ -849,10 +858,13 @@ private fun LessonSummary(
 @Composable
 private fun TeachingContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit) {
     val stage = state.activeStage ?: return
+    // Same rule as a question: the teaching page arrives at its top, because the step
+    // below is the thing that just appeared.
+    val scroll = remember(stage) { ScrollState(0) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scroll)
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
@@ -860,11 +872,21 @@ private fun TeachingContent(state: LessonUiState, onEvent: (LessonEvent) -> Unit
         StageHeader(state = state)
         state.focus?.let { FocusCard(it) }
 
-        when (stage) {
-            LearningStage.CONTEXT -> ContextCard(state = state)
-            LearningStage.GRAMMAR -> state.lesson?.let { GrammarTeachingCards(lesson = it) }
-            LearningStage.VOCABULARY -> VocabularyCard(state = state, onEvent = onEvent)
-            else -> Unit
+        // One step at a time, and the step arrives: the rail and the header stay put
+        // because they describe the whole lesson, while the page below them is what
+        // actually changed. Keyed on the stage, so answering a question on this step
+        // never re-plays the entrance.
+        StepChange(
+            changeKey = stage,
+            // The wrapper must not change the layout the step had before it existed.
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            when (stage) {
+                LearningStage.CONTEXT -> ContextCard(state = state)
+                LearningStage.GRAMMAR -> state.lesson?.let { GrammarTeachingCards(lesson = it) }
+                LearningStage.VOCABULARY -> VocabularyCard(state = state, onEvent = onEvent)
+                else -> Unit
+            }
         }
 
         StageNav(state = state, onEvent = onEvent, label = "ادامه")

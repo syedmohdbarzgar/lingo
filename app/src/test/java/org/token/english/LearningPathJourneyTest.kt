@@ -51,6 +51,7 @@ import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.CompleteLessonUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
@@ -213,7 +214,9 @@ class LearningPathJourneyTest {
         ) {
             val lessonItems = itemsForLesson(lessonId)
             val byId = statesFlow.value.associateBy { it.itemId }
-            KnowledgeEvidence.itemsFor(lessonItems, skill).forEach { item ->
+            // The card rule, not the exercise rule — the double has to mirror production
+            // or the journey would keep passing while the app mis-credits nodes.
+            KnowledgeEvidence.itemsForCard(lessonItems, skill).forEach { item ->
                 val updated = engine.applyAttempt(item.id, byId[item.id], correct, now, format)
                 statesFlow.value = statesFlow.value.filterNot { it.itemId == item.id } + updated
             }
@@ -399,6 +402,7 @@ class LearningPathJourneyTest {
             settingsRepository = settings,
             planner = DefaultLearningPlanner(),
             knowledge = knowledge,
+            missProfile = GetMissProfileUseCase(lessonsRepo, reviews),
         )
     }
 
@@ -574,6 +578,19 @@ class LearningPathJourneyTest {
             lessonWords.size - 1,
             app.reviews.countDue(now),
         )
+        // The grade reached the graph, and it reached the node the word belongs to.
+        val cardNodes = KnowledgeEvidence.itemsForCard(
+            app.knowledge.itemsForLesson(lessonId),
+            Skill.VOCABULARY,
+        )
+        assertTrue("the lesson owns a vocabulary node", cardNodes.isNotEmpty())
+        cardNodes.forEach { node ->
+            assertEquals(
+                "the card's recall landed on its vocabulary node",
+                now,
+                app.knowledge.getState(node.id)?.lastReviewedAt,
+            )
+        }
 
         // --- 8. Progress reflects the work ------------------------------------
         val stats = app.progress.statsFlow.value

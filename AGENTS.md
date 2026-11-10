@@ -126,6 +126,12 @@ version history in [`docs/CHANGELOG-content.md`](docs/CHANGELOG-content.md). Aft
 - Touch targets ≥ 48dp, primary buttons 48dp high, cards **22dp** radius with the soft shadow and
   pill buttons (see [`docs/design-direction.md`](docs/design-direction.md)), and **cards always span the
   available width** (`AppCard` fills it itself). Streak must never outweigh learning progress.
+- **Motion comes from `AppMotion`** (`core/designsystem/Motion.kt`) — a route change, an in-screen step
+  and the page reveal read their durations there, never a literal in a feature. The graph declares
+  its transitions once on the `NavHost`, so both ends of a move are known: a push/pop slides in the
+  direction of travel, a move between two bottom-bar tabs only cross-fades. Inside a screen the next
+  step uses `stepChange`/`StepChange` keyed on what changed, and a page's cards share one
+  `rememberPageReveal()` clock (`component/Reveal.kt`).
 - Every feature screen needs empty/loading/error states; a local failure must never be blamed on the
   network — only a genuinely online action may show a connectivity error.
 
@@ -139,7 +145,26 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (663 tests / 76 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (684 tests / 78 classes as of the
+miss-driven-plan pass, where the error taxonomy stopped being a report and started steering the day:
+`GetTodayPlanUseCase` reads the mix through `GetMissProfileUseCase` and `AdaptiveLearningPlanner`
+orders the plan *within one priority* by the weakest category and names the gap on the action that
+answers it — never inventing, dropping or re-prioritising one, steering nothing when the window holds
+no miss, and degrading to the unsteered plan when the profile cannot be read. Four cases in
+`AdaptiveLearningPlannerTest` (the reorder, the one named action, the clean window, review still
+leading) and three in the new `MissDrivenPlanTest` (the mix reaches the plan, an empty log changes
+nothing, a failed read keeps the graph's plan), with the category's Persian name moved to
+`MissTaxonomy.labelFa` so Progress and the plan cannot call one gap two things. Before it the
+card-attribution pass, where a review card is evidence only for its lesson's node of its **own**
+knowledge type (`KnowledgeEvidence.itemsForCard`): no by-skill pass and no whole-lesson fallback,
+because the 35 lessons that ship words but no VOCABULARY node have grammar nodes that *list*
+`VOCABULARY` in `skills`, so both broader rules credited exactly the wrong nodes — reviewing «airport»
+raised `grammar.future-will` while the recalled word had no node at all. Three cases in
+`KnowledgeEngineTest` (type-only, no fallback, the by-skill node refused while the exercise rule still
+reaches it), one in `EvidenceTransactionTest` on real Room (the grammar node is untouched, the card
+and its meter are not), an assertion in `LearningPathJourneyTest` that the card's recall lands on its
+vocabulary node, and one in `FocusPlanTest` for a due node with no exercise about it; the counts
+those four documents quote are now guarded by a case that counts the annotations. Before it the
 miss-taxonomy card pass, where the taxonomy stopped being lesson-only: a review card is classified by
 its item's content type (vocabulary or grammar — the only two things a recall card can train), GOOD
 and EASY are the hits via one `ReviewResult.isSuccess`, a grade whose item left the queue is dropped

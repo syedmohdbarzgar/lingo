@@ -49,4 +49,30 @@ object KnowledgeEvidence {
         val union = (byType + bySkill).distinctBy { it.id }
         return union.ifEmpty { lessonItems }
     }
+
+    /**
+     * Knowledge items a graded **review card** is evidence about — deliberately
+     * narrower than [itemsFor].
+     *
+     * A card is one word of one lesson, so the only honest claim it makes is about
+     * that lesson's node **of the card's own type** — nothing else. Unlike
+     * [itemsFor] there is no by-skill pass and no last-resort fallback:
+     *
+     * - the by-skill pass is not a narrowing here. The 35 lessons that ship words but
+     *   no VOCABULARY node (a2.airport, b1.plans, b2.environment, …) have grammar
+     *   nodes that *list* VOCABULARY in `skills`, so the pass selects exactly the
+     *   nodes the rule is meant to exclude — reviewing «airport» raised
+     *   `grammar.future-will` while the word had no node to move at all;
+     * - "every node of the lesson" is right for an exercise, because a translation
+     *   really does test the lesson's grammar too, and wrong for one word.
+     *
+     * An empty result is therefore a real answer: this lesson has no node the card
+     * can be evidence about, and the card is still graded (schedule, log, meter) —
+     * the graph simply stays out of a claim it cannot support.
+     */
+    fun itemsForCard(lessonItems: List<KnowledgeItem>, skill: Skill): List<KnowledgeItem> {
+        if (lessonItems.isEmpty()) return emptyList()
+        val wanted = knowledgeTypeFor(skill)
+        return lessonItems.filter { it.type == wanted }
+    }
 }

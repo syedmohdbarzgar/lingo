@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -60,6 +61,7 @@ import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.SectionHeader
+import org.token.english.core.designsystem.component.stepChange
 import org.token.english.di.reviewViewModelFactory
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.ReviewResult
@@ -238,11 +240,14 @@ private fun SummaryContent(
 private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
     val word = state.currentWord
     val extended = LocalAppExtendedColors.current
+    // A new card arrives at the top of the screen, not at the offset the previous one
+    // was scrolled to (see the reveal below).
+    val scroll = remember(state.index) { ScrollState(0) }
 
     Column(
         Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scroll)
             .padding(AppSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
@@ -256,7 +261,9 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        AppCard {
+        // A new card arrives instead of replacing the last one in the same frame —
+        // keyed on the index, so revealing or grading THIS card never re-plays it.
+        AppCard(modifier = Modifier.stepChange(state.index)) {
             Column(
                 Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,

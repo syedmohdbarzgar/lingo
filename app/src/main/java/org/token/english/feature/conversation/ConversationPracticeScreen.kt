@@ -72,6 +72,7 @@ import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.ProgressRing
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.StaggeredReveal
+import org.token.english.core.designsystem.component.rememberPageReveal
 import org.token.english.di.conversationPracticeViewModelFactory
 import org.token.english.domain.engine.SpeakingVerdict
 
@@ -215,7 +216,7 @@ fun ConversationPracticeScreen(
                         // one in the same frame: the turn changing is the one moment
                         // this screen moves, and it should be readable as a change.
                         key(state.index) {
-                            StaggeredReveal(index = 0) {
+                            StaggeredReveal(reveal = rememberPageReveal(), index = 0) {
                                 PartnerTurn(
                                     turn = turn,
                                     replayEnabled = !state.isListening && !state.isPartnerSpeaking,

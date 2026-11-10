@@ -39,10 +39,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import org.token.english.EnglishApp
+import org.token.english.core.designsystem.AppMotion
 import org.token.english.feature.conversation.ConversationPracticeScreen
 import org.token.english.feature.home.HomeScreen
 import org.token.english.feature.lesson.LessonScreen
@@ -56,31 +58,55 @@ import org.token.english.feature.vocabulary.VocabularyDetailScreen
 import org.token.english.feature.vocabulary.VocabularyScreen
 
 /**
- * Page changes move, they do not just cross-fade: the screen being left slides a
- * little in the direction of travel and the one arriving comes in from the
- * opposite edge. A push and a pop therefore read differently — before this, every
- * route change was the same fade, so "I went deeper" and "I came back" looked
- * identical.
+ * The moves this app makes, and what each one looks like.
  *
- * The offsets are fractions of the width, and the root layout is RTL: forward
+ * - **Forward / back** (a tab → its detail, a lesson → Home): the screen being left
+ *   slides a little in the direction of travel and the one arriving comes in from
+ *   the opposite edge, so "I went deeper" and "I came back" read differently.
+ * - **Sibling** (Home → Review → Vocabulary → Progress): a **cross-fade only**. The
+ *   four bottom-bar tabs sit at the same level, so sliding them sideways was the
+ *   app telling the learner they had gone somewhere deeper. It also animated two
+ *   full screens horizontally for a move that has no depth — the heaviest of all the
+ *   route changes, spent on the most frequent one.
+ *
+ * The slide offsets are fractions of the width, and the root layout is RTL: forward
  * arrives from the left, which is where a Persian reader's eye starts. The full
- * distance is never used — a quarter-screen slide keeps the tab bar steady and
- * stops the motion from feeling like a page-turn on a navigation that also has
- * a bottom bar.
+ * distance is never used — a fifth of the screen keeps the bottom bar steady and
+ * stops the motion from feeling like a page-turn.
  */
-private const val NAV_SLIDE_MS = 260
+private val TAB_ROUTES = setOf(Routes.HOME, Routes.REVIEW, Routes.VOCABULARY, Routes.PROGRESS)
+
+/**
+ * True when both ends of a route change are bottom-bar tabs — the one case with no
+ * depth, so it fades instead of sliding. Pure and route-string based, so the rule is
+ * testable without a `NavController` (see `AppMotionTest`).
+ */
+internal fun isSiblingMove(from: String?, to: String?): Boolean =
+    from != null && to != null && from in TAB_ROUTES && to in TAB_ROUTES
 
 private fun forwardEnter(): EnterTransition =
-    slideInHorizontally(tween(NAV_SLIDE_MS)) { -it / 5 } + fadeIn(tween(NAV_SLIDE_MS / 2))
+    slideInHorizontally(tween(AppMotion.SCREEN_MS)) { -it / 5 } +
+        fadeIn(tween(AppMotion.SCREEN_MS / 2))
 
 private fun forwardExit(): ExitTransition =
-    slideOutHorizontally(tween(NAV_SLIDE_MS)) { it / 12 } + fadeOut(tween(NAV_SLIDE_MS / 2))
+    slideOutHorizontally(tween(AppMotion.SCREEN_MS)) { it / 12 } +
+        fadeOut(tween(AppMotion.SCREEN_MS / 2))
 
 private fun backEnter(): EnterTransition =
-    slideInHorizontally(tween(NAV_SLIDE_MS)) { it / 5 } + fadeIn(tween(NAV_SLIDE_MS / 2))
+    slideInHorizontally(tween(AppMotion.SCREEN_MS)) { it / 5 } +
+        fadeIn(tween(AppMotion.SCREEN_MS / 2))
 
 private fun backExit(): ExitTransition =
-    slideOutHorizontally(tween(NAV_SLIDE_MS)) { -it / 12 } + fadeOut(tween(NAV_SLIDE_MS / 2))
+    slideOutHorizontally(tween(AppMotion.SCREEN_MS)) { -it / 12 } +
+        fadeOut(tween(AppMotion.SCREEN_MS / 2))
+
+/** A sibling swap: no direction to show, so only opacity changes. */
+private fun siblingEnter(): EnterTransition = fadeIn(tween(AppMotion.SCREEN_MS / 2))
+
+private fun siblingExit(): ExitTransition = fadeOut(tween(AppMotion.SCREEN_MS / 2))
+
+/** The route a back-stack entry belongs to (its pattern, so `lesson/7` reads as `lesson/{lessonId}`). */
+private fun NavBackStackEntry.routeOrPattern(): String? = destination.route
 
 object Routes {
     const val ONBOARDING = "onboarding"
@@ -215,6 +241,37 @@ fun AppNavGraph(startDestination: String) {
             navController = navController,
             startDestination = startDestination,
             modifier = Modifier.padding(padding),
+            // Declared once for the whole graph. They used to be repeated on all ten
+            // destinations, which is how the four tabs ended up sliding like pushes:
+            // a per-route default cannot see *both* ends of a move.
+            enterTransition = {
+                if (isSiblingMove(initialState.routeOrPattern(), targetState.routeOrPattern())) {
+                    siblingEnter()
+                } else {
+                    forwardEnter()
+                }
+            },
+            exitTransition = {
+                if (isSiblingMove(initialState.routeOrPattern(), targetState.routeOrPattern())) {
+                    siblingExit()
+                } else {
+                    forwardExit()
+                }
+            },
+            popEnterTransition = {
+                if (isSiblingMove(initialState.routeOrPattern(), targetState.routeOrPattern())) {
+                    siblingEnter()
+                } else {
+                    backEnter()
+                }
+            },
+            popExitTransition = {
+                if (isSiblingMove(initialState.routeOrPattern(), targetState.routeOrPattern())) {
+                    siblingExit()
+                } else {
+                    backExit()
+                }
+            },
         ) {
             onboarding(navController)
             placement(navController)
@@ -239,7 +296,7 @@ private fun NavGraphBuilder.paywall(
     navController: NavHostController,
     onDismissLocked: () -> Unit,
 ) {
-    composable(Routes.PAYWALL, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.PAYWALL) {
         PaywallScreen(
             onClose = { navController.popBackStack() },
             onLockedExit = {
@@ -268,7 +325,7 @@ private fun NavGraphBuilder.paywall(
 }
 
 private fun NavGraphBuilder.onboarding(navController: NavHostController) {
-    composable(Routes.ONBOARDING, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.ONBOARDING) {
         OnboardingScreen(
             onPlacement = { navController.navigate(Routes.PLACEMENT) },
             onSkip = {
@@ -281,7 +338,7 @@ private fun NavGraphBuilder.onboarding(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.placement(navController: NavHostController) {
-    composable(Routes.PLACEMENT, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.PLACEMENT) {
         PlacementScreen(
             onFinished = {
                 navController.navigate(Routes.HOME) {
@@ -294,7 +351,7 @@ private fun NavGraphBuilder.placement(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.home(navController: NavHostController) {
-    composable(Routes.HOME, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.HOME) {
         HomeScreen(
             onOpenLesson = { navController.navigate(Routes.lesson(it)) },
             onOpenSettings = { navController.navigate(Routes.SETTINGS) },
@@ -321,10 +378,6 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
                 defaultValue = null
             },
         ),
-        enterTransition = { forwardEnter() },
-        exitTransition = { forwardExit() },
-        popEnterTransition = { backEnter() },
-        popExitTransition = { backExit() },
     ) { entry ->
         val lessonId = entry.arguments?.getString("lessonId").orEmpty()
         LessonScreen(
@@ -336,7 +389,7 @@ private fun NavGraphBuilder.lesson(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.review(navController: NavHostController) {
-    composable(Routes.REVIEW, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.REVIEW) {
         ReviewScreen(
             onBrowseVocabulary = { navController.navigate(Routes.VOCABULARY) },
             onGoHome = { navController.navigate(Routes.HOME) },
@@ -350,7 +403,7 @@ private fun NavGraphBuilder.review(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
-    composable(Routes.VOCABULARY, enterTransition = { forwardEnter() }, exitTransition = { forwardExit() }, popEnterTransition = { backEnter() }, popExitTransition = { backExit() }) {
+    composable(Routes.VOCABULARY) {
         VocabularyScreen(
             onOpenDetail = { navController.navigate(Routes.vocabularyDetail(it)) },
         )
@@ -358,10 +411,6 @@ private fun NavGraphBuilder.vocabulary(navController: NavHostController) {
     composable(
         route = Routes.VOCABULARY_DETAIL,
         arguments = listOf(navArgument("vocabId") { type = NavType.StringType }),
-        enterTransition = { forwardEnter() },
-        exitTransition = { forwardExit() },
-        popEnterTransition = { backEnter() },
-        popExitTransition = { backExit() },
     ) { entry ->
         val vocabId = entry.arguments?.getString("vocabId").orEmpty()
         VocabularyDetailScreen(
@@ -381,10 +430,6 @@ private fun NavGraphBuilder.conversation(navController: NavHostController) {
                 defaultValue = null
             },
         ),
-        enterTransition = { forwardEnter() },
-        exitTransition = { forwardExit() },
-        popEnterTransition = { backEnter() },
-        popExitTransition = { backExit() },
     ) { entry ->
         ConversationPracticeScreen(
             lessonId = entry.arguments?.getString("lessonId"),
@@ -394,23 +439,11 @@ private fun NavGraphBuilder.conversation(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.progress(navController: NavHostController) {
-    composable(
-        route = Routes.PROGRESS,
-        enterTransition = { forwardEnter() },
-        exitTransition = { forwardExit() },
-        popEnterTransition = { backEnter() },
-        popExitTransition = { backExit() },
-    ) { ProgressScreen() }
+    composable(Routes.PROGRESS) { ProgressScreen() }
 }
 
 private fun NavGraphBuilder.settings(navController: NavHostController) {
-    composable(
-        route = Routes.SETTINGS,
-        enterTransition = { forwardEnter() },
-        exitTransition = { forwardExit() },
-        popEnterTransition = { backEnter() },
-        popExitTransition = { backExit() },
-    ) {
+    composable(Routes.SETTINGS) {
         SettingsScreen(
             onBack = { navController.popBackStack() },
             onReTakePlacement = { navController.navigate(Routes.PLACEMENT) },

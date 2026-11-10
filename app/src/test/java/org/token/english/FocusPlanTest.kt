@@ -260,6 +260,30 @@ class FocusPlanTest {
     }
 
     @Test
+    fun `a due node with no exercise about it is skipped, not offered`() = runTest {
+        // The lesson exists and is taught, but everything it asks is grammar: a
+        // vocabulary node whose date is due has no drill to open, so the row would
+        // land the learner in a whole lesson instead. The probe must skip it — and
+        // still spend the limit on a node that can actually be drilled.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state("vocab.test", 0.7f, nextReviewAt = now - 5_000L),
+                state("grammar.test", 0.7f, nextReviewAt = now - 1_000L),
+            ),
+        )
+        lessons.exercises[lessonId] = listOf(choice("$lessonId.ex.01", Skill.GRAMMAR))
+        val focus = GetFocusPlanUseCase(knowledge, lessons)
+
+        assertNull("a node with nothing to show is not a drill", focus("vocab.test", now))
+        assertEquals(
+            "the undrillable row is skipped rather than shown empty",
+            listOf("grammar.test"),
+            GetDueKnowledgeReviewsUseCase(knowledge, focus)(now).map { it.itemId },
+        )
+    }
+
+    @Test
     fun `a graph still inside its intervals yields no due reviews`() = runTest {
         val (knowledge, lessons) = repositories(
             items = listOf(grammar),
