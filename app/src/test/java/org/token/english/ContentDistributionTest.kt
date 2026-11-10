@@ -116,6 +116,38 @@ class ContentDistributionTest {
     }
 
     /**
+     * A word is only visible in the graph when its own lesson owns a node of its type:
+     * `KnowledgeEvidence.itemsForCard` credits the card's lesson node of the card's own
+     * knowledge type and nothing else, so a lesson that ships words without a VOCABULARY
+     * node grades its cards while moving no node at all. 35 lessons were in exactly that
+     * state until v65 shipped the missing nodes (their grammar nodes list `VOCABULARY` in
+     * `skills`, which is what made the broader attribution rules credit the wrong node).
+     * A lesson added with words and no node must fail here rather than grade into nothing.
+     */
+    @Test
+    fun `every lesson that ships words is taught by a vocabulary node`() {
+        val words = JSONObject(contentFile("vocabulary.json").readText()).getJSONArray("vocabulary")
+        val knowledge = JSONObject(contentFile("knowledge.json").readText()).getJSONArray("knowledge")
+        val lessonsWithWords = (0 until words.length())
+            .map { words.getJSONObject(it).getString("lessonId") }
+            .toSet()
+        val taught = (0 until knowledge.length())
+            .map { knowledge.getJSONObject(it) }
+            .filter { it.getString("type") == "VOCABULARY" }
+            .flatMap { node ->
+                val lessons = node.getJSONArray("lessons")
+                (0 until lessons.length()).map { lessons.getString(it) }
+            }
+            .toSet()
+        val orphans = (lessonsWithWords - taught).sorted()
+        assertTrue(
+            "${orphans.size} lesson(s) ship words but no VOCABULARY node, so their review " +
+                "cards move no node: $orphans",
+            orphans.isEmpty(),
+        )
+    }
+
+    /**
      * Reviewed single-answer fill_blank exercises (checklist A-2), each with the
      * pedagogical reason it may accept exactly one answer. This map IS the
      * report: grep it for the current "open blanks" inventory.

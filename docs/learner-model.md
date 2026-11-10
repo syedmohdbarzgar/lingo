@@ -168,15 +168,16 @@
   skill meters while every node stayed at the mastery of its last lesson answer.
   Attribution for a card is **type-only** (`KnowledgeEvidence.itemsForCard`), deliberately narrower
   than the exercise rule: same-type nodes, no by-skill pass and no last-resort fallback. It has to
-  be, because the two broader passes are not narrowings here — the 35 lessons that ship words but no
-  VOCABULARY node (`a2.airport`, `b1.plans`, `b2.environment`, …) have grammar nodes that *list*
-  `VOCABULARY` in `skills`, so both passes select exactly the nodes a card must not touch. Under the
+  be, because the two broader passes are not narrowings here — 35 lessons *used to* ship words with no
+  VOCABULARY node (`a2.airport`, `b1.plans`, `b2.environment`, …) while their grammar nodes *list*
+  `VOCABULARY` in `skills`, so both passes selected exactly the nodes a card must not touch. Under the
   exercise rule, reviewing «airport» raised `grammar.future-will` while the recalled word had no node
-  to move at all. A card's node set is therefore the lesson's nodes of its own type, which is one
-  topic node for 154 of the 157 vocabulary lessons and two for `c1.phrasal-idioms`, `c2.nuance` and
-  `c2.collocation` (see [`docs/debt.md`](debt.md)); when the lesson owns none, an empty set is the
-  answer — the card is still graded (schedule, log, meter) and the graph stays out of a claim it
-  cannot support. Two deliberate limits remain: **no exercise format** is recorded (a card is recall,
+  to move at all. v65 shipped those 35 missing nodes, so the rule now lands every card on a real node.
+  A card's node set is the lesson's nodes of its own type, which is one topic node for 189 of the 192
+  vocabulary lessons and two for `c1.phrasal-idioms`, `c2.nuance` and `c2.collocation` (see
+  [`docs/debt.md`](debt.md)); a lesson that owns none would leave the card still graded (schedule,
+  log, meter) with the graph out of a claim it cannot support, and `ContentDistributionTest` now
+  fails the build before a lesson can ship that way. Two deliberate limits remain: **no exercise format** is recorded (a card is recall,
   not a *transfer* claim — see [`docs/debt.md`](debt.md)), and the queue itself is still the card
   queue: a node's own exercises are not re-served from its due date, which is the other half of the
   roadmap item.
@@ -245,12 +246,12 @@
   correct answer (mastery seeded at `FIRST_HIT_MASTERY`, 0.4) consolidated. `GetSkillProfilesUseCase` returns
   `emptyList()` when no content is seeded, and Home + Progress both render the shared
   `SkillTrackProgress` composable (Home compact), so the two screens cannot disagree. Node
-  accounting is not a clean partition and the tests say so: of the **233** nodes, GRAMMAR claims 49,
-  VOCABULARY **159** and READING 16, four nodes belong to two tracks
+  accounting is not a clean partition and the tests say so: of the **268** nodes, GRAMMAR claims 49,
+  VOCABULARY **194** and READING 16, four nodes belong to two tracks
   (`grammar.passive-simple`, `discourse.reason-cause`, `discourse.narrative-tenses`,
   `vocab.idioms-and-figurative`) and 13 belong to none (a node that only trains LISTENING or
-  PHONOLOGY). The arithmetic is checked against the bundle: 49 + 159 + 16 = 224 claims, the four
-  double-claimed nodes take it to 220 distinct, and 233 − 220 = 13.
+  PHONOLOGY). The arithmetic is checked against the bundle: 49 + 194 + 16 = 259 claims, the four
+  double-claimed nodes take it to 255 distinct, and 268 − 255 = 13.
   **What the tracks can actually collect is a content fact, measured in
   [`review-v64.md`](review-v64.md):** READING is reachable in 43 of 192 lessons (a passage in 36) and
   WRITING only through the 156 `sentence_production` items — so those two bars move slower than

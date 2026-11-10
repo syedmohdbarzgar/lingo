@@ -97,7 +97,7 @@ Mastery is tracked twice, on purpose, and both use the same engines:
 
 - per **skill** (vocabulary, grammar, listening, speaking, reading, writing) — an exponentially
   weighted average, seeded by the first observation;
-- per **knowledge item** — 233 curriculum nodes carrying prerequisites, mastery, exposure counts and
+- per **knowledge item** — 268 curriculum nodes carrying prerequisites, mastery, exposure counts and
   their own review schedule. `KnowledgeGraph` orders and unlocks the graph; every graded lesson
   answer is attributed to the nodes its lesson teaches and written with an atomic
   read-modify-write.
@@ -133,7 +133,7 @@ cursor instead of pretending it starts over.
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
 | Exercises | 2888 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
 | Vocabulary entries | 1154 |
-| Knowledge items | 233 |
+| Knowledge items | 268 |
 | Placement questions | 36 |
 
 The syllabus behind those numbers is the 180 topics (30 per CEFR band) in
@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-684 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
+685 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,

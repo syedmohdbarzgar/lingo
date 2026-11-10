@@ -38,7 +38,7 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 64):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 65):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
@@ -71,7 +71,7 @@
   items + **a dialogue in every lesson: five or six turns at A2–C2, four at A1 — 1052 speaking
   turns**), 1154 vocabulary entries
   (6/lesson, 8 in the numbers lesson),
-  233 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
+  268 knowledge items, placement = 36 questions in six graded bands of 6 (A1→C2, ordered by
   difficulty) — 35 choice plus **one typed `fill_blank`** in the A1 band (`placement.t01`), so the
   test samples production and not recognition alone. Grammar points per level follow the British Council / EQUALS Core Inventory grammar
   tables (verified against examenglish.com/CEFR, Oct 2026): e.g. B1 = 2nd/3rd conditional + reported
@@ -106,6 +106,18 @@
   named their word. Every vocabulary example must now contain its word (inflection-tolerant:
   `blocks` illustrates `block`, `children` illustrates `child`, separable phrasal verbs may split) —
   the genuinely irregular forms live in an explicit allowlist that fails the build when it rots.
+- **Every lesson's words are nodes too (v65):** a review card is credited to its lesson's node of
+  the card's own type and to nothing else (`KnowledgeEvidence.itemsForCard`), so a lesson that ships
+  six words with no VOCABULARY node grades its cards while moving no node — 35 lessons were in that
+  state (the seven A1/A2 grammar supplements plus `a2.airport`, `b1.plans`, `b2.environment` and the
+  rest of the topic rows the v5 graph covered with grammar nodes whose `skills` list `VOCABULARY`).
+  Each now owns **one** vocabulary node: `id` is a topic slug (`vocab.airport-travel`,
+  `vocab.question-words`), `title`/`titleFa` are the lesson's own, `skills` are the corpus'
+  `["VOCABULARY", "LISTENING"]` pair, and `prerequisites` names the vocabulary node of the lesson
+  before it in the same level (a level's first lesson anchors on the last node of the level below), so
+  the graph stays one chained path with no new roots. All 192 lessons now own a vocabulary node — 189
+  one, three two. `ContentDistributionTest` fails the build when a lesson ships words with no node;
+  `validateContent` reports the 268.
 - **Practice bar (A-8):** every GRAMMAR knowledge item needs **at least six grammar-targeting
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the mastery
   engine uses, so a vocabulary-heavy lesson does not count as grammar practice. `GrammarCoverageTest`

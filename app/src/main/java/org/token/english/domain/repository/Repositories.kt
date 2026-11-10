@@ -180,9 +180,9 @@ interface KnowledgeRepository {
      * Narrower than [org.token.english.domain.engine.KnowledgeEvidence.itemsFor] on
      * purpose: a card is one word, so it may only move its lesson's node of its own
      * knowledge type and never the lesson's unrelated nodes — not even with a by-skill
-     * pass, because the shipped grammar nodes list VOCABULARY in their `skills`. Before
-     * this rule the 35 lessons with words but no VOCABULARY node credited every card to
-     * their grammar nodes.
+     * pass, because 35 lessons once had words but no VOCABULARY node while their grammar
+     * nodes list VOCABULARY in their `skills` — before this rule those cards credited
+     * their grammar nodes, and v65 shipped the missing vocabulary nodes.
      *
      * Deliberately no [ExerciseFormat]: a card is recall of a word, not a *transfer*
      * claim, and the format mask is exactly that claim ([KnowledgeGates]

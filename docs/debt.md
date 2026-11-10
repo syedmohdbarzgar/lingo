@@ -279,8 +279,9 @@
   is attributed by type alone (`KnowledgeEvidence.itemsForCard` — see
   [`docs/learner-model.md`](learner-model.md), which also explains why the by-skill and whole-lesson
   passes are wrong here), the remaining granularity question is decided by the content graph: nodes
-  are **topic**-granular (6–8 words each), a word carries no node id, and 157 lessons own vocabulary
-  nodes. 154 of them own exactly one, so a card moves exactly its topic. `c1.phrasal-idioms`,
+  are **topic**-granular (6–8 words each), a word carries no node id, and — since v65 gave the last 35
+  their node — all 192 lessons own vocabulary nodes. 189 own exactly one, so a card moves exactly its
+  topic. `c1.phrasal-idioms`,
   `c2.nuance` and `c2.collocation` own two (`vocab.phrasal-verbs` + `vocab.idioms-and-figurative`,
   `vocab.semantic-precision` + `vocab.connotation`, `vocab.collocation-strength` +
   `vocab.delexical-verbs`), so reviewing «give up» also moves `vocab.idioms-and-figurative`. That is a

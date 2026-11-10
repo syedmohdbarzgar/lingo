@@ -145,8 +145,13 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (684 tests / 78 classes as of the
-miss-driven-plan pass, where the error taxonomy stopped being a report and started steering the day:
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (685 tests / 78 classes as of the
+vocabulary-node pass, where the 35 lessons that shipped words with no VOCABULARY node got one each —
+titled by their own lesson, chained onto the vocabulary node of the lesson before them in their level
+(and a level's first lesson onto the level below) — so a card from those lessons finally moves the
+node it is evidence about instead of grading into nothing, with `ContentDistributionTest` failing the
+build when a lesson ships words and no node. Before it the miss-driven-plan pass, where the error
+taxonomy stopped being a report and started steering the day:
 `GetTodayPlanUseCase` reads the mix through `GetMissProfileUseCase` and `AdaptiveLearningPlanner`
 orders the plan *within one priority* by the weakest category and names the gap on the action that
 answers it — never inventing, dropping or re-prioritising one, steering nothing when the window holds
@@ -157,7 +162,7 @@ nothing, a failed read keeps the graph's plan), with the category's Persian name
 `MissTaxonomy.labelFa` so Progress and the plan cannot call one gap two things. Before it the
 card-attribution pass, where a review card is evidence only for its lesson's node of its **own**
 knowledge type (`KnowledgeEvidence.itemsForCard`): no by-skill pass and no whole-lesson fallback,
-because the 35 lessons that ship words but no VOCABULARY node have grammar nodes that *list*
+because the 35 lessons that shipped words with no VOCABULARY node had grammar nodes that *list*
 `VOCABULARY` in `skills`, so both broader rules credited exactly the wrong nodes — reviewing «airport»
 raised `grammar.future-will` while the recalled word had no node at all. Three cases in
 `KnowledgeEngineTest` (type-only, no fallback, the by-skill node refused while the exercise rule still

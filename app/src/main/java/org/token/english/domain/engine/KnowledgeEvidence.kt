@@ -58,11 +58,14 @@ object KnowledgeEvidence {
      * that lesson's node **of the card's own type** — nothing else. Unlike
      * [itemsFor] there is no by-skill pass and no last-resort fallback:
      *
-     * - the by-skill pass is not a narrowing here. The 35 lessons that ship words but
-     *   no VOCABULARY node (a2.airport, b1.plans, b2.environment, …) have grammar
-     *   nodes that *list* VOCABULARY in `skills`, so the pass selects exactly the
+     * - the by-skill pass is not a narrowing here. 35 lessons used to ship words with
+     *   no VOCABULARY node (a2.airport, b1.plans, b2.environment, …) while their
+     *   grammar nodes *list* VOCABULARY in `skills`, so the pass selected exactly the
      *   nodes the rule is meant to exclude — reviewing «airport» raised
-     *   `grammar.future-will` while the word had no node to move at all;
+     *   `grammar.future-will` while the word had no node to move at all. v65 shipped
+     *   those nodes and `ContentDistributionTest` refuses a lesson that ships words
+     *   without one, so the rule narrows on every lesson today — and stays the rule
+     *   regardless, because one card is still one word;
      * - "every node of the lesson" is right for an exercise, because a translation
      *   really does test the lesson's grammar too, and wrong for one word.
      *

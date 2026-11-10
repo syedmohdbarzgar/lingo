@@ -89,7 +89,7 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 684 tests / 78 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 685 tests / 78 classes as of
   the miss-driven-plan pass, where the error taxonomy's report finally steers work: the new
   `MissDrivenPlanTest` carries three cases at the use-case level — a vocabulary gap reaches
   `GetTodayPlanUseCase` through `GetMissProfileUseCase` and puts the vocabulary node first with
@@ -110,7 +110,8 @@
   pixels are a device check. Before it the card-attribution pass, where a review card stopped being credited to its lesson's unrelated
   nodes: `KnowledgeEvidence.itemsForCard` is type-only — no by-skill pass, no whole-lesson fallback —
   which is what the 35 lessons shipping words without a VOCABULARY node needed, since their grammar
-  nodes list `VOCABULARY` in `skills`. Three `KnowledgeEngineTest` cases pin the rule (only same-type
+  nodes list `VOCABULARY` in `skills` — until v65 shipped those nodes, and `ContentDistributionTest`
+  now fails when a lesson ships words and no node. Three `KnowledgeEngineTest` cases pin the rule (only same-type
   nodes, never the fallback, the by-skill node refused while `itemsFor` still reaches it), one
   `EvidenceTransactionTest` case proves it on real Room (the grammar node stays unwritten while the
   card, the log and the meter still land), `LearningPathJourneyTest` asserts the recall landed on the
