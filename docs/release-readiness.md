@@ -1,0 +1,52 @@
+# Release readiness — what is proven, and what still needs a device
+
+> Companion to [`release.md`](release.md) (the ritual) and [`testing.md`](testing.md) (the inventory).
+> This file exists because the roadmap's **P2** block cannot be closed on a laptop: every item in it
+> needs hardware, an emulator boot or a CI run, and "it compiles" is not evidence. Nothing here is a
+> wish list — each row says what the check produces and where that evidence goes.
+
+## What the code already proves (no device needed)
+
+These are green as of bundle **v72** and do not need re-proving for a release unless the area changes:
+
+| Area | Check | Evidence |
+|---|---|---|
+| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 2910 exercises, 36 placement questions, 268 nodes, bundle v72 |
+| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 725 tests / 79 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
+| Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |
+| Splash hand-off contract | `SplashHandOffTest` | below API 34 the finishing splash declares it, from 34 the entered activity does — never both |
+| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v72; each packages only its own billing SDK |
+
+## What still needs a device, an emulator or CI
+
+| # | Check | Needs | Evidence to record here |
+|---|---|---|---|
+| 1 | Home first paint and bottom-bar tab switching | real device, Android Studio Profiler (CPU + jank) | frame times for a cold Home and for each of the four tabs; any frame > 16 ms named with the composable responsible |
+| 2 | Splash across Android versions | emulators at API 24, 26, 31, 34, 35 (or one device per API family) | for each API: the fade is visible, there is no white flash and no double transition; note that API 34+ is where the contract flips |
+| 3 | Three-flavor build in CI | GitHub Actions `assemble` job (runs on a tag, a schedule or a dispatch — not on every push) | the job's green run for the release tag, with all three APKs in its artifacts |
+| 4 | Vosk offline conversation | real device, airplane mode on, Vosk model present | first recognition latency, peak memory during a take, memory released after the take ends, and a full dialogue scored with no network |
+| 5 | Room 9 → 10 on a real install, then Backup/Restore | device with a v9 build installed, then the v10 build over it, then Auto Backup + restore | progress survives the upgrade, `conversation_done` is carried, the finished dialogue is still marked after a restore, and the next lesson stays open |
+| 6 | Launch smoke on Android | `scripts/verify_device.sh bazaar --require-device` (the CI `device` job) | install, airplane mode, two timed cold starts, the seed line, and the crash sweep — with `--require-device` so a dead emulator is red, not a green no-op |
+
+## Release readiness criteria (roadmap), restated as checks
+
+- **The difficulty of every level is judged against the real content.** Done in code: all six levels are
+  read item by item (`scripts/difficulty/*.json`), and `ContentDistributionTest` fails the build when a
+  level's choice items share one number again.
+- **The selector never invents weakness where there is no evidence.** Done in code:
+  `AdaptiveExerciseSelector` classifies by `isEstablished()` first, and eight cases pin the
+  weak/consolidated × easy/hard matrix.
+- **A level change is explainable from the learner's performance.** Done in code: `DifficultyAudit`
+  reads the answer log with an 8-answer / 2-day bar; it proposes and never writes.
+- **Content tests and all three flavors build.** Content tests are green; the flavors build locally
+  (row 6 above turns that into a CI fact for the release tag).
+- **Device checks are documented.** Rows 1–6 above are the list; each is only "documented" once its
+  evidence column is filled.
+
+## How to use this file
+
+Work the table top to bottom at a release point, and replace the evidence cell with what was actually
+observed (device model, API level, numbers). An empty cell is an unproven claim: it is not a bug, and
+it must not be described as verified. When an item becomes automatable (a benchmark, a CI device
+matrix), move it to the first table and delete the row — the point of this document is to get shorter.

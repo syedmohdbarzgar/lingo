@@ -18,6 +18,8 @@ The root file is deliberately short; the deep material is in `docs/`:
 - [`docs/design-direction.md`](docs/design-direction.md) — the Xiaomi-inspired design system (tokens,
   shapes, the soft shadow, the entrance motion) and the sources behind it.
 - [`docs/release.md`](docs/release.md) — release ritual and toolchain facts;
+  [`docs/release-readiness.md`](docs/release-readiness.md) — what is proven without a device and what
+  still needs one, with the evidence each check must produce;
   [`docs/testing.md`](docs/testing.md) — the test inventory; [`docs/debt.md`](docs/debt.md) — debt.
 
 ## Always / Ask first / Never
