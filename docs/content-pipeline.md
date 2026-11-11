@@ -48,7 +48,12 @@
   format band (recognition 1, guided production 2, free production 3) bounded by its lesson's level,
   by [`scripts/author_difficulty.mjs`](../scripts/author_difficulty.mjs), which now only fills a
   missing value — from v66 the number is edited by hand like any other authored judgement.
-- **CEFR bundle (contentVersion 66):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  **A level that has been read item by item keeps its judgement in
+  [`scripts/difficulty/<level>.json`](../scripts/difficulty/b1.json)** (applied after the seed, so a
+  `--force` re-seed cannot silently undo it). B1 was the first (v67) and it showed what the seed gets
+  wrong in both directions: inference items are not the easy end merely because they are multiple
+  choice, and a one-clause typed answer is not the hard end merely because it is production.
+- **CEFR bundle (contentVersion 67):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,

@@ -20,7 +20,7 @@
  * encounter. A pure level-based number was the first attempt and it was useless where it
  * mattered most: every C1/C2 item landed on 3, so the level axis could not rise anywhere.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -46,6 +46,19 @@ const BAND = {
 const lessons = JSON.parse(readFileSync(lessonsPath, 'utf8')).lessons;
 const levelByLesson = new Map(lessons.map((lesson) => [lesson.id, lesson.level]));
 
+// Hand judgement per level, applied after the seed: a level that has been read item
+// by item keeps its own file (`scripts/difficulty/<level>.json`), so the overrides are
+// reviewable data instead of edits buried in a 1.5 MB bundle.
+const judgedDir = join(dirname(fileURLToPath(import.meta.url)), 'difficulty');
+const judgements = new Map();
+for (const level of new Set(levelByLesson.values())) {
+  const file = join(judgedDir, `${level.toLowerCase()}.json`);
+  if (!existsSync(file)) continue;
+  for (const [id, value] of Object.entries(JSON.parse(readFileSync(file, 'utf8')).overrides)) {
+    judgements.set(id, value);
+  }
+}
+
 const bundle = JSON.parse(readFileSync(exercisesPath, 'utf8'));
 const missingLevels = [];
 let filled = 0;
@@ -59,6 +72,12 @@ for (const exercise of bundle.exercises) {
     continue;
   }
   const seeded = Math.min(CEILING[level], Math.max(FLOOR[level], band));
+  const override = judgements.get(exercise.id);
+  if (override !== undefined) {
+    exercise.difficulty = override;
+    filled++;
+    continue;
+  }
   if (exercise.difficulty === undefined || force) {
     exercise.difficulty = seeded;
     filled++;
