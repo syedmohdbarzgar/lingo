@@ -214,18 +214,23 @@ class ContentDistributionTest {
     }
 
     /**
-     * The authored difficulty (v66) and its first hand-judged level (v67), measured on the
-     * bundle rather than on a fixture.
+     * The authored difficulty (v66) and its hand-judged levels (v67 B1, v68 B2), measured on
+     * the bundle rather than on a fixture.
      *
      * The selector can only change the **level** of a format where a lesson's items of that
      * format disagree about how hard they are. The seed decided by format band, so inside one
      * level every multiple-choice item got the same number and no within-format level axis
-     * exists; B1's hand pass (10 of its 30 lessons) is where the axis is real. That is a fact
-     * about the content, so this case states it: when another level is judged, these numbers
-     * move and this test is what says so.
+     * exists; the hand pass is where the axis becomes real. That is a fact about the content,
+     * so this case states it: when a level is judged, these numbers move and this test says so.
+     *
+     * The two judged levels disagree in different places, which is why both are pinned:
+     * B1's axis is inside the multiple-choice drills (`b1.work.ex.02` raised to the hard end),
+     * while B2's is inside the fill-in-the-blank drills — at B2 a blank that tests a structure
+     * (passive, perfect, conditional, quantifier agreement) is the hard end and a blank that
+     * tests a word is the easy end, where the seed had called every blank easy.
      */
     @Test
-    fun `only a hand-judged level has a within-format difficulty axis, and it reorders`() {
+    fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
         val levelByLesson = JSONObject(contentFile("lessons.json").readText())
             .getJSONArray("lessons")
             .let { arr ->
@@ -249,11 +254,16 @@ class ContentDistributionTest {
         }
 
         assertEquals(
-            "B1 is the level that has been read item by item (v67): 10 of its 30 choice lessons disagree about difficulty",
+            "B1 was the first level read item by item (v67): 10 of its 30 choice lessons disagree about difficulty",
             10,
             spreadByLevel["B1"] ?: 0,
         )
-        val seeded = listOf("A1", "A2", "B2", "C1", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
+        assertEquals(
+            "B2 was read item by item in v68: 10 of its 32 choice lessons disagree about difficulty",
+            10,
+            spreadByLevel["B2"] ?: 0,
+        )
+        val seeded = listOf("A1", "A2", "C1", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
         assertTrue(
             "a seeded level cannot disagree with itself about one format's difficulty — " +
                 "if one of these was hand-judged, say so here: $seeded",
@@ -290,6 +300,34 @@ class ContentDistributionTest {
                 workChoices,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
             ).toSet(),
+        )
+
+        // B2's axis is the blank, not the multiple-choice drill: the seed gave every
+        // fill_blank in the level the same number, and the hand pass split the two that
+        // test a structure (passive + since, present perfect passive) from the one that
+        // tests a word (make a ______ about the delay).
+        val problemBlanks = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "fill_blank" && it.getString("lessonId") == "b2.problems.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "b2.problems.lesson-01") as? Exercise.FillBlank }
+            .sortedBy { it.id }
+        assertTrue("b2.problems has to ship blanks to steer", problemBlanks.size >= 3)
+
+        assertEquals(
+            "a consolidated recall meter meets the structure blank first, not the word blank",
+            "b2.problems.ex.10",
+            selector.next(
+                problemBlanks,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the word blank instead",
+            1,
+            selector.next(
+                problemBlanks,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.4f)),
+            )?.difficulty,
         )
     }
 }

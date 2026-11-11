@@ -146,8 +146,18 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
+B2-difficulty pass, where the second level was read item by item and the case that guards the axis
+now pins both judged levels: B1 and B2 are the only levels whose choice items disagree about
+difficulty — 10 of B1's 30 lessons and 10 of B2's 32 — and they disagree in different places. B1's
+axis is inside the multiple-choice drills, so on `b1.work` a consolidated recognition meter is served
+`ex.02` (reported speech plus past perfect) while a shaky one starts at the easy end; B2's is inside
+the fill-in-the-blank drills, so on `b2.problems` a consolidated recall meter is served `ex.10` (the
+passive with `since`) and a shaky one starts at the blank that tests a word — because at B2 a blank
+that tests a structure is the hard end and a blank that tests a word is the easy end, which the seed
+had called equally easy. Both reorders are permutations, and the seeded levels (A1, A2, C1, C2) still
+prove they cannot reorder a format at all. Before it the
 difficulty-in-the-bundle pass, where the authored number's effect is measured on the shipped content
-rather than on a fixture: one `ContentDistributionTest` case proves that B1 — the only level read item
+rather than on a fixture: one `ContentDistributionTest` case proves that B1 — the first level read item
 by item — is the only level whose choice items disagree about difficulty (10 of its 30 lessons), and
 that on `b1.work` a consolidated recognition meter is served its hardest choice item (`ex.02`) while a
 shaky one starts at the easy end — reordering without dropping or duplicating anything. It also

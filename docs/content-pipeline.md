@@ -52,8 +52,17 @@
   [`scripts/difficulty/<level>.json`](../scripts/difficulty/b1.json)** (applied after the seed, so a
   `--force` re-seed cannot silently undo it). B1 was the first (v67) and it showed what the seed gets
   wrong in both directions: inference items are not the easy end merely because they are multiple
-  choice, and a one-clause typed answer is not the hard end merely because it is production.
-- **CEFR bundle (contentVersion 67):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  choice, and a one-clause typed answer is not the hard end merely because it is production. B2
+  followed (v68) and found the third error: **a `fill_blank` is not the easy end merely because it is
+  recognition** — at B2 a blank that tests a structure (passive, perfect, conditional, relative,
+  reported speech, quantifier agreement) is the hard end, while a blank that tests a word is the easy
+  end, and the seed had called every blank in the level a 1. 124 of B2's 502 items were re-judged
+  (111 changed); the level moved from 502/0/0 to 139/295/68 across 1/2/3, and 10 of its 32 choice
+  lessons now disagree about difficulty — six of them inside their own multiple-choice drills
+  (`b2.technology`, `b2.environment`, `b2.interview`, `b2.media`, `b2.problems`, `b2.research`) and
+  four through the paired reading questions (`b2.leadership`, `b2.education`, `b2.debate`,
+  `b2.viewpoints`).
+- **CEFR bundle (contentVersion 68):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
