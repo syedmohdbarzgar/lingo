@@ -62,7 +62,17 @@
   (`b2.technology`, `b2.environment`, `b2.interview`, `b2.media`, `b2.problems`, `b2.research`) and
   four through the paired reading questions (`b2.leadership`, `b2.education`, `b2.debate`,
   `b2.viewpoints`).
-- **CEFR bundle (contentVersion 68):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  C1 was judged next (v69), and its floor changes the question: nothing at C1 is a first encounter,
+  so the choice is between *typical C1* and *the hard end of C1*, not between easy and hard. Three
+  groups are the hard end — the inversion and mixed-conditional structures the level is built on
+  (`Rarely has the board seen…`, `Not only does the premise fail…`, `Under no circumstances should…`,
+  `Had the sample been larger`, `If we had settled in March, we would be…now`), the reading questions
+  that ask for the author's purpose or the consequence rather than a fact in the passage, and the
+  metalanguage items that ask which named device a sentence uses — plus the speaking turns that
+  demand an inversion out loud. 63 of C1's 478 items were re-judged (59 changed) and the 22
+  one-structure sentence productions came down to 2, the rule B1's pass set. C1 moved from 452/26 to
+  437/41 across 2/3, with 9 of its 31 choice lessons disagreeing about difficulty.
+- **CEFR bundle (contentVersion 69):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,

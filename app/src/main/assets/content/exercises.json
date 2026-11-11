@@ -1,5 +1,5 @@
 {
-  "contentVersion": 68,
+  "contentVersion": 69,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -1536,7 +1536,7 @@
       "lessonId": "c1.academic.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Not until I read the appendix ___ the flaw in the argument.",
       "questionFa": "تازه وقتی پیوست را خواندم، ایراد استدلال را دیدم.",
       "options": [
@@ -1572,7 +1572,7 @@
       "lessonId": "c1.academic.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Had the sample been larger, the findings ___ more reliable.",
       "accepted": [
         "would have been",
@@ -1627,7 +1627,7 @@
       "lessonId": "c1.persuasion.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Rarely ___ such a well-organized argument.",
       "questionFa": "به ندرت چنین استدلال منظمی دیده می‌شود.",
       "options": [
@@ -1676,7 +1676,7 @@
       "lessonId": "c1.persuasion.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Little ___ that his decision would change everything.",
       "accepted": [
         "did he know",
@@ -1717,7 +1717,7 @@
       "lessonId": "c1.culture.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "If I ___ to the party last night, I would have met her.",
       "questionFa": "اگر دیشب به مهمانی رفته بودم، او را می‌دیدم.",
       "options": [
@@ -1735,7 +1735,7 @@
       "lessonId": "c1.culture.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "If only he ___ quieter during the film!",
       "questionFa": "کاش در طول فیلم آرام‌تر بود!",
       "options": [
@@ -1766,7 +1766,7 @@
       "lessonId": "c1.culture.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "She speaks as if she ___ the whole story.",
       "accepted": [
         "knew",
@@ -3876,7 +3876,7 @@
       "lessonId": "c1.register.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Turning \"decide\" into \"decision\" is an example of ______.",
       "questionFa": "تبدیل «decide» به «decision» نمونهٔ چیست؟",
       "options": [
@@ -3982,7 +3982,7 @@
       "lessonId": "c1.cohesion.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Leaving out repeated words that the reader can supply is called ______.",
       "questionFa": "حذف واژه‌های تکراری که خواننده می‌تواند خودش بیاورد، چه نام دارد؟",
       "options": [
@@ -6413,7 +6413,7 @@
       "id": "c1.persuasion.ex.09",
       "lessonId": "c1.persuasion.lesson-01",
       "order": 9,
-      "difficulty": 2,
+      "difficulty": 3,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -7397,7 +7397,7 @@
       "lessonId": "c1.academic.lesson-01",
       "type": "multiple_choice",
       "order": 12,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The first group made significantly fewer errors in the final test.",
       "question": "What does this sentence mean?",
       "questionFa": "این جمله چه معنایی دارد؟",
@@ -7834,7 +7834,7 @@
       "lessonId": "c1.academic.lesson-01",
       "type": "sentence_production",
       "order": 14,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "شواهد جدید این فرضیه را تأیید می‌کند.",
       "mustUse": [
         "evidence",
@@ -7943,7 +7943,7 @@
       "lessonId": "c1.cohesion.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "In \"Ana met Sara because she needed help\", the pronoun is a cohesion problem because ______.",
       "questionFa": "در «Ana met Sara because she needed help» ضمیر مشکل انسجامی دارد، چون ______.",
       "options": [
@@ -35314,7 +35314,7 @@
       "lessonId": "c1.executive.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ the board seen such a clear mandate.",
       "accepted": [
         "has",
@@ -35328,7 +35328,7 @@
       "lessonId": "c1.executive.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Under no circumstances ___ the message cascade without a briefing.",
       "accepted": [
         "should",
@@ -35355,7 +35355,7 @@
       "lessonId": "c1.executive.lesson-01",
       "type": "translation",
       "order": 7,
-      "difficulty": 2,
+      "difficulty": 3,
       "prompt": "بهندرت چنین پیام روشنی دیده‌ایم.",
       "accepted": [
         "rarely have we seen such a clear message",
@@ -35401,7 +35401,7 @@
       "lessonId": "c1.executive.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "جلسهٔ هفتگی کمیتهٔ اجرایی",
       "partnerFa": "مدیرعامل",
       "prompt": "بگو بهندرت چنین پیام روشنی دیده‌ایم.",
@@ -35563,7 +35563,7 @@
       "lessonId": "c1.negotiation.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If we had settled in March, we ___ be in a stronger position now.",
       "accepted": [
         "would",
@@ -35577,7 +35577,7 @@
       "lessonId": "c1.negotiation.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If they were serious, they ___ have signed the draft last week.",
       "accepted": [
         "would",
@@ -35631,7 +35631,7 @@
       "lessonId": "c1.negotiation.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو اگر در مارس توافق کرده بودیم، الان در موقعیت قوی‌تری بودیم.",
       "mustUse": [
         "if",
@@ -35650,7 +35650,7 @@
       "lessonId": "c1.negotiation.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "مذاکرهٔ قرارداد با تأمین‌کننده",
       "partnerFa": "مدیر خرید",
       "prompt": "بگو اگر در مارس توافق کرده بودیم، الان در موقعیت قوی‌تری بودیم.",
@@ -35880,7 +35880,7 @@
       "lessonId": "c1.policy.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو وزارت باید اول با اتحادیه‌ها مشورت می‌کرد.",
       "mustUse": [
         "should",
@@ -36129,7 +36129,7 @@
       "lessonId": "c1.international.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو آن‌ها باید نشانه‌های نشست را اشتباه خوانده باشند.",
       "mustUse": [
         "must",
@@ -36310,7 +36310,7 @@
       "lessonId": "c1.economy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the bank had acted sooner, inflation ___ be lower now.",
       "accepted": [
         "would",
@@ -36324,7 +36324,7 @@
       "lessonId": "c1.economy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the stimulus had come earlier, output ___ have held.",
       "accepted": [
         "might",
@@ -36378,7 +36378,7 @@
       "lessonId": "c1.economy.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو اگر بانک زودتر اقدام کرده بود، تورم الان کمتر بود.",
       "mustUse": [
         "if",
@@ -36397,7 +36397,7 @@
       "lessonId": "c1.economy.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "جلسهٔ تحلیل اقتصادی بانک مرکزی",
       "partnerFa": "اقتصاددان ارشد",
       "prompt": "بگو اگر بانک زودتر اقدام کرده بود، تورم الان کمتر بود.",
@@ -36627,7 +36627,7 @@
       "lessonId": "c1.tech-ethics.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو داده‌ها باید بعد از نود روز حذف شوند.",
       "mustUse": [
         "should",
@@ -36808,7 +36808,7 @@
       "lessonId": "c1.philosophy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Not only ___ the premise fail, but the conclusion collapses too.",
       "accepted": [
         "does",
@@ -36822,7 +36822,7 @@
       "lessonId": "c1.philosophy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ an argument survived without a counterexample.",
       "accepted": [
         "has",
@@ -36895,7 +36895,7 @@
       "lessonId": "c1.philosophy.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "سمینار فلسفه و استدلال",
       "partnerFa": "استاد منطق",
       "prompt": "بگو نه‌تنها مقدمه نادرست است، نتیجه هم فرو می‌ریزد.",
@@ -37125,7 +37125,7 @@
       "lessonId": "c1.cognitive-bias.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو پنل باید روی نخستین عددی که دید لنگر انداخته باشد.",
       "mustUse": [
         "must",
@@ -37320,7 +37320,7 @@
       "lessonId": "c1.statistics.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Neither of the samples ___ significant.",
       "accepted": [
         "was",
@@ -37374,7 +37374,7 @@
       "lessonId": "c1.statistics.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو داده‌ها نشان می‌دهند که اثر کوچک است.",
       "mustUse": [
         "data",
@@ -37623,7 +37623,7 @@
       "lessonId": "c1.media-analysis.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو گزارشی که عدد را حذف کرده بود روز دوشنبه منتشر شد.",
       "mustUse": [
         "that",
@@ -37872,7 +37872,7 @@
       "lessonId": "c1.org-change.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو کارخانه از مارس بسته شده است.",
       "mustUse": [
         "has",
@@ -38121,7 +38121,7 @@
       "lessonId": "c1.risk.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو اگر تأمین‌کننده از کار بیفتد، دو هفته از دست می‌دهیم.",
       "mustUse": [
         "if",
@@ -38370,7 +38370,7 @@
       "lessonId": "c1.research-reports.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو پیمایش در ژوئن انجام شد.",
       "mustUse": [
         "was",
@@ -38619,7 +38619,7 @@
       "lessonId": "c1.research-method.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو مطالعه باید سن را کنترل می‌کرد.",
       "mustUse": [
         "should",
@@ -38868,7 +38868,7 @@
       "lessonId": "c1.data-interpretation.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو سه‌ماههٔ دوم از اولی قوی‌تر بود.",
       "mustUse": [
         "than",
@@ -39117,7 +39117,7 @@
       "lessonId": "c1.org-culture.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو قبلاً همه در جلسه تصمیم می‌گرفتند.",
       "mustUse": [
         "used",
@@ -39367,7 +39367,7 @@
       "lessonId": "c1.research-ethics.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو داده‌ها باید پیش از تحلیل ناشناس شوند.",
       "mustUse": [
         "must",
@@ -39616,7 +39616,7 @@
       "lessonId": "c1.diversity-inclusion.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو تیمی که به همهٔ صداها گوش می‌دهد بهتر تصمیم می‌گیرد.",
       "mustUse": [
         "that",
@@ -39866,7 +39866,7 @@
       "lessonId": "c1.business-sustainability.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو اگر بسته‌بندی قابل بازیافت بود، خط تولید واجد شرایط می‌شد.",
       "mustUse": [
         "if",
@@ -40116,7 +40116,7 @@
       "lessonId": "c1.semantic-nuance.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو واژهٔ دوم از اولی ملایم‌تر است.",
       "mustUse": [
         "softer",
@@ -40297,7 +40297,7 @@
       "lessonId": "c1.argumentation.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Not only ___ the study fail to show a link, but it also misreads the data.",
       "accepted": [
         "does",
@@ -40311,7 +40311,7 @@
       "lessonId": "c1.argumentation.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ a single study enough to settle the question.",
       "accepted": [
         "is",
@@ -40385,7 +40385,7 @@
       "lessonId": "c1.argumentation.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "دفاع از مقاله در سمینار، پاسخ به داور",
       "partnerFa": "استاد داور",
       "prompt": "بگو این پژوهش نه‌تنها پیوندی نشان نمی‌دهد، بلکه داده را هم بد می‌خواند.",
@@ -40475,7 +40475,7 @@
       "lessonId": "c1.argumentation.lesson-01",
       "type": "speaking",
       "order": 15,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "دفاع از مقاله در سمینار، پاسخ به داور",
       "partnerFa": "استاد داور",
       "prompt": "بگو به‌ندرت یک پژوهش برای حل مسئله کافی است.",
@@ -40615,7 +40615,7 @@
       "lessonId": "c1.proposals.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو اگر بودجه تغییر کند، زمان‌بندی را بازنگری می‌کنیم.",
       "mustUse": [
         "if",
@@ -40796,7 +40796,7 @@
       "lessonId": "c1.stakeholders.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "The board asked when the pilot ___ start.",
       "accepted": [
         "would",
@@ -40810,7 +40810,7 @@
       "lessonId": "c1.stakeholders.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "She asked ___ the figures were final.",
       "accepted": [
         "whether",
@@ -40864,7 +40864,7 @@
       "lessonId": "c1.stakeholders.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو او پرسید که آیا ارقام نهایی هستند.",
       "mustUse": [
         "asked",
@@ -41113,7 +41113,7 @@
       "lessonId": "c1.specialist-presentations.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو نتایج را یک آزمایشگاه بیرونی تأیید کرده است.",
       "mustUse": [
         "have",
@@ -48221,7 +48221,7 @@
       "lessonId": "c1.persuasion.lesson-01",
       "type": "multiple_choice",
       "order": 18,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "A persuasive speaker rarely begins with the strongest claim. She first establishes common ground, concedes the part of the opposing case that is true, and only then introduces her evidence. The concession costs little and buys the audience's attention for what follows.",
       "question": "When does she introduce her evidence?",
       "questionFa": "شواهدش را کِی ارائه می‌کند؟",
@@ -48259,7 +48259,7 @@
       "lessonId": "c1.policy.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The proposal would cap short-term rentals at ninety nights a year. Supporters argue that it returns housing to long-term residents; opponents warn that it will reduce tourism revenue and is difficult to enforce. The committee has asked for a costed impact assessment before the second reading.",
       "question": "What has the committee requested?",
       "questionFa": "کمیته چه چیزی خواسته است؟",
@@ -48297,7 +48297,7 @@
       "lessonId": "c1.statistics.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "A survey of 400 readers found that 70% preferred the new layout. The sample was drawn from people who had already subscribed to the magazine, so the result describes subscribers, not readers in general. Reporting it as 'most readers' overstates what the data can support.",
       "question": "Which wording would be accurate?",
       "questionFa": "کدام بیان دقیق است؟",
@@ -48335,7 +48335,7 @@
       "lessonId": "c1.org-culture.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "When a company rewards only individual output, employees stop helping each other. The behaviour is rational: helping costs time and earns no credit. Managers who want collaboration must therefore measure it, for example by asking teams what they learned from a colleague.",
       "question": "How can managers measure collaboration?",
       "questionFa": "مدیران همکاری را چگونه می‌سنجند؟",
@@ -48373,7 +48373,7 @@
       "lessonId": "c1.specialist-presentations.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "Specialists lose audiences for two reasons: they define terms the audience already knows, and they skip the step that links method to conclusion. A single slide that states the question, the method and the finding prevents both. Detail belongs in an appendix, not in the opening.",
       "question": "Where does detail belong?",
       "questionFa": "جزئیات کجا باید باشد؟",

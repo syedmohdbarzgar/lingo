@@ -214,8 +214,8 @@ class ContentDistributionTest {
     }
 
     /**
-     * The authored difficulty (v66) and its hand-judged levels (v67 B1, v68 B2), measured on
-     * the bundle rather than on a fixture.
+     * The authored difficulty (v66) and its hand-judged levels (v67 B1, v68 B2, v69 C1),
+     * measured on the bundle rather than on a fixture.
      *
      * The selector can only change the **level** of a format where a lesson's items of that
      * format disagree about how hard they are. The seed decided by format band, so inside one
@@ -223,11 +223,13 @@ class ContentDistributionTest {
      * exists; the hand pass is where the axis becomes real. That is a fact about the content,
      * so this case states it: when a level is judged, these numbers move and this test says so.
      *
-     * The two judged levels disagree in different places, which is why both are pinned:
+     * The judged levels disagree in different places, which is why each is pinned:
      * B1's axis is inside the multiple-choice drills (`b1.work.ex.02` raised to the hard end),
-     * while B2's is inside the fill-in-the-blank drills — at B2 a blank that tests a structure
+     * B2's is inside the fill-in-the-blank drills — at B2 a blank that tests a structure
      * (passive, perfect, conditional, quantifier agreement) is the hard end and a blank that
-     * tests a word is the easy end, where the seed had called every blank easy.
+     * tests a word is the easy end, where the seed had called every blank easy — and at C1,
+     * whose floor is 2, the hard end is the inversion and mixed-conditional structure the level
+     * is built on, so `c1.statistics` separates the agreement trap from the plain one.
      */
     @Test
     fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
@@ -263,7 +265,12 @@ class ContentDistributionTest {
             10,
             spreadByLevel["B2"] ?: 0,
         )
-        val seeded = listOf("A1", "A2", "C1", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
+        assertEquals(
+            "C1 was read item by item in v69: 9 of its 31 choice lessons disagree about difficulty",
+            9,
+            spreadByLevel["C1"] ?: 0,
+        )
+        val seeded = listOf("A1", "A2", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
         assertTrue(
             "a seeded level cannot disagree with itself about one format's difficulty — " +
                 "if one of these was hand-judged, say so here: $seeded",
@@ -328,6 +335,36 @@ class ContentDistributionTest {
                 problemBlanks,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.4f)),
             )?.difficulty,
+        )
+
+        // C1's floor is 2, so its axis is not easy against hard but typical against the hard
+        // end of the level: `Neither of the samples was significant` is the agreement trap the
+        // level is about, while `The data show that the effect is small` is the plain plural.
+        val statisticBlanks = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "fill_blank" && it.getString("lessonId") == "c1.statistics.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "c1.statistics.lesson-01") as? Exercise.FillBlank }
+            .sortedBy { it.id }
+        assertEquals(
+            "c1.statistics ships the two agreement blanks this axis needs",
+            listOf("c1.statistics.ex.04", "c1.statistics.ex.05"),
+            statisticBlanks.map { it.id },
+        )
+        assertEquals(
+            "a consolidated recall meter meets the agreement trap",
+            "c1.statistics.ex.05",
+            selector.next(
+                statisticBlanks,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the plain plural",
+            "c1.statistics.ex.04",
+            selector.next(
+                statisticBlanks,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.4f)),
+            )?.id,
         )
     }
 }

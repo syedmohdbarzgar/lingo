@@ -146,15 +146,24 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
-B2-difficulty pass, where the second level was read item by item and the case that guards the axis
-now pins both judged levels: B1 and B2 are the only levels whose choice items disagree about
-difficulty — 10 of B1's 30 lessons and 10 of B2's 32 — and they disagree in different places. B1's
-axis is inside the multiple-choice drills, so on `b1.work` a consolidated recognition meter is served
+C1-difficulty pass, where the third level was read item by item and the case that guards the axis
+now pins all three: B1, B2 and C1 are the levels whose choice items disagree about difficulty —
+10 of B1's 30 lessons, 10 of B2's 32 and 9 of C1's 31 — and each disagrees in a different place,
+which is what makes them three facts rather than one repeated. C1's floor is 2, so its axis is
+*typical C1 against the hard end of C1*: the inversion and mixed-conditional structures the level is
+built on (in a choice, a blank, a translation or out loud), the reading questions that ask for the
+author's purpose or the consequence instead of a fact, and the metalanguage items that name a
+device. On `c1.statistics` a consolidated recall meter is served `Neither of the samples was
+significant` — the agreement trap — while a shaky one starts at `The data show that the effect is
+small`; the 22 one-structure sentence productions dropped to 2, the rule B1's pass set. Before it
+the B2-difficulty pass, where the second level was read item by item and B1 and B2 turned out to
+disagree in different places. B1's axis is inside the multiple-choice drills, so on `b1.work` a
+consolidated recognition meter is served
 `ex.02` (reported speech plus past perfect) while a shaky one starts at the easy end; B2's is inside
 the fill-in-the-blank drills, so on `b2.problems` a consolidated recall meter is served `ex.10` (the
 passive with `since`) and a shaky one starts at the blank that tests a word — because at B2 a blank
 that tests a structure is the hard end and a blank that tests a word is the easy end, which the seed
-had called equally easy. Both reorders are permutations, and the seeded levels (A1, A2, C1, C2) still
+had called equally easy. All three reorders are permutations, and the seeded levels (A1, A2, C2) still
 prove they cannot reorder a format at all. Before it the
 difficulty-in-the-bundle pass, where the authored number's effect is measured on the shipped content
 rather than on a fixture: one `ContentDistributionTest` case proves that B1 — the first level read item
