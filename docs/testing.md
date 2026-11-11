@@ -89,8 +89,16 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 701 tests / 78 classes as of
-  the shared-steering pass, where the "which gap is mine" rule left the two comparators that had
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 702 tests / 78 classes as of
+  the difficulty-in-the-bundle pass, where the authored difficulty is checked against the real content
+  instead of a fixture. One `ContentDistributionTest` case measures the within-format axis and names
+  where it exists: B1, the only level read item by item, is the only level whose multiple-choice items
+  disagree about difficulty (10 of its 30 lessons); the seeded levels give every choice item of a level
+  one number, so they cannot reorder that format at all — judging another level moves these counts and
+  the case is what says so. The same case then proves the consequence on `b1.work`: a consolidated
+  recognition meter is served its hardest choice item (`ex.02`, reported speech plus past perfect), a
+  shaky one starts at the easy end, and the reorder is still a permutation. Before it the
+  shared-steering pass, where the "which gap is mine" rule left the two comparators that had
   grown their own copy and became `MissTaxonomy.weakestCategory` / `rank` / `gapSuffix` — called by
   both the planner and the review screen's due list. One case pins that a clean window steers nothing
   (five right answers are not a weakness), and one `ReviewViewModelTest` case closes the tab's half of

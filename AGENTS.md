@@ -145,7 +145,14 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (701 tests / 78 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
+difficulty-in-the-bundle pass, where the authored number's effect is measured on the shipped content
+rather than on a fixture: one `ContentDistributionTest` case proves that B1 — the only level read item
+by item — is the only level whose choice items disagree about difficulty (10 of its 30 lessons), and
+that on `b1.work` a consolidated recognition meter is served its hardest choice item (`ex.02`) while a
+shaky one starts at the easy end — reordering without dropping or duplicating anything. It also
+states where the axis does not exist yet: the seeded levels give every choice item of a level the same
+number, so a hand-judged level moves those counts and must update the case. Before it the
 shared-steering pass, where the rule that turns the miss mix into an ordering key moved out of the
 two comparators that had each grown their own copy: `MissTaxonomy.weakestCategory` / `rank` /
 `gapSuffix` is now what both the planner and the review screen's due list call, so one weakness

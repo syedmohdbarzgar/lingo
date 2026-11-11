@@ -5,7 +5,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.data.content.ContentParser
+import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.MasteryDimension
+import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.shuffledForDisplay
 import java.io.File
 
@@ -207,6 +210,86 @@ class ContentDistributionTest {
         assertTrue(
             "reviewed blank(s) now accept multiple answers — drop them from the allowlist: $stale",
             stale.isEmpty(),
+        )
+    }
+
+    /**
+     * The authored difficulty (v66) and its first hand-judged level (v67), measured on the
+     * bundle rather than on a fixture.
+     *
+     * The selector can only change the **level** of a format where a lesson's items of that
+     * format disagree about how hard they are. The seed decided by format band, so inside one
+     * level every multiple-choice item got the same number and no within-format level axis
+     * exists; B1's hand pass (10 of its 30 lessons) is where the axis is real. That is a fact
+     * about the content, so this case states it: when another level is judged, these numbers
+     * move and this test is what says so.
+     */
+    @Test
+    fun `only a hand-judged level has a within-format difficulty axis, and it reorders`() {
+        val levelByLesson = JSONObject(contentFile("lessons.json").readText())
+            .getJSONArray("lessons")
+            .let { arr ->
+                (0 until arr.length()).associate {
+                    val lesson = arr.getJSONObject(it)
+                    lesson.getString("id") to lesson.getString("level")
+                }
+            }
+        val exercises = JSONObject(contentFile("exercises.json").readText()).getJSONArray("exercises")
+        val spreadByLevel = mutableMapOf<String, Int>()
+        val mcByLesson = mutableMapOf<String, MutableSet<Int>>()
+        for (i in 0 until exercises.length()) {
+            val exercise = exercises.getJSONObject(i)
+            if (exercise.optString("type") != "multiple_choice") continue
+            mcByLesson.getOrPut(exercise.getString("lessonId")) { mutableSetOf() }
+                .add(exercise.getInt("difficulty"))
+        }
+        mcByLesson.forEach { (lessonId, difficulties) ->
+            val level = levelByLesson[lessonId] ?: return@forEach
+            if (difficulties.size > 1) spreadByLevel[level] = (spreadByLevel[level] ?: 0) + 1
+        }
+
+        assertEquals(
+            "B1 is the level that has been read item by item (v67): 10 of its 30 choice lessons disagree about difficulty",
+            10,
+            spreadByLevel["B1"] ?: 0,
+        )
+        val seeded = listOf("A1", "A2", "B2", "C1", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
+        assertTrue(
+            "a seeded level cannot disagree with itself about one format's difficulty — " +
+                "if one of these was hand-judged, say so here: $seeded",
+            seeded.isEmpty(),
+        )
+
+        // And the axis is not decoration: on real content the level decides who is served first.
+        val workChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "b1.work.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "b1.work.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+
+        val selector = AdaptiveExerciseSelector()
+        val consolidated = selector.next(
+            workChoices,
+            MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+        )
+        val shaky = selector.next(
+            workChoices,
+            MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+        )
+
+        assertEquals(
+            "b1.work.ex.02 (reported speech + past perfect) is the lesson's hardest choice item",
+            "b1.work.ex.02",
+            consolidated?.id,
+        )
+        assertEquals("a shaky meter starts at the easy end instead", 1, shaky?.difficulty)
+        assertEquals(
+            "reordering never drops or duplicates an item",
+            workChoices.toSet(),
+            selector.order(
+                workChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            ).toSet(),
         )
     }
 }
