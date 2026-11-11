@@ -48,7 +48,7 @@ class ContentValidationTest {
             """
             {"contentVersion": 1, "lessons": [
               {"id": "l1", "level": "A1", "title": "T", "titleFa": "ت", "topic": "greetings",
-               "order": 1, "estimatedMinutes": 5}
+               "order": 1, "difficulty": 2, "estimatedMinutes": 5}
             ]}
             """.trimIndent(),
         )
@@ -67,22 +67,22 @@ class ContentValidationTest {
         dir.resolve("exercises.json").writeText(
             """
             {"contentVersion": 1, "exercises": [
-              {"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 1,
+              {"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 1, "difficulty": 2,
                "question": "Which one?", "options": ["a", "b", "c", "d"], "correctIndex": 0,
                "explanationFa": "توضیح"},
-              {"id": "l1.dlg.01", "lessonId": "l1", "type": "speaking", "order": 2,
+              {"id": "l1.dlg.01", "lessonId": "l1", "type": "speaking", "order": 2, "difficulty": 2,
                "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
                "question": "How are you?", "questionFa": "حالت چطور است؟",
                "accepted": ["I'm fine, thank you."], "skill": "SPEAKING", "explanationFa": "توضیح"},
-              {"id": "l1.dlg.02", "lessonId": "l1", "type": "speaking", "order": 3,
+              {"id": "l1.dlg.02", "lessonId": "l1", "type": "speaking", "order": 3, "difficulty": 2,
                "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
                "question": "Where are you from?", "questionFa": "اهل کجایی؟",
                "accepted": ["I'm from Tehran."], "skill": "SPEAKING", "explanationFa": "توضیح"},
-              {"id": "l1.dlg.03", "lessonId": "l1", "type": "speaking", "order": 4,
+              {"id": "l1.dlg.03", "lessonId": "l1", "type": "speaking", "order": 4, "difficulty": 2,
                "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
                "question": "Do you study here?", "questionFa": "اینجا درس می‌خوانی؟",
                "accepted": ["Yes, I do."], "skill": "SPEAKING", "explanationFa": "توضیح"},
-              {"id": "l1.dlg.04", "lessonId": "l1", "type": "speaking", "order": 5,
+              {"id": "l1.dlg.04", "lessonId": "l1", "type": "speaking", "order": 5, "difficulty": 2,
                "sceneFa": "کلاس", "partnerFa": "معلم", "prompt": "جواب بده",
                "question": "See you tomorrow?", "questionFa": "فردا می‌بینمت؟",
                "accepted": ["See you tomorrow."], "skill": "SPEAKING", "explanationFa": "توضیح"}
@@ -196,12 +196,73 @@ class ContentValidationTest {
         dir.resolve("exercises.json").writeText(
             """
             {"contentVersion": 1, "exercises": [
-              {"id": "l1.ex.01", "lessonId": "l1", "type": "fill_blank", "order": 1,
+              {"id": "l1.ex.01", "lessonId": "l1", "type": "fill_blank", "order": 1, "difficulty": 2,
                "sentence": "I ___ a student.", "accepted": ["am"], "explanationFa": "توضیح"}
             ]}
             """.trimIndent(),
         )
         assertFails(dir, "fill_blank must declare skill")
+    }
+
+    @Test
+    fun `an exercise without an authored difficulty fails`() {
+        // The selector raises or lowers the level with this number; a missing value would
+        // silently fall back to the middle, which is adaptation nobody authored.
+        val dir = writeValidBundle()
+        dir.resolve("exercises.json").writeText(
+            """
+            {"contentVersion": 1, "exercises": [
+              {"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 1,
+               "question": "Which one?", "options": ["a", "b", "c", "d"], "correctIndex": 0,
+               "explanationFa": "توضیح"}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "difficulty is required")
+    }
+
+    @Test
+    fun `a difficulty outside the authored scale fails`() {
+        val dir = writeValidBundle()
+        dir.resolve("exercises.json").writeText(
+            """
+            {"contentVersion": 1, "exercises": [
+              {"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 1, "difficulty": 4,
+               "question": "Which one?", "options": ["a", "b", "c", "d"], "correctIndex": 0,
+               "explanationFa": "توضیح"}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "outside 1..3")
+    }
+
+    @Test
+    fun `every bundled exercise carries a difficulty its own level allows`() {
+        // The scale is relative to the lesson's level, so a level bounds it: A1/A2 has
+        // no hard item, C1/C2 has no first encounter. Checked on the shipped bundle, not
+        // on the seed — a hand edit is exactly what this rule must catch.
+        val dir = contentDir()
+        val lessonsJson = org.json.JSONObject(dir.resolve("lessons.json").readText()).getJSONArray("lessons")
+        val levelByLesson = (0 until lessonsJson.length()).associate {
+            val lesson = lessonsJson.getJSONObject(it)
+            lesson.getString("id") to lesson.getString("level")
+        }
+        val exercises = org.json.JSONObject(dir.resolve("exercises.json").readText()).getJSONArray("exercises")
+        val wrong = mutableListOf<String>()
+        for (i in 0 until exercises.length()) {
+            val exercise = exercises.getJSONObject(i)
+            val level = levelByLesson[exercise.getString("lessonId")] ?: continue
+            val floor = if (level == "C1" || level == "C2") 2 else 1
+            val ceiling = if (level == "A1" || level == "A2") 2 else 3
+            val difficulty = exercise.optInt("difficulty", 0)
+            if (difficulty !in floor..ceiling) {
+                wrong += "${exercise.getString("id")}: $level → $difficulty"
+            }
+        }
+        assertTrue(
+            "difficulty must sit inside its own level's band (A1/A2 ≤ 2, C1/C2 ≥ 2): ${wrong.take(10)}",
+            wrong.isEmpty(),
+        )
     }
 
     @Test
@@ -240,9 +301,9 @@ class ContentValidationTest {
             """
             {"contentVersion": 1, "lessons": [
               {"id": "l1", "level": "A1", "title": "T", "titleFa": "ت", "topic": "greetings",
-               "order": 1, "estimatedMinutes": 5},
+               "order": 1, "difficulty": 2, "estimatedMinutes": 5},
               {"id": "l2", "level": "A1", "title": "T2", "titleFa": "ت۲", "topic": "numbers",
-               "order": 2, "estimatedMinutes": 5}
+               "order": 2, "difficulty": 2, "estimatedMinutes": 5}
             ]}
             """.trimIndent(),
         )
@@ -272,7 +333,7 @@ class ContentValidationTest {
         val dir = writeValidBundle()
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "sentence_production", "order": 6, "prompt": "این جمله را بنویس.", "mustUse": ["evidence"], "minWords": 6, "accepted": ["the evidence holds"], "skill": "WRITING", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "sentence_production", "order": 6, "difficulty": 2, "prompt": "این جمله را بنویس.", "mustUse": ["evidence"], "minWords": 6, "accepted": ["the evidence holds"], "skill": "WRITING", "explanationFa": "توضیح"}""",
         )
         assertFails(dir, "under minWords 6")
     }
@@ -282,7 +343,7 @@ class ContentValidationTest {
         val dir = writeValidBundle()
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "text": "Close the door.", "accepted": ["shut the door"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "difficulty": 2, "text": "Close the door.", "accepted": ["shut the door"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
         )
         assertFails(dir, "no accepted answer matches the spoken text")
     }
@@ -294,7 +355,7 @@ class ContentValidationTest {
         // sentence, not its punctuation.
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "text": "The alphabet has twenty-six letters.", "accepted": ["the alphabet has twenty six letters"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "listening", "order": 6, "difficulty": 2, "text": "The alphabet has twenty-six letters.", "accepted": ["the alphabet has twenty six letters"], "skill": "LISTENING", "explanationFa": "توضیح"}""",
         )
         val report = ContentValidator.validate(dir)
         assertTrue(
@@ -308,7 +369,7 @@ class ContentValidationTest {
         val dir = writeValidBundle()
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "question": "Which word is right?", "options": ["right", "left", "up", "down"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "difficulty": 2, "question": "Which word is right?", "options": ["right", "left", "up", "down"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
         )
         assertFails(dir, "question already contains the correct option")
     }
@@ -318,8 +379,8 @@ class ContentValidationTest {
         val dir = writeValidBundle()
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "word_recall", "order": 6, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
-                """{"id": "l1.ex.02", "lessonId": "l1", "type": "word_recall", "order": 7, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "word_recall", "order": 6, "difficulty": 2, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
+                """{"id": "l1.ex.02", "lessonId": "l1", "type": "word_recall", "order": 7, "difficulty": 2, "prompt": "سرفه", "accepted": ["cough"], "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
         )
         assertFails(dir, "the same recall question is asked twice")
     }
@@ -379,8 +440,8 @@ class ContentValidationTest {
         val dir = writeValidBundle()
         replaceFirstExercise(
             dir,
-            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
-                """{"id": "l1.ex.02", "lessonId": "l1", "type": "multiple_choice", "order": 7, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
+            """{"id": "l1.ex.01", "lessonId": "l1", "type": "multiple_choice", "order": 6, "difficulty": 2, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"},""" +
+                """{"id": "l1.ex.02", "lessonId": "l1", "type": "multiple_choice", "order": 7, "difficulty": 2, "question": "Where is the cat?", "options": ["on the mat", "in the box", "under the bed", "by the door"], "correctIndex": 0, "skill": "VOCABULARY", "explanationFa": "توضیح"}""",
         )
         assertFails(dir, "the same item is shipped 2 times")
     }

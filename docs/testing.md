@@ -89,8 +89,15 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 693 tests / 78 classes as of
-  the miss-driven drill pass, where that steering reached the review screen's due list: four
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 699 tests / 78 classes as of
+  the authored-difficulty pass, where the bundle gained what selection was missing — every exercise
+  carries a `difficulty` 1..3, relative to its own lesson's level (A1/A2 ≤ 2, C1/C2 ≥ 2). Three
+  `AdaptiveExerciseSelectorTest` cases pin the behaviour: a shaky dimension is served from its easy
+  end, a consolidated one from its hard end, and a learner with no evidence keeps the authored order
+  whatever the numbers say ("no evidence" is not "weak"). Two `ContentValidationTest` fixtures pin
+  the gate — a missing value and one outside 1..3 — and a third case reads the shipped bundle and
+  refuses any item whose difficulty its own level forbids. Before it the miss-driven drill pass,
+  where that steering reached the review screen's due list: four
   `FocusPlanTest` cases — equally overdue nodes reorder toward the weakest category, the gap is named
   on exactly one row, a node owed longer still comes first, and a profile read that throws leaves the
   plain overdue list standing (no row invented, none dropped). Before it the miss-driven-plan pass,

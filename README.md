@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-693 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
+699 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -530,8 +530,10 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   and Progress shows the pooled mix and the category carrying the most misses. **The mix now steers**
   both places that decide what to do next: the day's plan orders within one priority by the weakest
   category and names the gap, and the review screen's due list breaks ties the same way (equally
-  overdue nodes, weakest first). What it still cannot do is change *difficulty* — an exercise carries
-  no authored level, so "harder" would be a guess dressed as adaptation
+  overdue nodes, weakest first). Difficulty is now authored too (v66): every exercise carries a
+  `difficulty` (1–3, relative to its own lesson’s level) and the selector uses it to come down to the
+  easy end while a dimension is shaky and up to the hard end once it is consolidated. What the plan
+  still cannot do is pick a harder **lesson** — a lesson carries no difficulty of its own
   ([`docs/debt.md`](docs/debt.md)).
 - A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
   its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.

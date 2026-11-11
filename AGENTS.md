@@ -145,9 +145,15 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (693 tests / 78 classes as of the
-miss-driven drill pass, where the review screen's due list got the same steering the day's plan
-already had: among nodes owed since the same midnight — equally urgent, so equally eligible — the one
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (699 tests / 78 classes as of the
+authored-difficulty pass, where the bundle gained the one axis the selector was missing: every
+exercise carries a `difficulty` (1..3, **relative to its own lesson's level**), so
+`AdaptiveExerciseSelector` can raise or lower the level — the easy end while a dimension is shaky,
+the hard end once it is consolidated, and the authored order when there is no evidence at all. Three
+cases in `AdaptiveExerciseSelectorTest` pin the two ends and the no-evidence pass-through, two
+`ContentValidationTest` fixtures the missing and out-of-range values, and one case checks all 2,888
+shipped items against their own level's band. Before it the miss-driven drill pass, where the review
+screen's due list got the same steering the day's plan already had: among nodes owed since the same midnight — equally urgent, so equally eligible — the one
 training the learner's weakest category leads, and one row says why (`… · ضعف اخیر: واژگان`). It never
 changes urgency (a node owed longer still comes first: an overdue interval is what retention pays for,
 a miss count is one window of evidence), invents nothing and drops nothing. Four cases in

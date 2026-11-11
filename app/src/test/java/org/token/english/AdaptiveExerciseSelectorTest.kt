@@ -115,4 +115,39 @@ class AdaptiveExerciseSelectorTest {
         assertEquals(null, selector.next(emptyList(), MasteryProfile()))
         assertTrue(selector.order(emptyList(), MasteryProfile()).isEmpty())
     }
+
+    // ---- authored difficulty sets the level (content v66) ----
+
+    private fun mc(id: String, difficulty: Int) = mc(id).copy(difficulty = difficulty)
+
+    @Test
+    fun `a shaky dimension is served from its easy end`() {
+        // Three recognition items in the authored order hard → easy, and a weak
+        // recognition meter: the level has to come down, not just the format change.
+        val exercises = listOf(mc("hard", 3), mc("middle", 2), mc("easy", 1))
+        val ordered = selector.order(exercises, profile(MasteryDimension.RECOGNITION to 0.4f))
+
+        assertEquals(listOf("easy", "middle", "hard"), ordered.map { it.id })
+        assertEquals("easy", selector.next(exercises, profile(MasteryDimension.RECOGNITION to 0.4f))?.id)
+    }
+
+    @Test
+    fun `a consolidated dimension is served from its hard end`() {
+        // The mirror rule: the same items, a meter above the strong bar, so the level
+        // rises instead of the learner re-tapping what they already know.
+        val exercises = listOf(mc("easy", 1), mc("hard", 3), mc("middle", 2))
+        val ordered = selector.order(exercises, profile(MasteryDimension.RECOGNITION to 0.95f))
+
+        assertEquals(listOf("hard", "middle", "easy"), ordered.map { it.id })
+    }
+
+    @Test
+    fun `no evidence keeps the authored order whatever the difficulty says`() {
+        // "No evidence" is not "weak": a fresh install must see the lesson as written,
+        // or the first screen of every lesson would be decided by a number nobody
+        // earned. The three items differ in difficulty on purpose.
+        val exercises = listOf(mc("hard", 3), mc("easy", 1), mc("middle", 2))
+
+        assertEquals(exercises, selector.order(exercises, MasteryProfile()))
+    }
 }

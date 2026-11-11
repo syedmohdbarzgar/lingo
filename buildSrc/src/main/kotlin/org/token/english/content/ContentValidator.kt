@@ -394,6 +394,15 @@ object ContentValidator {
             val order = number(exercise, "order") ?: 0
             if (order <= 0) report(id, "order must be a positive integer")
             else ordersPerLesson.getOrPut(lessonId) { mutableListOf() } += order
+            // Authored difficulty (content v66): the selector raises or lowers the level
+            // with it, so a missing value would silently fall back to the middle and the
+            // adaptation would be a guess dressed as a decision.
+            val difficulty = number(exercise, "difficulty")
+            if (difficulty == null) {
+                report(id, "difficulty is required (1 = first encounter, 3 = hardest in its lesson)")
+            } else if (difficulty !in 1..3) {
+                report(id, "difficulty $difficulty is outside 1..3")
+            }
             checkExercise(id, type, exercise)
         }
         ordersPerLesson.forEach { (lessonId, orders) ->

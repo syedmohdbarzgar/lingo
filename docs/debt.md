@@ -313,12 +313,13 @@
   action that answers it, and the review screen's due list breaks its ties the same way
   (miss-driven drill pass) — so the same mix reaches both places that decide what to do next, and
   neither is allowed to reorder across an urgency (see [`learner-model.md`](learner-model.md)).
-  What it still cannot do is
-  change *difficulty*, which is what the roadmap item literally asked for: an exercise carries no
-  authored difficulty, so "harder vocabulary" has nothing to sort by, and the honest substitute is
-  urgency (which node, in which order) rather than level. That is why the steering stays inside the
-  plan and never touches exercise selection — until the bundle carries a difficulty, a "harder" item
-  would be a guess dressed as adaptation. Two smaller limits are accepted with it: the ordering only
+  **Level now exists inside a session, not in the plan (v66).** Every
+  exercise carries an authored `difficulty` (1..3, relative to its own lesson's level), and
+  `AdaptiveExerciseSelector` uses it to come down to the easy end while a dimension is shaky and go up
+  to the hard end once it is consolidated. What the *plan* still cannot do is choose a harder **lesson**:
+  a plan action is a lesson, a lesson carries no difficulty of its own, and deriving one from its
+  items would be a guess dressed as adaptation — so the plan keeps steering by urgency (which node,
+  in which order) and the level changes only where the learner is actually answering. Two smaller limits are accepted with it: the ordering only
   bites where two actions share a priority (a broken prerequisite still wins, by design), and the
   profile read on Home's plan path is best-effort — a failure logs nothing and steers nothing.
 - **The lint budget is a decision list, not a clean zero (P2 triage, Nov 2026).** Seven warnings are

@@ -108,6 +108,26 @@ sealed interface Exercise {
     /** Optional short explanation shown after a wrong answer (content JSON). */
     val explanation: String?
 
+    /**
+     * How hard the item is, authored in the bundle: 1 = first encounter, 3 = the
+     * hardest thing its lesson asks. The scale is **relative to the lesson's own
+     * level**, never across levels — a C2 item at 1 is still C2 content, and an A1
+     * item at 3 would contradict the lesson it sits in (the validator refuses that).
+     *
+     * It exists so selection can change *level* and not only *order*: the adaptive
+     * selector serves the easy end while a dimension is still shaky and the hard end
+     * once it is consolidated (see `AdaptiveExerciseSelector`).
+     */
+    val difficulty: Int
+
+    companion object {
+        /** Neither authored nor unavoidable: what an item is when nobody said. */
+        const val DEFAULT_DIFFICULTY = 2
+
+        /** The authored scale: 1 = first encounter … 3 = hardest in its lesson. */
+        val DIFFICULTY_RANGE = 1..3
+    }
+
     data class MultipleChoice(
         override val id: String,
         override val lessonId: String,
@@ -124,6 +144,7 @@ sealed interface Exercise {
         val correctIndex: Int,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     data class FillBlank(
@@ -133,6 +154,7 @@ sealed interface Exercise {
         val accepted: List<String>,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     /**
@@ -151,6 +173,7 @@ sealed interface Exercise {
         val accepted: List<String>,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     data class Translation(
@@ -162,6 +185,7 @@ sealed interface Exercise {
         val bank: List<String> = emptyList(),
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     /**
@@ -194,6 +218,7 @@ sealed interface Exercise {
         val hintFa: String? = null,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     data class Listening(
@@ -203,6 +228,7 @@ sealed interface Exercise {
         val accepted: List<String>,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
     /** Speaking practice, graded on-device by `ConversationScorer` (Vosk + the
@@ -240,6 +266,7 @@ sealed interface Exercise {
         val partnerFa: String? = null,
         override val skill: Skill? = null,
         override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 }
 

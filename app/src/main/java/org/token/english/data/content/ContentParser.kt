@@ -177,6 +177,11 @@ object ContentParser {
         val type = o.getString("type")
         val skill = o.skillOrNull()
         val explanation = o.optString("explanationFa").ifBlank { null }
+        // Authored 1..3 (relative to the lesson's own level). A missing or nonsensical
+        // value falls back to the neutral middle rather than crashing a lesson: the
+        // validator is what refuses a bundle that omits it.
+        val difficulty = o.optInt("difficulty", Exercise.DEFAULT_DIFFICULTY)
+            .coerceIn(Exercise.DIFFICULTY_RANGE)
         return when (type) {
             "multiple_choice" -> Exercise.MultipleChoice(
                 id = id,
@@ -191,6 +196,7 @@ object ContentParser {
                 correctIndex = o.getInt("correctIndex"),
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "fill_blank" -> Exercise.FillBlank(
@@ -200,6 +206,7 @@ object ContentParser {
                 accepted = o.acceptedList(),
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "word_recall" -> Exercise.WordRecall(
@@ -209,6 +216,7 @@ object ContentParser {
                 accepted = o.acceptedList(),
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "translation" -> Exercise.Translation(
@@ -219,6 +227,7 @@ object ContentParser {
                 bank = o.optJSONArraytoString("bank"),
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "sentence_production" -> Exercise.SentenceProduction(
@@ -234,6 +243,7 @@ object ContentParser {
                 hintFa = o.optString("hintFa").ifBlank { null },
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "listening" -> Exercise.Listening(
@@ -243,6 +253,7 @@ object ContentParser {
                 accepted = o.acceptedList(),
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             "speaking" -> Exercise.Speaking(
@@ -262,6 +273,7 @@ object ContentParser {
                 partnerFa = o.optString("partnerFa").trim().ifBlank { null },
                 skill = skill,
                 explanation = explanation,
+                difficulty = difficulty,
             )
 
             else -> null // unknown / future types never break lesson loading

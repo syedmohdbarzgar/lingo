@@ -84,7 +84,7 @@ assertion of intent:
 | Gate | Command | Result |
 | --- | --- | --- |
 | Content | `./gradlew validateContent --rerun` | pass |
-| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **693 tests / 78 classes, 0 failures** |
+| Unit + typecheck | `./gradlew :app:testBazaarDebugUnitTest` | **699 tests / 78 classes, 0 failures** |
 | Lint | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | **0 errors**, 7 warnings, all accepted by the budget (6 version nags + 1 `CustomSplashScreen`, one of them a documented false positive); `UnusedResources`, `ObsoleteSdkInt`, `UseKtx` and `EmptySuperCall` are all zero |
 | Flavors | `assembleBazaarDebug`, `assembleMyketDebug`, `assembleGooglePlayDebug` | 3/3 build; the only permission difference is the marketplace billing one |
 | DB upgrade | `DatabaseUpgradeTest`, `RoomMigrationTest` (in the unit suite) | v1→v10 chain executed on real SQLite with learner rows; every value survives, the tables each step introduces arrive empty |

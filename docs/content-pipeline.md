@@ -38,7 +38,17 @@
   one knowledge item). For the graph it also checks that prerequisite ids resolve and that **no
   cycle** exists. It reports **all** problems at once, not just the first. Run it after every
   content edit.
-- **CEFR bundle (contentVersion 65):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **Every exercise carries an authored `difficulty` (v66).** 1..3, **relative to its own
+  lesson's level**, never a ranking across levels: A1/A2 tops out at 2 (nothing there is hard *for
+  A1*), C1/C2 starts at 2 (nothing at C level is a first encounter), and B1/B2 uses the full scale.
+  The adaptive selector reads it to raise or lower the level inside a dimension — easy end while the
+  meter is shaky, hard end once it is consolidated, authored order when there is no evidence.
+  `validateContent` refuses a missing value or one outside 1..3; `ContentValidationTest` also checks
+  each shipped item against its own level's band. The first values were seeded from the item's
+  format band (recognition 1, guided production 2, free production 3) bounded by its lesson's level,
+  by [`scripts/author_difficulty.mjs`](../scripts/author_difficulty.mjs), which now only fills a
+  missing value — from v66 the number is edited by hand like any other authored judgement.
+- **CEFR bundle (contentVersion 66):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
