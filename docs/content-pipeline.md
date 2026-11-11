@@ -72,7 +72,13 @@
   demand an inversion out loud. 63 of C1's 478 items were re-judged (59 changed) and the 22
   one-structure sentence productions came down to 2, the rule B1's pass set. C1 moved from 452/26 to
   437/41 across 2/3, with 9 of its 31 choice lessons disagreeing about difficulty.
-- **CEFR bundle (contentVersion 69):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  That 9 exposed the other half of the problem: the selector raises the level **within a format**, so
+  a lesson whose hardest item was a blank or a reading question could not raise recognition at all.
+  v70 gave each of the remaining 22 lessons one authored choice item — four grammatical options
+  where the context decides, never "choose the correct sentence" (three of those four options break
+  the structure outright, and v69 judged that shape a 2) — so C1 is 437/63 and **every one of its 31
+  lessons** now has a hard choice item. 2888 → 2910 exercises.
+- **CEFR bundle (contentVersion 70):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
@@ -96,7 +102,7 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  2888 exercises
+  2910 exercises
   (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
   3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
   lessons, four in the six original ones
@@ -156,7 +162,7 @@
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the mastery
   engine uses, so a vocabulary-heavy lesson does not count as grammar practice. `GrammarCoverageTest`
   fails the build below the bar; add exercises to that topic's lessons.
-- **Every exercise names its skill (v63):** `exercise.skill` is now authored on **all 2888 items**;
+- **Every exercise names its skill (v63):** `exercise.skill` is now authored on **all 2910 items**;
   the bundle's last 147 untagged ones (52 choice, 41 translation, 54 listening) got theirs, following
   the corpus' own convention (translation is VOCABULARY, listening is LISTENING, a choice item is
   READING with a passage and VOCABULARY/GRAMMAR otherwise). The tag is not cosmetic: it is what
@@ -185,7 +191,7 @@
   can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 2888 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 2910 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

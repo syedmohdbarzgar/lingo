@@ -1,5 +1,5 @@
 {
-  "contentVersion": 69,
+  "contentVersion": 70,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -23028,6 +23028,24 @@
       "explanationFa": "steamroll یعنی «با فشار زیر گرفتن»؛ hold the line یعنی «روی موضع ماندن»."
     },
     {
+      "id": "c1.phrasal-idioms.ex.10",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "difficulty": 3,
+      "question": "The talks fell ___ at the last minute.",
+      "questionFa": "مذاکرات در آخرین لحظه شکست خورد.",
+      "options": [
+        "over",
+        "off",
+        "out",
+        "through"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "fall through یعنی انجام نشدن و شکست خوردن؛ fall off و fall out و fall over این معنی را نمی‌دهند.",
+      "skill": "VOCABULARY"
+    },
+    {
       "id": "c1.inference.lesson-01.dlg.05",
       "lessonId": "c1.inference.lesson-01",
       "type": "speaking",
@@ -23062,6 +23080,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "inbox یعنی «صندوق ایمیل»؛ well before یعنی «خیلی قبل از»."
+    },
+    {
+      "id": "c1.inference.ex.11",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "multiple_choice",
+      "order": 17,
+      "difficulty": 3,
+      "question": "The lights are on and the door is unlocked. They ___ have gone away for the week.",
+      "questionFa": "چراغ‌ها روشن و در باز است. آن‌ها نمی‌توانند یک هفته رفته باشند.",
+      "options": [
+        "can't",
+        "must",
+        "should",
+        "might"
+      ],
+      "correctIndex": 0,
+      "explanationFa": "شاهدِ جمله خلاف رفتن را نشان می‌دهد، پس deduction منفی می‌سازیم: can't have gone.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.register.lesson-01.dlg.05",
@@ -23325,11 +23361,11 @@
       "questionFa": "معنی «background» چیست؟",
       "options": [
         "محل کار",
-        "مرخصی",
+        "پیشینه؛ سابقه",
         "حقوق",
-        "پیشینه؛ سابقه"
+        "مرخصی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "background «پیشینه» است؛ محل کار workplace و حقوق salary است."
     },
@@ -23342,12 +23378,12 @@
       "question": "What does \"graduate\" mean?",
       "questionFa": "معنی «graduate» چیست؟",
       "options": [
-        "فارغ‌التحصیل شدن",
-        "دانشجو بودن",
         "ثبت‌نام کردن",
+        "دانشجو بودن",
+        "فارغ‌التحصیل شدن",
         "درس دادن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "graduate یعنی «فارغ‌التحصیل شدن»؛ ثبت‌نام enrol و درس دادن teach است."
     },
@@ -23361,11 +23397,11 @@
       "questionFa": "معنی «qualification» چیست؟",
       "options": [
         "سابقهٔ کاری",
-        "مدرک؛ صلاحیت",
+        "نوع قرارداد",
         "حقوق ماهانه",
-        "نوع قرارداد"
+        "مدرک؛ صلاحیت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "qualification «مدرک و صلاحیت» است؛ سابقهٔ کاری experience و حقوق salary است."
     },
@@ -23573,12 +23609,12 @@
       "question": "What does \"advert\" mean?",
       "questionFa": "معنی «advert» چیست؟",
       "options": [
-        "قرارداد",
-        "مصاحبه",
         "آگهی",
+        "مصاحبه",
+        "قرارداد",
         "حقوق"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "advert «آگهی» است؛ مصاحبه interview و قرارداد contract است."
     },
@@ -23592,11 +23628,11 @@
       "questionFa": "معنی «vacancy» چیست؟",
       "options": [
         "شیفت کاری",
-        "پاداش",
+        "جای خالی شغلی",
         "مرخصی",
-        "جای خالی شغلی"
+        "پاداش"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "vacancy «جای خالی شغلی» است؛ شیفت shift و مرخصی leave است."
     },
@@ -23609,12 +23645,12 @@
       "question": "What does \"employer\" mean?",
       "questionFa": "معنی «employer» چیست؟",
       "options": [
-        "کارفرما",
-        "کارمند",
         "همکار",
+        "کارمند",
+        "کارفرما",
         "مشتری"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "employer کارفرماست و کارمند employee؛ همکار colleague است."
     },
@@ -23823,11 +23859,11 @@
       "questionFa": "معنی «lecture» چیست؟",
       "options": [
         "کتابخانه",
-        "سخنرانی درسی",
+        "ترم",
         "آزمون",
-        "ترم"
+        "سخنرانی درسی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "lecture «سخنرانی درسی» است؛ آزمون exam و ترم term است."
     },
@@ -23840,12 +23876,12 @@
       "question": "What does \"assignment\" mean?",
       "questionFa": "معنی «assignment» چیست؟",
       "options": [
-        "استاد",
-        "مدرک",
         "تکلیف درسی",
+        "مدرک",
+        "استاد",
         "امتحان"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "assignment «تکلیف درسی» است؛ مدرک degree و استاد tutor است."
     },
@@ -23859,11 +23895,11 @@
       "questionFa": "معنی «campus» چیست؟",
       "options": [
         "خوابگاه",
-        "کتابخانه",
+        "محوطهٔ دانشگاه",
         "کلاس درس",
-        "محوطهٔ دانشگاه"
+        "کتابخانه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "campus «محوطهٔ دانشگاه» است؛ خوابگاه dormitory نام دارد."
     },
@@ -24070,12 +24106,12 @@
       "question": "What does \"progress\" mean?",
       "questionFa": "معنی «progress» چیست؟",
       "options": [
-        "پیشرفت",
-        "تمرین",
         "اشتباه",
+        "تمرین",
+        "پیشرفت",
         "دوره"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "progress «پیشرفت» است؛ تمرین practise و دوره course است."
     },
@@ -24089,11 +24125,11 @@
       "questionFa": "معنی «patient» چیست؟",
       "options": [
         "مشغول",
-        "صبور",
+        "ماهر",
         "عجول",
-        "ماهر"
+        "صبور"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "patient «صبور» است؛ عجول impatient است."
     },
@@ -24106,12 +24142,12 @@
       "question": "What does \"mistake\" mean?",
       "questionFa": "معنی «mistake» چیست؟",
       "options": [
-        "هدف",
-        "نتیجه",
         "اشتباه",
+        "نتیجه",
+        "هدف",
         "عادت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "mistake «اشتباه» است و با make می‌آید: make a mistake."
     },
@@ -24319,11 +24355,11 @@
       "questionFa": "معنی «connection» چیست؟",
       "options": [
         "چمدان و بار",
-        "تأخیر",
+        "پرواز یا قطار اتصالی",
         "بازپرداخت",
-        "پرواز یا قطار اتصالی"
+        "تأخیر"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "connection «سرویس اتصالی» است؛ تأخیر delay و بازپرداخت refund است."
     },
@@ -24336,12 +24372,12 @@
       "question": "What does \"luggage\" mean?",
       "questionFa": "معنی «luggage» چیست؟",
       "options": [
-        "چمدان و بار",
-        "بلیت",
         "گذرنامه",
+        "بلیت",
+        "چمدان و بار",
         "صندلی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "luggage «بار و چمدان» است و غیرقابل‌شمارش می‌ماند."
     },
@@ -24355,11 +24391,11 @@
       "questionFa": "معنی «refund» چیست؟",
       "options": [
         "جریمه",
-        "بازپرداخت",
+        "بیمه",
         "تخفیف",
-        "بیمه"
+        "بازپرداخت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "refund «بازپرداخت» است؛ جریمه fine و تخفیف discount است."
     },
@@ -24566,12 +24602,12 @@
       "question": "What does \"custom\" mean?",
       "questionFa": "معنی «custom» چیست؟",
       "options": [
-        "زبان",
-        "قانون",
         "رسم و رسوم",
+        "قانون",
+        "زبان",
         "جشن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "custom «رسم» است؛ قانون law و جشن celebration است."
     },
@@ -24585,11 +24621,11 @@
       "questionFa": "معنی «polite» چیست؟",
       "options": [
         "کنجکاو",
-        "صبور",
+        "مؤدب",
         "ساکت",
-        "مؤدب"
+        "صبور"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "polite «مؤدب» است؛ متضاد آن rude «بی‌ادب» است."
     },
@@ -24602,12 +24638,12 @@
       "question": "What does \"host\" mean?",
       "questionFa": "معنی «host» چیست؟",
       "options": [
-        "میزبان",
-        "مهمان",
         "همسایه",
+        "مهمان",
+        "میزبان",
         "راهنما"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "host میزبان است و مهمان guest؛ همسایه neighbour است."
     },
@@ -24815,11 +24851,11 @@
       "questionFa": "معنی «friendship» چیست؟",
       "options": [
         "همسایگی",
-        "دوستی",
+        "همکاری",
         "خانواده",
-        "همکاری"
+        "دوستی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "friendship «دوستی» است؛ همسایگی neighbourhood و همکاری cooperation است."
     },
@@ -24832,12 +24868,12 @@
       "question": "What does \"honest\" mean?",
       "questionFa": "معنی «honest» چیست؟",
       "options": [
-        "صبور",
-        "خجالتی",
         "صادق",
+        "خجالتی",
+        "صبور",
         "مهربان"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "honest «صادق» است؛ متضاد آن dishonest است."
     },
@@ -24851,11 +24887,11 @@
       "questionFa": "معنی «trust» چیست؟",
       "options": [
         "قرض دادن",
-        "انتقاد کردن",
+        "اعتماد کردن",
         "دعوت کردن",
-        "اعتماد کردن"
+        "انتقاد کردن"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "trust «اعتماد کردن» است؛ انتقاد criticize و دعوت invite است."
     },
@@ -25062,12 +25098,12 @@
       "question": "What does \"nervous\" mean?",
       "questionFa": "معنی «nervous» چیست؟",
       "options": [
-        "مضطرب",
-        "خسته",
         "سرافراز",
+        "خسته",
+        "مضطرب",
         "آرام"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "nervous «مضطرب» است؛ خسته tired و آرام calm است."
     },
@@ -25081,11 +25117,11 @@
       "questionFa": "معنی «proud» چیست؟",
       "options": [
         "نگران",
-        "سرافراز",
+        "عصبانی",
         "تنها",
-        "عصبانی"
+        "سرافراز"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "proud «سرافراز» است و با of می‌آید: proud of my work."
     },
@@ -25098,12 +25134,12 @@
       "question": "What does \"lonely\" mean?",
       "questionFa": "معنی «lonely» چیست؟",
       "options": [
-        "شاد",
-        "آرام",
         "تنها",
+        "آرام",
+        "شاد",
         "خجالتی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "lonely «احساس تنهایی» است؛ alone فقط «تنها بودن» است."
     },
@@ -25311,11 +25347,11 @@
       "questionFa": "معنی «compromise» چیست؟",
       "options": [
         "راه‌حل",
-        "اختلاف",
+        "سازش؛ مصالحه",
         "سرزنش",
-        "سازش؛ مصالحه"
+        "اختلاف"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "compromise «سازش» است؛ اختلاف conflict و سرزنش blame است."
     },
@@ -25328,12 +25364,12 @@
       "question": "What does \"apologise\" mean?",
       "questionFa": "معنی «apologise» چیست؟",
       "options": [
-        "عذرخواهی کردن",
-        "سرزنش کردن",
         "مذاکره کردن",
+        "سرزنش کردن",
+        "عذرخواهی کردن",
         "توضیح دادن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "apologise «عذرخواهی کردن» است و با for یا to می‌آید."
     },
@@ -25347,11 +25383,11 @@
       "questionFa": "معنی «resolve» چیست؟",
       "options": [
         "تکرار کردن",
-        "حل کردن",
+        "شکایت کردن",
         "پنهان کردن",
-        "شکایت کردن"
+        "حل کردن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "resolve «حل کردن» است؛ شکایت complain و پنهان کردن hide است."
     },
@@ -25558,12 +25594,12 @@
       "question": "What does \"agree\" mean?",
       "questionFa": "معنی «agree» چیست؟",
       "options": [
-        "توضیح دادن",
-        "مخالف بودن",
         "موافق بودن",
+        "مخالف بودن",
+        "توضیح دادن",
         "تصمیم گرفتن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "agree «موافق بودن» است و با with می‌آید: agree with you."
     },
@@ -25577,11 +25613,11 @@
       "questionFa": "معنی «point» چیست؟",
       "options": [
         "تصمیم",
-        "سؤال",
+        "نکته",
         "مثال",
-        "نکته"
+        "سؤال"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "point در بحث «نکته» است؛ make a point یعنی نکته را مطرح کردن."
     },
@@ -25594,12 +25630,12 @@
       "question": "What does \"respect\" mean?",
       "questionFa": "معنی «respect» چیست؟",
       "options": [
-        "احترام گذاشتن",
-        "مخالفت کردن",
         "تکرار کردن",
+        "مخالفت کردن",
+        "احترام گذاشتن",
         "قبول کردن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "respect «احترام گذاشتن» است؛ مخالفت disagree است."
     },
@@ -25807,11 +25843,11 @@
       "questionFa": "معنی «suddenly» چیست؟",
       "options": [
         "آرام",
-        "ناگهان",
+        "همیشه",
         "دوباره",
-        "همیشه"
+        "ناگهان"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "suddenly «ناگهان» است؛ آرام calmly و دوباره again است."
     },
@@ -25824,12 +25860,12 @@
       "question": "What does \"plot\" mean?",
       "questionFa": "معنی «plot» چیست؟",
       "options": [
-        "پایان",
-        "شخصیت",
         "خط داستان",
+        "شخصیت",
+        "پایان",
         "عنوان"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "plot «خط داستان» است؛ پایان ending و شخصیت character است."
     },
@@ -25843,11 +25879,11 @@
       "questionFa": "معنی «detail» چیست؟",
       "options": [
         "زمان",
-        "نتیجه",
+        "جزئیات",
         "احساس",
-        "جزئیات"
+        "نتیجه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "detail «جزئیات» است و in detail یعنی «با جزئیات»."
     },
@@ -26054,12 +26090,12 @@
       "question": "What does \"device\" mean?",
       "questionFa": "معنی «device» چیست؟",
       "options": [
-        "دستگاه",
-        "برنامه",
         "باتری",
+        "برنامه",
+        "دستگاه",
         "شبکه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "device «دستگاه» است؛ برنامه app و باتری battery است."
     },
@@ -26073,11 +26109,11 @@
       "questionFa": "معنی «battery» چیست؟",
       "options": [
         "صفحه‌نمایش",
-        "باتری",
+        "دکمه",
         "شارژر",
-        "دکمه"
+        "باتری"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "battery «باتری» است و شارژر charger نام دارد."
     },
@@ -26090,12 +26126,12 @@
       "question": "What does \"update\" mean?",
       "questionFa": "معنی «update» چیست؟",
       "options": [
-        "خرید کردن",
-        "پاک کردن",
         "به‌روزرسانی کردن",
+        "پاک کردن",
+        "خرید کردن",
         "روشن کردن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "update «به‌روزرسانی کردن» است؛ پاک کردن delete و روشن کردن turn on است."
     },
@@ -26303,11 +26339,11 @@
       "questionFa": "معنی «viral» چیست؟",
       "options": [
         "نظر",
-        "حریم خصوصی",
+        "وایرال؛ بسیار پر بازدید",
         "دنبال‌کننده",
-        "وایرال؛ بسیار پر بازدید"
+        "حریم خصوصی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "viral برای چیزی است که سریع همه‌جا پخش می‌شود؛ حریم خصوصی privacy است."
     },
@@ -26320,12 +26356,12 @@
       "question": "What does \"follower\" mean?",
       "questionFa": "معنی «follower» چیست؟",
       "options": [
-        "دنبال‌کننده؛ فالوور",
-        "کامنت",
         "پست",
+        "کامنت",
+        "دنبال‌کننده؛ فالوور",
         "پیوند"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "follower کسی است که مطالب شما را دنبال می‌کند؛ comment «نظر» است."
     },
@@ -26339,11 +26375,11 @@
       "questionFa": "معنی «privacy» چیست؟",
       "options": [
         "شهرت",
-        "حریم خصوصی",
+        "ویدیو",
         "اشتراک‌گذاری",
-        "ویدیو"
+        "حریم خصوصی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "privacy «حریم خصوصی» است و با protect your privacy می‌آید."
     },
@@ -26550,12 +26586,12 @@
       "question": "What does \"recycle\" mean?",
       "questionFa": "معنی «recycle» چیست؟",
       "options": [
-        "آلوده کردن",
-        "هدر دادن",
         "بازیافت کردن",
+        "هدر دادن",
+        "آلوده کردن",
         "کاهش دادن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "recycle «بازیافت کردن» است؛ هدر دادن waste و کاهش دادن reduce است."
     },
@@ -26569,11 +26605,11 @@
       "questionFa": "معنی «carbon» چیست؟",
       "options": [
         "محیط زیست",
-        "پلاستیک",
+        "کربن",
         "زباله",
-        "کربن"
+        "پلاستیک"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "carbon گازی است که گرما را نگه می‌دارد: carbon emissions."
     },
@@ -26586,12 +26622,12 @@
       "question": "What does \"reduce\" mean?",
       "questionFa": "معنی «reduce» چیست؟",
       "options": [
-        "کاهش دادن",
-        "افزایش دادن",
         "جمع کردن",
+        "افزایش دادن",
+        "کاهش دادن",
         "بازیافت کردن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "reduce «کم کردن» است؛ متضاد آن increase است."
     },
@@ -26799,11 +26835,11 @@
       "questionFa": "معنی «habit» چیست؟",
       "options": [
         "میان‌وعده",
-        "عادت",
+        "وعده",
         "پرس غذا",
-        "وعده"
+        "عادت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "habit «عادت» است؛ میان‌وعده snack و وعده meal است."
     },
@@ -26816,12 +26852,12 @@
       "question": "What does \"portion\" mean?",
       "questionFa": "معنی «portion» چیست؟",
       "options": [
-        "پرشکر",
-        "ارگانیک",
         "پرس؛ مقدار غذا",
+        "ارگانیک",
+        "پرشکر",
         "عادت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "portion مقدار غذایی است که برای یک نفر کشیده می‌شود: large portions."
     },
@@ -26835,11 +26871,11 @@
       "questionFa": "معنی «sugary» چیست؟",
       "options": [
         "کم‌چرب",
-        "ارگانیک",
+        "شیرین؛ پرشکر",
         "تازه",
-        "شیرین؛ پرشکر"
+        "ارگانیک"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "sugary «پرشکر» است؛ organic «ارگانیک» و fresh «تازه» است."
     },
@@ -27046,12 +27082,12 @@
       "question": "What does \"focus\" mean?",
       "questionFa": "معنی «focus» چیست؟",
       "options": [
-        "تمرکز کردن",
-        "برنامه‌ریزی کردن",
         "به تعویق انداختن",
+        "برنامه‌ریزی کردن",
+        "تمرکز کردن",
         "عجله کردن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "focus «تمرکز کردن» است و با on می‌آید: focus on one task."
     },
@@ -27065,11 +27101,11 @@
       "questionFa": "معنی «priority» چیست؟",
       "options": [
         "برنامهٔ زمانی",
-        "اولویت",
+        "روتین",
         "حواس‌پرتی",
-        "روتین"
+        "اولویت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "priority «اولویت» است؛ برنامهٔ زمانی schedule و روتین routine است."
     },
@@ -27082,12 +27118,12 @@
       "question": "What does \"urgent\" mean?",
       "questionFa": "معنی «urgent» چیست؟",
       "options": [
-        "آرام",
-        "مهم",
         "فوری",
+        "مهم",
+        "آرام",
         "دقیق"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "urgent «فوری» است؛ مهم important است و همیشه فوری نیست."
     },
@@ -27295,11 +27331,11 @@
       "questionFa": "معنی «withdraw» چیست؟",
       "options": [
         "پس‌انداز کردن",
-        "واریز کردن",
+        "برداشت کردن",
         "قرض گرفتن",
-        "برداشت کردن"
+        "واریز کردن"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "withdraw «برداشت کردن» است؛ واریز کردن deposit نام دارد."
     },
@@ -27312,12 +27348,12 @@
       "question": "What does \"fee\" mean?",
       "questionFa": "معنی «fee» چیست؟",
       "options": [
-        "کارمزد؛ هزینهٔ خدمات",
-        "سود بانکی",
         "وام",
+        "سود بانکی",
+        "کارمزد؛ هزینهٔ خدمات",
         "جریمه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "fee پولی است که بابت یک خدمت می‌پردازی؛ سود بانکی interest است."
     },
@@ -27331,11 +27367,11 @@
       "questionFa": "معنی «statement» چیست؟",
       "options": [
         "قرارداد",
-        "صورت‌حساب بانکی",
+        "فیش حقوقی",
         "رسید خرید",
-        "فیش حقوقی"
+        "صورت‌حساب بانکی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "statement فهرست گردش حساب است؛ رسید خرید receipt نام دارد."
     },
@@ -27543,12 +27579,12 @@
       "question": "What does \"damaged\" mean?",
       "questionFa": "معنی «damaged» چیست؟",
       "options": [
-        "تقلبی",
-        "گران",
         "آسیب‌دیده",
+        "گران",
+        "تقلبی",
         "ناقص"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "damaged یعنی آسیب‌دیده؛ «تقلبی» fake است."
     },
@@ -27562,11 +27598,11 @@
       "questionFa": "معنی «supervisor» چیست؟",
       "options": [
         "فروشنده",
-        "مشتری",
+        "سرپرست",
         "راننده",
-        "سرپرست"
+        "مشتری"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "supervisor سرپرست تیم است؛ customer مشتری است."
     },
@@ -27579,12 +27615,12 @@
       "question": "What does \"escalate\" mean?",
       "questionFa": "معنی «escalate» چیست؟",
       "options": [
-        "ارجاع دادن به سطح بالاتر",
-        "لغو کردن سفارش",
         "تخفیف گرفتن",
+        "لغو کردن سفارش",
+        "ارجاع دادن به سطح بالاتر",
         "بسته‌بندی کردن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "escalate a complaint یعنی شکایت را به سطح بالاتر بردن؛ لغو سفارش cancel an order است."
     },
@@ -27793,11 +27829,11 @@
       "questionFa": "معنی «enquiry» چیست؟",
       "options": [
         "شکایت",
-        "پرس‌وجو؛ درخواست اطلاعات",
+        "فاکتور",
         "پیشنهاد شغلی",
-        "فاکتور"
+        "پرس‌وجو؛ درخواست اطلاعات"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "enquiry درخواست اطلاعات است؛ شکایت complaint نام دارد."
     },
@@ -27810,12 +27846,12 @@
       "question": "What does \"regarding\" mean?",
       "questionFa": "معنی «regarding» چیست؟",
       "options": [
-        "با وجود",
-        "به‌جای",
         "دربارهٔ؛ در خصوص",
+        "به‌جای",
+        "با وجود",
         "بر اساس"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "regarding یعنی «در خصوص» و رسمی‌تر از about است."
     },
@@ -27829,11 +27865,11 @@
       "questionFa": "معنی «recipient» چیست؟",
       "options": [
         "مدیر",
-        "فرستنده",
+        "گیرنده",
         "امضاکننده",
-        "گیرنده"
+        "فرستنده"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "recipient گیرنده است؛ فرستنده sender نام دارد."
     },
@@ -28041,12 +28077,12 @@
       "question": "What does \"overview\" mean?",
       "questionFa": "معنی «overview» چیست؟",
       "options": [
-        "نمای کلی",
-        "پرسش",
         "نتیجه‌گیری",
+        "پرسش",
+        "نمای کلی",
         "اسلاید"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "overview نمای کلی است؛ conclusion نتیجه‌گیری است."
     },
@@ -28060,11 +28096,11 @@
       "questionFa": "معنی «rehearse» چیست؟",
       "options": [
         "ضبط کردن",
-        "تمرین کردن",
+        "خلاصه کردن",
         "ترجمه کردن",
-        "خلاصه کردن"
+        "تمرین کردن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "rehearse یعنی اجرا را از قبل تمرین کردن؛ record ضبط کردن است."
     },
@@ -28077,12 +28113,12 @@
       "question": "What does \"handout\" mean?",
       "questionFa": "معنی «handout» چیست؟",
       "options": [
-        "میکروفون",
-        "تخته",
         "برگهٔ چاپی برای حاضران",
+        "تخته",
+        "میکروفون",
         "پروژکتور"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "handout برگه‌ای است که به حاضران می‌دهی؛ projector پروژکتور است."
     },
@@ -28291,11 +28327,11 @@
       "questionFa": "معنی «agenda» چیست؟",
       "options": [
         "قرارداد",
-        "صورت‌جلسه",
+        "دستور جلسه",
         "سخنرانی",
-        "دستور جلسه"
+        "صورت‌جلسه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "agenda فهرست بندهای جلسه است؛ صورت‌جلسه minutes نام دارد."
     },
@@ -28308,12 +28344,12 @@
       "question": "What does \"minutes\" mean?",
       "questionFa": "معنی «minutes» چیست؟",
       "options": [
-        "صورت‌جلسه",
-        "دقیقه",
         "برنامه",
+        "دقیقه",
+        "صورت‌جلسه",
         "حضور و غیاب"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "minutes در جلسه یعنی گزارش مکتوب آن، نه «دقیقه»."
     },
@@ -28327,11 +28363,11 @@
       "questionFa": "معنی «contribute» چیست؟",
       "options": [
         "مخالفت کردن",
-        "مشارکت کردن",
+        "خلاصه کردن",
         "رأی دادن",
-        "خلاصه کردن"
+        "مشارکت کردن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "contribute یعنی ایده یا کمک دادن؛ رأی دادن vote است."
     },
@@ -28539,12 +28575,12 @@
       "question": "What does \"chart\" mean?",
       "questionFa": "معنی «chart» چیست؟",
       "options": [
-        "گزارش",
-        "جدول",
         "نمودار",
+        "جدول",
+        "گزارش",
         "پیش‌بینی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "chart نمودار است؛ جدول table نام دارد."
     },
@@ -28558,11 +28594,11 @@
       "questionFa": "معنی «trend» چیست؟",
       "options": [
         "نوسان",
-        "میانگین",
+        "روند",
         "درصد",
-        "روند"
+        "میانگین"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "trend جهت کلی تغییر است؛ میانگین average است."
     },
@@ -28575,12 +28611,12 @@
       "question": "What does \"average\" mean?",
       "questionFa": "معنی «average» چیست؟",
       "options": [
-        "میانگین",
-        "بیشترین مقدار",
         "مجموع",
+        "بیشترین مقدار",
+        "میانگین",
         "تفاوت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "average میانگین است و با on average می‌آید."
     },
@@ -28789,11 +28825,11 @@
       "questionFa": "معنی «ambition» چیست؟",
       "options": [
         "عادت",
-        "آرزو؛ جاه‌طلبی",
+        "فرصت",
         "مهارت",
-        "فرصت"
+        "آرزو؛ جاه‌طلبی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "ambition خواستهٔ بزرگ و بلندمدت است؛ habit «عادت» است."
     },
@@ -28806,12 +28842,12 @@
       "question": "What does \"milestone\" mean?",
       "questionFa": "معنی «milestone» چیست؟",
       "options": [
-        "پایان کار",
-        "مانع",
         "نقطهٔ عطف",
+        "مانع",
+        "پایان کار",
         "هدف کوتاه‌مدت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "milestone نقطهٔ مهم میانی است؛ obstacle «مانع» است."
     },
@@ -28825,11 +28861,11 @@
       "questionFa": "معنی «achieve» چیست؟",
       "options": [
         "پیش‌بینی کردن",
-        "به تعویق انداختن",
+        "به دست آوردن؛ محقق کردن",
         "رها کردن",
-        "به دست آوردن؛ محقق کردن"
+        "به تعویق انداختن"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "achieve یعنی با تلاش به هدف رسیدن؛ postpone به تعویق انداختن است."
     },
@@ -29038,12 +29074,12 @@
       "question": "What does \"inequality\" mean?",
       "questionFa": "معنی «inequality» چیست؟",
       "options": [
-        "نابرابری",
-        "بیکاری",
         "فقر",
+        "بیکاری",
+        "نابرابری",
         "بی‌خانمانی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "inequality نابرابری است؛ poverty فقر و unemployment بیکاری‌اند."
     },
@@ -29057,11 +29093,11 @@
       "questionFa": "معنی «poverty» چیست؟",
       "options": [
         "ثروت",
-        "فقر",
+        "بیکاری",
         "نابرابری",
-        "بیکاری"
+        "فقر"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "poverty فقر است و با in poverty می‌آید؛ ثروت wealth نام دارد."
     },
@@ -29074,12 +29110,12 @@
       "question": "What does \"policy\" mean?",
       "questionFa": "معنی «policy» چیست؟",
       "options": [
-        "بودجه",
-        "قانون اساسی",
         "سیاست؛ خط‌مشی",
+        "قانون اساسی",
+        "بودجه",
         "اعتراض"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "policy خط‌مشی رسمی یک نهاد است؛ politics «سیاست» به معنای کشورداری است."
     },
@@ -29288,11 +29324,11 @@
       "questionFa": "معنی «concession» چیست؟",
       "options": [
         "پیشنهاد شغلی",
-        "قرارداد",
+        "امتیاز (در مذاکره)",
         "جریمه",
-        "امتیاز (در مذاکره)"
+        "قرارداد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "concession یعنی چیزی که برای توافق رها می‌کنی؛ contract قرارداد است."
     },
@@ -29305,12 +29341,12 @@
       "question": "What does \"leverage\" mean?",
       "questionFa": "معنی «leverage» چیست؟",
       "options": [
-        "ابزار فشار؛ برگ برنده",
-        "سود",
         "سهم بازار",
+        "سود",
+        "ابزار فشار؛ برگ برنده",
         "زمان‌بندی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "leverage توانی است که موضع تو را در مذاکره قوی می‌کند."
     },
@@ -29324,11 +29360,11 @@
       "questionFa": "معنی «mutual» چیست؟",
       "options": [
         "یک‌طرفه",
-        "دوجانبه",
+        "قطعی",
         "مشروط",
-        "قطعی"
+        "دوجانبه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "mutual یعنی هر دو طرف سهم دارند؛ متضاد آن one-sided است."
     },
@@ -29536,12 +29572,12 @@
       "question": "What does \"deliverable\" mean?",
       "questionFa": "معنی «deliverable» چیست؟",
       "options": [
-        "بودجه",
-        "زمان‌بندی",
         "محصول تحویلی",
+        "زمان‌بندی",
+        "بودجه",
         "جلسه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "deliverable خروجی مشخصی است که تحویل داده می‌شود؛ timeline زمان‌بندی است."
     },
@@ -29555,11 +29591,11 @@
       "questionFa": "معنی «scope» چیست؟",
       "options": [
         "ریسک",
-        "هزینه",
+        "دامنهٔ کار",
         "تیم",
-        "دامنهٔ کار"
+        "هزینه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "scope یعنی آنچه در پروژه هست و آنچه نیست."
     },
@@ -29572,12 +29608,12 @@
       "question": "What does \"stakeholder\" mean?",
       "questionFa": "معنی «stakeholder» چیست؟",
       "options": [
-        "ذی‌نفع",
-        "پیمانکار",
         "کارآموز",
+        "پیمانکار",
+        "ذی‌نفع",
         "مشتری نهایی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "stakeholder هر کسی است که نتیجهٔ پروژه به او مربوط است."
     },
@@ -29786,11 +29822,11 @@
       "questionFa": "معنی «delegate» چیست؟",
       "options": [
         "کنترل کردن",
-        "واگذار کردن",
+        "استخدام کردن",
         "استعفا دادن",
-        "استخدام کردن"
+        "واگذار کردن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "delegate یعنی بخشی از کار را به دیگری سپردن؛ hire استخدام کردن است."
     },
@@ -29803,12 +29839,12 @@
       "question": "What does \"consensus\" mean?",
       "questionFa": "معنی «consensus» چیست؟",
       "options": [
-        "رأی‌گیری",
-        "اختلاف",
         "اجماع",
+        "اختلاف",
+        "رأی‌گیری",
         "بحث"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "consensus توافقی است که همه بپذیرند؛ disagreement اختلاف است."
     },
@@ -29822,11 +29858,11 @@
       "questionFa": "معنی «accountability» چیست؟",
       "options": [
         "واگذاری",
-        "انگیزه",
+        "پاسخ‌گویی",
         "روحیه",
-        "پاسخ‌گویی"
+        "انگیزه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "accountability یعنی مسئول نتیجهٔ کارت بودن."
     },
@@ -30034,12 +30070,12 @@
       "question": "What does \"prototype\" mean?",
       "questionFa": "معنی «prototype» چیست؟",
       "options": [
-        "نمونهٔ اولیه",
-        "محصول نهایی",
         "قرارداد",
+        "محصول نهایی",
+        "نمونهٔ اولیه",
         "سرمایه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "prototype نسخهٔ اولیه برای آزمایش است، نه محصول نهایی."
     },
@@ -30053,11 +30089,11 @@
       "questionFa": "معنی «revenue» چیست؟",
       "options": [
         "سود",
-        "درآمد",
+        "بدهی",
         "هزینه",
-        "بدهی"
+        "درآمد"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "revenue درآمد فروش است؛ profit سود پس از کسر هزینه‌هاست."
     },
@@ -30070,12 +30106,12 @@
       "question": "What does \"investor\" mean?",
       "questionFa": "معنی «investor» چیست؟",
       "options": [
-        "تأمین‌کننده",
-        "مشتری",
         "سرمایه‌گذار",
+        "مشتری",
+        "تأمین‌کننده",
         "کارمند"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "investor پول در کسب‌وکار می‌گذارد؛ supplier تأمین‌کننده است."
     },
@@ -30284,11 +30320,11 @@
       "questionFa": "معنی «asset» چیست؟",
       "options": [
         "مالیات",
-        "بدهی",
+        "دارایی",
         "وام",
-        "دارایی"
+        "بدهی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "asset چیزی ارزشمند است که مالکش هستی؛ بدهی liability است."
     },
@@ -30301,12 +30337,12 @@
       "question": "What does \"liability\" mean?",
       "questionFa": "معنی «liability» چیست؟",
       "options": [
-        "بدهی؛ تعهد مالی",
-        "سود سهام",
         "سبد سرمایه‌گذاری",
+        "سود سهام",
+        "بدهی؛ تعهد مالی",
         "درآمد"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "liability بدهی است و در ترازنامه مقابل asset می‌آید."
     },
@@ -30320,11 +30356,11 @@
       "questionFa": "معنی «dividend» چیست؟",
       "options": [
         "قیمت سهام",
-        "سود سهام",
+        "کارمزد",
         "بهرهٔ بانکی",
-        "کارمزد"
+        "سود سهام"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "dividend بخشی از سود شرکت است که به سهام‌دار پرداخت می‌شود."
     },
@@ -30532,12 +30568,12 @@
       "question": "What does \"inflation\" mean?",
       "questionFa": "معنی «inflation» چیست؟",
       "options": [
-        "تعرفه",
-        "رکود",
         "تورم",
+        "رکود",
+        "تعرفه",
         "ارز"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "inflation افزایش عمومی قیمت‌هاست؛ رکود recession نام دارد."
     },
@@ -30551,11 +30587,11 @@
       "questionFa": "معنی «tariff» چیست؟",
       "options": [
         "بورس",
-        "مالیات بر درآمد",
+        "تعرفه",
         "یارانه",
-        "تعرفه"
+        "مالیات بر درآمد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "tariff مالیات بر کالای وارداتی است."
     },
@@ -30568,12 +30604,12 @@
       "question": "What does \"recession\" mean?",
       "questionFa": "معنی «recession» چیست؟",
       "options": [
-        "رکود",
-        "تورم",
         "رشد",
+        "تورم",
+        "رکود",
         "کسری بودجه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "recession دورهٔ افت فعالیت اقتصادی است."
     },
@@ -30782,11 +30818,11 @@
       "questionFa": "معنی «automation» چیست؟",
       "options": [
         "هوش مصنوعی",
-        "خودکارسازی",
+        "پردازش",
         "رمزنگاری",
-        "پردازش"
+        "خودکارسازی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "automation انجام کار با ماشین به‌جای انسان است."
     },
@@ -30799,12 +30835,12 @@
       "question": "What does \"dataset\" mean?",
       "questionFa": "معنی «dataset» چیست؟",
       "options": [
-        "شبکهٔ عصبی",
-        "پایگاه اطلاعات",
         "مجموعه داده",
+        "پایگاه اطلاعات",
+        "شبکهٔ عصبی",
         "خروجی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "dataset مجموعه‌ای بزرگ از داده است که مدل با آن آموزش می‌بیند."
     },
@@ -30818,11 +30854,11 @@
       "questionFa": "معنی «accuracy» چیست؟",
       "options": [
         "هزینه",
-        "سرعت",
+        "دقت",
         "حافظه",
-        "دقت"
+        "سرعت"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "accuracy میزان درستی و دقیق بودن است."
     },
@@ -31030,12 +31066,12 @@
       "question": "What does \"encryption\" mean?",
       "questionFa": "معنی «encryption» چیست؟",
       "options": [
-        "رمزنگاری",
-        "ردیابی",
         "پشتیبان‌گیری",
+        "ردیابی",
+        "رمزنگاری",
         "رضایت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "encryption تبدیل اطلاعات به کد است تا دیگران آن را نخوانند."
     },
@@ -31049,11 +31085,11 @@
       "questionFa": "معنی «breach» چیست؟",
       "options": [
         "خرابی دستگاه",
-        "نشت اطلاعات",
+        "نسخهٔ پشتیبان",
         "بازیابی رمز",
-        "نسخهٔ پشتیبان"
+        "نشت اطلاعات"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "breach در امنیت یعنی اطلاعات خصوصی بیرون رفته باشد."
     },
@@ -31066,12 +31102,12 @@
       "question": "What does \"consent\" mean?",
       "questionFa": "معنی «consent» چیست؟",
       "options": [
-        "اخطار",
-        "محدودیت",
         "رضایت",
+        "محدودیت",
+        "اخطار",
         "تنظیمات"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "consent اجازه‌ای است که خود فرد می‌دهد."
     },
@@ -31280,11 +31316,11 @@
       "questionFa": "معنی «solar» چیست؟",
       "options": [
         "هسته‌ای",
-        "فسیلی",
+        "خورشیدی",
         "آبی",
-        "خورشیدی"
+        "فسیلی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "solar یعنی مربوط به خورشید؛ fossil یعنی فسیلی."
     },
@@ -31297,12 +31333,12 @@
       "question": "What does \"turbine\" mean?",
       "questionFa": "معنی «turbine» چیست؟",
       "options": [
-        "توربین",
-        "شبکهٔ برق",
         "یارانه",
+        "شبکهٔ برق",
+        "توربین",
         "مبدل"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "turbine ماشینی است که باد یا آب را به برق تبدیل می‌کند."
     },
@@ -31316,11 +31352,11 @@
       "questionFa": "معنی «subsidy» چیست؟",
       "options": [
         "مالیات",
-        "یارانه",
+        "بیمه",
         "سرمایه",
-        "بیمه"
+        "یارانه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "subsidy پولی است که دولت برای ارزان‌شدن چیزی می‌پردازد."
     },
@@ -31528,12 +31564,12 @@
       "question": "What does \"curriculum\" mean?",
       "questionFa": "معنی «curriculum» چیست؟",
       "options": [
-        "بورس تحصیلی",
-        "شهریه",
         "برنامهٔ درسی",
+        "شهریه",
+        "بورس تحصیلی",
         "کارنامه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "curriculum مجموعهٔ درس‌ها و محتوایی است که آموزش داده می‌شود."
     },
@@ -31547,11 +31583,11 @@
       "questionFa": "معنی «tuition» چیست؟",
       "options": [
         "ارزیابی",
-        "بورس تحصیلی",
+        "شهریه",
         "ثبت‌نام",
-        "شهریه"
+        "بورس تحصیلی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "tuition پولی است که برای آموزش پرداخت می‌شود."
     },
@@ -31564,12 +31600,12 @@
       "question": "What does \"scholarship\" mean?",
       "questionFa": "معنی «scholarship» چیست؟",
       "options": [
-        "بورس تحصیلی",
-        "وام دانشجویی",
         "شهریه",
+        "وام دانشجویی",
+        "بورس تحصیلی",
         "کارآموزی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "scholarship پولی است که برای تحصیل به دانشجو داده می‌شود و بازپرداخت ندارد."
     },
@@ -31778,11 +31814,11 @@
       "questionFa": "معنی «anxiety» چیست؟",
       "options": [
         "فرسودگی",
-        "اضطراب",
+        "انگ اجتماعی",
         "بی‌خوابی",
-        "انگ اجتماعی"
+        "اضطراب"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "anxiety حالت نگرانی شدید و پیوسته است."
     },
@@ -31795,12 +31831,12 @@
       "question": "What does \"burnout\" mean?",
       "questionFa": "معنی «burnout» چیست؟",
       "options": [
-        "افسردگی",
-        "اضطراب",
         "فرسودگی شغلی",
+        "اضطراب",
+        "افسردگی",
         "بی‌خوابی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "burnout از فشار کار طولانی می‌آید، نه از یک روز بد."
     },
@@ -31814,11 +31850,11 @@
       "questionFa": "معنی «stigma» چیست؟",
       "options": [
         "رفاه",
-        "درمان",
+        "انگ؛ برچسب اجتماعی",
         "پشتیبانی",
-        "انگ؛ برچسب اجتماعی"
+        "درمان"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "stigma برداشت شرم‌آوری است که جامعه به یک موضوع می‌چسباند."
     },
@@ -32026,12 +32062,12 @@
       "question": "What does \"misleading\" mean?",
       "questionFa": "معنی «misleading» چیست؟",
       "options": [
-        "گمراه‌کننده",
-        "شایعه",
         "تبلیغات سیاسی",
+        "شایعه",
+        "گمراه‌کننده",
         "طنز"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "misleading یعنی چیزی را طوری نشان دادن که برداشت غلط بدهد."
     },
@@ -32045,11 +32081,11 @@
       "questionFa": "معنی «clickbait» چیست؟",
       "options": [
         "تیتر",
-        "کلیک‌بیت",
+        "مقاله",
         "منبع",
-        "مقاله"
+        "کلیک‌بیت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "clickbait تیتری است که فقط برای کلیک نوشته می‌شود."
     },
@@ -32062,12 +32098,12 @@
       "question": "What does \"outlet\" mean?",
       "questionFa": "معنی «outlet» چیست؟",
       "options": [
-        "تبلیغات سیاسی",
-        "شبکهٔ اجتماعی",
         "رسانه؛ خبرگزاری",
+        "شبکهٔ اجتماعی",
+        "تبلیغات سیاسی",
         "شایعه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "news outlet یعنی رسانه‌ای که خبر منتشر می‌کند."
     },
@@ -32277,11 +32313,11 @@
       "questionFa": "معنی «consumer» چیست؟",
       "options": [
         "تولیدکننده",
-        "فروشنده",
+        "مصرف‌کننده",
         "سرمایه‌گذار",
-        "مصرف‌کننده"
+        "فروشنده"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "consumer کسی است که کالا یا خدمت می‌خرد و مصرف می‌کند."
     },
@@ -32294,12 +32330,12 @@
       "question": "What does \"brand\" mean?",
       "questionFa": "معنی «brand» چیست؟",
       "options": [
-        "برند؛ نشان تجاری",
-        "قیمت",
         "تخفیف",
+        "قیمت",
+        "برند؛ نشان تجاری",
         "شعار"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "brand نام و تصویری است که یک شرکت با آن شناخته می‌شود."
     },
@@ -32313,11 +32349,11 @@
       "questionFa": "معنی «testimonial» چیست؟",
       "options": [
         "شعار تبلیغاتی",
-        "توصیهٔ مشتری",
+        "نظرسنجی",
         "قرارداد",
-        "نظرسنجی"
+        "توصیهٔ مشتری"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "testimonial جملهٔ کوتاهی از یک مشتری است که محصول را تأیید می‌کند."
     },
@@ -32525,12 +32561,12 @@
       "question": "What does \"crisis\" mean?",
       "questionFa": "معنی «crisis» چیست؟",
       "options": [
-        "بیانیه",
-        "جلسه",
         "بحران",
+        "جلسه",
+        "بیانیه",
         "خسارت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "crisis زمانی است که یک مشکل جدی باید سریع حل شود."
     },
@@ -32544,11 +32580,11 @@
       "questionFa": "معنی «spokesperson» چیست؟",
       "options": [
         "مشتری",
-        "مدیرعامل",
+        "سخنگو",
         "روزنامه‌نگار",
-        "سخنگو"
+        "مدیرعامل"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "spokesperson به‌طور رسمی از طرف سازمان حرف می‌زند."
     },
@@ -32561,12 +32597,12 @@
       "question": "What does \"reassure\" mean?",
       "questionFa": "معنی «reassure» چیست؟",
       "options": [
-        "دلگرم کردن",
-        "تهدید کردن",
         "انکار کردن",
+        "تهدید کردن",
+        "دلگرم کردن",
         "اطلاع دادن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "reassure یعنی نگرانی کسی را کم کردن."
     },
@@ -32775,11 +32811,11 @@
       "questionFa": "معنی «finding» چیست؟",
       "options": [
         "خلاصه",
-        "یافته",
+        "پیش‌نویس",
         "پیوست",
-        "پیش‌نویس"
+        "یافته"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "finding نتیجه‌ای است که گزارش یا پژوهش نشان می‌دهد."
     },
@@ -32792,12 +32828,12 @@
       "question": "What does \"summary\" mean?",
       "questionFa": "معنی «summary» چیست؟",
       "options": [
-        "نمودار",
-        "پیوست",
         "خلاصه",
+        "پیوست",
+        "نمودار",
         "توصیه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "summary نسخهٔ کوتاهی است که فقط نکات اصلی را می‌آورد."
     },
@@ -32811,11 +32847,11 @@
       "questionFa": "معنی «appendix» چیست؟",
       "options": [
         "پیش‌نویس",
-        "فهرست",
+        "پیوست",
         "جدول",
-        "پیوست"
+        "فهرست"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "appendix بخش اضافه در انتهای گزارش است."
     },
@@ -33023,12 +33059,12 @@
       "question": "What does \"gesture\" mean?",
       "questionFa": "معنی «gesture» چیست؟",
       "options": [
-        "اشاره؛ حرکت دست",
-        "سکوت",
         "صدا",
+        "سکوت",
+        "اشاره؛ حرکت دست",
         "نگاه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "gesture حرکتی است که با دست یا سر معنا می‌رساند."
     },
@@ -33042,11 +33078,11 @@
       "questionFa": "معنی «pace» چیست؟",
       "options": [
         "بلندی صدا",
-        "آهنگ؛ سرعت",
+        "محتوا",
         "ساختار",
-        "محتوا"
+        "آهنگ؛ سرعت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "pace سرعت حرف زدن یا حرکت کردن است."
     },
@@ -33059,12 +33095,12 @@
       "question": "What does \"outline\" mean?",
       "questionFa": "معنی «outline» چیست؟",
       "options": [
-        "نتیجه‌گیری",
-        "منبع",
         "رئوس مطالب",
+        "منبع",
+        "نتیجه‌گیری",
         "برگهٔ چاپی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "outline فهرست کوتاهی از بخش‌های اصلی است."
     },
@@ -33273,11 +33309,11 @@
       "questionFa": "معنی «argument» چیست؟",
       "options": [
         "ردیه",
-        "دعوا",
+        "استدلال",
         "موضع",
-        "استدلال"
+        "دعوا"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "argument مجموعهٔ دلایلی است که یک طرف را تقویت می‌کند."
     },
@@ -33290,12 +33326,12 @@
       "question": "What does \"rebuttal\" mean?",
       "questionFa": "معنی «rebuttal» چیست؟",
       "options": [
-        "ردیه؛ پاسخ نقضی",
-        "موضوع رأی‌گیری",
         "سؤال تماشاگر",
+        "موضوع رأی‌گیری",
+        "ردیه؛ پاسخ نقضی",
         "خلاصهٔ پایانی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "rebuttal پاسخ کوتاهی است که نشان می‌دهد طرف مقابل اشتباه می‌کند."
     },
@@ -33309,11 +33345,11 @@
       "questionFa": "معنی «stance» چیست؟",
       "options": [
         "مجری",
-        "موضع",
+        "قانون",
         "رأی",
-        "قانون"
+        "موضع"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "stance موضعی است که فرد در یک موضوع می‌گیرد."
     },
@@ -33521,12 +33557,12 @@
       "question": "What does \"cast\" mean?",
       "questionFa": "معنی «cast» چیست؟",
       "options": [
-        "صحنه",
-        "فیلم‌نامه",
         "بازیگران (گروه)",
+        "فیلم‌نامه",
+        "صحنه",
         "امتیاز"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "cast همهٔ بازیگران یک فیلم یا نمایش است."
     },
@@ -33540,11 +33576,11 @@
       "questionFa": "معنی «screenplay» چیست؟",
       "options": [
         "دنباله",
-        "زیرنویس",
+        "فیلم‌نامه",
         "کارگردان",
-        "فیلم‌نامه"
+        "زیرنویس"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "screenplay متن نوشته‌شده‌ای است که فیلم از آن ساخته می‌شود."
     },
@@ -33557,12 +33593,12 @@
       "question": "What does \"twist\" mean?",
       "questionFa": "معنی «twist» چیست؟",
       "options": [
-        "پیچش داستانی",
-        "صحنهٔ پایانی",
         "دنباله",
+        "صحنهٔ پایانی",
+        "پیچش داستانی",
         "نقد"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "twist تغییر غیرمنتظره‌ای در داستان است."
     },
@@ -33771,11 +33807,11 @@
       "questionFa": "معنی «once in a blue moon» چیست؟",
       "options": [
         "هر روز",
-        "خیلی به‌ندرت",
+        "به‌زودی",
         "همیشه",
-        "به‌زودی"
+        "خیلی به‌ندرت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "once in a blue moon یعنی تقریباً هیچ‌وقت، خیلی به‌ندرت."
     },
@@ -33788,12 +33824,12 @@
       "question": "What does \"bite the bullet\" mean?",
       "questionFa": "معنی «bite the bullet» چیست؟",
       "options": [
-        "فرار کردن",
-        "شکایت کردن",
         "دندان روی جگر گذاشتن",
+        "شکایت کردن",
+        "فرار کردن",
         "شوخی کردن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "bite the bullet یعنی کار سختی را پذیرفتن و انجام دادن."
     },
@@ -33807,11 +33843,11 @@
       "questionFa": "معنی «under the weather» چیست؟",
       "options": [
         "خواب زیاد",
-        "هوای بارانی",
+        "حال‌وهوای خوبی نداشتن",
         "سفر کوتاه",
-        "حال‌وهوای خوبی نداشتن"
+        "هوای بارانی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "under the weather یعنی کمی بیمار بودن."
     },
@@ -34019,12 +34055,12 @@
       "question": "What does \"look into\" mean?",
       "questionFa": "معنی «look into» چیست؟",
       "options": [
-        "بررسی کردن",
-        "نادیده گرفتن",
         "جست‌وجو در اینترنت",
+        "نادیده گرفتن",
+        "بررسی کردن",
         "ترک کردن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "look into یعنی موضوعی را بررسی کردن، بدون at."
     },
@@ -34038,11 +34074,11 @@
       "questionFa": "معنی «put up with» چیست؟",
       "options": [
         "قبول نکردن",
-        "تحمل کردن",
+        "پوشیدن",
         "بلند شدن",
-        "پوشیدن"
+        "تحمل کردن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "put up with یعنی چیزی آزاردهنده را بدون شکایت تحمل کردن."
     },
@@ -34055,12 +34091,12 @@
       "question": "What does \"break down\" mean?",
       "questionFa": "معنی «break down» چیست؟",
       "options": [
-        "توقف کوتاه",
-        "ساختن",
         "خراب شدن",
+        "ساختن",
+        "توقف کوتاه",
         "شکستن قانون"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "break down برای ماشین و سیستم یعنی از کار افتادن."
     },
@@ -34269,11 +34305,11 @@
       "questionFa": "معنی «norm» چیست؟",
       "options": [
         "عرف محلی",
-        "قانون رسمی",
+        "هنجار",
         "جریمه",
-        "هنجار"
+        "قانون رسمی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "norm رفتاری است که یک گروه آن را عادی می‌داند."
     },
@@ -34286,12 +34322,12 @@
       "question": "What does \"misunderstanding\" mean?",
       "questionFa": "معنی «misunderstanding» چیست؟",
       "options": [
-        "سوءتفاهم",
-        "توافق",
         "ترجمه",
+        "توافق",
+        "سوءتفاهم",
         "توضیح"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "misunderstanding یعنی دو طرف یکدیگر را اشتباه فهمیده‌اند."
     },
@@ -34305,11 +34341,11 @@
       "questionFa": "معنی «etiquette» چیست؟",
       "options": [
         "زبان محلی",
-        "آداب معاشرت",
+        "قرارداد",
         "لباس رسمی",
-        "قرارداد"
+        "آداب معاشرت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "etiquette قواعد پذیرفته‌شدهٔ رفتار مؤدبانه است."
     },
@@ -34517,12 +34553,12 @@
       "question": "What does \"mediation\" mean?",
       "questionFa": "معنی «mediation» چیست؟",
       "options": [
-        "تشویق",
-        "استعفا",
         "میانجی‌گری",
+        "استعفا",
+        "تشویق",
         "تحریم"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "mediation فرایندی است که نفر سومی به توافق دو طرف کمک می‌کند."
     },
@@ -34536,11 +34572,11 @@
       "questionFa": "معنی «grievance» چیست؟",
       "options": [
         "ارتقا",
-        "پاداش",
+        "شکایت رسمی",
         "قرارداد",
-        "شکایت رسمی"
+        "پاداش"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "grievance شکایت رسمی دربارهٔ رفتار ناعادلانه است."
     },
@@ -34553,12 +34589,12 @@
       "question": "What does \"neutral\" mean?",
       "questionFa": "معنی «neutral» چیست؟",
       "options": [
-        "بی‌طرف",
-        "عصبانی",
         "مسئول",
+        "عصبانی",
+        "بی‌طرف",
         "داوطلب"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "neutral یعنی از هیچ طرفی حمایت نمی‌کند."
     },
@@ -34767,11 +34803,11 @@
       "questionFa": "معنی «objective» چیست؟",
       "options": [
         "بودجه",
-        "هدف",
+        "نتیجه",
         "ریسک",
-        "نتیجه"
+        "هدف"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "objective نتیجه‌ای است که برای رسیدن به آن برنامه می‌ریزیم."
     },
@@ -34784,12 +34820,12 @@
       "question": "What does \"benchmark\" mean?",
       "questionFa": "معنی «benchmark» چیست؟",
       "options": [
-        "قرارداد",
-        "سود",
         "معیار سنجش",
+        "سود",
+        "قرارداد",
         "گزارش"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "benchmark استانداردی است که نتیجه را با آن می‌سنجیم."
     },
@@ -34803,11 +34839,11 @@
       "questionFa": "معنی «roadmap» چیست؟",
       "options": [
         "شاخص",
-        "فهرست کارکنان",
+        "نقشهٔ راه",
         "صورت‌حساب",
-        "نقشهٔ راه"
+        "فهرست کارکنان"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "roadmap گام‌های یک برنامه را در طول زمان نشان می‌دهد."
     },
@@ -35015,12 +35051,12 @@
       "question": "What does \"integrity\" mean?",
       "questionFa": "معنی «integrity» چیست؟",
       "options": [
-        "درستکاری",
-        "هوش",
         "قدرت",
+        "هوش",
+        "درستکاری",
         "ثروت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "integrity یعنی صادق بودن و داشتن اصول محکم."
     },
@@ -35034,11 +35070,11 @@
       "questionFa": "معنی «transparency» چیست؟",
       "options": [
         "محرمانگی",
-        "شفافیت",
+        "سود",
         "سرعت",
-        "سود"
+        "شفافیت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "transparency یعنی باز بودن دربارهٔ کاری که انجام می‌دهی و دلیلش."
     },
@@ -35051,12 +35087,12 @@
       "question": "What does \"dilemma\" mean?",
       "questionFa": "معنی «dilemma» چیست؟",
       "options": [
-        "پاداش",
-        "قطعی‌نامه",
         "دو راهی اخلاقی",
+        "قطعی‌نامه",
+        "پاداش",
         "مهلت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "dilemma انتخاب بین دو گزینهٔ سخت است."
     },
@@ -35265,11 +35301,11 @@
       "questionFa": "معنی «mandate» چیست؟",
       "options": [
         "گزارش",
-        "بودجه",
+        "اختیار",
         "جلسه",
-        "اختیار"
+        "بودجه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "mandate اختیار رسمی برای انجام کاری است."
     },
@@ -35282,12 +35318,12 @@
       "question": "What does \"briefing\" mean?",
       "questionFa": "معنی «briefing» چیست؟",
       "options": [
-        "جلسهٔ توجیهی",
-        "قرارداد",
         "دستورالعمل",
+        "قرارداد",
+        "جلسهٔ توجیهی",
         "مهلت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "briefing جلسهٔ کوتاهی است که واقعیت‌های لازم را می‌دهد."
     },
@@ -35301,11 +35337,11 @@
       "questionFa": "معنی «alignment» چیست؟",
       "options": [
         "رقابت",
-        "هم‌سویی",
+        "تأخیر",
         "سود",
-        "تأخیر"
+        "هم‌سویی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "alignment توافق میان آدم‌ها یا برنامه‌ها است."
     },
@@ -35505,6 +35541,24 @@
       "explanationFa": "articulate با مفعول مستقیم می‌آید، بدون about."
     },
     {
+      "id": "c1.executive.ex.10",
+      "lessonId": "c1.executive.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Under no circumstances ___ the figures leave this room.",
+      "questionFa": "تحت هیچ شرایطی این ارقام نباید از این اتاق بیرون برود.",
+      "options": [
+        "should",
+        "they should",
+        "should they",
+        "do"
+      ],
+      "correctIndex": 0,
+      "explanationFa": "عبارت منفیِ آغاز جمله وارونگی می‌سازد: should the figures leave (نه they should).",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.negotiation.ex.01",
       "lessonId": "c1.negotiation.lesson-01",
       "type": "multiple_choice",
@@ -35514,11 +35568,11 @@
       "questionFa": "معنی «deadlock» چیست؟",
       "options": [
         "امتیاز",
-        "توافق",
         "بن‌بست",
+        "توافق",
         "داوری"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "deadlock جایی است که هیچ طرفی تکان نمی‌خورد."
     },
@@ -35533,10 +35587,10 @@
       "options": [
         "مهلت قانونی",
         "سود تضمین‌شده",
-        "قرارداد محرمانه",
-        "ریسک تا مرز بحران"
+        "ریسک تا مرز بحران",
+        "قرارداد محرمانه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "brinkmanship فشار آوردن تا لبهٔ بحران برای برنده شدن است."
     },
@@ -35549,12 +35603,12 @@
       "question": "What does \"contingency\" mean?",
       "questionFa": "معنی «contingency» چیست؟",
       "options": [
-        "برنامهٔ جایگزین",
+        "غرامت",
         "قیمت پایه",
         "شاهد",
-        "غرامت"
+        "برنامهٔ جایگزین"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "contingency برنامه‌ای برای چیزی است که ممکن است پیش بیاید."
     },
@@ -35752,6 +35806,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "suit somebody یعنی به نفع کسی بودن؛ اینجا nobody با فعل مثبت می‌آید."
+    },
+    {
+      "id": "c1.negotiation.ex.10",
+      "lessonId": "c1.negotiation.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "___ we settled in March, we would be in a stronger position now.",
+      "questionFa": "اگر در مارس توافق کرده بودیم، الان در موقعیت قوی‌تری بودیم.",
+      "options": [
+        "Had",
+        "Have",
+        "Should",
+        "Were"
+      ],
+      "correctIndex": 0,
+      "explanationFa": "شرطی وارونهٔ گذشته: Had we settled = If we had settled.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.policy.ex.01",
@@ -36252,6 +36324,24 @@
       "explanationFa": "the envoy مفرد است: returns، نه return."
     },
     {
+      "id": "c1.international.ex.10",
+      "lessonId": "c1.international.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Seldom ___ the two sides agreed so quickly as they did this week.",
+      "questionFa": "به‌ندرت پیش آمده دو طرف به این سرعت توافق کنند.",
+      "options": [
+        "they have",
+        "has",
+        "did",
+        "have"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "Seldom در آغاز جمله وارونگی می‌سازد و با as they did this week به حال کامل نیاز دارد: Seldom have the two sides agreed.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.economy.ex.01",
       "lessonId": "c1.economy.lesson-01",
       "type": "multiple_choice",
@@ -36260,12 +36350,12 @@
       "question": "What does \"deficit\" mean?",
       "questionFa": "معنی «deficit» چیست؟",
       "options": [
-        "بهره",
+        "کسری",
         "مازاد",
         "تورم",
-        "کسری"
+        "بهره"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "deficit وقتی است که هزینه از درآمد بیشتر باشد."
     },
@@ -36278,12 +36368,12 @@
       "question": "What does \"stimulus\" mean?",
       "questionFa": "معنی «stimulus» چیست؟",
       "options": [
-        "محرک اقتصادی",
         "مالیات",
+        "محرک اقتصادی",
         "قرارداد",
         "بودجهٔ نظامی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "stimulus پولی است که دولت برای رشد اقتصاد خرج می‌کند."
     },
@@ -36297,11 +36387,11 @@
       "questionFa": "معنی «volatility» چیست؟",
       "options": [
         "ثبات",
-        "نوسان",
         "رشد",
+        "نوسان",
         "کسری"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "volatility سرعت بالا و پایین رفتن قیمت‌ها است."
     },
@@ -36501,6 +36591,24 @@
       "explanationFa": "years of austerity: austerity غیرقابل‌شمارش است."
     },
     {
+      "id": "c1.economy.ex.10",
+      "lessonId": "c1.economy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Not only ___ inflation rise, but unemployment also grew.",
+      "questionFa": "نه‌تنها تورم بالا رفت، بیکاری هم زیاد شد.",
+      "options": [
+        "it did",
+        "has",
+        "was",
+        "did"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "Not only در آغاز جمله کمکی پیش از فاعل می‌آورد: Not only did inflation rise.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.tech-ethics.ex.01",
       "lessonId": "c1.tech-ethics.lesson-01",
       "type": "multiple_choice",
@@ -36509,12 +36617,12 @@
       "question": "What does \"surveillance\" mean?",
       "questionFa": "معنی «surveillance» چیست؟",
       "options": [
-        "مالکیت",
-        "اجازه",
         "پایش",
+        "اجازه",
+        "مالکیت",
         "پشتیبان"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "surveillance یعنی زیر نظر گرفتن مردم، اغلب بی‌آنکه بدانند."
     },
@@ -36528,11 +36636,11 @@
       "questionFa": "معنی «opacity» چیست؟",
       "options": [
         "هزینه",
-        "دقت",
+        "ناشفافیت",
         "سرعت",
-        "ناشفافیت"
+        "دقت"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "opacity یعنی نتوان به درون چیزی دید یا توضیحش داد."
     },
@@ -36545,12 +36653,12 @@
       "question": "What does \"safeguard\" mean?",
       "questionFa": "معنی «safeguard» چیست؟",
       "options": [
-        "محافظ",
-        "قرارداد",
         "گزارش",
+        "قرارداد",
+        "محافظ",
         "جریمه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "safeguard قاعده یا ویژگی‌ای است که جلوی آسیب را می‌گیرد."
     },
@@ -36750,6 +36858,24 @@
       "explanationFa": "every با اسم مفرد و فعل مفرد می‌آید: every system needs."
     },
     {
+      "id": "c1.tech-ethics.ex.10",
+      "lessonId": "c1.tech-ethics.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Auditors ___ approve each release; a human review is enough.",
+      "questionFa": "بازرسان لازم نیست هر انتشار را تأیید کنند؛ بازبینی انسانی کافی است.",
+      "options": [
+        "cannot",
+        "must not",
+        "should not",
+        "do not have to"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "نداشتن الزام با do not have to گفته می‌شود؛ must not ممنوعیت است و با «بازبینی انسانی کافی است» نمی‌خواند.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.philosophy.ex.01",
       "lessonId": "c1.philosophy.lesson-01",
       "type": "multiple_choice",
@@ -36758,12 +36884,12 @@
       "question": "What does \"syllogism\" mean?",
       "questionFa": "معنی «syllogism» چیست؟",
       "options": [
-        "تناقض",
         "قیاس",
+        "تناقض",
         "شاهد",
         "فرضیه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "syllogism استدلالی از دو مقدمه و یک نتیجه است."
     },
@@ -36777,11 +36903,11 @@
       "questionFa": "معنی «counterexample» چیست؟",
       "options": [
         "اثبات",
-        "تعریف",
         "مثال نقض",
+        "تعریف",
         "نتیجه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "counterexample موردی است که نشان می‌دهد ادعای کلی نادرست است."
     },
@@ -36796,10 +36922,10 @@
       "options": [
         "برهان",
         "خطا",
-        "پرسش",
-        "اصل موضوع"
+        "اصل موضوع",
+        "پرسش"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "axiom گزاره‌ای است که بدون اثبات پذیرفته می‌شود."
     },
@@ -36997,6 +37123,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "entail با مفعول مستقیم: entails that conclusion."
+    },
+    {
+      "id": "c1.philosophy.ex.10",
+      "lessonId": "c1.philosophy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Were the premise false, the conclusion ___ collapse.",
+      "questionFa": "اگر مقدمه نادرست بود، نتیجه فرو می‌ریخت.",
+      "options": [
+        "had",
+        "will",
+        "should",
+        "would"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "Were + فاعل شرطی خیالی می‌سازد و جواب با would می‌آید.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.cognitive-bias.ex.01",
@@ -37248,6 +37392,24 @@
       "explanationFa": "look for confirmation: دنبال تأیید گشتن."
     },
     {
+      "id": "c1.cognitive-bias.ex.10",
+      "lessonId": "c1.cognitive-bias.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Had the panel known the base rate, it ___ have anchored on the first figure.",
+      "questionFa": "اگر پنل نرخ پایه را می‌دانست، روی نخستین عدد لنگر نمی‌انداخت.",
+      "options": [
+        "couldn't",
+        "mustn't",
+        "shouldn't",
+        "wouldn't"
+      ],
+      "correctIndex": 3,
+      "explanationFa": "شرطی مختلط: گذشتهٔ خیالی (Had known) با نتیجهٔ خیالی would not have anchored.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.statistics.ex.01",
       "lessonId": "c1.statistics.lesson-01",
       "type": "multiple_choice",
@@ -37256,12 +37418,12 @@
       "question": "What does \"correlation\" mean?",
       "questionFa": "معنی «correlation» چیست؟",
       "options": [
-        "نمونه",
+        "همبستگی",
         "علیت",
         "میانگین",
-        "همبستگی"
+        "نمونه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "correlation رابطهٔ دو چیزی است که با هم تغییر می‌کنند، نه رابطهٔ علت و معلول."
     },
@@ -37274,12 +37436,12 @@
       "question": "What does \"outlier\" mean?",
       "questionFa": "معنی «outlier» چیست؟",
       "options": [
-        "دادهٔ پرت",
         "میانه",
+        "دادهٔ پرت",
         "خطای نمونه",
         "نمودار"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "outlier مقداری است که از بقیهٔ داده‌ها دور افتاده است."
     },
@@ -37293,11 +37455,11 @@
       "questionFa": "معنی «significance» چیست؟",
       "options": [
         "دقت",
-        "معناداری",
         "سرعت",
+        "معناداری",
         "حجم"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "significance احتمال آن است که نتیجه تصادفی نباشد."
     },
@@ -37507,10 +37669,10 @@
       "options": [
         "مصاحبه",
         "تیتر",
-        "چرخش خبری",
-        "آگهی"
+        "آگهی",
+        "چرخش خبری"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "spin یعنی روایتی که خبر را به نفع یک طرف می‌چیند."
     },
@@ -37523,12 +37685,12 @@
       "question": "What does \"omission\" mean?",
       "questionFa": "معنی «omission» چیست؟",
       "options": [
-        "ترجمه",
+        "حذف",
         "افزایش",
         "تکرار",
-        "حذف"
+        "ترجمه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "omission چیزی است که آگاهانه یا از اشتباه جا افتاده است."
     },
@@ -37541,12 +37703,12 @@
       "question": "What does \"gatekeeping\" mean?",
       "questionFa": "معنی «gatekeeping» چیست؟",
       "options": [
-        "دروازه‌بانی",
         "ویرایش",
+        "دروازه‌بانی",
         "تبلیغ",
         "بایگانی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "gatekeeping قدرت تصمیم دربارهٔ این است که چه خبری به مردم برسد."
     },
@@ -37746,6 +37908,24 @@
       "explanationFa": "access to something: دسترسی به یک چیز."
     },
     {
+      "id": "c1.media-analysis.ex.10",
+      "lessonId": "c1.media-analysis.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The editor, ___ approved the story, has resigned.",
+      "questionFa": "ویرایشگری که خبر را تأیید کرده بود استعفا داد.",
+      "options": [
+        "which",
+        "that",
+        "who",
+        "whom"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "بند توضیحیِ غیرمحدودکننده پس از ویرگول با who می‌آید؛ that در آن جایز نیست.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.org-change.ex.01",
       "lessonId": "c1.org-change.lesson-01",
       "type": "multiple_choice",
@@ -37755,11 +37935,11 @@
       "questionFa": "معنی «restructuring» چیست؟",
       "options": [
         "استخدام",
-        "بازساختاردهی",
+        "آموزش",
         "بازنشستگی",
-        "آموزش"
+        "بازساختاردهی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "restructuring تغییر چگونگی سازمان‌دهی یک شرکت است."
     },
@@ -37772,12 +37952,12 @@
       "question": "What does \"downsizing\" mean?",
       "questionFa": "معنی «downsizing» چیست؟",
       "options": [
-        "گسترش",
-        "ادغام",
         "کوچک‌سازی",
+        "ادغام",
+        "گسترش",
         "برون‌سپاری"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "downsizing کم‌کردن نیرو برای کوچک‌تر کردن شرکت است."
     },
@@ -37791,11 +37971,11 @@
       "questionFa": "معنی «inertia» چیست؟",
       "options": [
         "بهره‌وری",
-        "خلاقیت",
+        "رخوت سازمانی",
         "شفافیت",
-        "رخوت سازمانی"
+        "خلاقیت"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "inertia بی‌میلی به تغییر است که وضع را همان‌طور نگه می‌دارد."
     },
@@ -37995,6 +38175,24 @@
       "explanationFa": "without + اسم: بدون همراه‌سازی."
     },
     {
+      "id": "c1.org-change.ex.10",
+      "lessonId": "c1.org-change.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "By the time the announcement came, the plant ___ closed for six weeks.",
+      "questionFa": "وقتی اطلاعیه آمد، کارخانه شش هفته بود که بسته شده بود.",
+      "options": [
+        "was",
+        "has been",
+        "had been",
+        "is"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "گذشتهٔ کامل مجهول برای کاری که پیش از رویداد دیگری کامل شده بود: had been closed.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.risk.ex.01",
       "lessonId": "c1.risk.lesson-01",
       "type": "multiple_choice",
@@ -38003,12 +38201,12 @@
       "question": "What does \"exposure\" mean?",
       "questionFa": "معنی «exposure» چیست؟",
       "options": [
-        "مواجهه",
+        "بیمه",
         "سود",
         "قرارداد",
-        "بیمه"
+        "مواجهه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "exposure نشان می‌دهد از یک ریسک چقدر ممکن است از دست بدهی."
     },
@@ -38021,12 +38219,12 @@
       "question": "What does \"mitigation\" mean?",
       "questionFa": "معنی «mitigation» چیست؟",
       "options": [
-        "افزایش سود",
         "کاهش ریسک",
+        "افزایش سود",
         "گزارش مالی",
         "بازبینی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "mitigation کاری است که ریسک را کوچک‌تر می‌کند."
     },
@@ -38040,11 +38238,11 @@
       "questionFa": "معنی «resilience» چیست؟",
       "options": [
         "دقت",
-        "سرعت",
         "تاب‌آوری",
+        "سرعت",
         "هزینه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "resilience توان بازیابی سریع پس از یک ضربه است."
     },
@@ -38242,6 +38440,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "resilient صفت و resilience اسم است."
+    },
+    {
+      "id": "c1.risk.ex.10",
+      "lessonId": "c1.risk.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "___ the supplier fail, we would lose two weeks.",
+      "questionFa": "اگر تأمین‌کننده از کار بیفتد، دو هفته از دست می‌دهیم.",
+      "options": [
+        "Were",
+        "If",
+        "Should",
+        "Had"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "شرطی رسمی با وارونگی: Should the supplier fail = If the supplier failed.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.research-reports.ex.01",
@@ -38493,6 +38709,24 @@
       "explanationFa": "last در پایان جمله یعنی «آخر»، نه «گذشته»."
     },
     {
+      "id": "c1.research-reports.ex.10",
+      "lessonId": "c1.research-reports.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The survey, ___ findings are summarised on page two, was conducted in June.",
+      "questionFa": "پیمایشی که یافته‌هایش در صفحهٔ دوم خلاصه شده در ژوئن انجام شد.",
+      "options": [
+        "that",
+        "which",
+        "whose",
+        "of which"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "مالکیت در بند موصولی با whose بیان می‌شود: whose findings.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.research-method.ex.01",
       "lessonId": "c1.research-method.lesson-01",
       "type": "multiple_choice",
@@ -38503,10 +38737,10 @@
       "options": [
         "نمونه",
         "روایی",
-        "پایایی",
-        "فرضیه"
+        "فرضیه",
+        "پایایی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "reliability یعنی یک ابزار چقدر پایدار همان نتیجه را می‌دهد."
     },
@@ -38519,12 +38753,12 @@
       "question": "What does \"replication\" mean?",
       "questionFa": "معنی «replication» چیست؟",
       "options": [
-        "پیوست",
+        "تکرارپذیری",
         "تصادفی‌سازی",
         "پرسشنامه",
-        "تکرارپذیری"
+        "پیوست"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "replication تکرار یک مطالعه برای بررسی نتیجه است."
     },
@@ -38537,12 +38771,12 @@
       "question": "What does \"longitudinal\" mean?",
       "questionFa": "معنی «longitudinal» چیست؟",
       "options": [
-        "طولی",
         "عرضی",
+        "طولی",
         "آزمایشی",
         "مقطعی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "longitudinal یعنی همان افراد را در طول چند سال دنبال کردن."
     },
@@ -38742,6 +38976,24 @@
       "explanationFa": "a longitudinal study مفرد: takes."
     },
     {
+      "id": "c1.research-method.ex.10",
+      "lessonId": "c1.research-method.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The protocol should have been recorded, ___?",
+      "questionFa": "پروتکل باید ثبت می‌شد، نه؟",
+      "options": [
+        "wasn't it",
+        "didn't it",
+        "shouldn't it",
+        "hasn't it"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "پرسش ضمیمهٔ should have been با shouldn't ساخته می‌شود، نه با didn't.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.data-interpretation.ex.01",
       "lessonId": "c1.data-interpretation.lesson-01",
       "type": "multiple_choice",
@@ -38751,11 +39003,11 @@
       "questionFa": "معنی «cohort» چیست؟",
       "options": [
         "خط پایه",
-        "گروه هم‌دوره",
+        "بخش‌بندی",
         "ناهنجاری",
-        "بخش‌بندی"
+        "گروه هم‌دوره"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "cohort گروهی از افراد است با یک نقطهٔ شروع مشترک."
     },
@@ -38768,12 +39020,12 @@
       "question": "What does \"seasonality\" mean?",
       "questionFa": "معنی «seasonality» چیست؟",
       "options": [
-        "رشد پایدار",
-        "تصادفی بودن",
         "فصلی‌بودن",
+        "تصادفی بودن",
+        "رشد پایدار",
         "خطای ثبت"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "seasonality الگویی است که هر سال تکرار می‌شود."
     },
@@ -38787,11 +39039,11 @@
       "questionFa": "معنی «anomaly» چیست؟",
       "options": [
         "شاخص",
-        "میانگین",
+        "ناهنجاری",
         "پیش‌بینی",
-        "ناهنجاری"
+        "میانگین"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "anomaly نتیجه‌ای است که در الگو نمی‌گنجد."
     },
@@ -38991,6 +39243,24 @@
       "explanationFa": "take something as the baseline: چیزی را خط پایه گرفتن."
     },
     {
+      "id": "c1.data-interpretation.ex.10",
+      "lessonId": "c1.data-interpretation.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The second quarter was ___ stronger than the first.",
+      "questionFa": "سه‌ماههٔ دوم به‌مراتب از اولی قوی‌تر بود.",
+      "options": [
+        "consider",
+        "considerable",
+        "considerably",
+        "considering"
+      ],
+      "correctIndex": 2,
+      "explanationFa": "درجهٔ قید considerably است؛ considerable صفت است و پیش از stronger نمی‌آید.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.org-culture.ex.01",
       "lessonId": "c1.org-culture.lesson-01",
       "type": "multiple_choice",
@@ -38999,12 +39269,12 @@
       "question": "What does \"hierarchy\" mean?",
       "questionFa": "معنی «hierarchy» چیست؟",
       "options": [
-        "سلسله‌مراتب",
+        "بازخورد",
         "فرهنگ",
         "آیین",
-        "بازخورد"
+        "سلسله‌مراتب"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "hierarchy سطوح اختیار در یک سازمان است."
     },
@@ -39017,12 +39287,12 @@
       "question": "What does \"silo\" mean?",
       "questionFa": "معنی «silo» چیست؟",
       "options": [
-        "جلسهٔ هفتگی",
         "جزیرهٔ سازمانی",
+        "جلسهٔ هفتگی",
         "ارزش مشترک",
         "نرخ ریزش"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "silo تیمی است که اطلاعات را برای خودش نگه می‌دارد."
     },
@@ -39036,11 +39306,11 @@
       "questionFa": "معنی «attrition» چیست؟",
       "options": [
         "آموزش",
-        "استخدام",
         "ریزش نیرو",
+        "استخدام",
         "ارتقا"
       ],
-      "correctIndex": 2,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "attrition خارج شدن افراد از شرکت سریع‌تر از جایگزینی‌شان است."
     },
@@ -39250,10 +39520,10 @@
       "options": [
         "جعل داده",
         "محرمانگی",
-        "رضایت آگاهانه",
-        "ناشناس‌بودن"
+        "ناشناس‌بودن",
+        "رضایت آگاهانه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "anonymity یعنی هویت فرد پنهان بماند؛ confidentiality دربارهٔ اطلاعات است."
     },
@@ -39266,12 +39536,12 @@
       "question": "What does \"plagiarism\" mean?",
       "questionFa": "معنی «plagiarism» چیست؟",
       "options": [
-        "سرقت علمی",
+        "خطای نمونه‌گیری",
         "تخلف مالی",
         "بازبینی همتا",
-        "خطای نمونه‌گیری"
+        "سرقت علمی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "plagiarism یعنی کار دیگری را به نام خود آوردن."
     },
@@ -39284,12 +39554,12 @@
       "question": "What does \"misconduct\" mean?",
       "questionFa": "معنی «misconduct» چیست؟",
       "options": [
-        "محرمانگی",
         "تخلف",
+        "محرمانگی",
         "پایایی",
         "بازبینی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "misconduct رفتار نادرست کسی است که به او اعتماد شده است."
     },
@@ -39488,6 +39758,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "break confidentiality: نقض محرمانگی."
+    },
+    {
+      "id": "c1.research-ethics.ex.10",
+      "lessonId": "c1.research-ethics.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The data ___ have been anonymised before the audit; the names were still in the file.",
+      "questionFa": "داده‌ها باید پیش از ممیزی ناشناس می‌شدند؛ نام‌ها هنوز در فایل بود.",
+      "options": [
+        "must",
+        "should",
+        "can",
+        "may"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "سرزنشِ کاری که انجام نشده با should have been گفته می‌شود؛ must have been ادعای قطعیت می‌کند که با شاهد جمله نمی‌خواند.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.diversity-inclusion.ex.01",
@@ -39739,6 +40027,24 @@
       "explanationFa": "بند غیرتعریفی با کاما و who؛ در نسخهٔ تعریفی کاما حذف می‌شود."
     },
     {
+      "id": "c1.diversity-inclusion.ex.10",
+      "lessonId": "c1.diversity-inclusion.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The policy, ___ excludes part-time staff, is not inclusive.",
+      "questionFa": "سیاستی که کارکنان پاره‌وقت را حذف می‌کند فراگیر نیست.",
+      "options": [
+        "that",
+        "which",
+        "who",
+        "what"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "بند توضیحی غیرمحدودکننده با which می‌آید و that در آن جایز نیست.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.business-sustainability.ex.01",
       "lessonId": "c1.business-sustainability.lesson-01",
       "type": "multiple_choice",
@@ -39748,11 +40054,11 @@
       "questionFa": "معنی «footprint» چیست؟",
       "options": [
         "چرخهٔ عمر",
-        "رد پا (محیطی)",
         "سرپرستی مسئولانه",
+        "رد پا (محیطی)",
         "خرید و تأمین"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "footprint هزینهٔ محیطی یک فعالیت است، معمولاً carbon footprint."
     },
@@ -39767,10 +40073,10 @@
       "options": [
         "بسته‌بندی",
         "تجزیه‌پذیری",
-        "چرخهٔ عمر",
-        "ممیزی"
+        "ممیزی",
+        "چرخهٔ عمر"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "lifecycle کل عمر محصول از ساخت تا دورریز است."
     },
@@ -39783,12 +40089,12 @@
       "question": "What does \"stewardship\" mean?",
       "questionFa": "معنی «stewardship» چیست؟",
       "options": [
-        "طراحی چرخه‌ای",
+        "سرپرستی مسئولانه",
         "خرید و تأمین",
         "رد پا",
-        "سرپرستی مسئولانه"
+        "طراحی چرخه‌ای"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "stewardship مراقبت از چیزی است که مالک آن نیستی."
     },
@@ -39989,6 +40295,24 @@
       "explanationFa": "start with: با چیزی شروع شدن."
     },
     {
+      "id": "c1.business-sustainability.ex.10",
+      "lessonId": "c1.business-sustainability.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "___ the packaging compostable, the line would qualify.",
+      "questionFa": "اگر بسته‌بندی تجزیه‌پذیر بود، خط تولید واجد شرایط می‌شد.",
+      "options": [
+        "Was",
+        "Were",
+        "If",
+        "Had"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "Were + گروه اسمی/صفت شرطی خیالی می‌سازد: Were the packaging compostable.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.semantic-nuance.ex.01",
       "lessonId": "c1.semantic-nuance.lesson-01",
       "type": "multiple_choice",
@@ -39997,12 +40321,12 @@
       "question": "What does \"nuance\" mean?",
       "questionFa": "معنی «nuance» چیست؟",
       "options": [
-        "تفاوت ظریف",
-        "معنی صریح",
         "اغراق",
+        "معنی صریح",
+        "تفاوت ظریف",
         "هم‌معنا"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "nuance تفاوت کوچک در معنی یا لحن است."
     },
@@ -40016,11 +40340,11 @@
       "questionFa": "معنی «euphemism» چیست؟",
       "options": [
         "تحقیر",
-        "تعبیر خوش‌بینانه",
+        "هم‌معنا",
         "اغراق",
-        "هم‌معنا"
+        "تعبیر خوش‌بینانه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "euphemism واژه‌ای ملایم برای معنایی ناخوشایند است."
     },
@@ -40033,12 +40357,12 @@
       "question": "What does \"hyperbole\" mean?",
       "questionFa": "معنی «hyperbole» چیست؟",
       "options": [
-        "معنی صریح",
-        "تفاوت ظریف",
         "اغراق",
+        "تفاوت ظریف",
+        "معنی صریح",
         "درشتی لحن"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "hyperbole اغراق عامدانه است و نباید تحت‌اللفظی فهمیده شود."
     },
@@ -40239,6 +40563,24 @@
       "explanationFa": "denotation معنی صریح است، نه بار احساسی."
     },
     {
+      "id": "c1.semantic-nuance.ex.10",
+      "lessonId": "c1.semantic-nuance.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The second word is ___ less loaded than the first.",
+      "questionFa": "واژهٔ دوم به‌مراتب بار عاطفی کمتری از اولی دارد.",
+      "options": [
+        "very",
+        "far",
+        "too",
+        "so"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "درجهٔ مقایسه با far less تقویت می‌شود؛ very less در انگلیسی معیار نیست.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.argumentation.ex.01",
       "lessonId": "c1.argumentation.lesson-01",
       "type": "multiple_choice",
@@ -40249,10 +40591,10 @@
       "options": [
         "تقویت استدلال حریف",
         "بار اثبات",
-        "پاسخ متقابل",
-        "حملهٔ شخصی"
+        "حملهٔ شخصی",
+        "پاسخ متقابل"
       ],
-      "correctIndex": 3,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "ad hominem به شخص حمله می‌کند، نه به استدلال."
     },
@@ -40265,12 +40607,12 @@
       "question": "What does \"steelman\" mean?",
       "questionFa": "معنی «steelman» چیست؟",
       "options": [
-        "تقویت استدلال حریف",
+        "مشروط کردن ادعا",
         "حملهٔ شخصی",
         "مجوز استدلال",
-        "مشروط کردن ادعا"
+        "تقویت استدلال حریف"
       ],
-      "correctIndex": 0,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "steelman یعنی ادعای حریف را در قوی‌ترین شکلش بازگو کردن."
     },
@@ -40283,12 +40625,12 @@
       "question": "What does \"burden of proof\" mean?",
       "questionFa": "معنی «burden of proof» چیست؟",
       "options": [
-        "پاسخ متقابل",
         "بار اثبات",
+        "پاسخ متقابل",
         "نتیجهٔ منطقی",
         "مجوز استدلال"
       ],
-      "correctIndex": 1,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "burden of proof وظیفهٔ ارائهٔ شاهد برای ادعاست."
     },
@@ -40487,6 +40829,24 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "Rarely در آغاز جمله وارونگی می‌سازد: Rarely is…."
+    },
+    {
+      "id": "c1.argumentation.ex.10",
+      "lessonId": "c1.argumentation.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The claim would have been stronger ___ the authors qualified it.",
+      "questionFa": "ادعا قوی‌تر می‌بود اگر نویسندگان آن را مشروط می‌کردند.",
+      "options": [
+        "if had",
+        "had",
+        "would",
+        "were"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "شرطی وارونهٔ گذشته: had the authors qualified it = if the authors had qualified it.",
+      "skill": "GRAMMAR"
     },
     {
       "id": "c1.proposals.ex.01",
@@ -40738,6 +41098,24 @@
       "explanationFa": "lower but slower: تفضیلی و مقایسهٔ دو ویژگی."
     },
     {
+      "id": "c1.proposals.ex.10",
+      "lessonId": "c1.proposals.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "We will not start in May ___ the client approves the scope.",
+      "questionFa": "اگر مشتری محدوده را تأیید نکند، در ماه مه شروع نمی‌کنیم.",
+      "options": [
+        "if",
+        "unless",
+        "whether",
+        "until"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "با فعل منفی، شرط استثنا با unless گفته می‌شود.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.stakeholders.ex.01",
       "lessonId": "c1.stakeholders.lesson-01",
       "type": "multiple_choice",
@@ -40747,11 +41125,11 @@
       "questionFa": "معنی «liaison» چیست؟",
       "options": [
         "حامی درون‌سازمانی",
-        "رابط",
         "انتظار",
+        "رابط",
         "آهنگ تکرار"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "liaison کسی است که دو گروه را در تماس نگه می‌دارد."
     },
@@ -40766,10 +41144,10 @@
       "options": [
         "آهنگ تکرار",
         "مشارکت‌جویی",
-        "ارجاع به سطح بالاتر",
-        "انتظار"
+        "انتظار",
+        "ارجاع به سطح بالاتر"
       ],
-      "correctIndex": 2,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "escalation بالا بردن یک موضوع به کسی با اختیار بیشتر است."
     },
@@ -40782,12 +41160,12 @@
       "question": "What does \"champion\" mean?",
       "questionFa": "معنی «champion» چیست؟",
       "options": [
-        "برنامهٔ ارتباط",
+        "حامی درون‌سازمانی",
         "رابط",
         "مسیر ارجاع",
-        "حامی درون‌سازمانی"
+        "برنامهٔ ارتباط"
       ],
-      "correctIndex": 3,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "champion در این بافت کسی است که از پروژه در سازمان دفاع می‌کند."
     },
@@ -40987,6 +41365,24 @@
       "explanationFa": "liaison with: رابط با چه نهادی."
     },
     {
+      "id": "c1.stakeholders.ex.10",
+      "lessonId": "c1.stakeholders.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The board asked when ___.",
+      "questionFa": "هیئت‌مدیره پرسید آزمون آزمایشی چه زمانی شروع می‌شود.",
+      "options": [
+        "would the pilot start",
+        "the pilot would start",
+        "the pilot will start",
+        "will the pilot start"
+      ],
+      "correctIndex": 1,
+      "explanationFa": "در سؤال نقل‌شده ترتیب جمله خبری است و فعل به گذشتهٔ نقل برمی‌گردد: when the pilot would start.",
+      "skill": "GRAMMAR"
+    },
+    {
       "id": "c1.specialist-presentations.ex.01",
       "lessonId": "c1.specialist-presentations.lesson-01",
       "type": "multiple_choice",
@@ -40995,12 +41391,12 @@
       "question": "What does \"jargon\" mean?",
       "questionFa": "معنی «jargon» چیست؟",
       "options": [
-        "اصطلاح تخصصی",
-        "نکتهٔ کلیدی",
         "سلب مسئولیت",
+        "نکتهٔ کلیدی",
+        "اصطلاح تخصصی",
         "مرور گام‌به‌گام"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "jargon واژه‌هایی است که فقط اهل فن می‌فهمند."
     },
@@ -41014,11 +41410,11 @@
       "questionFa": "معنی «takeaway» چیست؟",
       "options": [
         "نشانه‌گذاری",
-        "نکتهٔ کلیدی",
+        "سلب مسئولیت",
         "تجسم داده",
-        "سلب مسئولیت"
+        "نکتهٔ کلیدی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "takeaway تنها ایده‌ای است که مخاطب باید به یاد بسپارد."
     },
@@ -41031,12 +41427,12 @@
       "question": "What does \"disclaimer\" mean?",
       "questionFa": "معنی «disclaimer» چیست؟",
       "options": [
-        "اصطلاح تخصصی",
-        "تجسم داده",
         "سلب مسئولیت",
+        "تجسم داده",
+        "اصطلاح تخصصی",
         "مرور گام‌به‌گام"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "disclaimer دامنهٔ یک ادعا را محدود می‌کند."
     },
@@ -41245,11 +41641,11 @@
       "questionFa": "معنی «vocation» چیست؟",
       "options": [
         "چرخش مسیر شغلی",
-        "ارزیابی عملکرد",
+        "رسالت شغلی",
         "مدت اخطار",
-        "رسالت شغلی"
+        "ارزیابی عملکرد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "vocation کاری است که آدم حس می‌کند برای آن ساخته شده است."
     },
@@ -41262,12 +41658,12 @@
       "question": "What does \"appraisal\" mean?",
       "questionFa": "معنی «appraisal» چیست؟",
       "options": [
-        "ارزیابی عملکرد",
-        "مرخصی مطالعاتی",
         "کار مستقل",
+        "مرخصی مطالعاتی",
+        "ارزیابی عملکرد",
         "رسالت شغلی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "appraisal بررسی دوره‌ای عملکرد کاری است."
     },
@@ -41281,11 +41677,11 @@
       "questionFa": "معنی «sabbatical» چیست؟",
       "options": [
         "چرخش مسیر شغلی",
-        "مرخصی مطالعاتی",
+        "ارزیابی عملکرد",
         "مدت اخطار",
-        "ارزیابی عملکرد"
+        "مرخصی مطالعاتی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "sabbatical وقفهٔ بلندمدت از کار برای یادگیری یا استراحت است."
     },
@@ -41493,12 +41889,12 @@
       "question": "What does \"standpoint\" mean?",
       "questionFa": "معنی «standpoint» چیست؟",
       "options": [
-        "ارائهٔ نادرست",
-        "نقطهٔ مقابل",
         "دیدگاه",
+        "نقطهٔ مقابل",
+        "ارائهٔ نادرست",
         "گزینش گزینشی شواهد"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "standpoint موقعیتی است که از آن دربارهٔ یک موضوع داوری می‌شود."
     },
@@ -41512,11 +41908,11 @@
       "questionFa": "معنی «cherry-pick» چیست؟",
       "options": [
         "ارزیابی منصفانه",
-        "ارائهٔ نادرست",
+        "گزینش گزینشی شواهد",
         "نقطهٔ مقابل",
-        "گزینش گزینشی شواهد"
+        "ارائهٔ نادرست"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "cherry-pick یعنی فقط شواهد موافق را انتخاب کردن."
     },
@@ -41529,12 +41925,12 @@
       "question": "What does \"one-sided\" mean?",
       "questionFa": "معنی «one-sided» چیست؟",
       "options": [
-        "یک‌طرفه",
-        "منصف",
         "دیدگاه",
+        "منصف",
+        "یک‌طرفه",
         "نقطهٔ مقابل"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "one-sided فقط یک بخش روایت را نشان می‌دهد."
     },
@@ -41743,11 +42139,11 @@
       "questionFa": "معنی «idiolect» چیست؟",
       "options": [
         "گونهٔ گروه اجتماعی",
-        "گویش فردی",
+        "تصحیح افراطی",
         "دوزبان‌گونگی",
-        "تصحیح افراطی"
+        "گویش فردی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "idiolect شیوهٔ گفتار یک فرد است، نه یک گروه."
     },
@@ -41760,12 +42156,12 @@
       "question": "What does \"sociolect\" mean?",
       "questionFa": "معنی «sociolect» چیست؟",
       "options": [
-        "تغییر زبان در گفتار",
-        "زبان محلی",
         "گونهٔ گروه اجتماعی",
+        "زبان محلی",
+        "تغییر زبان در گفتار",
         "گویش فردی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "sociolect گونه‌ای است که یک گروه اجتماعی به کار می‌برد."
     },
@@ -41779,11 +42175,11 @@
       "questionFa": "معنی «vernacular» چیست؟",
       "options": [
         "گونهٔ گروه اجتماعی",
-        "تصحیح افراطی",
+        "زبان محلی",
         "دوزبان‌گونگی",
-        "زبان محلی"
+        "تصحیح افراطی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "vernacular زبان روزمرهٔ همان منطقه است."
     },
@@ -41990,12 +42386,12 @@
       "question": "What does \"anaphora\" mean?",
       "questionFa": "معنی «anaphora» چیست؟",
       "options": [
-        "ارجاع پس‌رو",
-        "پیش‌فرض نهفته",
         "نوبت‌گیری در گفتگو",
+        "پیش‌فرض نهفته",
+        "ارجاع پس‌رو",
         "انسجام معنایی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "anaphora اشارهٔ ضمیر یا واژه به چیزی است که پیش‌تر آمده است."
     },
@@ -42009,11 +42405,11 @@
       "questionFa": "معنی «presupposition» چیست؟",
       "options": [
         "برجسته‌سازی موضوع",
-        "پیش‌فرض نهفته",
+        "ارجاع پس‌رو",
         "بافت‌مندی متنی",
-        "ارجاع پس‌رو"
+        "پیش‌فرض نهفته"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "presupposition چیزی است که جمله آن را مسلّم می‌گیرد."
     },
@@ -42026,12 +42422,12 @@
       "question": "What does \"coherence\" mean?",
       "questionFa": "معنی «coherence» چیست؟",
       "options": [
-        "پیش‌فرض نهفته",
-        "نوبت‌گیری در گفتگو",
         "انسجام معنایی",
+        "نوبت‌گیری در گفتگو",
+        "پیش‌فرض نهفته",
         "برجسته‌سازی موضوع"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "coherence منطق و پیوستگی معنایی متن است."
     },
@@ -42239,11 +42635,11 @@
       "questionFa": "معنی «epistemology» چیست؟",
       "options": [
         "همان‌گویی",
-        "هستی‌شناسی",
+        "شناخت‌شناسی",
         "غایت‌شناسی",
-        "شناخت‌شناسی"
+        "هستی‌شناسی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "epistemology مطالعهٔ دانش و توجیه آن است."
     },
@@ -42256,12 +42652,12 @@
       "question": "What does \"tautology\" mean?",
       "questionFa": "معنی «tautology» چیست؟",
       "options": [
-        "همان‌گویی",
-        "دیالکتیک",
         "شک‌گرایی",
+        "دیالکتیک",
+        "همان‌گویی",
         "شناخت‌شناسی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "tautology جمله‌ای است که فقط با تکرار خودش درست است."
     },
@@ -42275,11 +42671,11 @@
       "questionFa": "معنی «teleology» چیست؟",
       "options": [
         "هستی‌شناسی",
-        "غایت‌شناسی",
+        "دیالکتیک",
         "شک‌گرایی",
-        "دیالکتیک"
+        "غایت‌شناسی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "teleology توضیح یک چیز با هدف و کارکرد آن است."
     },
@@ -42486,12 +42882,12 @@
       "question": "What does \"oratory\" mean?",
       "questionFa": "معنی «oratory» چیست؟",
       "options": [
-        "آهنگ صدا",
-        "نکتهٔ اصلی",
         "سخنوری",
+        "نکتهٔ اصلی",
+        "آهنگ صدا",
         "کلمه‌به‌کلمه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "oratory مهارت سخن گفتن رسمی برای مخاطب است."
     },
@@ -42505,11 +42901,11 @@
       "questionFa": "معنی «gist» چیست؟",
       "options": [
         "سخنوری",
-        "برگردان (اجرا)",
+        "نکتهٔ اصلی",
         "بی‌آماده‌سازی",
-        "نکتهٔ اصلی"
+        "برگردان (اجرا)"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "gist جان کلام است، نه واژه‌های دقیق."
     },
@@ -42522,12 +42918,12 @@
       "question": "What does \"verbatim\" mean?",
       "questionFa": "معنی «verbatim» چیست؟",
       "options": [
-        "کلمه‌به‌کلمه",
-        "آهنگ صدا",
         "نکتهٔ اصلی",
+        "آهنگ صدا",
+        "کلمه‌به‌کلمه",
         "برگردان (اجرا)"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "verbatim یعنی عیناً با همان واژه‌ها."
     },
@@ -42735,11 +43131,11 @@
       "questionFa": "معنی «ethos» چیست؟",
       "options": [
         "شور عاطفی",
-        "اعتبار گوینده",
+        "حکایت شخصی",
         "برجستگی ذهنی",
-        "حکایت شخصی"
+        "اعتبار گوینده"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "ethos اعتباری است که گوینده نزد مخاطب به دست می‌آورد."
     },
@@ -42752,12 +43148,12 @@
       "question": "What does \"pathos\" mean?",
       "questionFa": "معنی «pathos» چیست؟",
       "options": [
-        "اعتبار گوینده",
-        "استدلال منطقی",
         "شور عاطفی",
+        "استدلال منطقی",
+        "اعتبار گوینده",
         "واکسینه‌سازی مخاطب"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "pathos توسل به احساسات مخاطب است."
     },
@@ -42771,11 +43167,11 @@
       "questionFa": "معنی «salience» چیست؟",
       "options": [
         "شور عاطفی",
-        "حکایت شخصی",
+        "برجستگی ذهنی",
         "استدلال منطقی",
-        "برجستگی ذهنی"
+        "حکایت شخصی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "salience یعنی چیزی در توجه مخاطب برجسته شود."
     },
@@ -42982,12 +43378,12 @@
       "question": "What does \"thesis\" mean?",
       "questionFa": "معنی «thesis» چیست؟",
       "options": [
-        "ادعای اصلی",
-        "پانویس",
         "تک‌نگاشت",
+        "پانویس",
+        "ادعای اصلی",
         "تفسیر متن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "thesis ادعای مرکزی یک متن آکادمیک است."
     },
@@ -43001,11 +43397,11 @@
       "questionFa": "معنی «citation» چیست؟",
       "options": [
         "چکیده",
-        "ارجاع",
+        "ادعای اصلی",
         "پانویس",
-        "ادعای اصلی"
+        "ارجاع"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "citation نشان می‌دهد یک ادعا از کجا آمده است."
     },
@@ -43018,12 +43414,12 @@
       "question": "What does \"monograph\" mean?",
       "questionFa": "معنی «monograph» چیست؟",
       "options": [
-        "ارجاع",
-        "تفسیر متن",
         "تک‌نگاشت",
+        "تفسیر متن",
+        "ارجاع",
         "چکیده"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "monograph پژوهشی کتاب‌طول دربارهٔ یک موضوع است."
     },
@@ -43231,11 +43627,11 @@
       "questionFa": "معنی «redundancy» چیست؟",
       "options": [
         "فهرست اصلاحات",
-        "یکدستی",
+        "افزون‌گویی",
         "نمونه‌خوانی",
-        "افزون‌گویی"
+        "یکدستی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "redundancy تکرار معنایی است که متن را سنگین می‌کند."
     },
@@ -43248,12 +43644,12 @@
       "question": "What does \"errata\" mean?",
       "questionFa": "معنی «errata» چیست؟",
       "options": [
-        "فهرست اصلاحات",
-        "شیوهٔ نشر",
         "بازنویسی کردن",
+        "شیوهٔ نشر",
+        "فهرست اصلاحات",
         "افزون‌گویی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "errata فهرست چاپ‌شدهٔ اصلاحات است؛ مفرد آن erratum."
     },
@@ -43267,11 +43663,11 @@
       "questionFa": "معنی «house style» چیست؟",
       "options": [
         "نمونه‌خوانی",
-        "شیوهٔ نشر",
+        "فهرست اصلاحات",
         "یکدستی",
-        "فهرست اصلاحات"
+        "شیوهٔ نشر"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "house style قراردادهای یک ناشر برای همهٔ متن‌هایش است."
     },
@@ -43478,12 +43874,12 @@
       "question": "What does \"synthesis\" mean?",
       "questionFa": "معنی «synthesis» چیست؟",
       "options": [
-        "رده‌بندی",
-        "فشرده‌سازی",
         "ترکیب منابع",
+        "فشرده‌سازی",
+        "رده‌بندی",
         "ارجاع متقابل"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "synthesis چند منبع را در یک روایت به هم می‌بندد."
     },
@@ -43497,11 +43893,11 @@
       "questionFa": "معنی «distillation» چیست؟",
       "options": [
         "ترکیب منابع",
-        "فراتحلیل",
+        "فشرده‌سازی",
         "رفع ابهام کردن",
-        "فشرده‌سازی"
+        "فراتحلیل"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "distillation کاهش متن به جانِ مطلب است."
     },
@@ -43514,12 +43910,12 @@
       "question": "What does \"taxonomy\" mean?",
       "questionFa": "معنی «taxonomy» چیست؟",
       "options": [
-        "رده‌بندی",
-        "ارجاع متقابل",
         "فشرده‌سازی",
+        "ارجاع متقابل",
+        "رده‌بندی",
         "فراتحلیل"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "taxonomy نظام دسته‌بندی است."
     },
@@ -43727,11 +44123,11 @@
       "questionFa": "معنی «soundness» چیست؟",
       "options": [
         "دور استدلال",
-        "درستی استدلال",
+        "استنتاج",
         "سور",
-        "استنتاج"
+        "درستی استدلال"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "soundness یعنی استدلال هم شکل معتبر دارد و هم مقدمه‌های راست."
     },
@@ -43744,12 +44140,12 @@
       "question": "What does \"equivocation\" mean?",
       "questionFa": "معنی «equivocation» چیست؟",
       "options": [
-        "دور استدلال",
-        "خوش‌بینانه‌ترین خوانش",
         "چندپهلویی یک واژه",
+        "خوش‌بینانه‌ترین خوانش",
+        "دور استدلال",
         "استنتاج"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "equivocation یعنی یک واژه در دو معنا در همان استدلال به کار برود."
     },
@@ -43763,11 +44159,11 @@
       "questionFa": "معنی «quantifier» چیست؟",
       "options": [
         "چندپهلویی یک واژه",
-        "استنتاج",
+        "سور",
         "درستی استدلال",
-        "سور"
+        "استنتاج"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "quantifier واژه‌ای مانند all یا some است که دامنهٔ ادعا را تعیین می‌کند."
     },
@@ -43974,12 +44370,12 @@
       "question": "What does \"pidgin\" mean?",
       "questionFa": "معنی «pidgin» چیست؟",
       "options": [
-        "زبان آمیختهٔ تماسی",
-        "کرئول",
         "مرز گویشی",
+        "کرئول",
+        "زبان آمیختهٔ تماسی",
         "گویش محلی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "pidgin زبانی ساده‌شده برای ارتباط دو گروه است و گویشور بومی ندارد."
     },
@@ -43993,11 +44389,11 @@
       "questionFa": "معنی «creole» چیست؟",
       "options": [
         "زبان آمیختهٔ تماسی",
-        "کرئول",
+        "طنین تودماغی لهجه",
         "r-تلفظ‌کن",
-        "طنین تودماغی لهجه"
+        "کرئول"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "creole زبانی است که از پیدگین زاده شده و زبان اول یک جامعه شده است."
     },
@@ -44010,12 +44406,12 @@
       "question": "What does \"rhotic\" mean?",
       "questionFa": "معنی «rhotic» چیست؟",
       "options": [
-        "مرز گویشی",
-        "گویش محلی",
         "r-تلفظ‌کن",
+        "گویش محلی",
+        "مرز گویشی",
         "کرئول"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "rhotic یعنی لهجه‌ای که r پس از واکه را تلفظ می‌کند."
     },
@@ -44223,11 +44619,11 @@
       "questionFa": "معنی «implicature» چیست؟",
       "options": [
         "واکنش شنونده",
-        "اشاره‌گری",
+        "معنای ضمنی",
         "اصل گفتگو",
-        "معنای ضمنی"
+        "اشاره‌گری"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "implicature معنایی است که گوینده می‌رساند، بی‌آنکه بگوید."
     },
@@ -44240,12 +44636,12 @@
       "question": "What does \"deixis\" mean?",
       "questionFa": "معنی «deixis» چیست؟",
       "options": [
-        "اشاره‌گری",
-        "غیرمستقیم‌گویی",
         "معنای ضمنی",
+        "غیرمستقیم‌گویی",
+        "اشاره‌گری",
         "نیروی کنشی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "deixis یعنی واژه‌هایی مانند here و now که به موقعیت گفتار اشاره می‌کنند."
     },
@@ -44259,11 +44655,11 @@
       "questionFa": "معنی «illocutionary» چیست؟",
       "options": [
         "واکنش شنونده",
-        "نیروی کنشی",
+        "اشاره‌گری",
         "اصل گفتگو",
-        "اشاره‌گری"
+        "نیروی کنشی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "illocutionary force یعنی کاری که جمله با گفتنش انجام می‌دهد، مانند هشدار دادن."
     },
@@ -44470,12 +44866,12 @@
       "question": "What does \"allusion\" mean?",
       "questionFa": "معنی «allusion» چیست؟",
       "options": [
-        "ترجمهٔ ساختاری",
-        "وامواژه",
         "تلمیح",
+        "وامواژه",
+        "ترجمهٔ ساختاری",
         "ضرب‌المثل"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "allusion اشارهٔ غیرمستقیم به متنی آشناست."
     },
@@ -44489,11 +44885,11 @@
       "questionFa": "معنی «loanword» چیست؟",
       "options": [
         "اصطلاح",
-        "ترجمهٔ ساختاری",
+        "وامواژه",
         "شوک فرهنگی",
-        "وامواژه"
+        "ترجمهٔ ساختاری"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "loanword واژه‌ای است که از زبانی دیگر بدون ترجمه وارد شده است."
     },
@@ -44506,12 +44902,12 @@
       "question": "What does \"calque\" mean?",
       "questionFa": "معنی «calque» چیست؟",
       "options": [
-        "ترجمهٔ ساختاری",
-        "تلمیح",
         "وامواژه",
+        "تلمیح",
+        "ترجمهٔ ساختاری",
         "ضرب‌المثل"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "calque ترجمهٔ کلمه‌به‌کلمهٔ یک عبارت از زبان دیگر است."
     },
@@ -44719,11 +45115,11 @@
       "questionFa": "معنی «archetype» چیست؟",
       "options": [
         "بن‌مایه",
-        "الگوی کهن",
+        "بازآفرینی",
         "سرلوحه",
-        "بازآفرینی"
+        "الگوی کهن"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "archetype الگوی اولیه‌ای است که آثار بعدی تکرارش می‌کنند."
     },
@@ -44736,12 +45132,12 @@
       "question": "What does \"motif\" mean?",
       "questionFa": "معنی «motif» چیست؟",
       "options": [
-        "تقلید سبک",
-        "الگوی کهن",
         "بن‌مایه",
+        "الگوی کهن",
+        "تقلید سبک",
         "ادای احترام هنری"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "motif تصویر یا اندیشه‌ای است که در یک اثر تکرار می‌شود."
     },
@@ -44755,11 +45151,11 @@
       "questionFa": "معنی «epigraph» چیست؟",
       "options": [
         "تقلید سبک",
-        "بن‌مایه",
+        "سرلوحه",
         "بازآفرینی",
-        "سرلوحه"
+        "بن‌مایه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "epigraph نقل‌قول کوتاهی در آغاز کتاب یا فصل است."
     },
@@ -44966,12 +45362,12 @@
       "question": "What does \"rewording\" mean?",
       "questionFa": "معنی «rewording» چیست؟",
       "options": [
-        "بازنویسی",
-        "تحریف معنا",
         "دورگویی",
+        "تحریف معنا",
+        "بازنویسی",
         "وفاداری به معنا"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "rewording همان محتوا را با واژه‌های دیگر و بدون کوتاه‌کردن می‌آورد."
     },
@@ -44985,11 +45381,11 @@
       "questionFa": "معنی «fidelity» چیست؟",
       "options": [
         "هم‌معنایی",
-        "وفاداری به معنا",
+        "بازنویسی",
         "توضیح کوتاه",
-        "بازنویسی"
+        "وفاداری به معنا"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "fidelity یعنی چقدر نسخهٔ تازه معنای اصل را نگه داشته است."
     },
@@ -45002,12 +45398,12 @@
       "question": "What does \"distortion\" mean?",
       "questionFa": "معنی «distortion» چیست؟",
       "options": [
-        "وفاداری به معنا",
-        "دورگویی",
         "تحریف معنا",
+        "دورگویی",
+        "وفاداری به معنا",
         "توضیح کوتاه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "distortion تغییری است که معنای اصل را جابه‌جا می‌کند."
     },
@@ -45215,11 +45611,11 @@
       "questionFa": "معنی «literalism» چیست؟",
       "options": [
         "اقتباس",
-        "آوانویسی",
+        "ترجمهٔ تحت‌اللفظی",
         "بومی‌سازی",
-        "ترجمهٔ تحت‌اللفظی"
+        "آوانویسی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "literalism ترجمهٔ کلمه‌به‌کلمه است که به شیوهٔ زبان مقصد توجه نمی‌کند."
     },
@@ -45232,12 +45628,12 @@
       "question": "What does \"domestication\" mean?",
       "questionFa": "معنی «domestication» چیست؟",
       "options": [
-        "بومی‌سازی",
-        "بیگانه‌سازی",
         "آوانویسی",
+        "بیگانه‌سازی",
+        "بومی‌سازی",
         "مترجم شفاهی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "domestication متن را به فرهنگ خواننده نزدیک می‌کند."
     },
@@ -45251,11 +45647,11 @@
       "questionFa": "معنی «foreignization» چیست؟",
       "options": [
         "اقتباس",
-        "بیگانه‌سازی",
+        "ترجمهٔ تحت‌اللفظی",
         "بومی‌سازی",
-        "ترجمهٔ تحت‌اللفظی"
+        "بیگانه‌سازی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "foreignization تفاوت فرهنگ مبدأ را در متن نگه می‌دارد."
     },
@@ -45462,12 +45858,12 @@
       "question": "What does \"tact\" mean?",
       "questionFa": "معنی «tact» چیست؟",
       "options": [
-        "میانجی",
-        "قابلیت انکار",
         "ظرافت در گفتار",
+        "قابلیت انکار",
+        "میانجی",
         "کانال غیررسمی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "tact مهارت گفتن حرف سخت بدون رنجاندن است."
     },
@@ -45481,11 +45877,11 @@
       "questionFa": "معنی «broach» چیست؟",
       "options": [
         "قابلیت انکار",
-        "سند غیررسمی",
+        "مطرح کردن موضوع حساس",
         "میانجی",
-        "مطرح کردن موضوع حساس"
+        "سند غیررسمی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "broach یعنی موضوعی حساس را برای گفتگو باز کردن."
     },
@@ -45498,12 +45894,12 @@
       "question": "What does \"deniability\" mean?",
       "questionFa": "معنی «deniability» چیست؟",
       "options": [
-        "قابلیت انکار",
-        "کانال غیررسمی",
         "ظرافت در گفتار",
+        "کانال غیررسمی",
+        "قابلیت انکار",
         "سند غیررسمی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "deniability یعنی امکان انکار اینکه چیزی گفته یا توافق شده است."
     },
@@ -45711,11 +46107,11 @@
       "questionFa": "معنی «layperson» چیست؟",
       "options": [
         "متخصصِ در عمل",
-        "غیرمتخصص",
+        "جمع‌بندی کوتاه",
         "انتزاع",
-        "جمع‌بندی کوتاه"
+        "غیرمتخصص"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "layperson کسی است که در آن رشته آموزش تخصصی ندیده است."
     },
@@ -45728,12 +46124,12 @@
       "question": "What does \"plenary\" mean?",
       "questionFa": "معنی «plenary» چیست؟",
       "options": [
-        "انتزاع",
-        "اجرای تمرینی",
         "نشست همگانی",
+        "اجرای تمرینی",
+        "انتزاع",
         "متخصصِ در عمل"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "plenary نشستی است که همهٔ حاضران کنفرانس در آن شرکت می‌کنند."
     },
@@ -45747,11 +46143,11 @@
       "questionFa": "معنی «run-through» چیست؟",
       "options": [
         "غیرمتخصص",
-        "جمع‌بندی کوتاه",
+        "اجرای تمرینی",
         "نشست همگانی",
-        "اجرای تمرینی"
+        "جمع‌بندی کوتاه"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "run-through تمرین کامل سخنرانی پیش از اجرای اصلی است."
     },
@@ -45958,12 +46354,12 @@
       "question": "What does \"denouement\" mean?",
       "questionFa": "معنی «denouement» چیست؟",
       "options": [
-        "گره‌گشایی",
-        "کانونِ دید",
         "پیشینه",
+        "کانونِ دید",
+        "گره‌گشایی",
         "ترتیب زمانی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "denouement بخش پایانی است که گره‌های داستان باز می‌شوند."
     },
@@ -45977,11 +46373,11 @@
       "questionFa": "معنی «focaliser» چیست؟",
       "options": [
         "جهانِ روایت",
-        "کانونِ دید",
+        "کلیشهٔ روایی",
         "گره‌گشایی",
-        "کلیشهٔ روایی"
+        "کانونِ دید"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "focaliser شخصیتی است که از دریچهٔ او روایت دیده می‌شود."
     },
@@ -45994,12 +46390,12 @@
       "question": "What does \"trope\" mean?",
       "questionFa": "معنی «trope» چیست؟",
       "options": [
-        "جهانِ روایت",
-        "پیشینه",
         "کلیشهٔ روایی",
+        "پیشینه",
+        "جهانِ روایت",
         "گره‌گشایی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "trope الگوی آشنای روایت است که خواننده بی‌درنگ می‌شناسد."
     },
@@ -46207,11 +46603,11 @@
       "questionFa": "معنی «credence» چیست؟",
       "options": [
         "استحکام نتیجه",
-        "باور پیشین",
+        "درجهٔ باور",
         "ارزش انتظاری",
-        "درجهٔ باور"
+        "باور پیشین"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "credence شدتِ باور به یک گزاره را به‌صورت درجه نشان می‌دهد."
     },
@@ -46224,12 +46620,12 @@
       "question": "What does \"calibration\" mean?",
       "questionFa": "معنی «calibration» چیست؟",
       "options": [
-        "همترازی پیش‌بینی‌ها",
-        "باور پسین",
         "استحکام نتیجه",
+        "باور پسین",
+        "همترازی پیش‌بینی‌ها",
         "باور پیشین"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "calibration می‌سنجد اطمینانِ اعلام‌شده چقدر با دقت واقعی می‌خواند."
     },
@@ -46243,11 +46639,11 @@
       "questionFa": "معنی «robustness» چیست؟",
       "options": [
         "ارزش انتظاری",
-        "استحکام نتیجه",
+        "همترازی پیش‌بینی‌ها",
         "درجهٔ باور",
-        "همترازی پیش‌بینی‌ها"
+        "استحکام نتیجه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "robustness یعنی نتیجه با تغییر فرض‌ها هم برجا می‌ماند."
     },
@@ -46454,12 +46850,12 @@
       "question": "What does \"condolence\" mean?",
       "questionFa": "معنی «condolence» چیست؟",
       "options": [
-        "حفظ آبرو",
-        "صراحت",
         "تسلیت",
+        "صراحت",
+        "حفظ آبرو",
         "احتیاط در افشا"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "condolence ابراز همدردی با کسی است که عزیزی را از دست داده است."
     },
@@ -46473,11 +46869,11 @@
       "questionFa": "معنی «discretion» چیست؟",
       "options": [
         "تسلیت",
-        "صیانت از افراد آسیب‌پذیر",
+        "احتیاط در افشا",
         "از تنش کاستن",
-        "احتیاط در افشا"
+        "صیانت از افراد آسیب‌پذیر"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "discretion یعنی با قضاوت درست، اطلاعات را محرمانه نگه داشتن."
     },
@@ -46490,12 +46886,12 @@
       "question": "What does \"safeguarding\" mean?",
       "questionFa": "معنی «safeguarding» چیست؟",
       "options": [
-        "صیانت از افراد آسیب‌پذیر",
-        "حفظ آبرو",
         "صراحت",
+        "حفظ آبرو",
+        "صیانت از افراد آسیب‌پذیر",
         "از تنش کاستن"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "safeguarding وظیفهٔ محافظت از کسانی است که خودشان نمی‌توانند از خود دفاع کنند."
     },
@@ -46703,11 +47099,11 @@
       "questionFa": "معنی «externalities» چیست؟",
       "options": [
         "بده‌بستان",
-        "هزینه‌های بیرونی",
+        "معیار",
         "مشروعیت",
-        "معیار"
+        "هزینه‌های بیرونی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "externalities هزینه‌هایی است که تصمیم به کسانی تحمیل می‌کند که در آن سهیم نبودند."
     },
@@ -46720,12 +47116,12 @@
       "question": "What does \"trade-off\" mean?",
       "questionFa": "معنی «trade-off» چیست؟",
       "options": [
-        "اثر ناخواسته",
-        "انگیزهٔ اقتصادی",
         "بده‌بستان",
+        "انگیزهٔ اقتصادی",
+        "اثر ناخواسته",
         "معیار"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "trade-off یعنی دادن چیزی برای گرفتن چیز دیگر."
     },
@@ -46739,11 +47135,11 @@
       "questionFa": "معنی «legitimacy» چیست؟",
       "options": [
         "انگیزهٔ اقتصادی",
-        "هزینه‌های بیرونی",
+        "مشروعیت",
         "بده‌بستان",
-        "مشروعیت"
+        "هزینه‌های بیرونی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "legitimacy پذیرش یک تصمیم به‌عنوان درست و به‌جا است."
     },
@@ -46950,12 +47346,12 @@
       "question": "What does \"statute\" mean?",
       "questionFa": "معنی «statute» چیست؟",
       "options": [
-        "قانون مصوب",
-        "رویهٔ قضایی",
         "صلاحیت قضایی",
+        "رویهٔ قضایی",
+        "قانون مصوب",
         "شهادت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "statute قانونی است که نهاد قانون‌گذاری نوشته و تصویب کرده است."
     },
@@ -46969,11 +47365,11 @@
       "questionFa": "معنی «precedent» چیست؟",
       "options": [
         "بند",
-        "رویهٔ قضایی",
+        "قانون مصوب",
         "شاکی",
-        "قانون مصوب"
+        "رویهٔ قضایی"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "precedent تصمیم پیشینی است که پرونده‌های بعدی از آن پیروی می‌کنند."
     },
@@ -46986,12 +47382,12 @@
       "question": "What does \"clause\" mean?",
       "questionFa": "معنی «clause» چیست؟",
       "options": [
-        "صلاحیت قضایی",
-        "شهادت",
         "بند",
+        "شهادت",
+        "صلاحیت قضایی",
         "شاکی"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "clause یک بخش شماره‌دار از قرارداد یا قانون است."
     },
@@ -47199,11 +47595,11 @@
       "questionFa": "معنی «patronising» چیست؟",
       "options": [
         "نگاه از بالا",
-        "شمول‌گرا",
+        "تحقیرآمیز",
         "روشنی",
-        "تحقیرآمیز"
+        "شمول‌گرا"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "VOCABULARY",
       "explanationFa": "patronising یعنی با مخاطب طوری حرف زدن که او را کم‌توان‌تر از آنچه هست بدانیم."
     },
@@ -47216,12 +47612,12 @@
       "question": "What does \"condescension\" mean?",
       "questionFa": "معنی «condescension» چیست؟",
       "options": [
-        "نگاه از بالا",
-        "انگلیسی ساده",
         "بیش از حد توضیح دادن",
+        "انگلیسی ساده",
+        "نگاه از بالا",
         "روشنی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "condescension رفتار از موضع برتر با مخاطب است."
     },
@@ -47235,11 +47631,11 @@
       "questionFa": "معنی «inclusive» چیست؟",
       "options": [
         "تحقیرآمیز",
-        "شمول‌گرا",
+        "انگلیسی ساده",
         "روشنی",
-        "انگلیسی ساده"
+        "شمول‌گرا"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "VOCABULARY",
       "explanationFa": "inclusive یعنی همهٔ خوانندگان بتوانند خود را در متن ببینند."
     },
@@ -47447,12 +47843,12 @@
       "question": "Which letter does Sara's name start with?",
       "questionFa": "نام سارا با کدام حرف شروع می‌شود؟",
       "options": [
-        "O",
-        "M",
         "S",
+        "M",
+        "O",
         "A"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "جملهٔ دوم را بخوان: «It starts with the letter S» — حرف اولِ نام، حرف S است."
     },
@@ -47467,11 +47863,11 @@
       "questionFa": "حرف اولِ نام را چگونه می‌نویسیم؟",
       "options": [
         "با حرف کوچک",
-        "با عدد",
+        "با حرف بزرگ",
         "اصلاً نمی‌نویسیم",
-        "با حرف بزرگ"
+        "با عدد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "capital letter یعنی «حرف بزرگ»؛ در انگلیسی حرف اولِ نام‌ها همیشه بزرگ نوشته می‌شود."
     },
@@ -47485,12 +47881,12 @@
       "question": "Which word comes before 'apple' in the first sentence?",
       "questionFa": "در جملهٔ اول پیش از apple کدام واژه آمده است؟",
       "options": [
-        "an",
-        "a",
         "the",
+        "a",
+        "an",
         "some"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "apple با صدای صدادار شروع می‌شود، پس an می‌گیرد: an apple."
     },
@@ -47505,11 +47901,11 @@
       "questionFa": "تخم‌مرغ‌ها کجا هستند؟",
       "options": [
         "روی میز",
-        "در یخچال",
+        "در مغازه",
         "در کیف",
-        "در مغازه"
+        "در یخچال"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "جملهٔ آخر می‌گوید «the eggs are in the fridge» — fridge یعنی یخچال."
     },
@@ -47523,12 +47919,12 @@
       "question": "When does the speaker study English?",
       "questionFa": "گوینده کِی انگلیسی می‌خواند؟",
       "options": [
-        "چهارشنبه",
-        "شنبه",
         "پنجشنبه",
+        "شنبه",
+        "چهارشنبه",
         "جمعه"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«On Thursday I study English» — Thursday یعنی پنجشنبه."
     },
@@ -47543,11 +47939,11 @@
       "questionFa": "تولد گوینده در کدام ماه است؟",
       "options": [
         "March",
-        "August",
+        "May",
         "July",
-        "May"
+        "August"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "جملهٔ آخر: «My birthday is in May» — May یعنی ماه مه (اردیبهشت)."
     },
@@ -47561,12 +47957,12 @@
       "question": "What does the speaker drink at breakfast?",
       "questionFa": "گوینده در صبحانه چه می‌نوشد؟",
       "options": [
-        "چای",
-        "قهوه",
         "شیر",
+        "قهوه",
+        "چای",
         "آب"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«I drink tea, not coffee» — tea یعنی چای؛ قهوه را صریحاً رد می‌کند."
     },
@@ -47581,11 +47977,11 @@
       "questionFa": "ناهار چیست؟",
       "options": [
         "نان و پنیر",
-        "برنج با مرغ",
+        "میوه",
         "سوپ",
-        "میوه"
+        "برنج با مرغ"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«At lunch I have rice with chicken» — rice برنج و chicken مرغ است."
     },
@@ -47599,12 +47995,12 @@
       "question": "Where is the bakery?",
       "questionFa": "نانوایی کجاست؟",
       "options": [
-        "طبقهٔ دوم",
-        "روبروی پارک",
         "زیر آپارتمان",
+        "روبروی پارک",
+        "طبقهٔ دوم",
         "کنار محل کار"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«a bakery under my flat» — under یعنی زیر."
     },
@@ -47619,11 +48015,11 @@
       "questionFa": "گوینده چگونه به سر کار می‌رود؟",
       "options": [
         "با اتوبوس",
-        "با ماشین",
+        "پیاده",
         "با دوچرخه",
-        "پیاده"
+        "با ماشین"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«I walk to work every morning» — walk یعنی پیاده رفتن؛ نزدیکی خانه دلیلش است."
     },
@@ -47637,12 +48033,12 @@
       "question": "Which turning should you take?",
       "questionFa": "کدام پیچ را باید بگیرید؟",
       "options": [
-        "دومین پیچ سمت راست",
-        "اولین پیچ سمت چپ",
         "دومین پیچ سمت چپ",
+        "اولین پیچ سمت چپ",
+        "دومین پیچ سمت راست",
         "اولین پیچ سمت راست"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«the second turning on the right» — second دومین و on the right سمت راست است."
     },
@@ -47657,11 +48053,11 @@
       "questionFa": "اگر به میدان برسید یعنی چه؟",
       "options": [
         "درست آمده‌اید",
-        "خیلی دور شده‌اید",
+        "به بانک رسیده‌اید",
         "باید برگردید و از اول بروید",
-        "به بانک رسیده‌اید"
+        "خیلی دور شده‌اید"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«you have gone too far» یعنی از مقصد گذشته‌اید؛ این جمله‌ٔ هشدارِ راهنماست."
     },
@@ -47675,12 +48071,12 @@
       "question": "How much does a single ticket cost?",
       "questionFa": "بلیت یک‌طرفه چند است؟",
       "options": [
-        "۱۸۰ یورو",
-        "۸۰ یورو",
         "۱۰۰ یورو",
+        "۸۰ یورو",
+        "۱۸۰ یورو",
         "۱۴۰ یورو"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«A single is 100 euros» — single یعنی یک‌طرفه؛ ۱۸۰ یورو بهای بلیت رفت‌وبرگشت است."
     },
@@ -47695,11 +48091,11 @@
       "questionFa": "پذیرش بلیت کِی بسته می‌شود؟",
       "options": [
         "دو ساعت پیش از پرواز",
-        "نیم ساعت پیش از پرواز",
+        "چهل دقیقه پیش از پرواز",
         "هفت و چهل دقیقه",
-        "چهل دقیقه پیش از پرواز"
+        "نیم ساعت پیش از پرواز"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«Check-in closes forty minutes before departure» — قبل از پرواز، چهل دقیقه."
     },
@@ -47713,12 +48109,12 @@
       "question": "Which way of paying is NOT accepted?",
       "questionFa": "کدام روش پرداخت پذیرفته نمی‌شود؟",
       "options": [
-        "چک",
-        "نقدی",
         "کارت",
+        "نقدی",
+        "چک",
         "پرداخت با دستگاه"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«The shop does not accept cheques» — cheque یعنی چک."
     },
@@ -47733,11 +48129,11 @@
       "questionFa": "برای پس‌گرفتن پول به چه چیزی نیاز دارید؟",
       "options": [
         "رمز کارت",
-        "رسید",
+        "مدرک شناسایی",
         "تلفن فروشگاه",
-        "مدرک شناسایی"
+        "رسید"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«Keep the receipt: you need it for a refund» — receipt رسید و refund بازگرداندن پول است."
     },
@@ -47751,12 +48147,12 @@
       "question": "How should an email to Mr Karimi begin?",
       "questionFa": "ایمیل به آقای کریمی با چه عبارتی شروع می‌شود؟",
       "options": [
-        "Hi Karimi",
-        "Best regards",
         "Dear Mr Karimi",
+        "Best regards",
+        "Hi Karimi",
         "To Karimi"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«Dear + Mr + family name» شکل رسمیِ آغاز ایمیل است؛ Best regards پایان نامه است."
     },
@@ -47771,11 +48167,11 @@
       "questionFa": "پیش از فرستادن چه باید کرد؟",
       "options": [
         "نام خود را ننویسید",
-        "موضوع را حذف کنید",
+        "ایمیل را یک بار دیگر بخوانید",
         "ایمیل را بلندتر بنویسید",
-        "ایمیل را یک بار دیگر بخوانید"
+        "موضوع را حذف کنید"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«Read it once more before you send it» — یک بار دیگر خواندن، اشتباه‌ها را پیش از ارسال پیدا می‌کند."
     },
@@ -47789,12 +48185,12 @@
       "question": "Why did the speaker call a plumber?",
       "questionFa": "چرا گوینده لوله‌کش خبر کرد؟",
       "options": [
-        "چون شیر آب چکه می‌کرد",
-        "چون آب گرم نداشت",
         "چون لوله ترکیده بود",
+        "چون آب گرم نداشت",
+        "چون شیر آب چکه می‌کرد",
         "چون دستشویی خراب بود"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«The tap was leaking» — leak یعنی چکه کردن؛ tap شیر آب است."
     },
@@ -47809,11 +48205,11 @@
       "questionFa": "صورت‌حساب در مقایسه با انتظار گوینده چگونه بود؟",
       "options": [
         "بیشتر از انتظار",
-        "کمتر از انتظار",
+        "گوینده چیزی نمی‌گوید",
         "دقیقاً همان‌قدر",
-        "گوینده چیزی نمی‌گوید"
+        "کمتر از انتظار"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«not as high as I expected» یعنی از آنچه فکر می‌کرد، کمتر بود."
     },
@@ -47827,12 +48223,12 @@
       "question": "When will construction begin?",
       "questionFa": "ساخت‌وساز کِی آغاز می‌شود؟",
       "options": [
-        "پاییز",
-        "تابستان",
         "بهار",
+        "تابستان",
+        "پاییز",
         "بلافاصله پس از تصویب"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«Construction will begin in spring» — spring یعنی بهار."
     },
@@ -47847,11 +48243,11 @@
       "questionFa": "ساکنان از چه شکایت دارند؟",
       "options": [
         "هزینهٔ بلیت",
-        "سرعت قطارها",
+        "جا ماندن دو محله از طرح",
         "مدت ساخت‌وساز",
-        "جا ماندن دو محله از طرح"
+        "سرعت قطارها"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«two neighbourhoods were left out of the plan» — left out یعنی جا ماندن، حذف شدن."
     },
@@ -47865,12 +48261,12 @@
       "question": "How many interviews did the speaker have?",
       "questionFa": "گوینده چند مصاحبه داشت؟",
       "options": [
-        "دو",
-        "یکی",
         "سی",
+        "یکی",
+        "دو",
         "هیچ‌کدام"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«Two companies invited me for an interview» — تعداد شرکت‌ها دو بود."
     },
@@ -47885,11 +48281,11 @@
       "questionFa": "گوینده اکنون هر روز چه می‌کند؟",
       "options": [
         "کار تمام‌وقت می‌کند",
-        "روی رزومه و تمرین پاسخ‌ها کار می‌کند",
+        "به دنبال خانه است",
         "در دو شرکت کار می‌کند",
-        "به دنبال خانه است"
+        "روی رزومه و تمرین پاسخ‌ها کار می‌کند"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«improving my CV and practising answers» — رزومه (CV) و تمرین پاسخ‌های مصاحبه."
     },
@@ -47903,12 +48299,12 @@
       "question": "What is the first step when colleagues disagree?",
       "questionFa": "نخستین گام هنگام اختلاف همکاران چیست؟",
       "options": [
-        "پیدا کردن راه‌حل",
-        "داوری مدیر",
         "گوش دادن بی‌وقفه به هر دو طرف",
+        "داوری مدیر",
+        "پیدا کردن راه‌حل",
         "تغییر موضوع"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«let each side finish without interrupting» — interrupting یعنی میان حرف پریدن."
     },
@@ -47923,11 +48319,11 @@
       "questionFa": "چرا نکتهٔ طرف مقابل را تکرار می‌کنیم؟",
       "options": [
         "برای تغییر نظر او",
-        "برای طولانی‌تر شدن گفتگو",
+        "برای نشان دادن اینکه فهمیده‌ایم",
         "برای پایان دادن به بحث",
-        "برای نشان دادن اینکه فهمیده‌ایم"
+        "برای طولانی‌تر شدن گفتگو"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«shows you have understood it» — تکرار، نشانهٔ فهم است، نه پذیرش."
     },
@@ -47941,12 +48337,12 @@
       "question": "What changed after the operation?",
       "questionFa": "پس از عمل جراحی چه تغییر کرد؟",
       "options": [
-        "سبزیجات سه بار در هفته به برنامه اضافه شد",
-        "خانواده گوشت را کنار گذاشت",
         "آن‌ها دیگر شام نمی‌خورند",
+        "خانواده گوشت را کنار گذاشت",
+        "سبزیجات سه بار در هفته به برنامه اضافه شد",
         "پدرشان آشپزی می‌کند"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«we have eaten vegetables three times a week» — سه بار در هفته؛ گوشت حذف نشده، کم شده است."
     },
@@ -47961,11 +48357,11 @@
       "questionFa": "خانواده هنوز چه کاری می‌کند؟",
       "options": [
         "هر شب برنج و گوشت می‌خورد",
-        "گوشت می‌خورد، اما کمتر",
+        "سبزیجات نمی‌خورد",
         "پیاده‌روی را کنار گذاشته",
-        "سبزیجات نمی‌خورد"
+        "گوشت می‌خورد، اما کمتر"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«We still eat meat, but much less» — still یعنی هنوز."
     },
@@ -47979,12 +48375,12 @@
       "question": "Why do many young people share flats?",
       "questionFa": "چرا بسیاری از جوانان آپارتمان مشترک می‌گیرند؟",
       "options": [
-        "چون تنها زندگی کردن را دوست ندارند",
-        "چون آپارتمان‌ها خالی مانده‌اند",
         "چون اجاره‌ها تندتر از دستمزد بالا رفته‌اند",
+        "چون آپارتمان‌ها خالی مانده‌اند",
+        "چون تنها زندگی کردن را دوست ندارند",
         "چون شهردار این را خواسته است"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«Rents have risen faster than wages» — علت، فاصلهٔ اجاره و دستمزد است."
     },
@@ -47999,11 +48395,11 @@
       "questionFa": "نخستین بلوک‌های مسکن ارزان کِی انتظار می‌رود؟",
       "options": [
         "امسال",
-        "هیچ‌وقت",
+        "سال آینده",
         "ماه آینده",
-        "سال آینده"
+        "هیچ‌وقت"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«not expected before next year» — پیش از سال آینده انتظار نمی‌رود."
     },
@@ -48017,12 +48413,12 @@
       "question": "Which question surprised the candidate?",
       "questionFa": "کدام پرسش نامزد را غافلگیر کرد؟",
       "options": [
-        "پرسشی دربارهٔ تصمیمی که از آن پشیمان است",
-        "پرسشی دربارهٔ حقوق",
         "پرسشی دربارهٔ ساعت کاری",
+        "پرسشی دربارهٔ حقوق",
+        "پرسشی دربارهٔ تصمیمی که از آن پشیمان است",
         "پرسشی دربارهٔ مدرک تحصیلی"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«a question I had not prepared» دربارهٔ «a decision you regret» بود — پشیمانی."
     },
@@ -48037,11 +48433,11 @@
       "questionFa": "مصاحبه‌گر سپس چه پرسید؟",
       "options": [
         "دربارهٔ تحصیلات",
-        "دربارهٔ مدیریت مهلت",
+        "دربارهٔ سفر",
         "دربارهٔ تیم قبلی",
-        "دربارهٔ سفر"
+        "دربارهٔ مدیریت مهلت"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«asked how I handled the deadline» — deadline یعنی مهلت نهایی."
     },
@@ -48055,12 +48451,12 @@
       "question": "What does the leader review?",
       "questionFa": "رهبر چه چیزی را بررسی می‌کند؟",
       "options": [
-        "مراحل کار",
-        "حضور و غیاب",
         "نتیجه، نه مراحل",
+        "حضور و غیاب",
+        "مراحل کار",
         "ساعت کاری افراد"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«reviews the result rather than the steps» — result بر steps ترجیح دارد."
     },
@@ -48075,11 +48471,11 @@
       "questionFa": "پس از یک شکست نخست چه می‌پرسد؟",
       "options": [
         "چه کسی مقصر است",
-        "چه کسی تسلیم شد",
+        "تیم چه آموخت",
         "چه‌قدر ضرر داشت",
-        "تیم چه آموخت"
+        "چه کسی تسلیم شد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«asks what the team learned before … who is to blame» — یادگیری پیش از سرزنش."
     },
@@ -48093,12 +48489,12 @@
       "question": "What do Finnish teachers do?",
       "questionFa": "معلمان فنلاندی چه می‌کنند؟",
       "options": [
-        "خودشان درس طراحی می‌کنند و دانش‌آموز را می‌سنجند",
-        "فقط کتاب درسی را می‌خوانند",
         "آزمون سراسری برگزار می‌کنند",
+        "فقط کتاب درسی را می‌خوانند",
+        "خودشان درس طراحی می‌کنند و دانش‌آموز را می‌سنجند",
         "زودتر از همه نوشتن را شروع می‌کنند"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«design their own lessons and are trusted to assess students» — طراحی و سنجش، هر دو."
     },
@@ -48113,11 +48509,11 @@
       "questionFa": "استدلال منتقدان چیست؟",
       "options": [
         "نتیجه‌ها ضعیف است",
-        "مدل به کلاس کوچک و معلم ورزیده وابسته است",
+        "معلمان آزادی زیادی ندارند",
         "خواندن دیر شروع می‌شود",
-        "معلمان آزادی زیادی ندارند"
+        "مدل به کلاس کوچک و معلم ورزیده وابسته است"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«depends on small classes and well-trained staff» — وابستگی به شرایط پرهزینه."
     },
@@ -48131,12 +48527,12 @@
       "question": "What must each speaker do?",
       "questionFa": "هر سخنران باید چه کار کند؟",
       "options": [
-        "فقط ادعا را بگوید",
-        "به همهٔ پرسش‌ها پاسخ دهد",
         "ادعا، شواهد و پاسخ به یک پرسش",
+        "به همهٔ پرسش‌ها پاسخ دهد",
+        "فقط ادعا را بگوید",
         "سخنران مقابل را قطع کند"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«states a claim, supports it with evidence, and answers one question» — سه کار با هم."
     },
@@ -48151,11 +48547,11 @@
       "questionFa": "داور چه چیزی را نمره می‌دهد؟",
       "options": [
         "بلندی صدا",
-        "سرعت سخن",
+        "کیفیت استدلال",
         "تعداد کلمات",
-        "کیفیت استدلال"
+        "سرعت سخن"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«the quality of the reasoning, not the loudness» — استدلال، نه بلندی صدا."
     },
@@ -48169,12 +48565,12 @@
       "question": "What should you do before rejecting an argument?",
       "questionFa": "پیش از رد کردن یک استدلال چه باید کرد؟",
       "options": [
-        "خلاصه‌ای نوشت که خودِ نویسنده بپذیرد",
-        "شواهد را نادیده گرفت",
         "نویسنده را نقد کرد",
+        "شواهد را نادیده گرفت",
+        "خلاصه‌ای نوشت که خودِ نویسنده بپذیرد",
         "به سراغ نتیجه رفت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«summarise it so well that its author would agree» — خلاصهٔ منصفانه، پیش‌شرط نقد است."
     },
@@ -48189,11 +48585,11 @@
       "questionFa": "بسیاری از اختلاف‌ها در واقع دربارهٔ چیست؟",
       "options": [
         "واقعیت‌ها",
-        "ارزش‌ها",
+        "تعریف واژه‌ها",
         "آمار",
-        "تعریف واژه‌ها"
+        "ارزش‌ها"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«about values, not facts» — ارزش‌ها، نه واقعیت‌ها."
     },
@@ -48207,12 +48603,12 @@
       "question": "Why does the speaker concede a point?",
       "questionFa": "چرا سخنران بخشی از ادعای طرف مقابل را می‌پذیرد؟",
       "options": [
-        "چون از موضع خود مطمئن نیست",
-        "چون شواهدی ندارد",
         "چون هزینهٔ کمی دارد و توجه مخاطب را می‌خرد",
+        "چون شواهدی ندارد",
+        "چون از موضع خود مطمئن نیست",
         "چون بحث را می‌خواهد پایان دهد"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«costs little and buys the audience's attention» — امتیاز کوچک، اعتماد بزرگ‌تر."
     },
@@ -48227,11 +48623,11 @@
       "questionFa": "شواهدش را کِی ارائه می‌کند؟",
       "options": [
         "در همان جملهٔ اول",
-        "هرگز",
+        "پس از ایجاد زمینهٔ مشترک و امتیاز دادن",
         "در پایان سخنرانی",
-        "پس از ایجاد زمینهٔ مشترک و امتیاز دادن"
+        "هرگز"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«and only then introduces her evidence» — only then یعنی تنها پس از آن مراحل."
     },
@@ -48245,12 +48641,12 @@
       "question": "What would the cap limit?",
       "questionFa": "این سقف چه چیزی را محدود می‌کند؟",
       "options": [
-        "اجارهٔ کوتاه‌مدت به نود شب در سال",
-        "قیمت هتل‌ها",
         "تعداد گردشگران",
+        "قیمت هتل‌ها",
+        "اجارهٔ کوتاه‌مدت به نود شب در سال",
         "مدت اجارهٔ بلندمدت"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«cap short-term rentals at ninety nights a year» — cap یعنی سقف گذاشتن."
     },
@@ -48265,11 +48661,11 @@
       "questionFa": "کمیته چه چیزی خواسته است؟",
       "options": [
         "قرائت دوم فوری",
-        "ارزیابی اثر همراه با برآورد هزینه",
+        "نظر دادگاه",
         "تعطیلی بازار اجاره",
-        "نظر دادگاه"
+        "ارزیابی اثر همراه با برآورد هزینه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«a costed impact assessment» — ارزیابی اثر با هزینهٔ برآوردشده، پیش از قرائت دوم."
     },
@@ -48283,12 +48679,12 @@
       "question": "What is the flaw in the claim?",
       "questionFa": "ایراد این ادعا چیست؟",
       "options": [
-        "هفتاد درصد عدد بالایی است",
-        "تعداد نمونه بسیار زیاد است",
         "نمونه فقط مشترکان را نمایندگی می‌کند",
+        "تعداد نمونه بسیار زیاد است",
+        "هفتاد درصد عدد بالایی است",
         "طرح پرسشنامه نامشخص است"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«describes subscribers, not readers in general» — نمونه از جمعیت هدف گسترده‌تر گرفته نشده."
     },
@@ -48303,11 +48699,11 @@
       "questionFa": "کدام بیان دقیق است؟",
       "options": [
         "همهٔ خوانندگان",
-        "هیچ‌کس",
+        "بیشتر مشترکان",
         "بیشتر مردم",
-        "بیشتر مشترکان"
+        "هیچ‌کس"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "داده فقط دربارهٔ مشترکان است، پس «بیشتر مشترکان» ادعای درست است."
     },
@@ -48321,12 +48717,12 @@
       "question": "Why do employees stop helping each other?",
       "questionFa": "چرا کارمندان از کمک به هم دست می‌کشند؟",
       "options": [
-        "چون کمک پاداش نمی‌گیرد و وقت می‌برد",
-        "چون از هم خوششان نمی‌آید",
         "چون مدیران منع کرده‌اند",
+        "چون از هم خوششان نمی‌آید",
+        "چون کمک پاداش نمی‌گیرد و وقت می‌برد",
         "چون کارشان کم شده است"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«helping costs time and earns no credit» — credit یعنی اعتبار و پاداش."
     },
@@ -48341,11 +48737,11 @@
       "questionFa": "مدیران همکاری را چگونه می‌سنجند؟",
       "options": [
         "با شمارش ساعت حضور",
-        "با پرسیدن از تیم‌ها که از همکاران چه آموختند",
+        "با مقایسهٔ حقوق",
         "با کاهش جلسات",
-        "با مقایسهٔ حقوق"
+        "با پرسیدن از تیم‌ها که از همکاران چه آموختند"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«asking teams what they learned from a colleague» — سنجش، نه فرض."
     },
@@ -48359,12 +48755,12 @@
       "question": "What do specialists often skip?",
       "questionFa": "متخصصان اغلب چه چیزی را جا می‌اندازند؟",
       "options": [
-        "تعریف واژه‌ها",
-        "معرفی خودشان",
         "پیوند میان روش و نتیجه",
+        "معرفی خودشان",
+        "تعریف واژه‌ها",
         "فهرست منابع"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«skip the step that links method to conclusion» — حلقهٔ گمشده میان روش و نتیجه."
     },
@@ -48379,11 +48775,11 @@
       "questionFa": "جزئیات کجا باید باشد؟",
       "options": [
         "در آغاز ارائه",
-        "در پرسش‌وپاسخ شفاهی",
+        "در پیوست",
         "در اسلاید اول",
-        "در پیوست"
+        "در پرسش‌وپاسخ شفاهی"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«Detail belongs in an appendix, not in the opening» — پیوست، نه آغاز."
     },
@@ -48397,12 +48793,12 @@
       "question": "What does 'regrettable' avoid?",
       "questionFa": "واژهٔ «regrettable» از چه چیزی پرهیز می‌کند؟",
       "options": [
-        "پذیرش تقصیر",
-        "اعتراف به وجود مشکل",
         "ذکر تأخیر",
+        "اعتراف به وجود مشکل",
+        "پذیرش تقصیر",
         "تعیین زمان"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«without admitting fault» — fault یعنی تقصیر؛ واژه مشکل را می‌پذیرد، تقصیر را نه."
     },
@@ -48417,11 +48813,11 @@
       "questionFa": "انتخاب این صفت چه چیزی را آشکار می‌کند؟",
       "options": [
         "نویسنده اطلاعات ندارد",
-        "استدلال پنهان گزارش",
+        "گزارش تاریخ ندارد",
         "تأخیر بی‌اهمیت است",
-        "گزارش تاریخ ندارد"
+        "استدلال پنهان گزارش"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«The choice of adjective is the report's argument» — بار ارزشی واژه، خودِ استدلال است."
     },
@@ -48435,12 +48831,12 @@
       "question": "How is 'they' used?",
       "questionFa": "ضمیر «they» چگونه به کار رفته است؟",
       "options": [
-        "در همهٔ جمله‌ها",
-        "فقط در جملهٔ اول",
         "فقط در جمله‌های انتقادی",
+        "فقط در جملهٔ اول",
+        "در همهٔ جمله‌ها",
         "هرگز"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«every 'they' appears in a sentence about criticism» — کاربرد ضمیر، منظم و جهت‌دار است."
     },
@@ -48455,11 +48851,11 @@
       "questionFa": "این الگوی ضمیر چه کاری می‌کند؟",
       "options": [
         "تعریف واژه‌های کلیدی",
-        "افزایش دقت آمار",
+        "متقاعدسازی‌ای که آشکارا گفته نمی‌شود",
         "کوتاه‌کردن متن",
-        "متقاعدسازی‌ای که آشکارا گفته نمی‌شود"
+        "افزایش دقت آمار"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«does the persuasive work that the argument never states openly» — اثر بلاغی پنهان."
     },
@@ -48473,12 +48869,12 @@
       "question": "Which fallacy does the author commit?",
       "questionFa": "نویسنده مرتکب کدام مغالطه شده است؟",
       "options": [
-        "حمله به منبع به‌جای نقد روش",
-        "تعمیم شتاب‌زده",
         "مصادره به مطلوب",
+        "تعمیم شتاب‌زده",
+        "حمله به منبع به‌جای نقد روش",
         "خلط علت و معلول"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«attacks the funding body rather than the study's method» — همان ad hominem موقعیتی است."
     },
@@ -48493,11 +48889,11 @@
       "questionFa": "چه چیزی اثبات نشده باقی می‌ماند؟",
       "options": [
         "منبع تأمین بودجه",
-        "خطا بودن مطالعه",
+        "نیت نویسنده",
         "وجود روش در مطالعه",
-        "نیت نویسنده"
+        "خطا بودن مطالعه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«relevance is not proof of error» — بودنِ ارتباط، خطا بودن را ثابت نمی‌کند."
     },
@@ -48511,12 +48907,12 @@
       "question": "What does the freer version sacrifice?",
       "questionFa": "نسخهٔ آزادتر چه چیزی را قربانی می‌کند؟",
       "options": [
-        "ریتم متن",
-        "معنا",
         "تصویر اصلی (استعاره)",
+        "معنا",
+        "ریتم متن",
         "اثر بر خواننده"
       ],
-      "correctIndex": 2,
+      "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«replaces the image» — تصویرِ استعاری تغییر می‌کند، هرچند اثر می‌ماند."
     },
@@ -48531,11 +48927,11 @@
       "questionFa": "چه چیزی درستیِ هر نسخه را تعیین می‌کند؟",
       "options": [
         "طول متن",
-        "زبان مقصد",
+        "نیاز خواننده: فرهنگ مبدأ یا اثر",
         "نظر مترجم",
-        "نیاز خواننده: فرهنگ مبدأ یا اثر"
+        "زبان مقصد"
       ],
-      "correctIndex": 3,
+      "correctIndex": 1,
       "skill": "READING",
       "explanationFa": "«depends on whether the reader needs the source culture or the effect» — هدف خواننده تعیین‌کننده است."
     },
@@ -48549,12 +48945,12 @@
       "question": "How does the patient version differ?",
       "questionFa": "نسخهٔ بیماران چه تفاوتی دارد؟",
       "options": [
-        "ملایم‌تر است و امید را نگه می‌دارد",
-        "دقیق‌تر و فنی‌تر است",
         "کوتاه‌تر است",
+        "دقیق‌تر و فنی‌تر است",
+        "ملایم‌تر است و امید را نگه می‌دارد",
         "به داده‌های آماری تکیه دارد"
       ],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«did not work as hoped» — لحن ملایم‌تر و همراه با امید، در برابر دقت فنی."
     },
@@ -48569,11 +48965,11 @@
       "questionFa": "متن کدام تنش را نام می‌برد؟",
       "options": [
         "سرعت در برابر هزینه",
-        "دقت در برابر ملاحظه",
+        "متن در برابر تصویر",
         "علم در برابر سیاست",
-        "متن در برابر تصویر"
+        "دقت در برابر ملاحظه"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«Precision and kindness pull in opposite directions» — دقت و مهربانی، دو جهت مخالف."
     }

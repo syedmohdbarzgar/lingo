@@ -146,10 +146,18 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
-C1-difficulty pass, where the third level was read item by item and the case that guards the axis
-now pins all three: B1, B2 and C1 are the levels whose choice items disagree about difficulty —
-10 of B1's 30 lessons, 10 of B2's 32 and 9 of C1's 31 — and each disagrees in a different place,
-which is what makes them three facts rather than one repeated. C1's floor is 2, so its axis is
+hard-end-choice pass, where C1 got the hard item its axis was missing: the v69 read left 22 of the
+level's 31 lessons with no multiple-choice item at 3, so the selector could not raise recognition
+there however consolidated the meter was. Each of those lessons got one authored choice item of the
+shape the level's own hard items already had — four grammatical options where the context decides,
+never "which sentence is correct" (that was judged 2, because three of its four options break the
+structure outright): `Under no circumstances should…`, `Had we settled in March…`, `Were the
+premise false…`, `The editor, who approved the story,…`, `do not have to` against `must not`. The
+792 choice items were rebalanced afterwards (352 answers moved) and `ContentDistributionTest` now
+asserts that **all 31** C1 lessons disagree about difficulty, not 9. Before it the C1-difficulty
+pass, where the third level was read item by item and the case that guards the axis began pinning
+three levels — 10 of B1's 30 lessons, 10 of B2's 32 and then 9 of C1's 31 — each disagreeing in a
+different place, which is what made them three facts rather than one repeated. C1's floor is 2, so its axis is
 *typical C1 against the hard end of C1*: the inversion and mixed-conditional structures the level is
 built on (in a choice, a blank, a translation or out loud), the reading questions that ask for the
 author's purpose or the consequence instead of a fact, and the metalanguage items that name a
@@ -184,8 +192,8 @@ exercise carries a `difficulty` (1..3, **relative to its own lesson's level**), 
 `AdaptiveExerciseSelector` can raise or lower the level — the easy end while a dimension is shaky,
 the hard end once it is consolidated, and the authored order when there is no evidence at all. Three
 cases in `AdaptiveExerciseSelectorTest` pin the two ends and the no-evidence pass-through, two
-`ContentValidationTest` fixtures the missing and out-of-range values, and one case checks all 2,888
-shipped items against their own level's band. Before it the miss-driven drill pass, where the review
+`ContentValidationTest` fixtures the missing and out-of-range values, and one case checks every
+shipped item against its own level's band. Before it the miss-driven drill pass, where the review
 screen's due list got the same steering the day's plan already had: among nodes owed since the same midnight — equally urgent, so equally eligible — the one
 training the learner's weakest category leads, and one row says why (`… · ضعف اخیر: واژگان`). It never
 changes urgency (a node owed longer still comes first: an overdue interval is what retention pays for,

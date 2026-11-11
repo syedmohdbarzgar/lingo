@@ -90,11 +90,13 @@
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 702 tests / 78 classes as of
-  the C1-difficulty pass, where the third level was read item by item. One `ContentDistributionTest`
-  case measures the within-format axis and names where it exists: B1, B2 and C1 are the levels whose
-  multiple-choice items disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32, 9 of C1's 31),
-  and the seeded levels give every choice item of a level one number, so they cannot reorder that
-  format at all — judging another level moves these counts and the case is what says so. The same case
+  the hard-end-choice pass, where the 22 C1 lessons whose hardest item was a blank or a reading
+  question got one authored choice item each. One `ContentDistributionTest` case measures the
+  within-format axis and names where it exists: B1, B2 and C1 are the levels whose multiple-choice
+  items disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32, and all 31 of C1's — the
+  level whose axis is now complete), and the seeded levels give every choice item of a level one
+  number, so they cannot reorder that format at all — judging another level moves these counts and
+  the case is what says so. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated
   recognition meter is served its hardest choice item (`ex.02`, reported speech plus past perfect)
   while a shaky one starts at the easy end; on `b2.problems` a consolidated recall meter is served

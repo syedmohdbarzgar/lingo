@@ -265,9 +265,12 @@ class ContentDistributionTest {
             10,
             spreadByLevel["B2"] ?: 0,
         )
+        // C1 is the level whose axis is complete: v69 judged it and v70 gave the 22 lessons
+        // that had no hard choice item one, so every C1 lesson can now raise recognition.
         assertEquals(
-            "C1 was read item by item in v69: 9 of its 31 choice lessons disagree about difficulty",
-            9,
+            "C1 was read item by item (v69) and completed in v70: all 31 of its choice lessons " +
+                "disagree about difficulty",
+            31,
             spreadByLevel["C1"] ?: 0,
         )
         val seeded = listOf("A1", "A2", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
