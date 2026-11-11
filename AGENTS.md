@@ -146,6 +146,15 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
+C2-difficulty pass, where the last level with no hand judgement was read item by item. C2's floor is
+2 like C1's, so the hard end is the structure the level is built on — inversion after a negative
+adverbial, the mixed and unreal conditional, the quantifier-phrase agreement trap — the reading
+questions that ask what a passage implies rather than a fact, and the metalanguage items where a
+near-synonym would be wrong; 18 one-clause sentence productions came down to 2. C2 is now 411/44
+from 430/25, 9 of its 30 choice lessons disagree about difficulty, and on `c2.literature` a
+consolidated recognition meter is served `ex.08` (the narrator's tone against the passage's
+optimism) while a shaky one starts at the vocabulary item — the lesson's only hard choice item.
+A1 and A2 are now the only levels still entirely seeded. Before it the
 hard-end-choice pass, where C1 got the hard item its axis was missing: the v69 read left 22 of the
 level's 31 lessons with no multiple-choice item at 3, so the selector could not raise recognition
 there however consolidated the meter was. Each of those lessons got one authored choice item of the

@@ -76,9 +76,15 @@
   a lesson whose hardest item was a blank or a reading question could not raise recognition at all.
   v70 gave each of the remaining 22 lessons one authored choice item — four grammatical options
   where the context decides, never "choose the correct sentence" (three of those four options break
-  the structure outright, and v69 judged that shape a 2) — so C1 is 437/63 and **every one of its 31
-  lessons** now has a hard choice item. 2888 → 2910 exercises.
-- **CEFR bundle (contentVersion 70):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  the structure outright, and v69 judged that shape a 2) — so C1 is 437/63 and **  every one of its 31 lessons** now has a hard choice item. 2888 → 2910 exercises.
+  C2 was judged last (v71) and follows C1's shape — floor 2, so *typical C2 against the hard end of
+  C2*: the inversion and mixed conditional the level is built on, the quantifier-phrase agreement
+  trap, the reading questions that ask what a passage implies, and the metalanguage items where a
+  near-synonym would be wrong. 61 of its 455 items were re-judged (55 changed) and 18 one-clause
+  productions came down to 2. C2 is 411/44 from 430/25, and 9 of its 30 choice lessons disagree
+  about difficulty — the other 21 carry C2's hard item in a blank or a production, which is why only
+  C1 (the one level finished with v70's added items) has the axis in every lesson.
+- **CEFR bundle (contentVersion 71):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,

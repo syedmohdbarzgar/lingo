@@ -1,5 +1,5 @@
 {
-  "contentVersion": 70,
+  "contentVersion": 71,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -2030,7 +2030,7 @@
       "lessonId": "c2.rhetoric.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Never in my life ___ I witnessed such arrogance.",
       "accepted": [
         "have",
@@ -2795,7 +2795,7 @@
       "lessonId": "c2.literature.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Read: \"The narrator's tone belies the tale's optimism.\" What is meant?",
       "questionFa": "منظور از این جمله چیست؟",
       "options": [
@@ -4196,7 +4196,7 @@
       "lessonId": "c2.collocation.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "In \"have a shower\", the verb have is a ______.",
       "questionFa": "در «have a shower» فعل have یک ______ است.",
       "options": [
@@ -4214,7 +4214,7 @@
       "lessonId": "c2.irony.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "He called the hurricane a bit of wind. This is ______.",
       "questionFa": "توفان را «کمی باد» نامید. این ______ است.",
       "options": [
@@ -4232,7 +4232,7 @@
       "lessonId": "c2.irony.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "\"Not uncommon\" used to mean fairly common is an example of ______.",
       "questionFa": "«Not uncommon» به‌معنی نسبتاً رایج، نمونهٔ چیست؟",
       "options": [
@@ -7435,7 +7435,7 @@
       "lessonId": "c2.science.lesson-01",
       "type": "multiple_choice",
       "order": 9,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "Far from being a passive storage system, memory appears to be reconstructive: each time we recall an event, we rebuild it rather than replay a fixed recording. This helps explain why two witnesses can sincerely remember the same scene differently. Sceptics point out that such findings are hard to replicate outside the laboratory, yet the reconstructive view has become the dominant framework in cognitive science.",
       "question": "What does the reconstructive view help explain?",
       "questionFa": "دیدگاه بازسازی‌کننده چه چیزی را توضیح می‌دهد؟",
@@ -7454,7 +7454,7 @@
       "lessonId": "c2.science.lesson-01",
       "type": "multiple_choice",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "Far from being a passive storage system, memory appears to be reconstructive: each time we recall an event, we rebuild it rather than replay a fixed recording. This helps explain why two witnesses can sincerely remember the same scene differently. Sceptics point out that such findings are hard to replicate outside the laboratory, yet the reconstructive view has become the dominant framework in cognitive science.",
       "question": "What do sceptics point out?",
       "questionFa": "شک‌گرایان به چه نکته‌ای اشاره می‌کنند؟",
@@ -8033,7 +8033,7 @@
       "lessonId": "c2.nuance.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "In political contexts the word carries a negative ______, although its dictionary meaning is neutral.",
       "questionFa": "در بافت سیاسی، واژه بار معنایی منفی دارد، هرچند معنای فرهنگنامهایاش خنثی است.",
       "options": [
@@ -8083,7 +8083,7 @@
       "lessonId": "c2.collocation.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "The findings are at ______ with the earlier hypothesis.",
       "questionFa": "یافتهها با فرضیهٔ قبلی در تضادند.",
       "options": [
@@ -8119,7 +8119,7 @@
       "lessonId": "c2.irony.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 2,
+      "difficulty": 3,
       "question": "Which sentence is an example of hyperbole?",
       "questionFa": "کدام جمله نمونهٔ اغراق (hyperbole) است؟",
       "options": [
@@ -42188,7 +42188,7 @@
       "lessonId": "c2.sociolinguistics.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "A number of dialects ___ disappearing fast.",
       "accepted": [
         "are",
@@ -42202,7 +42202,7 @@
       "lessonId": "c2.sociolinguistics.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "The number of speakers ___ fallen sharply.",
       "accepted": [
         "has",
@@ -42256,7 +42256,7 @@
       "lessonId": "c2.sociolinguistics.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو تغییر زبان در خانه و محل کار نشانهٔ سردرگمی نیست.",
       "mustUse": [
         "code-switching"
@@ -42436,7 +42436,7 @@
       "lessonId": "c2.discourse.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Not only ___ the pronoun point back, but it also sets the topic.",
       "accepted": [
         "does",
@@ -42450,7 +42450,7 @@
       "lessonId": "c2.discourse.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ a paragraph hold together without coherence.",
       "accepted": [
         "does",
@@ -42522,7 +42522,7 @@
       "lessonId": "c2.discourse.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "جلسهٔ تحلیل متن",
       "partnerFa": "تحلیلگر گفتمان",
       "prompt": "بگو ضمیر نه‌تنها به عقب اشاره می‌کند، بلکه موضوع را هم تعیین می‌کند.",
@@ -42684,7 +42684,7 @@
       "lessonId": "c2.philosophy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the premise had held, the conclusion ___ follow now.",
       "accepted": [
         "would",
@@ -42698,7 +42698,7 @@
       "lessonId": "c2.philosophy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the argument were valid, the objection ___ have failed.",
       "accepted": [
         "would",
@@ -42752,7 +42752,7 @@
       "lessonId": "c2.philosophy.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو دیالکتیک از ادعا به انکار آن و بازگشت حرکت می‌کند.",
       "mustUse": [
         "dialectic"
@@ -42770,7 +42770,7 @@
       "lessonId": "c2.philosophy.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "حلقهٔ خواندن فلسفه",
       "partnerFa": "استاد فلسفه",
       "prompt": "بگو اگر مقدمه برجا مانده بود، نتیجه اکنون درست می‌شد.",
@@ -43000,7 +43000,7 @@
       "lessonId": "c2.speeches.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو رساندن نکتهٔ اصلی مهم‌تر از تطبیق هر واژه است.",
       "mustUse": [
         "gist"
@@ -43180,7 +43180,7 @@
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Not only ___ the plan cut costs, but it also wins votes.",
       "accepted": [
         "does",
@@ -43194,7 +43194,7 @@
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ an audience remember a table of averages.",
       "accepted": [
         "does",
@@ -43248,7 +43248,7 @@
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو یک حکایت می‌تواند از جدولی از میانگین‌ها سنگین‌تر شود.",
       "mustUse": [
         "anecdote"
@@ -43266,7 +43266,7 @@
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "speaking",
       "order": 10,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "کارگاه اقناع",
       "partnerFa": "مشاور ارتباطات",
       "prompt": "بگو طرح نه‌تنها هزینه را کم می‌کند، بلکه رأی هم می‌آورد.",
@@ -43284,7 +43284,7 @@
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "speaking",
       "order": 11,
-      "difficulty": 2,
+      "difficulty": 3,
       "sceneFa": "کارگاه اقناع",
       "partnerFa": "مشاور ارتباطات",
       "prompt": "بگو مخاطب به‌ندرت جدولی از میانگین‌ها را به یاد می‌آورد.",
@@ -43496,7 +43496,7 @@
       "lessonId": "c2.academic-writing.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو ادعای اصلی باید قابل بحث باشد، نه بدیهی.",
       "mustUse": [
         "thesis"
@@ -43676,7 +43676,7 @@
       "lessonId": "c2.editing.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Each of the reports ___ checked twice.",
       "accepted": [
         "was",
@@ -43690,7 +43690,7 @@
       "lessonId": "c2.editing.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Neither of the drafts ___ ready.",
       "accepted": [
         "is",
@@ -43992,7 +43992,7 @@
       "lessonId": "c2.synthesis.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو ترکیب منابع به پرسشی پاسخ می‌دهد که منابع نپرسیده بودند.",
       "mustUse": [
         "synthesis"
@@ -44240,7 +44240,7 @@
       "lessonId": "c2.argument-analysis.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو درستی استدلال هم به شکل معتبر نیاز دارد و هم به مقدمه‌های راست.",
       "mustUse": [
         "soundness"
@@ -44488,7 +44488,7 @@
       "lessonId": "c2.dialects.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو مرز گویشی درست شمال رود می‌گذرد.",
       "mustUse": [
         "isogloss"
@@ -44736,7 +44736,7 @@
       "lessonId": "c2.pragmatics.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو معنای ضمنی این است که پاسخ خیر است.",
       "mustUse": [
         "implicature"
@@ -44984,7 +44984,7 @@
       "lessonId": "c2.culture-expressions.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو در برخی زبان‌ها «آسمان‌خراش» ترجمهٔ ساختاری است، نه وامواژه.",
       "mustUse": [
         "calque"
@@ -45480,7 +45480,7 @@
       "lessonId": "c2.paraphrasing.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو در خلاصه، وفاداری از زیبایی مهم‌تر است.",
       "mustUse": [
         "fidelity"
@@ -45728,7 +45728,7 @@
       "lessonId": "c2.translation.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو ترجمهٔ تحت‌اللفظی جمله‌هایی می‌سازد که هیچ گویشور بومی نمی‌گوید.",
       "mustUse": [
         "literalism"
@@ -45908,7 +45908,7 @@
       "lessonId": "c2.diplomacy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the wording ___ softer, the other side could accept it.",
       "accepted": [
         "were",
@@ -45922,7 +45922,7 @@
       "lessonId": "c2.diplomacy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If we were to raise it, it ___ look like pressure.",
       "accepted": [
         "would",
@@ -45976,7 +45976,7 @@
       "lessonId": "c2.diplomacy.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو ظرافت در گفتار تفاوت میان هشدار و توهین است.",
       "mustUse": [
         "tact"
@@ -46156,7 +46156,7 @@
       "lessonId": "c2.specialist-audiences.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Not only does the method scale, but it also ___ the cost.",
       "accepted": [
         "cuts",
@@ -46170,7 +46170,7 @@
       "lessonId": "c2.specialist-audiences.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Rarely ___ a talk change how a specialist works.",
       "accepted": [
         "does",
@@ -46224,7 +46224,7 @@
       "lessonId": "c2.specialist-audiences.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو سخنرانی با جمع‌بندی کوتاهی پایان می‌یابد که متخصص‌ها می‌توانند نقل کنند.",
       "mustUse": [
         "recap"
@@ -46472,7 +46472,7 @@
       "lessonId": "c2.narrative.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو ترتیب زمانی در فصل دوم به هم می‌ریزد.",
       "mustUse": [
         "chronology"
@@ -46900,7 +46900,7 @@
       "lessonId": "c2.sensitive.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If I ___ in your position, I would wait a week.",
       "accepted": [
         "were",
@@ -46914,7 +46914,7 @@
       "lessonId": "c2.sensitive.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the family ___ the news today, would they want the details?",
       "accepted": [
         "heard",
@@ -46968,7 +46968,7 @@
       "lessonId": "c2.sensitive.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو صراحت تنها پس از شنیده شدن خانواده سود می‌دهد.",
       "mustUse": [
         "candour"
@@ -47148,7 +47148,7 @@
       "lessonId": "c2.policy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "If the review had counted the externalities, the choice ___ different now.",
       "accepted": [
         "would be",
@@ -47162,7 +47162,7 @@
       "lessonId": "c2.policy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 2,
+      "difficulty": 3,
       "sentence": "Had the ministry consulted the unions, the plan ___ legitimacy.",
       "accepted": [
         "would have kept",
@@ -47216,7 +47216,7 @@
       "lessonId": "c2.policy.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو هزینه یک معیار است، نه تنها معیار.",
       "mustUse": [
         "criterion"
@@ -47464,7 +47464,7 @@
       "lessonId": "c2.legal.lesson-01",
       "type": "sentence_production",
       "order": 9,
-      "difficulty": 3,
+      "difficulty": 2,
       "prompt": "بگو این حکم از یک رویهٔ قضایی پیشین پیروی می‌کند.",
       "mustUse": [
         "precedent"
@@ -48807,7 +48807,7 @@
       "lessonId": "c2.nuance.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The report describes the delay as 'regrettable'. Regrettable acknowledges a problem without admitting fault; 'unacceptable' would assign blame, and 'unfortunate' would suggest chance. The choice of adjective is the report's argument.",
       "question": "What does the adjective choice reveal?",
       "questionFa": "انتخاب این صفت چه چیزی را آشکار می‌کند؟",
@@ -48845,7 +48845,7 @@
       "lessonId": "c2.discourse.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The speaker uses 'we' eleven times and 'they' only twice. In the transcript, every 'they' appears in a sentence about criticism. The pronoun pattern does the persuasive work that the argument never states openly.",
       "question": "What does the pronoun pattern accomplish?",
       "questionFa": "این الگوی ضمیر چه کاری می‌کند؟",
@@ -48883,7 +48883,7 @@
       "lessonId": "c2.argument-analysis.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The author attacks the funding body rather than the study's method. This is a circumstantial ad hominem: the funding may indeed be relevant, but relevance is not proof of error. The study could still be sound, and the author has not shown otherwise.",
       "question": "What remains unproven?",
       "questionFa": "چه چیزی اثبات نشده باقی می‌ماند؟",
@@ -48921,7 +48921,7 @@
       "lessonId": "c2.translation.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "A literal translation of the proverb loses its rhythm but keeps its meaning. A freer version keeps the rhythm and replaces the image, so the reader feels the effect while the metaphor changes. Which is right depends on whether the reader needs the source culture or the effect.",
       "question": "What decides which version is right?",
       "questionFa": "چه چیزی درستیِ هر نسخه را تعیین می‌کند؟",
@@ -48959,7 +48959,7 @@
       "lessonId": "c2.audience.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 2,
+      "difficulty": 3,
       "passage": "The same finding reaches three audiences in three registers: 'the trial failed' for a lab, 'the trial did not meet its endpoint' for a journal, and 'the treatment did not work as hoped' for patients. Precision and kindness pull in opposite directions, and the author has to choose.",
       "question": "What tension does the passage name?",
       "questionFa": "متن کدام تنش را نام می‌برد؟",

@@ -214,7 +214,7 @@ class ContentDistributionTest {
     }
 
     /**
-     * The authored difficulty (v66) and its hand-judged levels (v67 B1, v68 B2, v69 C1),
+     * The authored difficulty (v66) and its hand-judged levels (v67 B1, v68 B2, v69 C1, v71 C2),
      * measured on the bundle rather than on a fixture.
      *
      * The selector can only change the **level** of a format where a lesson's items of that
@@ -229,7 +229,11 @@ class ContentDistributionTest {
      * (passive, perfect, conditional, quantifier agreement) is the hard end and a blank that
      * tests a word is the easy end, where the seed had called every blank easy — and at C1,
      * whose floor is 2, the hard end is the inversion and mixed-conditional structure the level
-     * is built on, so `c1.statistics` separates the agreement trap from the plain one.
+     * is built on, so `c1.statistics` separates the agreement trap from the plain one. C2 is read
+     * the same way as C1 — its hard end is the inversion and mixed conditional it is built on plus
+     * the reading questions that ask what a passage implies — but only 9 of its 30 choice lessons
+     * have one, because the other 21 carry the level's hard item in a blank or a production,
+     * which is what `c2.literature` shows: its one hard choice item is the only one it has.
      */
     @Test
     fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
@@ -273,7 +277,12 @@ class ContentDistributionTest {
             31,
             spreadByLevel["C1"] ?: 0,
         )
-        val seeded = listOf("A1", "A2", "C2").filter { (spreadByLevel[it] ?: 0) != 0 }
+        assertEquals(
+            "C2 was read item by item in v71: 9 of its 30 choice lessons disagree about difficulty",
+            9,
+            spreadByLevel["C2"] ?: 0,
+        )
+        val seeded = listOf("A1", "A2").filter { (spreadByLevel[it] ?: 0) != 0 }
         assertTrue(
             "a seeded level cannot disagree with itself about one format's difficulty — " +
                 "if one of these was hand-judged, say so here: $seeded",
@@ -367,6 +376,30 @@ class ContentDistributionTest {
             selector.next(
                 statisticBlanks,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECALL to 0.4f)),
+            )?.id,
+        )
+
+        // C2's hard choice item is the one that reads the narrator's tone against the passage's
+        // optimism; the other three choices in that lesson only name a device or a word.
+        val literaryChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "c2.literature.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "c2.literature.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertEquals(
+            "a consolidated recognition meter meets the inference item, not a vocabulary match",
+            "c2.literature.ex.08",
+            selector.next(
+                literaryChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the vocabulary end",
+            "c2.literature.ex.01",
+            selector.next(
+                literaryChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
             )?.id,
         )
     }

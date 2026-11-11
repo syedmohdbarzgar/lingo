@@ -90,13 +90,13 @@
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 702 tests / 78 classes as of
-  the hard-end-choice pass, where the 22 C1 lessons whose hardest item was a blank or a reading
-  question got one authored choice item each. One `ContentDistributionTest` case measures the
-  within-format axis and names where it exists: B1, B2 and C1 are the levels whose multiple-choice
-  items disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32, and all 31 of C1's — the
-  level whose axis is now complete), and the seeded levels give every choice item of a level one
-  number, so they cannot reorder that format at all — judging another level moves these counts and
-  the case is what says so. The same case
+  the C2-difficulty pass, where the last unjudged level was read item by item. One
+  `ContentDistributionTest` case measures the within-format axis and names where it exists: B1, B2,
+  C1 and C2 are the levels whose multiple-choice items disagree about difficulty (10 of B1's 30
+  lessons, 10 of B2's 32, all 31 of C1's — the level whose axis is complete — and 9 of C2's 30,
+  because the other 21 carry C2's hard item in a blank or a production), and A1/A2 are the levels
+  still fully seeded: they give every choice item of a level one number, so they cannot reorder that
+  format at all — judging a level moves these counts and the case is what says so. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated
   recognition meter is served its hardest choice item (`ex.02`, reported speech plus past perfect)
   while a shaky one starts at the easy end; on `b2.problems` a consolidated recall meter is served
@@ -104,7 +104,11 @@
   the structure blank is the hard end and the word blank the easy end, where the seed had called every
   blank easy — and on `c1.statistics`, whose floor is 2, a consolidated recall meter is served
   `ex.05` (`Neither of the samples was significant`, the agreement trap) while a shaky one starts at
-  `ex.04` (the plain plural). All three reorders are permutations. Before it the B2-difficulty pass, where the second level was read item by item
+  `ex.04` (the plain plural); and on `c2.literature` a consolidated recognition meter is served
+  `ex.08` (the narrator's tone read against the passage's optimism) while a shaky one starts at the
+  vocabulary item. All four reorders are permutations. Before it the hard-end-choice pass, where the
+  22 C1 lessons whose hardest item was a blank or a reading question got one authored choice item
+  each, so recognition can rise in every one of them. Before it the B2-difficulty pass, where the second level was read item by item
   and its axis turned out to sit in the blanks rather than the choices. Before it the difficulty-in-the-bundle pass, where the authored difficulty is checked against the real content
   instead of a fixture. Before it the
   shared-steering pass, where the "which gap is mine" rule left the two comparators that had
