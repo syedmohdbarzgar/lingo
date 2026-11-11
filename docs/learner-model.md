@@ -88,9 +88,15 @@
 - **`AdaptiveExerciseSelector` + `DefaultMasteryProfileEngine` steer a session's queue.** Every
   graded answer is folded into a per-dimension `MasteryProfile` (recognition / recall /
   comprehension / application / production) and the next exercise is chosen with the selector, so
-  the kinds of knowing still untested lead the session instead of the next authored item. Two rules
-  keep it safe: with no evidence the sort is stable, so a first-teach lesson runs exactly as
-  authored, and a missed exercise still comes back later in the session  (a failed dimension ties with an untouched one at 0, and the tie is broken by queue position). The profile is
+  the kinds of knowing still untested lead the session instead of the next authored item. The order
+  is decided by **three states of evidence, not by a number**: a dimension that was assessed and sits
+  below `STRONG_THRESHOLD` is *weak* — it leads, weakest first, from its easy end; a dimension with
+  **no evidence at all** is *unseen* — neutral, keeping its authored position, so a first-teach lesson
+  runs exactly as written; a dimension assessed at or above the bar is *consolidated* — it sinks and
+  is served from its hard end. Only `isEstablished()` separates the first two, which both read 0f: a
+  missed dimension is weak **with evidence** and still leads, while a never-asked one is never called
+  weak merely for having no history. A missed exercise also stays in the session's pending list, so it
+  comes back later either way. The profile is
   **cross-session** (checklist B-1, Room v6): every answer also writes its dimension to
   `dimension_mastery`, and the next session seeds `MasteryProfile` from those rows before the first
   exercise, so the selector can steer immediately instead of waiting for an in-session answer —

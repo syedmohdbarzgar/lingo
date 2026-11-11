@@ -89,8 +89,13 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 702 tests / 78 classes as of
-  the C2-difficulty pass, where the last unjudged level was read item by item. One
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 705 tests / 78 classes as of
+  the evidence-boundary pass, where the selector learned the difference between "never assessed" and
+  "assessed wrong". Three `AdaptiveExerciseSelectorTest` cases: a never-assessed dimension is not
+  promoted over a proven gap (reading mastery alone made production at 0f outrank an observed 0.4f
+  recall item), a proven 0f is weak *with evidence* and leads from its easy end, and unseen
+  dimensions keep authored order among themselves while a gap leads — with a permutation check
+  beside them. Before it the C2-difficulty pass, where the last unjudged level was read item by item. One
   `ContentDistributionTest` case measures the within-format axis and names where it exists: B1, B2,
   C1 and C2 are the levels whose multiple-choice items disagree about difficulty (10 of B1's 30
   lessons, 10 of B2's 32, all 31 of C1's — the level whose axis is complete — and 9 of C2's 30,

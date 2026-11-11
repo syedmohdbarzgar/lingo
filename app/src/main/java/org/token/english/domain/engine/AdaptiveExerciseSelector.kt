@@ -1,6 +1,7 @@
 package org.token.english.domain.engine
 
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.MasteryProfile
 
 /**
@@ -8,23 +9,26 @@ import org.token.english.domain.model.MasteryProfile
  * (audit §6 — "the system must not always take the next exercise from a fixed
  * list; it chooses by knowledge state → weakness → exercise type").
  *
- * The rule is deliberately narrow and explainable: exercise formats whose mastery
- * dimension is still below [strongThreshold] are front-loaded, weakest dimension
- * first; formats the learner has already consolidated keep their authored order
- * and sink to the back. So a learner with strong recognition but shaky recall
- * stops being served multiple-choice and gets fill-in-the-blank instead.
+ * **Three states of evidence, not a number (P0 gap between "no evidence" and "zero").**
+ * A dimension's mastery reads 0f both when it was never assessed and when it was and the
+ * learner got it wrong, so deciding from the number alone made a fresh dimension look like
+ * the worst one — and a lesson with one shaky recall item had its never-asked
+ * sentence-production pushed to the very front, ahead of the gap that was actually
+ * observed. The order below therefore classifies every exercise by
+ * [MasteryProfile.isEstablished] first:
  *
- * Pure and deterministic — the same inputs always produce the same order, and a
- * learner with no evidence yet sees the lesson exactly as authored (stable sort).
+ *  - **weak** — assessed and below [strongThreshold]: promoted, weakest first, and served
+ *    from its easy end (a proven 0f is weak, and it is weak *with* evidence).
+ *  - **unseen** — never assessed: neutral. It neither earns a promotion nor a demotion, and
+ *    keeps its authored position; a fresh install therefore sees the lesson exactly as
+ *    written.
+ *  - **consolidated** — assessed and at or above the bar: demoted, and served from its hard
+ *    end instead of re-tapping what is already known.
  *
- * **Difficulty sets the level, not only the order (content v66).** Every exercise now
- * carries an authored `difficulty` (1..3, relative to its own lesson's level), so the
- * selector can do what a list of formats cannot: while a dimension is still shaky it
- * serves the easy end first, and once the dimension is consolidated it serves the hard
- * end first instead of walking the authored order. A dimension with **no evidence at
- * all** keeps the authored order — "no evidence" is not "weak", and a fresh install must
- * see the lesson as it was written. Nothing is dropped or duplicated: every rule here is
- * a key in one sort, so the result is always a permutation.
+ * Weak items come before unseen ones because a gap that was observed is the one thing the
+ * session knows it must fix; unseen items come before consolidated ones because nothing has
+ * shown they are mastered. Nothing is dropped or duplicated — every rule here is a key in
+ * one sort, so the result is always a permutation.
  */
 class AdaptiveExerciseSelector(
     /** At or above this, a dimension needs no extra prompting. */
@@ -32,7 +36,19 @@ class AdaptiveExerciseSelector(
 ) {
 
     /**
-     * The available exercises, ordered so the learner's weakest dimensions come
+     * What the profile says about one dimension. `UNSEEN` is the whole point: it is
+     * not a low score, it is the absence of a score.
+     */
+    private enum class Evidence { WEAK, UNSEEN, CONSOLIDATED }
+
+    private fun evidenceOf(profile: MasteryProfile, dimension: MasteryDimension): Evidence = when {
+        !profile.isEstablished(dimension) -> Evidence.UNSEEN
+        profile.masteryOf(dimension) < strongThreshold -> Evidence.WEAK
+        else -> Evidence.CONSOLIDATED
+    }
+
+    /**
+     * The available exercises, ordered so the learner's observed weaknesses come
      * first. Never drops or duplicates an exercise — this is a permutation.
      */
     fun order(exercises: List<Exercise>, profile: MasteryProfile): List<Exercise> =
@@ -40,22 +56,21 @@ class AdaptiveExerciseSelector(
             .withIndex()
             .sortedWith(
                 compareBy(
-                    // 0 = still weak (front-load), 1 = consolidated (keep order).
-                    { if (profile.masteryOf(ExerciseDimension.dimensionOf(it.value)) < strongThreshold) 0 else 1 },
-                    // Weakest first — but only meaningful for the weak group; giving
-                    // every consolidated item 0f here lets the index preserve order.
+                    // 1. Evidence band: weak → unseen → consolidated.
+                    { evidenceOf(profile, ExerciseDimension.dimensionOf(it.value)).ordinal },
+                    // 2. Among proven gaps, the deepest one leads. Meaningless for the
+                    //    other bands (0f lets the later keys / authored index decide).
                     {
-                        val mastery = profile.masteryOf(ExerciseDimension.dimensionOf(it.value))
-                        if (mastery < strongThreshold) mastery else 0f
+                        val dimension = ExerciseDimension.dimensionOf(it.value)
+                        if (evidenceOf(profile, dimension) == Evidence.WEAK) profile.masteryOf(dimension) else 0f
                     },
-                    // 3. Level. Shaky → easiest first; consolidated → hardest first;
-                    //    unseen → 0 for every item, so the index (authored order) decides.
+                    // 3. Level, only where evidence names a direction: weak → easiest
+                    //    first, consolidated → hardest first, unseen → 0 (authored order).
                     {
-                        val mastery = profile.masteryOf(ExerciseDimension.dimensionOf(it.value))
-                        when {
-                            mastery <= 0f -> 0
-                            mastery < strongThreshold -> it.value.difficulty
-                            else -> -it.value.difficulty
+                        when (evidenceOf(profile, ExerciseDimension.dimensionOf(it.value))) {
+                            Evidence.WEAK -> it.value.difficulty
+                            Evidence.CONSOLIDATED -> -it.value.difficulty
+                            Evidence.UNSEEN -> 0
                         }
                     },
                     { it.index },

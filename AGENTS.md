@@ -145,8 +145,18 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (702 tests / 78 classes as of the
-C2-difficulty pass, where the last level with no hand judgement was read item by item. C2's floor is
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (705 tests / 78 classes as of the
+evidence-boundary pass, where the selector stopped deciding from a number: a dimension's mastery
+reads 0f both when it was never assessed and when it was and the answer was wrong, so a lesson with
+one shaky recall item had its never-asked sentence-production pushed to the front — material nobody
+had looked at outranked the one gap the session had actually observed. `AdaptiveExerciseSelector`
+now classifies every item by `MasteryProfile.isEstablished()` first: **weak** (assessed, below the
+bar) leads, weakest first and from its easy end; **unseen** is neutral and keeps its authored
+position; **consolidated** sinks and is served from its hard end. A proven 0f is therefore weak
+*with evidence* — it leads and still starts easy — while an absent dimension is never called weak.
+Three `AdaptiveExerciseSelectorTest` cases pin it: an unseen dimension is not promoted over a proven
+gap, a proven zero leads from its easy end, and unseen dimensions keep authored order among
+themselves while a gap leads. Before it the C2-difficulty pass, where the last level with no hand judgement was read item by item. C2's floor is
 2 like C1's, so the hard end is the structure the level is built on — inversion after a negative
 adverbial, the mixed and unreal conditional, the quantifier-phrase agreement trap — the reading
 questions that ask what a passage implies rather than a fact, and the metalanguage items where a

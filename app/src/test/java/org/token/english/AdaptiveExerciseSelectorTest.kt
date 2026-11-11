@@ -25,12 +25,12 @@ class AdaptiveExerciseSelectorTest {
         correctIndex = 0,
     )
 
-    private fun fill(id: String) = Exercise.FillBlank(
+    private fun fill(id: String, difficulty: Int = Exercise.DEFAULT_DIFFICULTY) = Exercise.FillBlank(
         id = id,
         lessonId = "l1",
         sentence = "I ___ here.",
         accepted = listOf("live"),
-    )
+    ).copy(difficulty = difficulty)
 
     private fun translation(id: String) = Exercise.Translation(
         id = id,
@@ -139,6 +139,64 @@ class AdaptiveExerciseSelectorTest {
         val ordered = selector.order(exercises, profile(MasteryDimension.RECOGNITION to 0.95f))
 
         assertEquals(listOf("hard", "middle", "easy"), ordered.map { it.id })
+    }
+
+    // ---- "no evidence" is not "zero" (P0 evidence boundary) ----
+
+    private fun sentence(id: String, difficulty: Int = Exercise.DEFAULT_DIFFICULTY) = Exercise.SentenceProduction(
+        id = id,
+        lessonId = "l1",
+        prompt = "بگو چه شد.",
+        mustUse = listOf("happened"),
+        minWords = 2,
+        accepted = listOf("It happened."),
+        difficulty = difficulty,
+    )
+
+    @Test
+    fun `a never-assessed dimension is not promoted over a proven gap`() {
+        // Recognition consolidated, recall observed at 0.4, production never asked.
+        // Reading the number alone called production 0f and pushed it to the very
+        // front — the learner's one observed gap lost first place to material nobody
+        // has looked at. Absence of evidence must not win that tie.
+        val exercises = listOf(mc("m1"), sentence("s1"), fill("f1"))
+        val profile = profile(
+            MasteryDimension.RECOGNITION to 0.95f,
+            MasteryDimension.RECALL to 0.4f,
+        )
+
+        val ordered = selector.order(exercises, profile)
+
+        assertEquals(listOf("f1", "s1", "m1"), ordered.map { it.id })
+        assertEquals("f1", selector.next(exercises, profile)?.id)
+    }
+
+    @Test
+    fun `a proven zero with real evidence is weak, and gets the easy end`() {
+        // A wrong answer establishes the dimension at 0f — the same number an unseen
+        // dimension reads. Here it is the weakest thing the session knows, so it leads,
+        // and it leads from its easy end instead of the authored (hard-first) order.
+        val exercises = listOf(fill("hard", 3), sentence("s1"), fill("easy", 1))
+        val profile = profile(MasteryDimension.RECALL to 0f)
+
+        val ordered = selector.order(exercises, profile)
+
+        assertEquals(0f, profile.masteryOf(MasteryDimension.RECALL), 0f)
+        assertTrue(profile.isEstablished(MasteryDimension.RECALL))
+        assertEquals(listOf("easy", "hard", "s1"), ordered.map { it.id })
+    }
+
+    @Test
+    fun `unseen dimensions keep authored order among themselves while a gap leads`() {
+        // Two never-assessed formats and one observed gap: the gap leads, and the two
+        // unseen items stay in the order the author wrote them — no difficulty key is
+        // invented for material with no evidence.
+        val exercises = listOf(sentence("s3", 3), fill("f1"), sentence("s1", 1), mc("m1"))
+        val ordered = selector.order(exercises, profile(MasteryDimension.RECALL to 0.2f))
+
+        assertEquals(listOf("f1", "s3", "s1", "m1"), ordered.map { it.id })
+        assertEquals(exercises.toSet(), ordered.toSet())
+        assertEquals(exercises.size, ordered.size)
     }
 
     @Test
