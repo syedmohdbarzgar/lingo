@@ -3,6 +3,7 @@ package org.token.english.domain.engine
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.GradedCard
+import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.Skill
@@ -181,4 +182,36 @@ object MissTaxonomy {
         }
         return MissProfile(categories)
     }
+
+    /**
+     * The category the mix says to work on, or `null` when nothing steers.
+     *
+     * Both places that decide what to do next ask this one function (`GetTodayPlanUseCase`
+     * through the planner, and the review screen's due list), because "which gap is mine"
+     * answered twice is how two surfaces start pointing at two different weaknesses. A
+     * clean window does not steer: "weakest" of five right answers is not a weakness.
+     */
+    fun weakestCategory(profile: MissProfile?): MissCategory? =
+        profile?.weakest?.takeIf { it.misses > 0 }?.category
+
+    /**
+     * The ordering key for nodes under the mix: 0 = this node trains the weakest category,
+     * 1 = it does not. Empty when nothing steers, so a caller's comparator falls through to
+     * its own order.
+     *
+     * A key, never a filter: the mix reorders equals and is not allowed to add or drop work.
+     */
+    fun rank(nodes: List<KnowledgeItem>, weakest: MissCategory?): Map<String, Int> {
+        if (weakest == null) return emptyMap()
+        return nodes.associate { node ->
+            val trainsIt = node.skills.any { categoryOf(it) == weakest }
+            node.id to if (trainsIt) 0 else 1
+        }
+    }
+
+    /**
+     * The suffix both surfaces append to the one row or action that answers the gap —
+     * same words, so a promotion the learner sees twice reads as one explanation.
+     */
+    fun gapSuffix(weakest: MissCategory): String = " · ضعف اخیر: ${labelFa(weakest)}"
 }

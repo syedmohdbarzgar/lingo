@@ -170,6 +170,50 @@ class ReviewViewModelTest {
         )
     }
 
+    private fun vocabularyNode(itemId: String, lessonId: String) = KnowledgeItem(
+        id = itemId,
+        type = KnowledgeType.VOCABULARY,
+        title = "Airport",
+        titleFa = "فرودگاه",
+        level = LearningLevel.A2,
+        prerequisites = emptyList(),
+        lessonIds = listOf(lessonId),
+        skills = listOf(Skill.VOCABULARY, Skill.LISTENING),
+    )
+
+    @Test
+    fun `a card from a lesson that gained its vocabulary node in v65 reaches the tab and is credited to it`() {
+        // a2.airport is one of the 35 lessons that shipped words while owning only grammar
+        // nodes; v65 gave each of them a VOCABULARY node titled by its own lesson. This is
+        // the tab's half of that promise: the card is in the queue the learner sees, and
+        // its grade is attributed to the word's own lesson (which is what resolves to that
+        // node — `KnowledgeEngineTest` pins the same-type rule, `EvidenceTransactionTest`
+        // the rolled-back write on real Room).
+        val h = Harness()
+        val airportWord = word.copy(lessonId = "a2.airport")
+        h.reviews.dueFlow.value = listOf(card)
+        h.vocabulary.allFlow.value = listOf(airportWord)
+        h.knowledge.itemsFlow.value = listOf(vocabularyNode("vocab.airport", "a2.airport"))
+
+        val vm = h.build()
+
+        assertEquals(
+            "the card of a v65 lesson is on the review screen, not stranded in the graph",
+            listOf(airportWord.id),
+            vm.state.value.queue.map { it.contentId },
+        )
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.Reveal)
+        vm.onEvent(ReviewEvent.Grade(ReviewResult.GOOD))
+
+        assertEquals(
+            "the grade is credited to that lesson, where its vocabulary node lives",
+            listOf(Triple("a2.airport", Skill.VOCABULARY, true)),
+            h.knowledge.recalled,
+        )
+    }
+
     @Test
     fun `a due curriculum node is offered beside the cards, not instead of them`() {
         // review→graph pass: the node's own schedule is read too, so a due node whose

@@ -145,7 +145,14 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (699 tests / 78 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (701 tests / 78 classes as of the
+shared-steering pass, where the rule that turns the miss mix into an ordering key moved out of the
+two comparators that had each grown their own copy: `MissTaxonomy.weakestCategory` / `rank` /
+`gapSuffix` is now what both the planner and the review screen's due list call, so one weakness
+cannot get two spellings and one rule cannot drift in two directions. One case in `MissTaxonomyTest`
+(a clean window steers nothing) and one in `ReviewViewModelTest` for the tab's half of the v65
+vocabulary-node promise — a card from `a2.airport`, one of the 35 lessons that used to own only
+grammar nodes, sits in the review queue and its grade is credited to that lesson. Before it the
 authored-difficulty pass, where the bundle gained the one axis the selector was missing: every
 exercise carries a `difficulty` (1..3, **relative to its own lesson's level**), so
 `AdaptiveExerciseSelector` can raise or lower the level — the easy end while a dimension is shaky,

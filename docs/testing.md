@@ -89,8 +89,14 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 699 tests / 78 classes as of
-  the authored-difficulty pass, where the bundle gained what selection was missing — every exercise
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 701 tests / 78 classes as of
+  the shared-steering pass, where the "which gap is mine" rule left the two comparators that had
+  grown their own copy and became `MissTaxonomy.weakestCategory` / `rank` / `gapSuffix` — called by
+  both the planner and the review screen's due list. One case pins that a clean window steers nothing
+  (five right answers are not a weakness), and one `ReviewViewModelTest` case closes the tab's half of
+  the v65 vocabulary-node promise: a card from `a2.airport` (a lesson that used to own only grammar
+  nodes) is in the queue the learner sees, and its grade is credited to the word's own lesson, where
+  that node lives. Before it the authored-difficulty pass, where the bundle gained what selection was missing — every exercise
   carries a `difficulty` 1..3, relative to its own lesson's level (A1/A2 ≤ 2, C1/C2 ≥ 2). Three
   `AdaptiveExerciseSelectorTest` cases pin the behaviour: a shaky dimension is served from its easy
   end, a consolidated one from its hard end, and a learner with no evidence keeps the authored order

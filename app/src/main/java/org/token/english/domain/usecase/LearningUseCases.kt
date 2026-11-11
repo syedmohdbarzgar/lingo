@@ -572,15 +572,16 @@ class GetDueKnowledgeReviewsUseCase(
         limit: Int = DEFAULT_LIMIT,
     ): List<DueKnowledgeReview> {
         // A clean window is not a weakness: "weakest" of five right answers steers nothing.
-        val weakest = runCatchingCancellable { missProfile() }.getOrNull()
-            ?.weakest?.takeIf { it.misses > 0 }?.category
-        val trainsIt: Set<String> = if (weakest == null) {
-            emptySet()
+        // The rule itself lives in `MissTaxonomy`, where the day's plan asks the same
+        // question — one definition, so the two surfaces cannot start pointing at different
+        // gaps (miss-driven drill pass).
+        val weakest = MissTaxonomy.weakestCategory(
+            runCatchingCancellable { missProfile() }.getOrNull(),
+        )
+        val missRank: Map<String, Int> = if (weakest == null) {
+            emptyMap()
         } else {
-            knowledge.allItems()
-                .filter { node -> node.skills.any { MissTaxonomy.categoryOf(it) == weakest } }
-                .map { it.id }
-                .toSet()
+            MissTaxonomy.rank(knowledge.allItems(), weakest)
         }
 
         val candidates = knowledge.observeStates().first()
@@ -589,7 +590,7 @@ class GetDueKnowledgeReviewsUseCase(
             }
             .sortedWith(
                 compareBy<KnowledgeState> { it.nextReviewAt }
-                    .thenBy { state -> if (state.itemId in trainsIt) 0 else 1 }
+                    .thenBy { state -> missRank[state.itemId] ?: 1 }
                     .thenBy { it.itemId },
             )
             .take(MAX_PROBES)
@@ -607,7 +608,7 @@ class GetDueKnowledgeReviewsUseCase(
                 reasonFa = plan.reasonFa,
             )
         }
-        return if (weakest == null) reviews else nameGap(reviews, weakest, trainsIt)
+        return if (weakest == null) reviews else nameGap(reviews, weakest, missRank)
     }
 
     /**
@@ -618,13 +619,13 @@ class GetDueKnowledgeReviewsUseCase(
     private fun nameGap(
         reviews: List<DueKnowledgeReview>,
         weakest: MissCategory,
-        trainsIt: Set<String>,
+        missRank: Map<String, Int>,
     ): List<DueKnowledgeReview> {
-        val at = reviews.indexOfFirst { it.itemId in trainsIt }
+        val at = reviews.indexOfFirst { missRank[it.itemId] == 0 }
         if (at < 0) return reviews
-        val gap = "ضعف اخیر: ${MissTaxonomy.labelFa(weakest)}"
+        val suffix = MissTaxonomy.gapSuffix(weakest)
         return reviews.mapIndexed { index, review ->
-            if (index == at) review.copy(reasonFa = "${review.reasonFa} · $gap") else review
+            if (index == at) review.copy(reasonFa = review.reasonFa + suffix) else review
         }
     }
 

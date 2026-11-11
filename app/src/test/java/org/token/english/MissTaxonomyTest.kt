@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.token.english.domain.engine.ClassifiedAnswer
 import org.token.english.domain.engine.MissCategory
 import org.token.english.domain.engine.MissTaxonomy
 import org.token.english.domain.model.Exercise
@@ -202,6 +203,23 @@ class MissTaxonomyTest {
             profile.categories.map { it.category },
         )
         assertEquals(MissCategory.GRAMMAR, profile.weakest?.category)
+    }
+
+    @Test
+    fun `the mix steering is one rule, and a clean window steers nothing`() {
+        // The day's plan and the review screen's due list both ask this function, so a
+        // change here moves both — that is the point of it living in the taxonomy rather
+        // than in two comparators.
+        val clean = MissTaxonomy.profile(
+            (1..5).map { ClassifiedAnswer(MissCategory.VOCABULARY, correct = true, at = it.toLong()) },
+        )
+        assertNull("five right answers are not a weakness", MissTaxonomy.weakestCategory(clean))
+        assertTrue("nothing steers, so there is no key to sort by", MissTaxonomy.rank(emptyList(), null).isEmpty())
+
+        val gap = MissTaxonomy.profile(
+            (1..5).map { ClassifiedAnswer(MissCategory.GRAMMAR, correct = false, at = it.toLong()) },
+        )
+        assertEquals(MissCategory.GRAMMAR, MissTaxonomy.weakestCategory(gap))
     }
 
     @Test

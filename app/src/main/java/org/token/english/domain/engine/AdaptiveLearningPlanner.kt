@@ -199,15 +199,8 @@ class AdaptiveLearningPlanner(
         //    worth of evidence and a prerequisite is a fact. A mix whose weakest
         //    category has no miss at all (everything answered right) steers nothing:
         //    "weakest" of a clean window is not a weakness.
-        val weakestMiss = missProfile?.weakest?.takeIf { it.misses > 0 }?.category
-        val missRank: Map<String, Int> = if (weakestMiss == null) {
-            emptyMap()
-        } else {
-            graph.items.associate { node ->
-                val trainsIt = node.skills.any { MissTaxonomy.categoryOf(it) == weakestMiss }
-                node.id to if (trainsIt) 0 else 1
-            }
-        }
+        val weakestMiss = MissTaxonomy.weakestCategory(missProfile)
+        val missRank: Map<String, Int> = MissTaxonomy.rank(graph.items, weakestMiss)
         val sorted = actions.sortedWith(
             compareBy(
                 { it.priority },
@@ -284,9 +277,7 @@ class AdaptiveLearningPlanner(
         if (index < 0) return actions
         val promoted = actions[index]
         return actions.toMutableList().also { list ->
-            list[index] = promoted.copy(
-                reasonFa = "${promoted.reasonFa} · ضعف اخیر: ${MissTaxonomy.labelFa(weakest)}",
-            )
+            list[index] = promoted.copy(reasonFa = promoted.reasonFa + MissTaxonomy.gapSuffix(weakest))
         }
     }
 
