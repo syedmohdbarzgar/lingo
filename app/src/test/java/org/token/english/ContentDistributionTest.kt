@@ -282,11 +282,25 @@ class ContentDistributionTest {
             9,
             spreadByLevel["C2"] ?: 0,
         )
-        val seeded = listOf("A1", "A2").filter { (spreadByLevel[it] ?: 0) != 0 }
-        assertTrue(
-            "a seeded level cannot disagree with itself about one format's difficulty — " +
-                "if one of these was hand-judged, say so here: $seeded",
-            seeded.isEmpty(),
+        // v72 read the last two levels. A1 and A2 run 1..2, so their axis is "first encounter
+        // against more", and only the 17 A1 and 11 A2 lessons that own both a first-encounter
+        // item and a one-step-harder one can be reordered inside a format.
+        assertEquals(
+            "A1 was read item by item in v72: 17 of its 30 choice lessons disagree about difficulty",
+            17,
+            spreadByLevel["A1"] ?: 0,
+        )
+        assertEquals(
+            "A2 was read item by item in v72: 11 of its 30 choice lessons disagree about difficulty",
+            11,
+            spreadByLevel["A2"] ?: 0,
+        )
+        // Every level ships judgement now, so none may still read as seeded — a level whose
+        // choice items all share one number cannot be reordered inside that format at all.
+        assertEquals(
+            "all six levels are hand-judged; a level with no within-format spread is seeded again",
+            listOf("A1", "A2", "B1", "B2", "C1", "C2"),
+            spreadByLevel.filterValues { it > 0 }.keys.sorted(),
         )
 
         // And the axis is not decoration: on real content the level decides who is served first.
@@ -399,6 +413,56 @@ class ContentDistributionTest {
             "c2.literature.ex.01",
             selector.next(
                 literaryChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        // A1's axis is the article: `a university student` (a vowel letter that is not a
+        // vowel sound) is a step past a first encounter, while the word-meaning item is not.
+        val articleChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "a1.articles.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "a1.articles.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("a1.articles has to ship choices to steer", articleChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the a/an choice first (a university student)",
+            "a1.articles.ex.01",
+            selector.next(
+                articleChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the word-meaning item instead",
+            "a1.articles.ex.08",
+            selector.next(
+                articleChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        // A2's axis is the comparative: the -er form and `more expensive` are the level's
+        // structural work, while naming what "crowded" means is a first encounter.
+        val cityChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "a2.city-life.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "a2.city-life.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("a2.city-life has to ship choices to steer", cityChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the comparative first",
+            "a2.city-life.ex.01",
+            selector.next(
+                cityChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the word-meaning item instead",
+            "a2.city-life.ex.02",
+            selector.next(
+                cityChoices,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
             )?.id,
         )

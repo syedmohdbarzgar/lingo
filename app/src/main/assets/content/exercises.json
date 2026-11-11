@@ -1,5 +1,5 @@
 {
-  "contentVersion": 71,
+  "contentVersion": 72,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -42,7 +42,7 @@
       "lessonId": "a1.greetings.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Hello, ______ are you?",
       "accepted": [
         "how"
@@ -92,7 +92,7 @@
       "lessonId": "a1.greetings.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which phrase is polite when asking for something?",
       "questionFa": "کدام عبارت برای درخواست مؤدبانه است؟",
       "options": [
@@ -128,7 +128,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "fill_blank",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I usually ______ coffee in the morning.",
       "accepted": [
         "drink",
@@ -232,7 +232,7 @@
       "lessonId": "a1.family.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Your mother's husband is your ______.",
       "questionFa": "شوهر مادر شما ______ شماست.",
       "options": [
@@ -320,7 +320,7 @@
       "lessonId": "a2.airport.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "What do you show before boarding?",
       "questionFa": "قبل از سوار شدن چه چیزی را نشان می‌دهید؟",
       "options": [
@@ -356,7 +356,7 @@
       "lessonId": "a2.airport.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Excuse me, where is gate 12? It's over ______, next to the coffee shop.",
       "accepted": [
         "there",
@@ -399,7 +399,7 @@
       "lessonId": "a2.airport.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "The flight to Dubai ______ at 9 p.m. tomorrow.",
       "questionFa": "پرواز دبی فردا ساعت ۹ شب حرکت میکند.",
       "options": [
@@ -435,7 +435,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the polite way to ask for the bill:",
       "questionFa": "درخواست مؤدبانه صورتحساب کدام است؟",
       "options": [
@@ -496,7 +496,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "I have a ______ for two people.",
       "questionFa": "برای دو نفر ______ دارم.",
       "options": [
@@ -514,7 +514,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "How much ___ these shoes?",
       "questionFa": "قیمت این کفش‌ها چند است؟",
       "options": [
@@ -532,7 +532,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "I'd like ___ kilo of apples, please.",
       "questionFa": "لطفاً یک کیلو سیب می‌خواهم.",
       "options": [
@@ -550,7 +550,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "This shirt is very ___. It only costs five pounds.",
       "accepted": [
         "cheap",
@@ -565,7 +565,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "How ___ water do you drink every day?",
       "accepted": [
         "much"
@@ -606,7 +606,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "listening",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The supermarket is open until nine o'clock.",
       "accepted": [
         "the supermarket is open until nine o'clock",
@@ -621,7 +621,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Go straight ___ and then turn left.",
       "questionFa": "مستقیم بروید و بعد بپیچید چپ.",
       "options": [
@@ -639,7 +639,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "The bank is ___ the post office and the pharmacy.",
       "questionFa": "بانک بین اداره پست و داروخانه است.",
       "options": [
@@ -657,7 +657,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Turn right ___ the second traffic light.",
       "accepted": [
         "at",
@@ -671,7 +671,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Walk ___ this street until you see the church.",
       "accepted": [
         "down",
@@ -699,7 +699,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "listening",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Take the second turning on the right.",
       "accepted": [
         "take the second turning on the right",
@@ -713,7 +713,7 @@
       "lessonId": "a2.health.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "You have to ___ this medicine twice a day.",
       "questionFa": "باید این دارو را دو بار در روز بخورید.",
       "options": [
@@ -731,7 +731,7 @@
       "lessonId": "a2.health.lesson-01",
       "type": "multiple_choice",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "She ___ sick, so she stayed home from work.",
       "questionFa": "او مریض بود، بنابراین در خانه ماند.",
       "options": [
@@ -791,7 +791,7 @@
       "lessonId": "a2.health.lesson-01",
       "type": "listening",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Take one pill after breakfast.",
       "accepted": [
         "take one pill after breakfast"
@@ -2705,7 +2705,7 @@
       "lessonId": "a1.greetings.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Read: \"Nice to meet you.\" What does it mean?",
       "questionFa": "این جمله چه معنی‌ای دارد؟",
       "options": [
@@ -2723,7 +2723,7 @@
       "lessonId": "a2.airport.lesson-01",
       "type": "multiple_choice",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Read: \"Please proceed to gate twelve.\" What should you do?",
       "questionFa": "با دیدن این جمله در فرودگاه چه باید بکنید؟",
       "options": [
@@ -2813,7 +2813,7 @@
       "lessonId": "a1.introductions.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence introduces someone correctly?",
       "questionFa": "کدام جمله کسی را درست معرفی می‌کند؟",
       "options": [
@@ -2903,7 +2903,7 @@
       "lessonId": "a1.introductions.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Where are you from? — ______",
       "questionFa": "اهل کجایی؟ — ______",
       "options": [
@@ -2921,7 +2921,7 @@
       "lessonId": "a1.weather.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "There are many grey clouds in the sky. It is ______.",
       "questionFa": "آسمان پر از ابر خاکستری است. هوا ______ است.",
       "options": [
@@ -2997,7 +2997,7 @@
       "lessonId": "a1.weather.lesson-01",
       "type": "listening",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "It is raining and the wind is strong.",
       "accepted": [
         "it is raining and the wind is strong",
@@ -3011,7 +3011,7 @@
       "lessonId": "a1.weather.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "It ______ a lot in winter here.",
       "questionFa": "زمستان‌ها اینجا زیاد باران می‌بارد.",
       "options": [
@@ -3029,7 +3029,7 @@
       "lessonId": "a2.hobbies.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "I enjoy ______ in my spare time.",
       "questionFa": "از ______ در وقت آزادم لذت می‌برم.",
       "options": [
@@ -3065,7 +3065,7 @@
       "lessonId": "a2.hobbies.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "She wants ______ learn photography this year.",
       "accepted": [
         "to"
@@ -3119,7 +3119,7 @@
       "lessonId": "a2.hobbies.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "He ______ old coins and stamps.",
       "questionFa": "او سکه‌ها و تمبرهای قدیمی ______.",
       "options": [
@@ -3137,7 +3137,7 @@
       "lessonId": "a2.city-life.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Tehran is ______ than Shiraz.",
       "questionFa": "تهران ______ شیراز است.",
       "options": [
@@ -3173,7 +3173,7 @@
       "lessonId": "a2.city-life.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "There ______ two parks near my house.",
       "accepted": [
         "are"
@@ -3212,7 +3212,7 @@
       "lessonId": "a2.city-life.lesson-01",
       "type": "listening",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "There is heavy traffic in the morning.",
       "accepted": [
         "there is heavy traffic in the morning",
@@ -3226,7 +3226,7 @@
       "lessonId": "a2.city-life.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "The subway is very ______ for the city centre.",
       "questionFa": "مترو برای مرکز شهر بسیار ______ است.",
       "options": [
@@ -4335,7 +4335,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "I wake up at seven and take a shower.",
       "accepted": [
         "i wake up at seven and take a shower"
@@ -4361,7 +4361,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "This shirt is cheap and that one is expensive.",
       "accepted": [
         "this shirt is cheap and that one is expensive"
@@ -4374,7 +4374,7 @@
       "lessonId": "a1.introductions.lesson-01",
       "type": "listening",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "My name is Amir and I am from Iran.",
       "accepted": [
         "my name is amir and i am from iran"
@@ -4400,7 +4400,7 @@
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4431,7 +4431,7 @@
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4449,7 +4449,7 @@
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
@@ -4480,7 +4480,7 @@
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4529,7 +4529,7 @@
       "lessonId": "a1.plurals.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4561,7 +4561,7 @@
       "lessonId": "a1.plurals.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
@@ -4579,7 +4579,7 @@
       "lessonId": "a1.plurals.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct plural of “leaf”:",
       "questionFa": "جمع درست «leaf» کدام است؟",
       "options": [
@@ -4597,7 +4597,7 @@
       "lessonId": "a1.plurals.lesson-01",
       "type": "multiple_choice",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct plural of “woman”:",
       "questionFa": "جمع درست «woman» کدام است؟",
       "options": [
@@ -4660,7 +4660,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4678,7 +4678,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "fill_blank",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The teacher asked ___ to open our books.",
       "accepted": [
         "us"
@@ -4691,7 +4691,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
@@ -4709,7 +4709,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4727,7 +4727,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "multiple_choice",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
@@ -4745,7 +4745,7 @@
       "lessonId": "a1.pronouns.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4794,7 +4794,7 @@
       "lessonId": "a1.can.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4812,7 +4812,7 @@
       "lessonId": "a1.can.lesson-01",
       "type": "fill_blank",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I ___ play the guitar — it's too difficult.",
       "accepted": [
         "can't",
@@ -4826,7 +4826,7 @@
       "lessonId": "a1.can.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct form:",
       "questionFa": "شکل درست را انتخاب کنید:",
       "options": [
@@ -4844,7 +4844,7 @@
       "lessonId": "a1.can.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct question:",
       "questionFa": "پرسش درست را انتخاب کنید:",
       "options": [
@@ -4875,7 +4875,7 @@
       "lessonId": "a1.can.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "______ you play the piano? — Yes, a little.",
       "questionFa": "میتوانی پیانو بزنی؟ — بله، کمی.",
       "options": [
@@ -4924,7 +4924,7 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -4956,7 +4956,7 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
       "options": [
@@ -4974,7 +4974,7 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct polite request:",
       "questionFa": "درخواست مؤدبانهٔ درست را انتخاب کنید:",
       "options": [
@@ -5006,7 +5006,7 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct negative:",
       "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
       "options": [
@@ -5024,7 +5024,7 @@
       "lessonId": "a1.imperatives.lesson-01",
       "type": "listening",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Please sit down and listen.",
       "accepted": [
         "please sit down and listen"
@@ -5055,7 +5055,7 @@
       "lessonId": "a1.question-words.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -5087,7 +5087,7 @@
       "lessonId": "a1.question-words.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct question:",
       "questionFa": "پرسش درست را انتخاب کنید:",
       "options": [
@@ -5105,7 +5105,7 @@
       "lessonId": "a1.question-words.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Which question asks about a reason?",
       "questionFa": "کدام پرسش دلیل را می‌پرسد؟",
       "options": [
@@ -5136,7 +5136,7 @@
       "lessonId": "a1.question-words.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct question word:",
       "questionFa": "کلمهٔ پرسشی درست را انتخاب کنید:",
       "options": [
@@ -5154,7 +5154,7 @@
       "lessonId": "a1.question-words.lesson-01",
       "type": "listening",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "What time does the train leave?",
       "accepted": [
         "what time does the train leave"
@@ -5185,7 +5185,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "multiple_choice",
       "order": 1,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
       "options": [
@@ -5203,7 +5203,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "fill_blank",
       "order": 2,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "She ___ a new phone yesterday.",
       "accepted": [
         "bought",
@@ -5217,7 +5217,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "multiple_choice",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct negative:",
       "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
       "options": [
@@ -5235,7 +5235,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "multiple_choice",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct question:",
       "questionFa": "پرسش درست را انتخاب کنید:",
       "options": [
@@ -5253,7 +5253,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "He ___ an email last night.",
       "accepted": [
         "wrote",
@@ -5267,7 +5267,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "multiple_choice",
       "order": 6,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "Choose the correct past form:",
       "questionFa": "شکل گذشتهٔ درست را انتخاب کنید:",
       "options": [
@@ -5285,7 +5285,7 @@
       "lessonId": "a2.past-simple.lesson-01",
       "type": "listening",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "We went to the coast last weekend.",
       "accepted": [
         "we went to the coast last weekend"
@@ -5333,7 +5333,7 @@
       "id": "a1.daily-routine.ex.10",
       "lessonId": "a1.daily-routine.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5351,7 +5351,7 @@
       "id": "a1.daily-routine.ex.11",
       "lessonId": "a1.daily-routine.lesson-01",
       "order": 11,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct negative:",
       "questionFa": "جملهٔ منفی درست را انتخاب کنید:",
@@ -5369,7 +5369,7 @@
       "id": "a1.introductions.ex.08",
       "lessonId": "a1.introductions.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5405,7 +5405,7 @@
       "id": "a1.introductions.ex.10",
       "lessonId": "a1.introductions.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5423,7 +5423,7 @@
       "id": "a1.shopping.ex.09",
       "lessonId": "a1.shopping.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct question:",
       "questionFa": "پرسش درست را انتخاب کنید:",
@@ -5441,7 +5441,7 @@
       "id": "a1.shopping.ex.10",
       "lessonId": "a1.shopping.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct question:",
       "questionFa": "پرسش درست را انتخاب کنید:",
@@ -5459,7 +5459,7 @@
       "id": "a1.weather.ex.08",
       "lessonId": "a1.weather.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5477,7 +5477,7 @@
       "id": "a1.weather.ex.09",
       "lessonId": "a1.weather.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5495,7 +5495,7 @@
       "id": "a1.weather.ex.10",
       "lessonId": "a1.weather.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5513,7 +5513,7 @@
       "id": "a1.weather.ex.11",
       "lessonId": "a1.weather.lesson-01",
       "order": 11,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5531,7 +5531,7 @@
       "id": "a1.weather.ex.12",
       "lessonId": "a1.weather.lesson-01",
       "order": 12,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5549,7 +5549,7 @@
       "id": "a2.city-life.ex.07",
       "lessonId": "a2.city-life.lesson-01",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5567,7 +5567,7 @@
       "id": "a2.city-life.ex.08",
       "lessonId": "a2.city-life.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5585,7 +5585,7 @@
       "id": "a2.city-life.ex.09",
       "lessonId": "a2.city-life.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5603,7 +5603,7 @@
       "id": "a2.city-life.ex.10",
       "lessonId": "a2.city-life.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5621,7 +5621,7 @@
       "id": "a2.directions.ex.08",
       "lessonId": "a2.directions.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5639,7 +5639,7 @@
       "id": "a2.directions.ex.09",
       "lessonId": "a2.directions.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5657,7 +5657,7 @@
       "id": "a2.health.ex.08",
       "lessonId": "a2.health.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct advice:",
       "questionFa": "توصیهٔ درست را انتخاب کنید:",
@@ -5675,7 +5675,7 @@
       "id": "a2.health.ex.09",
       "lessonId": "a2.health.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5693,7 +5693,7 @@
       "id": "a2.hobbies.ex.07",
       "lessonId": "a2.hobbies.lesson-01",
       "order": 7,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5711,7 +5711,7 @@
       "id": "a2.hobbies.ex.08",
       "lessonId": "a2.hobbies.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5729,7 +5729,7 @@
       "id": "a2.hobbies.ex.09",
       "lessonId": "a2.hobbies.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5747,7 +5747,7 @@
       "id": "a2.restaurant.ex.08",
       "lessonId": "a2.restaurant.lesson-01",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5765,7 +5765,7 @@
       "id": "a2.restaurant.ex.09",
       "lessonId": "a2.restaurant.lesson-01",
       "order": 9,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -5783,7 +5783,7 @@
       "id": "a2.restaurant.ex.10",
       "lessonId": "a2.restaurant.lesson-01",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Choose the correct sentence:",
       "questionFa": "جملهٔ درست را انتخاب کنید:",
@@ -5801,7 +5801,7 @@
       "id": "a2.restaurant.ex.11",
       "lessonId": "a2.restaurant.lesson-01",
       "order": 11,
-      "difficulty": 1,
+      "difficulty": 2,
       "type": "multiple_choice",
       "question": "Which sentence is correct?",
       "questionFa": "کدام جمله درست است؟",
@@ -6572,7 +6572,7 @@
       "skill": "GRAMMAR",
       "explanationFa": "ترتیب جملهٔ انگلیسی ثابت است: نهاد + فعل + بقیه؛ «The letter A is the first letter» درست است و جابهجا کردن واژهها جمله را بیمعنی میکند.",
       "order": 8,
-      "difficulty": 1
+      "difficulty": 2
     },
     {
       "id": "a1.spelling.ex.01",
@@ -6608,7 +6608,7 @@
       "skill": "VOCABULARY",
       "explanationFa": "در letter حرف t دو بار آمده است؛ بقیهٔ واژه‌ها حرف تکراری ندارند.",
       "order": 10,
-      "difficulty": 1
+      "difficulty": 2
     },
     {
       "id": "a1.spelling.ex.03",
@@ -6660,7 +6660,7 @@
       ],
       "explanationFa": "به نام حروف داخل surname و مکث بین واژه‌ها گوش کن؛ هجی‌کردن حرف‌ها را جدا و روشن می‌گوید.",
       "order": 13,
-      "difficulty": 1,
+      "difficulty": 2,
       "skill": "LISTENING"
     },
     {
@@ -6848,7 +6848,7 @@
       ],
       "explanationFa": "به /tw/ در آغاز twenty و تکیه روی هجای اولش گوش کن؛ با twelve اشتباه نکن.",
       "order": 24,
-      "difficulty": 1,
+      "difficulty": 2,
       "skill": "LISTENING"
     },
     {
@@ -6856,7 +6856,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 12,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "She ______ to work every day.",
       "questionFa": "او هر روز به سر کار می‌رود.",
       "options": [
@@ -6874,7 +6874,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 13,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "They ______ breakfast at seven.",
       "questionFa": "آن‌ها ساعت هفت صبحانه می‌خورند.",
       "options": [
@@ -6892,7 +6892,7 @@
       "lessonId": "a1.shopping.lesson-01",
       "type": "multiple_choice",
       "order": 11,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "______ money do you have?",
       "questionFa": "چقدر پول داری؟",
       "options": [
@@ -6910,7 +6910,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 12,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "I would like ______ coffee, please.",
       "questionFa": "لطفاً یک قهوه می‌خواهم.",
       "options": [
@@ -6928,7 +6928,7 @@
       "lessonId": "a2.health.lesson-01",
       "type": "multiple_choice",
       "order": 10,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "You ______ stay in bed if you feel dizzy.",
       "questionFa": "اگر سرگیجه داری، بهتر است در رختخواب بمانی.",
       "options": [
@@ -6946,7 +6946,7 @@
       "lessonId": "a2.health.lesson-01",
       "type": "multiple_choice",
       "order": 11,
-      "difficulty": 1,
+      "difficulty": 2,
       "question": "I ______ to take this medicine twice a day.",
       "questionFa": "باید این دارو را روزی دو بار بخورم.",
       "options": [
@@ -7036,7 +7036,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 14,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
       "question": "What time does Sara wake up?",
       "questionFa": "سارا چه ساعتی بیدار می‌شود؟",
@@ -7055,7 +7055,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
       "question": "Who does Sara have breakfast with?",
       "questionFa": "سارا صبحانه را با چه کسی می‌خورد؟",
@@ -7074,7 +7074,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Hi, I am Sara. I wake up at seven every morning and have breakfast with my family. Then I go to school, and in the evening I do my homework. I go to bed at ten.",
       "question": "What does Sara do in the evening?",
       "questionFa": "سارا عصرها چه کار می‌کند؟",
@@ -7093,7 +7093,7 @@
       "lessonId": "a1.daily-routine.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "I wake up at seven every morning.",
       "question": "What does this sentence mean?",
       "questionFa": "این جمله چه معنایی دارد؟",
@@ -7112,7 +7112,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 13,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Last Friday, Ali and his friends went to a new restaurant near the station. Ali ordered grilled chicken, and his friends chose pizza and salad. The food was delicious, but the service was slow, so they waited almost an hour.",
       "question": "Where did Ali and his friends go?",
       "questionFa": "علی و دوستانش کجا رفتند؟",
@@ -7150,7 +7150,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Last Friday, Ali and his friends went to a new restaurant near the station. Ali ordered grilled chicken, and his friends chose pizza and salad. The food was delicious, but the service was slow, so they waited almost an hour.",
       "question": "Why did they wait a long time?",
       "questionFa": "چرا مدت زیادی منتظر ماندند؟",
@@ -7169,7 +7169,7 @@
       "lessonId": "a2.restaurant.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "The food was delicious, but the service was slow.",
       "question": "What does this sentence mean?",
       "questionFa": "این جمله چه معنایی دارد؟",
@@ -8218,7 +8218,7 @@
       "lessonId": "a1.countries.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "She ______ from Japan.",
       "accepted": [
         "is",
@@ -8275,7 +8275,7 @@
       "lessonId": "a1.countries.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "My country is Iran and my nationality is Iranian.",
       "accepted": [
         "my country is iran and my nationality is iranian"
@@ -8370,7 +8370,7 @@
       "lessonId": "a1.age-birthday.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I ______ born in Tehran.",
       "accepted": [
         "was"
@@ -8425,7 +8425,7 @@
       "lessonId": "a1.age-birthday.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "My sister is twelve years old and her birthday is in June.",
       "accepted": [
         "my sister is twelve years old and her birthday is in june"
@@ -8493,7 +8493,7 @@
       "lessonId": "a1.days-months.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I play football ______ Friday.",
       "accepted": [
         "on"
@@ -8575,7 +8575,7 @@
       "lessonId": "a1.days-months.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "I work from Monday to Friday and I rest at the weekend.",
       "accepted": [
         "i work from monday to friday and i rest at the weekend"
@@ -8643,7 +8643,7 @@
       "lessonId": "a1.time.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The class starts ______ nine o'clock.",
       "accepted": [
         "at"
@@ -8727,7 +8727,7 @@
       "lessonId": "a1.time.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The clock says half past seven and the bus is late.",
       "accepted": [
         "the clock says half past seven and the bus is late"
@@ -8821,7 +8821,7 @@
       "lessonId": "a1.colors.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "She has a ______ coat and black shoes.",
       "accepted": [
         "red",
@@ -8879,7 +8879,7 @@
       "lessonId": "a1.colors.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "My new bag is black and my old bag is white.",
       "accepted": [
         "my new bag is black and my old bag is white"
@@ -8947,7 +8947,7 @@
       "lessonId": "a1.classroom.lesson-01",
       "type": "fill_blank",
       "order": 3,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "______ is my English book.",
       "accepted": [
         "this",
@@ -9031,7 +9031,7 @@
       "lessonId": "a1.classroom.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Open your book and write your name on the board.",
       "accepted": [
         "open your book and write your name on the board"
@@ -9117,7 +9117,7 @@
       "lessonId": "a1.jobs.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "My mother is a ___ at the hospital.",
       "accepted": [
         "doctor",
@@ -9131,7 +9131,7 @@
       "lessonId": "a1.jobs.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "A ___ works in a kitchen.",
       "accepted": [
         "cook",
@@ -9172,7 +9172,7 @@
       "lessonId": "a1.jobs.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The nurse helps the doctor.",
       "accepted": [
         "the nurse helps the doctor"
@@ -9274,7 +9274,7 @@
       "lessonId": "a1.belongings.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I look at my ___ to see the time.",
       "accepted": [
         "watch",
@@ -9415,7 +9415,7 @@
       "lessonId": "a1.home-rooms.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "We eat dinner in the ___.",
       "accepted": [
         "kitchen",
@@ -10832,7 +10832,7 @@
       "lessonId": "a1.transport.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I wait for the bus at the bus ___.",
       "accepted": [
         "station",
@@ -10974,7 +10974,7 @@
       "lessonId": "a1.cafe-restaurant.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Could we have the ___, please?",
       "accepted": [
         "menu",
@@ -11016,7 +11016,7 @@
       "lessonId": "a1.cafe-restaurant.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Can I take your order?",
       "accepted": [
         "can i take your order"
@@ -11299,7 +11299,7 @@
       "lessonId": "a1.where-i-live.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The city is busy in the morning.",
       "accepted": [
         "the city is busy in the morning"
@@ -11385,7 +11385,7 @@
       "lessonId": "a2.hotel-booking.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "___ I book a room for tonight, please?",
       "accepted": [
         "Could",
@@ -11399,7 +11399,7 @@
       "lessonId": "a2.hotel-booking.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The room costs eighty dollars ___ night.",
       "accepted": [
         "per",
@@ -11527,7 +11527,7 @@
       "lessonId": "a2.plane-ticket.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "___ I have a window seat, please?",
       "accepted": [
         "Could",
@@ -11541,7 +11541,7 @@
       "lessonId": "a2.plane-ticket.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Air ___ rise in the summer holidays.",
       "accepted": [
         "fares",
@@ -11683,7 +11683,7 @@
       "lessonId": "a2.hotel-checkin.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "___ I have a room on a quiet floor, please?",
       "accepted": [
         "Could",
@@ -11811,7 +11811,7 @@
       "lessonId": "a2.train-bus.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The train ___ at 7:15 from platform three.",
       "accepted": [
         "leaves",
@@ -11825,7 +11825,7 @@
       "lessonId": "a2.train-bus.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "There is a ten-minute ___ because of the snow.",
       "accepted": [
         "delay",
@@ -11952,7 +11952,7 @@
       "lessonId": "a2.travel-info.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The journey ___ about four hours.",
       "accepted": [
         "takes",
@@ -11966,7 +11966,7 @@
       "lessonId": "a2.travel-info.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "___ route goes to the airport?",
       "accepted": [
         "Which",
@@ -12149,7 +12149,7 @@
       "lessonId": "a2.holiday-plans.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "We will stay in a small hotel near the beach.",
       "accepted": [
         "we will stay in a small hotel near the beach"
@@ -12235,7 +12235,7 @@
       "lessonId": "a2.buying-clothes.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "This jacket is ___ big for me.",
       "accepted": [
         "too",
@@ -12249,7 +12249,7 @@
       "lessonId": "a2.buying-clothes.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Can I try ___ on, please?",
       "accepted": [
         "it",
@@ -12290,7 +12290,7 @@
       "lessonId": "a2.buying-clothes.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "These jeans are too tight.",
       "accepted": [
         "these jeans are too tight"
@@ -12376,7 +12376,7 @@
       "lessonId": "a2.returns.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I'd like to ___ these shoes.",
       "accepted": [
         "return",
@@ -12431,7 +12431,7 @@
       "lessonId": "a2.returns.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Do you have the receipt for this jacket?",
       "accepted": [
         "do you have the receipt for this jacket"
@@ -12517,7 +12517,7 @@
       "lessonId": "a2.payments.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Can I pay ___ card?",
       "accepted": [
         "by",
@@ -12531,7 +12531,7 @@
       "lessonId": "a2.payments.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Do you ___ card payments?",
       "accepted": [
         "take",
@@ -12672,7 +12672,7 @@
       "lessonId": "a2.symptoms.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "It ___ when I walk.",
       "accepted": [
         "hurts",
@@ -12799,7 +12799,7 @@
       "lessonId": "a2.pharmacy.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "How ___ should I take this?",
       "accepted": [
         "often",
@@ -12813,7 +12813,7 @@
       "lessonId": "a2.pharmacy.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "You should take it ___ meals.",
       "accepted": [
         "after",
@@ -12940,7 +12940,7 @@
       "lessonId": "a2.childhood.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "We ___ football every day when I was young.",
       "accepted": [
         "played",
@@ -12954,7 +12954,7 @@
       "lessonId": "a2.childhood.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "My family ___ to a new house when I was six.",
       "accepted": [
         "moved",
@@ -13081,7 +13081,7 @@
       "lessonId": "a2.celebrations.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "We ___ a big party last year.",
       "accepted": [
         "had",
@@ -13136,7 +13136,7 @@
       "lessonId": "a2.celebrations.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "There were thirty guests at the wedding.",
       "accepted": [
         "there were thirty guests at the wedding"
@@ -13222,7 +13222,7 @@
       "lessonId": "a2.invitations.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Would you ___ to come to dinner?",
       "accepted": [
         "like",
@@ -13277,7 +13277,7 @@
       "lessonId": "a2.invitations.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "I am sorry, I cannot come on Friday.",
       "accepted": [
         "i am sorry, i cannot come on friday"
@@ -13363,7 +13363,7 @@
       "lessonId": "a2.phone.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Can I ___ to Sara, please?",
       "accepted": [
         "speak",
@@ -13377,7 +13377,7 @@
       "lessonId": "a2.phone.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "Who is ___?",
       "accepted": [
         "calling",
@@ -13418,7 +13418,7 @@
       "lessonId": "a2.phone.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The line is busy, so I left a voicemail.",
       "accepted": [
         "the line is busy, so i left a voicemail"
@@ -13560,7 +13560,7 @@
       "lessonId": "a2.emails.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Please find the document attached to this email.",
       "accepted": [
         "please find the document attached to this email"
@@ -19838,7 +19838,7 @@
       "lessonId": "a2.renting.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The rent ___ water and electricity.",
       "accepted": [
         "includes",
@@ -19852,7 +19852,7 @@
       "lessonId": "a2.renting.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The flat is fully ___.",
       "accepted": [
         "furnished",
@@ -20051,7 +20051,7 @@
       "lessonId": "a2.house-problems.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "The tap has a ___ under the sink.",
       "accepted": [
         "leak",
@@ -20106,7 +20106,7 @@
       "lessonId": "a2.house-problems.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "There is a leak under the kitchen sink.",
       "accepted": [
         "there is a leak under the kitchen sink"
@@ -20264,7 +20264,7 @@
       "lessonId": "a2.future-plans.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "We had to ___ the meeting until Monday.",
       "accepted": [
         "postpone",
@@ -20278,7 +20278,7 @@
       "lessonId": "a2.future-plans.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "They ___ to buy a house next year.",
       "accepted": [
         "plan",
@@ -20477,7 +20477,7 @@
       "lessonId": "a2.comparing.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "This bag is ___ than that one.",
       "accepted": [
         "cheaper",
@@ -20491,7 +20491,7 @@
       "lessonId": "a2.comparing.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "That hotel is more ___ than ours.",
       "accepted": [
         "expensive",
@@ -20532,7 +20532,7 @@
       "lessonId": "a2.comparing.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "The new chairs are more comfortable than the old ones.",
       "accepted": [
         "the new chairs are more comfortable than the old ones"
@@ -20690,7 +20690,7 @@
       "lessonId": "a2.opinions.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I prefer tea ___ coffee.",
       "accepted": [
         "to",
@@ -20704,7 +20704,7 @@
       "lessonId": "a2.opinions.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "We enjoy ___ together.",
       "accepted": [
         "cooking",
@@ -20745,7 +20745,7 @@
       "lessonId": "a2.opinions.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "I prefer tea to coffee in the morning.",
       "accepted": [
         "i prefer tea to coffee in the morning"
@@ -20903,7 +20903,7 @@
       "lessonId": "a2.asking-help.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "May I ___ your phone?",
       "accepted": [
         "borrow",
@@ -20958,7 +20958,7 @@
       "lessonId": "a2.asking-help.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "Would you mind opening the window?",
       "accepted": [
         "would you mind opening the window"
@@ -21328,7 +21328,7 @@
       "lessonId": "a2.work.lesson-01",
       "type": "fill_blank",
       "order": 4,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "I ___ to finish the report today.",
       "accepted": [
         "have",
@@ -21555,7 +21555,7 @@
       "lessonId": "a2.everyday-problems.lesson-01",
       "type": "fill_blank",
       "order": 5,
-      "difficulty": 1,
+      "difficulty": 2,
       "sentence": "They ___ the problem in ten minutes.",
       "accepted": [
         "solved",
@@ -21596,7 +21596,7 @@
       "lessonId": "a2.everyday-problems.lesson-01",
       "type": "listening",
       "order": 8,
-      "difficulty": 1,
+      "difficulty": 2,
       "text": "I would like to complain about the noise.",
       "accepted": [
         "i would like to complain about the noise"
@@ -47876,7 +47876,7 @@
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
       "order": 13,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "This is an apple and that is a banana. The apple is on the table. I want an egg, but the eggs are in the fridge.",
       "question": "Which word comes before 'apple' in the first sentence?",
       "questionFa": "در جملهٔ اول پیش از apple کدام واژه آمده است؟",
@@ -47914,7 +47914,7 @@
       "lessonId": "a1.days-months.lesson-01",
       "type": "multiple_choice",
       "order": 14,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "My week starts on Saturday. I work from Saturday to Wednesday. On Thursday I study English, and on Friday I visit my family. My birthday is in May.",
       "question": "When does the speaker study English?",
       "questionFa": "گوینده کِی انگلیسی می‌خواند؟",
@@ -47933,7 +47933,7 @@
       "lessonId": "a1.days-months.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "My week starts on Saturday. I work from Saturday to Wednesday. On Thursday I study English, and on Friday I visit my family. My birthday is in May.",
       "question": "Which month is the speaker's birthday in?",
       "questionFa": "تولد گوینده در کدام ماه است؟",
@@ -47952,7 +47952,7 @@
       "lessonId": "a1.food-drinks.lesson-01",
       "type": "multiple_choice",
       "order": 14,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "For breakfast I eat bread, cheese and an egg. I drink tea, not coffee. At lunch I have rice with chicken. In the evening I only drink water.",
       "question": "What does the speaker drink at breakfast?",
       "questionFa": "گوینده در صبحانه چه می‌نوشد؟",
@@ -47971,7 +47971,7 @@
       "lessonId": "a1.food-drinks.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "For breakfast I eat bread, cheese and an egg. I drink tea, not coffee. At lunch I have rice with chicken. In the evening I only drink water.",
       "question": "What is for lunch?",
       "questionFa": "ناهار چیست؟",
@@ -47990,7 +47990,7 @@
       "lessonId": "a1.where-i-live.lesson-01",
       "type": "multiple_choice",
       "order": 14,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "I live in a small flat near the park. My flat is on the second floor. There is a bakery under my flat, and a bus stop in front of the building. I walk to work every morning.",
       "question": "Where is the bakery?",
       "questionFa": "نانوایی کجاست؟",
@@ -48009,7 +48009,7 @@
       "lessonId": "a1.where-i-live.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "I live in a small flat near the park. My flat is on the second floor. There is a bakery under my flat, and a bus stop in front of the building. I walk to work every morning.",
       "question": "How does the speaker go to work?",
       "questionFa": "گوینده چگونه به سر کار می‌رود؟",
@@ -48028,7 +48028,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Go straight along this street and take the second turning on the right. The bank is next to the pharmacy. If you reach the roundabout, you have gone too far.",
       "question": "Which turning should you take?",
       "questionFa": "کدام پیچ را باید بگیرید؟",
@@ -48047,7 +48047,7 @@
       "lessonId": "a2.directions.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Go straight along this street and take the second turning on the right. The bank is next to the pharmacy. If you reach the roundabout, you have gone too far.",
       "question": "What does it mean if you reach the roundabout?",
       "questionFa": "اگر به میدان برسید یعنی چه؟",
@@ -48085,7 +48085,7 @@
       "lessonId": "a2.plane-ticket.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "A return ticket to Istanbul costs 180 euros. A single is 100 euros. The morning flight leaves at 7:40, but you must be at the airport two hours before it. Check-in closes forty minutes before departure.",
       "question": "When does check-in close?",
       "questionFa": "پذیرش بلیت کِی بسته می‌شود؟",
@@ -48104,7 +48104,7 @@
       "lessonId": "a2.payments.lesson-01",
       "type": "multiple_choice",
       "order": 15,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "You can pay by card or in cash. The shop does not accept cheques. If you pay by card, the machine asks for your PIN. Keep the receipt: you need it for a refund.",
       "question": "Which way of paying is NOT accepted?",
       "questionFa": "کدام روش پرداخت پذیرفته نمی‌شود؟",
@@ -48123,7 +48123,7 @@
       "lessonId": "a2.payments.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "You can pay by card or in cash. The shop does not accept cheques. If you pay by card, the machine asks for your PIN. Keep the receipt: you need it for a refund.",
       "question": "What do you need if you want your money back?",
       "questionFa": "برای پس‌گرفتن پول به چه چیزی نیاز دارید؟",
@@ -48142,7 +48142,7 @@
       "lessonId": "a2.emails.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Start your email with 'Dear Mr Karimi'. Say why you are writing in the first sentence. Keep it short, and end with 'Best regards'. Read it once more before you send it.",
       "question": "How should an email to Mr Karimi begin?",
       "questionFa": "ایمیل به آقای کریمی با چه عبارتی شروع می‌شود؟",
@@ -48161,7 +48161,7 @@
       "lessonId": "a2.emails.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "Start your email with 'Dear Mr Karimi'. Say why you are writing in the first sentence. Keep it short, and end with 'Best regards'. Read it once more before you send it.",
       "question": "What should you do before sending?",
       "questionFa": "پیش از فرستادن چه باید کرد؟",
@@ -48180,7 +48180,7 @@
       "lessonId": "a2.everyday-problems.lesson-01",
       "type": "multiple_choice",
       "order": 16,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "The tap in my kitchen was leaking, so I called a plumber. He came the same afternoon and changed a small washer. The bill was not as high as I expected.",
       "question": "Why did the speaker call a plumber?",
       "questionFa": "چرا گوینده لوله‌کش خبر کرد؟",
@@ -48199,7 +48199,7 @@
       "lessonId": "a2.everyday-problems.lesson-01",
       "type": "multiple_choice",
       "order": 17,
-      "difficulty": 1,
+      "difficulty": 2,
       "passage": "The tap in my kitchen was leaking, so I called a plumber. He came the same afternoon and changed a small washer. The bill was not as high as I expected.",
       "question": "How was the bill compared with the speaker's expectation?",
       "questionFa": "صورت‌حساب در مقایسه با انتظار گوینده چگونه بود؟",

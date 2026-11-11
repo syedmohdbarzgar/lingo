@@ -84,7 +84,17 @@
   productions came down to 2. C2 is 411/44 from 430/25, and 9 of its 30 choice lessons disagree
   about difficulty — the other 21 carry C2's hard item in a blank or a production, which is why only
   C1 (the one level finished with v70's added items) has the axis in every lesson.
-- **CEFR bundle (contentVersion 71):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+  A1 and A2 were judged last (v72), and their band of 1..2 makes the question the simplest one the
+  scale allows: *first encounter, or one step past it*. The 2 goes to a blank that tests a structure,
+  to a choice where two options are grammatical and the context decides, to a choice that reads a
+  sentence or a passage rather than a word, to a listening line with two clauses or a place/time
+  phrase, and to the request whose politeness is the point; the 1 stays with a word's meaning, a
+  spelling, a number, a single-clause line or a sentence whose wrong options are mangled. 97 A1 and
+  105 A2 items were raised, which is what gives the two levels their axis: A1 is 175/324, A2 120/368,
+  and 17 of A1's 30 and 11 of A2's 30 choice lessons now disagree about difficulty. Every level in the
+  bundle has been read item by item, so a level whose choice items all share one number is seeded
+  again — `ContentDistributionTest` fails the build when it sees that.
+- **CEFR bundle (contentVersion 72):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,

@@ -146,7 +146,17 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (725 tests / 79 classes as of the
-mastery-matrix pass, where the selector's two axes were finally pinned cell by cell instead of one
+A1/A2-difficulty pass, where the last two seeded levels were read item by item and **no level is
+seeded any more**: their band of 1..2 makes the only question "first encounter, or one step past
+it", so the 2 went to a blank that tests a structure (`I play football ______ Friday`), a choice
+where two options are grammatical and the context decides (`I bought a book. The book is on the
+table`, `a university student`), a choice that reads a sentence or a passage instead of a word, a
+listening line with two clauses, and the request whose politeness is the point; a word's meaning, a
+spelling, a number and a single-clause line stayed at 1. 97 A1 and 105 A2 items were raised (A1 is
+175/324, A2 120/368), 17 of A1's 30 and 11 of A2's 30 choice lessons now disagree about difficulty,
+and `ContentDistributionTest` pins all six levels — plus, on `a1.articles` and `a2.city-life`, the
+consequence: a consolidated recognition meter meets the article/ comparative choice, a shaky one the
+word-meaning item. Before it the mastery-matrix pass, where the selector's two axes were finally pinned cell by cell instead of one
 rule at a time: eight `AdaptiveExerciseSelectorTest` cases cover the four cells of weak/consolidated
 × easy/hard — a weak meter over an interleaved list leads with the easy end, a consolidated one with
 the hard end, and neither end is a filter, so a lesson made only of hard items (or only easy ones)

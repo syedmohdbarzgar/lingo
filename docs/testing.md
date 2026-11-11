@@ -108,13 +108,14 @@
   promoted over a proven gap (reading mastery alone made production at 0f outrank an observed 0.4f
   recall item), a proven 0f is weak *with evidence* and leads from its easy end, and unseen
   dimensions keep authored order among themselves while a gap leads — with a permutation check
-  beside them. Before it the C2-difficulty pass, where the last unjudged level was read item by item. One
-  `ContentDistributionTest` case measures the within-format axis and names where it exists: B1, B2,
-  C1 and C2 are the levels whose multiple-choice items disagree about difficulty (10 of B1's 30
-  lessons, 10 of B2's 32, all 31 of C1's — the level whose axis is complete — and 9 of C2's 30,
-  because the other 21 carry C2's hard item in a blank or a production), and A1/A2 are the levels
-  still fully seeded: they give every choice item of a level one number, so they cannot reorder that
-  format at all — judging a level moves these counts and the case is what says so. The same case
+  beside them. Before it the A1/A2-difficulty pass, where the last two levels were read item by item
+  and their band of 1..2 made the only question "first encounter or one step past it". One
+  `ContentDistributionTest` case measures the within-format axis and names where it exists: every
+  level's multiple-choice items now disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32,
+  all 31 of C1's — the level whose axis is complete — 9 of C2's 30, because the other 21 carry C2's
+  hard item in a blank or a production, 17 of A1's 30 and 11 of A2's 30), and the case fails when a
+  level's choice items all share one number again, because that is what a seeded level looks like and
+  it cannot reorder its own format. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated
   recognition meter is served its hardest choice item (`ex.02`, reported speech plus past perfect)
   while a shaky one starts at the easy end; on `b2.problems` a consolidated recall meter is served
@@ -124,7 +125,10 @@
   `ex.05` (`Neither of the samples was significant`, the agreement trap) while a shaky one starts at
   `ex.04` (the plain plural); and on `c2.literature` a consolidated recognition meter is served
   `ex.08` (the narrator's tone read against the passage's optimism) while a shaky one starts at the
-  vocabulary item. All four reorders are permutations. Before it the hard-end-choice pass, where the
+  vocabulary item; on `a1.articles` a consolidated recognition meter is served `ex.01` (`She is a
+  university student`, the vowel letter that is not a vowel sound) while a shaky one starts at the
+  word-meaning item; and on `a2.city-life` the comparative (`Tehran is bigger than Shiraz`) against
+  `ex.02` (`What does "crowded" mean?`). All six reorders are permutations. Before it the hard-end-choice pass, where the
   22 C1 lessons whose hardest item was a blank or a reading question got one authored choice item
   each, so recognition can rise in every one of them. Before it the B2-difficulty pass, where the second level was read item by item
   and its axis turned out to sit in the blanks rather than the choices. Before it the difficulty-in-the-bundle pass, where the authored difficulty is checked against the real content
