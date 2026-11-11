@@ -89,7 +89,7 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 688 tests / 78 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 689 tests / 78 classes as of
   the miss-driven-plan pass, where the error taxonomy's report finally steers work: the new
   `MissDrivenPlanTest` carries three cases at the use-case level — a vocabulary gap reaches
   `GetTodayPlanUseCase` through `GetMissProfileUseCase` and puts the vocabulary node first with
@@ -111,13 +111,15 @@
   nodes: `KnowledgeEvidence.itemsForCard` is type-only — no by-skill pass, no whole-lesson fallback —
   which is what the 35 lessons shipping words without a VOCABULARY node needed, since their grammar
   nodes list `VOCABULARY` in `skills` — until v65 shipped those nodes, and `ContentDistributionTest`
-  now fails when a lesson ships words and no node. Three cases close the attribution
+  now fails when a lesson ships words and no node. Four cases then closed the attribution
   block: one in `KnowledgeEngineTest` pins that a lesson owing **two** vocabulary nodes is
   credited twice (the documented over-credit in `c1.phrasal-idioms`, `c2.nuance` and
-  `c2.collocation`), and two in `EvidenceTransactionTest` on real Room pin the grades —
+  `c2.collocation`), two in `EvidenceTransactionTest` on real Room pin the grades —
   GOOD, EASY and HARD are three hits on the node, AGAIN is a miss that still reschedules
-  the card. Three `KnowledgeEngineTest` cases pin the rule (only same-type
-  nodes, never the fallback, the by-skill node refused while `itemsFor` still reaches it), one
+  the card — and one in `FocusPlanTest` pins the review list's own shape: the row count is
+  the screen's three, drawn from the eight most overdue nodes, not the probe budget.
+  Three `KnowledgeEngineTest` cases pin the rule (only same-type nodes, never the fallback, the
+  by-skill node refused while `itemsFor` still reaches it), one
   `EvidenceTransactionTest` case proves it on real Room (the grammar node stays unwritten while the
   card, the log and the meter still land), `LearningPathJourneyTest` asserts the recall landed on the
   lesson's vocabulary node, and `FocusPlanTest` gained the missing due-node case — a due node with no

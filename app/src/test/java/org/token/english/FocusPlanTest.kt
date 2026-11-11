@@ -260,6 +260,28 @@ class FocusPlanTest {
     }
 
     @Test
+    fun `the review list is a short block, not the probe budget`() = runTest {
+        // The use case may look at MAX_PROBES nodes to find ones with a real drill, but
+        // the screen shows DEFAULT_LIMIT rows: a learner with ten overdue nodes gets a
+        // three-row block, and it is the three most overdue — not the first three the
+        // state read happened to return.
+        val nodes = (1..10).map { n -> item("grammar.n$n", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR)) }
+        val (knowledge, lessons) = repositories(
+            items = nodes,
+            states = (1..10).map { n -> state("grammar.n$n", 0.7f, nextReviewAt = now - n * 1_000L) },
+        )
+
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))(now)
+
+        assertEquals(GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT, due.size)
+        assertEquals(
+            "most overdue first, and only as many as the screen asks for",
+            listOf("grammar.n10", "grammar.n9", "grammar.n8"),
+            due.map { it.itemId },
+        )
+    }
+
+    @Test
     fun `a due node with no exercise about it is skipped, not offered`() = runTest {
         // The lesson exists and is taught, but everything it asks is grammar: a
         // vocabulary node whose date is due has no drill to open, so the row would
