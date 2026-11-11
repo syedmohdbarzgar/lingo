@@ -89,8 +89,16 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 705 tests / 78 classes as of
-  the evidence-boundary pass, where the selector learned the difference between "never assessed" and
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 717 tests / 79 classes as of
+  the difficulty-audit pass, where the authored number got a reading that checks it: twelve
+  `DifficultyAuditTest` cases cover the engine and its use case — no verdict from one answer, none
+  from eight answers in one sitting (`MIN_ATTEMPTS` 8 over `MIN_DAYS` 2), a harder number suggested
+  for an A1 item authored 1 and missed half the time, an easier one for a B1 item authored 3 and
+  answered always right, nothing suggested below a C1 floor or for a middling 7-of-10 accuracy, the
+  thinking-time median dropping a session break, an exercise that left the bundle skipped rather than
+  invented, the per-level fold, and the use case joining `lesson_attempt` to the authored difficulty
+  and the lesson level. Nothing is written and nothing is recorded for it — the log already held the
+  answer, the verdict and the time. Before it the evidence-boundary pass, where the selector learned the difference between "never assessed" and
   "assessed wrong". Three `AdaptiveExerciseSelectorTest` cases: a never-assessed dimension is not
   promoted over a proven gap (reading mastery alone made production at 0f outrank an observed 0.4f
   recall item), a proven 0f is weak *with evidence* and leads from its easy end, and unseen

@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.first
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveLearningPlanner
 import org.token.english.domain.engine.DefaultKnowledgeGraph
+import org.token.english.domain.engine.DifficultyAudit
+import org.token.english.domain.engine.DifficultyAuditReport
 import org.token.english.domain.engine.ExerciseDimension
 import org.token.english.domain.engine.KnowledgeGates
 import org.token.english.domain.engine.LearningPlanner
@@ -793,5 +795,50 @@ class GetMissProfileUseCase(
 
     private companion object {
         const val MAX_CACHED_LESSONS = 64
+    }
+}
+
+/**
+ * Checks the authored `difficulty` against the answers the log already holds (roadmap
+ * P1): per exercise, how often it was right, how long it took, and on how many days.
+ *
+ * Nothing new is recorded — `lesson_attempt` has stored the exercise, the verdict and the
+ * time of every answer since v9 — so this is a **read** that joins the log to the authored
+ * exercises (for `difficulty`) and to the lessons (for the level the per-level fold needs).
+ *
+ * The window is deliberately larger than the miss taxonomy's: eight answers per item is
+ * the audit's own bar, so a session-sized window would leave almost every item
+ * `INSUFFICIENT` forever. [DifficultyAudit.MIN_ATTEMPTS] and its day rule are what keep the
+ * larger window from turning into a verdict on thin evidence.
+ *
+ * Exercises are cached per lesson for the process, exactly as the miss profile does:
+ * content is static once seeded, and this read is not on a hot path but does walk the
+ * bundle's exercises per reading lesson.
+ */
+class GetDifficultyAuditUseCase(
+    private val lessons: LessonRepository,
+) {
+    private val exercisesByLesson = mutableMapOf<String, Map<String, Exercise>>()
+
+    suspend operator fun invoke(window: Int = WINDOW): DifficultyAuditReport {
+        val attempts = lessons.recentAttempts(window)
+        if (attempts.isEmpty()) return DifficultyAuditReport(emptyList(), emptyList())
+        if (exercisesByLesson.size > MAX_CACHED_LESSONS) exercisesByLesson.clear()
+        val byId = mutableMapOf<String, Exercise>()
+        attempts.map { it.lessonId }.distinct().forEach { lessonId ->
+            val exercises = exercisesByLesson[lessonId] ?: lessons.getExercises(lessonId)
+                .associateBy { it.id }
+                .also { exercisesByLesson[lessonId] = it }
+            byId += exercises
+        }
+        val levels = lessons.observeLessons().first().associate { it.id to it.level }
+        return DifficultyAudit.report(attempts, byId, levels)
+    }
+
+    companion object {
+        /** A term of answers, not a session's: the audit needs eight per item. */
+        const val WINDOW = 2_000
+
+        private const val MAX_CACHED_LESSONS = 64
     }
 }

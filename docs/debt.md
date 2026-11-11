@@ -14,6 +14,18 @@
   A revisit's answer is claimed like any other: re-answering the *same* exercise on the same day
   writes nothing to mastery, and `firstTries` refuses to recount it as a first pass.
 
+- **The difficulty audit reads the log and nothing surfaces it yet (P1).** `DifficultyAudit` +
+  `GetDifficultyAuditUseCase` turn the answers `lesson_attempt` already keeps into per-item accuracy,
+  thinking time and a bounded suggestion, and twelve cases in `DifficultyAuditTest` read it on a fake
+  repository. No screen asks for it: a content-review surface is an authoring tool, not a learner
+  screen, and putting a "this item may be mis-rated" row inside the app would hand a judgement to the
+  person least able to act on it. Until that surface exists the report is read by its tests, which is
+  why the pass ships an engine and a use case rather than a migration — the recording half was
+  already there. The second limit is the timing itself: `lesson_attempt.at` gives the gap between one
+  answer and the next in the same lesson, so reading time and feedback reading are inside it, and a
+  distractible learner and a stuck one cannot be told apart. It is a diagnostic beside the accuracy,
+  never a trigger on its own.
+
 - **`question_attempt` is the claim, `lesson_attempt` is the history (Phase 1 + 2, Room v9).**
   `question_attempt` keeps one row per exercise, overwritten: its only question is "has this
   exercise already moved the learner today", and a second row per exercise would have to be summed

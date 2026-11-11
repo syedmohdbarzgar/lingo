@@ -145,7 +145,18 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (705 tests / 78 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (717 tests / 79 classes as of the
+difficulty-audit pass, where the authored number finally has a read that checks it instead of a
+second guess: the new `DifficultyAudit` engine folds the answer log into per-item accuracy, thinking
+time and day span — `lesson_attempt` has stored every answer's exercise, verdict and time since v9,
+so **nothing new is recorded** — and proposes nothing below `MIN_ATTEMPTS` (8) answers over
+`MIN_DAYS` (2) days, never above the item's level band and never below its floor. Twelve
+`DifficultyAuditTest` cases pin the two refusals (one answer; eight answers in one sitting), both
+directions (an A1 item authored 1 missed half the time asks for a harder number, a B1 item authored 3
+answered always right for an easier one), the quiet middle, `GetDifficultyAuditUseCase` joining the
+log to the authored difficulty and the lesson's level, a break dropped from the timing median, an
+exercise that left the bundle skipped, and the per-level fold. The audit only reads: content stays
+hand-judged, and a suggestion is a candidate for the next authoring pass. Before it the
 evidence-boundary pass, where the selector stopped deciding from a number: a dimension's mastery
 reads 0f both when it was never assessed and when it was and the answer was wrong, so a lesson with
 one shaky recall item had its never-asked sentence-production pushed to the front — material nobody

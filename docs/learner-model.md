@@ -102,6 +102,17 @@
   exercise, so the selector can steer immediately instead of waiting for an in-session answer —
   while an untouched dimension stays *absent* rather than 0, keeping "no evidence" distinct from
   "failed" (see [`docs/debt.md`](debt.md)).
+- **The authored `difficulty` is checked against performance, never rewritten by it (P1).**
+  `DifficultyAudit` reads the answer log that `lesson_attempt` has kept since v9 — exercise, verdict,
+  time — and reports per item its accuracy, the median gap since the previous answer in the same
+  lesson (a break over two minutes is dropped, not averaged) and the days it was asked on. A number
+  is only questioned when the sample earns it: **8 answers over at least 2 days**, because one answer
+  proves nothing and eight taps in one sitting are one state of one learner. Then a suggestion points
+  only where the scale can go — a harder number for an item at the easy end of its own level band that
+  is missed half the time, an easier one for an item at the hard end answered almost always right,
+  and never below the level's floor (C1/C2 start at 2). `GetDifficultyAuditUseCase` joins the log to
+  the authored exercises and the lessons' levels and folds the same window per level. It writes
+  nothing: content stays hand-judged, and a suggestion is a candidate for the next authoring pass.
 - **Planner time budget (checklist B-2):** review is never dropped for lack of budget — its
   estimate is capped at half the day's target and it always leads — and the remaining actions
   stop at the **first** one that does not fit instead of skipping ahead to a cheaper one. With the
