@@ -145,8 +145,15 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (689 tests / 78 classes as of the
-vocabulary-node pass, where the 35 lessons that shipped words with no VOCABULARY node got one each —
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (693 tests / 78 classes as of the
+miss-driven drill pass, where the review screen's due list got the same steering the day's plan
+already had: among nodes owed since the same midnight — equally urgent, so equally eligible — the one
+training the learner's weakest category leads, and one row says why (`… · ضعف اخیر: واژگان`). It never
+changes urgency (a node owed longer still comes first: an overdue interval is what retention pays for,
+a miss count is one window of evidence), invents nothing and drops nothing. Four cases in
+`FocusPlanTest` pin it — the reorder, the label on exactly one row, the older date still winning, and a
+profile read that throws leaving the plain overdue list standing. Before it the vocabulary-node pass,
+where the 35 lessons that shipped words with no VOCABULARY node got one each —
 titled by their own lesson, chained onto the vocabulary node of the lesson before them in their level
 (and a level's first lesson onto the level below) — so a card from those lessons finally moves the
 node it is evidence about instead of grading into nothing, with `ContentDistributionTest` failing the

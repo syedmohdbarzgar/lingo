@@ -11,6 +11,7 @@ import org.token.english.domain.engine.PrerequisiteEngine
 import org.token.english.domain.engine.RemediationEngine
 import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.nextLessonFor
+import org.token.english.domain.engine.MissCategory
 import org.token.english.domain.engine.MissProfile
 import org.token.english.domain.engine.MissTaxonomy
 import org.token.english.domain.engine.PlacementAnswer
@@ -26,6 +27,7 @@ import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.ReviewAttempt
@@ -540,20 +542,56 @@ data class DueKnowledgeReview(
  * The probes are bounded: only the most overdue [MAX_PROBES] nodes are asked, and the
  * result stops at [limit]. Each probe re-reads the graph through the focus use case, so
  * the bound is what keeps this a screen-local read rather than a scan of the bundle.
+ *
+ * **The miss mix steers ties, never urgency (miss-driven drill pass).** Two nodes owed
+ * since the same midnight are equally urgent, and of those the one training the
+ * category the learner keeps missing is served first — the same rule, and the same
+ * `… · ضعف اخیر: …` label, that `AdaptiveLearningPlanner` applies inside one plan
+ * priority. A node owed for longer still comes first: a miss count is one window of
+ * evidence, while an overdue interval is what retention actually pays for. Nothing is
+ * invented or dropped either way — the same due nodes are served, in a different order
+ * among equals.
  */
 class GetDueKnowledgeReviewsUseCase(
     private val knowledge: KnowledgeRepository,
     private val focus: GetFocusPlanUseCase,
+    /**
+     * The recent miss mix, optional on purpose: the list is a queue of retention first,
+     * and a caller with no profile seam still gets the overdue order. The same "a hint,
+     * never a dependency" rule the day's plan follows — a read that throws steers
+     * nothing instead of failing the screen.
+     *
+     * A lambda rather than the use case itself: the only thing this list needs is the
+     * mix, and a caller (or a test) that has none should not have to build a log reader
+     * to say so.
+     */
+    private val missProfile: suspend () -> MissProfile? = { null },
 ) {
     suspend operator fun invoke(
         now: Long,
         limit: Int = DEFAULT_LIMIT,
     ): List<DueKnowledgeReview> {
+        // A clean window is not a weakness: "weakest" of five right answers steers nothing.
+        val weakest = runCatchingCancellable { missProfile() }.getOrNull()
+            ?.weakest?.takeIf { it.misses > 0 }?.category
+        val trainsIt: Set<String> = if (weakest == null) {
+            emptySet()
+        } else {
+            knowledge.allItems()
+                .filter { node -> node.skills.any { MissTaxonomy.categoryOf(it) == weakest } }
+                .map { it.id }
+                .toSet()
+        }
+
         val candidates = knowledge.observeStates().first()
             .filter { state ->
                 KnowledgeGates.isDue(state, now) && !KnowledgeGates.isSecured(state)
             }
-            .sortedBy { it.nextReviewAt }
+            .sortedWith(
+                compareBy<KnowledgeState> { it.nextReviewAt }
+                    .thenBy { state -> if (state.itemId in trainsIt) 0 else 1 }
+                    .thenBy { it.itemId },
+            )
             .take(MAX_PROBES)
 
         val reviews = mutableListOf<DueKnowledgeReview>()
@@ -569,7 +607,25 @@ class GetDueKnowledgeReviewsUseCase(
                 reasonFa = plan.reasonFa,
             )
         }
-        return reviews
+        return if (weakest == null) reviews else nameGap(reviews, weakest, trainsIt)
+    }
+
+    /**
+     * Names the gap once, on the first row whose node trains it — a promotion the screen
+     * cannot explain is worse than no promotion, so the order and its reason ship
+     * together (the plan's own rule). No promoted row, no label.
+     */
+    private fun nameGap(
+        reviews: List<DueKnowledgeReview>,
+        weakest: MissCategory,
+        trainsIt: Set<String>,
+    ): List<DueKnowledgeReview> {
+        val at = reviews.indexOfFirst { it.itemId in trainsIt }
+        if (at < 0) return reviews
+        val gap = "ضعف اخیر: ${MissTaxonomy.labelFa(weakest)}"
+        return reviews.mapIndexed { index, review ->
+            if (index == at) review.copy(reasonFa = "${review.reasonFa} · $gap") else review
+        }
     }
 
     companion object {

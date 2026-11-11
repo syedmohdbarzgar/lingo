@@ -5,14 +5,17 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.token.english.domain.engine.MissProfile
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.LessonAttempt
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.GetMissProfileUseCase
 
 /**
  * `GetFocusPlanUseCase` (checklist B-1): the remediation engine's decision, on
@@ -315,5 +318,113 @@ class FocusPlanTest {
         assertTrue(
             GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))(now).isEmpty(),
         )
+    }
+
+    // ---- the miss mix steers the drill list (miss-driven drill pass) ----
+
+    /** Five misses on the lesson's vocabulary exercise: the window's weakest category. */
+    private fun vocabularyMisses(count: Int = 5): List<LessonAttempt> = (1..count).map { index ->
+        LessonAttempt(
+            lessonId = lessonId,
+            stageId = "practice",
+            exerciseId = "$lessonId.ex.02",
+            answer = "wrong",
+            correct = false,
+            at = index.toLong(),
+        )
+    }
+
+    private fun dueList(
+        knowledge: FakeKnowledgeRepository,
+        lessons: FakeLessonRepository,
+        profile: suspend () -> MissProfile? = {
+            GetMissProfileUseCase(lessons, FakeReviewRepository())()
+        },
+    ): GetDueKnowledgeReviewsUseCase = GetDueKnowledgeReviewsUseCase(
+        knowledge,
+        GetFocusPlanUseCase(knowledge, lessons),
+        profile,
+    )
+
+    @Test
+    fun `a vocabulary gap leads the equally overdue nodes`() = runTest {
+        // Both nodes are owed since the same instant, so they are equally urgent and the
+        // mix decides. Without it the id tie-break puts grammar first, which is why the
+        // expectation below is a reorder and not an artefact of declaration order.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state("grammar.test", 0.7f, nextReviewAt = now - 1_000L),
+                state("vocab.test", 0.7f, nextReviewAt = now - 1_000L),
+            ),
+        )
+        lessons.attemptsLog += vocabularyMisses()
+
+        val due = dueList(knowledge, lessons)(now)
+
+        assertEquals(listOf("vocab.test", "grammar.test"), due.map { it.itemId })
+        assertTrue(
+            "the promotion has to say why: ${due.first().reasonFa}",
+            due.first().reasonFa.endsWith("ضعف اخیر: واژگان"),
+        )
+        assertEquals(
+            "named once, not on every row",
+            1,
+            due.count { it.reasonFa.contains("ضعف اخیر") },
+        )
+    }
+
+    @Test
+    fun `an older due date still outranks a weaker category`() = runTest {
+        // The mix orders equals; it never changes urgency, because an overdue interval is
+        // what retention pays for and a miss count is one window of evidence.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state("grammar.test", 0.7f, nextReviewAt = now - 9_000L),
+                state("vocab.test", 0.7f, nextReviewAt = now - 1_000L),
+            ),
+        )
+        lessons.attemptsLog += vocabularyMisses()
+
+        assertEquals(
+            listOf("grammar.test", "vocab.test"),
+            dueList(knowledge, lessons)(now).map { it.itemId },
+        )
+    }
+
+    @Test
+    fun `with no answers at all the drill list is exactly the overdue order`() = runTest {
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state("grammar.test", 0.7f, nextReviewAt = now - 1_000L),
+                state("vocab.test", 0.7f, nextReviewAt = now - 1_000L),
+            ),
+        )
+
+        val due = dueList(knowledge, lessons)(now)
+
+        assertEquals(listOf("grammar.test", "vocab.test"), due.map { it.itemId })
+        assertTrue(due.none { it.reasonFa.contains("ضعف اخیر") })
+    }
+
+    @Test
+    fun `a profile that cannot be read leaves the drill list standing`() = runTest {
+        // A hint, never a dependency: the same rule the day's plan follows. An answer log
+        // that throws must not empty the review screen's other half.
+        val (knowledge, lessons) = repositories(
+            items = listOf(grammar, vocabulary),
+            states = listOf(
+                state("grammar.test", 0.7f, nextReviewAt = now - 1_000L),
+                state("vocab.test", 0.7f, nextReviewAt = now - 1_000L),
+            ),
+        )
+        val due = dueList(knowledge, lessons) {
+            throw IllegalStateException("the answer log cannot be read")
+        }(now)
+
+        assertEquals(listOf("grammar.test", "vocab.test"), due.map { it.itemId })
+        assertTrue(due.none { it.reasonFa.contains("ضعف اخیر") })
     }
 }

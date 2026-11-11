@@ -308,9 +308,12 @@
   the process** (bounded at 64 lessons): content is static once seeded, and the read runs on every
   mastery emission — without it one answer would re-parse the bundle's exercises for every lesson in
   the window. A re-seed mid-process would leave stale ids in that cache; the effect is a miss that
-  silently is not classified, never a wrong label. **The adaptive half now ships (miss-driven plan
+  silently is not classified, never a wrong label.  **The adaptive half now ships (miss-driven plan
   pass)**: the planner reorders within one priority by the weakest category and names the gap on the
-  action that answers it (see [`learner-model.md`](learner-model.md)). What it still cannot do is
+  action that answers it, and the review screen's due list breaks its ties the same way
+  (miss-driven drill pass) — so the same mix reaches both places that decide what to do next, and
+  neither is allowed to reorder across an urgency (see [`learner-model.md`](learner-model.md)).
+  What it still cannot do is
   change *difficulty*, which is what the roadmap item literally asked for: an exercise carries no
   authored difficulty, so "harder vocabulary" has nothing to sort by, and the honest substitute is
   urgency (which node, in which order) rather than level. That is why the steering stays inside the

@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-689 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
+693 unit tests across 78 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -520,15 +520,19 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   review grade **feeds the reviewed word's node** — mastery and that node's own next review date,
   inside the card's transaction, and never an exercise-format confirmation (a card is recall, not
   transfer; see [`docs/debt.md`](docs/debt.md)) — and a due **node** is re-served through its own
-  exercises, listed on the review screen and opened as the focused drill. What is still missing is
-  the reverse *convenience*: a due node still costs one tap into its lesson, and the node's
-  exercises are not yet queued as cards.
+  exercises, listed on the review screen and opened as the focused drill — one tap into its own
+  drill, not into a whole lesson. What is still missing is the reverse *convenience*: a node's
+  exercises are not queued **as cards** (a card carries no exercise to grade, so the queue and the
+  graph stay two lists).
 - Finish the error taxonomy. The classification shipped: `MissTaxonomy` labels every recent lesson
   answer by the skill its exercise is authored for (vocabulary, grammar, comprehension, production)
   and every review card by its content type (vocabulary or grammar — a card knows nothing finer),
-  and Progress shows the pooled mix and the category carrying the most misses. What is still missing
-  is the second half — **driving what comes next** from that mix (adaptive difficulty, a drill chosen
-  by the weakest category).
+  and Progress shows the pooled mix and the category carrying the most misses. **The mix now steers**
+  both places that decide what to do next: the day's plan orders within one priority by the weakest
+  category and names the gap, and the review screen's due list breaks ties the same way (equally
+  overdue nodes, weakest first). What it still cannot do is change *difficulty* — an exercise carries
+  no authored level, so "harder" would be a guess dressed as adaptation
+  ([`docs/debt.md`](docs/debt.md)).
 - A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
   its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.
 - Pronunciation scoring **inside** the lesson's `speaking` item — record-and-compare today, while the

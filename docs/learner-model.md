@@ -178,9 +178,13 @@
   [`docs/debt.md`](debt.md)); a lesson that owns none would leave the card still graded (schedule,
   log, meter) with the graph out of a claim it cannot support, and `ContentDistributionTest` now
   fails the build before a lesson can ship that way. Two deliberate limits remain: **no exercise format** is recorded (a card is recall,
-  not a *transfer* claim — see [`docs/debt.md`](debt.md)), and the queue itself is still the card
-  queue: a node's own exercises are not re-served from its due date, which is the other half of the
-  roadmap item.
+  not a *transfer* claim — see [`docs/debt.md`](debt.md)), and the **card** queue is still words:
+  a due node is served beside the cards, as its own focused drill (`GetDueKnowledgeReviewsUseCase` →
+  the review screen's «مرور هدفمند» rows), never queued as a card — a card carries no exercise to
+  grade, which is the same limit the taxonomy lives with. That list is steered exactly as the day's
+  plan is (miss-driven drill pass): among nodes owed since the same midnight the one training the
+  weakest `MissCategory` leads, and one row carries the `… · ضعف اخیر: …` label; an older due date
+  still wins, because the mix orders equals and never urgency.
 - **One bar for «مسلط» (v30 mastery gate).** A first correct answer seeds mastery at
   `DefaultKnowledgeEngine.FIRST_HIT_MASTERY` (0.4), not 1.0 — one tap is evidence, not proof, and
   seeding it at full made a just-met node look learned to the planner and to the skill meters.

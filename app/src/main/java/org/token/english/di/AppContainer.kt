@@ -416,10 +416,11 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
     /**
      * The review screen's graph half (review→graph pass): which curriculum nodes are
      * due, via the focused drill that will serve them — so the row it shows and the
-     * session it opens are the same decision.
+     * session it opens are the same decision. The same miss mix Progress and the plan
+     * read, so a due node that trains the learner's weakest category leads its equals.
      */
     val getDueKnowledgeReviews: GetDueKnowledgeReviewsUseCase by lazy {
-        GetDueKnowledgeReviewsUseCase(knowledgeRepository, getFocusPlan)
+        GetDueKnowledgeReviewsUseCase(knowledgeRepository, getFocusPlan) { getMissProfile() }
     }
 
     /**

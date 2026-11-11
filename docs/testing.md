@@ -89,8 +89,12 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 689 tests / 78 classes as of
-  the miss-driven-plan pass, where the error taxonomy's report finally steers work: the new
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 693 tests / 78 classes as of
+  the miss-driven drill pass, where that steering reached the review screen's due list: four
+  `FocusPlanTest` cases — equally overdue nodes reorder toward the weakest category, the gap is named
+  on exactly one row, a node owed longer still comes first, and a profile read that throws leaves the
+  plain overdue list standing (no row invented, none dropped). Before it the miss-driven-plan pass,
+  where the error taxonomy's report finally steers work: the new
   `MissDrivenPlanTest` carries three cases at the use-case level — a vocabulary gap reaches
   `GetTodayPlanUseCase` through `GetMissProfileUseCase` and puts the vocabulary node first with
   «ضعف اخیر: واژگان» on it, an empty log leaves the graph's plan exactly as written, and a profile
