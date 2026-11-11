@@ -145,8 +145,15 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (717 tests / 79 classes as of the
-difficulty-audit pass, where the authored number finally has a read that checks it instead of a
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (725 tests / 79 classes as of the
+mastery-matrix pass, where the selector's two axes were finally pinned cell by cell instead of one
+rule at a time: eight `AdaptiveExerciseSelectorTest` cases cover the four cells of weak/consolidated
+× easy/hard — a weak meter over an interleaved list leads with the easy end, a consolidated one with
+the hard end, and neither end is a filter, so a lesson made only of hard items (or only easy ones)
+still runs in its authored order — plus mixed dimensions (a weak band ascends, a consolidated band
+descends, neither borrowing the other's order), dimensions with no evidence (they keep authored order
+and gain no direction), and the permutation over every meter from 0f to 1f (the boundary values 0.84
+and 0.85 included). Before it the difficulty-audit pass, where the authored number finally has a read that checks it instead of a
 second guess: the new `DifficultyAudit` engine folds the answer log into per-item accuracy, thinking
 time and day span — `lesson_attempt` has stored every answer's exercise, verdict and time since v9,
 so **nothing new is recorded** — and proposes nothing below `MIN_ATTEMPTS` (8) answers over

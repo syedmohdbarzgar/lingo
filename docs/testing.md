@@ -89,8 +89,13 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 717 tests / 79 classes as of
-  the difficulty-audit pass, where the authored number got a reading that checks it: twelve
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 725 tests / 79 classes as of
+  the mastery-matrix pass, where the selector's two axes are pinned cell by cell: eight
+  `AdaptiveExerciseSelectorTest` cases for weak/consolidated × easy/hard (each end decides the level
+  inside its band, and neither end filters the lesson — an all-hard or all-easy lesson keeps its
+  authored order), mixed dimensions (the weak band ascends, the consolidated one descends), dimensions
+  with no evidence (authored order, no invented direction), and the permutation across every meter
+  including the 0.84/0.85 boundary. Before it the difficulty-audit pass, where the authored number got a reading that checks it: twelve
   `DifficultyAuditTest` cases cover the engine and its use case — no verdict from one answer, none
   from eight answers in one sitting (`MIN_ATTEMPTS` 8 over `MIN_DAYS` 2), a harder number suggested
   for an A1 item authored 1 and missed half the time, an easier one for a B1 item authored 3 and

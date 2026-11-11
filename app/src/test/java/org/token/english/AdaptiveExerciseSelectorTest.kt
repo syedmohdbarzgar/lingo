@@ -32,11 +32,12 @@ class AdaptiveExerciseSelectorTest {
         accepted = listOf("live"),
     ).copy(difficulty = difficulty)
 
-    private fun translation(id: String) = Exercise.Translation(
+    private fun translation(id: String, difficulty: Int = Exercise.DEFAULT_DIFFICULTY) = Exercise.Translation(
         id = id,
         lessonId = "l1",
         prompt = "من اینجا زندگی می‌کنم",
         accepted = listOf("I live here"),
+        difficulty = difficulty,
     )
 
     private fun profile(vararg pairs: Pair<MasteryDimension, Float>) =
@@ -207,5 +208,103 @@ class AdaptiveExerciseSelectorTest {
         val exercises = listOf(mc("hard", 3), mc("easy", 1), mc("middle", 2))
 
         assertEquals(exercises, selector.order(exercises, MasteryProfile()))
+    }
+
+    // ---- the whole mastery × difficulty matrix (P1) ----
+    //
+    // The four cells of weak/consolidated × easy/hard, each asserted on its own so no
+    // cell can drift while another keeps the suite green. The items are authored
+    // interleaved on purpose: an implementation that only reversed the list would pass
+    // one cell and fail the other.
+
+    private fun orderOf(exercises: List<Exercise>, mastery: Float): List<String> =
+        selector.order(exercises, profile(MasteryDimension.RECOGNITION to mastery)).map { it.id }
+
+    private val easy = mc("easy", 1)
+    private val hard = mc("hard", 3)
+    private val interleaved = listOf(mc("easy-1", 1), mc("hard-1", 3), mc("easy-2", 1), mc("hard-2", 3))
+
+    @Test
+    fun `low mastery with an easy item available leads with the easy end`() {
+        assertEquals(
+            listOf("easy-1", "easy-2", "hard-1", "hard-2"),
+            selector.order(interleaved, profile(MasteryDimension.RECOGNITION to 0.2f)).map { it.id },
+        )
+    }
+
+    @Test
+    fun `low mastery with only hard items still serves them, in authored order`() {
+        // The weak end is not a filter: a lesson whose items are all hard still gets its
+        // lesson, and the tie between two equally hard items stays the author's order.
+        val onlyHard = listOf(mc("hard-b", 3), mc("hard-a", 3))
+        assertEquals(listOf("hard-b", "hard-a"), orderOf(onlyHard, 0.3f))
+    }
+
+    @Test
+    fun `high mastery with a hard item available leads with the hard end`() {
+        assertEquals(
+            listOf("hard-1", "hard-2", "easy-1", "easy-2"),
+            selector.order(interleaved, profile(MasteryDimension.RECOGNITION to 0.95f)).map { it.id },
+        )
+    }
+
+    @Test
+    fun `high mastery with only easy items still serves them, in authored order`() {
+        // Nor is "consolidated" a filter: the hard end leads when it exists, and when it
+        // does not the authored order stands rather than a reverse nobody asked for.
+        val onlyEasy = listOf(mc("easy-b", 1), mc("easy-a", 1))
+        assertEquals(listOf("easy-b", "easy-a"), orderOf(onlyEasy, 0.95f))
+    }
+
+    @Test
+    fun `mixed dimensions order by evidence band, then by level inside each band`() {
+        // Recognition consolidated, recall weak, both with an easy and a hard item: the
+        // weak band leads from its easy end, the consolidated band follows from its hard
+        // end, and neither band's items jump into the other's order.
+        val exercises = listOf(
+            mc("m-hard", 3),
+            fill("f-hard", 3),
+            mc("m-easy", 1),
+            fill("f-easy", 1),
+        )
+        val ordered = selector.order(
+            exercises,
+            profile(MasteryDimension.RECOGNITION to 0.9f, MasteryDimension.RECALL to 0.3f),
+        )
+
+        assertEquals(listOf("f-easy", "f-hard", "m-hard", "m-easy"), ordered.map { it.id })
+    }
+
+    @Test
+    fun `no evidence in some dimensions never invents an order for them`() {
+        // One consolidated dimension, one observable but unassessed: the unseen items
+        // keep their authored position and gain no direction from a number they do not
+        // have, while the consolidated one sinks with its hard end first.
+        val exercises = listOf(
+            mc("m-easy", 1),
+            translation("t-hard", 3),
+            mc("m-hard", 3),
+        )
+        val ordered = selector.order(exercises, profile(MasteryDimension.RECOGNITION to 0.95f))
+
+        assertEquals(listOf("t-hard", "m-hard", "m-easy"), ordered.map { it.id })
+    }
+
+    @Test
+    fun `every cell of the matrix keeps every exercise exactly once`() {
+        // The one property that must hold whatever the meters say: a lesson is reordered,
+        // never shortened, and no item is served twice.
+        listOf(0f, 0.2f, 0.5f, 0.84f, 0.85f, 0.95f, 1f).forEach { mastery ->
+            val ordered = selector.order(interleaved, profile(MasteryDimension.RECOGNITION to mastery))
+            assertEquals("mastery $mastery dropped or duplicated an item", interleaved.size, ordered.size)
+            assertEquals("mastery $mastery changed the item set", interleaved.toSet(), ordered.toSet())
+        }
+    }
+
+    @Test
+    fun `both ends of the scale are reachable from one list`() {
+        // The point of the axis: the same two items, one meter, two directions.
+        assertEquals("easy", selector.next(listOf(easy, hard), profile(MasteryDimension.RECOGNITION to 0.2f))?.id)
+        assertEquals("hard", selector.next(listOf(easy, hard), profile(MasteryDimension.RECOGNITION to 0.95f))?.id)
     }
 }
