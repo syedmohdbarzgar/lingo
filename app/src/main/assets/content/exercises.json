@@ -1,5 +1,5 @@
 {
-  "contentVersion": 74,
+  "contentVersion": 75,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -48970,6 +48970,384 @@
       "correctIndex": 3,
       "skill": "READING",
       "explanationFa": "«Precision and kindness pull in opposite directions» — دقت و مهربانی، دو جهت مخالف."
+    },
+    {
+      "id": "c2.rhetoric.ex.10",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "difficulty": 3,
+      "question": "In \"The scheme was bold, the scheme was costly, the scheme was ours\", the repetition of the opening words is ______.",
+      "questionFa": "تکرار واژه‌های آغازین در این جمله چه آرایه‌ای است؟",
+      "options": [
+        "anaphora",
+        "epistrophe",
+        "asyndeton",
+        "litotes"
+      ],
+      "correctIndex": 0,
+      "skill": "WRITING",
+      "explanationFa": "تکرار در آغازِ بندهای پیاپی anaphora است؛ epistrophe تکرار در پایان، asyndeton حذف حرف ربط و litotes کم‌گویی با نفی دوگانه است."
+    },
+    {
+      "id": "c2.argumentation.ex.09",
+      "lessonId": "c2.argumentation.lesson-01",
+      "type": "multiple_choice",
+      "order": 15,
+      "difficulty": 3,
+      "question": "\"Either we fund the library in full or we close it\" presents two options and ignores the third. The move is ______.",
+      "questionFa": "جمله‌ای که تنها دو گزینه می‌گذارد و گزینهٔ سوم را نادیده می‌گیرد چه مغالطه‌ای است؟",
+      "options": [
+        "a straw man",
+        "a false dilemma",
+        "a hasty generalisation",
+        "a circular argument"
+      ],
+      "correctIndex": 1,
+      "skill": "WRITING",
+      "explanationFa": "وقتی گزینه‌های دیگر نادیده گرفته می‌شود، مغالطهٔ دوراهی جعلی (false dilemma) است؛ straw man تحریف موضع مخالف است، نه حذف گزینه‌ها."
+    },
+    {
+      "id": "c2.sociolinguistics.ex.10",
+      "lessonId": "c2.sociolinguistics.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "A number of linguists ______ argued that the written standard is an artefact of the printing press.",
+      "questionFa": "کدام فعل با «a number of linguists» سازگار است؟",
+      "options": [
+        "is",
+        "has",
+        "have",
+        "was"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "«a number of + اسم جمع» فعل جمع می‌گیرد (have)؛ در «the number of» فعل مفرد است."
+    },
+    {
+      "id": "c2.philosophy.ex.10",
+      "lessonId": "c2.philosophy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "If the manuscript had been dated by its watermark, the debate ______ today.",
+      "questionFa": "شرط گذشته با نتیجهٔ امروز: کدام صورت درست است؟",
+      "options": [
+        "had not existed",
+        "would not have existed",
+        "does not exist",
+        "would not exist"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "شرط گذشته با نتیجهٔ زمان حال، شرطی مرکب می‌سازد: would not exist؛ «today» نتیجهٔ حال را الزام می‌کند."
+    },
+    {
+      "id": "c2.speeches.ex.10",
+      "lessonId": "c2.speeches.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The minister's remarks ______ as a concession, though nothing had been conceded.",
+      "questionFa": "مجهول با فعل وجهی در گذشته: کدام صورت درست است؟",
+      "options": [
+        "may have been read",
+        "may have read",
+        "must read",
+        "can be reading"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "سخنانِ minister خوانده می‌شود، پس مجهول است: may have been read (وجهی + گذشتهٔ نقلی + مجهول)."
+    },
+    {
+      "id": "c2.advanced-persuasion.ex.10",
+      "lessonId": "c2.advanced-persuasion.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Not until the final slide ______ what the numbers had been hiding.",
+      "questionFa": "وارونگی پس از قید منفیِ آغازین: کدام ترتیب درست است؟",
+      "options": [
+        "the audience saw",
+        "did the audience see",
+        "the audience had seen",
+        "saw the audience"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "قید منفیِ آغازین (Not until…) وارونگی می‌خواهد: فعل کمکی پیش از فاعل، did the audience see."
+    },
+    {
+      "id": "c2.academic-writing.ex.10",
+      "lessonId": "c2.academic-writing.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The dataset ______ twice since it was first published, and the corrections are now standard.",
+      "questionFa": "با «since» و پیامد کنونی، کدام صورت مجهول درست است؟",
+      "options": [
+        "is revised",
+        "was revised",
+        "has been revised",
+        "had revised"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "«since» با پیامدِ امروز، حال کامل مجهول می‌خواهد: has been revised."
+    },
+    {
+      "id": "c2.editing.ex.10",
+      "lessonId": "c2.editing.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Either the chapter headings or the index ______ to be rewritten before Friday.",
+      "questionFa": "مطابقت فعل با «either … or»: کدام صورت درست است؟",
+      "options": [
+        "is needing",
+        "need",
+        "needing",
+        "needs"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "با either … or فعل با نزدیک‌ترین اسم (the index) مطابقت می‌کند: needs."
+    },
+    {
+      "id": "c2.synthesis.ex.10",
+      "lessonId": "c2.synthesis.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The reviewer asked whether the two studies ______ the same cohort.",
+      "questionFa": "پرسش غیرمستقیم در نقل قول: کدام صورت درست است؟",
+      "options": [
+        "had used",
+        "did they use",
+        "were they using",
+        "have they used"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "در پرسش غیرمستقیم ترتیب جمله‌ای است و زمان به عقب می‌رود: whether the two studies had used."
+    },
+    {
+      "id": "c2.dialects.ex.10",
+      "lessonId": "c2.dialects.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "There ______ a mill on this river, and the women carried their flour to it every week.",
+      "questionFa": "عادت و وضعیت گذشته: کدام صورت درست است؟",
+      "options": [
+        "would be",
+        "used to be",
+        "was used to be",
+        "had used to be"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "برای وضعیتِ گذشته «used to» می‌آید؛ «would» تنها برای عادتِ کنشی است، پس there used to be."
+    },
+    {
+      "id": "c2.pragmatics.ex.10",
+      "lessonId": "c2.pragmatics.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The chair asked whether the minutes ______ circulated before the meeting.",
+      "questionFa": "گذشتهٔ کامل مجهول در نقل قول غیرمستقیم: کدام صورت درست است؟",
+      "options": [
+        "have been",
+        "were",
+        "had been",
+        "had"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "نقل قول غیرمستقیم در گذشته، گذشتهٔ کامل مجهول می‌خواهد: had been circulated."
+    },
+    {
+      "id": "c2.culture-expressions.ex.10",
+      "lessonId": "c2.culture-expressions.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "She was elected ______ of the society, though she had been ______ of it for years.",
+      "questionFa": "حرف تعریف با مقام یگانه و با اسم قابل شمارش: کدام جفت درست است؟",
+      "options": [
+        "president … critic",
+        "the president … the critic",
+        "a president … a critic",
+        "president … a critic"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "پس از فعلِ مقام (elected president) حرف تعریف نمی‌آید، اما critic یکی از چند نفر است: a critic."
+    },
+    {
+      "id": "c2.allusions.ex.10",
+      "lessonId": "c2.allusions.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The poem ______ the epigraph is taken was published posthumously.",
+      "questionFa": "بند موصولی با حرف اضافه: کدام صورت درست است؟",
+      "options": [
+        "from which",
+        "which",
+        "where",
+        "that"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "حرف اضافهٔ وابسته به فعل در آغاز بند موصولی می‌آید: the poem from which the epigraph is taken."
+    },
+    {
+      "id": "c2.paraphrasing.ex.10",
+      "lessonId": "c2.paraphrasing.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "In the second edition the figures ______ to a different base year, and every chart was redrawn.",
+      "questionFa": "مجهول گذشتهٔ ساده: کدام صورت درست است؟",
+      "options": [
+        "rebased",
+        "were rebased",
+        "have rebased",
+        "were rebasing"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "فاعل (the figures) مفعولِ فعل است، پس مجهول گذشته: were rebased."
+    },
+    {
+      "id": "c2.diplomacy.ex.10",
+      "lessonId": "c2.diplomacy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "______ the delegation to withdraw, the talks would not have collapsed.",
+      "questionFa": "شرط سومِ وارونه: کدام صورت درست است؟",
+      "options": [
+        "Were we asking",
+        "If we asked",
+        "Had we asked",
+        "Should we ask"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "شرط سوم می‌تواند بدون if و با وارونگی بیاید: Had we asked … would not have collapsed."
+    },
+    {
+      "id": "c2.specialist-audiences.ex.10",
+      "lessonId": "c2.specialist-audiences.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Only by stripping out the equations ______ the talk reach the audience it deserves.",
+      "questionFa": "وارونگی پس از «Only by …»: کدام صورت درست است؟",
+      "options": [
+        "was",
+        "did",
+        "could it",
+        "could"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "پس از «Only by + اسمِ فعل» فعل کمکی پیش از فاعل می‌آید: could the talk reach."
+    },
+    {
+      "id": "c2.narrative.ex.10",
+      "lessonId": "c2.narrative.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The confession ______ place long before the trial the narrator describes.",
+      "questionFa": "رویداد پیش‌تر از رویداد گذشتهٔ دیگر: کدام زمان درست است؟",
+      "options": [
+        "had taken",
+        "took",
+        "has taken",
+        "was taken"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "رویدادی که پیش از رویداد گذشتهٔ دیگری رخ داده، گذشتهٔ کامل می‌گیرد: had taken place."
+    },
+    {
+      "id": "c2.uncertainty.ex.10",
+      "lessonId": "c2.uncertainty.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The pattern ______ be chance: it appears in every one of the twelve samples.",
+      "questionFa": "استنتاجِ ناممکنی: کدام وجهی درست است؟",
+      "options": [
+        "must not",
+        "cannot",
+        "need not",
+        "should not"
+      ],
+      "correctIndex": 1,
+      "skill": "GRAMMAR",
+      "explanationFa": "استنتاجِ ناممکنی با cannot بیان می‌شود؛ must not نهی است و need not نبودِ ضرورت."
+    },
+    {
+      "id": "c2.sensitive.ex.10",
+      "lessonId": "c2.sensitive.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "If I ______ you, I ______ the children's teacher before the meeting.",
+      "questionFa": "شرط دوم: کدام جفت درست است؟",
+      "options": [
+        "am … would tell",
+        "was … will tell",
+        "were … would tell",
+        "were … told"
+      ],
+      "correctIndex": 2,
+      "skill": "GRAMMAR",
+      "explanationFa": "حالت غیرواقعیِ حال: If I were you, I would tell — گذشتهٔ ساده در بند شرط و would در نتیجه."
+    },
+    {
+      "id": "c2.policy.ex.10",
+      "lessonId": "c2.policy.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "Had the cap been indexed to inflation, it ______ today's households as heavily as it does.",
+      "questionFa": "شرط گذشته با نتیجهٔ حال: کدام صورت درست است؟",
+      "options": [
+        "had not weighed on",
+        "would not have weighed on",
+        "does not weigh on",
+        "would not weigh on"
+      ],
+      "correctIndex": 3,
+      "skill": "GRAMMAR",
+      "explanationFa": "شرط گذشته با نتیجهٔ امروز، شرطی مرکب است: would not weigh on؛ «as it does» نتیجهٔ حال را الزام می‌کند."
+    },
+    {
+      "id": "c2.legal.ex.10",
+      "lessonId": "c2.legal.lesson-01",
+      "type": "multiple_choice",
+      "order": 16,
+      "difficulty": 3,
+      "question": "The clause ______ twice since the contract was signed, and neither amendment was published.",
+      "questionFa": "حال کامل مجهول با «since»: کدام صورت درست است؟",
+      "options": [
+        "has been amended",
+        "was amended",
+        "is amended",
+        "had amended"
+      ],
+      "correctIndex": 0,
+      "skill": "GRAMMAR",
+      "explanationFa": "«since» با پیامدِ کنونی، حال کامل مجهول می‌خواهد: has been amended."
     }
   ]
 }

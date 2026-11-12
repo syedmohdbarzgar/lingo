@@ -90,8 +90,18 @@
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 728 tests / 79 classes as of
-  the graph-label pass, where two `ContentDistributionTest` cases count the curriculum graph's own
-  claims. One says a prerequisite must be introduced **at or before** the node that needs it (both
+  the C2-hard-choice pass, where the last level whose recognition could not rise got the item it was
+  missing: v71 left 21 of C2's 30 lessons with a hard item only in a blank or a production, and
+  `AdaptiveExerciseSelector` raises the level **within a format**, so those 21 could not raise
+  recognition however consolidated the meter was. Each got one authored choice item at 3, written in
+  the level's own hard-end shape — four grammatical options where the context decides, never "which
+  sentence is correct" — and `ContentDistributionTest` now pins **all 30** of C2's choice lessons
+  (2910 → 2931 exercises, bundle v75); nothing else about the level moved. The judgement of each new
+  item is its explanation: `a number of` against `the number of`, the mixed conditional chosen by
+  "today", inversion after `Not until`, `may have been read` against `may have read`, `either … or`
+  agreement, `used to` for a state against `would` for a habit, `cannot` as deduction against `must
+  not` as prohibition. Before it the graph-label pass, where two `ContentDistributionTest` cases count the curriculum graph's own
+  claims. One says a prerequisite has to be introduced **at or before** the node that needs it (both
   in the same lesson is the normal case — C1's idiom node chains onto the phrasal-verb node taught
   beside it — so the check is "not later", never "strictly earlier"; position in
   the level-then-order path, plus the level check a reader looks for): `PrerequisiteEngine` answers
@@ -133,8 +143,8 @@
   and their band of 1..2 made the only question "first encounter or one step past it". One
   `ContentDistributionTest` case measures the within-format axis and names where it exists: every
   level's multiple-choice items now disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32,
-  all 31 of C1's — the level whose axis is complete — 9 of C2's 30, because the other 21 carry C2's
-  hard item in a blank or a production, 17 of A1's 30 and 11 of A2's 30), and the case fails when a
+  all 31 of C1's and all 30 of C2's — both C levels complete, C1 in v70 and C2 in v75 — 17 of A1's
+  30 and 11 of A2's 30), and the case fails when a
   level's choice items all share one number again, because that is what a seeded level looks like and
   it cannot reorder its own format. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated

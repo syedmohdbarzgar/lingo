@@ -7,11 +7,11 @@
 
 ## What the code already proves (no device needed)
 
-These are green as of bundle **v74** and do not need re-proving for a release unless the area changes:
+These are green as of bundle **v75** and do not need re-proving for a release unless the area changes:
 
 | Area | Check | Evidence |
 |---|---|---|
-| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 2910 exercises, 36 placement questions, 268 nodes, bundle v74 |
+| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 2931 exercises, 36 placement questions, 268 nodes, bundle v75 |
 | Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 728 tests / 79 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
 | Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |

@@ -148,7 +148,17 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (728 tests / 79 classes as of the
-graph-label pass, where the curriculum graph's own promises were counted instead of trusted:
+C2-hard-choice pass, where the last level whose recognition could not rise got the item it was
+missing: the v71 read left 21 of C2's 30 lessons with their hard item only in a blank or a
+production, and the selector raises the level **within a format**, so those 21 could not raise
+recognition however consolidated the meter was. Each got one authored choice item at 3 in the
+level's own hard-end shape — four grammatical options where the context decides, never "which
+sentence is correct" (that shape is a 2, because three of its four options break the structure
+outright): `a number of` against `the number of`, the mixed conditional the word "today" decides,
+inversion after `Not until`, `may have been read` against `may have read`, `either … or` agreement,
+`used to` for a state against `would` for a habit, `cannot` as deduction against `must not` as
+prohibition. 2910 → 2931 exercises and **all 30** of C2's choice lessons now disagree about
+difficulty, which `ContentDistributionTest` asserts (bundle v75). Before it the graph-label pass, where the curriculum graph's own promises were counted instead of trusted:
 a prerequisite is a claim about order, so `PrerequisiteEngine` turns an unmet one into a
 `REMEDIATE` action — and two B2 vocabulary nodes required the two C1 nodes of `c1.phrasal-idioms`,
 which sent a learner studying `b2.idioms` or `b2.phrasal-verbs` a whole level up. The honest target
@@ -208,10 +218,11 @@ themselves while a gap leads. Before it the C2-difficulty pass, where the last l
 2 like C1's, so the hard end is the structure the level is built on — inversion after a negative
 adverbial, the mixed and unreal conditional, the quantifier-phrase agreement trap — the reading
 questions that ask what a passage implies rather than a fact, and the metalanguage items where a
-near-synonym would be wrong; 18 one-clause sentence productions came down to 2. C2 is now 411/44
-from 430/25, 9 of its 30 choice lessons disagree about difficulty, and on `c2.literature` a
-consolidated recognition meter is served `ex.08` (the narrator's tone against the passage's
-optimism) while a shaky one starts at the vocabulary item — the lesson's only hard choice item.
+near-synonym would be wrong; 18 one-clause sentence productions came down to 2. C2 is 411/44
+from 430/25 at that point, 9 of its 30 choice lessons disagreed about difficulty, and on
+`c2.literature` a consolidated recognition meter is served `ex.08` (the narrator's tone against the
+passage's optimism) while a shaky one starts at the vocabulary item — the lesson's only hard choice
+item then.
 A1 and A2 are now the only levels still entirely seeded. Before it the
 hard-end-choice pass, where C1 got the hard item its axis was missing: the v69 read left 22 of the
 level's 31 lessons with no multiple-choice item at 3, so the selector could not raise recognition

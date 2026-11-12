@@ -81,9 +81,12 @@
   C2*: the inversion and mixed conditional the level is built on, the quantifier-phrase agreement
   trap, the reading questions that ask what a passage implies, and the metalanguage items where a
   near-synonym would be wrong. 61 of its 455 items were re-judged (55 changed) and 18 one-clause
-  productions came down to 2. C2 is 411/44 from 430/25, and 9 of its 30 choice lessons disagree
-  about difficulty — the other 21 carry C2's hard item in a blank or a production, which is why only
-  C1 (the one level finished with v70's added items) has the axis in every lesson.
+  productions came down to 2. C2 is 411/65 from 430/25, and all 30 of its 30 choice lessons disagree
+  about difficulty. v75 finished the level the way v70 finished C1: the 21 lessons whose hardest item
+  sat in a blank or a production got one authored hard choice item each, written in the level's own
+  hard-end shape (four grammatical options where the context decides, and the mixed conditional, the
+  inverted negative adverbial and the agreement trap among them), so 2931 exercises today. Neither C
+  level now leaves recognition unable to rise.
   A1 and A2 were judged last (v72), and their band of 1..2 makes the question the simplest one the
   scale allows: *first encounter, or one step past it*. The 2 goes to a blank that tests a structure,
   to a choice where two options are grammatical and the context decides, to a choice that reads a
@@ -114,7 +117,7 @@
   never moves, read its lessons' `skill` tags before concluding the level teaches too little —
   `ContentDistributionTest` now counts the formats that can credit every node and fails under
   `MIN_FORMATS_TO_SECURE` (2).
-- **CEFR bundle (contentVersion 74):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 75):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,
@@ -138,7 +141,7 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  2910 exercises
+  2931 exercises
   (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
   3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
   lessons, four in the six original ones
@@ -227,7 +230,7 @@
   can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 2910 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 2931 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

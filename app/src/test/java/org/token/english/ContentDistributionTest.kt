@@ -402,11 +402,13 @@ class ContentDistributionTest {
      * (passive, perfect, conditional, quantifier agreement) is the hard end and a blank that
      * tests a word is the easy end, where the seed had called every blank easy — and at C1,
      * whose floor is 2, the hard end is the inversion and mixed-conditional structure the level
-     * is built on, so `c1.statistics` separates the agreement trap from the plain one. C2 is read
+     * is built on, so `c1.statistics` separates the agreement trap from the plain one. C2 was read
      * the same way as C1 — its hard end is the inversion and mixed conditional it is built on plus
-     * the reading questions that ask what a passage implies — but only 9 of its 30 choice lessons
-     * have one, because the other 21 carry the level's hard item in a blank or a production,
-     * which is what `c2.literature` shows: its one hard choice item is the only one it has.
+     * the reading questions that ask what a passage implies — and v71 left only 9 of its 30 choice
+     * lessons with one, because the other 21 carried the level's hard item in a blank or a
+     * production. v75 finished the level the way v70 finished C1: each of those 21 got one authored
+     * hard choice item, so **all 30** can now raise recognition. `c2.literature` is still the
+     * example of a lesson whose own hard item is a choice. 
      */
     @Test
     fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
@@ -442,17 +444,19 @@ class ContentDistributionTest {
             10,
             spreadByLevel["B2"] ?: 0,
         )
-        // C1 is the level whose axis is complete: v69 judged it and v70 gave the 22 lessons
-        // that had no hard choice item one, so every C1 lesson can now raise recognition.
+        // v69 judged C1 and v70 gave the 22 lessons that had no hard choice item one, so every C1
+        // lesson can raise recognition — the shape v75 completed for C2.
         assertEquals(
             "C1 was read item by item (v69) and completed in v70: all 31 of its choice lessons " +
                 "disagree about difficulty",
             31,
             spreadByLevel["C1"] ?: 0,
         )
+        // C2 was judged in v71 and completed in v75, the same shape as C1's v69 + v70 pass.
         assertEquals(
-            "C2 was read item by item in v71: 9 of its 30 choice lessons disagree about difficulty",
-            9,
+            "C2 was read item by item (v71) and completed in v75: all 30 of its choice lessons " +
+                "disagree about difficulty",
+            30,
             spreadByLevel["C2"] ?: 0,
         )
         // v72 read the last two levels. A1 and A2 run 1..2, so their axis is "first encounter
