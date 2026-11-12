@@ -29,7 +29,9 @@ import org.json.JSONObject
 import org.token.english.R
 import org.token.english.core.audio.SpeechBus
 import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.TakeRecorder
 import org.vosk.Recognizer
+import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -53,6 +55,10 @@ class SpeechRecognitionService : Service() {
 
     @Volatile
     private var captureThread: Thread? = null
+
+    /** The take's own audio, written while it is recognised (see [TakeRecorder]). */
+    @Volatile
+    private var takeRecorder: TakeRecorder? = null
 
     @Volatile
     private var keepRecording = false
@@ -253,6 +259,12 @@ class SpeechRecognitionService : Service() {
         audioRecord = record
         recognizer = rec
         keepRecording = true
+        // One take, two outputs: the transcript the scorer reads and the audio the
+        // learner hears back. The file starts empty and is patched when the take
+        // ends (TakeRecorder), so a take that dies half-way still leaves nothing to
+        // play; a failure to open it costs the playback, never the verdict.
+        takeRecorder?.discard()
+        takeRecorder = TakeRecorder(File(cacheDir, TAKE_AUDIO_FILE))
 
         // Already foreground since onStartCommand (see enterForeground); refresh
         // the text now that the mic is genuinely live.
@@ -344,6 +356,10 @@ class SpeechRecognitionService : Service() {
                     bytes[i * 2] = (buffer[i].toInt() and 0xFF).toByte()
                     bytes[i * 2 + 1] = (buffer[i].toInt() shr 8).toByte()
                 }
+                // The same buffer Vosk just heard, appended for the learner's own
+                // playback — one capture, so "what I said" and "what it graded"
+                // cannot drift apart.
+                takeRecorder?.append(bytes, bytes.size)
                 // Vosk's Java API exposes these as getResult()/getPartialResult()/
                 // getFinalResult(); Kotlin sees the getters as properties, so the
                 // bare `result()` form does not resolve.
@@ -550,14 +566,24 @@ class SpeechRecognitionService : Service() {
         } catch (t: Throwable) {
             // Already closed.
         }
+        // The audio is closed before the state that announces the end of the take:
+        // the screen starts offering playback from that same emission, and a file
+        // still open would play back truncated (its WAV sizes are patched on close).
+        val audio = takeRecorder?.finish()
+        takeRecorder = null
         // A finished take may already have been replaced by a newer one. Clearing
         // the live take's fields or publishing «not listening» here would make the
         // new take look dead — and the screen grades the end of a take by that
         // flag, so the learner's next sentence would be scored against the old one.
-        if (!ownsScreenState(take)) return
+        if (!ownsScreenState(take)) {
+            audio?.delete()
+            return
+        }
         audioRecord = null
         recognizer = null
-        SpeechBus.publish { it.copy(isListening = false, isPreparing = false) }
+        SpeechBus.publish {
+            it.copy(isListening = false, isPreparing = false, takePath = audio?.absolutePath)
+        }
     }
 
     /** Vosk result JSON: `{"text": "go straight and turn left"}`. */
@@ -623,6 +649,13 @@ class SpeechRecognitionService : Service() {
         private const val TAG = "SpeechRecognition"
         private const val NOTIFICATION_ID = 4711
         const val SAMPLE_RATE = 16_000
+
+        /**
+         * One take, one file: the next take overwrites it, and leaving the feature
+         * deletes it (`SpeechBus.reset`). Cache dir, so the OS may clear it too — and
+         * so it is never part of the learner's backed-up data.
+         */
+        private const val TAKE_AUDIO_FILE = "speech_take.wav"
         private const val BUFFER_SAMPLES = 1600 // 100 ms at 16 kHz mono
 
         /**

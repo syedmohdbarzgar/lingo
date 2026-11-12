@@ -15,6 +15,7 @@ import org.token.english.core.audio.Speaker
 import org.token.english.core.audio.SpeechBus
 import org.token.english.core.audio.SpeechError
 import org.token.english.core.audio.SpeechState
+import org.token.english.core.audio.VoiceNote
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
@@ -105,6 +106,13 @@ data class LessonUiState(
     val heardPartial: String = "",
     /** The last take's transcript: what the device heard, and what it graded. */
     val heardText: String = "",
+    /**
+     * The take's own audio, once it was captured — the learner can hear exactly the
+     * words the verdict was formed on. Null when the take captured nothing.
+     */
+    val takePath: String? = null,
+    /** The learner's own take is playing right now. */
+    val isPlayingTake: Boolean = false,
     /**
      * The last take ended without a single recognised word — a recogniser problem,
      * deliberately not a verdict. The learner is offered the mic again instead of
@@ -228,6 +236,10 @@ sealed interface LessonEvent {
      * record-and-compare path an install without the recogniser still gets.
      */
     data object ContinueUnassessed : LessonEvent
+
+    /** Plays the take's own audio back: the "hear yourself" half of the practice. */
+    data object PlayTake : LessonEvent
+    data object StopTakePlayback : LessonEvent
 }
 
 /**
@@ -246,6 +258,12 @@ class LessonViewModel(
     private val completeLesson: CompleteLessonUseCase,
     private val audioPlayer: AudioPlayer,
     private val speaker: Speaker,
+    /**
+     * Plays the take's audio back. The lesson does not use it to **record** any more
+     * — one take through the recogniser is both heard and judged (TakeRecorder) —
+     * so this is playback only.
+     */
+    private val voiceNote: VoiceNote,
     /**
      * The offline recogniser, taken the way the dialogue takes it: live state plus
      * start/stop. The lesson speaks through this platform seam and never touches
@@ -315,6 +333,13 @@ class LessonViewModel(
             // The take's own state, mirrored instead of guessed: mic open, model
             // loading, the words so far, and a failure that is never a verdict.
             speechState.collect { onSpeech(it) }
+        }
+        viewModelScope.launch {
+            // The take's playback is the recorder seam's own state: the button says
+            // "playing" because the player says so, not because a tap happened.
+            voiceNote.isPlaying.collect { playing ->
+                _state.update { it.copy(isPlayingTake = playing) }
+            }
         }
         startLoading()
     }
@@ -535,6 +560,8 @@ class LessonViewModel(
             LessonEvent.StopTake -> stopRecognition()
             LessonEvent.RetryTake -> retryTake()
             LessonEvent.ContinueUnassessed -> continueUnassessed()
+            LessonEvent.PlayTake -> playTake()
+            LessonEvent.StopTakePlayback -> voiceNote.stopPlayback()
             // One voice at a time: the model never plays into an open mic.
             is LessonEvent.SpeakText -> {
                 if (_state.value.isListening) return
@@ -638,6 +665,8 @@ class LessonViewModel(
         val s = _state.value
         val exercise = s.currentExercise as? Exercise.Speaking ?: return
         if (s.outcome != null) return
+        // One voice at a time: the take's playback stops before the mic opens.
+        voiceNote.stopPlayback()
         SpeechBus.grammar = ConversationScorer.speechGrammar(exercise.referenceAnswers)
         SpeechBus.acceptedAnswers = exercise.referenceAnswers
         // A beginner pausing to find the next word is not finished (checklist 1.5).
@@ -673,6 +702,9 @@ class LessonViewModel(
                 isPreparing = s.isPreparing,
                 heardPartial = s.partial,
                 heardText = s.finalText.ifBlank { it.heardText },
+                // The take's audio arrives with the emission that ends the take; a
+                // later one without a path must not erase a take that has one.
+                takePath = s.takePath ?: it.takePath,
                 recordingFailed = s.error != SpeechError.NONE,
             )
         }
@@ -803,6 +835,7 @@ class LessonViewModel(
      * gone (another exercise, another step, a closed screen).
      */
     private fun abandonTake() {
+        voiceNote.stopPlayback()
         // Only touch the service when it is actually holding the mic or loading a
         // model: a stop on every step entry would start and tear down a foreground
         // service (and flash its notification) for a take that never existed.
@@ -812,7 +845,21 @@ class LessonViewModel(
         SpeechBus.reset()
         wasListening = false
         takeExerciseId = null
-        _state.update { it.copy(isListening = false, isPreparing = false) }
+        _state.update {
+            it.copy(isListening = false, isPreparing = false, takePath = null, isPlayingTake = false)
+        }
+    }
+
+    /**
+     * Plays the take's own audio — the words the verdict was formed on.
+     *
+     * Silence is the point here too: the model and the take never overlap, so the
+     * learner is not asked to tell two English voices apart.
+     */
+    private fun playTake() {
+        val path = _state.value.takePath ?: return
+        silenceModel()
+        voiceNote.playFile(path)
     }
 
     private fun submit() {

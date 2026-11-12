@@ -147,6 +147,7 @@ class LearningPersistenceTest {
         completeLesson = CompleteLessonUseCase(repo, progress),
         audioPlayer = FakeAudioPlayer(true),
         speaker = RecordingSpeaker(),
+        voiceNote = FakeVoiceNote(),
         speechState = FakeSpeech().state,
         startRecognition = {},
         stopRecognition = {},

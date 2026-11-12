@@ -620,7 +620,7 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "میکروفون فقط در تمرین گفتاری و گفتگو، با اجازهٔ خودتان، به کار می‌رود؛ صدا روی همان دستگاه شنیده و سنجیده می‌شود، ذخیره نمی‌شود و جایی فرستاده نمی‌شود.",
+                    text = "میکروفون فقط در تمرین گفتاری و گفتگو، با اجازهٔ خودتان، به کار می‌رود؛ صدا روی همان دستگاه شنیده و سنجیده می‌شود، نمونه‌اش فقط تا پایان همان تمرین در حافظهٔ موقت می‌ماند و جایی فرستاده نمی‌شود.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(

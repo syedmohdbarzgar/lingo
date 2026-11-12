@@ -509,7 +509,11 @@ private fun ExerciseContent(
                         heardText = state.heardText,
                         unheard = state.unheard,
                         interrupted = micRefused || state.recordingFailed,
+                        canPlayTake = state.takePath != null && !state.isListening,
+                        isPlayingTake = state.isPlayingTake,
                         onPlayModel = { onEvent(LessonEvent.SpeakText(exercise.referenceAnswers.firstOrNull().orEmpty())) },
+                        onPlayTake = { onEvent(LessonEvent.PlayTake) },
+                        onStopTakePlayback = { onEvent(LessonEvent.StopTakePlayback) },
                     )
                 }
             }

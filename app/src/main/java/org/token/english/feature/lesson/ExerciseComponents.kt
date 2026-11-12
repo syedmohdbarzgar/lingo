@@ -160,7 +160,11 @@ fun SpeakingCard(
     heardText: String,
     unheard: Boolean,
     interrupted: Boolean,
+    canPlayTake: Boolean,
+    isPlayingTake: Boolean,
     onPlayModel: () -> Unit,
+    onPlayTake: () -> Unit,
+    onStopTakePlayback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -240,6 +244,13 @@ fun SpeakingCard(
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     )
+                    // The verdict was formed on these words, and this is the voice
+                    // that said them — one take, heard and judged, not two passes.
+                    if (canPlayTake) {
+                        TextButton(onClick = if (isPlayingTake) onStopTakePlayback else onPlayTake) {
+                            Text(if (isPlayingTake) "توقف پخش" else "پخش صدای خودت")
+                        }
+                    }
                 }
             }
         }

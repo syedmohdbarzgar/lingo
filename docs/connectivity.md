@@ -40,10 +40,12 @@ no network — the same rule the rest of the learning core lives by.
 `RECORD_AUDIO` serves **two local-only** surfaces, and neither ever uploads audio:
 
 1. **The lesson's `speaking` item** (see `docs/content-pipeline.md`): the take goes through the same
-   on-device recogniser as a dialogue turn and is graded by the same engine. Nothing is written to
-   disk — the recogniser keeps text, not audio — and the card asks for the mic itself, so no other
-   screen triggers the prompt. A device that cannot hear a take (no model, no mic, refusal)
-   downgrades the item to the older listen-and-compare card, which credits nothing.
+   on-device recogniser as a dialogue turn and is graded by the same engine. The same PCM is also
+   written to a WAV in the cache dir, so the learner can hear back the exact words that were graded;
+   that file is deleted when the step or the screen is left, and the next take overwrites it. The card
+   asks for the mic itself, so no other screen triggers the prompt. A device that cannot hear a take
+   (no model, no mic, refusal) downgrades the item to the older listen-and-compare card, which credits
+   nothing.
 2. **Conversation practice** (`feature/conversation/`): an on-device Vosk recogniser transcribes the
    learner's take and a pure engine (`domain/engine/ConversationScorer.kt`) grades it. The model is
    the only bundled binary — `assets/vosk/vosk-model-small-en-us-0.15`, fetched by
@@ -63,7 +65,7 @@ explicitly, so here is the answer read off the code rather than the store copy):
 | The raw PCM take (conversation practice) | never written — read from `AudioRecord`, fed to the in-process `Recognizer`, then dropped | the take |
 | The recognised text | memory only (`SpeechBus`, the screen state) | the take / the turn |
 | The verdict of a turn | `conversation_turn`-style evidence row: lesson id, exercise id, verdict, a `spoken` flag, a timestamp — **no transcript** | reset |
-| The lesson's spoken take | never written — read from `AudioRecord` and fed to the in-process `Recognizer`, exactly as a dialogue turn | the take |
+| The lesson's spoken take (audio) | `cacheDir/speech_take.wav` — the PCM the recogniser heard | deleted when the step is left (`SpeechBus.reset`), replaced by the next take, and the OS may clear the cache |
 | A voice note an **older build** left behind | `cacheDir/voice_take.m4a` | nothing writes it any more; reset still deletes it, and the OS may clear it |
 | The extracted Vosk model | `filesDir/vosk/…` | a copy of the APK asset — not user data, excluded from backup, never deleted |
 

@@ -117,6 +117,7 @@ class GuidedLessonTest {
     ) {
         val knowledge = FakeKnowledgeRepository()
         val speech = FakeSpeech()
+        val voiceNote = FakeVoiceNote()
 
         fun build(): LessonViewModel = LessonViewModel(
             lessonId = lessonId,
@@ -128,6 +129,7 @@ class GuidedLessonTest {
             completeLesson = CompleteLessonUseCase(lessonRepo, progress),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
+            voiceNote = voiceNote,
             speechState = speech.state,
             startRecognition = { speech.start() },
             stopRecognition = { speech.stop() },

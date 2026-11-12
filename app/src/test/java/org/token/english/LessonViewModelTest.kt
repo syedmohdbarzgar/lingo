@@ -109,6 +109,8 @@ class LessonViewModelTest {
         available: Boolean? = true,
         /** The offline recogniser, faked: a take is published as the service would. */
         val speech: FakeSpeech = FakeSpeech(),
+        /** Playback only: the take's own audio, captured by the recogniser. */
+        val voiceNote: FakeVoiceNote = FakeVoiceNote(),
     ) {
         val lessonRepo = FakeLessonRepository(lessons = listOf(Lesson(lessonId, LearningLevel.A1, "t", "ت", "topic", 5, 1)))
         val progress = FakeProgressRepository()
@@ -144,6 +146,7 @@ class LessonViewModelTest {
                 completeLesson = complete,
                 audioPlayer = audio,
                 speaker = speaker,
+                voiceNote = voiceNote,
                 speechState = speech.state,
                 startRecognition = { speech.start() },
                 stopRecognition = { speech.stop() },
@@ -437,6 +440,63 @@ class LessonViewModelTest {
         vm.onEvent(LessonEvent.SpeakText("Go straight."))
 
         assertTrue("the device's own voice would be recorded as the answer", h.speaker.spoken.isEmpty())
+    }
+
+    @Test
+    fun `the take's own audio is offered and played back`() {
+        // One capture, two outputs: the words the verdict was formed on, and the
+        // voice that said them. The learner no longer has to choose between a
+        // graded take and hearing themselves.
+        val h = Harness().with(speaking("a1.test.sp.12", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("Go straight.")
+        assertEquals("the take's file is on the state", "cache/speech_take.wav", vm.state.value.takePath)
+
+        vm.onEvent(LessonEvent.PlayTake)
+        assertEquals("the player was asked for that exact take", listOf("cache/speech_take.wav"), h.voiceNote.playedFiles)
+        assertTrue("and the screen follows the player", vm.state.value.isPlayingTake)
+
+        vm.onEvent(LessonEvent.StopTakePlayback)
+        assertTrue("the learner can stop it", h.voiceNote.stopPlaybackCalls > 0)
+        assertFalse(vm.state.value.isPlayingTake)
+    }
+
+    @Test
+    fun `a take with no audio offers no playback`() {
+        // A device that could not write the file still has its verdict; the button is
+        // simply absent rather than present and dead.
+        val h = Harness().with(speaking("a1.test.sp.13", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("Go straight.", audio = null)
+        assertNotNull("the verdict still lands", vm.state.value.outcome)
+        assertNull("nothing to play", vm.state.value.takePath)
+
+        vm.onEvent(LessonEvent.PlayTake)
+        assertTrue("and no empty file is handed to the player", h.voiceNote.playedFiles.isEmpty())
+    }
+
+    @Test
+    fun `moving on stops the take's playback`() {
+        val h = Harness().with(
+            speaking("a1.test.sp.14", "Go straight."),
+            speaking("a1.test.sp.15", "Turn left."),
+        )
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("Go straight.")
+        vm.onEvent(LessonEvent.PlayTake)
+        val stops = h.voiceNote.stopPlaybackCalls
+
+        vm.onEvent(LessonEvent.Next())
+
+        assertTrue("a voice from the previous sentence is silenced", h.voiceNote.stopPlaybackCalls > stops)
+        assertNull("and its file is no longer offered", vm.state.value.takePath)
+        assertFalse(vm.state.value.isPlayingTake)
     }
 
     /** Answers the current exercise correctly, whatever option the shuffle put first. */

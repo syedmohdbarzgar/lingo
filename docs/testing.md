@@ -89,7 +89,7 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 733 tests / 79 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 742 tests / 80 classes as of
   the word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
   lessons appeared in the word list and then not again until the review queue, so each got a
   `word_recall` in its own lesson (cue from the entry's authored `translation`, explanation from its
@@ -421,7 +421,12 @@
   rules — the requeue-once-on-a-miss, the TTS-unavailable fallback, the authored order, a focused
   session's evidence subset and the P7 study ticks. Eleven of its cases are the speaking step's own
   (v79), driven through `FakeSpeech` — the recogniser seam, faked: a take is published exactly as the
-  service publishes it, and the mic commands are counted. They pin that a said-back take is one
+  service publishes it, and the mic commands are counted. Three more (v80) pin the take's audio:
+  the file reaches the state and `VoiceNote.playFile` is asked for that exact path, a take with no
+  audio offers no button, and moving to the next item silences the player. `TakeAudioTest` is the
+  container's own check — six JVM cases that write a WAV and read it back (canonical header, sizes
+  patched to what was appended, an empty take leaving no file, discard, a second take not inheriting
+  the first, a directory that does not exist yet). They pin that a said-back take is one
   transaction of evidence with its transcript as the saved answer, that `NEAR` is a hit and
   `RETRY` a miss that writes nothing, that a silent take is `unheard` and a broken one is never
   scored, that the no-recogniser install can still leave the step without a claim, that a retry

@@ -60,10 +60,13 @@ fun lessonViewModelFactory(
         completeLesson = c.completeLesson,
         audioPlayer = c.audioPlayer,
         speaker = c,
+        // Playback of the take the recogniser captured — the recorder half of this
+        // seam is not used here any more, because one take is heard and judged.
+        voiceNote = c.voiceNote,
         isAppInForeground = { c.isAppInForeground },
         getFocusPlan = c.getFocusPlan,
-        // The lesson's `speaking` item now hears the take too (offline recogniser),
-        // so it takes the same three seams the dialogue does — not a recorder.
+        // The lesson's `speaking` item hears the take through the same three seams
+        // the dialogue uses (offline recogniser), not through a recorder.
         speechState = c.speechState,
         startRecognition = { c.startRecognition() },
         stopRecognition = { c.stopRecognition() },

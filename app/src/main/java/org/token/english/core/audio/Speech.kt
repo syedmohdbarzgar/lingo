@@ -95,8 +95,16 @@ object SpeechBus {
         _state.update(update)
     }
 
-    /** Screen left the feature: never leave a mic button looking live. */
+    /**
+     * Screen left the feature: never leave a mic button looking live, and never
+     * leave a recording of the learner's voice on disk. The take belongs to the
+     * item it was said for, so moving on deletes it (the next take overwrites it
+     * either way).
+     */
     internal fun reset() {
+        _state.value.takePath?.let { path ->
+            runCatching { java.io.File(path).delete() }
+        }
         _state.value = SpeechState()
         grammar = null
         acceptedAnswers = emptyList()
@@ -121,5 +129,11 @@ data class SpeechState(
      * the pause (see `SpeechRecognitionService`).
      */
     val finalText: String = "",
+    /**
+     * The take's own audio, as a WAV the learner can play back, or null when the
+     * take captured nothing (or could not be written). This is what makes one take
+     * both graded and hearable — see [TakeRecorder].
+     */
+    val takePath: String? = null,
     val error: SpeechError = SpeechError.NONE,
 )

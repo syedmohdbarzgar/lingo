@@ -45,6 +45,16 @@ interface VoiceNote {
     /** Plays the last take back. */
     fun playTake()
 
+    /**
+     * Plays a take the **recogniser** captured (a WAV path from `SpeechState.takePath`).
+     *
+     * The graded speaking practice has no separate recorder — one take is both heard
+     * and judged — so the playback half of "hear the model, say it, hear yourself"
+     * comes from the file the recogniser wrote. Same contract as [playTake]: the
+     * state reaches "playing" or reports [error], never a silent no-op.
+     */
+    fun playFile(path: String)
+
     /** Stops take playback (leaving the screen, starting a new recording). */
     fun stopPlayback()
 
@@ -138,6 +148,30 @@ class AndroidVoiceNote(private val context: Context) : VoiceNote {
         }
         _isRecording.value = false
         _hasTake.value = takeFile.exists() && takeFile.length() > 0
+    }
+
+    override fun playFile(path: String) {
+        if (_isRecording.value) return
+        stopPlayback()
+        try {
+            player = MediaPlayer().apply {
+                setDataSource(path)
+                setOnCompletionListener {
+                    _isPlaying.value = false
+                    releasePlayer()
+                }
+                prepare()
+                start()
+            }
+            _isPlaying.value = true
+            _error.value = false
+        } catch (t: Throwable) {
+            // A take whose file is already gone (leaving the screen deletes it) is
+            // not an error the learner needs to read twice; the button hides itself.
+            releasePlayer()
+            _isPlaying.value = false
+            _error.value = true
+        }
     }
 
     override fun playTake() {

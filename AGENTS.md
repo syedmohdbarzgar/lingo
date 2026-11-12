@@ -147,7 +147,18 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (733 tests / 79 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (742 tests / 80 classes as of the
+take-audio pass, where the graded speaking take got its audio back: `TakeRecorder` writes the
+recogniser's own PCM to a mono 16 kHz WAV — the header twice, placeholder sizes first and the real
+ones at the end of the take — so one capture is both judged and hearable, instead of the two passes
+(record-and-compare, or grade-and-lose-the-voice) the app had before. The service appends the same
+buffer it feeds Vosk, closes the file **before** publishing the emission that ends the take, and
+hands its path over in that emission; `SpeechBus.reset()` deletes it, because the take belongs to the
+item it was said for. Six `TakeAudioTest` cases read the file back rather than trusting a byte count
+(a canonical header, sizes patched to what was appended, an empty take leaving no file, discard, a
+second take not inheriting the first, a missing directory), and three `LessonViewModelTest` cases
+pin the wiring: the file reaches the state and the player is asked for that exact path, a take with
+no audio offers no button, and moving on silences it. Before it the
 spoken-lesson pass, where the lesson's `speaking` item stopped being self-assessed: it takes the
 same offline recogniser the dialogue uses and `ConversationScorer` grades the take — `CORRECT` and
 `NEAR` are a hit written as ordinary evidence (the transcript is even the answer `lesson_attempt`

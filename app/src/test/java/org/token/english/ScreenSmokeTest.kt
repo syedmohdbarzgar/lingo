@@ -288,6 +288,7 @@ class ScreenSmokeTest {
             completeLesson = CompleteLessonUseCase(lessonRepo, progress),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
+            voiceNote = FakeVoiceNote(),
             speechState = FakeSpeech().state,
             startRecognition = {},
             stopRecognition = {},

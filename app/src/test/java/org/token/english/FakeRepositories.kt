@@ -534,11 +534,15 @@ class FakeSpeech {
         state.value = SpeechState(isListening = false)
     }
 
-    /** The learner says [text] and the take ends on its own, as silence would end it. */
-    fun say(text: String) {
+    /**
+     * The learner says [text] and the take ends on its own, as silence would end it.
+     * [audio] is the take's file, which the service hands over with the last emission
+     * — null models a device that captured no audio.
+     */
+    fun say(text: String, audio: String? = "cache/speech_take.wav") {
         state.value = SpeechState(isListening = true)
         state.value = SpeechState(isListening = true, finalText = text)
-        state.value = SpeechState(isListening = false, finalText = text)
+        state.value = SpeechState(isListening = false, finalText = text, takePath = audio)
     }
 
     /** A take that ended without a single recognised word. */
@@ -612,6 +616,15 @@ class FakeVoiceNote(
 
     override fun playTake() {
         if (_hasTake.value && !_isRecording.value) _isPlaying.value = true
+    }
+
+    /** Every take the recogniser captured that the screen asked to hear back. */
+    val playedFiles = mutableListOf<String>()
+
+    override fun playFile(path: String) {
+        if (_isRecording.value) return
+        playedFiles += path
+        _isPlaying.value = true
     }
 
     override fun stopPlayback() {

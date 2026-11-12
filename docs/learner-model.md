@@ -53,6 +53,13 @@
   again, no verdict is invented), and a take that broke off (no model, mic refused) is an app
   failure that is never scored. An install that cannot hear at all still has the old self-assessed
   path: «ادامه بدون سنجش» unlocks the step and credits nothing.
+- **One take, heard *and* judged (v80).** Grading the step had cost the learner their own playback —
+  the recorder kept the audio and the recogniser kept only text — so the same capture now produces
+  both. `TakeRecorder` (core/audio) appends the PCM the capture loop already feeds Vosk to a mono
+  16 kHz WAV and patches the header when the take ends; the path travels with the state that ends
+  the take, `VoiceNote.playFile` plays it back under the card's «پخش صدای خودت», and
+  `SpeechBus.reset()` deletes the file — it belongs to the sentence it was said for, not to the
+  learner's history. A take that captured nothing simply offers no button.
 - **Finished steps are not mastery (Phase 1).** `LessonMastery` turns lesson state plus node evidence
   into `NOT_STARTED → IN_PROGRESS → COMPLETED → MASTERED`. `COMPLETED` means the required steps have
   been walked; `MASTERED` means every node the lesson teaches passes `KnowledgeGates.isSecured` (no
