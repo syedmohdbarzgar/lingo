@@ -7,16 +7,19 @@
 
 ## What the code already proves (no device needed)
 
-These are green as of bundle **v75** and do not need re-proving for a release unless the area changes:
+These are green as of bundle **v78** and do not need re-proving for a release unless the area changes:
 
 | Area | Check | Evidence |
 |---|---|---|
 | Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3147 exercises, 36 placement questions, 268 nodes, bundle v78 |
-| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 728 tests / 79 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 729 tests / 79 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Lint, against the accepted list | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | 7 warnings, all seven named in the budget with their reason (`CustomSplashScreen`, AGP ×2, `NewerVersionAvailable` ×3, `UseTomlInstead`) — none appeared, grew or shrank |
 | Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |
 | Splash hand-off contract | `SplashHandOffTest` | below API 34 the finishing splash declares it, from 34 the entered activity does — never both |
-| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v72; each packages only its own billing SDK |
+| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v78 (26 s, 1124 / 1139 / 1182 entries) |
+| Each flavor packages only its own store SDK | `unzip -p <apk> 'classes*.dex' \| grep -a -c <package>` | bazaar: `ir/cafebazaar/poolakey` 46, play billing 0, myket 0 · myket: `ir/myket/billingclient` 33 (the SDK's own package), poolakey 0, play billing 0 · googlePlay: `android/billingclient` 7, poolakey 0, myket 0 |
+| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | all three: `contentVersion` 78, 3147 exercises — the APK cannot ship content the suite did not read |
 
 ## What still needs a device, an emulator or CI
 
@@ -32,8 +35,8 @@ These are green as of bundle **v75** and do not need re-proving for a release un
 ## Release readiness criteria (roadmap), restated as checks
 
 - **The difficulty of every level is judged against the real content.** Done in code: all six levels are
-  read item by item (`scripts/difficulty/*.json`), and `ContentDistributionTest` fails the build when a
-  level's choice items share one number again.
+  read item by item (`scripts/difficulty/*.json`), and since v77 no lesson is flat either —
+  `ContentDistributionTest` fails the build when any single lesson's choice items share one number.
 - **The selector never invents weakness where there is no evidence.** Done in code:
   `AdaptiveExerciseSelector` classifies by `isEstablished()` first, and eight cases pin the
   weak/consolidated × easy/hard matrix.
