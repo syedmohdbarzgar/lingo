@@ -408,7 +408,12 @@ class ContentDistributionTest {
      * lessons with one, because the other 21 carried the level's hard item in a blank or a
      * production. v75 finished the level the way v70 finished C1: each of those 21 got one authored
      * hard choice item, so **all 30** can now raise recognition. `c2.literature` is still the
-     * example of a lesson whose own hard item is a choice. 
+     * example of a lesson whose own hard item is a choice. v76 did the same for the bottom of the
+     * scale: 41 A1/A2 lessons (20 A1, 21 A2) shipped only «What does X mean?» choices at 1, so
+     * neither selector direction existed there; each got one item at 2 in which the **sentence**
+     * decides the word — four of the lesson's own words of the same part of speech, one of which
+     * the context picks out (`The ______ says "meow"`, `I am crying because I am cutting an ______`,
+     * `Our ______ trains the team twice a week`) — so all 37 A1 and 32 A2 choice lessons now move.
      */
     @Test
     fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
@@ -435,12 +440,15 @@ class ContentDistributionTest {
         }
 
         assertEquals(
-            "B1 was the first level read item by item (v67): 10 of its 30 choice lessons disagree about difficulty",
+            "B1 was the first level read item by item (v67): 10 of its 30 choice lessons disagree about " +
+                "difficulty — the other 20 carry the level's hard item in a blank or a production, the gap " +
+                "v76 closed for A1/A2 and v75 for C2, and B1's own pass is the one still owed",
             10,
             spreadByLevel["B1"] ?: 0,
         )
         assertEquals(
-            "B2 was read item by item in v68: 10 of its 32 choice lessons disagree about difficulty",
+            "B2 was read item by item in v68 and is in the same state as B1: 10 of its 32 choice lessons " +
+                "disagree about difficulty, because its hard end lives in the blank (v68's own finding)",
             10,
             spreadByLevel["B2"] ?: 0,
         )
@@ -459,17 +467,20 @@ class ContentDistributionTest {
             30,
             spreadByLevel["C2"] ?: 0,
         )
-        // v72 read the last two levels. A1 and A2 run 1..2, so their axis is "first encounter
-        // against more", and only the 17 A1 and 11 A2 lessons that own both a first-encounter
-        // item and a one-step-harder one can be reordered inside a format.
+        // v72 read the last two levels and v76 gave every lesson whose choices were all at 1 one
+        // item at 2 — a sentence the learner has to read, where the context picks the word. A1 and
+        // A2 run 1..2, so their axis is "first encounter against one step past it", and no lesson in
+        // either level is flat any more: the count is now the level's whole choice population.
         assertEquals(
-            "A1 was read item by item in v72: 17 of its 30 choice lessons disagree about difficulty",
-            17,
+            "A1 was read item by item in v72 and completed in v76: all 37 of its choice lessons " +
+                "disagree about difficulty",
+            37,
             spreadByLevel["A1"] ?: 0,
         )
         assertEquals(
-            "A2 was read item by item in v72: 11 of its 30 choice lessons disagree about difficulty",
-            11,
+            "A2 was read item by item in v72 and completed in v76: all 32 of its choice lessons " +
+                "disagree about difficulty",
+            32,
             spreadByLevel["A2"] ?: 0,
         )
         // Every level ships judgement now, so none may still read as seeded — a level whose
@@ -640,6 +651,58 @@ class ContentDistributionTest {
             "a2.city-life.ex.02",
             selector.next(
                 cityChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        // v76 closed the other half at the bottom of the scale: a lesson whose choices were all
+        // «What does X mean?» had no direction for the selector to move in. In `a1.animals` the
+        // word-meaning items stay at 1 and the sentence that reads "meow" is the step past a first
+        // encounter, so the same meter that serves ex.01 when it is shaky serves ex.10 when it is not.
+        val animalChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "a1.animals.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "a1.animals.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("a1.animals has to ship choices to steer", animalChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the sentence that says meow, not another gloss",
+            "a1.animals.ex.10",
+            selector.next(
+                animalChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the word-meaning item instead",
+            "a1.animals.ex.01",
+            selector.next(
+                animalChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        // A2's half of the same pass: `a2.work`'s three choices were all glosses of «task»,
+        // «deadline» and «colleague»; the meeting at ten is the one that is read rather than known.
+        val workMeetingChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "a2.work.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "a2.work.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("a2.work has to ship choices to steer", workMeetingChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the meeting at ten",
+            "a2.work.ex.10",
+            selector.next(
+                workMeetingChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the gloss it can recognise instead",
+            "a2.work.ex.01",
+            selector.next(
+                workMeetingChoices,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
             )?.id,
         )

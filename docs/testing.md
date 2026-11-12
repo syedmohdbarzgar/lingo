@@ -90,8 +90,17 @@
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 728 tests / 79 classes as of
-  the C2-hard-choice pass, where the last level whose recognition could not rise got the item it was
-  missing: v71 left 21 of C2's 30 lessons with a hard item only in a blank or a production, and
+  the A1/A2-choice pass, where the bottom of the scale got the axis v72 left half-built: 41 lessons
+  (20 A1, 21 A2) shipped only «What does X mean?» choices at 1, so `AdaptiveExerciseSelector` had no
+  direction to move in at the two levels a beginner most needs both. Each got one item at 2 in which
+  **the sentence decides the word** — four of the lesson's own words of the same part of speech
+  (`The ______ says "meow"`, `I am crying because I am cutting an ______`, `Our ______ trains the team
+  twice a week`) — and `ContentDistributionTest` now pins **all 37** of A1's and **all 32** of A2's
+  choice lessons and proves the consequence on `a1.animals` (a consolidated meter is served the item
+  that says meow, a shaky one the gloss) and `a2.work` (the meeting at ten against the gloss)
+  (2931 → 2972 exercises, bundle v76); no lesson, word or node moved. Before it the C2-hard-choice pass,
+  where the last level whose recognition could not rise got the item it was missing: v71 left 21 of
+  C2's 30 lessons with a hard item only in a blank or a production, and
   `AdaptiveExerciseSelector` raises the level **within a format**, so those 21 could not raise
   recognition however consolidated the meter was. Each got one authored choice item at 3, written in
   the level's own hard-end shape — four grammatical options where the context decides, never "which
@@ -143,8 +152,9 @@
   and their band of 1..2 made the only question "first encounter or one step past it". One
   `ContentDistributionTest` case measures the within-format axis and names where it exists: every
   level's multiple-choice items now disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32,
-  all 31 of C1's and all 30 of C2's — both C levels complete, C1 in v70 and C2 in v75 — 17 of A1's
-  30 and 11 of A2's 30), and the case fails when a
+  all 31 of C1's and all 30 of C2's — both C levels complete, C1 in v70 and C2 in v75 — and, since
+  v76, all 37 of A1's and all 32 of A2's, so B1's 20 and B2's 22 flat lessons are the only ones left),
+  and the case fails when a
   level's choice items all share one number again, because that is what a seeded level looks like and
   it cannot reorder its own format. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated

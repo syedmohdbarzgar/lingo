@@ -11,7 +11,7 @@ These are green as of bundle **v75** and do not need re-proving for a release un
 
 | Area | Check | Evidence |
 |---|---|---|
-| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 2931 exercises, 36 placement questions, 268 nodes, bundle v75 |
+| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 2972 exercises, 36 placement questions, 268 nodes, bundle v76 |
 | Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 728 tests / 79 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
 | Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |

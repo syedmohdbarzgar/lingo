@@ -85,7 +85,7 @@
   about difficulty. v75 finished the level the way v70 finished C1: the 21 lessons whose hardest item
   sat in a blank or a production got one authored hard choice item each, written in the level's own
   hard-end shape (four grammatical options where the context decides, and the mixed conditional, the
-  inverted negative adverbial and the agreement trap among them), so 2931 exercises today. Neither C
+  inverted negative adverbial and the agreement trap among them), so 2972 exercises today. Neither C
   level now leaves recognition unable to rise.
   A1 and A2 were judged last (v72), and their band of 1..2 makes the question the simplest one the
   scale allows: *first encounter, or one step past it*. The 2 goes to a blank that tests a structure,
@@ -97,6 +97,15 @@
   and 17 of A1's 30 and 11 of A2's 30 choice lessons now disagree about difficulty. Every level in the
   bundle has been read item by item, so a level whose choice items all share one number is seeded
   again — `ContentDistributionTest` fails the build when it sees that.
+  The same half-gap v69 left in C1 and v71 in C2 was widest here, and v76 closed it: 41 lessons
+  (20 A1, 21 A2) shipped only «What does X mean?» choices, every one authored 1, so the selector
+  could neither come down (nothing below) nor step up (nothing above) — at the two levels where a
+  beginner most needs both. Each got one item at 2 in which **the sentence decides the word**: four
+  of the lesson's own words of the same part of speech, one of which the context picks out
+  (`The ______ says "meow"` → cat, `I am crying because I am cutting an ______` → onion,
+  `Our ______ trains the team twice a week` → coach, `I ______ tea to coffee` → prefer). All 37 A1
+  and 32 A2 choice lessons now disagree, the shape v70 and v75 gave C1 and C2 — so B1's 20 and B2's
+  22 flat lessons are the only ones left, and their hard item sits in a blank or a production.
 - **A prerequisite is taught at or before the node that needs it (v74).** A prerequisite is not a
   suggestion: `PrerequisiteEngine` answers an unmet one with a `REMEDIATE` action, so a
   prerequisite introduced *later* in the path sends the learner up a level instead of back to one
@@ -141,7 +150,7 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  2931 exercises
+  2972 exercises
   (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
   3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
   lessons, four in the six original ones
@@ -230,7 +239,7 @@
   can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 2931 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 2972 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any
