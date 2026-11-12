@@ -12,14 +12,19 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.token.english.core.audio.AudioPlayer
 import org.token.english.core.audio.Speaker
-import org.token.english.core.audio.VoiceNote
+import org.token.english.core.audio.SpeechBus
+import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.SpeechState
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveExerciseSelector
+import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.engine.ExerciseDimension
+import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.LearningStage
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonAttempt
@@ -92,13 +97,21 @@ data class LessonUiState(
     val audioUnavailable: Boolean = false,
     /** The last playback attempt failed (engine error) — show a retry hint (B-3). */
     val audioFailed: Boolean = false,
-    /** Speaking practice: the mic is open right now. */
-    val isRecording: Boolean = false,
-    /** Speaking practice: a take exists, so it can be played back and compared. */
-    val hasRecording: Boolean = false,
-    /** Speaking practice: the learner's own take is playing. */
-    val isPlayingRecording: Boolean = false,
-    /** The mic could not be opened (permission denied or recorder unavailable). */
+    /** The recogniser has the mic open right now (the `speaking` item). */
+    val isListening: Boolean = false,
+    /** The recogniser is still loading its model — the card shows that, not a mic. */
+    val isPreparing: Boolean = false,
+    /** The take's words so far, shown while the learner is still speaking. */
+    val heardPartial: String = "",
+    /** The last take's transcript: what the device heard, and what it graded. */
+    val heardText: String = "",
+    /**
+     * The last take ended without a single recognised word — a recogniser problem,
+     * deliberately not a verdict. The learner is offered the mic again instead of
+     * being told they said it wrong.
+     */
+    val unheard: Boolean = false,
+    /** The take could not be produced at all (no mic, permission, model missing). */
     val recordingFailed: Boolean = false,
     /** Focused practice: the engine's decision this session obeys (B-1), else null. */
     val focus: FocusBanner? = null,
@@ -193,14 +206,28 @@ sealed interface LessonEvent {
     data object StartExercises : LessonEvent
     data class SpeakText(val text: String) : LessonEvent
 
-    // Speaking practice (the `speaking` item): listen, record, compare. No grading.
-    data object StartRecording : LessonEvent
-    data object StopRecording : LessonEvent
-    data object PlayRecording : LessonEvent
-    data object StopRecordingPlayback : LessonEvent
+    /**
+     * Speaking practice (the `speaking` item): hear the model, then say the sentence.
+     * The offline recogniser hears the take and [ConversationScorer] grades it — the
+     * same seam, and the same bar, the lesson's own dialogue already uses.
+     */
+    data object StartTake : LessonEvent
 
-    /** The learner finished comparing — advance without grading the utterance. */
-    data object FinishSpeaking : LessonEvent
+    /** Closes the take; the verdict lands when the recogniser says the take is over. */
+    data object StopTake : LessonEvent
+
+    /**
+     * Says the same sentence again after a take the scorer could not match. The
+     * attempt already happened, so this is a repeat: one more try, counted once.
+     */
+    data object RetryTake : LessonEvent
+
+    /**
+     * Moves on without a verdict, for the install that cannot hear a take at all
+     * (no mic, no permission, no model). Nothing is credited — this is the
+     * record-and-compare path an install without the recogniser still gets.
+     */
+    data object ContinueUnassessed : LessonEvent
 }
 
 /**
@@ -218,8 +245,15 @@ class LessonViewModel(
     private val submitExercise: SubmitExerciseUseCase,
     private val completeLesson: CompleteLessonUseCase,
     private val audioPlayer: AudioPlayer,
-    private val voiceNote: VoiceNote,
     private val speaker: Speaker,
+    /**
+     * The offline recogniser, taken the way the dialogue takes it: live state plus
+     * start/stop. The lesson speaks through this platform seam and never touches
+     * Vosk, AudioRecord or a Context (B-6) — a unit test drives a whole take.
+     */
+    private val speechState: StateFlow<SpeechState>,
+    private val startRecognition: () -> Unit,
+    private val stopRecognition: () -> Unit,
     private val isAppInForeground: () -> Boolean,
     /** Focused practice: the node whose block this session should run (B-1). */
     private val getFocusPlan: GetFocusPlanUseCase,
@@ -247,6 +281,16 @@ class LessonViewModel(
     /** Exercises already answered once: a second appearance is a repeat, not a first try. */
     private val firstTries = mutableSetOf<String>()
 
+    /** Last value of the recogniser's listening flag, to detect the end of a take. */
+    private var wasListening = false
+
+    /**
+     * The item the current (or last) take belongs to. A transcript that lands after the
+     * session moved on belongs to the sentence it was recorded against, never to
+     * whatever is on screen now.
+     */
+    private var takeExerciseId: String? = null
+
     /** Per-dimension mastery of this session's own answers (audit §2/§6). */
     private var profile: MasteryProfile = MasteryProfile()
 
@@ -268,26 +312,9 @@ class LessonViewModel(
             }
         }
         viewModelScope.launch {
-            // Speaking practice mirrors the recorder's own state instead of
-            // guessing it: mic open, take on disk, take playing, last failure.
-            voiceNote.isRecording.collect { recording ->
-                _state.update { it.copy(isRecording = recording) }
-            }
-        }
-        viewModelScope.launch {
-            voiceNote.hasTake.collect { has ->
-                _state.update { if (has) it.copy(hasRecording = true, recordingFailed = false) else it }
-            }
-        }
-        viewModelScope.launch {
-            voiceNote.isPlaying.collect { playing ->
-                _state.update { it.copy(isPlayingRecording = playing) }
-            }
-        }
-        viewModelScope.launch {
-            voiceNote.error.collect { failed ->
-                if (failed) _state.update { it.copy(recordingFailed = true, isRecording = false) }
-            }
+            // The take's own state, mirrored instead of guessed: mic open, model
+            // loading, the words so far, and a failure that is never a verdict.
+            speechState.collect { onSpeech(it) }
         }
         startLoading()
     }
@@ -504,23 +531,13 @@ class LessonViewModel(
                 if (first != null) enterStage(set, first)
             }
 
-            // Speaking practice stays ungraded on purpose: there is no recogniser
-            // offline, so the learner compares against the model and moves on.
-            LessonEvent.StartRecording -> if (_state.value.outcome == null) {
-                silenceModel()
-                voiceNote.startRecording()
-            }
-
-            LessonEvent.StopRecording -> voiceNote.stopRecording()
-            LessonEvent.PlayRecording -> {
-                silenceModel()
-                voiceNote.playTake()
-            }
-            LessonEvent.StopRecordingPlayback -> voiceNote.stopPlayback()
-            LessonEvent.FinishSpeaking -> finishSpeaking()
-            // One voice at a time: the model and the learner's take never overlap.
+            LessonEvent.StartTake -> startTake()
+            LessonEvent.StopTake -> stopRecognition()
+            LessonEvent.RetryTake -> retryTake()
+            LessonEvent.ContinueUnassessed -> continueUnassessed()
+            // One voice at a time: the model never plays into an open mic.
             is LessonEvent.SpeakText -> {
-                voiceNote.stopPlayback()
+                if (_state.value.isListening) return
                 if (audioPlayer.isEnglishAvailable.value == false) {
                     // No English voice on this device — say so instead of hanging
                     // on "در حال پخش…" (the sentence is already on screen).
@@ -546,6 +563,9 @@ class LessonViewModel(
      * never moves progress.
      */
     private fun enterStage(base: LessonStageState, stage: LearningStage, cursor: Int = 0) {
+        // The step this session is leaving may have had the mic open: a take belongs
+        // to the sentence it was recorded against, never to the next step.
+        abandonTake()
         val unit = base.plan.unitOf(stage)
         val list = unit?.exercises.orEmpty()
         val index = cursor.coerceIn(0, (list.size - 1).coerceAtLeast(0))
@@ -570,8 +590,9 @@ class LessonViewModel(
                 repeatsCurrent = false,
                 remainingCount = pending.size,
                 audioFailed = false,
-                hasRecording = false,
-                isPlayingRecording = false,
+                heardText = "",
+                heardPartial = "",
+                unheard = false,
                 recordingFailed = false,
                 completed = stage == LearningStage.REVIEW,
             )
@@ -606,18 +627,164 @@ class LessonViewModel(
     }
 
     /**
-     * Closes out a `speaking` item. It is deliberately NOT graded: with no
-     * recogniser the app cannot judge pronunciation, so the exercise is
-     * "hear the model, say it, hear yourself, compare" — self-assessed. The
-     * outcome exists only to unlock the shared «ادامه» button; mastery and the
-     * correct count are left untouched, because no evidence was produced.
+     * Opens the mic for this item's own sentence.
+     *
+     * The recogniser is constrained to the answers the content authored **before** the
+     * service opens the mic, exactly as the dialogue does: an open vocabulary mishears
+     * accented English often enough that a correct take reads as a miss, and the same
+     * list lets the service close the take as soon as the sentence is complete.
      */
-    private fun finishSpeaking() {
+    private fun startTake() {
+        val s = _state.value
+        val exercise = s.currentExercise as? Exercise.Speaking ?: return
+        if (s.outcome != null) return
+        SpeechBus.grammar = ConversationScorer.speechGrammar(exercise.referenceAnswers)
+        SpeechBus.acceptedAnswers = exercise.referenceAnswers
+        // A beginner pausing to find the next word is not finished (checklist 1.5).
+        SpeechBus.hesitant = s.lesson?.level == LearningLevel.A1
+        silenceModel()
+        takeExerciseId = exercise.id
+        _state.update {
+            it.copy(
+                unheard = false,
+                recordingFailed = false,
+                heardText = "",
+                heardPartial = "",
+            )
+        }
+        startRecognition()
+    }
+
+    /**
+     * The recogniser's state, mirrored into the screen — and the single place a take
+     * is graded, when it ends.
+     *
+     * Grading on every update would show «تلاش دوباره» for the first half of a
+     * sentence the learner is still saying, so the take has to be **over**. A take
+     * that broke off (recorder died, permission revoked, model missing) is an app
+     * failure and never a language mistake.
+     */
+    private fun onSpeech(s: SpeechState) {
+        val takeEnded = wasListening && !s.isListening
+        wasListening = s.isListening
+        _state.update {
+            it.copy(
+                isListening = s.isListening,
+                isPreparing = s.isPreparing,
+                heardPartial = s.partial,
+                heardText = s.finalText.ifBlank { it.heardText },
+                recordingFailed = s.error != SpeechError.NONE,
+            )
+        }
+        if (s.error != SpeechError.NONE) return
+        if (takeEnded) gradeTake(s.finalText.trim())
+    }
+
+    /**
+     * Grades the take that just ended.
+     *
+     * A take with no words is not an answer — it is the recogniser failing to hear —
+     * so the learner gets the mic again instead of a verdict. A [SpeakingVerdict.RETRY]
+     * transcript writes **nothing** to the graph, exactly as a dialogue turn does not:
+     * the app cannot tell a wrong sentence from a misheard one, and a mastery penalty
+     * would be that same accusation, only harder to see. It still counts as a miss on
+     * the lesson's own bar, because an attempt was made and the sentence did not land.
+     */
+    private fun gradeTake(spoken: String) {
+        val s = _state.value
+        val exercise = s.currentExercise as? Exercise.Speaking ?: return
+        // The take belonged to an item this session has already left: its words are
+        // not an answer to whatever is on screen now.
+        if (exercise.id != takeExerciseId) return
+        takeExerciseId = null
+        if (s.outcome != null) return
+        if (spoken.isBlank()) {
+            _state.update { it.copy(unheard = true) }
+            return
+        }
+        val verdict = ConversationScorer.assessBest(spoken, exercise.referenceAnswers)
+        val outcome = ExerciseOutcome(
+            correct = verdict != SpeakingVerdict.RETRY,
+            correctAnswer = exercise.referenceAnswers.firstOrNull().orEmpty(),
+            skill = exercise.skill ?: Skill.SPEAKING,
+            almostCorrect = verdict == SpeakingVerdict.NEAR,
+            spokenVerdict = verdict,
+        )
+        if (verdict == SpeakingVerdict.RETRY) {
+            // Nothing the app can attribute to the learner: no claim, no node, no meter.
+            showOutcome(exercise, outcome, firstTry = firstTries.add(exercise.id))
+            return
+        }
+        submitTake(exercise, spoken, outcome)
+    }
+
+    /**
+     * A spoken take as evidence: the same rows a typed answer writes — the day's claim,
+     * the curriculum nodes, the skill meter and its own history row, in one transaction.
+     * A spoken answer is not a lesser kind of answer (checklist 0.1).
+     *
+     * A failed write keeps the verdict on screen: the scorer really did hear that
+     * sentence, and an answer nobody managed to save is not a wrong answer.
+     */
+    private fun submitTake(exercise: Exercise, spoken: String, outcome: ExerciseOutcome) {
+        if (submitting) return
+        submitting = true
+        val firstTry = firstTries.add(exercise.id)
+        viewModelScope.launch {
+            try {
+                val now = System.currentTimeMillis()
+                val stageId = _state.value.stageState?.active?.id ?: LearningStage.SPEAKING.id
+                runCatchingCancellable {
+                    progressRepository.inTransaction {
+                        submitExercise(exercise, outcome, now).also { graded ->
+                            lessonRepository.recordAttempt(
+                                LessonAttempt(
+                                    lessonId = lessonId,
+                                    stageId = stageId,
+                                    exerciseId = exercise.id,
+                                    answer = spoken,
+                                    correct = graded.correct,
+                                    at = now,
+                                ),
+                            )
+                        }
+                    }
+                }.onFailure { error ->
+                    android.util.Log.w("LessonViewModel", "speech evidence not recorded", error)
+                }
+                foldDimension(exercise, outcome.correct)
+                showOutcome(exercise, outcome, firstTry)
+            } finally {
+                submitting = false
+            }
+        }
+    }
+
+    /**
+     * Says the sentence again after a [SpeakingVerdict.RETRY].
+     *
+     * The attempt already happened and was already counted as a miss on the lesson's
+     * bar, so this only clears the verdict and reopens the mic: the retry is a repeat,
+     * and `firstTries` keeps the second answer from being counted as the first one.
+     */
+    private fun retryTake() {
+        val s = _state.value
+        if (s.outcome?.spokenVerdict != SpeakingVerdict.RETRY) return
+        _state.update { it.copy(outcome = null, repeatsCurrent = false) }
+        startTake()
+    }
+
+    /**
+     * Accepts the item without a verdict, for an install that cannot hear a take at
+     * all. The outcome exists only to unlock «ادامه»: nothing is written to a skill
+     * track or a node, and the counts below are deliberately untouched, because an
+     * unassessed take is not a hit the summary should quote.
+     */
+    private fun continueUnassessed() {
         val s = _state.value
         if (s.outcome != null) return
         val speaking = s.currentExercise as? Exercise.Speaking ?: return
-        voiceNote.stopRecording()
-        voiceNote.stopPlayback()
+        abandonTake()
         _state.update {
             it.copy(
                 outcome = ExerciseOutcome(
@@ -629,6 +796,23 @@ class LessonViewModel(
                 repeatsCurrent = false,
             )
         }
+    }
+
+    /**
+     * Stops the mic without grading what it heard: the item the take belonged to is
+     * gone (another exercise, another step, a closed screen).
+     */
+    private fun abandonTake() {
+        // Only touch the service when it is actually holding the mic or loading a
+        // model: a stop on every step entry would start and tear down a foreground
+        // service (and flash its notification) for a take that never existed.
+        if (_state.value.isListening || _state.value.isPreparing) stopRecognition()
+        // reset() emits a blank state; wasListening must follow it so that blank
+        // emission is not mistaken for the end of a take.
+        SpeechBus.reset()
+        wasListening = false
+        takeExerciseId = null
+        _state.update { it.copy(isListening = false, isPreparing = false) }
     }
 
     private fun submit() {
@@ -679,49 +863,63 @@ class LessonViewModel(
                 // First try or repeat: the summary's «تثبیت‌شده» verdict is about
                 // the first pass only, so a fix on the repeat cannot hide a gap.
                 val firstTry = firstTries.add(exercise.id)
-                // The answer is evidence about a *kind of knowing* too (audit §2):
-                // folding it keeps the session's own weakness visible and lets the
-                // selector steer the rest of the session with it (B-1).
-                val moved = ExerciseDimension.dimensionOf(exercise)
-                val updatedProfile = profileEngine.apply(profile, moved, outcome.correct)
-                profile = updatedProfile
-                // Cross-session (B-1, Room v6): persist the dimension this answer
-                // moved so the NEXT session seeds from it instead of starting blind.
-                //
-                // Guarded on purpose: the fold is session *input*, not evidence about
-                // what was learned (docs/debt.md), so losing it costs one stale seed —
-                // while an unguarded throw here killed the coroutine before the verdict
-                // was rendered, leaving the learner staring at their own answer with a
-                // button that did nothing (checklist P1-7).
-                updatedProfile.byDimension[moved]?.let { mastery ->
-                    runCatchingCancellable { progressRepository.setDimensionMastery(moved, mastery) }
-                }
-                _state.update {
-                    it.copy(
-                        outcome = outcome,
-                        weakestDimension = weakestDimensionOf(updatedProfile, it.stageExercises),
-                        correctCount = if (outcome.correct) it.correctCount + 1 else it.correctCount,
-                        // Misses are marked so the summary can point them out (P4).
-                        weakAnswers = if (outcome.correct) {
-                            it.weakAnswers
-                        } else {
-                            (it.weakAnswers + outcome.correctAnswer).distinct()
-                        },
-                        askedCount = it.askedCount + 1,
-                        firstAttemptAsked = if (firstTry) it.firstAttemptAsked + 1 else it.firstAttemptAsked,
-                        firstAttemptCorrect = if (firstTry && outcome.correct) {
-                            it.firstAttemptCorrect + 1
-                        } else {
-                            it.firstAttemptCorrect
-                        },
-                        // Not yet re-queued (that happens in next()) — used for the
-                        // final-button label so «پایان درس» never lies.
-                        repeatsCurrent = !outcome.correct && exercise.id !in requeued,
-                    )
-                }
+                foldDimension(exercise, outcome.correct)
+                showOutcome(exercise, outcome, firstTry)
             } finally {
                 submitting = false
             }
+        }
+    }
+
+    /**
+     * The answer is evidence about a *kind of knowing* too (audit §2): folding it keeps
+     * the session's own weakness visible and lets the selector steer the rest of the
+     * session with it (B-1).
+     *
+     * Cross-session (B-1, Room v6): the dimension this answer moved is persisted so the
+     * NEXT session seeds from it instead of starting blind. Guarded on purpose — the
+     * fold is session *input*, not evidence about what was learned (docs/debt.md), so
+     * losing it costs one stale seed, while an unguarded throw here killed the coroutine
+     * before the verdict was rendered, leaving the learner staring at their own answer
+     * with a button that did nothing (checklist P1-7).
+     */
+    private suspend fun foldDimension(exercise: Exercise, correct: Boolean) {
+        val moved = ExerciseDimension.dimensionOf(exercise)
+        val updatedProfile = profileEngine.apply(profile, moved, correct)
+        profile = updatedProfile
+        updatedProfile.byDimension[moved]?.let { mastery ->
+            runCatchingCancellable { progressRepository.setDimensionMastery(moved, mastery) }
+        }
+    }
+
+    /**
+     * Puts one graded answer on screen: the counts, the summary's own bookkeeping and
+     * the banner's inputs. Shared by a typed answer and a spoken take, so the two can
+     * never disagree about what one attempt is worth.
+     */
+    private fun showOutcome(exercise: Exercise, outcome: ExerciseOutcome, firstTry: Boolean) {
+        _state.update {
+            it.copy(
+                outcome = outcome,
+                weakestDimension = weakestDimensionOf(profile, it.stageExercises),
+                correctCount = if (outcome.correct) it.correctCount + 1 else it.correctCount,
+                // Misses are marked so the summary can point them out (P4).
+                weakAnswers = if (outcome.correct) {
+                    it.weakAnswers
+                } else {
+                    (it.weakAnswers + outcome.correctAnswer).distinct()
+                },
+                askedCount = it.askedCount + 1,
+                firstAttemptAsked = if (firstTry) it.firstAttemptAsked + 1 else it.firstAttemptAsked,
+                firstAttemptCorrect = if (firstTry && outcome.correct) {
+                    it.firstAttemptCorrect + 1
+                } else {
+                    it.firstAttemptCorrect
+                },
+                // Not yet re-queued (that happens in next()) — used for the
+                // final-button label so «پایان درس» never lies.
+                repeatsCurrent = !outcome.correct && exercise.id !in requeued,
+            )
         }
     }
 
@@ -751,9 +949,8 @@ class LessonViewModel(
             return
         }
         // A take belongs to the sentence it was recorded against, so the next
-        // item starts with playback closed (the recorder keeps its own state).
-        voiceNote.stopRecording()
-        voiceNote.stopPlayback()
+        // item starts with the mic closed and nothing heard.
+        abandonTake()
         // A repeat shows the same question in a NEW order (P4 follow-through): the
         // learner who just missed it could otherwise answer from the position they
         // remembered instead of from the answer.
@@ -770,8 +967,9 @@ class LessonViewModel(
                 remainingCount = pending.size,
                 repeatsCurrent = false,
                 audioFailed = false,
-                hasRecording = false,
-                isPlayingRecording = false,
+                heardText = "",
+                heardPartial = "",
+                unheard = false,
                 recordingFailed = false,
             )
         }
@@ -800,8 +998,6 @@ class LessonViewModel(
         val s = _state.value
         val stageState = s.stageState ?: return
         val previous = stageState.plan.previous(stageState.active) ?: return
-        voiceNote.stopRecording()
-        voiceNote.stopPlayback()
         enterStage(stageState, previous)
     }
 
@@ -923,10 +1119,9 @@ class LessonViewModel(
      * (no recording left running behind a home screen).
      */
     fun onAudioInterrupted() {
-        if (_state.value.isRecording) voiceNote.stopRecording()
-        voiceNote.stopPlayback()
+        abandonTake()
         audioPlayer.stop()
-        _state.update { it.copy(isPlaying = false, isPlayingRecording = false) }
+        _state.update { it.copy(isPlaying = false) }
     }
 
     override fun onCleared() {

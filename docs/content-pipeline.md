@@ -320,20 +320,21 @@
   with `--rerun`.
 - Supported exercise types: `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
   `sentence_production`, `listening`, `speaking`.
-  - `speaking` feeds **conversation practice** (the lesson screen's own card still records and
-    compares, self-assessed). The first `accepted` sentence is the reply the learner is graded
-    against by the on-device recogniser (`ConversationScorer`), so it must be English. Two optional
-    fields turn the item into a dialogue turn instead of an echo:
+  - `speaking` feeds the lesson's speaking step **and** conversation practice, and both are graded
+    offline now: without a `question` the item is a say-it-back turn on the lesson screen, and the
+    recogniser scores it with `ConversationScorer` against the first `accepted` sentence — which is
+    why that answer must be English, and why a take that only partly matches is still a hit
+    (`NEAR`). Two optional fields turn the item into a dialogue turn instead of an echo:
     - `question` — the partner's line in English, spoken by the device before the learner answers.
       English only (TTS speaks it) and never identical to the answer (that would be an echo).
     - `questionFa` — the Persian gloss of `question`. Required **whenever** `question` is present:
       the learner must know what was asked; a gloss without a question is rejected too.
     Without `question` the item stays a repeat-the-model turn. `validateContent` enforces all of
     this, the validator also requires a Persian `prompt`, at least one English `accepted` answer and
-    a declared `skill`. The self-assessed speaking card on the lesson screen moves no mastery; the
-    one speaking surface that does is the lesson's own dialogue — a **spoken** turn is graded by the
-    recogniser and credits `SPEAKING` (`RecordConversationTurnUseCase`), a typed one credits
-    `WRITING`.
+    a declared `skill`. Both speaking surfaces move mastery through the recogniser: the lesson's own
+    card writes the take as a normal answer (`SubmitExerciseUseCase`, credited to its own `skill`),
+    and a dialogue turn credits `SPEAKING` when spoken and `WRITING` when typed
+    (`RecordConversationTurnUseCase`). A `RETRY` take writes nothing on either surface.
 - **Retrieval and production, not just recognition (P2).** Two shapes close the hole that every
   vocabulary item was multiple choice and the only "say something" item (`translation`) shipped a
   word bank in 21 of its 41 items:

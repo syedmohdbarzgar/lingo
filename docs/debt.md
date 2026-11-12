@@ -312,6 +312,19 @@
   because the alternative is a per-word node id in the bundle (1154 words), and because the graph
   itself says those lessons teach both topics. The narrower fix would be a `nodeId` on a word, which
   is a schema change to `vocabulary.json` and earns its own content version.
+- **The lesson's speaking verdict is real evidence, but the recogniser behind it is not measured
+  here (v79).** The take is graded offline by Vosk through the dialogue's own seam, and the VERDICT
+  is unit-tested end to end (`FakeSpeech` publishes what the service publishes). What no test can
+  answer is whether the recogniser *earns* that verdict on a phone: word error rate on a Persian
+  speaker's English, the first-take latency after the model is already loaded, and whether the
+  silence window is long enough for a beginner. On top of that, the step traded one thing for
+  another: **there is no longer a "hear yourself" playback** — the recorder that stored the take was
+  replaced by the recogniser, which publishes text only. The transcript is what the learner compares
+  against now (it is shown, live and settled), which is more actionable but not the same. A future
+  pass could record and recognise in one take (Vosk accepts a byte stream, so the same buffers could
+  be written to a file), but that is a device-only feature and earns its own measurement first. Until
+  then: the lesson's speaking card is a **device check**, listed as such in
+  [`release-readiness.md`](release-readiness.md).
 - **The error taxonomy reads the log, not a stored label (roadmap).** `lesson_attempt` records
   which exercise was asked and whether it was right; it does **not** record the skill, so
   `GetMissProfileUseCase` joins the id to the authored exercise and classifies by

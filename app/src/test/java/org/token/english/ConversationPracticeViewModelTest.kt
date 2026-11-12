@@ -24,9 +24,9 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.RecordConversationTurnUseCase
 import org.token.english.feature.conversation.ConversationEvent
 import org.token.english.feature.conversation.ConversationPracticeViewModel
-import org.token.english.feature.conversation.SpeechBus
-import org.token.english.feature.conversation.SpeechError
-import org.token.english.feature.conversation.SpeechState
+import org.token.english.core.audio.SpeechBus
+import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.SpeechState
 
 /**
  * ConversationPracticeViewModel tests (checklist B-6): the screen's own logic with

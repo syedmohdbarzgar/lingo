@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.token.english.core.audio.SpeechError
 import org.token.english.core.common.persianMeasure
 import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing

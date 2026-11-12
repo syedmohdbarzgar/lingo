@@ -42,8 +42,6 @@ import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LearningTargetStyle
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.EnglishText
-import org.token.english.core.designsystem.component.PrimaryButton
-import org.token.english.core.designsystem.component.SecondaryButton
 
 enum class OptionVisual { DEFAULT, SELECTED, CORRECT, INCORRECT }
 
@@ -156,15 +154,13 @@ fun SpeakingCard(
     modelSentence: String,
     promptFa: String,
     isPlayingModel: Boolean,
-    isRecording: Boolean,
-    hasRecording: Boolean,
-    isPlayingRecording: Boolean,
-    recordingFailed: Boolean,
+    isListening: Boolean,
+    isPreparing: Boolean,
+    heardPartial: String,
+    heardText: String,
+    unheard: Boolean,
+    interrupted: Boolean,
     onPlayModel: () -> Unit,
-    onStartRecording: () -> Unit,
-    onStopRecording: () -> Unit,
-    onPlayRecording: () -> Unit,
-    onStopPlayback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -202,27 +198,59 @@ fun SpeakingCard(
             }
         }
 
-        PrimaryButton(
-            text = if (isRecording) "پایان ضبط" else "ضبط صدای من",
-            onClick = if (isRecording) onStopRecording else onStartRecording,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        // What the device actually heard is the comparison now: the recogniser's
+        // transcript is shown as it accumulates, so the learner sees the words land
+        // while they are still speaking instead of waiting for a verdict.
+        val live = heardPartial.trim()
+        if (isListening && live.isNotEmpty()) {
+            AppCard {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                ) {
+                    Text(
+                        text = "شنیدم:",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    EnglishText(
+                        text = live,
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    )
+                }
+            }
+        }
 
-        SecondaryButton(
-            text = when {
-                isPlayingRecording -> "توقف پخش"
-                else -> "پخش صدای من"
-            },
-            onClick = if (isPlayingRecording) onStopPlayback else onPlayRecording,
-            enabled = hasRecording,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        if (!isListening && heardText.isNotBlank()) {
+            AppCard {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                ) {
+                    Text(
+                        text = "آنچه شنیده شد:",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    EnglishText(
+                        text = heardText,
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    )
+                }
+            }
+        }
 
         Text(
             text = when {
-                isRecording -> "در حال ضبط — جمله را واضح بگو و بعد ضبط را ببند."
-                hasRecording -> "صدای خودت را با نمونه مقایسه کن و بعد ادامه بده."
-                else -> "اول نمونه را گوش کن، بعد جمله را خودت بگو و ضبط کن."
+                isListening -> "در حال شنیدن — جمله را کامل و واضح بگو، بعد «پایان پاسخ» را بزن."
+                isPreparing -> "مدل گفتار در حال آماده‌سازی است…"
+                unheard -> "چیزی نشنیدم. یک بار دیگر، کمی نزدیک‌تر به میکروفون بگو."
+                heardText.isNotBlank() -> "جمله‌ات با نمونه سنجیده شد؛ نتیجه در پایین آمده است."
+                else -> "اول نمونه را گوش کن، بعد جمله را خودت بگو تا روی همین گوشی سنجیده شود."
             },
             style = MaterialTheme.typography.bodySmall.copy(
                 textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
@@ -231,9 +259,10 @@ fun SpeakingCard(
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
 
-        if (recordingFailed) {
+        if (interrupted) {
             Text(
-                text = "ضبط صدا ممکن نشد — اجازه‌ی میکروفون را بررسی کن و دوباره تلاش کن.",
+                text = "این نوبت شنیده نشد — میکروفون یا مدل گفتار در دسترس نیست. " +
+                    "می‌توانی دوباره تلاش کنی یا بدون سنجش ادامه بدهی؛ هیچ چیز به اینترنت فرستاده نمی‌شود.",
                 style = MaterialTheme.typography.bodySmall.copy(
                     textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
                 ),

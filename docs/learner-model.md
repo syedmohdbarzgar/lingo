@@ -43,6 +43,16 @@
   wrong answer from a recogniser error, and turning that doubt into a penalty is what the
   conversation screen refuses to do. Speaking lands on the lesson's `PHONOLOGY` nodes through the
   same `KnowledgeEvidence` rule the exercises use.
+- **The lesson's own `speaking` item is graded by the same recogniser (v79).** It used to be the one
+  productive step with no verdict — hear the model, record, compare, self-assess — because the
+  conversation was the only place wired to Vosk. It now takes the dialogue's seam
+  (`SpeechBus` / `SpeechRecognitionService` moved to `core/audio`, since two features speak through
+  it) and `ConversationScorer` decides: `CORRECT` and `NEAR` are a hit and are written as evidence
+  through the **same** `SubmitExerciseUseCase` transaction a typed answer uses, `RETRY` is a miss on
+  the lesson's own bar that writes nothing at all, a take with no words is `unheard` (the mic opens
+  again, no verdict is invented), and a take that broke off (no model, mic refused) is an app
+  failure that is never scored. An install that cannot hear at all still has the old self-assessed
+  path: «ادامه بدون سنجش» unlocks the step and credits nothing.
 - **Finished steps are not mastery (Phase 1).** `LessonMastery` turns lesson state plus node evidence
   into `NOT_STARTED → IN_PROGRESS → COMPLETED → MASTERED`. `COMPLETED` means the required steps have
   been walked; `MASTERED` means every node the lesson teaches passes `KnowledgeGates.isSecured` (no

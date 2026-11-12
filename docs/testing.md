@@ -89,7 +89,7 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 729 tests / 79 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 733 tests / 79 classes as of
   the word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
   lessons appeared in the word list and then not again until the review queue, so each got a
   `word_recall` in its own lesson (cue from the entry's authored `translation`, explanation from its
@@ -419,11 +419,19 @@
 - **The guided lesson (v60)** splits `LessonViewModelTest`'s territory in two: `GuidedLessonTest`
   drives the eight-step walk itself (see above), while `LessonViewModelTest` keeps the exercise
   rules — the requeue-once-on-a-miss, the TTS-unavailable fallback, the authored order, a focused
-  session's evidence subset and the P7 study ticks. `ScreenSmokeTest` renders the Lesson screen
+  session's evidence subset and the P7 study ticks. Eleven of its cases are the speaking step's own
+  (v79), driven through `FakeSpeech` — the recogniser seam, faked: a take is published exactly as the
+  service publishes it, and the mic commands are counted. They pin that a said-back take is one
+  transaction of evidence with its transcript as the saved answer, that `NEAR` is a hit and
+  `RETRY` a miss that writes nothing, that a silent take is `unheard` and a broken one is never
+  scored, that the no-recogniser install can still leave the step without a claim, that a retry
+  reopens the mic without becoming a first try, that moving on closes the take, and that the model
+  never plays into an open mic. `ScreenSmokeTest` renders the Lesson screen
   through the same fakes, so the stage header, rail and Previous/Continue controls are exercised on
   the host JVM (Robolectric) rather than only on a device.
-- **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories + a
-  `RecordingSpeaker`), so a screen's ViewModel is exercised with no Android, no Room and no device:
+- **ViewModel tests (B-6)** sit on top of `FakeRepositories.kt` (in-memory repositories, a
+  `RecordingSpeaker` and `FakeSpeech` for the recogniser seam), so a screen's ViewModel is exercised
+  with no Android, no Room and no device:
   `HomeViewModelTest` (installing/removing the companion app flips access to COMPANION_APP / LOCKED;
   the engine's weak spot reaches the state),  `LessonViewModelTest` (a miss is re-asked exactly once
   and the session still ends; a device without an English voice reports `audioUnavailable`; a fresh

@@ -140,16 +140,20 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         org.token.english.feature.conversation.VoskManager(appContext)
     }
 
-    /** Live recognition state for the practice screen; published by the service. */
-    val conversationSpeech: StateFlow<org.token.english.feature.conversation.SpeechState> =
-        org.token.english.feature.conversation.SpeechBus.state
+    /**
+     * Live recognition state, published by the service. Two screens read it now —
+     * the dialogue and the lesson's own `speaking` item — which is why the state
+     * lives in `core/audio` rather than inside either feature.
+     */
+    val speechState: StateFlow<org.token.english.core.audio.SpeechState> =
+        org.token.english.core.audio.SpeechBus.state
 
     /** Starts the mic foreground service — the container is where the Context lives. */
-    fun startConversationRecognition() =
+    fun startRecognition() =
         org.token.english.feature.conversation.SpeechRecognitionService.start(appContext)
 
     /** Stops the take and dismisses its notification. Safe when nothing is running. */
-    fun stopConversationRecognition() =
+    fun stopRecognition() =
         org.token.english.feature.conversation.SpeechRecognitionService.stop(appContext)
 
     // Free-access companion app (org.token.zaribar): while it is installed *and

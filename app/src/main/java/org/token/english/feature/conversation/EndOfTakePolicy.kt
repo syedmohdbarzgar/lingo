@@ -1,5 +1,7 @@
 package org.token.english.feature.conversation
 
+import org.token.english.core.audio.SpeechBus
+
 /**
  * When a take ends on its own (checklist 1.4/1.5) — pure, so the timing is a unit
  * test instead of a comment inside the capture loop.

@@ -30,6 +30,8 @@ import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
+import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.SpeechState
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.StudyStats
@@ -502,6 +504,54 @@ class FakeBillingGateway(
     }
 
     override suspend fun subscriptionUntil(): Long = if (subscriptionActive) Long.MAX_VALUE else 0L
+}
+
+/**
+ * The offline recogniser, faked — the seam the dialogue and the lesson's `speaking`
+ * item share.
+ *
+ * A test publishes the state the service would publish and counts the mic commands
+ * the ViewModel asks for, so a whole take is graded on the JVM: no Vosk, no model,
+ * no microphone. [say] is deliberately three emissions (listening → words → ended),
+ * because grading on the first one is exactly the bug the take-end rule prevents.
+ */
+class FakeSpeech {
+    val state = MutableStateFlow(SpeechState())
+
+    var starts = 0
+        private set
+    var stops = 0
+        private set
+
+    /** What the real service does on a START: the mic opens before a word is heard. */
+    fun start() {
+        starts++
+        state.value = SpeechState(isListening = true)
+    }
+
+    fun stop() {
+        stops++
+        state.value = SpeechState(isListening = false)
+    }
+
+    /** The learner says [text] and the take ends on its own, as silence would end it. */
+    fun say(text: String) {
+        state.value = SpeechState(isListening = true)
+        state.value = SpeechState(isListening = true, finalText = text)
+        state.value = SpeechState(isListening = false, finalText = text)
+    }
+
+    /** A take that ended without a single recognised word. */
+    fun silence() {
+        state.value = SpeechState(isListening = true)
+        state.value = SpeechState(isListening = false)
+    }
+
+    /** A take that broke off: the service names the failure, and it is not a verdict. */
+    fun breakOff(error: SpeechError) {
+        state.value = SpeechState(isListening = true)
+        state.value = SpeechState(isListening = false, error = error)
+    }
 }
 
 /**

@@ -37,12 +37,13 @@ cannot be read. A local notification is the one screen the app shows unasked, so
 place a reassuring sentence would be a lie the learner cannot check. Its count is a local Room read
 no network — the same rule the rest of the learning core lives by.
 
-`RECORD_AUDIO` serves **two local-only** features, and neither ever uploads audio:
+`RECORD_AUDIO` serves **two local-only** surfaces, and neither ever uploads audio:
 
-1. **A voice note inside a lesson speaking item** (see `docs/content-pipeline.md`): the take is
-   written to the app cache dir and played back against the on-device TTS model. The card asks for
-   the mic itself, so no other screen triggers the prompt, and a refusal downgrades the item to
-   listen-and-compare instead of breaking the lesson.
+1. **The lesson's `speaking` item** (see `docs/content-pipeline.md`): the take goes through the same
+   on-device recogniser as a dialogue turn and is graded by the same engine. Nothing is written to
+   disk — the recogniser keeps text, not audio — and the card asks for the mic itself, so no other
+   screen triggers the prompt. A device that cannot hear a take (no model, no mic, refusal)
+   downgrades the item to the older listen-and-compare card, which credits nothing.
 2. **Conversation practice** (`feature/conversation/`): an on-device Vosk recogniser transcribes the
    learner's take and a pure engine (`domain/engine/ConversationScorer.kt`) grades it. The model is
    the only bundled binary — `assets/vosk/vosk-model-small-en-us-0.15`, fetched by
@@ -62,7 +63,8 @@ explicitly, so here is the answer read off the code rather than the store copy):
 | The raw PCM take (conversation practice) | never written — read from `AudioRecord`, fed to the in-process `Recognizer`, then dropped | the take |
 | The recognised text | memory only (`SpeechBus`, the screen state) | the take / the turn |
 | The verdict of a turn | `conversation_turn`-style evidence row: lesson id, exercise id, verdict, a `spoken` flag, a timestamp — **no transcript** | reset |
-| The voice note (lesson speaking item) | `cacheDir/voice_take.m4a` | replaced by the next recording, deleted by reset, may be cleared by the OS |
+| The lesson's spoken take | never written — read from `AudioRecord` and fed to the in-process `Recognizer`, exactly as a dialogue turn | the take |
+| A voice note an **older build** left behind | `cacheDir/voice_take.m4a` | nothing writes it any more; reset still deletes it, and the OS may clear it |
 | The extracted Vosk model | `filesDir/vosk/…` | a copy of the APK asset — not user data, excluded from backup, never deleted |
 
 Nothing on that path calls the network: the app has **no HTTP client of its

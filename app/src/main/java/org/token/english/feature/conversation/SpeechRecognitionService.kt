@@ -27,6 +27,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.token.english.R
+import org.token.english.core.audio.SpeechBus
+import org.token.english.core.audio.SpeechError
 import org.vosk.Recognizer
 import java.util.concurrent.atomic.AtomicInteger
 

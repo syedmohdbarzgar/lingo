@@ -3,6 +3,7 @@ package org.token.english.domain.usecase
 import kotlinx.coroutines.flow.first
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveLearningPlanner
+import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.DefaultKnowledgeGraph
 import org.token.english.domain.engine.DifficultyAudit
 import org.token.english.domain.engine.DifficultyAuditReport
@@ -56,6 +57,17 @@ data class ExerciseOutcome(
      * can say «تقریباً درست — املای کلمه را بررسی کن» instead of a bare miss.
      */
     val almostCorrect: Boolean = false,
+    /**
+     * The verdict a recogniser formed on a **spoken** answer, when one was spoken.
+     *
+     * It is carried next to [correct] rather than replacing it because the two answer
+     * different questions: [correct] is the lesson's own bar (did this attempt land?)
+     * and this is what the app heard, which is the only way the screen can say «نزدیک
+     * بود» instead of a bare miss — and the only way a take the app could not hear is
+     * told apart from a sentence that was actually wrong. `null` for a typed answer,
+     * and for a take accepted without a verdict (no recogniser on the device).
+     */
+    val spokenVerdict: SpeakingVerdict? = null,
 )
 
 /**
@@ -88,8 +100,24 @@ class SubmitExerciseUseCase(
         exercise: Exercise,
         answer: String,
         now: Long,
+    ): ExerciseOutcome = invoke(exercise, grade(exercise, answer), now)
+
+    /**
+     * The same write, for an answer whose verdict is already decided — a spoken take,
+     * where the judge is [ConversationScorer] over the recogniser's transcript rather
+     * than [AnswerChecker] over typed text.
+     *
+     * It exists so there is exactly **one** place that turns an answer into evidence:
+     * the day's claim, the skill meter, the curriculum nodes and the caller's history
+     * row stay in one transaction (checklist 0.1). A second copy of those writes for
+     * speech would be a second rule to keep in step — and the two would eventually
+     * disagree about what one answer is worth.
+     */
+    suspend operator fun invoke(
+        exercise: Exercise,
+        outcome: ExerciseOutcome,
+        now: Long,
     ): ExerciseOutcome {
-        val outcome = grade(exercise, answer)
         val correct = outcome.correct
         val skill = outcome.skill
         val format = AnswerChecker.formatOf(exercise)

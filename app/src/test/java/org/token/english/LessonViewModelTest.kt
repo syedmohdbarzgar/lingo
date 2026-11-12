@@ -28,6 +28,9 @@ import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.engine.AdaptiveExerciseSelector
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
+import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.SpeechState
+import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
@@ -85,6 +88,15 @@ class LessonViewModelTest {
         nextReviewAt = 0L,
     )
 
+    /** A "say this sentence back" item: no partner question, so the model is the target. */
+    private fun speaking(id: String, model: String) = Exercise.Speaking(
+        id = id,
+        lessonId = lessonId,
+        prompt = "جمله را بگو",
+        referenceAnswers = listOf(model),
+        skill = Skill.SPEAKING,
+    )
+
     private fun blank(id: String) = Exercise.FillBlank(
         id = id,
         lessonId = lessonId,
@@ -95,7 +107,8 @@ class LessonViewModelTest {
 
     private inner class Harness(
         available: Boolean? = true,
-        val voiceNote: FakeVoiceNote = FakeVoiceNote(),
+        /** The offline recogniser, faked: a take is published as the service would. */
+        val speech: FakeSpeech = FakeSpeech(),
     ) {
         val lessonRepo = FakeLessonRepository(lessons = listOf(Lesson(lessonId, LearningLevel.A1, "t", "ت", "topic", 5, 1)))
         val progress = FakeProgressRepository()
@@ -130,8 +143,10 @@ class LessonViewModelTest {
                 submitExercise = submit,
                 completeLesson = complete,
                 audioPlayer = audio,
-                voiceNote = voiceNote,
                 speaker = speaker,
+                speechState = speech.state,
+                startRecognition = { speech.start() },
+                stopRecognition = { speech.stop() },
                 isAppInForeground = { true },
                 getFocusPlan = focusPlan,
                 profileEngine = DefaultMasteryProfileEngine(),
@@ -236,181 +251,192 @@ class LessonViewModelTest {
         assertEquals("acting again reopens the window", StudyTimePolicy.TICK_SECONDS, h.progress.studySeconds)
     }
 
+    // -------------------------------------------------------------- speaking (graded)
+
     @Test
-    fun `a speaking item practices without grading or moving mastery`() {
-        val h = Harness().with(
-            Exercise.Speaking(
-                id = "a1.test.sp.01",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("Go straight and turn left."),
-                skill = Skill.SPEAKING,
-            ),
-        )
+    fun `a spoken take is graded on this phone and written as one answer`() {
+        // The step used to be self-assessed: hear the model, record, compare. The
+        // recogniser that already grades the dialogue is the judge here too, so the take
+        // is evidence — and one answer is still one transaction.
+        val h = Harness().with(speaking("a1.test.sp.01", "Go straight and turn left."))
         val vm = h.build()
 
-        // Record, then close the mic: the take is now available for playback.
-        vm.onEvent(LessonEvent.StartRecording)
-        assertTrue("the mic is open", vm.state.value.isRecording)
-        vm.onEvent(LessonEvent.StopRecording)
-        assertTrue("a take exists", vm.state.value.hasRecording)
-        assertFalse(vm.state.value.isRecording)
+        vm.onEvent(LessonEvent.StartTake)
+        assertEquals("the mic is asked for", 1, h.speech.starts)
+        assertTrue("and the screen shows it is live", vm.state.value.isListening)
 
-        vm.onEvent(LessonEvent.PlayRecording)
-        assertTrue("the take plays back", vm.state.value.isPlayingRecording)
+        h.speech.say("Go straight and turn left.")
 
-        vm.onEvent(LessonEvent.FinishSpeaking)
         val outcome = vm.state.value.outcome
-        assertTrue("finishing unlocks the next step", outcome != null)
-        assertEquals(
-            "the model sentence is what the learner compared against",
-            "Go straight and turn left.",
-            outcome?.correctAnswer,
+        assertNotNull("the take gets a verdict", outcome)
+        assertEquals(SpeakingVerdict.CORRECT, outcome?.spokenVerdict)
+        assertTrue("the sentence was said back", outcome!!.correct)
+        assertEquals("and it counts once", 1, vm.state.value.askedCount)
+        assertEquals(1, vm.state.value.correctCount)
+        assertEquals("one answer is one transaction", 1, h.progress.transactions)
+        assertTrue(
+            "the speaking track moved",
+            h.progress.attempts.any { it.first == Skill.SPEAKING && it.second },
         )
-        // No recogniser ran, so nothing was scored and no dimension was written.
-        assertEquals(0, vm.state.value.correctCount)
-        assertTrue("self-practice is not mastery evidence", h.progress.dimensionWrites.isEmpty())
+        assertTrue(
+            "the transcript is the answer the step resumes from",
+            h.lessonRepo.attemptsLog.any { it.answer == "Go straight and turn left." },
+        )
+        assertTrue(
+            "and the session's own weakness is persisted",
+            h.progress.dimensionWrites.any { it.first == MasteryDimension.PRODUCTION },
+        )
     }
 
     @Test
-    fun `switching to another exercise drops the previous take`() {
-        val h = Harness()
-        h.with(
-            Exercise.Speaking(
-                id = "a1.test.sp.01",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("Go straight."),
-                skill = Skill.SPEAKING,
-            ),
-            // A second sentence of the same step: Next moves within speaking.
-            Exercise.Speaking(
-                id = "a1.test.sp.02",
-                lessonId = lessonId,
-                prompt = "جملهٔ دوم را بگو",
-                referenceAnswers = listOf("Turn left at the bank."),
-                skill = Skill.SPEAKING,
-            ),
+    fun `a take said with a slip is near, and still counts as a hit`() {
+        // "Near" is the scorer's own bar: every content word of the target, in the
+        // learner's own order. It is a hit for the same reason a dialogue's near turn is
+        // one — the meaning came across — but the banner still says it was not exact.
+        val h = Harness().with(speaking("a1.test.sp.02", "Go straight and turn left at the bank."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("turn left at the bank go straight")
+
+        val outcome = vm.state.value.outcome
+        assertEquals(SpeakingVerdict.NEAR, outcome?.spokenVerdict)
+        assertTrue("still a hit", outcome!!.correct)
+        assertTrue("but not exact", outcome.almostCorrect)
+        assertEquals(1, vm.state.value.correctCount)
+    }
+
+    @Test
+    fun `a take the scorer cannot match writes no evidence but counts as a miss`() {
+        // The app cannot tell a wrong sentence from a misheard one, so a retry claims
+        // nothing — no day claim, no node, no meter (the dialogue's own rule). It is
+        // still an attempt, so the item comes back later in the step.
+        val h = Harness().with(speaking("a1.test.sp.03", "The bank is on the left."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("where is the station")
+
+        val outcome = vm.state.value.outcome
+        assertEquals(SpeakingVerdict.RETRY, outcome?.spokenVerdict)
+        assertFalse(outcome!!.correct)
+        assertEquals("nothing was claimed", 0, h.progress.transactions)
+        assertTrue("no skill moved", h.progress.attempts.isEmpty())
+        assertTrue("no dimension was written", h.progress.dimensionWrites.isEmpty())
+        assertTrue("the item is asked again", vm.state.value.repeatsCurrent)
+    }
+
+    @Test
+    fun `a take with no words is not an answer`() {
+        val h = Harness().with(speaking("a1.test.sp.04", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.silence()
+
+        assertTrue("the card says nothing was heard", vm.state.value.unheard)
+        assertNull("no verdict is invented", vm.state.value.outcome)
+        assertEquals(0, h.progress.transactions)
+    }
+
+    @Test
+    fun `a take that broke off is never graded`() {
+        // A missing model or a dead recorder is an app failure: scoring it would blame
+        // the learner for hardware.
+        val h = Harness().with(speaking("a1.test.sp.05", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.breakOff(SpeechError.MODEL_MISSING)
+
+        assertTrue("the card names the failure", vm.state.value.recordingFailed)
+        assertNull(vm.state.value.outcome)
+        assertEquals(0, h.progress.transactions)
+    }
+
+    @Test
+    fun `an install without the recogniser can move on without a claim`() {
+        // The old self-assessed path, kept for the device that cannot hear at all: the
+        // stage is never a trap, and an unassessed take is not quoted as a hit.
+        val h = Harness().with(speaking("a1.test.sp.06", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.breakOff(SpeechError.MODEL_MISSING)
+        vm.onEvent(LessonEvent.ContinueUnassessed)
+
+        assertNotNull("the step can be left", vm.state.value.outcome)
+        assertEquals("nothing was claimed", 0, h.progress.transactions)
+        assertEquals("and it is not counted as a hit", 0, vm.state.value.correctCount)
+        assertEquals("nor as a first try", 0, vm.state.value.firstAttemptAsked)
+    }
+
+    @Test
+    fun `retrying a retry verdict reopens the mic and keeps it one first try`() {
+        val h = Harness().with(speaking("a1.test.sp.07", "Go straight and turn left."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("go left")
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.outcome?.spokenVerdict)
+
+        vm.onEvent(LessonEvent.RetryTake)
+        assertNull("the old verdict is cleared", vm.state.value.outcome)
+        assertEquals("the mic is open again", 2, h.speech.starts)
+
+        h.speech.say("Go straight and turn left.")
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.outcome?.spokenVerdict)
+        assertEquals("the first attempt already counted", 1, vm.state.value.firstAttemptAsked)
+        assertEquals("a fix on the retry is not a first try", 0, vm.state.value.firstAttemptCorrect)
+    }
+
+    @Test
+    fun `moving to the next item closes the take`() {
+        val h = Harness().with(
+            speaking("a1.test.sp.08", "Go straight."),
+            speaking("a1.test.sp.09", "Turn left at the bank."),
         )
         val vm = h.build()
 
-        vm.onEvent(LessonEvent.StartRecording)
-        vm.onEvent(LessonEvent.StopRecording)
-        vm.onEvent(LessonEvent.PlayRecording)
-        assertTrue("the take plays", vm.state.value.isPlayingRecording)
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("Go straight.")
+        assertTrue("the take was heard", vm.state.value.heardText.isNotBlank())
 
-        vm.onEvent(LessonEvent.FinishSpeaking)
         vm.onEvent(LessonEvent.Next())
 
-        // The next item is a different sentence: an old take is not "your answer"
-        // to it, so playback closes and the button goes back to disabled.
-        assertFalse("the old take is out of scope", vm.state.value.hasRecording)
-        assertFalse("nothing keeps playing into the next item", vm.state.value.isPlayingRecording)
-        assertTrue(h.voiceNote.stopPlaybackCalls > 0)
+        assertNull("the next item has no verdict", vm.state.value.outcome)
+        assertEquals("and nothing heard from the previous sentence", "", vm.state.value.heardText)
+        assertEquals(
+            "the next sentence is the one on screen",
+            "a1.test.sp.09",
+            (vm.state.value.currentExercise as Exercise.Speaking).id,
+        )
     }
 
     @Test
-    fun `a refused microphone still lets the lesson finish`() {
-        val h = Harness(voiceNote = FakeVoiceNote(permission = false))
-        h.with(
-            Exercise.Speaking(
-                id = "a1.test.sp.02",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("The bank is on the left."),
-                skill = Skill.SPEAKING,
-            ),
-        )
+    fun `leaving the lesson closes the microphone`() {
+        val h = Harness().with(speaking("a1.test.sp.10", "Go straight."))
         val vm = h.build()
 
-        vm.onEvent(LessonEvent.StartRecording)
-        assertFalse("no mic, no recording", vm.state.value.isRecording)
-        assertTrue("the card explains why", vm.state.value.recordingFailed)
-
-        // The exercise degrades to listen-and-compare instead of trapping the learner.
-        vm.onEvent(LessonEvent.FinishSpeaking)
-        assertNotNull(vm.state.value.outcome)
-    }
-
-    @Test
-    fun `a failed recording recovers when the learner tries again`() {
-        val note = FakeVoiceNote(permission = false)
-        val h = Harness(voiceNote = note)
-        h.with(
-            Exercise.Speaking(
-                id = "a1.test.sp.03",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("Turn left at the light."),
-                skill = Skill.SPEAKING,
-            ),
-        )
-        val vm = h.build()
-
-        vm.onEvent(LessonEvent.StartRecording)
-        assertTrue(vm.state.value.recordingFailed)
-
-        note.permission = true
-        vm.onEvent(LessonEvent.StartRecording)
-        assertTrue("the retry opens the mic", vm.state.value.isRecording)
-        assertTrue("and the take exists once closed", run {
-            vm.onEvent(LessonEvent.StopRecording)
-            vm.state.value.hasRecording
-        })
-    }
-
-    @Test
-    fun `leaving the lesson closes the microphone and the players`() {
-        val h = Harness()
-        h.with(
-            Exercise.Speaking(
-                id = "a1.test.sp.04",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("Go straight."),
-                skill = Skill.SPEAKING,
-            ),
-        )
-        val vm = h.build()
-
-        vm.onEvent(LessonEvent.StartRecording)
-        assertTrue(vm.state.value.isRecording)
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.state.value = SpeechState(isListening = true)
+        assertTrue(vm.state.value.isListening)
 
         vm.onAudioInterrupted()
-        assertFalse("the mic is closed", vm.state.value.isRecording)
-        assertFalse(vm.state.value.isPlayingRecording)
-        assertTrue("the recorder was told to stop", h.voiceNote.stopRecordingCalls > 0)
+
+        assertTrue("the service was told to stop", h.speech.stops >= 1)
+        assertFalse("no mic is left running behind a home screen", vm.state.value.isListening)
     }
 
     @Test
-    fun `the model and the learner's take never play at the same time`() {
-        val h = Harness()
-        h.with(
-            Exercise.Speaking(
-                id = "a1.test.sp.05",
-                lessonId = lessonId,
-                prompt = "جمله را بگو",
-                referenceAnswers = listOf("Go straight."),
-                skill = Skill.SPEAKING,
-            ),
-        )
+    fun `the model never plays into an open mic`() {
+        val h = Harness().with(speaking("a1.test.sp.11", "Go straight."))
         val vm = h.build()
 
-        vm.onEvent(LessonEvent.StartRecording)
-        vm.onEvent(LessonEvent.StopRecording)
-        vm.onEvent(LessonEvent.PlayRecording)
-        assertTrue(vm.state.value.isPlayingRecording)
-
-        // Asking for the model silences the take.
+        vm.onEvent(LessonEvent.StartTake)
         vm.onEvent(LessonEvent.SpeakText("Go straight."))
-        assertFalse("the take stops when the model speaks", vm.state.value.isPlayingRecording)
-        // The fake speaker finishes instantly, so the observable evidence is that
-        // the model was the one asked to speak last.
-        assertEquals("Go straight.", h.speaker.spoken.last())
 
-        // And starting a new recording silences the model.
-        vm.onEvent(LessonEvent.StartRecording)
-        assertFalse("the model cannot talk over a recording", vm.state.value.isPlaying)
+        assertTrue("the device's own voice would be recorded as the answer", h.speaker.spoken.isEmpty())
     }
 
     /** Answers the current exercise correctly, whatever option the shuffle put first. */

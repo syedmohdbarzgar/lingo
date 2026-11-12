@@ -116,6 +116,7 @@ class GuidedLessonTest {
         val progress: FakeProgressRepository = FakeProgressRepository(),
     ) {
         val knowledge = FakeKnowledgeRepository()
+        val speech = FakeSpeech()
 
         fun build(): LessonViewModel = LessonViewModel(
             lessonId = lessonId,
@@ -126,8 +127,10 @@ class GuidedLessonTest {
             submitExercise = SubmitExerciseUseCase(progress, knowledge),
             completeLesson = CompleteLessonUseCase(lessonRepo, progress),
             audioPlayer = FakeAudioPlayer(),
-            voiceNote = FakeVoiceNote(),
             speaker = RecordingSpeaker(),
+            speechState = speech.state,
+            startRecognition = { speech.start() },
+            stopRecognition = { speech.stop() },
             isAppInForeground = { true },
             getFocusPlan = GetFocusPlanUseCase(knowledge, lessonRepo),
             profileEngine = DefaultMasteryProfileEngine(),

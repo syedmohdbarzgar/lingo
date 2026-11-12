@@ -147,7 +147,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (729 tests / 79 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (733 tests / 79 classes as of the
+spoken-lesson pass, where the lesson's `speaking` item stopped being self-assessed: it takes the
+same offline recogniser the dialogue uses and `ConversationScorer` grades the take — `CORRECT` and
+`NEAR` are a hit written as ordinary evidence (the transcript is even the answer `lesson_attempt`
+saves, so a reopened step resumes from the words that were actually said), `RETRY` is a miss on the
+lesson's own bar that writes nothing at all, a take with no words is `unheard` and a broken one is
+an app failure that is never scored, and an install without the model still gets «ادامه بدون سنجش».
+The state types and the bus moved from `feature/conversation` to `core/audio`, because two features
+now speak through the seam and `feature/` may not import `feature/`; the eleven cases that pin it run
+over `FakeSpeech`, which publishes exactly what the service publishes. Before it the
 word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
 lessons (A1 16, A2 15, B1 28, B2 22, C1 31, C2 21) were met in the word list and then not again
 until the review queue, so each got a `word_recall` in its own lesson, built from the entry's own

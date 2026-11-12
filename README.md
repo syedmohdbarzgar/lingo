@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-729 unit tests across 79 classes. The pure cores carry the most weight — review scheduling,
+733 unit tests across 79 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -536,9 +536,12 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   still cannot do is pick a harder **lesson** — a lesson carries no difficulty of its own
   ([`docs/debt.md`](docs/debt.md)).
 - A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
-  its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.
-- Pronunciation scoring **inside** the lesson's `speaking` item — record-and-compare today, while the
-  dialogue's turns are already scored. The gap is the stage session, not the recogniser.
+  its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.- Pronunciation scoring, deeper than the verdict. The lesson's `speaking` item now goes through the
+  same offline recogniser as the dialogue (a said-back take is graded, `NEAR` counts, `RETRY` claims
+  nothing) — but a take is not *scored*, it is matched: no phoneme-level feedback, no per-word marks,
+  and no self-playback any more, because the recogniser keeps text rather than audio
+  ([`docs/debt.md`](debt.md)). The next step would be a take that is both recorded and recognised, so
+  the learner hears themselves *and* gets a verdict.
 - Remote crash reporting — a deliberate provider and privacy decision, not a default.
 
 **Suspended until a backend exists**

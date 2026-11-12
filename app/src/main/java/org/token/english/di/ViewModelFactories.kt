@@ -59,10 +59,14 @@ fun lessonViewModelFactory(
         submitExercise = c.submitExercise,
         completeLesson = c.completeLesson,
         audioPlayer = c.audioPlayer,
-        voiceNote = c.voiceNote,
         speaker = c,
         isAppInForeground = { c.isAppInForeground },
         getFocusPlan = c.getFocusPlan,
+        // The lesson's `speaking` item now hears the take too (offline recogniser),
+        // so it takes the same three seams the dialogue does — not a recorder.
+        speechState = c.speechState,
+        startRecognition = { c.startRecognition() },
+        stopRecognition = { c.stopRecognition() },
         profileEngine = DefaultMasteryProfileEngine(),
         selector = AdaptiveExerciseSelector(),
         focusItemId = focusItemId,
@@ -155,8 +159,8 @@ fun conversationPracticeViewModelFactory(
         speaker = c,
         contentStatus = c.contentStatus,
         seedContent = { c.seedContent() },
-        speechState = c.conversationSpeech,
-        startRecognition = { c.startConversationRecognition() },
-        stopRecognition = { c.stopConversationRecognition() },
+        speechState = c.speechState,
+        startRecognition = { c.startRecognition() },
+        stopRecognition = { c.stopRecognition() },
     )
 }

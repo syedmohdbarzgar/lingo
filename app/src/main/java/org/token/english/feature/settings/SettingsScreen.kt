@@ -620,7 +620,7 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "میکروفون فقط در تمرین گفتاری و با اجازهٔ خودتان به کار می‌رود؛ صدای شما روی همان دستگاه ضبط و برای مقایسه پخش می‌شود و جایی فرستاده نمی‌شود.",
+                    text = "میکروفون فقط در تمرین گفتاری و گفتگو، با اجازهٔ خودتان، به کار می‌رود؛ صدا روی همان دستگاه شنیده و سنجیده می‌شود، ذخیره نمی‌شود و جایی فرستاده نمی‌شود.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
@@ -628,7 +628,7 @@ private fun InfoPageBody(page: InfoPage, onOpenStorePage: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = "برای حذف کامل دادهٔ یادگیری، از گزینهٔ «پاک‌سازی پیشرفت و شروع دوباره» در همین صفحه استفاده کنید؛ نمونهٔ صدای ضبط‌شده و گفتگوهای انجام‌شده هم با همان گزینه پاک می‌شوند.",
+                    text = "برای حذف کامل دادهٔ یادگیری، از گزینهٔ «پاک‌سازی پیشرفت و شروع دوباره» در همین صفحه استفاده کنید؛ نمونهٔ صدایی که نسخه‌های قدیمی‌تر ضبط می‌کردند و گفتگوهای انجام‌شده هم با همان گزینه پاک می‌شوند.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }

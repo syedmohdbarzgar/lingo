@@ -78,12 +78,15 @@ import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.CorrectBanner
 import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.IncorrectBanner
+import org.token.english.core.designsystem.component.InfoBanner
+import org.token.english.core.designsystem.component.OutlinedActionButton
 import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.StepChange
 import org.token.english.core.designsystem.component.stepChange
 import org.token.english.di.lessonViewModelFactory
+import org.token.english.domain.engine.SpeakingVerdict
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
@@ -282,6 +285,30 @@ private fun ExerciseContent(
     } else {
         null
     }
+    // The microphone, asked for once per screen: the speaking card shows the
+    // sentence and what was heard, and the shared action row below owns the button.
+    // Hoisted here because both need the launcher and the refusal flag.
+    var micRefused by remember { mutableStateOf(false) }
+    val micPermission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        micRefused = !granted
+        if (granted) onEvent(LessonEvent.StartTake)
+    }
+    val micGranted: () -> Boolean = {
+        ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.RECORD_AUDIO,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+    val startTake: () -> Unit = {
+        if (micGranted()) {
+            onEvent(LessonEvent.StartTake)
+        } else {
+            // Asked here, not at app start: the microphone belongs to this card.
+            micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        }
+    }
     // A new question starts at the top. The card fades in, so it must not fade in at
     // the offset the reader had scrolled the previous question to — the animation would
     // be revealing a line they cannot see the start of.
@@ -467,42 +494,22 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.Speaking -> {
-                    // Offline speaking practice: model from TTS, own take recorded
-                    // and played back for comparison. Nothing is graded or uploaded.
-                    SectionHeader("تمرین مکالمه")
-                    val context = LocalContext.current
-                    var permissionRefused by remember { mutableStateOf(false) }
-                    val micPermission = rememberLauncherForActivityResult(
-                        ActivityResultContracts.RequestPermission(),
-                    ) { granted ->
-                        permissionRefused = !granted
-                        if (granted) onEvent(LessonEvent.StartRecording)
-                    }
+                    // Speaking practice, graded offline: the model sentence from TTS,
+                    // then the learner's own take through the on-device recogniser.
+                    // Nothing is recorded to disk, uploaded or sent anywhere — the
+                    // verdict is formed on this phone (docs/connectivity.md).
+                    SectionHeader("تمرین گفتار")
                     SpeakingCard(
                         modelSentence = exercise.referenceAnswers.firstOrNull().orEmpty(),
                         promptFa = exercise.prompt,
                         isPlayingModel = state.isPlaying,
-                        isRecording = state.isRecording,
-                        hasRecording = state.hasRecording,
-                        isPlayingRecording = state.isPlayingRecording,
-                        recordingFailed = permissionRefused || state.recordingFailed,
+                        isListening = state.isListening,
+                        isPreparing = state.isPreparing,
+                        heardPartial = state.heardPartial,
+                        heardText = state.heardText,
+                        unheard = state.unheard,
+                        interrupted = micRefused || state.recordingFailed,
                         onPlayModel = { onEvent(LessonEvent.SpeakText(exercise.referenceAnswers.firstOrNull().orEmpty())) },
-                        onStartRecording = {
-                            val granted = ContextCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.RECORD_AUDIO,
-                            ) == PackageManager.PERMISSION_GRANTED
-                            if (granted) {
-                                onEvent(LessonEvent.StartRecording)
-                            } else {
-                                // Asked from the card itself: nothing else in the app
-                                // touches the microphone, so no global prompt.
-                                micPermission.launch(Manifest.permission.RECORD_AUDIO)
-                            }
-                        },
-                        onStopRecording = { onEvent(LessonEvent.StopRecording) },
-                        onPlayRecording = { onEvent(LessonEvent.PlayRecording) },
-                        onStopPlayback = { onEvent(LessonEvent.StopRecordingPlayback) },
                     )
                 }
             }
@@ -511,48 +518,74 @@ private fun ExerciseContent(
             // dead (the compiler said so) and hid which branch actually runs.
             val outcome = state.outcome
             if (outcome != null) {
-                // Speaking is self-assessed: no recogniser ran, so a green
-                // "correct" banner would claim evidence the app does not have.
-                if (outcome.correct && exercise !is Exercise.Speaking) {
-                    CorrectBanner(Modifier.fillMaxWidth())
-                    // A production item has many valid sentences, so passing
-                    // only means *a* valid wording — show the authored model
-                    // answer too, pass or fail (checklist B-10).
-                    if (exercise is Exercise.SentenceProduction) {
-                        ModelAnswer(outcome.correctAnswer)
-                    }
-                } else if (outcome.correct) {
-                    // Speaking: nothing to show — the card already holds the
-                    // model sentence and the compare hint.
-                } else {
-                    IncorrectBanner(
+                // A spoken item has three outcomes, not two: the sentence said back,
+                // the sentence said with a slip, and a take the scorer could not match.
+                // None of them is a spelling slip, so the A-2 copy never applies here.
+                val verdict = outcome.spokenVerdict
+                when {
+                    exercise is Exercise.Speaking && verdict == null -> InfoBanner(
                         modifier = Modifier.fillMaxWidth(),
-                        message = if (outcome.almostCorrect) {
-                            // A-2: one edit away — actionable spelling feedback
-                            // instead of a bare miss (still graded wrong).
-                            "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
-                        } else {
-                            "پاسخ درست: ${outcome.correctAnswer}"
-                        },
+                        message = "این جمله بدون سنجش پذیرفته شد — میکروفون یا مدل گفتار در دسترس نبود.",
                     )
-                    // A short explanation after a miss: the authored one if the
-                    // content has it, otherwise the lesson's grammar tip (P4).
-                    val explanation = exercise.explanation
-                        // First section only — the multi-section A-8 text must not
-                        // be dumped wholesale after a miss (summary = rule section).
-                        ?: state.lesson?.grammarSummary?.takeIf {
-                            AnswerChecker.skillOf(exercise) == Skill.GRAMMAR
-                        }
-                    explanation?.let { tip ->
-                        Text(
-                            text = "نکته: $tip",
-                            // Long mixed tips wrap across lines — keep the
-                            // paragraph pinned to RTL for stable bidi wrapping.
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+
+                    verdict == SpeakingVerdict.NEAR -> InfoBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        message = "نزدیک بود! جمله تقریباً گفته شد: «${state.heardText}»",
+                    )
+
+                    verdict == SpeakingVerdict.RETRY -> {
+                        IncorrectBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            message = "آنچه شنیدم با جملهٔ نمونه هم‌خوان نبود: «${state.heardText}» — " +
+                                "دوباره بگو یا ادامه بده؛ جمله: ${outcome.correctAnswer}",
                         )
+                        OutlinedActionButton(
+                            text = "دوباره بگو",
+                            onClick = { onEvent(LessonEvent.RetryTake) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+
+                    outcome.correct -> {
+                        CorrectBanner(Modifier.fillMaxWidth())
+                        // A production item has many valid sentences, so passing
+                        // only means *a* valid wording — show the authored model
+                        // answer too, pass or fail (checklist B-10).
+                        if (exercise is Exercise.SentenceProduction) {
+                            ModelAnswer(outcome.correctAnswer)
+                        }
+                    }
+
+                    else -> {
+                        IncorrectBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            message = if (outcome.almostCorrect) {
+                                // A-2: one edit away — actionable spelling feedback
+                                // instead of a bare miss (still graded wrong).
+                                "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
+                            } else {
+                                "پاسخ درست: ${outcome.correctAnswer}"
+                            },
+                        )
+                        // A short explanation after a miss: the authored one if the
+                        // content has it, otherwise the lesson's grammar tip (P4).
+                        val explanation = exercise.explanation
+                            // First section only — the multi-section A-8 text must not
+                            // be dumped wholesale after a miss (summary = rule section).
+                            ?: state.lesson?.grammarSummary?.takeIf {
+                                AnswerChecker.skillOf(exercise) == Skill.GRAMMAR
+                            }
+                        explanation?.let { tip ->
+                            Text(
+                                text = "نکته: $tip",
+                                // Long mixed tips wrap across lines — keep the
+                                // paragraph pinned to RTL for stable bidi wrapping.
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                                ),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
             }
@@ -560,11 +593,43 @@ private fun ExerciseContent(
 
         if (state.outcome == null) {
             if (exercise is Exercise.Speaking) {
-                PrimaryButton(
-                    text = "ادامه",
-                    onClick = { onEvent(LessonEvent.FinishSpeaking) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                // One action row for the take, the way every other item has one: the
+                // card holds the sentence and what was heard, the button holds the mic.
+                when {
+                    state.isListening -> PrimaryButton(
+                        text = "پایان پاسخ",
+                        onClick = { onEvent(LessonEvent.StopTake) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    state.isPreparing -> PrimaryButton(
+                        text = "در حال آماده‌سازی…",
+                        onClick = {},
+                        enabled = false,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    state.recordingFailed -> {
+                        PrimaryButton(
+                            text = "ادامه بدون سنجش",
+                            onClick = { onEvent(LessonEvent.ContinueUnassessed) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        OutlinedActionButton(
+                            text = "تلاش دوباره",
+                            onClick = startTake,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+
+                    else -> PrimaryButton(
+                        // A take that produced no words asks for the mic again, not
+                        // for a verdict the app does not have.
+                        text = if (state.unheard) "دوباره بگو" else "شروع پاسخ",
+                        onClick = startTake,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             } else {
                 val canSubmit = when (exercise) {
                     is Exercise.MultipleChoice -> state.selectedOption != null
