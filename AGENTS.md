@@ -147,8 +147,14 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (728 tests / 79 classes as of the
-B1/B2-hard-choice pass, where the last 42 lessons whose choices were glosses got the hard item they
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (729 tests / 79 classes as of the
+word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
+lessons (A1 16, A2 15, B1 28, B2 22, C1 31, C2 21) were met in the word list and then not again
+until the review queue, so each got a `word_recall` in its own lesson, built from the entry's own
+authored `translation` and `explanationFa` — nothing invented — and one new `VocabularyContentTest`
+case makes it structural: every word a lesson ships must appear (inflection-tolerant, with the
+existing irregular allowlist) in that lesson's exercise English **or** be one of their accepted
+answers (3014 → 3147 exercises, bundle v78). Before it the B1/B2-hard-choice pass, where the last 42 lessons whose choices were glosses got the hard item they
 were missing: 20 B1 and 22 B2 lessons shipped three «What does X mean?» choices, every one authored
 1, so the selector had nothing to move to. Each got an item at 3 that reads the lesson's
 own **grammar** node in its own vocabulary (`A transfer fee of five dollars is charged`, `had

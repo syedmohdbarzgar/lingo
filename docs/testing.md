@@ -89,8 +89,14 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 728 tests / 79 classes as of
-  the B1/B2-hard-choice pass, where the last 42 flat lessons got the item they were missing: v76's own
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 729 tests / 79 classes as of
+  the word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
+  lessons appeared in the word list and then not again until the review queue, so each got a
+  `word_recall` in its own lesson (cue from the entry's authored `translation`, explanation from its
+  authored `explanationFa` — nothing invented), and one new `VocabularyContentTest` case makes the
+  rule structural: every word a lesson ships must appear (inflection-tolerant, with the existing
+  irregular allowlist) in that lesson's exercise English **or** be one of their accepted answers
+  (3014 → 3147 exercises, bundle v78). Before it the B1/B2-hard-choice pass, where the last 42 flat lessons got the item they were missing: v76's own
   measurement left 20 B1 and 22 B2 lessons whose whole choice population was a gloss at 1, with the
   hard item in a blank, a translation or a production — so recognition could not be steered there.
   Each got one item at 3 that reads the lesson's own **grammar** node in the lesson's own vocabulary,
@@ -337,7 +343,8 @@
   boundaries, reinstall restore, store-truth reconciliation, and Myket's fixed-length
   `flatPeriodExpiry` reinstall restore — 30/365 flat days from the owned purchase time), `KnowledgeGraphTest` (curriculum
   graph), `ContentSeederTest` / `ContentDistributionTest` (content pipeline) /
-  `VocabularyContentTest` (example-contains-word + same-lesson distractors), `ContentValidationTest`
+  `VocabularyContentTest` (example-contains-word, every shipped word asked in its own lesson,
+  same-lesson distractors), `ContentValidationTest`
   (the content gate itself: the shared buildSrc `ContentValidator` on the real bundle, plus
   mutation fixtures proving each rule fails — and, since v64, one fixture per semantic rule: an item
   whose stem spells its own answer, an `accepted` model under the item's own `minWords`, a listening

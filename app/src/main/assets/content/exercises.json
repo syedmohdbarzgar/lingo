@@ -1,5 +1,5 @@
 {
-  "contentVersion": 77,
+  "contentVersion": 78,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -13730,6 +13730,19 @@
       "explanationFa": "روزهای هفته با on می‌آیند: on Saturday."
     },
     {
+      "id": "a1.spelling.ex.09",
+      "lessonId": "a1.spelling.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "دوتایی",
+      "accepted": [
+        "double"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "حرف تکراری؛ در هجی‌کردن می‌گوییم double L یعنی دو تا L."
+    },
+    {
       "id": "a1.numbers.lesson-01.dlg.01",
       "lessonId": "a1.numbers.lesson-01",
       "order": 25,
@@ -13818,6 +13831,19 @@
       "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "ده و ده می‌شود twenty یعنی بیست؛ twelve دوازده است و two و hundred عدد دیگری‌اند."
+    },
+    {
+      "id": "a1.numbers.ex.10",
+      "lessonId": "a1.numbers.lesson-01",
+      "type": "word_recall",
+      "order": 30,
+      "difficulty": 2,
+      "prompt": "صفر",
+      "accepted": [
+        "zero"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "عدد ۰؛ در شماره‌تلفن محاوره‌ای «o» هم گفته می‌شود."
     },
     {
       "id": "a1.greetings.lesson-01.dlg.01",
@@ -14036,6 +14062,19 @@
       "explanationFa": "every + روز، تکرار منظم را نشان می‌دهد."
     },
     {
+      "id": "a1.family.ex.11",
+      "lessonId": "a1.family.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "دختر",
+      "accepted": [
+        "daughter"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دخترِ فرزند؛ دقیق‌تر از girl است."
+    },
+    {
       "id": "a1.shopping.lesson-01.dlg.01",
       "lessonId": "a1.shopping.lesson-01",
       "order": 12,
@@ -14108,6 +14147,19 @@
       "explanationFa": "برای پرسیدن پرداخت با کارت از Can I pay by card استفاده کن."
     },
     {
+      "id": "a1.shopping.ex.12",
+      "lessonId": "a1.shopping.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "تخفیف",
+      "accepted": [
+        "discount"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تخفیف؛ با get a discount می‌آید."
+    },
+    {
       "id": "a1.introductions.lesson-01.dlg.01",
       "lessonId": "a1.introductions.lesson-01",
       "order": 11,
@@ -14178,6 +14230,45 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "وقتی کسی معرفی می‌شود، پاسخ کوتاه و مؤدبانه کافی است."
+    },
+    {
+      "id": "a1.introductions.ex.11",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "جدید",
+      "accepted": [
+        "new"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "جدید؛ با brand new یعنی «کاملاً نو»."
+    },
+    {
+      "id": "a1.introductions.ex.12",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "کار کردن",
+      "accepted": [
+        "work"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "کار کردن؛ با work as + شغل می‌آید."
+    },
+    {
+      "id": "a1.introductions.ex.13",
+      "lessonId": "a1.introductions.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "زندگی کردن",
+      "accepted": [
+        "live"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "زندگی کردن؛ با live in + مکان می‌آید."
     },
     {
       "id": "a1.weather.lesson-01.dlg.01",
@@ -14396,6 +14487,19 @@
       "explanationFa": "people خودش جمع است؛ peoples غلط است."
     },
     {
+      "id": "a1.plurals.ex.09",
+      "lessonId": "a1.plurals.lesson-01",
+      "type": "word_recall",
+      "order": 13,
+      "difficulty": 2,
+      "prompt": "پا",
+      "accepted": [
+        "foot"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پا؛ جمعش بی‌قاعده است: feet."
+    },
+    {
       "id": "a1.pronouns.lesson-01.dlg.01",
       "lessonId": "a1.pronouns.lesson-01",
       "order": 9,
@@ -14468,6 +14572,45 @@
       "explanationFa": "mine و my را با هم اشتباه نگیر: my + اسم، mine تنها."
     },
     {
+      "id": "a1.pronouns.ex.09",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "word_recall",
+      "order": 13,
+      "difficulty": 2,
+      "prompt": "برادر",
+      "accepted": [
+        "brother"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برادر؛ با twin brother."
+    },
+    {
+      "id": "a1.pronouns.ex.10",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "word_recall",
+      "order": 14,
+      "difficulty": 2,
+      "prompt": "پزشک، دکتر",
+      "accepted": [
+        "doctor"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پزشک؛ با see a doctor."
+    },
+    {
+      "id": "a1.pronouns.ex.11",
+      "lessonId": "a1.pronouns.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "دانش‌آموز، دانشجو",
+      "accepted": [
+        "student"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دانش‌آموز یا دانشجو؛ با exchange student."
+    },
+    {
       "id": "a1.can.lesson-01.dlg.01",
       "lessonId": "a1.can.lesson-01",
       "order": 9,
@@ -14538,6 +14681,19 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "برای قرار قطعی از will استفاده کن."
+    },
+    {
+      "id": "a1.can.ex.09",
+      "lessonId": "a1.can.lesson-01",
+      "type": "word_recall",
+      "order": 13,
+      "difficulty": 2,
+      "prompt": "دویدن",
+      "accepted": [
+        "run"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دویدن؛ با go for a run."
     },
     {
       "id": "a1.imperatives.lesson-01.dlg.01",
@@ -15294,6 +15450,19 @@
       "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "cook یعنی «آشپز»؛ doctor پزشک، driver راننده و farmer کشاورز است."
+    },
+    {
+      "id": "a1.jobs.ex.11",
+      "lessonId": "a1.jobs.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "معلم",
+      "accepted": [
+        "teacher"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "teacher از teach ساخته شده؛ پسوند -er یعنی «کسی که ... می‌کند»."
     },
     {
       "id": "a1.belongings.lesson-01.dlg.01",
@@ -22108,6 +22277,19 @@
       "explanationFa": "a table by the window یعنی «میز کنار پنجره»؛ could we…? درخواست مؤدبانه است."
     },
     {
+      "id": "a2.restaurant.ex.17",
+      "lessonId": "a2.restaurant.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "پیشخدمت",
+      "accepted": [
+        "waiter"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پیشخدمتِ مرد؛ برای زن waitress به کار می‌رود."
+    },
+    {
       "id": "a2.directions.lesson-01.dlg.05",
       "lessonId": "a2.directions.lesson-01",
       "type": "speaking",
@@ -22160,6 +22342,32 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "plenty of water یعنی «آب زیاد»؛ rest فعل و اسم است."
+    },
+    {
+      "id": "a2.health.ex.14",
+      "lessonId": "a2.health.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "نسخه پزشک",
+      "accepted": [
+        "prescription"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "نسخهٔ پزشک؛ با write یا fill a prescription."
+    },
+    {
+      "id": "a2.health.ex.15",
+      "lessonId": "a2.health.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "بهبود یافتن",
+      "accepted": [
+        "recover"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "بهبود یافتن؛ با recover from + بیماری می‌آید."
     },
     {
       "id": "a2.hobbies.lesson-01.dlg.05",
@@ -22250,6 +22458,32 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "Please do یعنی «حتماً این کار را بکن»؛ earlier یعنی «زودتر»."
+    },
+    {
+      "id": "a2.past-simple.ex.11",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "خوردن",
+      "accepted": [
+        "eat"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خوردن؛ گذشته‌اش بی‌قاعده است: ate."
+    },
+    {
+      "id": "a2.past-simple.ex.12",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "گرفتن، برداشتن",
+      "accepted": [
+        "take"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "گرفتن و برداشتن؛ گذشته‌اش بی‌قاعده است: took."
     },
     {
       "id": "a2.hotel-booking.lesson-01.dlg.05",
@@ -22376,6 +22610,19 @@
       "correctIndex": 0,
       "skill": "VOCABULARY",
       "explanationFa": "key card یعنی «کارت‌کلید» و در را باز می‌کند؛ reception پذیرش، lift آسانسور و breakfast صبحانه است."
+    },
+    {
+      "id": "a2.hotel-checkin.ex.11",
+      "lessonId": "a2.hotel-checkin.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "پذیرش",
+      "accepted": [
+        "check-in"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "check-in اسم است؛ check in بدون خط تیره فعل است: we check in at two."
     },
     {
       "id": "a2.train-bus.lesson-01.dlg.05",
@@ -22594,6 +22841,32 @@
       "explanationFa": "refund یعنی «بازپرداخت پول»؛ receipt رسید، guarantee ضمانت و faulty معیوب است — جمله تعمیر را رد می‌کند، پس پول برمی‌گردد."
     },
     {
+      "id": "a2.returns.ex.11",
+      "lessonId": "a2.returns.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "جایگزین کردن",
+      "accepted": [
+        "replace"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "replace یعنی کالای نو جای کالای خراب؛ با with هم می‌آید: replace A with B."
+    },
+    {
+      "id": "a2.returns.ex.12",
+      "lessonId": "a2.returns.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "خرید",
+      "accepted": [
+        "purchase"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "purchase اسم رسمی‌تر «خرید» است؛ در گفتار روزمره buy رایج‌تر است."
+    },
+    {
       "id": "a2.payments.lesson-01.dlg.05",
       "lessonId": "a2.payments.lesson-01",
       "type": "speaking",
@@ -22664,6 +22937,19 @@
       "correctIndex": 2,
       "skill": "VOCABULARY",
       "explanationFa": "sore throat یعنی «گلودرد» و قورت دادن را به‌درد می‌آورد؛ headache سردرد است، cough سرفه و dizzy سرگیجه."
+    },
+    {
+      "id": "a2.symptoms.ex.11",
+      "lessonId": "a2.symptoms.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "درد",
+      "accepted": [
+        "pain"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "pain با in + عضو می‌آید: a pain in my back."
     },
     {
       "id": "a2.pharmacy.lesson-01.dlg.05",
@@ -23368,6 +23654,32 @@
       "explanationFa": "I appreciate that یعنی «قدرش را می‌دانم»؛ schedule یعنی «زمان‌بندی کردن»."
     },
     {
+      "id": "b1.work.ex.16",
+      "lessonId": "b1.work.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "حقوق",
+      "accepted": [
+        "salary"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "حقوق ثابت ماهانه؛ wage دستمزد ساعتی است."
+    },
+    {
+      "id": "b1.work.ex.17",
+      "lessonId": "b1.work.lesson-01",
+      "type": "word_recall",
+      "order": 23,
+      "difficulty": 2,
+      "prompt": "صلاحیت، مدرک تحصیلی",
+      "accepted": [
+        "qualification"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "مدرک و صلاحیت تحصیلی یا حرفه‌ای."
+    },
+    {
       "id": "b1.news.lesson-01.dlg.05",
       "lessonId": "b1.news.lesson-01",
       "type": "speaking",
@@ -23422,6 +23734,58 @@
       "explanationFa": "sort the hotel یعنی «هتل را مرتب کردن»؛ tonight یعنی «امشب»."
     },
     {
+      "id": "b1.plans.ex.13",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "قصد داشتن",
+      "accepted": [
+        "intend"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "قصد داشتن؛ با intend to + فعل ساده می‌آید."
+    },
+    {
+      "id": "b1.plans.ex.14",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "برنامه زمانی",
+      "accepted": [
+        "schedule"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "برنامهٔ زمانی؛ behind schedule یعنی عقب از برنامه."
+    },
+    {
+      "id": "b1.plans.ex.15",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "ترتیب دادن، هماهنگ کردن",
+      "accepted": [
+        "arrange"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "arrange یعنی «هماهنگ کردن و ترتیب دادن» — تصمیم گرفتن بههمراه مشخص کردن جزئیات. با intend (قصد داشتن) و afford (توان مالی داشتن) اشتباه نشود."
+    },
+    {
+      "id": "b1.plans.ex.16",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "به احتمال زیاد",
+      "accepted": [
+        "probably"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "به احتمال زیاد؛ پیش از فعل اصلی می‌آید."
+    },
+    {
       "id": "b1.experiences.lesson-01.dlg.05",
       "lessonId": "b1.experiences.lesson-01",
       "type": "speaking",
@@ -23438,6 +23802,71 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "keep a copy یعنی «یک نسخه نگه داشتن»؛ backup plan یعنی «نقشهٔ جایگزین»."
+    },
+    {
+      "id": "b1.experiences.ex.10",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "به‌یادماندنی",
+      "accepted": [
+        "memorable"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "به‌یادماندنی؛ از ریشهٔ memory ساخته شده است."
+    },
+    {
+      "id": "b1.experiences.ex.11",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "یادگاری",
+      "accepted": [
+        "souvenir"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "یادگاری سفر؛ با bring back souvenirs می‌آید."
+    },
+    {
+      "id": "b1.experiences.ex.12",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "کاوش کردن",
+      "accepted": [
+        "explore"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "کاوش کردن؛ برای مکان و ایده هر دو به کار می‌رود."
+    },
+    {
+      "id": "b1.experiences.ex.13",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "ماجرا",
+      "accepted": [
+        "adventure"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ماجراجویی؛ با go on an adventure می‌آید."
+    },
+    {
+      "id": "b1.experiences.ex.14",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "در خارج از کشور",
+      "accepted": [
+        "abroad"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "در خارج از کشور؛ قید است و با in/to به کار نمی‌رود."
     },
     {
       "id": "b1.money.lesson-01.dlg.05",
@@ -23494,6 +23923,32 @@
       "explanationFa": "build from there یعنی «از همان‌جا گسترش بده»؛ doable یعنی «شدنی»."
     },
     {
+      "id": "b1.health-lifestyle.ex.11",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "عادت",
+      "accepted": [
+        "habit"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "عادت؛ با break/form a habit می‌آید."
+    },
+    {
+      "id": "b1.health-lifestyle.ex.12",
+      "lessonId": "b1.health-lifestyle.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "حذف کردن، جا انداختن",
+      "accepted": [
+        "skip"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "جا انداختن؛ با skip a meal."
+    },
+    {
       "id": "b2.technology.lesson-01.dlg.05",
       "lessonId": "b2.technology.lesson-01",
       "type": "speaking",
@@ -23530,6 +23985,45 @@
       "explanationFa": "Thanks for having me یعنی «ممنون که دعوتم کردید»؛ a pleasure «افتخار» است."
     },
     {
+      "id": "b2.technology.ex.11",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "منسوخ، قدیمی",
+      "accepted": [
+        "obsolete"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "منسوخ؛ با become obsolete می‌آید."
+    },
+    {
+      "id": "b2.technology.ex.12",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "حریم خصوصی (اطلاعات شخصی)",
+      "accepted": [
+        "privacy"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "حریم خصوصی؛ غیرقابل‌شمارش است."
+    },
+    {
+      "id": "b2.technology.ex.13",
+      "lessonId": "b2.technology.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "الگوریتم",
+      "accepted": [
+        "algorithm"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "الگوریتم؛ مجموعه‌ای از دستورهای محاسباتی برای حل یک مسئله."
+    },
+    {
       "id": "b2.environment.lesson-01.dlg.05",
       "lessonId": "b2.environment.lesson-01",
       "type": "speaking",
@@ -23546,6 +24040,58 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "pilot street یعنی «خیابان آزمایشی»؛ organise یعنی «هماهنگ کردن»."
+    },
+    {
+      "id": "b2.environment.ex.17",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "پایدار",
+      "accepted": [
+        "sustainable"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پایدار؛ sustainable development یعنی توسعهٔ پایدار."
+    },
+    {
+      "id": "b2.environment.ex.18",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "word_recall",
+      "order": 23,
+      "difficulty": 2,
+      "prompt": "حفاظت کردن، صرفه‌جویی",
+      "accepted": [
+        "conserve"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "حفاظت و صرفه‌جویی کردن؛ با conserve energy."
+    },
+    {
+      "id": "b2.environment.ex.19",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "word_recall",
+      "order": 24,
+      "difficulty": 2,
+      "prompt": "خطر، عامل زیان‌آور",
+      "accepted": [
+        "hazard"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "خطر و عامل زیان‌آور؛ با health hazard."
+    },
+    {
+      "id": "b2.environment.ex.20",
+      "lessonId": "b2.environment.lesson-01",
+      "type": "word_recall",
+      "order": 25,
+      "difficulty": 2,
+      "prompt": "تجدیدپذیر",
+      "accepted": [
+        "renewable"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تجدیدپذیر؛ با renewable energy."
     },
     {
       "id": "b2.interview.lesson-01.dlg.05",
@@ -23602,6 +24148,58 @@
       "explanationFa": "audience یعنی «مخاطب»؛ existing customers یعنی «مشتریان فعلی»."
     },
     {
+      "id": "b2.media.ex.11",
+      "lessonId": "b2.media.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "کمپین",
+      "accepted": [
+        "campaign"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "کمپین؛ با launch a campaign می‌آید."
+    },
+    {
+      "id": "b2.media.ex.12",
+      "lessonId": "b2.media.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "پوشش خبری",
+      "accepted": [
+        "coverage"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "coverage یعنی «پوشش خبری» یک رویداد؛ bias (سوگیری) دربارهٔ جهتگیری خبر است و در درس پژوهش میآید. این دو با هم اشتباه نشوند."
+    },
+    {
+      "id": "b2.media.ex.13",
+      "lessonId": "b2.media.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "شعار تبلیغاتی",
+      "accepted": [
+        "slogan"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "شعار تبلیغاتی؛ جمله‌ای کوتاه و به‌یادماندنی."
+    },
+    {
+      "id": "b2.media.ex.14",
+      "lessonId": "b2.media.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "تأثیر گذاشتن",
+      "accepted": [
+        "influence"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تأثیر گذاشتن؛ هم فعل است و هم اسم."
+    },
+    {
       "id": "b2.problems.lesson-01.dlg.05",
       "lessonId": "b2.problems.lesson-01",
       "type": "speaking",
@@ -23636,6 +24234,19 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "as soon as it ships یعنی «به‌محض ارسال»؛ sorting it out یعنی «حلش کردی»."
+    },
+    {
+      "id": "b2.problems.ex.14",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "ضمانت، گارانتی",
+      "accepted": [
+        "warranty"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "warranty یعنی ضمانتِ کالا و معمولاً با under warranty میآید؛ guarantee عمومیتر است و برای هر وعدهٔ قطعی به کار میرود."
     },
     {
       "id": "b2.research.lesson-01.dlg.05",
@@ -23692,6 +24303,58 @@
       "explanationFa": "reviewers یعنی «داوران»؛ satisfy یعنی «قانع کردن»."
     },
     {
+      "id": "c1.academic.ex.15",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "روش‌شناسی",
+      "accepted": [
+        "methodology"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "روش‌شناسی؛ نظام روش‌های یک پژوهش."
+    },
+    {
+      "id": "c1.academic.ex.16",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "ارجاع دادن، نقل قول کردن",
+      "accepted": [
+        "cite"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ارجاع دادن؛ با cite a source می‌آید."
+    },
+    {
+      "id": "c1.academic.ex.17",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "word_recall",
+      "order": 23,
+      "difficulty": 2,
+      "prompt": "نوشتار نمادین، علائم قراردادی",
+      "accepted": [
+        "notation"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "نمادگذاری قراردادی؛ مانند mathematical notation."
+    },
+    {
+      "id": "c1.academic.ex.18",
+      "lessonId": "c1.academic.lesson-01",
+      "type": "word_recall",
+      "order": 24,
+      "difficulty": 2,
+      "prompt": "قابل توجه، چشمگیر",
+      "accepted": [
+        "substantial"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "چشمگیر و قابل توجه؛ با substantial evidence."
+    },
+    {
       "id": "c1.persuasion.lesson-01.dlg.05",
       "lessonId": "c1.persuasion.lesson-01",
       "type": "speaking",
@@ -23746,6 +24409,32 @@
       "explanationFa": "Let's do that یعنی «بیا همین کار را بکنیم»؛ over coffee یعنی «همراه قهوه»."
     },
     {
+      "id": "c1.culture.ex.10",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "کلیشه، قالب ذهنی",
+      "accepted": [
+        "stereotype"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "کلیشه؛ با break a stereotype می‌آید."
+    },
+    {
+      "id": "c1.culture.ex.11",
+      "lessonId": "c1.culture.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "روایت",
+      "accepted": [
+        "narrative"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "روایت؛ ساختار داستان‌گویی."
+    },
+    {
       "id": "c1.phrasal-idioms.lesson-01.dlg.05",
       "lessonId": "c1.phrasal-idioms.lesson-01",
       "type": "speaking",
@@ -23780,6 +24469,45 @@
       "correctIndex": 0,
       "explanationFa": "fall through یعنی انجام نشدن و شکست خوردن؛ fall off و fall out و fall over این معنی را نمی‌دهند.",
       "skill": "VOCABULARY"
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.11",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "به طور اتفاقی پیدا کردن",
+      "accepted": [
+        "come across"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "اتفاقی پیدا کردن؛ با come across as یعنی «به نظر رسیدن»."
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.12",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "بی‌مجازات ماندن",
+      "accepted": [
+        "get away with"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "بی‌مجازات ماندن؛ با get away with it."
+    },
+    {
+      "id": "c1.phrasal-idioms.ex.13",
+      "lessonId": "c1.phrasal-idioms.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "پیش کشیدن (موضوع)",
+      "accepted": [
+        "bring up"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پیش کشیدن موضوع؛ با bring up a topic."
     },
     {
       "id": "c1.inference.lesson-01.dlg.05",
@@ -23836,6 +24564,58 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.inference.ex.12",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "فرض، پیش‌فرض",
+      "accepted": [
+        "assumption"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "فرض و پیش‌فرض؛ با make an assumption."
+    },
+    {
+      "id": "c1.inference.ex.13",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "ابهام",
+      "accepted": [
+        "ambiguity"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ابهام؛ با remove ambiguity."
+    },
+    {
+      "id": "c1.inference.ex.14",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "اغراق کردن، بیش از حد بزرگ‌نمایی کردن",
+      "accepted": [
+        "overstate"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "اغراق کردن؛ نقطهٔ مقابلش understate است."
+    },
+    {
+      "id": "c1.inference.ex.15",
+      "lessonId": "c1.inference.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "ناگفته",
+      "accepted": [
+        "unspoken"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ناگفته؛ با unspoken rule."
+    },
+    {
       "id": "c1.register.lesson-01.dlg.05",
       "lessonId": "c1.register.lesson-01",
       "type": "speaking",
@@ -23852,6 +24632,32 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "Still too formal یعنی «هنوز زیادی رسمی»؛ closing یعنی «پایان نامه»."
+    },
+    {
+      "id": "c1.register.ex.09",
+      "lessonId": "c1.register.lesson-01",
+      "type": "word_recall",
+      "order": 14,
+      "difficulty": 2,
+      "prompt": "محاوره‌ای",
+      "accepted": [
+        "colloquial"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "محاوره‌ای؛ مناسب گفتار غیررسمی."
+    },
+    {
+      "id": "c1.register.ex.10",
+      "lessonId": "c1.register.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "ادب، نزاکت",
+      "accepted": [
+        "courtesy"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ادب و نزاکت؛ با common courtesy."
     },
     {
       "id": "c1.cohesion.lesson-01.dlg.05",
@@ -23980,6 +24786,32 @@
       "explanationFa": "response letter یعنی «نامهٔ پاسخ به داوران»؛ in advance یعنی «از پیش»."
     },
     {
+      "id": "c2.science.ex.12",
+      "lessonId": "c2.science.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "متغیر",
+      "accepted": [
+        "variable"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "متغیر؛ در پژوهش چیزی که تغییر می‌کند."
+    },
+    {
+      "id": "c2.science.ex.13",
+      "lessonId": "c2.science.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "دقیق",
+      "accepted": [
+        "precise"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دقیق؛ با precise wording."
+    },
+    {
       "id": "c2.literature.lesson-01.dlg.05",
       "lessonId": "c2.literature.lesson-01",
       "type": "speaking",
@@ -23996,6 +24828,45 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "warn the class یعنی «به کلاس هشدار دادن»؛ aloud یعنی «بلند»."
+    },
+    {
+      "id": "c2.literature.ex.09",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "word_recall",
+      "order": 14,
+      "difficulty": 2,
+      "prompt": "پیش‌درآمد، نشانه آینده",
+      "accepted": [
+        "foreshadowing"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "پیش‌درآمد؛ نشانه‌ای از رویداد آیندهٔ داستان."
+    },
+    {
+      "id": "c2.literature.ex.10",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "تصویرسازی",
+      "accepted": [
+        "imagery"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تصویرسازی زبانی؛ با vivid imagery."
+    },
+    {
+      "id": "c2.literature.ex.11",
+      "lessonId": "c2.literature.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "استعاره",
+      "accepted": [
+        "metaphor"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "استعاره؛ با extended metaphor."
     },
     {
       "id": "c2.argumentation.lesson-01.dlg.05",
@@ -24052,6 +24923,58 @@
       "explanationFa": "collocation یعنی «هم‌نشینی واژه»؛ where they belong یعنی «در جای خودشان»."
     },
     {
+      "id": "c2.collocation.ex.09",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "word_recall",
+      "order": 14,
+      "difficulty": 2,
+      "prompt": "هم‌نشین شدن",
+      "accepted": [
+        "collocate"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "هم‌نشین شدن؛ با collocate with."
+    },
+    {
+      "id": "c2.collocation.ex.10",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "واژگانی",
+      "accepted": [
+        "lexical"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "واژگانی؛ مربوط به واژه‌ها و گنجینهٔ واژگان."
+    },
+    {
+      "id": "c2.collocation.ex.11",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "اصطلاحی، طبیعی",
+      "accepted": [
+        "idiomatic"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "اصطلاحی و طبیعی؛ با idiomatic English."
+    },
+    {
+      "id": "c2.collocation.ex.12",
+      "lessonId": "c2.collocation.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "دقت (در انتخاب واژه)",
+      "accepted": [
+        "precision"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دقت؛ با with precision."
+    },
+    {
       "id": "c2.irony.lesson-01.dlg.05",
       "lessonId": "c2.irony.lesson-01",
       "type": "speaking",
@@ -24086,6 +25009,32 @@
       ],
       "skill": "SPEAKING",
       "explanationFa": "as long as یعنی «به شرطی که»؛ straight version یعنی «نسخهٔ صریح»."
+    },
+    {
+      "id": "c2.irony.ex.09",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "با چهرهٔ بی‌احساس",
+      "accepted": [
+        "deadpan"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "با چهرهٔ بی‌احساس؛ طنزِ خشک."
+    },
+    {
+      "id": "c2.irony.ex.10",
+      "lessonId": "c2.irony.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "شوخ‌طبع و نامناسب",
+      "accepted": [
+        "facetious"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "شوخ‌طبع اما نامناسبِ موقعیت."
     },
     {
       "id": "b1.personal-background.ex.01",
@@ -24870,6 +25819,19 @@
       "explanationFa": "نمره‌دهی را استادان انجام می‌دهند، نه خودِ تمرین، پس مجهول است: is marked. marks و is marking فعال‌اند (assignment نمی‌تواند نمره بدهد) و has marking ساختار ندارد."
     },
     {
+      "id": "b1.university.ex.11",
+      "lessonId": "b1.university.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "مدرک دانشگاهی",
+      "accepted": [
+        "degree"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "a degree in + رشته می‌آید: a degree in law."
+    },
+    {
       "id": "b1.new-skills.ex.01",
       "lessonId": "b1.new-skills.lesson-01",
       "type": "multiple_choice",
@@ -25402,6 +26364,19 @@
       "explanationFa": "کاری که در جریان بود و رویداد دیگری آن را قطع کرد گذشتهٔ استمراری است: were waiting … when … cancelled. waited ترتیب را از دست می‌دهد، have waited به حالا وصل است و had waiting ساختار ندارد."
     },
     {
+      "id": "b1.travel-problems.ex.11",
+      "lessonId": "b1.travel-problems.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "مطالبه کردن؛ تحویل گرفتن",
+      "accepted": [
+        "claim"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "claim در فرودگاه یعنی «بار را تحویل گرفتن» و در بیمه یعنی «مطالبه کردن»."
+    },
+    {
       "id": "b1.cultural-differences.ex.01",
       "lessonId": "b1.cultural-differences.lesson-01",
       "type": "multiple_choice",
@@ -25666,6 +26641,19 @@
       "correctIndex": 0,
       "skill": "GRAMMAR",
       "explanationFa": "had better فعل ساده و بی‌to می‌گیرد: had better greet. to greet و greeting ساختار را می‌شکنند و greeted گذشته است، در حالی که این جمله دربارهٔ کار درست در همین لحظه است."
+    },
+    {
+      "id": "b1.cultural-differences.ex.11",
+      "lessonId": "b1.cultural-differences.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "رنجاندن",
+      "accepted": [
+        "offend"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "offend بدون to می‌آید: offend his host؛ صفت آن offended «رنجیده» است."
     },
     {
       "id": "b1.friendship.ex.01",
@@ -26714,6 +27702,19 @@
       "explanationFa": "در شرطی نوع اول، جملهٔ if حال ساده می‌گیرد و تنها جملهٔ اصلی will دارد: If you disagree …, we can … . will disagree و had disagreed ساختار را می‌شکنند و disagreed گذشته است، پس با now نمی‌آید."
     },
     {
+      "id": "b1.agreeing.ex.11",
+      "lessonId": "b1.agreeing.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "اشتباه",
+      "accepted": [
+        "wrong"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "wrong about چیزی: you are wrong about the price؛ متضاد آن right است."
+    },
+    {
       "id": "b1.storytelling.ex.01",
       "lessonId": "b1.storytelling.lesson-01",
       "type": "multiple_choice",
@@ -27244,6 +28245,19 @@
       "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "be going to + فعل ساده قصد را می‌گوید: am going to charge. am charge و going to charge فعل کمکی را جا می‌اندازند و charge to ترتیب را برمی‌گرداند."
+    },
+    {
+      "id": "b1.technology.ex.11",
+      "lessonId": "b1.technology.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "آنلاین",
+      "accepted": [
+        "online"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "online هم صفت است هم قید: an online course / work online."
     },
     {
       "id": "b1.social-media.ex.01",
@@ -29093,6 +30107,32 @@
       "explanationFa": "نتیجهٔ جمله with would be read آمده، پس شرطی نوع دوم است و جملهٔ if گذشتهٔ ساده می‌گیرد: found. finds و has found شرطی نوع اول می‌سازند و will find در جملهٔ if نمی‌آید."
     },
     {
+      "id": "b1.formal-emails.ex.11",
+      "lessonId": "b1.formal-emails.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "از صمیم قلب (در پایان نامه)",
+      "accepted": [
+        "sincerely"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "با نام مخاطب Yours sincerely و بدون نام Yours faithfully؛ بعد از آن ویرگول و نام خودت."
+    },
+    {
+      "id": "b1.formal-emails.ex.12",
+      "lessonId": "b1.formal-emails.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "بستن نامه؛ جملهٔ پایانی",
+      "accepted": [
+        "closing"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "closing در این درس بخش پایانی نامه است، نه «بستن مغازه» (closing time)."
+    },
+    {
       "id": "b1.presentation.ex.01",
       "lessonId": "b1.presentation.lesson-01",
       "type": "multiple_choice",
@@ -29358,6 +30398,19 @@
       "correctIndex": 2,
       "skill": "GRAMMAR",
       "explanationFa": "قصدی که پیش از این تصمیم گرفته شده با be going to + فعل ساده می‌آید: am going to rehearse. سه گزینهٔ دیگر be یا to را جا می‌اندازند و ساختار ناقص می‌سازند."
+    },
+    {
+      "id": "b1.presentation.ex.11",
+      "lessonId": "b1.presentation.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "تصویری؛ عنصر بصری",
+      "accepted": [
+        "visual"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "visual هم صفت است (visual aids) و هم در این درس اسم (a visual)."
     },
     {
       "id": "b1.meetings.ex.01",
@@ -29627,6 +30680,32 @@
       "explanationFa": "had better + فعل ساده: had better read. to read و reading نادرست‌اند و have read جمله را به گذشتهٔ کامل می‌برد، در حالی که هنوز جلسهٔ بعدی نیامده است."
     },
     {
+      "id": "b1.meetings.ex.11",
+      "lessonId": "b1.meetings.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "شرکت کردن",
+      "accepted": [
+        "attend"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "attend رسمی‌تر از go to است و مفعول مستقیم می‌گیرد، بدون حرف اضافه."
+    },
+    {
+      "id": "b1.meetings.ex.12",
+      "lessonId": "b1.meetings.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "خلاصه کردن",
+      "accepted": [
+        "summarize"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "املای بریتانیایی summarize و summARise هر دو رایج است؛ اسم آن summary است."
+    },
+    {
       "id": "b1.charts.ex.01",
       "lessonId": "b1.charts.lesson-01",
       "type": "multiple_choice",
@@ -29892,6 +30971,19 @@
       "correctIndex": 2,
       "skill": "GRAMMAR",
       "explanationFa": "با of the three مقایسه میان بیش از دو چیز است، پس صفت برترین با the می‌آید: the highest. higher مقایسهٔ دو چیز است و highest بدون the ناقص می‌ماند."
+    },
+    {
+      "id": "b1.charts.ex.11",
+      "lessonId": "b1.charts.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "کاهش یافتن",
+      "accepted": [
+        "decrease"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "متضاد increase است؛ مانند آن، تکیهٔ فعل و اسم فرق دارد."
     },
     {
       "id": "b1.goals.ex.01",
@@ -33580,6 +34672,19 @@
       "explanationFa": "مجهول با should چنین است: should be read یعنی «باید طنز خوانده شود». should read فاعلِ فعال می‌خواهد، should have read گذشته را سرزنش می‌کند و should be reading استمرارِ بی‌دلیل است."
     },
     {
+      "id": "b2.media-literacy.ex.11",
+      "lessonId": "b2.media-literacy.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "تبلیغات سیاسی",
+      "accepted": [
+        "propaganda"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "propaganda غیرقابل‌شمارش است و بار منفی دارد؛ با advertising فرق دارد."
+    },
+    {
       "id": "b2.persuasion.ex.01",
       "lessonId": "b2.persuasion.lesson-01",
       "type": "multiple_choice",
@@ -33845,6 +34950,19 @@
       "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "الگوی موازی the more … the less … است و هر دو نیمه with the می‌آیند: the less it appeals. less بدون the ناقص است، the least برترین است نه موازی، و lesser صفت است نه قید."
+    },
+    {
+      "id": "b2.persuasion.ex.11",
+      "lessonId": "b2.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "تأیید کردن؛ تبلیغ کردن برای",
+      "accepted": [
+        "endorse"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "endorse با مفعول مستقیم می‌آید؛ اسم آن endorsement است."
     },
     {
       "id": "b2.crisis.ex.01",
@@ -38083,6 +39201,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.economy.ex.11",
+      "lessonId": "c1.economy.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "مازاد",
+      "accepted": [
+        "surplus"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "surplus قابل‌شمارش است و متضاد deficit."
+    },
+    {
       "id": "c1.tech-ethics.ex.01",
       "lessonId": "c1.tech-ethics.lesson-01",
       "type": "multiple_choice",
@@ -39400,6 +40531,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.media-analysis.ex.11",
+      "lessonId": "c1.media-analysis.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "هم‌صدایی",
+      "accepted": [
+        "echo"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "echo هم اسم است و هم فعل؛ عبارت رایج echo chamber یعنی اتاق پژواک."
+    },
+    {
       "id": "c1.org-change.ex.01",
       "lessonId": "c1.org-change.lesson-01",
       "type": "multiple_choice",
@@ -39665,6 +40809,19 @@
       "correctIndex": 0,
       "explanationFa": "گذشتهٔ کامل مجهول برای کاری که پیش از رویداد دیگری کامل شده بود: had been closed.",
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.org-change.ex.11",
+      "lessonId": "c1.org-change.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "ادغام",
+      "accepted": [
+        "merger"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "merger قابل‌شمارش است؛ فعل آن merge با into: merge into one."
     },
     {
       "id": "c1.risk.ex.01",
@@ -40468,6 +41625,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.research-method.ex.11",
+      "lessonId": "c1.research-method.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "عامل مخدوش‌کننده",
+      "accepted": [
+        "confound"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "confound در این معنا اسم است؛ فعل آن به معنی «گیج کردن» است."
+    },
+    {
       "id": "c1.data-interpretation.ex.01",
       "lessonId": "c1.data-interpretation.lesson-01",
       "type": "multiple_choice",
@@ -40733,6 +41903,19 @@
       "correctIndex": 0,
       "explanationFa": "درجهٔ قید considerably است؛ considerable صفت است و پیش از stronger نمی‌آید.",
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.data-interpretation.ex.11",
+      "lessonId": "c1.data-interpretation.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "داشبورد",
+      "accepted": [
+        "dashboard"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "dashboard قابل‌شمارش است؛ در خودرو به معنی «داشبورد» هم به کار می‌رود."
     },
     {
       "id": "c1.org-culture.ex.01",
@@ -41787,6 +42970,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.business-sustainability.ex.11",
+      "lessonId": "c1.business-sustainability.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "تجزیه‌پذیر",
+      "accepted": [
+        "biodegradable"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "biodegradable با compostable یکی نیست؛ دومی به شرایط کمپوست نیاز دارد."
+    },
+    {
       "id": "c1.semantic-nuance.ex.01",
       "lessonId": "c1.semantic-nuance.lesson-01",
       "type": "multiple_choice",
@@ -42053,6 +43249,19 @@
       "correctIndex": 3,
       "explanationFa": "درجهٔ مقایسه با far less تقویت می‌شود؛ very less در انگلیسی معیار نیست.",
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.semantic-nuance.ex.11",
+      "lessonId": "c1.semantic-nuance.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "هم‌معنا",
+      "accepted": [
+        "synonym"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "synonym با for می‌آید: a synonym for this word."
     },
     {
       "id": "c1.argumentation.ex.01",
@@ -42323,6 +43532,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.argumentation.ex.11",
+      "lessonId": "c1.argumentation.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "مشروط کردن",
+      "accepted": [
+        "qualify"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "در این معنا qualify یعنی «محدود و مشروط کردن»، نه «واجد شرایط بودن»."
+    },
+    {
       "id": "c1.proposals.ex.01",
       "lessonId": "c1.proposals.lesson-01",
       "type": "multiple_choice",
@@ -42590,6 +43812,19 @@
       "skill": "GRAMMAR"
     },
     {
+      "id": "c1.proposals.ex.11",
+      "lessonId": "c1.proposals.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "مشخصات فنی",
+      "accepted": [
+        "specification"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "specification قابل‌شمارش است؛ در گفتار کوتاه‌شدهٔ spec رایج است."
+    },
+    {
       "id": "c1.stakeholders.ex.01",
       "lessonId": "c1.stakeholders.lesson-01",
       "type": "multiple_choice",
@@ -42855,6 +44090,19 @@
       "correctIndex": 3,
       "explanationFa": "در سؤال نقل‌شده ترتیب جمله خبری است و فعل به گذشتهٔ نقل برمی‌گردد: when the pilot would start.",
       "skill": "GRAMMAR"
+    },
+    {
+      "id": "c1.stakeholders.ex.11",
+      "lessonId": "c1.stakeholders.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "آهنگ تکرار",
+      "accepted": [
+        "cadence"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "cadence قابل‌شمارش است؛ در موسیقی هم به معنی «ضرباهنگ» است."
     },
     {
       "id": "c1.specialist-presentations.ex.01",
@@ -49364,6 +50612,32 @@
       "explanationFa": "capital letter یعنی «حرف بزرگ»؛ در انگلیسی حرف اولِ نام‌ها همیشه بزرگ نوشته می‌شود."
     },
     {
+      "id": "a1.alphabet.ex.09",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "حرف کوچک",
+      "accepted": [
+        "small letter"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "شکل کوچک و رایج حرف؛ در ایمیل و نشانی اینترنتی همه را کوچک می‌نویسیم."
+    },
+    {
+      "id": "a1.alphabet.ex.10",
+      "lessonId": "a1.alphabet.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "صدا",
+      "accepted": [
+        "sound"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "صدایی که می‌شنوی، جدا از نام حرف؛ نام B «بی» است ولی صدایش /b/ است."
+    },
+    {
       "id": "a1.articles.read.01",
       "lessonId": "a1.articles.lesson-01",
       "type": "multiple_choice",
@@ -49400,6 +50674,19 @@
       "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "جملهٔ آخر می‌گوید «the eggs are in the fridge» — fridge یعنی یخچال."
+    },
+    {
+      "id": "a1.articles.ex.09",
+      "lessonId": "a1.articles.lesson-01",
+      "type": "word_recall",
+      "order": 15,
+      "difficulty": 2,
+      "prompt": "ساعت (۶۰ دقیقه)",
+      "accepted": [
+        "hour"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ساعت (۶۰ دقیقه)؛ h در تلفظ خوانده نمی‌شود، پس an hour."
     },
     {
       "id": "a1.days-months.read.01",
@@ -49554,6 +50841,32 @@
       "explanationFa": "«you have gone too far» یعنی از مقصد گذشته‌اید؛ این جمله‌ٔ هشدارِ راهنماست."
     },
     {
+      "id": "a2.directions.ex.10",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "گوشه، چهارراه",
+      "accepted": [
+        "corner"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "گوشه و چهارراه؛ on the corner یعنی سرِ نبش."
+    },
+    {
+      "id": "a2.directions.ex.11",
+      "lessonId": "a2.directions.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "تقاطع",
+      "accepted": [
+        "intersection"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تقاطع؛ رسمی‌تر از crossroads است."
+    },
+    {
       "id": "a2.plane-ticket.read.01",
       "lessonId": "a2.plane-ticket.lesson-01",
       "type": "multiple_choice",
@@ -49590,6 +50903,19 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«Check-in closes forty minutes before departure» — قبل از پرواز، چهل دقیقه."
+    },
+    {
+      "id": "a2.plane-ticket.ex.10",
+      "lessonId": "a2.plane-ticket.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "شرکت هواپیمایی",
+      "accepted": [
+        "airline"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "airline از air و line ساخته شده و نام شرکت‌های هوایی با همین واژه می‌آید."
     },
     {
       "id": "a2.payments.read.01",
@@ -49630,6 +50956,32 @@
       "explanationFa": "«Keep the receipt: you need it for a refund» — receipt رسید و refund بازگرداندن پول است."
     },
     {
+      "id": "a2.payments.ex.10",
+      "lessonId": "a2.payments.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "پول خرد",
+      "accepted": [
+        "change"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "change در این معنی غیرقابل‌شمارش است."
+    },
+    {
+      "id": "a2.payments.ex.11",
+      "lessonId": "a2.payments.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "مبلغ",
+      "accepted": [
+        "amount"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "amount با اسم غیرقابل‌شمارش می‌آید: an amount of money."
+    },
+    {
       "id": "a2.emails.read.01",
       "lessonId": "a2.emails.lesson-01",
       "type": "multiple_choice",
@@ -49666,6 +51018,19 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«Read it once more before you send it» — یک بار دیگر خواندن، اشتباه‌ها را پیش از ارسال پیدا می‌کند."
+    },
+    {
+      "id": "a2.emails.ex.10",
+      "lessonId": "a2.emails.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "ارسال کردن",
+      "accepted": [
+        "forward"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "forward با to + شخص می‌آید: forward it to Ali."
     },
     {
       "id": "a2.everyday-problems.read.01",
@@ -49742,6 +51107,58 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«two neighbourhoods were left out of the plan» — left out یعنی جا ماندن، حذف شدن."
+    },
+    {
+      "id": "b1.news.ex.10",
+      "lessonId": "b1.news.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "گزارش",
+      "accepted": [
+        "report"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "گزارش؛ هم اسم است و هم فعل."
+    },
+    {
+      "id": "b1.news.ex.11",
+      "lessonId": "b1.news.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "منبع",
+      "accepted": [
+        "source"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "منبع خبر؛ با reliable source می‌آید."
+    },
+    {
+      "id": "b1.news.ex.12",
+      "lessonId": "b1.news.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "اعلام کردن",
+      "accepted": [
+        "announce"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "اعلام کردنِ رسمی؛ با announce a decision."
+    },
+    {
+      "id": "b1.news.ex.13",
+      "lessonId": "b1.news.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "روزنامه‌نگار",
+      "accepted": [
+        "journalist"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "روزنامه‌نگار؛ با reporter هم‌معنی است."
     },
     {
       "id": "b1.job-hunting.read.01",
@@ -49934,6 +51351,71 @@
       "explanationFa": "«asked how I handled the deadline» — deadline یعنی مهلت نهایی."
     },
     {
+      "id": "b2.interview.ex.11",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "نقاط قوت، قدرت",
+      "accepted": [
+        "strength"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "نقطهٔ قوت؛ جمعش strengths در مصاحبهٔ کاری رایج است."
+    },
+    {
+      "id": "b2.interview.ex.12",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "تجربه",
+      "accepted": [
+        "experience"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تجربه؛ در معنای تجربهٔ کاری غیرقابل‌شمارش است."
+    },
+    {
+      "id": "b2.interview.ex.13",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "دستاورد",
+      "accepted": [
+        "achievement"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "دستاورد؛ از فعل achieve ساخته شده است."
+    },
+    {
+      "id": "b2.interview.ex.14",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "word_recall",
+      "order": 22,
+      "difficulty": 2,
+      "prompt": "مسئول",
+      "accepted": [
+        "responsible"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "مسئول؛ با responsible for + کار می‌آید."
+    },
+    {
+      "id": "b2.interview.ex.15",
+      "lessonId": "b2.interview.lesson-01",
+      "type": "word_recall",
+      "order": 23,
+      "difficulty": 2,
+      "prompt": "واجد شرایط",
+      "accepted": [
+        "eligible"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "واجد شرایط؛ با eligible for می‌آید."
+    },
+    {
       "id": "b2.leadership.read.01",
       "lessonId": "b2.leadership.lesson-01",
       "type": "multiple_choice",
@@ -49972,6 +51454,19 @@
       "explanationFa": "«asks what the team learned before … who is to blame» — یادگیری پیش از سرزنش."
     },
     {
+      "id": "b2.leadership.ex.10",
+      "lessonId": "b2.leadership.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "انگیزه دادن",
+      "accepted": [
+        "motivate"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "اسم آن motivation و صفت آن motivated است؛ motivate somebody to do something."
+    },
+    {
       "id": "b2.education.read.01",
       "lessonId": "b2.education.lesson-01",
       "type": "multiple_choice",
@@ -50008,6 +51503,32 @@
       "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«depends on small classes and well-trained staff» — وابستگی به شرایط پرهزینه."
+    },
+    {
+      "id": "b2.education.ex.10",
+      "lessonId": "b2.education.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "ثبت‌نام کردن",
+      "accepted": [
+        "enrol"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "enrol با in می‌آید: enrol in a course؛ اسم آن enrolment است."
+    },
+    {
+      "id": "b2.education.ex.11",
+      "lessonId": "b2.education.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "سواد",
+      "accepted": [
+        "literacy"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "literacy غیرقابل‌شمارش است؛ digital literacy یعنی سواد دیجیتال."
     },
     {
       "id": "b2.debate.read.01",
@@ -50124,6 +51645,45 @@
       "explanationFa": "«and only then introduces her evidence» — only then یعنی تنها پس از آن مراحل."
     },
     {
+      "id": "c1.persuasion.ex.12",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 19,
+      "difficulty": 2,
+      "prompt": "منازعه، ادعای اصلی",
+      "accepted": [
+        "contention"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "ادعای اصلی؛ با central contention می‌آید."
+    },
+    {
+      "id": "c1.persuasion.ex.13",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 20,
+      "difficulty": 2,
+      "prompt": "تضعیف کردن، پایه‌ها را سست کردن",
+      "accepted": [
+        "undermine"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تضعیف کردن؛ با undermine confidence."
+    },
+    {
+      "id": "c1.persuasion.ex.14",
+      "lessonId": "c1.persuasion.lesson-01",
+      "type": "word_recall",
+      "order": 21,
+      "difficulty": 2,
+      "prompt": "بلاغت، سخنوری",
+      "accepted": [
+        "rhetoric"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "بلاغت و سخنوری؛ گاه بار منفی دارد: empty rhetoric."
+    },
+    {
       "id": "c1.policy.read.01",
       "lessonId": "c1.policy.lesson-01",
       "type": "multiple_choice",
@@ -50200,6 +51760,19 @@
       "explanationFa": "داده فقط دربارهٔ مشترکان است، پس «بیشتر مشترکان» ادعای درست است."
     },
     {
+      "id": "c1.statistics.ex.10",
+      "lessonId": "c1.statistics.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "پراکندگی",
+      "accepted": [
+        "variance"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "variance غیرقابل‌شمارش است؛ صفت آن variable و فعل آن vary."
+    },
+    {
       "id": "c1.org-culture.read.01",
       "lessonId": "c1.org-culture.lesson-01",
       "type": "multiple_choice",
@@ -50236,6 +51809,19 @@
       "correctIndex": 2,
       "skill": "READING",
       "explanationFa": "«asking teams what they learned from a colleague» — سنجش، نه فرض."
+    },
+    {
+      "id": "c1.org-culture.ex.10",
+      "lessonId": "c1.org-culture.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "ارزش‌ها",
+      "accepted": [
+        "values"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "values در این معنا جمع است: the values are، نه is."
     },
     {
       "id": "c1.specialist-presentations.read.01",
@@ -50276,6 +51862,19 @@
       "explanationFa": "«Detail belongs in an appendix, not in the opening» — پیوست، نه آغاز."
     },
     {
+      "id": "c1.specialist-presentations.ex.10",
+      "lessonId": "c1.specialist-presentations.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "مرور گام‌به‌گام",
+      "accepted": [
+        "walkthrough"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "walkthrough قابل‌شمارش است؛ در نرم‌افزار «آموزش گام‌به‌گام» هم معنی می‌دهد."
+    },
+    {
       "id": "c2.nuance.read.01",
       "lessonId": "c2.nuance.lesson-01",
       "type": "multiple_choice",
@@ -50314,6 +51913,19 @@
       "explanationFa": "«The choice of adjective is the report's argument» — بار ارزشی واژه، خودِ استدلال است."
     },
     {
+      "id": "c2.nuance.ex.10",
+      "lessonId": "c2.nuance.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "تلویحاً بیان کردن",
+      "accepted": [
+        "imply"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "تلویحاً بیان کردن؛ گوینده imply می‌کند و شنونده infer."
+    },
+    {
       "id": "c2.discourse.read.01",
       "lessonId": "c2.discourse.lesson-01",
       "type": "multiple_choice",
@@ -50350,6 +51962,19 @@
       "correctIndex": 0,
       "skill": "READING",
       "explanationFa": "«does the persuasive work that the argument never states openly» — اثر بلاغی پنهان."
+    },
+    {
+      "id": "c2.discourse.ex.10",
+      "lessonId": "c2.discourse.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "برجسته‌سازی موضوع",
+      "accepted": [
+        "topicalisation"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "املای بریتانیایی topicalisation؛ در انگلیسی آمریکایی topicalization."
     },
     {
       "id": "c2.argument-analysis.read.01",
@@ -50428,6 +52053,19 @@
       "explanationFa": "«depends on whether the reader needs the source culture or the effect» — هدف خواننده تعیین‌کننده است."
     },
     {
+      "id": "c2.translation.ex.10",
+      "lessonId": "c2.translation.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "مترجم شفاهی",
+      "accepted": [
+        "interpreter"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "interpreter برای گفتار و translator برای نوشتار؛ در فارسی اغلب هر دو «مترجم» خوانده می‌شوند."
+    },
+    {
       "id": "c2.audience.read.01",
       "lessonId": "c2.audience.lesson-01",
       "type": "multiple_choice",
@@ -50482,6 +52120,32 @@
       "correctIndex": 3,
       "skill": "WRITING",
       "explanationFa": "تکرار در آغازِ بندهای پیاپی anaphora است؛ epistrophe تکرار در پایان، asyndeton حذف حرف ربط و litotes کم‌گویی با نفی دوگانه است."
+    },
+    {
+      "id": "c2.rhetoric.ex.11",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "word_recall",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "کنایه، طنز تلخ",
+      "accepted": [
+        "irony"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "کنایه؛ تضاد میان ظاهر و معنای واقعی."
+    },
+    {
+      "id": "c2.rhetoric.ex.12",
+      "lessonId": "c2.rhetoric.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "قانع کردن",
+      "accepted": [
+        "persuade"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "قانع کردن؛ با persuade somebody to do."
     },
     {
       "id": "c2.argumentation.ex.09",
@@ -50556,6 +52220,19 @@
       "explanationFa": "سخنانِ minister خوانده می‌شود، پس مجهول است: may have been read (وجهی + گذشتهٔ نقلی + مجهول)."
     },
     {
+      "id": "c2.speeches.ex.11",
+      "lessonId": "c2.speeches.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "بی‌آماده‌سازی",
+      "accepted": [
+        "extempore"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "extempore هم صفت است هم قید؛ مترادف رایج آن impromptu است."
+    },
+    {
       "id": "c2.advanced-persuasion.ex.10",
       "lessonId": "c2.advanced-persuasion.lesson-01",
       "type": "multiple_choice",
@@ -50626,6 +52303,32 @@
       "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "در پرسش غیرمستقیم ترتیب جمله‌ای است و زمان به عقب می‌رود: whether the two studies had used."
+    },
+    {
+      "id": "c2.synthesis.ex.11",
+      "lessonId": "c2.synthesis.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "ارجاع متقابل",
+      "accepted": [
+        "cross-reference"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "با خط تیره نوشته می‌شود؛ فعل آن cross-refer است."
+    },
+    {
+      "id": "c2.synthesis.ex.12",
+      "lessonId": "c2.synthesis.lesson-01",
+      "type": "word_recall",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "رفع ابهام کردن",
+      "accepted": [
+        "disambiguate"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "disambiguate فعل است؛ اسم آن disambiguation."
     },
     {
       "id": "c2.dialects.ex.10",
@@ -50718,6 +52421,19 @@
       "explanationFa": "فاعل (the figures) مفعولِ فعل است، پس مجهول گذشته: were rebased."
     },
     {
+      "id": "c2.paraphrasing.ex.11",
+      "lessonId": "c2.paraphrasing.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "هم‌معنایی",
+      "accepted": [
+        "equivalence"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "equivalence اسم است و صفتش equivalent؛ با equality («برابری») یکی نیست."
+    },
+    {
       "id": "c2.diplomacy.ex.10",
       "lessonId": "c2.diplomacy.lesson-01",
       "type": "multiple_choice",
@@ -50734,6 +52450,19 @@
       "correctIndex": 1,
       "skill": "GRAMMAR",
       "explanationFa": "شرط سوم می‌تواند بدون if و با وارونگی بیاید: Had we asked … would not have collapsed."
+    },
+    {
+      "id": "c2.diplomacy.ex.11",
+      "lessonId": "c2.diplomacy.lesson-01",
+      "type": "word_recall",
+      "order": 17,
+      "difficulty": 2,
+      "prompt": "میانجی",
+      "accepted": [
+        "mediator"
+      ],
+      "skill": "VOCABULARY",
+      "explanationFa": "mediator بی‌طرف است؛ negotiator نمایندهٔ یکی از طرف‌هاست."
     },
     {
       "id": "c2.specialist-audiences.ex.10",

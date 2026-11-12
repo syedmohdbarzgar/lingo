@@ -22,6 +22,10 @@ import java.io.File
  *     `{en, fa}` whose Persian translation is really Persian. The legacy
  *     plain-string shape is rejected here so a rolled-back bundle fails loudly.
  *
+ * 3. A word a lesson ships must be **asked** in that lesson's own exercises — it appears
+ *    (inflection-tolerant) in their English, or is one of their accepted answers. Before
+ *    v78, 133 words across 75 lessons were taught and then not asked until the review queue.
+ *
  * 2. A machine-generated "What does X mean?" choice (`scripts/archive/enrich_content.mjs`
  *    writes exactly one per lesson, always at `*.ex.07`) must draw every option
  *    from the lesson's own vocabulary. It used to pick distractors from a
@@ -212,6 +216,64 @@ class VocabularyContentTest {
             if (previous != null) duplicates += "$previous == ${e.getString("id")} ($key)"
         }
         assertTrue("duplicate multiple-choice item(s): $duplicates", duplicates.isEmpty())
+    }
+
+    /**
+     * The English one exercise puts in front of the learner — every string field except the
+     * Persian cues (`questionFa`, `explanationFa`, a recall's `prompt`).
+     */
+    private fun englishOf(exercise: JSONObject): String {
+        val parts = mutableListOf<String>()
+        val keys = exercise.keys()
+        while (keys.hasNext()) {
+            val key = keys.next()
+            if (key.endsWith("Fa") || key == "prompt") continue
+            when (val value = exercise.opt(key)) {
+                is String -> parts += value
+                is org.json.JSONArray -> parts += (0 until value.length())
+                    .map { value.get(it) }
+                    .filterIsInstance<String>()
+                else -> Unit
+            }
+        }
+        return parts.joinToString(" ")
+    }
+
+    /**
+     * 3. **A word a lesson ships is asked in that lesson.** The examples rule above keeps the word
+     * in context (A-10 gives each one two bilingual sentences), but nothing held the *exercises* to
+     * anything: 133 words across 75 lessons were taught and then not asked until the review queue,
+     * which is the wrong place for a first retrieval. "Asked" is deliberately the weaker claim —
+     * the word appears (inflection-tolerant, with the irregular allowlist) in the English of one of
+     * the lesson's exercises, or is one of their accepted answers. Requiring a *sentence* about
+     * every one of 1154 words would have been 133 hand-authored context items for no pedagogical
+     * gain; the sentence is already guaranteed by the examples.
+     */
+    @Test
+    fun `every word a lesson ships is asked in its own exercises`() {
+        val byLesson = exercises().groupBy { it.getString("lessonId") }
+        val offenders = mutableListOf<String>()
+        vocabulary().forEach { entry ->
+            val lessonId = entry.getString("lessonId")
+            val word = entry.getString("word")
+            val items = byLesson[lessonId].orEmpty()
+            val askedInEnglish = exampleUses(items.joinToString(" ") { englishOf(it) }, word)
+            val irregular = irregularForms[entry.getString("id")]
+            val askedAsIrregular = irregular != null &&
+                items.any { englishOf(it).lowercase().contains(irregular) }
+            val askedAsAnswer = items.any { item ->
+                val accepted = item.optJSONArray("accepted") ?: return@any false
+                (0 until accepted.length()).any { accepted.getString(it).equals(word, ignoreCase = true) }
+            }
+            if (!askedInEnglish && !askedAsIrregular && !askedAsAnswer) {
+                offenders += "${entry.getString("id")} («$word»)"
+            }
+        }
+        assertTrue(
+            "word(s) a lesson ships but never asks — add an exercise that uses the word, " +
+                "a word_recall for it, or move it to a lesson that teaches it: ${offenders.joinToString()}",
+            offenders.isEmpty(),
+        )
     }
 
     private companion object {

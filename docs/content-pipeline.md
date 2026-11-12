@@ -85,7 +85,7 @@
   about difficulty. v75 finished the level the way v70 finished C1: the 21 lessons whose hardest item
   sat in a blank or a production got one authored hard choice item each, written in the level's own
   hard-end shape (four grammatical options where the context decides, and the mixed conditional, the
-  inverted negative adverbial and the agreement trap among them), so 3014 exercises today. Neither C
+  inverted negative adverbial and the agreement trap among them), so 3147 exercises today. Neither C
   level now leaves recognition unable to rise.
   A1 and A2 were judged last (v72), and their band of 1..2 makes the question the simplest one the
   scale allows: *first encounter, or one step past it*. The 2 goes to a blank that tests a structure,
@@ -161,7 +161,7 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  3014 exercises
+  3147 exercises
   (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
   3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
   lessons, four in the six original ones
@@ -186,6 +186,16 @@
   [`debt.md`](debt.md)), and `RoomMigrationTest` keeps proving the existing path. `validateContent` and `VocabularyContentTest`
   both require ≥ 2 examples per word with a non-empty Persian `fa`, and the word-in-example rule is
   checked **per example**, not per entry.
+- **A word a lesson ships is asked in that lesson (v78).** The examples rule keeps the word in
+  context; nothing held the *exercises* to anything, and 133 words across 75 lessons were taught and
+  then not asked again until the review queue — the wrong place for a first retrieval. Each now has
+  a `word_recall` in its own lesson (the Persian meaning, name the English word, no options), built
+  from the entry's own authored `translation` and `explanationFa`, so nothing was invented: 1154
+  words, and `VocabularyContentTest` fails the build when a lesson ships a word its exercises never
+  ask. "Asked" is deliberately the weaker claim — the word appears (inflection-tolerant, with the
+  irregular allowlist) in an exercise's English **or** is one of its accepted answers; requiring a
+  sentence about every word would have been 133 hand-authored context items for no pedagogical gain
+  the examples do not already give.
 - **Foundations at the very front (A-7):** the alphabet, spelling a name and numbers 0–100 come
   **before** Greetings, so a complete beginner meets letters before words. Three A1 lessons
   (`a1.alphabet.lesson-01`, `a1.spelling.lesson-01`, `a1.numbers.lesson-01`, orders 1–3 with every
@@ -250,7 +260,7 @@
   can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 3014 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 3147 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any
