@@ -1,5 +1,5 @@
 {
-  "contentVersion": 72,
+  "contentVersion": 73,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -3529,8 +3529,7 @@
         "in",
         "for"
       ],
-      "explanationFa": "مجهول گذشته: was resolved within two days.",
-      "skill": "VOCABULARY"
+      "explanationFa": "مجهول گذشته: was resolved within two days."
     },
     {
       "id": "b2.problems.ex.05",
@@ -3638,8 +3637,7 @@
         "for",
         "from"
       ],
-      "explanationFa": "the evidence غیرقابل‌شمارش و مفرد است: does not support.",
-      "skill": "VOCABULARY"
+      "explanationFa": "the evidence غیرقابل‌شمارش و مفرد است: does not support."
     },
     {
       "id": "b2.research.ex.05",
@@ -4652,7 +4650,7 @@
         "قفسه"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR",
+      "skill": "VOCABULARY",
       "explanationFa": "box یعنی «جعبه»؛ جمعِ آن boxes می‌شود."
     },
     {
@@ -4786,7 +4784,7 @@
         "معلم"
       ],
       "correctIndex": 3,
-      "skill": "GRAMMAR",
+      "skill": "VOCABULARY",
       "explanationFa": "teacher یعنی «معلم»."
     },
     {
@@ -4916,7 +4914,7 @@
         "پیاده‌روی"
       ],
       "correctIndex": 0,
-      "skill": "GRAMMAR",
+      "skill": "VOCABULARY",
       "explanationFa": "swim یعنی «شنا کردن»."
     },
     {
@@ -5047,7 +5045,7 @@
         "ادامه دادن"
       ],
       "correctIndex": 1,
-      "skill": "GRAMMAR",
+      "skill": "VOCABULARY",
       "explanationFa": "stop یعنی «توقف کردن»."
     },
     {
@@ -5177,7 +5175,7 @@
         "چگونه"
       ],
       "correctIndex": 2,
-      "skill": "GRAMMAR",
+      "skill": "VOCABULARY",
       "explanationFa": "why یعنی «چرا»."
     },
     {

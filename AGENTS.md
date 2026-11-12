@@ -147,8 +147,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (725 tests / 79 classes as of the
-A1/A2-difficulty pass, where the last two seeded levels were read item by item and **no level is
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (726 tests / 79 classes as of the
+two-format-reachability pass, where the graph's other half was finally measured instead of
+assumed: securing a node needs two exercise formats (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), so
+a node its lessons only ever ask one way can never be secured — and seven were in exactly that
+state. Five A1 vocabulary nodes were credited only by a listening item, because the lesson's
+«What does X mean?» choice was tagged `GRAMMAR` while `AnswerChecker.heuristicMc` reads a
+Persian-option question as vocabulary; two B2 discourse nodes were credited only by a spoken
+dialogue turn, because their typed translation carried a `VOCABULARY` override and `skillOf`'s own
+default for a translation is `WRITING`. Seven tags changed, no item was added, and
+`ContentDistributionTest` now fails when a node is reachable in fewer than two formats (bundle
+v73). Before it the A1/A2-difficulty pass, where the last two seeded levels were read item by item and **no level is
 seeded any more**: their band of 1..2 makes the only question "first encounter, or one step past
 it", so the 2 went to a blank that tests a structure (`I play football ______ Friday`), a choice
 where two options are grammatical and the context decides (`I bought a book. The book is on the

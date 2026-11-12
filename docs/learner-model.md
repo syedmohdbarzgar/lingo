@@ -225,9 +225,12 @@
     `repetitions >= MASTERED_MIN_REPETITIONS` (3) and an interval past
     `Sm2ReviewScheduler.MASTERED_INTERVAL_DAYS` (30). The format and streak rules are inside
     `isSecured`; repeating them here would let the two gates disagree about what "confirmed" means.
-    Because securing already needs a second format, the two `phonology.*` nodes the content only
-    exercises through translation (`phonology.spelling-aloud`, `phonology.number-sounds`) cannot
-    reach either claim today — a content gap, recorded rather than papered over.
+    Because securing already needs a second format, a node its lessons only ever ask one way can
+    reach neither claim — it stays in the plan forever. No node is in that state today: since v73
+    `ContentDistributionTest` counts the formats that can credit every node and fails the build
+    under `MIN_FORMATS_TO_SECURE`, which is how the seven that were stuck (five A1 vocabulary
+    nodes credited only by a listening item, two B2 discourse nodes credited only by a spoken
+    turn) were found and fixed by their tags rather than by adding content.
 - **A strong node that is not secured is a retest, not a re-drill.** The planner keeps one clock
   parameter (`plan(..., now)`) for exactly this decision: a node at `STRONG_MASTERY` with a recorded
   hit but not secured

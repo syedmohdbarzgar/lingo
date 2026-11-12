@@ -89,8 +89,18 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 725 tests / 79 classes as of
-  the mastery-matrix pass, where the selector's two axes are pinned cell by cell: eight
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 726 tests / 79 classes as of
+  the two-format-reachability pass, where a content case measures the graph's other half:
+  `ContentDistributionTest` now runs every shipped exercise through `KnowledgeEvidence.itemsFor` and
+  `AnswerChecker.skillOf`/`formatOf` and fails when a knowledge node can be confirmed in fewer than
+  `KnowledgeGates.MIN_FORMATS_TO_SECURE` (2) formats — the bar `isSecured` asks for, so a node under
+  it can never leave the plan however well it is known. Seven nodes were under it: five A1
+  vocabulary nodes whose only credit was a listening item (the lesson's «What does X mean?» choice
+  was tagged `GRAMMAR`, though a Persian-option question is vocabulary by the code's own heuristic)
+  and two B2 discourse nodes credited only by a spoken turn (their typed translation carried a
+  `VOCABULARY` override while `skillOf` defaults a translation to `WRITING`). Seven tags fixed the
+  graph; no exercise, lesson, word or node was added, and `GrammarCoverageTest`'s six-exercise bar
+  still holds. Before it the mastery-matrix pass, where the selector's two axes are pinned cell by cell: eight
   `AdaptiveExerciseSelectorTest` cases for weak/consolidated × easy/hard (each end decides the level
   inside its band, and neither end filters the lesson — an all-hard or all-easy lesson keeps its
   authored order), mixed dimensions (the weak band ascends, the consolidated one descends), dimensions

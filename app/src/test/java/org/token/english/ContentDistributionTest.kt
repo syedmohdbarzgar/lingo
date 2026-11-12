@@ -6,7 +6,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.data.content.ContentParser
 import org.token.english.domain.engine.AdaptiveExerciseSelector
+import org.token.english.domain.engine.KnowledgeEvidence
+import org.token.english.domain.engine.KnowledgeGates
+import org.token.english.domain.model.AnswerChecker
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.MasteryDimension
 import org.token.english.domain.model.MasteryProfile
 import org.token.english.domain.model.shuffledForDisplay
@@ -147,6 +151,56 @@ class ContentDistributionTest {
             "${orphans.size} lesson(s) ship words but no VOCABULARY node, so their review " +
                 "cards move no node: $orphans",
             orphans.isEmpty(),
+        )
+    }
+
+    /**
+     * Dynamically authored check for the other half of the graph's reachability.
+     *
+     * Securing a node needs **two** exercise formats ([KnowledgeGates.MIN_FORMATS_TO_SECURE]):
+     * one shape answered well can be pattern-matched, which is why a second format is the
+     * cheapest honest evidence of transfer. A node whose lessons only ever ask it one way can
+     * therefore never be secured, however well the learner knows it — it keeps surfacing in the
+     * plan and the long-term claim stays out of reach. That was true of seven nodes until v73:
+     * five A1 vocabulary nodes whose only credit came from a listening item (the lesson's
+     * "What does X mean?" choices were tagged GRAMMAR, though `AnswerChecker.heuristicMc` reads
+     * a Persian-option question as vocabulary), and two B2 discourse nodes whose only credit
+     * came from a spoken dialogue turn (their translation carried a VOCABULARY override, so the
+     * typed sentence never reached the node).
+     *
+     * Both halves are the production rule — `KnowledgeEvidence.itemsFor` over the parsed
+     * exercise and `AnswerChecker.skillOf`/`formatOf` — so this fails on a content edit, not on
+     * a second opinion about the attribution.
+     */
+    @Test
+    fun `every knowledge node can be confirmed in two exercise formats`() {
+        val nodes = ContentParser.parseKnowledge(contentFile("knowledge.json").readText())
+        val nodesByLesson = nodes
+            .flatMap { node -> node.lessonIds.map { lessonId -> lessonId to node } }
+            .groupBy({ it.first }, { it.second })
+        val formats = mutableMapOf<String, MutableSet<ExerciseFormat>>()
+        ContentParser.parseRawExercises(contentFile("exercises.json").readText()).forEach { raw ->
+            val exercise = ContentParser.exerciseFromPayload(raw.payloadJson, raw.lessonId) ?: return@forEach
+            val lessonNodes = nodesByLesson[raw.lessonId].orEmpty()
+            KnowledgeEvidence.itemsFor(lessonNodes, AnswerChecker.skillOf(exercise)).forEach { node ->
+                formats.getOrPut(node.id) { mutableSetOf() }.add(AnswerChecker.formatOf(exercise))
+            }
+        }
+
+        val stuck = nodes.mapNotNull { node ->
+            val seen = formats[node.id].orEmpty()
+            if (seen.size >= KnowledgeGates.MIN_FORMATS_TO_SECURE) {
+                null
+            } else {
+                val ways = seen.joinToString(", ").ifEmpty { "no exercise asks it" }
+                "${node.id} [$ways] via ${node.lessonIds.joinToString()}"
+            }
+        }
+
+        assertTrue(
+            "${stuck.size} knowledge node(s) reachable in fewer than " +
+                "${KnowledgeGates.MIN_FORMATS_TO_SECURE} exercise formats, so they can never be secured: $stuck",
+            stuck.isEmpty(),
         )
     }
 

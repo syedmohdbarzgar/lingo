@@ -62,12 +62,23 @@
   build does not know are ignored on read, and `DatabaseUpgradeTest` executes the step against a
   real SQLite engine. An untouched dimension is still *absent*, never 0 — "no evidence" keeps its
   meaning.
-- **Two nodes can never claim *long-term* mastery (Room v7).** `isLongTermMastered` requires two
-  confirming exercise formats, and `phonology.spelling-aloud` / `phonology.number-sounds` are only
-  exercised through translation in the current bundle, so their mask can never hold a second bit.
-  They are still *secured* (the planner's bar) and fully learnable — only the longer claim stays out
-  of reach until their lessons gain a second format. Recorded here so it reads as a content gap,
-  not a gate bug. The same migration leaves `firstCorrectAt` NULL on legacy rows instead of
+- **Closed (v73): every node is reachable in two formats, and it is counted rather than assumed.**
+  Securing a node needs two confirming exercise formats, so a node a lesson only ever asks one way
+  can never leave the plan. The entry here used to name `phonology.spelling-aloud` and
+  `phonology.number-sounds` as the two stuck ones — that was read off the lessons instead of counted,
+  and it was wrong: both are credited by a listening item and by a spoken dialogue turn, so they
+  held two formats all along. Measuring it properly (the rule is `KnowledgeEvidence.itemsFor` over
+  each shipped exercise) found **seven** nodes in the state, none of them those two: five A1
+  vocabulary nodes (`vocab.irregular-plurals`, `vocab.people-in-my-life`, `vocab.ability-verbs`,
+  `vocab.imperative-verbs`, `vocab.question-words`) whose only credit came from the lesson's listening
+  item, because its «What does X mean?» choice was tagged `GRAMMAR` while `AnswerChecker.heuristicMc`
+  reads a Persian-option question as vocabulary; and two B2 discourse nodes
+  (`discourse.complaint-register`, `discourse.hedging`) credited only by a spoken turn, because their
+  typed translation carried a `VOCABULARY` override while `skillOf`'s own default for a translation
+  is `WRITING`. Seven tags fixed it — no item was added, so the lesson counts, the difficulty numbers
+  and `GrammarCoverageTest`'s six-exercise bar are untouched — and `ContentDistributionTest` now
+  fails when any node falls under `KnowledgeGates.MIN_FORMATS_TO_SECURE`, so the next such node
+  fails the build instead of being discovered by reading. The same migration leaves `firstCorrectAt` NULL on legacy rows instead of
   inventing a date; each row fills it on its next correct answer.
 - **The companion key was pinned from a sideloaded build — since verified against the store
   build (N-1, Oct 2026).** `CompanionApp.EXPECTED_SIGNING_SHA256` holds the Zaribar 3.4.10
