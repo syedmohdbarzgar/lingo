@@ -94,6 +94,15 @@
   and 17 of A1's 30 and 11 of A2's 30 choice lessons now disagree about difficulty. Every level in the
   bundle has been read item by item, so a level whose choice items all share one number is seeded
   again — `ContentDistributionTest` fails the build when it sees that.
+- **A prerequisite is taught at or before the node that needs it (v74).** A prerequisite is not a
+  suggestion: `PrerequisiteEngine` answers an unmet one with a `REMEDIATE` action, so a
+  prerequisite introduced *later* in the path sends the learner up a level instead of back to one
+  item. Two B2 vocabulary nodes taught in `b2.idioms` and `b2.phrasal-verbs` required the two C1
+  nodes of `c1.phrasal-idioms` — a whole level after their own lessons. The honest target is the
+  node before it in the chain (the shape v65 gave every other level), so they now follow
+  `vocab.film-reviews` and `vocab.common-idioms`. A node's `level` is the same kind of claim about
+  place: it is where the node is **introduced**, so two grammar nodes whose first lesson was a B1
+  one are B1, not B2. `ContentDistributionTest` fails the build on either slip.
 - **Every knowledge node is confirmable in two exercise formats (v73).** `KnowledgeGates` refuses to
   secure a node that one format confirmed, so a node whose lessons only ever ask it one way can never
   be secured — it stays in the plan however well the learner knows it. Seven nodes were in that
@@ -105,7 +114,7 @@
   never moves, read its lessons' `skill` tags before concluding the level teaches too little —
   `ContentDistributionTest` now counts the formats that can credit every node and fails under
   `MIN_FORMATS_TO_SECURE` (2).
-- **CEFR bundle (contentVersion 73):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
+- **CEFR bundle (contentVersion 74):** 192 lessons (**A1 = 37 — all 30 syllabus topics plus the
   seven A1 grammar supplements**, **A2 = 32 — all 30 syllabus topics (topic 28 ships as
   `a2.hobbies`) plus `a2.restaurant`, `a2.directions` and the `a2.past-simple` supplement**, **B1 = 30
   — all 30 syllabus topics (topic 2 ships as `b1.work`, 12 as `b1.experiences`, 21 as `b1.money`,

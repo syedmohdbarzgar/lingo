@@ -205,6 +205,125 @@ class ContentDistributionTest {
     }
 
     /**
+     * The curriculum's own order: level first, then the lesson's `order` inside it — the same
+     * path Home walks, so "before" here means what the learner actually meets first.
+     */
+    private fun lessonPositions(): Map<String, Int> {
+        val levels = listOf("A1", "A2", "B1", "B2", "C1", "C2")
+        val lessons = JSONObject(contentFile("lessons.json").readText()).getJSONArray("lessons")
+        return (0 until lessons.length())
+            .map { lessons.getJSONObject(it) }
+            .sortedWith(
+                compareBy<JSONObject>(
+                    { levels.indexOf(it.getString("level")) },
+                    { it.getInt("order") },
+                ),
+            )
+            .mapIndexed { index, lesson -> lesson.getString("id") to index }
+            .toMap()
+    }
+
+    private fun knowledgeNodes(): List<JSONObject> {
+        val array = JSONObject(contentFile("knowledge.json").readText()).getJSONArray("knowledge")
+        return (0 until array.length()).map { array.getJSONObject(it) }
+    }
+
+    private fun strings(o: JSONObject, key: String): List<String> {
+        val array = o.optJSONArray(key) ?: return emptyList()
+        return (0 until array.length()).map { array.getString(it) }
+    }
+
+    /**
+     * A prerequisite is a promise about order, so it has to be taught at or before the node that
+     * needs it — the same lesson is the normal case (C1's idiom node chains onto the phrasal-verb
+     * node taught beside it), but a prerequisite the learner reaches *later* is not.
+     *
+     * `PrerequisiteEngine` turns an unmet prerequisite into a `REMEDIATE` action — that is what it
+     * is for — so a prerequisite introduced *later* in the path sends a learner to material a whole
+     * level above them: two B2 vocabulary nodes required the two C1 nodes of `c1.phrasal-idioms`, so
+     * studying `b2.idioms` or `b2.phrasal-verbs` first demanded a C1 lesson. The graph's own shape
+     * (one chain per topic) makes the honest target the node just before it, never the one after.
+     */
+    @Test
+    fun `a prerequisite is introduced before the node that needs it`() {
+        val positions = lessonPositions()
+        val nodes = knowledgeNodes()
+        fun introducedAt(node: JSONObject): Int = strings(node, "lessons")
+            .minOfOrNull { positions[it] ?: Int.MAX_VALUE } ?: Int.MAX_VALUE
+
+        val byId = nodes.associateBy { it.getString("id") }
+        val offenders = nodes.flatMap { node ->
+            val at = introducedAt(node)
+            strings(node, "prerequisites").mapNotNull { prerequisiteId ->
+                val prerequisite = byId[prerequisiteId] ?: return@mapNotNull null
+                val before = introducedAt(prerequisite)
+                // The same lesson is fine — C1's idiom node chains onto the phrasal-verb node
+                // taught beside it — but a prerequisite the learner meets later is not.
+                if (before <= at) {
+                    null
+                } else {
+                    "${node.getString("id")} (${node.getString("level")}, position $at) requires " +
+                        "$prerequisiteId (${prerequisite.getString("level")}, introduced at $before)"
+                }
+            }
+        }
+
+        assertTrue(
+            "${offenders.size} prerequisite(s) come after the lesson that needs them, so the " +
+                "planner would remediate forward: $offenders",
+            offenders.isEmpty(),
+        )
+        // The level half of the same promise, stated where a reader looks for it.
+        val levels = listOf("A1", "A2", "B1", "B2", "C1", "C2")
+        val levelSkips = nodes.flatMap { node ->
+            strings(node, "prerequisites").mapNotNull { prerequisiteId ->
+                val prerequisite = byId[prerequisiteId] ?: return@mapNotNull null
+                if (levels.indexOf(prerequisite.getString("level")) > levels.indexOf(node.getString("level"))) {
+                    "${node.getString("id")} (${node.getString("level")}) requires a " +
+                        "${prerequisite.getString("level")} node (${prerequisiteId})"
+                } else {
+                    null
+                }
+            }
+        }
+        assertTrue("prerequisite(s) from a higher level than the node: $levelSkips", levelSkips.isEmpty())
+    }
+
+    /**
+     * A node's `level` says where it is introduced, which is what the graph, the docs and a
+     * placement read all assume. Two grammar nodes claimed B2 while their first lesson was a B1
+     * one (`b1.environment`, `b1.eating-habits`), so the graph advertised material a level above
+     * where the learner actually meets it.
+     */
+    @Test
+    fun `a node is levelled where its first lesson sits`() {
+        val positions = lessonPositions()
+        val levels = listOf("A1", "A2", "B1", "B2", "C1", "C2")
+        val lessonLevel = JSONObject(contentFile("lessons.json").readText())
+            .getJSONArray("lessons")
+            .let { arr ->
+                (0 until arr.length()).associate {
+                    val lesson = arr.getJSONObject(it)
+                    lesson.getString("id") to lesson.getString("level")
+                }
+            }
+
+        val offenders = knowledgeNodes().mapNotNull { node ->
+            val first = strings(node, "lessons")
+                .minByOrNull { positions[it] ?: Int.MAX_VALUE } ?: return@mapNotNull null
+            val declared = node.getString("level")
+            val actual = lessonLevel[first] ?: return@mapNotNull null
+            if (levels.indexOf(declared) == levels.indexOf(actual)) null
+            else "${node.getString("id")} says $declared but is introduced in $first ($actual)"
+        }
+
+        assertTrue(
+            "${offenders.size} node(s) levelled away from their first lesson: $offenders",
+            offenders.isEmpty(),
+        )
+    }
+
+    /**
      * Reviewed single-answer fill_blank exercises (checklist A-2), each with the
      * pedagogical reason it may accept exactly one answer. This map IS the
      * report: grep it for the current "open blanks" inventory.

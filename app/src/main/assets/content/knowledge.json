@@ -1,5 +1,5 @@
 {
-  "contentVersion": 73,
+  "contentVersion": 74,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -645,7 +645,7 @@
       "type": "GRAMMAR",
       "title": "Passive with modals",
       "titleFa": "مجهول با افعال وجهی",
-      "level": "B2",
+      "level": "B1",
       "prerequisites": [
         "grammar.passive-simple"
       ],
@@ -746,7 +746,7 @@
       "type": "GRAMMAR",
       "title": "used to / would for past habits",
       "titleFa": "used to و would برای عادت گذشته",
-      "level": "B2",
+      "level": "B1",
       "prerequisites": [
         "grammar.past-continuous"
       ],
@@ -3106,7 +3106,7 @@
       "titleFa": "اصطلاحات رایج",
       "level": "B2",
       "prerequisites": [
-        "vocab.idioms-and-figurative"
+        "vocab.film-reviews"
       ],
       "lessons": [
         "b2.idioms.lesson-01"
@@ -3123,7 +3123,7 @@
       "titleFa": "افعال عبارتی",
       "level": "B2",
       "prerequisites": [
-        "vocab.phrasal-verbs"
+        "vocab.common-idioms"
       ],
       "lessons": [
         "b2.phrasal-verbs.lesson-01"

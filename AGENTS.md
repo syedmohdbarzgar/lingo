@@ -147,8 +147,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (726 tests / 79 classes as of the
-two-format-reachability pass, where the graph's other half was finally measured instead of
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (728 tests / 79 classes as of the
+graph-label pass, where the curriculum graph's own promises were counted instead of trusted:
+a prerequisite is a claim about order, so `PrerequisiteEngine` turns an unmet one into a
+`REMEDIATE` action — and two B2 vocabulary nodes required the two C1 nodes of `c1.phrasal-idioms`,
+which sent a learner studying `b2.idioms` or `b2.phrasal-verbs` a whole level up. The honest target
+is the node before it in the chain, so `vocab.common-idioms` now follows `vocab.film-reviews` and
+`vocab.common-phrasal-verbs` follows `vocab.common-idioms`. The same count found two grammar nodes
+levelled B2 while their first lesson was a B1 one (`grammar.passive-with-modals` at
+`b1.environment`, `grammar.used-to-and-would` at `b1.eating-habits`), so both are B1; a node's level
+says where it is introduced. Two `ContentDistributionTest` cases now fail the build on either slip
+(bundle v74). Before it the two-format-reachability pass, where the graph's other half was finally measured instead of
 assumed: securing a node needs two exercise formats (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), so
 a node its lessons only ever ask one way can never be secured — and seven were in exactly that
 state. Five A1 vocabulary nodes were credited only by a listening item, because the lesson's

@@ -89,8 +89,19 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 726 tests / 79 classes as of
-  the two-format-reachability pass, where a content case measures the graph's other half:
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 728 tests / 79 classes as of
+  the graph-label pass, where two `ContentDistributionTest` cases count the curriculum graph's own
+  claims. One says a prerequisite must be introduced **at or before** the node that needs it (both
+  in the same lesson is the normal case — C1's idiom node chains onto the phrasal-verb node taught
+  beside it — so the check is "not later", never "strictly earlier"; position in
+  the level-then-order path, plus the level check a reader looks for): `PrerequisiteEngine` answers
+  an unmet prerequisite with a `REMEDIATE` action, so a forward one sends the learner to material a
+  level up — exactly what `vocab.common-idioms` and `vocab.common-phrasal-verbs` did by requiring
+  the two C1 nodes of `c1.phrasal-idioms`, a whole level after their own B2 lessons. They now follow
+  `vocab.film-reviews` and each other, which is the chain the rest of the level uses. The other case
+  says a node's `level` is the level of the lesson that introduces it, which caught
+  `grammar.passive-with-modals` and `grammar.used-to-and-would` calling themselves B2 while their
+  first lesson (`b1.environment`, `b1.eating-habits`) was B1. Before it the two-format-reachability pass, where a content case measures the graph's other half:
   `ContentDistributionTest` now runs every shipped exercise through `KnowledgeEvidence.itemsFor` and
   `AnswerChecker.skillOf`/`formatOf` and fails when a knowledge node can be confirmed in fewer than
   `KnowledgeGates.MIN_FORMATS_TO_SECURE` (2) formats — the bar `isSecured` asks for, so a node under

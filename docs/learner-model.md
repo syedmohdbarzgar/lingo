@@ -8,6 +8,11 @@
   `DefaultLearningPlanner`, plus the knowledge layer — `KnowledgeGraph` (prerequisite ordering and
   unlocking) and `DefaultKnowledgeEngine` (how one graded answer moves a node's mastery and review
   date). The UI must never learn how intervals/mastery are computed (technical spec §19).
+  A prerequisite is load-bearing, not decorative: `PrerequisiteEngine` turns an unmet one into a
+  `REMEDIATE` action, so the graph has to be ordered as well as acyclic — a prerequisite taught
+  later in the path would send the learner forward instead of back. `ContentDistributionTest`
+  counts that (and that a node is levelled where its first lesson sits), because the graph is
+  content and nothing else would notice.
 - **One answer is evidence once (Phase 1, Room v9).** `ProgressRepository.claimAnswer` stores the
   day's answer per exercise in `question_attempt` *before* anything is written, and the use cases
   write the skill meter and the graph only from a claimed answer. Re-answering the question that was
