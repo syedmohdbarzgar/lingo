@@ -90,7 +90,16 @@
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
 - Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 728 tests / 79 classes as of
-  the A1/A2-choice pass, where the bottom of the scale got the axis v72 left half-built: 41 lessons
+  the B1/B2-hard-choice pass, where the last 42 flat lessons got the item they were missing: v76's own
+  measurement left 20 B1 and 22 B2 lessons whose whole choice population was a gloss at 1, with the
+  hard item in a blank, a translation or a production — so recognition could not be steered there.
+  Each got one item at 3 that reads the lesson's own **grammar** node in the lesson's own vocabulary,
+  four grammatical options where the context decides (`A transfer fee is charged`, `had better greet
+  your host`, `must be recycled` against `must recycle`, `has been verified` with `since`, `Were the
+  subsidy withdrawn`), and `ContentDistributionTest` now asserts **lesson by lesson** that no choice
+  lesson is flat — all 192 of them move — and proves the consequence on `b1.banking` and `b2.privacy`
+  (2972 → 3014 exercises, bundle v77); no lesson, word or node moved. Before it the A1/A2-choice pass,
+  where the bottom of the scale got the axis v72 left half-built: 41 lessons
   (20 A1, 21 A2) shipped only «What does X mean?» choices at 1, so `AdaptiveExerciseSelector` had no
   direction to move in at the two levels a beginner most needs both. Each got one item at 2 in which
   **the sentence decides the word** — four of the lesson's own words of the same part of speech
@@ -151,12 +160,10 @@
   beside them. Before it the A1/A2-difficulty pass, where the last two levels were read item by item
   and their band of 1..2 made the only question "first encounter or one step past it". One
   `ContentDistributionTest` case measures the within-format axis and names where it exists: every
-  level's multiple-choice items now disagree about difficulty (10 of B1's 30 lessons, 10 of B2's 32,
-  all 31 of C1's and all 30 of C2's — both C levels complete, C1 in v70 and C2 in v75 — and, since
-  v76, all 37 of A1's and all 32 of A2's, so B1's 20 and B2's 22 flat lessons are the only ones left),
-  and the case fails when a
-  level's choice items all share one number again, because that is what a seeded level looks like and
-  it cannot reorder its own format. The same case
+  level's multiple-choice items disagree about difficulty, and since v77 that is asserted **lesson by
+  lesson** — all 37 A1, 32 A2, 30 B1, 32 B2, 31 C1 and 30 C2 choice lessons, so the case fails when any
+  single lesson ships its choices at one number, because that is what a seeded lesson looks like and it
+  cannot reorder its own format. The same case
   proves the consequence on each, and that they sit in different places: on `b1.work` a consolidated
   recognition meter is served its hardest choice item (`ex.02`, reported speech plus past perfect)
   while a shaky one starts at the easy end; on `b2.problems` a consolidated recall meter is served

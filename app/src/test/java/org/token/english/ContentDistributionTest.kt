@@ -414,6 +414,10 @@ class ContentDistributionTest {
      * decides the word — four of the lesson's own words of the same part of speech, one of which
      * the context picks out (`The ______ says "meow"`, `I am crying because I am cutting an ______`,
      * `Our ______ trains the team twice a week`) — so all 37 A1 and 32 A2 choice lessons now move.
+     * v77 closed the same gap at B1 and B2 (20 + 22 lessons), where the level's hard end is a
+     * **structure** rather than a harder word, so each new item reads the lesson's own grammar node
+     * in the lesson's own vocabulary (`must be recycled`, `had better talk`, `Were we to offer`,
+     * `the more … the less`). No lesson in the bundle is flat any more.
      */
     @Test
     fun `the hand-judged levels have a within-format difficulty axis, and it reorders`() {
@@ -439,17 +443,19 @@ class ContentDistributionTest {
             if (difficulties.size > 1) spreadByLevel[level] = (spreadByLevel[level] ?: 0) + 1
         }
 
+        // B1 was the first level read item by item (v67) and B2 the second (v68); v77 finished the
+        // half both left — 20 B1 and 22 B2 lessons whose whole choice population was a gloss at 1,
+        // with the hard item living in a blank, a translation or a production.
         assertEquals(
-            "B1 was the first level read item by item (v67): 10 of its 30 choice lessons disagree about " +
-                "difficulty — the other 20 carry the level's hard item in a blank or a production, the gap " +
-                "v76 closed for A1/A2 and v75 for C2, and B1's own pass is the one still owed",
-            10,
+            "B1 was read item by item (v67) and completed in v77: all 30 of its choice lessons " +
+                "disagree about difficulty",
+            30,
             spreadByLevel["B1"] ?: 0,
         )
         assertEquals(
-            "B2 was read item by item in v68 and is in the same state as B1: 10 of its 32 choice lessons " +
-                "disagree about difficulty, because its hard end lives in the blank (v68's own finding)",
-            10,
+            "B2 was read item by item (v68) and completed in v77: all 32 of its choice lessons " +
+                "disagree about difficulty",
+            32,
             spreadByLevel["B2"] ?: 0,
         )
         // v69 judged C1 and v70 gave the 22 lessons that had no hard choice item one, so every C1
@@ -489,6 +495,16 @@ class ContentDistributionTest {
             "all six levels are hand-judged; a level with no within-format spread is seeded again",
             listOf("A1", "A2", "B1", "B2", "C1", "C2"),
             spreadByLevel.filterValues { it > 0 }.keys.sorted(),
+        )
+        // v76 and v77 between them closed the last of it: no lesson in the bundle now ships its
+        // choices at a single number, which is what "seeded" looked like at the level and at the
+        // lesson — the selector can move recognition in every lesson there is.
+        val flatLessons = mcByLesson.filterValues { it.size == 1 }.keys.sorted()
+        assertEquals(
+            "every lesson's choice items disagree about difficulty — a flat lesson cannot be steered " +
+                "inside that format",
+            emptyList<String>(),
+            flatLessons,
         )
 
         // And the axis is not decoration: on real content the level decides who is served first.
@@ -703,6 +719,55 @@ class ContentDistributionTest {
             "a2.work.ex.01",
             selector.next(
                 workMeetingChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        // v77 finished B1 and B2 the same way: their 20 and 22 flat lessons keep the glosses at 1
+        // and gained one item at 3 that reads the lesson's own structure — here the simple passive
+        // charged on a withdrawal, and the present-perfect passive verified since a breach.
+        val bankChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "b1.banking.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "b1.banking.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("b1.banking has to ship choices to steer", bankChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the passive that reads the sentence",
+            "b1.banking.ex.10",
+            selector.next(
+                bankChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the gloss instead",
+            "b1.banking.ex.01",
+            selector.next(
+                bankChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
+            )?.id,
+        )
+
+        val privacyChoices = (0 until exercises.length())
+            .map { exercises.getJSONObject(it) }
+            .filter { it.optString("type") == "multiple_choice" && it.getString("lessonId") == "b2.privacy.lesson-01" }
+            .mapNotNull { ContentParser.parseExercise(it, "b2.privacy.lesson-01") as? Exercise.MultipleChoice }
+            .sortedBy { it.id }
+        assertTrue("b2.privacy has to ship choices to steer", privacyChoices.size >= 3)
+        assertEquals(
+            "a consolidated recognition meter meets the present-perfect passive",
+            "b2.privacy.ex.10",
+            selector.next(
+                privacyChoices,
+                MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.95f)),
+            )?.id,
+        )
+        assertEquals(
+            "a shaky one starts at the gloss instead",
+            "b2.privacy.ex.01",
+            selector.next(
+                privacyChoices,
                 MasteryProfile(byDimension = mapOf(MasteryDimension.RECOGNITION to 0.4f)),
             )?.id,
         )

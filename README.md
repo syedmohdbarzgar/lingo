@@ -131,7 +131,7 @@ cursor instead of pretending it starts over.
 | | Count |
 |---|---|
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
-| Exercises | 2972 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
+| Exercises | 3014 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
 | Vocabulary entries | 1154 |
 | Knowledge items | 268 |
 | Placement questions | 36 |

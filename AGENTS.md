@@ -148,9 +148,14 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (728 tests / 79 classes as of the
-A1/A2-choice pass, where the bottom of the scale got the axis v72 left half-built: 41 lessons (20 A1,
-21 A2) shipped three «What does X mean?» choices, every one authored 1, so the selector had neither
-end to move to at the two levels a beginner most needs both. Each got one item at 2 in which **the
+B1/B2-hard-choice pass, where the last 42 lessons whose choices were glosses got the hard item they
+were missing: 20 B1 and 22 B2 lessons shipped three «What does X mean?» choices, every one authored
+1, so the selector had nothing to move to. Each got an item at 3 that reads the lesson's
+own **grammar** node in its own vocabulary (`A transfer fee of five dollars is charged`, `had
+better greet your host`, `must be recycled` against `must recycle`, `has been verified` with
+`since`, `Were the subsidy withdrawn`), so **no lesson in the bundle is flat any more** and
+`ContentDistributionTest` asserts it lesson by lesson (2972 → 3014 exercises, bundle v77). Before it
+the A1/A2-choice pass, where each of 41 such lessons got one item at 2 in which **the
 sentence decides the word** — four of the lesson's own words of the same part of speech, one of
 which the context picks out (`The ______ says "meow"` → cat, `I am crying because I am cutting an
 ______` → onion, `Please open the ______; the room is very hot` → window against door, `Could you
@@ -158,9 +163,8 @@ ______ me your pen for a minute` → lend against borrow, `I ______ tea to coffe
 ______ trains the team twice a week` → coach), skill staying `VOCABULARY` because the item tests
 the word in a sentence rather than glossed. The 854 choice items were rebalanced (425 answers moved)
 and **all 37** of A1's and **all 32** of A2's choice lessons now disagree about difficulty, which
-`ContentDistributionTest` asserts and proves on `a1.animals` and `a2.work` — leaving B1's 20 and B2's
-22 flat lessons, whose hard item sits in a blank or a production, as the only ones left (2931 →
-2972 exercises, bundle v76). Before it the C2-hard-choice pass, where the last level whose recognition could not rise got the item it was
+`ContentDistributionTest` asserts and proves on `a1.animals` and `a2.work` (2931 → 2972 exercises,
+bundle v76). Before it the C2-hard-choice pass, where the last level whose recognition could not rise got the item it was
 missing: the v71 read left 21 of C2's 30 lessons with their hard item only in a blank or a
 production, and the selector raises the level **within a format**, so those 21 could not raise
 recognition however consolidated the meter was. Each got one authored choice item at 3 in the
