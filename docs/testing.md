@@ -89,8 +89,13 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 813 tests / 86 classes as of
-  the writing-anchor pass (bundle v81), where a `writing` anchor became a phrase instead of a set of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 817 tests / 86 classes as of
+  the independent-day pass, where the difficulty audit started counting learner-local days: an
+  answer is evidence only when it is the first of its calendar day, so `DifficultyAudit.report`
+  takes the `dayKey` seam the use case fills from `TimeUtil.dateKey`, same-day retries stay in the
+  log as diagnostics only, and `DifficultyAuditTest` runs in Tehran's zone with cases for a local
+  midnight (22:00 and 01:00 are two days although one UTC day) and for the 23- and 25-hour
+  daylight-saving days in Berlin. Before it the writing-anchor pass (bundle v81), where a `writing` anchor became a phrase instead of a set of
   words: separate anchors may sit in any sentence and in any order, but `was collected` now needs
   its two words adjacent, so «the survey was useful … we collected the forms» no longer passes the
   passive item, and `not` + `only` in the other order is not the inversion. The two items that test

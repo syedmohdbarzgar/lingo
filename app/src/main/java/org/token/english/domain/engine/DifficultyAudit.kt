@@ -40,14 +40,25 @@ data class ItemPerformance(
     val lessonId: String,
     val level: LearningLevel?,
     val authoredDifficulty: Int,
+    /** Every answer in the window — the diagnostic half, retries included. */
     val attempts: Int,
     val misses: Int,
+    /**
+     * The answers that count as evidence: the **first** of each local day. A retry ten
+     * seconds after the feedback is not a second observation of the item — the learner
+     * has just been told the answer — so [independent] keeps the log's volume while
+     * [verdict] reads only what the item was met cold with.
+     */
+    val independent: Int,
+    val independentMisses: Int,
+    /** Distinct learner-local calendar days the item was answered on. */
     val days: Int,
     val medianGapMs: Long?,
     val verdict: DifficultyVerdict,
 ) {
-    /** 0..1 over the window. */
-    val accuracy: Float get() = if (attempts == 0) 0f else (attempts - misses) / attempts.toFloat()
+    /** 0..1 over the independent sample; 0 when there is none. */
+    val accuracy: Float
+        get() = if (independent == 0) 0f else (independent - independentMisses) / independent.toFloat()
 }
 
 /** The same fold per CEFR level, so a whole level can be read without listing its items. */
@@ -78,10 +89,20 @@ data class DifficultyAuditReport(
  *
  * Three deliberate limits, each one a rule rather than a tuning knob:
  *
- * - **A minimum sample before any verdict.** [MIN_ATTEMPTS] answers over at least
- *   [MIN_DAYS] days — one answer, or eight taps in one session, is one state of one
- *   learner, not a difficulty. Below the bar every item is [DifficultyVerdict.INSUFFICIENT]
- *   and [DifficultyAuditReport.suggestions] is empty.
+ * - **A minimum sample before any verdict, and one answer per day inside it.**
+ *   [MIN_ATTEMPTS] **independent** answers over at least [MIN_DAYS] days — one answer,
+ *   or eight taps in one session, is one state of one learner, not a difficulty. An
+ *   answer is independent when it is the first of its learner-local calendar day: a
+ *   retry is kept in the log ([ItemPerformance.attempts]) for diagnostics, but the
+ *   learner has just been shown the answer, so it cannot count as a second observation.
+ *   Below the bar every item is [DifficultyVerdict.INSUFFICIENT] and
+ *   [DifficultyAuditReport.suggestions] is empty.
+ * - **Days are the learner's, not UTC's.** The day of an answer comes from the
+ *   [dayKey] seam, which the app fills with `TimeUtil.dateKey` (the device's calendar).
+ *   Dividing the epoch by 86 400 000 would put an answer given at 00:30 into the
+ *   previous day in Tehran and split a session that happened in one evening in UTC-8 —
+ *   and with `MIN_ATTEMPTS` answers now meaning that many *days*, a wrong boundary is
+ *   the difference between "no evidence" and a suggestion.
  * - **A suggestion only points where the scale can actually go.** The scale is relative to
  *   the lesson's level (content v66), so A1/A2 run 1..2 and C1/C2 run 2..3 — an item that
  *   is already at its level's floor has no lower number to be given. The engine carries
@@ -113,18 +134,19 @@ object DifficultyAudit {
     const val EASY_END = 1
     const val HARD_END = 3
 
-    private const val DAY_MS = 86_400_000L
-
     /**
      * @param attempts the answer log, any order; duplicates are real answers.
      * @param exercisesById the authored exercises — an id the bundle no longer ships is
      *   skipped, because a difficulty judgement about content that is gone is unusable.
      * @param levelByLesson the level each lesson belongs to, for the per-level fold.
+     * @param dayKey the learner-local calendar day of an epoch millisecond. Required, not
+     *   defaulted: a UTC default here is exactly the bug this parameter exists to close.
      */
     fun report(
         attempts: List<LessonAttempt>,
         exercisesById: Map<String, Exercise>,
         levelByLesson: Map<String, LearningLevel>,
+        dayKey: (Long) -> Int,
     ): DifficultyAuditReport {
         if (attempts.isEmpty()) return DifficultyAuditReport(emptyList(), emptyList())
 
@@ -136,7 +158,12 @@ object DifficultyAudit {
             .mapNotNull { (exerciseId, answers) ->
                 val exercise = exercisesById.getValue(exerciseId)
                 val misses = answers.count { !it.correct }
-                val days = answers.map { it.at / DAY_MS }.distinct().size
+                // One observation per local day: the first answer, before any feedback.
+                val firstOfDay = answers
+                    .groupBy { dayKey(it.at) }
+                    .mapNotNull { (_, ofDay) -> ofDay.minByOrNull { it.at } }
+                val independentMisses = firstOfDay.count { !it.correct }
+                val days = firstOfDay.size
                 val median = answers.mapNotNull { gaps[it] }.sorted().let { sorted ->
                     if (sorted.isEmpty()) null else sorted[sorted.size / 2]
                 }
@@ -147,11 +174,13 @@ object DifficultyAudit {
                     authoredDifficulty = exercise.difficulty,
                     attempts = answers.size,
                     misses = misses,
+                    independent = days,
+                    independentMisses = independentMisses,
                     days = days,
                     medianGapMs = median,
                     verdict = verdict(
-                        accuracy = (answers.size - misses) / answers.size.toFloat(),
-                        attempts = answers.size,
+                        accuracy = (days - independentMisses) / days.toFloat(),
+                        independent = days,
                         days = days,
                         authoredDifficulty = exercise.difficulty,
                         band = bandOf(levelByLesson[exercise.lessonId]),
@@ -210,12 +239,12 @@ object DifficultyAudit {
 
     private fun verdict(
         accuracy: Float,
-        attempts: Int,
+        independent: Int,
         days: Int,
         authoredDifficulty: Int,
         band: IntRange,
     ): DifficultyVerdict {
-        if (attempts < MIN_ATTEMPTS || days < MIN_DAYS) return DifficultyVerdict.INSUFFICIENT
+        if (independent < MIN_ATTEMPTS || days < MIN_DAYS) return DifficultyVerdict.INSUFFICIENT
         return when {
             // Raised only while there is a harder number to raise it to.
             accuracy < LOW_ACCURACY && authoredDifficulty < band.last -> DifficultyVerdict.SUGGEST_HARDER

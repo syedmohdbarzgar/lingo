@@ -128,8 +128,13 @@
   `DifficultyAudit` reads the answer log that `lesson_attempt` has kept since v9 — exercise, verdict,
   time — and reports per item its accuracy, the median gap since the previous answer in the same
   lesson (a break over two minutes is dropped, not averaged) and the days it was asked on. A number
-  is only questioned when the sample earns it: **8 answers over at least 2 days**, because one answer
-  proves nothing and eight taps in one sitting are one state of one learner. Then a suggestion points
+  is only questioned when the sample earns it: **8 independent answers over at least 2 days**,
+  because one answer proves nothing and eight taps in one sitting are one state of one learner. An
+  answer is independent when it is the first of its **learner-local calendar day** — a retry made
+  after the feedback stays in the log as a diagnostic, but it is not a second observation of the
+  item, and the day comes from the device's calendar (`TimeUtil.dateKey`) rather than from dividing
+  the epoch by 24 hours, so an evening session in Tehran is not split at 03:30 and a 23-hour or
+  25-hour daylight-saving day is still one day. Then a suggestion points
   only where the scale can go — a harder number for an item at the easy end of its own level band that
   is missed half the time, an easier one for an item at the hard end answered almost always right,
   and never below the level's floor (C1/C2 start at 2). `GetDifficultyAuditUseCase` joins the log to

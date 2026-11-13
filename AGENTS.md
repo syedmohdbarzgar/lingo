@@ -162,7 +162,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (813 tests / 86 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (817 tests / 86 classes as of the
+independent-day pass, where the difficulty audit stopped counting one learner's taps as separate
+observations: an answer is evidence only if it is the **first of its learner-local calendar day**,
+so `DifficultyAudit.report` now takes a `dayKey: (Long) -> Int` — required, never defaulted, because
+a UTC default is the bug — which `GetDifficultyAuditUseCase` fills with `TimeUtil.dateKey`. Retries
+stay in the log as diagnostics (`attempts`, `misses`, `medianGapMs`) while `independent`,
+`independentMisses`, `days` and `accuracy` are what a verdict reads; the bar is still eight of them
+over two days, which now means eight distinct days, and `docs/debt.md` says so. Four
+`DifficultyAuditTest` cases pin it (a same-day retry is not a second observation, 22:00 and 01:00
+Tehran are two days although one UTC day, and a 23- or 25-hour Berlin daylight-saving day is one),
+and the whole class now runs in Tehran's zone. Before it the
 writing-anchor pass (bundle v81), where a `mustUse` anchor stopped being a bag of words: separate
 anchors may still sit in any sentence and in any order, but the words *inside* one anchor must be
 adjacent in that order, so `was collected` is the passive and «the survey was useful … we collected

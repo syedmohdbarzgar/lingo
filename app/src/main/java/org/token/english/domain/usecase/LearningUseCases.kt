@@ -1,6 +1,7 @@
 package org.token.english.domain.usecase
 
 import kotlinx.coroutines.flow.first
+import org.token.english.core.common.TimeUtil
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.AdaptiveLearningPlanner
 import org.token.english.domain.engine.ConversationScorer
@@ -834,10 +835,12 @@ class GetMissProfileUseCase(
  * time of every answer since v9 — so this is a **read** that joins the log to the authored
  * exercises (for `difficulty`) and to the lessons (for the level the per-level fold needs).
  *
- * The window is deliberately larger than the miss taxonomy's: eight answers per item is
- * the audit's own bar, so a session-sized window would leave almost every item
- * `INSUFFICIENT` forever. [DifficultyAudit.MIN_ATTEMPTS] and its day rule are what keep the
- * larger window from turning into a verdict on thin evidence.
+ * The window is deliberately larger than the miss taxonomy's: eight **independent**
+ * answers per item is the audit's own bar, so a session-sized window would leave almost
+ * every item `INSUFFICIENT` forever. [DifficultyAudit.MIN_ATTEMPTS] and its day rule are
+ * what keep the larger window from turning into a verdict on thin evidence — and the day
+ * is the learner's own, since [TimeUtil.dateKey] reads the device calendar rather than
+ * dividing the epoch by 24 hours.
  *
  * Exercises are cached per lesson for the process, exactly as the miss profile does:
  * content is static once seeded, and this read is not on a hot path but does walk the
@@ -860,11 +863,11 @@ class GetDifficultyAuditUseCase(
             byId += exercises
         }
         val levels = lessons.observeLessons().first().associate { it.id to it.level }
-        return DifficultyAudit.report(attempts, byId, levels)
+        return DifficultyAudit.report(attempts, byId, levels, dayKey = TimeUtil::dateKey)
     }
 
     companion object {
-        /** A term of answers, not a session's: the audit needs eight per item. */
+        /** A term of answers, not a session's: the audit needs eight days per item. */
         const val WINDOW = 2_000
 
         private const val MAX_CACHED_LESSONS = 64

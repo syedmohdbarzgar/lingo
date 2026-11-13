@@ -38,8 +38,14 @@
   how much text a lesson should ask for is a content decision.
 - **The difficulty audit reads the log and nothing surfaces it yet (P1).** `DifficultyAudit` +
   `GetDifficultyAuditUseCase` turn the answers `lesson_attempt` already keeps into per-item accuracy,
-  thinking time and a bounded suggestion, and twelve cases in `DifficultyAuditTest` read it on a fake
-  repository. No screen asks for it: a content-review surface is an authoring tool, not a learner
+  thinking time and a bounded suggestion, and sixteen cases in `DifficultyAuditTest` read it on a fake
+  repository. Its sample is **one answer per learner-local day** (`TimeUtil.dateKey`), which is both
+  the honest unit — a retry after the feedback is not a second observation — and the reason its bar
+  is expensive: eight independent answers now means eight different days on the same item, so a
+  learner who meets an item twice per session will take weeks to make it eligible. That is a
+  deliberate trade against verdicts on grinding, and `MIN_ATTEMPTS` / `MIN_DAYS` stay provisional
+  until a real answer log has been read; the report also describes **one learner's own history**, so
+  a suggestion is a hint for the next authoring pass, never a population-level difficulty. No screen asks for it: a content-review surface is an authoring tool, not a learner
   screen, and putting a "this item may be mis-rated" row inside the app would hand a judgement to the
   person least able to act on it. Until that surface exists the report is read by its tests, which is
   why the pass ships an engine and a use case rather than a migration — the recording half was
