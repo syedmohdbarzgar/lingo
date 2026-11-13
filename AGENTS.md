@@ -147,7 +147,15 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (742 tests / 80 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (746 tests / 80 classes as of the
+spoken-turn-playback pass, which finished the audio seam the take-audio pass opened: the dialogue's
+turn also writes the PCM the recogniser hears (`TakeRecorder` is the same class), so
+`ConversationPracticeViewModel` mirrors `takePath` into its own state, `LearnerTake` offers
+«پخش صدای خودت» under the transcript once the take is over, and `PlayTake`/`StopTakePlayback` go
+through the existing `VoiceNote` seam — a typed answer has no audio and offers nothing, and moving
+to the next turn silences the previous one. Four `ConversationPracticeViewModelTest` cases pin it
+(the file reaches the state and the player is asked for that exact path, a take with no audio hands
+the player nothing, a typed answer clears the path, and advancing stops playback). Before it the
 take-audio pass, where the graded speaking take got its audio back: `TakeRecorder` writes the
 recogniser's own PCM to a mono 16 kHz WAV — the header twice, placeholder sizes first and the real
 ones at the end of the take — so one capture is both judged and hearable, instead of the two passes

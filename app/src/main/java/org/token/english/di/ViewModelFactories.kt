@@ -160,6 +160,9 @@ fun conversationPracticeViewModelFactory(
         conversationRepository = c.conversationRepository,
         recordTurn = c.recordConversationTurn,
         speaker = c,
+        // Plays this turn's captured take back; the recorder half is unused here
+        // too, because the recogniser is what hears the learner.
+        voiceNote = c.voiceNote,
         contentStatus = c.contentStatus,
         seedContent = { c.seedContent() },
         speechState = c.speechState,

@@ -44,6 +44,7 @@ class ConversationPracticeViewModelTest {
 
     private val speech = MutableStateFlow(SpeechState())
     private val speaker = RecordingSpeaker()
+    private val voiceNote = FakeVoiceNote()
     private var starts = 0
     private var stops = 0
 
@@ -119,6 +120,7 @@ class ConversationPracticeViewModelTest {
             conversationRepository = conversations,
             recordTurn = RecordConversationTurnUseCase(progress, knowledge, conversations),
             speaker = speaker,
+            voiceNote = voiceNote,
             contentStatus = MutableStateFlow(ContentStatus.READY),
             seedContent = { true },
             speechState = speech,
@@ -282,6 +284,7 @@ class ConversationPracticeViewModelTest {
             conversationRepository = FakeConversationRepository(),
             recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = speaker,
+            voiceNote = voiceNote,
             contentStatus = status,
             seedContent = { true },
             speechState = speech,
@@ -315,6 +318,7 @@ class ConversationPracticeViewModelTest {
             conversationRepository = FakeConversationRepository(),
             recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = speaker,
+            voiceNote = voiceNote,
             contentStatus = status,
             seedContent = {
                 seeds++
@@ -517,6 +521,86 @@ class ConversationPracticeViewModelTest {
     }
 
     @Test
+    fun `the turn's take reaches the state and the player is asked for that file`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you", takePath = "cache/turn.wav")
+
+        assertEquals("the take's audio is on the state", "cache/turn.wav", vm.state.value.takePath)
+        vm.onEvent(ConversationEvent.PlayTake)
+        assertEquals(
+            "the player was asked for the words that were graded",
+            listOf("cache/turn.wav"),
+            voiceNote.playedFiles,
+        )
+    }
+
+    @Test
+    fun `a take with no audio offers nothing to play`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you", takePath = null)
+
+        assertNull("a take that captured no audio has no file", vm.state.value.takePath)
+        vm.onEvent(ConversationEvent.PlayTake)
+        assertTrue("and nothing is handed to the player", voiceNote.playedFiles.isEmpty())
+    }
+
+    @Test
+    fun `a typed answer is not your voice`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you", takePath = "cache/turn.wav")
+        assertEquals("cache/turn.wav", vm.state.value.takePath)
+
+        vm.onEvent(ConversationEvent.SubmitTyped("i'm fine, thank you"))
+
+        assertNull("a typed answer has no audio of its own", vm.state.value.takePath)
+        assertFalse("and the take it replaced is not still playing", vm.state.value.isPlayingTake)
+    }
+
+    @Test
+    fun `moving to the next turn silences the take`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you."),
+                    dialogue("a1.one", "s2", "Where are you going?", "I'm going home."),
+                ),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you", takePath = "cache/turn.wav")
+        vm.onEvent(ConversationEvent.PlayTake)
+        assertTrue("the take is playing", vm.state.value.isPlayingTake)
+        val stops = voiceNote.stopPlaybackCalls
+
+        vm.onEvent(ConversationEvent.Next)
+
+        assertTrue("a voice from the previous sentence is silenced", voiceNote.stopPlaybackCalls > stops)
+        assertNull("and its file is no longer offered", vm.state.value.takePath)
+    }
+
+    @Test
     fun `retry clears the previous verdict and restarts the microphone`() {
         val vm = viewModel(
             repository(
@@ -631,6 +715,7 @@ class ConversationPracticeViewModelTest {
             conversationRepository = FakeConversationRepository(),
             recordTurn = RecordConversationTurnUseCase(progress, knowledge, FakeConversationRepository()),
             speaker = slowSpeaker,
+            voiceNote = voiceNote,
             contentStatus = MutableStateFlow(ContentStatus.READY),
             seedContent = { true },
             speechState = speech,

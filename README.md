@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-742 unit tests across 80 classes. The pure cores carry the most weight — review scheduling,
+746 unit tests across 80 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -539,7 +539,8 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.- Pronunciation scoring, deeper than the verdict. The lesson's `speaking` item goes through the same
   offline recogniser as the dialogue (a said-back take is graded, `NEAR` counts, `RETRY` claims
   nothing), and the same capture is kept as audio so the learner hears exactly the words that were
-  judged. But a take is still not *scored*, it is matched: no phoneme-level feedback and no per-word
+  judged — on the lesson's card **and** on every dialogue turn, which now offers its own recording
+  back under the transcript. But a take is still not *scored*, it is matched: no phoneme-level feedback and no per-word
   marks ([`docs/debt.md`](debt.md)). The next step would be word-level feedback on the transcript the
   recogniser already produces.
 - Remote crash reporting — a deliberate provider and privacy decision, not a default.

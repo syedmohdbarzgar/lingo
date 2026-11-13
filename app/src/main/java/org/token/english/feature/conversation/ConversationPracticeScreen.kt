@@ -35,6 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -227,7 +228,11 @@ fun ConversationPracticeScreen(
                         }
 
                         if (state.hasTake || state.isListening) {
-                            LearnerTake(state = state)
+                            LearnerTake(
+                                state = state,
+                                onPlayTake = { vm.onEvent(ConversationEvent.PlayTake) },
+                                onStopTakePlayback = { vm.onEvent(ConversationEvent.StopTakePlayback) },
+                            )
                         }
 
                         Outcome(state = state, turn = turn, permissionRefused = permissionRefused)
@@ -415,7 +420,11 @@ private fun PartnerTurn(
  * the two extra buttons competed with the one action that matters (answer again).
  */
 @Composable
-private fun LearnerTake(state: ConversationUiState) {
+private fun LearnerTake(
+    state: ConversationUiState,
+    onPlayTake: () -> Unit,
+    onStopTakePlayback: () -> Unit,
+) {
     AppCard(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -454,6 +463,16 @@ private fun LearnerTake(state: ConversationUiState) {
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = AppSpacing.xs),
             )
+        }
+
+        // The verdict was formed on these words, and this is the voice that said
+        // them — one take, heard and judged. Offered only once the take is over and
+        // only when it actually captured audio: a typed answer is not your voice,
+        // and an empty take has nothing to play.
+        if (state.takePath != null && !state.isListening) {
+            TextButton(onClick = if (state.isPlayingTake) onStopTakePlayback else onPlayTake) {
+                Text(if (state.isPlayingTake) "توقف پخش" else "پخش صدای خودت")
+            }
         }
     }
 }

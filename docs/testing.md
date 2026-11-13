@@ -89,7 +89,12 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 742 tests / 80 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 746 tests / 80 classes as of
+  the spoken-turn-playback pass, where the dialogue's turn got the playback the lesson's card already
+  had: the recogniser writes the same WAV for a turn (`TakeRecorder`), `ConversationPracticeViewModel`
+  mirrors `takePath` into its state and offers `PlayTake` through the `VoiceNote` seam, and four cases
+  pin it (the path reaches the state and the player, a take with no audio hands the player nothing, a
+  typed answer clears the path because it is not your voice, and advancing stops playback). Before it
   the word-practice pass, where a word can no longer be taught and never asked: 133 words across 75
   lessons appeared in the word list and then not again until the review queue, so each got a
   `word_recall` in its own lesson (cue from the entry's authored `translation`, explanation from its

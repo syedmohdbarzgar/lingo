@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import org.token.english.core.audio.SpeechBus
 import org.token.english.core.audio.SpeechError
 import org.token.english.core.audio.SpeechState
+import org.token.english.core.audio.VoiceNote
 import org.token.english.core.common.ContentStatus
 import org.token.english.core.common.persianCountPair
 import org.token.english.core.common.runCatchingCancellable
@@ -109,6 +110,13 @@ data class ConversationUiState(
      * whenever the learner breathed — see SpeechRecognitionService.
      */
     val finalText: String = "",
+    /**
+     * This turn's take as audio, so the learner can hear the words the verdict was
+     * formed on. Null when the take captured nothing, or when the answer was typed.
+     */
+    val takePath: String? = null,
+    /** This turn's take is playing right now. */
+    val isPlayingTake: Boolean = false,
     /** Set once the take is graded; cleared when a new take starts. */
     val verdict: SpeakingVerdict? = null,
     /**
@@ -196,6 +204,12 @@ class ConversationPracticeViewModel(
      */
     private val recordTurn: RecordConversationTurnUseCase,
     private val speaker: Speaker,
+    /**
+     * Plays this turn's captured take. The dialogue never records on its own — the
+     * recogniser captures, and this seam only plays the file back, exactly as the
+     * lesson's `speaking` item does.
+     */
+    private val voiceNote: VoiceNote,
     /** Where the offline bundle stands — not a bare "ready or not" (see [startLoading]). */
     private val contentStatus: StateFlow<ContentStatus>,
     /** Re-runs the bundle write; the error's retry needs it when the write failed. */
@@ -240,6 +254,13 @@ class ConversationPracticeViewModel(
         viewModelScope.launch {
             speechState.collect { onSpeech(it) }
         }
+        viewModelScope.launch {
+            // The button says "playing" because the player says so, not because a
+            // tap happened — same contract as the lesson's speaking card.
+            voiceNote.isPlaying.collect { playing ->
+                _state.update { it.copy(isPlayingTake = playing) }
+            }
+        }
     }
 
     /**
@@ -276,6 +297,9 @@ class ConversationPracticeViewModel(
                 isPreparing = s.isPreparing,
                 partial = s.partial,
                 finalText = s.finalText,
+                // The service closes the file before it publishes the emission that
+                // ends the take, so this path is only ever a finished WAV.
+                takePath = s.takePath,
                 error = s.error,
             )
         }
@@ -483,6 +507,8 @@ class ConversationPracticeViewModel(
 
         // An open take would end later and grade itself over this answer.
         stopRecognition()
+        // A typed answer has no audio: the previous take's file is not this answer.
+        voiceNote.stopPlayback()
         wasListening = false
         typedThisTurn = true
 
@@ -491,6 +517,8 @@ class ConversationPracticeViewModel(
             it.copy(
                 finalText = said,
                 partial = "",
+                takePath = null,
+                isPlayingTake = false,
                 answeredByTyping = true,
                 verdict = verdict,
                 unheard = false,
@@ -515,6 +543,8 @@ class ConversationPracticeViewModel(
             ConversationEvent.Retry -> startTake()
             ConversationEvent.Next -> advance()
             ConversationEvent.SpeakPartner -> speakPartner()
+            ConversationEvent.PlayTake -> playTake()
+            ConversationEvent.StopTakePlayback -> voiceNote.stopPlayback()
             ConversationEvent.Restart -> restart()
         }
     }
@@ -536,6 +566,8 @@ class ConversationPracticeViewModel(
         // Recording over the partner's own line would capture the device, not the
         // learner — the take would be graded against the question it just heard.
         if (_state.value.isPartnerSpeaking) return
+        // One voice at a time: the previous take's playback stops before the mic opens.
+        voiceNote.stopPlayback()
         // Constrain the recogniser to this turn's own sentences before the service
         // opens the microphone; an open vocabulary is what misheard accented
         // English and made a correct answer look like a miss. The same answers also
@@ -571,8 +603,23 @@ class ConversationPracticeViewModel(
         speakPartner()
     }
 
+    /**
+     * Plays this turn's own words back.
+     *
+     * Silence is the point: the partner's line and the learner's take are never
+     * heard at once, because two English voices talking over each other is not a
+     * comparison. Nothing to play (a typed answer, a take that captured no audio)
+     * means no call at all — the button is only offered when there is a file.
+     */
+    private fun playTake() {
+        val path = _state.value.takePath ?: return
+        if (_state.value.isListening || _state.value.isPartnerSpeaking) return
+        voiceNote.playFile(path)
+    }
+
     /** A take that is not on screen must not stay on screen as if it happened. */
     private fun clearTake() {
+        voiceNote.stopPlayback()
         stopRecognition()
         SpeechBus.reset()
         // SpeechBus.reset() emits a blank state; wasListening must follow it so the
@@ -587,6 +634,8 @@ class ConversationPracticeViewModel(
             it.copy(
                 partial = "",
                 finalText = "",
+                takePath = null,
+                isPlayingTake = false,
                 answeredByTyping = false,
                 verdict = null,
                 unheard = false,
@@ -600,6 +649,9 @@ class ConversationPracticeViewModel(
         // behind a screen the learner already left, and never leave the device
         // talking to an empty room.
         speaker.stop()
+        // Leaving deletes the take (SpeechBus.reset below), so nothing may still be
+        // holding the file open for playback.
+        voiceNote.stopPlayback()
         stopRecognition()
         SpeechBus.reset()
     }
@@ -616,6 +668,12 @@ sealed interface ConversationEvent {
 
     /** Replay the partner's line. */
     data object SpeakPartner : ConversationEvent
+
+    /** Hear this turn's own take back — the words the verdict was formed on. */
+    data object PlayTake : ConversationEvent
+
+    /** Stop the take's playback. */
+    data object StopTakePlayback : ConversationEvent
 
     /** Run the conversation again from the first exchange (the summary's action). */
     data object Restart : ConversationEvent
