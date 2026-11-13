@@ -162,8 +162,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (798 tests / 84 classes as of the
-vocabulary-search pass, where the word browser's box stopped treating the bundle's spelling as the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (800 tests / 85 classes as of the
+touch-target pass, where the one component every level picker and filter is built from stopped being
+too small to hit: `AppChip` is a 6dp-padded `labelMedium` pill, about 32dp tall, and `Modifier.clickable`
+— unlike a Material component — does not grow a target, so the chips in Settings' level picker and in
+the vocabulary browser's level row sat under the 48dp bar AGENTS §6 sets. The floor now belongs to the
+tappable half only (`TouchTargetMin` via `sizeIn`, with the click moved to the wrapper `Box`), which is
+what keeps a metadata chip — the part-of-speech and collocation labels, which are not tappable — a chip
+instead of a 48dp band in a row of three. `ChipTouchTargetTest` measures both directions on the host
+JVM through the merged semantics node: a tappable chip clears 48dp, a label chip stays under it.
+Before it the vocabulary-search pass, where the word browser's box stopped treating the bundle's spelling as the
 only spelling: `VocabularySearch` folds the two spellings a Persian keyboard produces (the Arabic
 ك/ي onto ک/ی), drops the ZWNJ, the harakat, the tatweel and the hamza-bearing alefs, and turns
 Persian digits into ASCII — «كتاب», «میروم» and «۹» now find what «کتاب», «می‌روم» and «9» find —

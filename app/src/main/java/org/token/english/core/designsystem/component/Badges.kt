@@ -2,16 +2,20 @@ package org.token.english.core.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
+import org.token.english.core.designsystem.TouchTargetMin
 import org.token.english.domain.model.LearningLevel
 
 /** The two colors a CEFR level is drawn in — badge fill and its text. */
@@ -105,21 +109,37 @@ fun AppChip(
     val shape = MaterialTheme.shapes.extraLarge
     val selectionOutline =
         if (selected) contentColor ?: MaterialTheme.colorScheme.primary else null
-    Text(
-        text = label,
-        style = MaterialTheme.typography.labelMedium,
-        color = fg,
+    // A 6dp-padded label is a ~32dp pill, which is the right *look* for a chip and the
+    // wrong *size* for a finger: `Modifier.clickable` does not grow the touch area the
+    // way a Material component does, so a level picker or filter chip missed AGENTS §6's
+    // 48dp bar. The floor belongs to the tapping half only, so the visual stays a chip
+    // and a metadata chip that is just a label keeps its own height.
+    val touchTarget = if (onClick != null) {
+        Modifier.sizeIn(minWidth = TouchTargetMin, minHeight = TouchTargetMin)
+    } else {
+        Modifier
+    }
+    Box(
         modifier = modifier
-            .clip(shape)
-            .background(bg)
-            .then(
-                if (selectionOutline != null) {
-                    Modifier.border(1.dp, selectionOutline, shape)
-                } else {
-                    Modifier
-                },
-            )
-            .then(if (onClick != null) Modifier.clickableNoRipple(onClick) else Modifier)
-            .padding(horizontal = AppSpacing.compact, vertical = 6.dp),
-    )
+            .then(touchTarget)
+            .then(if (onClick != null) Modifier.clickableNoRipple(onClick) else Modifier),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = fg,
+            modifier = Modifier
+                .clip(shape)
+                .background(bg)
+                .then(
+                    if (selectionOutline != null) {
+                        Modifier.border(1.dp, selectionOutline, shape)
+                    } else {
+                        Modifier
+                    },
+                )
+                .padding(horizontal = AppSpacing.compact, vertical = 6.dp),
+        )
+    }
 }
