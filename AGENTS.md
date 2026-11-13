@@ -39,7 +39,9 @@ The root file is deliberately short; the deep material is in `docs/`:
   ([`docs/master-rules.md`](docs/master-rules.md) §16): **Summary**, **Files Changed**, **Problems
   Fixed**, **New Risks**, **Tests**, **Regression Check**, **Remaining Tasks**, **Verification
   Status** — the last one naming each change Verified, Implemented-Not-Verified or Partially
-  Implemented, never a guess.
+  Implemented, never a guess. A question or a one-line change skips the sections it has nothing to
+  say in (saying why in one line) rather than growing eight empty headings; the
+  **Verification Status** never drops.
 - **Ask first:** anything on the *suspended* list, a new network feature/permission, a schema
   migration, or a product decision (gating, pricing).
 - **Never:** commit secrets (`keystore.properties`, `*.jks`); hardcode design tokens; put raw English
