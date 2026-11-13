@@ -163,7 +163,15 @@ pinning decision and an ADR first.
 ## 8. Testing
 
 The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (820 tests / 86 classes as of the
-closest-answer pass, where the reply the feedback speaks about stopped being whichever the bundle
+writing-coverage pass, where the type stopped being skippable: v79 shipped six texts, one
+per level, in the six lessons whose topic was plainly a piece of writing — and nothing stopped a
+later pass from dropping one, which would leave that level's writing step only ever asking for a
+sentence. Each level got a **second** text in a different lesson asking for a different structure
+(a routine at A1, a past event at A2, an experience at B1, a report paragraph at B2, an argument at
+C1, a narrative analysis at C2), and `WritingContentTest` now makes that structural: every level
+ships **two** `writing` items asking for different structures, no lesson asks for two texts, every exemplar is accepted by its
+own item, the floors stay at 8 words and 2 sentences, and two items of one level may not share an
+anchor set. Before it the closest-answer pass, where the reply the feedback speaks about stopped being whichever the bundle
 listed first: a turn authored with two equivalent answers can give both the same verdict, so
 `ConversationScorer.bestTarget` now breaks an equal verdict by **keyword coverage** and then by
 **similarity** — the two signals the verdict itself was formed on — and only a genuine tie keeps the
