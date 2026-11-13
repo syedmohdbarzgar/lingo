@@ -131,7 +131,7 @@ cursor instead of pretending it starts over.
 | | Count |
 |---|---|
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
-| Exercises | 3153 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
+| Exercises | 3159 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
 | Vocabulary entries | 1154 |
 | Knowledge items | 268 |
 | Placement questions | 36 |
@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-777 unit tests across 82 classes. The pure cores carry the most weight — review scheduling,
+782 unit tests across 83 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,

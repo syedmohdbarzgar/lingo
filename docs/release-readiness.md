@@ -7,12 +7,12 @@
 
 ## What the code already proves (no device needed)
 
-These are green as of bundle **v79** and do not need re-proving for a release unless the area changes:
+These are green as of bundle **v80** and do not need re-proving for a release unless the area changes:
 
 | Area | Check | Evidence |
 |---|---|---|
-| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3153 exercises (six of them `writing` texts), 36 placement questions, 268 nodes, bundle v79 |
-| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 777 tests / 82 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3159 exercises (twelve of them `writing` texts), 36 placement questions, 268 nodes, bundle v80 |
+| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 782 tests / 83 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
 | Lint, against the accepted list | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | 7 warnings, all seven named in the budget with their reason (`CustomSplashScreen`, AGP ×2, `NewerVersionAvailable` ×3, `UseTomlInstead`) — none appeared, grew or shrank |
 | Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |
@@ -20,9 +20,9 @@ These are green as of bundle **v79** and do not need re-proving for a release un
 | The lesson's spoken answer | eleven `LessonViewModelTest` cases over `FakeSpeech` | `CORRECT`/`NEAR` write one transaction and are credited, `RETRY` writes nothing, a silent or broken take is never scored, and the no-recogniser install can leave the step unclaimed |
 | The take's own audio | `TakeAudioTest` (six JVM cases) + three playback cases in `LessonViewModelTest` + four in `ConversationPracticeViewModelTest` | a canonical mono 16 kHz WAV whose sizes are patched to what was appended, no file for an empty take, the path reaching the player on both screens, and playback stopping when the item, the turn or the screen moves on |
 | Word-level speech feedback | nine `SpokenWordFeedbackTest` cases + three `LessonViewModelTest` and two `ConversationPracticeViewModelTest` cases | the dropped content word is named, a dropped article is not, a reordering is not punished, a contraction / homophone / dialect spelling still counts as heard, one utterance satisfies one repeated word, and both screens show the list under the verdict but never on a hit or a typed answer |
-| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v79 (26 s, 1124 / 1139 / 1182 entries) |
+| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v80 (26 s, 1124 / 1139 / 1182 entries) |
 | Each flavor packages only its own store SDK | `unzip -p <apk> 'classes*.dex' \| grep -a -c <package>` | bazaar: `ir/cafebazaar/poolakey` 46, play billing 0, myket 0 · myket: `ir/myket/billingclient` 33 (the SDK's own package), poolakey 0, play billing 0 · googlePlay: `android/billingclient` 7, poolakey 0, myket 0 |
-| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | all three: `contentVersion` 79, 3153 exercises — the APK cannot ship content the suite did not read |
+| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | all three: `contentVersion` 80, 3159 exercises — the APK cannot ship content the suite did not read |
 
 ## What still needs a device, an emulator or CI
 

@@ -1,5 +1,5 @@
 {
-  "contentVersion": 79,
+  "contentVersion": 80,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -13990,6 +13990,26 @@
       "explanationFa": "قید تکرار usually قبل از فعل اصلی می‌آید."
     },
     {
+      "id": "a1.daily-routine.ex.20",
+      "lessonId": "a1.daily-routine.lesson-01",
+      "type": "writing",
+      "order": 24,
+      "difficulty": 2,
+      "prompt": "روزت را در دو جمله بنویس: صبح چه می‌کنی و بعد چه کار می‌کنی.",
+      "hintFa": "با usually و فعل حال ساده جمله بساز.",
+      "mustUse": [
+        "usually",
+        "wake up"
+      ],
+      "minWords": 8,
+      "minSentences": 2,
+      "accepted": [
+        "I usually wake up at seven. Then I have breakfast and go to work."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "برای کار تکراری حال ساده می‌آید: I usually wake up at seven."
+    },
+    {
       "id": "a1.family.lesson-01.dlg.01",
       "lessonId": "a1.family.lesson-01",
       "order": 11,
@@ -22525,6 +22545,26 @@
       "explanationFa": "گرفتن و برداشتن؛ گذشته‌اش بی‌قاعده است: took."
     },
     {
+      "id": "a2.past-simple.ex.13",
+      "lessonId": "a2.past-simple.lesson-01",
+      "type": "writing",
+      "order": 18,
+      "difficulty": 2,
+      "prompt": "دیروزت را در دو جمله بنویس: چه کاری کردی و کجا رفتی.",
+      "hintFa": "فعل گذشتهٔ نامنظم را به یاد بیاور: went, bought, saw.",
+      "mustUse": [
+        "yesterday",
+        "went"
+      ],
+      "minWords": 10,
+      "minSentences": 2,
+      "accepted": [
+        "Yesterday I went to the market with my sister. We bought some fruit and then we ate lunch."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "رویداد تمام‌شدهٔ گذشته با شکل گذشتهٔ فعل: went, bought, saw, ate."
+    },
+    {
       "id": "a2.hotel-booking.lesson-01.dlg.05",
       "lessonId": "a2.hotel-booking.lesson-01",
       "type": "speaking",
@@ -23926,6 +23966,26 @@
       ],
       "skill": "VOCABULARY",
       "explanationFa": "در خارج از کشور؛ قید است و با in/to به کار نمی‌رود."
+    },
+    {
+      "id": "b1.experiences.ex.15",
+      "lessonId": "b1.experiences.lesson-01",
+      "type": "writing",
+      "order": 20,
+      "difficulty": 3,
+      "prompt": "یک تجربهٔ سفر را در دو یا سه جمله بنویس: کجا رفته‌ای و چه چیزی برایت ماند.",
+      "hintFa": "حال کامل برای تجربه، و never برای چیزی که هرگز نکرده‌ای.",
+      "mustUse": [
+        "have",
+        "memorable"
+      ],
+      "minWords": 16,
+      "minSentences": 2,
+      "accepted": [
+        "I have travelled abroad twice. My most memorable journey was a week of exploring in Turkey, and I brought a small souvenir home."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "تجربهٔ بدون زمان مشخص با حال کامل: I have travelled abroad twice."
     },
     {
       "id": "b1.money.lesson-01.dlg.05",
@@ -35578,6 +35638,26 @@
       "explanationFa": "بررسی را بازبین انجام می‌دهد، پس مجهول است و each مفرد فعل مفرد می‌گیرد: is checked. checks و is checking فعال‌اند و has checking ساختار ندارد."
     },
     {
+      "id": "b2.reports.ex.11",
+      "lessonId": "b2.reports.lesson-01",
+      "type": "writing",
+      "order": 17,
+      "difficulty": 3,
+      "prompt": "یک بند کوتاه از یک گزارش بنویس: یافته، روشِ گردآوری داده، و یک توصیه.",
+      "hintFa": "مجهول گذشتهٔ ساده: was/were + قسمت سوم فعل.",
+      "mustUse": [
+        "was collected",
+        "recommendation"
+      ],
+      "minWords": 16,
+      "minSentences": 3,
+      "accepted": [
+        "The data was collected in May from three regional offices. The main finding is a steady decline in response rates. Our recommendation is to shorten the survey."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "روش گردآوری با مجهول گذشتهٔ ساده: The data was collected in May."
+    },
+    {
       "id": "b2.presentations.ex.01",
       "lessonId": "b2.presentations.lesson-01",
       "type": "multiple_choice",
@@ -43622,6 +43702,26 @@
       ],
       "skill": "VOCABULARY",
       "explanationFa": "در این معنا qualify یعنی «محدود و مشروط کردن»، نه «واجد شرایط بودن»."
+    },
+    {
+      "id": "c1.argumentation.ex.12",
+      "lessonId": "c1.argumentation.lesson-01",
+      "type": "writing",
+      "order": 18,
+      "difficulty": 3,
+      "prompt": "یک ادعا و پاسخ به یک نقد را در دو جمله بنویس؛ جمله را با ساختار تأکیدی آغاز کن.",
+      "hintFa": "Not only does … but …، و burden of proof برای بار اثبات.",
+      "mustUse": [
+        "not only",
+        "burden of proof"
+      ],
+      "minWords": 18,
+      "minSentences": 2,
+      "accepted": [
+        "Not only does the study fail to establish a link, but its sample was also small. The burden of proof therefore lies with the claim, not the critique."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "تأکید با آغاز منفی و جابه‌جایی فعل کمکی: Not only does the study fail to …"
     },
     {
       "id": "c1.proposals.ex.01",
@@ -52618,6 +52718,26 @@
       "correctIndex": 3,
       "skill": "GRAMMAR",
       "explanationFa": "رویدادی که پیش از رویداد گذشتهٔ دیگری رخ داده، گذشتهٔ کامل می‌گیرد: had taken place."
+    },
+    {
+      "id": "c2.narrative.ex.11",
+      "lessonId": "c2.narrative.lesson-01",
+      "type": "writing",
+      "order": 17,
+      "difficulty": 3,
+      "prompt": "یک بند کوتاه تحلیلی دربارهٔ یک روایت بنویس: چیزی که پیش از شروع رخ داده و یک تروپ.",
+      "hintFa": "برای رویداد پیش از نقطهٔ مرجع: had + past participle.",
+      "mustUse": [
+        "had",
+        "trope"
+      ],
+      "minWords": 16,
+      "minSentences": 2,
+      "accepted": [
+        "The backstory had already been established before the first chapter opened. The novel uses that trope deliberately, so the denouement reads as inevitable rather than sudden."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "رویداد پیش از نقطهٔ مرجع با past perfect: had already been established."
     },
     {
       "id": "c2.uncertainty.ex.10",

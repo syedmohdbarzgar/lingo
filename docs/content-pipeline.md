@@ -85,7 +85,7 @@
   about difficulty. v75 finished the level the way v70 finished C1: the 21 lessons whose hardest item
   sat in a blank or a production got one authored hard choice item each, written in the level's own
   hard-end shape (four grammatical options where the context decides, and the mixed conditional, the
-  inverted negative adverbial and the agreement trap among them), so 3153 exercises today. Neither C
+  inverted negative adverbial and the agreement trap among them), so 3159 exercises today. Neither C
   level now leaves recognition unable to rise.
   A1 and A2 were judged last (v72), and their band of 1..2 makes the question the simplest one the
   scale allows: *first encounter, or one step past it*. The 2 goes to a blank that tests a structure,
@@ -161,7 +161,7 @@
   dialects, pragmatics and culture-expressions lessons, v58's allusions, paraphrasing,
   translation and diplomacy lessons, v59's specialist-audiences, narrative, uncertainty and
   sensitive-communication lessons and v60's policy, legal-text and audience-design lessons)),
-  3153 exercises
+  3159 exercises
   (8–19/lesson + **reading evidence in 43 lessons: 95 READING items, of which 84 sit on a shared
   3–5 sentence passage in 36 lessons (six per level) — two comprehension questions in the 30 v63
   lessons, four in the six original ones
@@ -196,8 +196,9 @@
   go below 8, `minSentences` may not go below 2, and the authored exemplar must itself reach both
   floors, because it is the model shown after a miss. Nothing checks whether the prose is *good* —
   offline and deterministic, like every other grader here, and the limit is named in
-  [`debt.md`](debt.md). Six items ship (one per level: `a1.family`, `a2.hobbies`, `b1.plans`,
-  `b2.problems`, `c1.statistics`, `c2.academic-writing`), each built from the lesson's own words and
+  [`debt.md`](debt.md). Twelve ship — two per level, in different lessons and asking for different
+  structures (a routine, a past event, an experience, a report paragraph, an argument, a narrative
+  analysis beside the v79 six), each built from the lesson's own words and
   its own grammar tip; the type is meant to grow by later authoring, not by a bulk pass, because a
   text is the hardest thing a lesson asks (difficulty 3 wherever the level's band allows it). It is
   its own evidence format (`WRITING_TEXT`) and credits the `PRODUCTION` dimension.
@@ -275,7 +276,7 @@
   can never be right. The v64 audit itself is in [`review-v64.md`](review-v64.md).
 - **Explain a miss (A-1):** every grammar and fill-in-the-blank exercise carries a one/two-sentence
   `explanationFa` saying *why* the answer is right (and, for the common wrong option, why it is not).
-  Coverage is **every one of the 3153 exercises** (grammar/fill-blank core plus vocabulary meaning,
+  Coverage is **every one of the 3159 exercises** (grammar/fill-blank core plus vocabulary meaning,
   translation and listening items). `ExplanationCoverageTest` enforces 100% on the core set and on
   the whole bundle (checklist A-1's floor of 90% was passed, so the bar is now the invariant);
   `validateContent` prints any exercise without one as a non-blocking warning. A new exercise of any

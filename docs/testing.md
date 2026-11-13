@@ -89,8 +89,12 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 777 tests / 82 classes as of
-  the writing-type pass (bundle v79), where the last format the exercise model had room for shipped
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 782 tests / 83 classes as of
+  the writing-coverage pass (bundle v80), where the type stopped being skippable: a second text per
+  level, in a different lesson and asking for a different structure, and the new `WritingContentTest`
+  to hold it — every level ships one, no lesson asks for two, every exemplar passes its own item, the
+  floors stay where the validator puts them, and two items of a level cannot share an anchor set.
+  Before it the writing-type pass (bundle v79), where the last format the exercise model had room for shipped
   with content that asks for it: `Exercise.Writing` is a short connected text, graded offline on its
   anchors **anywhere**, a word floor and a sentence floor — so a single run-on carrying every anchor
   is not the two sentences that were asked for, which is the difference from a produced sentence.

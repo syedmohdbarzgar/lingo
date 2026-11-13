@@ -147,8 +147,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (777 tests / 82 classes as of the
-writing-type pass (bundle v79), where the last format the exercise model had room for shipped with
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (782 tests / 83 classes as of the
+writing-coverage pass (bundle v80), where the type stopped being skippable: v79 shipped six texts, one
+per level, in the six lessons whose topic was plainly a piece of writing — and nothing stopped a later
+pass from dropping one, which would leave that level's writing step only ever asking for a sentence.
+Each level got a **second** text in a different lesson asking for a different structure (a routine at
+A1, a past event at A2, an experience at B1, a report paragraph at B2, an argument at C1, a narrative
+analysis at C2), and the new `WritingContentTest` makes that structural: every level ships at least one
+`writing` item, no lesson asks for two texts, every exemplar is accepted by its own item, the floors
+stay at 8 words and 2 sentences, and two items of one level may not share an anchor set. Before it
+the writing-type pass (bundle v79), where the last format the exercise model had room for shipped with
 content that asks for it: `Exercise.Writing` is a short **connected text** (two or three sentences),
 and it differs from `sentence_production` in exactly the two ways a text differs from a sentence —
 anchors may sit in **any** sentence rather than in order, and the answer must reach a sentence floor
@@ -159,7 +167,8 @@ The validator holds an item to the bar its learner is held to (English anchors, 
 and six items ship — one per level — written from their lesson's own words and grammar tip. Twelve
 `WritingExerciseTest` cases pin the grading, the parser and the format; three `ContentValidationTest`
 fixtures the validator's refusals; two `LessonViewModelTest` cases the wiring (a text that reaches both
-floors is a hit and credits WRITING, a single run-on comes back). Before it the
+floors is a hit and credits WRITING, a single run-on comes back) — and five `WritingContentTest` cases
+hold the shipped bundle to the same rules. Before it the
 word-level-feedback pass, where the verdict stopped being the last word: the new
 `SpokenWordFeedback` marks the take against the model sentence word by word, with the scorer's own
 normalisation, contraction expansion, dialect/homophone fold and one-edit tolerance, so feedback can
