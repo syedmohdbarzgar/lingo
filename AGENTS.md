@@ -1,12 +1,20 @@
 # AGENTS.md — Lingo English Learning App (org.token.english)
 
-> این سند «حقیقت مرجع» و نقطهٔ ورود است. هستهٔ یادگیری **آفلاین-محور** است و باید همیشه بدون
+> این سند «حقیقت مرجع» مهندسی و نقطهٔ ورود است. هستهٔ یادگیری **آفلاین-محور** است و باید همیشه بدون
 > اینترنت کار کند؛ فقط چیزهایی که به **زیرساخت بک‌اند/سرور** نیاز دارند معلق می‌مانند.
+>
+> قوانین رفتاری (آموزشی، اعتماد، امنیت، گزارش پایان کار) در
+> [`docs/master-rules.md`](docs/master-rules.md) است؛ آن سند و این سند مکمل‌اند و هر تعارضشان
+> با سه یادداشتِ بالای همان فایل تصمیم‌گیری شده — نه با نادیده گرفتن یکی از دو سند.
 
 ## Where the detail lives
 
 The root file is deliberately short; the deep material is in `docs/`:
 
+- [`docs/master-rules.md`](docs/master-rules.md) — the master rules: mission, the education and
+  trust bars, the review protocol, the end-of-task report, and the three notes that reconcile it
+  with what this repository actually has (no instrumented suite, one rules document rather than
+  `docs/ai/`, offline is the normal state rather than an error state).
 - [`docs/learner-model.md`](docs/learner-model.md) — engines, the adaptive layer, the remediation
   bar, the three skill tracks.
 - [`docs/content-pipeline.md`](docs/content-pipeline.md) — the JSON bundle, `validateContent`,
