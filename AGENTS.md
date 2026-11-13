@@ -162,7 +162,25 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (800 tests / 85 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (810 tests / 86 classes as of the
+abandoned-take pass, where a take the learner walked away from stopped being able to report:
+one question — "may this take still speak?" — is now `TakeWindow` in `core/audio`, because the
+take that ends and the take that is abandoned were the same value before it. `SpeechBus.epoch`
+is bumped by every `reset()`, the service's capture loop leaves when its take is abandoned (so
+the mic is released, not held until the silence fuse), every emission in that loop goes through
+`publishFor(take)` rather than straight to the bus, and `cleanup` **discards** an unowned
+recorder instead of `finish()`-ing it — patching the WAV sizes of a take nobody wants is how a
+cancelled take used to leave a playable file in the cache. `SpeechRecognitionService.stop()` is a
+no-op when `SpeechBus.isLive()` is false, because `startService` on a dead service *creates* it
+and flashes a notification just to tear itself down, while `start()` announces `isPreparing`
+before queueing the intent so a screen that leaves immediately still finds something to cancel.
+`LessonViewModel` keeps its own half: a take is owned by the item it was said for
+(`takeExerciseId`), so a late emission cannot hand the next exercise another one's words or
+WAV. Eight `TakeWindowTest` cases pin the two endings, the abandoned take's silence, the
+newer-take hand-off, a take begun after an abandonment and the epoch bump `reset()` makes; two
+`LessonViewModelTest` cases the screen's half (a lesson left mid-take neither grades the late
+take nor offers its audio, and accepting an item with `ContinueUnassessed` cancels the open take
+and stays unassessed). Before it the
 touch-target pass, where the one component every level picker and filter is built from stopped being
 too small to hit: `AppChip` is a 6dp-padded `labelMedium` pill, about 32dp tall, and `Modifier.clickable`
 — unlike a Material component — does not grow a target, so the chips in Settings' level picker and in

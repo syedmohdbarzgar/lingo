@@ -469,6 +469,53 @@ class LessonViewModelTest {
     }
 
     @Test
+    fun `a take the learner walked away from never lands back on the screen`() {
+        // The service can finish a take after this screen stopped waiting for it. The
+        // late emission must not grade a sentence nobody is answering, and must not
+        // restore its audio: the next item's «پخش صدای خودت» would otherwise play the
+        // exercise the learner left.
+        val h = Harness().with(speaking("a1.test.sp.14", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.state.value = SpeechState(isListening = true)
+        vm.onAudioInterrupted() // leaving the lesson with the mic open
+
+        // What an abandoned take used to publish a moment later.
+        h.speech.state.value = SpeechState(
+            isListening = false,
+            finalText = "Go straight.",
+            takePath = "cache/speech_take.wav",
+        )
+
+        assertNull("no verdict for a take that belongs to a screen nobody is on", vm.state.value.outcome)
+        assertNull("and no audio offered", vm.state.value.takePath)
+        assertEquals("nothing heard", "", vm.state.value.heardText)
+    }
+
+    @Test
+    fun `accepting the item without a verdict still cancels the open take`() {
+        val h = Harness().with(speaking("a1.test.sp.16", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.state.value = SpeechState(isListening = true)
+        vm.onEvent(LessonEvent.ContinueUnassessed)
+
+        assertTrue("the mic was closed", h.speech.stops >= 1)
+        assertFalse("and the screen says so", vm.state.value.isListening)
+
+        // The abandoned take finishes anyway; it must not overwrite the unassessed outcome.
+        h.speech.state.value = SpeechState(
+            isListening = false,
+            finalText = "Go straight.",
+            takePath = "cache/speech_take.wav",
+        )
+        assertNull("an unassessed item stays unassessed", vm.state.value.outcome?.spokenVerdict)
+        assertNull(vm.state.value.takePath)
+    }
+
+    @Test
     fun `leaving the lesson closes the microphone`() {
         val h = Harness().with(speaking("a1.test.sp.10", "Go straight."))
         val vm = h.build()

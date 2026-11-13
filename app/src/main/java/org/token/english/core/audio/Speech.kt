@@ -96,10 +96,30 @@ object SpeechBus {
     }
 
     /**
+     * The screen the current take belongs to. Bumped by [reset], read by
+     * [TakeWindow]: a take that began under an older epoch was abandoned, so nothing
+     * it produces — no partial, no transcript, no audio path, no error — may land.
+     *
+     * A counter rather than a flag because a new take begins right after an
+     * abandonment and must be allowed to publish; "was it ever reset" would refuse it.
+     */
+    @Volatile
+    var epoch: Int = 0
+        private set
+
+    /** A take is in flight (or still loading): the only state in which a stop is real. */
+    fun isLive(): Boolean = _state.value.let { it.isListening || it.isPreparing }
+
+    /**
      * Screen left the feature: never leave a mic button looking live, and never
      * leave a recording of the learner's voice on disk. The take belongs to the
      * item it was said for, so moving on deletes it (the next take overwrites it
      * either way).
+     *
+     * The epoch bump is what makes the deletion hold: the file of a take still being
+     * recorded does not exist under [SpeechState.takePath] yet, so the service has to
+     * learn about the reset from here and discard its own in-progress writer. Without
+     * it, the take finished a moment later and published a path nobody asked for.
      */
     internal fun reset() {
         _state.value.takePath?.let { path ->
@@ -109,6 +129,7 @@ object SpeechBus {
         grammar = null
         acceptedAnswers = emptyList()
         hesitant = false
+        epoch += 1
     }
 }
 

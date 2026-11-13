@@ -14,6 +14,15 @@
   A revisit's answer is claimed like any other: re-answering the *same* exercise on the same day
   writes nothing to mastery, and `firstTries` refuses to recount it as a first pass.
 
+- **An abandoned take is refused by policy, and the refusal is tested off-device.**
+  `TakeWindow` + `TakeWindowTest` pin *whether* a take may still publish, and a capture loop
+  that leaves on abandonment closes the microphone in code, but the two device-only halves are
+  not unit-testable here: `cleanup()` discarding `TakeRecorder`'s open writer (that `discard()`
+  closes the file rather than leaving a playable WAV) and `SpeechBus.isLive()` skipping a
+  `startService` that would otherwise flash a notification. They are read in review and checked
+  on a device in `scripts/verify_device.sh`'s manual list, not by an assertion — the same limit
+  this file already records for the Vosk recogniser itself.
+
 - **A written text is graded on its shape, not on its prose (bundle v79).** `Exercise.Writing`
   checks three things a phone can check without a model: every authored anchor appears **somewhere**,
   the answer reaches its `minWords`, and it contains at least `minSentences` finished sentences. That

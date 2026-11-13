@@ -705,18 +705,24 @@ class LessonViewModel(
     private fun onSpeech(s: SpeechState) {
         val takeEnded = wasListening && !s.isListening
         wasListening = s.isListening
+        // A take belongs to the item it was said for: once this screen abandoned it
+        // (`takeExerciseId == null`), a late emission is about a sentence nobody is
+        // answering now. Its words and its WAV must not be adopted — otherwise the
+        // next item offers «پخش صدای خودت» for another exercise's take.
+        val ownsTake = takeExerciseId != null
         _state.update {
             it.copy(
                 isListening = s.isListening,
                 isPreparing = s.isPreparing,
                 heardPartial = s.partial,
-                heardText = s.finalText.ifBlank { it.heardText },
+                heardText = if (ownsTake) s.finalText.ifBlank { it.heardText } else it.heardText,
                 // The take's audio arrives with the emission that ends the take; a
                 // later one without a path must not erase a take that has one.
-                takePath = s.takePath ?: it.takePath,
+                takePath = if (ownsTake) s.takePath ?: it.takePath else it.takePath,
                 recordingFailed = s.error != SpeechError.NONE,
             )
         }
+        if (!ownsTake) return
         if (s.error != SpeechError.NONE) return
         if (takeEnded) gradeTake(s.finalText.trim())
     }
@@ -856,10 +862,12 @@ class LessonViewModel(
      */
     private fun abandonTake() {
         voiceNote.stopPlayback()
-        // Only touch the service when it is actually holding the mic or loading a
-        // model: a stop on every step entry would start and tear down a foreground
-        // service (and flash its notification) for a take that never existed.
-        if (_state.value.isListening || _state.value.isPreparing) stopRecognition()
+        // Unconditional, and cheap: the service itself refuses a stop when no take is
+        // live (`SpeechBus.isLive`), which is what keeps a step change from starting a
+        // foreground service just to tear it down. Guarding here instead left a window —
+        // a take requested a moment ago is not yet visible in this state — in which the
+        // microphone was already asked for and then never cancelled.
+        stopRecognition()
         // reset() emits a blank state; wasListening must follow it so that blank
         // emission is not mistaken for the end of a take.
         SpeechBus.reset()

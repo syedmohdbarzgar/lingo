@@ -29,7 +29,9 @@ import org.json.JSONObject
 import org.token.english.R
 import org.token.english.core.audio.SpeechBus
 import org.token.english.core.audio.SpeechError
+import org.token.english.core.audio.SpeechState
 import org.token.english.core.audio.TakeRecorder
+import org.token.english.core.audio.TakeWindow
 import org.vosk.Recognizer
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
@@ -76,8 +78,15 @@ class SpeechRecognitionService : Service() {
      */
     private val takeSequence = AtomicInteger(0)
 
-    @Volatile
-    private var activeTake = 0
+    /**
+     * Which take may still touch the screen (see [TakeWindow]). Two different ends are
+     * distinguished by *who asks*, not by a second intent action: a STOP is the learner
+     * finishing and must publish, while `SpeechBus.reset()` — every abandon path in both
+     * screens emits it — bumps the epoch and makes this window refuse every emission and
+     * discard the in-progress WAV. A separate CANCEL action would be a second signal for
+     * the same fact, and the screen's own state is the authoritative one.
+     */
+    private val takeWindow = TakeWindow(newest = { takeSequence.get() })
 
     private var audioRecord: AudioRecord? = null
     private var recognizer: Recognizer? = null
@@ -119,7 +128,7 @@ class SpeechRecognitionService : Service() {
         // dropping it left «تلاش دوباره» pressed right after «پایان پاسخ» with a
         // spinner and no take at all.
         if (captureThread != null) {
-            stopRecording() // clears activeTake: the old take no longer owns the mic
+            stopRecording() // closes the mic: the old take no longer owns it
             return
         }
         beginTake(take)
@@ -131,7 +140,7 @@ class SpeechRecognitionService : Service() {
      * never cancelled mid-load by anything but a STOP, which the checks below see.
      */
     private fun beginTake(take: Int) {
-        activeTake = take
+        takeWindow.begin(take)
 
         serviceScope.launch {
             SpeechBus.publish { it.copy(isPreparing = true, error = SpeechError.NONE) }
@@ -189,19 +198,21 @@ class SpeechRecognitionService : Service() {
     }
 
     /** Whether [take] is the one still allowed to open the mic. */
-    private fun isCurrentTake(take: Int): Boolean = take != 0 && take == activeTake
+    private fun isCurrentTake(take: Int): Boolean = takeWindow.mayOpenMic(take)
 
     /**
      * Whether [take] may still publish what the screen shows. The newest START owns
      * the screen: a STOP does *not* take that away (the screen must still learn the
-     * take ended), while a newer take does — its own publish is the truth then.
+     * take ended), while a newer take does — its own publish is the truth then. And
+     * neither does a *reset*: an abandoned screen owns no take at all.
      *
-     * Using [activeTake] here instead was a real bug on the phone: a STOP clears it
-     * before the capture loop exits, so the take that was ended *by the learner*
-     * looked superseded, never published `isListening = false`, and the screen sat
-     * on «در حال صحبت…» with the microphone long closed.
+     * Using "is this take active" here was a real bug on the phone: a STOP clears the
+     * active take before the capture loop exits, so the take the learner ended looked
+     * superseded, never published `isListening = false`, and the screen sat on «در حال
+     * صحبت…» with the microphone long closed. [TakeWindow] keeps those two answers
+     * apart, which is why the rule can be read (and tested) on its own.
      */
-    private fun ownsScreenState(take: Int): Boolean = take != 0 && take == takeSequence.get()
+    private fun ownsScreenState(take: Int): Boolean = takeWindow.mayPublish(take)
 
     /**
      * Opens the mic for [take]. Runs after the model load (a background
@@ -339,7 +350,12 @@ class SpeechRecognitionService : Service() {
         var lastSoundAt = 0L
         try {
             record.startRecording()
-            while (keepRecording && isCurrentTake(take)) {
+            // An abandoned take stops reading too: the screen that asked for it has
+            // bumped the epoch, so the microphone is no longer for anybody. Waiting
+            // for the silence fuse would keep it open for up to half a minute after
+            // the learner left, which is exactly the window a voice recording must
+            // not survive.
+            while (keepRecording && isCurrentTake(take) && !takeWindow.isAbandoned(take)) {
                 val read = record.read(buffer, 0, buffer.size)
                 if (read <= 0) {
                     // ERROR_INVALID_OPERATION / ERROR_DEAD_OBJECT: the recorder
@@ -347,7 +363,7 @@ class SpeechRecognitionService : Service() {
                     // when the learner ended the take: `read` reports the same
                     // negative codes for a stream stopped on purpose.
                     if (keepRecording && isCurrentTake(take)) {
-                        SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+                        publishFor(take) { it.copy(error = SpeechError.INTERRUPTED) }
                     }
                     break
                 }
@@ -374,7 +390,7 @@ class SpeechRecognitionService : Service() {
                         heardSomething = true
                         lastSoundAt = SystemClock.elapsedRealtime()
                     }
-                    SpeechBus.publish { it.copy(finalText = transcript.toString(), partial = "") }
+                    publishFor(take) { it.copy(finalText = transcript.toString(), partial = "") }
                 } else {
                     val partial = parsePartial(rec.getPartialResult())
                     inFlight = partial
@@ -382,7 +398,7 @@ class SpeechRecognitionService : Service() {
                         heardSomething = true
                         lastSoundAt = SystemClock.elapsedRealtime()
                     }
-                    SpeechBus.publish { it.copy(partial = partial) }
+                    publishFor(take) { it.copy(partial = partial) }
                 }
                 // The exit is a plain `break`, never `keepRecording = false`: that
                 // flag belongs to the service, and clearing it here stopped a NEW
@@ -411,12 +427,12 @@ class SpeechRecognitionService : Service() {
             // in-flight utterance used to be dropped because the loop had already
             // left on `keepRecording == false`.
             appendSegment(transcript, parseText(rec.getFinalResult()))
-            SpeechBus.publish { it.copy(finalText = transcript.toString(), partial = "") }
+            publishFor(take) { it.copy(finalText = transcript.toString(), partial = "") }
         } catch (t: Throwable) {
             // A take the learner ended is not a failure; only a recorder that
             // died underneath a take still meant to be running is.
             if (keepRecording && isCurrentTake(take)) {
-                SpeechBus.publish { it.copy(error = SpeechError.INTERRUPTED) }
+                publishFor(take) { it.copy(error = SpeechError.INTERRUPTED) }
             }
         } finally {
             finishCapture(record, rec, take)
@@ -466,7 +482,7 @@ class SpeechRecognitionService : Service() {
         if (newest != take) {
             // A START landed while this take was still leaving; serve it now that
             // the microphone is free (see [startRecording]).
-            if (activeTake == 0) beginTake(newest)
+            if (!takeWindow.hasActiveTake) beginTake(newest)
             return
         }
         // Only the take that is still current owns the service. An automatic end
@@ -542,7 +558,7 @@ class SpeechRecognitionService : Service() {
     private fun stopRecording() {
         // Invalidates a take still copying/loading the model, so it cannot open the
         // mic after this stop, and leaves no take current for the next START.
-        activeTake = 0
+        takeWindow.end()
         keepRecording = false
         // A take stopped while it was still preparing never reaches cleanup(), so
         // without this the screen keeps showing the loading spinner of a take the
@@ -566,24 +582,46 @@ class SpeechRecognitionService : Service() {
         } catch (t: Throwable) {
             // Already closed.
         }
+        // A take that may no longer speak is thrown away **on disk**, not finished:
+        // `finish()` patches the WAV sizes and keeps the file, which is exactly the
+        // wrong answer for an abandoned take. Its writer is still open at this point,
+        // so `discard()` is also the only thing that closes it — the reason a
+        // cancelled take used to leave a playable WAV in the cache.
+        val owned = ownsScreenState(take)
+        val audio = if (owned) {
+            takeRecorder?.finish()
+        } else {
+            takeRecorder?.discard()
+            null
+        }
+        takeRecorder = null
+        // A finished take may already have been replaced by a newer one, or its screen
+        // may have been abandoned. Clearing the live take's fields or publishing «not
+        // listening» here would make a new take look dead — and the screen grades the
+        // end of a take by that flag, so the learner's next sentence would be scored
+        // against the old one. Nothing is published at all: a blank state is the
+        // truth for an abandoned take, and a newer take publishes its own.
+        if (!owned) return
+        audioRecord = null
+        recognizer = null
         // The audio is closed before the state that announces the end of the take:
         // the screen starts offering playback from that same emission, and a file
         // still open would play back truncated (its WAV sizes are patched on close).
-        val audio = takeRecorder?.finish()
-        takeRecorder = null
-        // A finished take may already have been replaced by a newer one. Clearing
-        // the live take's fields or publishing «not listening» here would make the
-        // new take look dead — and the screen grades the end of a take by that
-        // flag, so the learner's next sentence would be scored against the old one.
-        if (!ownsScreenState(take)) {
-            audio?.delete()
-            return
-        }
-        audioRecord = null
-        recognizer = null
         SpeechBus.publish {
             it.copy(isListening = false, isPreparing = false, takePath = audio?.absolutePath)
         }
+    }
+
+    /**
+     * Publishes only while [take] still owns the screen.
+     *
+     * Every emission in the capture loop goes through here, not just the final one: a
+     * partial that lands after the learner left would repaint a blanked screen with a
+     * sentence from the abandoned take, and an `INTERRUPTED` error would report a
+     * failure for a take nobody was waiting for.
+     */
+    private fun publishFor(take: Int, update: (SpeechState) -> SpeechState) {
+        if (ownsScreenState(take)) SpeechBus.publish(update)
     }
 
     /** Vosk result JSON: `{"text": "go straight and turn left"}`. */
@@ -675,12 +713,24 @@ class SpeechRecognitionService : Service() {
          * from API 26, and below that a plain start is the correct behavior.
          */
         fun start(context: Context) {
+            // Announced synchronously, before the intent is even queued: between the
+            // request and the service's own `isPreparing` there is a window in which a
+            // screen that leaves immediately would see "nothing live" — and then skip
+            // the stop that would have cancelled this very take.
+            SpeechBus.publish { it.copy(isPreparing = true, error = SpeechError.NONE) }
             val intent = Intent(context, SpeechRecognitionService::class.java).setAction(ACTION_START)
             ContextCompat.startForegroundService(context, intent)
         }
 
-        /** Stop the take and dismiss the notification. Safe when not running. */
+        /**
+         * Stop the take and dismiss the notification. Safe when not running — and a
+         * no-op when it is not, on purpose: a plain `startService` for a service that
+         * does not exist *creates* it, which enters the foreground state and flashes a
+         * notification just to tear itself down. Every step change calls this, so an
+         * idle call is the common case, not an edge one.
+         */
         fun stop(context: Context) {
+            if (!SpeechBus.isLive()) return
             val intent = Intent(context, SpeechRecognitionService::class.java).setAction(ACTION_STOP)
             context.startService(intent)
         }

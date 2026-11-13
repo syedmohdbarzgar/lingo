@@ -89,8 +89,19 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 800 tests / 85 classes as of
-  the touch-target pass, where the chip every level picker and filter is built from stopped being too
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 810 tests / 86 classes as of
+  the abandoned-take pass, where the take and the take nobody wants stopped being one value:
+  `core/audio/TakeWindow` answers "may this take still speak?" with `mayOpenMic`, `isAbandoned`
+  and `mayPublish`, `SpeechBus.reset()` bumps `SpeechBus.epoch` so a take begun under an older
+  screen publishes nothing (no partial, no transcript, no audio path, no error) and its
+  half-written WAV is discarded rather than finished, and the service's capture loop leaves on
+  the abandonment instead of recording until the silence fuse. `SpeechRecognitionService.stop()`
+  is a no-op while nothing is live, so a step change no longer starts a foreground service to
+  tear it down. Eight `TakeWindowTest` cases pin the rule on its own; two `LessonViewModelTest`
+  cases pin the lesson's half (a lesson left mid-take neither grades the late take nor offers its
+  `takePath`, and accepting an item without a verdict cancels the open take and stays unassessed) — `ConversationPracticeViewModel` needs no
+  guard of its own because the service refuses to publish at all. Before it the touch-target
+  pass, where the chip every level picker and filter is built from stopped being too
   small to hit: `AppChip` was a ~32dp pill with the click on the label, and `Modifier.clickable` does
   not grow a target, so the 48dp bar only held by accident. The floor is now on the tappable half
   (`TouchTargetMin`), leaving a metadata chip its own height, and `ChipTouchTargetTest` measures both
