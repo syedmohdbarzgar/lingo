@@ -170,8 +170,10 @@ class BidiTextTest {
      * Persian gloss kept inside an English sentence, which the BiDi rule handles
      * (the paragraph stays LTR and the gloss renders RTL within it).
      */
+    // A `writing` prompt is a Persian situation to write about, exactly like a
+    // translation cue — its English lives in `accepted`, which is checked as English.
     private val persianCueTypes =
-        setOf("translation", "word_recall", "sentence_production", "speaking")
+        setOf("translation", "word_recall", "sentence_production", "speaking", "writing")
 
     private val reviewedPersianGlosses = setOf(
         // "My ______ is a teacher. (مادر)" — the gloss names the word being tested.

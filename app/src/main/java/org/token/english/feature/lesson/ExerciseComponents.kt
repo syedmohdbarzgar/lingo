@@ -116,6 +116,14 @@ fun AnswerField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     label: String = "پاسخ شما",
+    /**
+     * A written text needs room to be read back before it is submitted — a
+     * one-line field over a two-sentence answer scrolls the start of the learner's
+     * own writing out of sight. Everything shorter stays a single line, where Enter
+     * is "done" rather than "new line".
+     */
+    singleLine: Boolean = true,
+    minLines: Int = 1,
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         OutlinedTextField(
@@ -123,12 +131,13 @@ fun AnswerField(
             onValueChange = onValueChange,
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,
-            singleLine = true,
+            singleLine = singleLine,
+            minLines = minLines,
             label = { Text(label) },
             textStyle = LearningTargetStyle.copy(fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurface),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
-                imeAction = ImeAction.Done,
+                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
                 keyboardType = KeyboardType.Text,
             ),
             shape = MaterialTheme.shapes.medium,

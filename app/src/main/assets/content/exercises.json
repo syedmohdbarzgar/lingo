@@ -1,5 +1,5 @@
 {
-  "contentVersion": 78,
+  "contentVersion": 79,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -14075,6 +14075,25 @@
       "explanationFa": "دخترِ فرزند؛ دقیق‌تر از girl است."
     },
     {
+      "id": "a1.family.ex.12",
+      "lessonId": "a1.family.lesson-01",
+      "type": "writing",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "خانواده‌ات را در دو جمله معرفی کن: چند نفر هستند و یکی از آن‌ها چه کار می‌کند.",
+      "hintFa": "با have شروع کن و در جملهٔ دوم is یا works را به کار ببر.",
+      "mustUse": [
+        "have"
+      ],
+      "minWords": 8,
+      "minSentences": 2,
+      "accepted": [
+        "I have a small family. My father is a teacher and my sister is a student."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "در جملهٔ دوم با is یا works بگو یکی از اعضای خانواده چه کار می‌کند."
+    },
+    {
       "id": "a1.shopping.lesson-01.dlg.01",
       "lessonId": "a1.shopping.lesson-01",
       "order": 12,
@@ -22406,6 +22425,26 @@
       "explanationFa": "set up یعنی «چیدن و آماده کردن»؛ looking forward to یعنی «بی‌صبرانه منتظر»."
     },
     {
+      "id": "a2.hobbies.ex.10",
+      "lessonId": "a2.hobbies.lesson-01",
+      "type": "writing",
+      "order": 16,
+      "difficulty": 2,
+      "prompt": "دو جمله دربارهٔ سرگرمی‌ات بنویس: چه کاری دوست داری و در وقت آزادت چه می‌کنی.",
+      "hintFa": "بعد از enjoy فعل با ing می‌آید.",
+      "mustUse": [
+        "enjoy",
+        "spare time"
+      ],
+      "minWords": 10,
+      "minSentences": 2,
+      "accepted": [
+        "I enjoy painting in my spare time. I also collect old stamps because they are beautiful."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "بعد از enjoy فعل با ing می‌آید؛ دلیل را در جملهٔ دوم با because بگو."
+    },
+    {
       "id": "a2.city-life.lesson-01.dlg.05",
       "lessonId": "a2.city-life.lesson-01",
       "type": "speaking",
@@ -23786,6 +23825,26 @@
       "explanationFa": "به احتمال زیاد؛ پیش از فعل اصلی می‌آید."
     },
     {
+      "id": "b1.plans.ex.17",
+      "lessonId": "b1.plans.lesson-01",
+      "type": "writing",
+      "order": 23,
+      "difficulty": 3,
+      "prompt": "برنامهٔ تابستانت را در سه جمله بنویس: چه کاری می‌خواهی بکنی، چه چیزی احتمال دارد، و اگر هوا خوب بود چه می‌کنی.",
+      "hintFa": "قصد از پیش‌پذیرفته‌شده با going to، پیش‌بینی با will و احتمال با probably.",
+      "mustUse": [
+        "going to",
+        "probably"
+      ],
+      "minWords": 18,
+      "minSentences": 3,
+      "accepted": [
+        "I am going to take a new course next month. I will probably visit my family in the summer. If the weather is good, we are going to travel."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "going to برای قصد از پیش‌پذیرفته‌شده، will + probably برای پیش‌بینی."
+    },
+    {
       "id": "b1.experiences.lesson-01.dlg.05",
       "lessonId": "b1.experiences.lesson-01",
       "type": "speaking",
@@ -24247,6 +24306,26 @@
       ],
       "skill": "VOCABULARY",
       "explanationFa": "warranty یعنی ضمانتِ کالا و معمولاً با under warranty میآید؛ guarantee عمومیتر است و برای هر وعدهٔ قطعی به کار میرود."
+    },
+    {
+      "id": "b2.problems.ex.15",
+      "lessonId": "b2.problems.lesson-01",
+      "type": "writing",
+      "order": 21,
+      "difficulty": 3,
+      "prompt": "یک شکایت رسمی کوتاه بنویس: چه چیزی تحویل نشده و چه می‌خواهی.",
+      "hintFa": "مجهول حال کامل: has not been …",
+      "mustUse": [
+        "has not been",
+        "refund"
+      ],
+      "minWords": 14,
+      "minSentences": 3,
+      "accepted": [
+        "The order has not been delivered yet. I have contacted support twice, but there is no answer. I would like a full refund."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "مجهول حال کامل (has not been delivered) و درخواست با I would like a refund."
     },
     {
       "id": "b2.research.lesson-01.dlg.05",
@@ -51773,6 +51852,26 @@
       "explanationFa": "variance غیرقابل‌شمارش است؛ صفت آن variable و فعل آن vary."
     },
     {
+      "id": "c1.statistics.ex.11",
+      "lessonId": "c1.statistics.lesson-01",
+      "type": "writing",
+      "order": 19,
+      "difficulty": 3,
+      "prompt": "یک یافتهٔ آماری را در دو جمله توصیف کن: چه چیزی دیده شد و چه محدودیتی داشت.",
+      "hintFa": "data در نگارش آکادمیک جمع است: The data show …",
+      "mustUse": [
+        "data",
+        "correlation"
+      ],
+      "minWords": 16,
+      "minSentences": 2,
+      "accepted": [
+        "The data show a strong correlation between the two variables. However, three outliers were removed before the test, so the result is only suggestive."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "data با فعل جمع می‌آید و However محدودیت را معرفی می‌کند."
+    },
+    {
       "id": "c1.org-culture.read.01",
       "lessonId": "c1.org-culture.lesson-01",
       "type": "multiple_choice",
@@ -52267,6 +52366,26 @@
       "correctIndex": 1,
       "skill": "GRAMMAR",
       "explanationFa": "«since» با پیامدِ امروز، حال کامل مجهول می‌خواهد: has been revised."
+    },
+    {
+      "id": "c2.academic-writing.ex.11",
+      "lessonId": "c2.academic-writing.lesson-01",
+      "type": "writing",
+      "order": 17,
+      "difficulty": 3,
+      "prompt": "یک بند کوتاه آکادمیک بنویس: ادعا، پیشینه، و یک محدودیت.",
+      "hintFa": "پیشینه با مجهول حال کامل: studies have been conducted on …",
+      "mustUse": [
+        "have been",
+        "thesis"
+      ],
+      "minWords": 16,
+      "minSentences": 2,
+      "accepted": [
+        "Several studies have been conducted on this thesis. However, the sample sizes were small, so the findings remain tentative."
+      ],
+      "skill": "WRITING",
+      "explanationFa": "پیشینه با Studies have been conducted on … و محدودیت با However."
     },
     {
       "id": "c2.editing.ex.10",

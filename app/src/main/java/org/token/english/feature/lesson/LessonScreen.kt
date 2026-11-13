@@ -474,6 +474,40 @@ private fun ExerciseContent(
                     )
                 }
 
+                // A short connected text: the cue is Persian, the writing is English,
+                // and the field is multi-line because two sentences do not fit on one.
+                is Exercise.Writing -> {
+                    SectionHeader("بنویسید")
+                    Text(
+                        text = exercise.prompt,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                        ),
+                    )
+                    exercise.hintFa?.let { hint ->
+                        Text(
+                            text = hint,
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Text(
+                        text = "حداقل ${exercise.minSentences} جمله",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    AnswerField(
+                        value = state.textAnswer,
+                        onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
+                        enabled = state.outcome == null,
+                        label = "متن انگلیسی",
+                        singleLine = false,
+                        minLines = 4,
+                    )
+                }
+
                 is Exercise.Listening -> {
                     SectionHeader(
                         if (state.audioUnavailable) "متن را بخوان و بنویس" else "گوش کن و بنویس",
@@ -559,7 +593,9 @@ private fun ExerciseContent(
                         // A production item has many valid sentences, so passing
                         // only means *a* valid wording — show the authored model
                         // answer too, pass or fail (checklist B-10).
-                        if (exercise is Exercise.SentenceProduction) {
+                        // A text has many valid wordings too, so the authored exemplar
+                        // is shown on a pass as well as after a miss.
+                        if (exercise is Exercise.SentenceProduction || exercise is Exercise.Writing) {
                             ModelAnswer(outcome.correctAnswer)
                         }
                     }

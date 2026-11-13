@@ -374,6 +374,11 @@ object AnswerChecker {
             // for not matching the one the author happened to write.
             is Exercise.SentenceProduction ->
                 return matchesAny(exercise.accepted, answer) || productionMatches(exercise, answer)
+            // A text is graded on the shape it was asked for (a floor of words and
+            // sentences) plus its anchors, anywhere; an exemplar match is the shortcut
+            // an answer that reads back as authored takes.
+            is Exercise.Writing ->
+                return matchesAny(exercise.accepted, answer) || writingMatches(exercise, answer)
             is Exercise.Speaking -> exercise.referenceAnswers
         }
         return matchesAny(accepted, answer)
@@ -445,6 +450,47 @@ object AnswerChecker {
     }
 
     /**
+     * Structural credit for [Exercise.Writing] — a short connected text.
+     *
+     * Three conditions, all of them checkable without a model: every
+     * [Exercise.Writing.mustUse] anchor appears **somewhere** in the answer, the
+     * answer reaches [Exercise.Writing.minWords], and it is at least
+     * [Exercise.Writing.minSentences] finished sentences. The last one is what makes
+     * this a text rather than a sentence: a paragraph's connective may open the
+     * second sentence, so anchor order is not part of the contract — but a single
+     * run-on that happens to carry every anchor and enough words is not two
+     * sentences and does not pass.
+     *
+     * A sentence is counted by its terminator (`.` `!` `?`), and a final clause with
+     * no punctuation still counts as a sentence once it carries a word — a learner
+     * who forgets the last full stop has written two sentences, not one, and the
+     * answer should not fail for punctuation. It is otherwise deliberately not a
+     * judge of prose: nothing here decides whether the text is *good*.
+     */
+    private fun writingMatches(exercise: Exercise.Writing, answer: String): Boolean {
+        val words = expandContractions(normalize(answer)).split(' ').filter { it.isNotEmpty() }
+        if (words.isEmpty() || words.size < exercise.minWords) return false
+        if (sentencesIn(answer) < exercise.minSentences) return false
+        val anchors = exercise.mustUse
+            .flatMap { expandContractions(normalize(it)).split(' ') }
+            .filter { it.isNotEmpty() }
+        if (anchors.isEmpty()) return false
+        // Anchor space as a set: a text may use its structures in any order.
+        val present = words.toSet()
+        return anchors.all { it in present }
+    }
+
+    /**
+     * Finished sentences in a text: a terminator ends one, and the trailing words
+     * after the last terminator are one more if they say anything.
+     */
+    internal fun sentencesIn(text: String): Int {
+        val terminators = text.count { it == '.' || it == '!' || it == '?' }
+        val tail = text.trimEnd().lastOrNull()?.let { it !in ".!?" } ?: false
+        return terminators + if (tail && normalize(text).isNotEmpty()) 1 else 0
+    }
+
+    /**
      * Grades a typed answer: exact match → CORRECT, one-edit near-miss → ALMOST.
      *
      * ALMOST is a **spelling** signal, so it is not offered where the learner was
@@ -492,6 +538,9 @@ object AnswerChecker {
             // A produced sentence is not a spelling question, and in any case the
             // near-miss rule only ever fires on a single word (P2).
             is Exercise.SentenceProduction -> return false
+            // A text is not a spelling question, and the near-miss rule only ever
+            // fires on a single word (the same reason a production is excluded).
+            is Exercise.Writing -> return false
             is Exercise.Speaking -> return false
         }
         return isAlmost(accepted, answer)
@@ -537,6 +586,7 @@ object AnswerChecker {
         is Exercise.Translation -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.Listening -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.SentenceProduction -> exercise.accepted.firstOrNull().orEmpty()
+        is Exercise.Writing -> exercise.accepted.firstOrNull().orEmpty()
         is Exercise.Speaking -> exercise.referenceAnswers.firstOrNull().orEmpty()
     }
 
@@ -555,6 +605,7 @@ object AnswerChecker {
         is Exercise.WordRecall -> exercise.skill ?: Skill.VOCABULARY
         is Exercise.Translation -> exercise.skill ?: Skill.WRITING
         is Exercise.SentenceProduction -> exercise.skill ?: Skill.WRITING
+        is Exercise.Writing -> exercise.skill ?: Skill.WRITING
         is Exercise.Listening -> exercise.skill ?: Skill.LISTENING
         is Exercise.Speaking -> exercise.skill ?: Skill.SPEAKING
     }
@@ -570,6 +621,7 @@ object AnswerChecker {
         is Exercise.WordRecall -> ExerciseFormat.WORD_RECALL
         is Exercise.Translation -> ExerciseFormat.TRANSLATION
         is Exercise.SentenceProduction -> ExerciseFormat.SENTENCE_PRODUCTION
+        is Exercise.Writing -> ExerciseFormat.WRITING_TEXT
         is Exercise.Listening -> ExerciseFormat.LISTENING
         is Exercise.Speaking -> ExerciseFormat.SPEAKING
     }

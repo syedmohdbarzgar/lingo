@@ -97,6 +97,18 @@ class LessonViewModelTest {
         skill = Skill.SPEAKING,
     )
 
+    /** A short connected text: the writing step's own item. */
+    private fun writing(id: String) = Exercise.Writing(
+        id = id,
+        lessonId = lessonId,
+        prompt = "دو جمله دربارهٔ خانواده‌ات بنویس",
+        mustUse = listOf("have"),
+        minWords = 8,
+        minSentences = 2,
+        accepted = listOf("I have a small family. My father is a teacher."),
+        skill = Skill.WRITING,
+    )
+
     private fun blank(id: String) = Exercise.FillBlank(
         id = id,
         lessonId = lessonId,
@@ -540,6 +552,37 @@ class LessonViewModelTest {
         assertTrue("and its gap is not carried onto the next item", vm.state.value.missedWords.isEmpty())
     }
 
+    @Test
+    fun `a written text is graded on its shape and its evidence names writing`() {
+        // The writing step used to be a produced sentence; a text has to reach the
+        // step, be graded on its own floors, and credit the WRITING meter as a hit.
+        val h = Harness().with(writing("a1.test.wr.01"))
+        val vm = h.build()
+
+        vm.onEvent(
+            LessonEvent.TextAnswerChanged("My family has five people. I have two brothers and one sister."),
+        )
+        vm.onEvent(LessonEvent.Submit)
+
+        val outcome = vm.state.value.outcome
+        assertTrue("a text that reaches both floors passes", outcome!!.correct)
+        assertEquals(Skill.WRITING, outcome.skill)
+        assertTrue("the answer is real evidence", h.progress.attempts.isNotEmpty())
+    }
+
+    @Test
+    fun `a single sentence is not a text`() {
+        val h = Harness().with(writing("a1.test.wr.02"))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.TextAnswerChanged("I have two brothers and one sister in my family"))
+        vm.onEvent(LessonEvent.Submit)
+
+        val outcome = vm.state.value.outcome
+        assertFalse("one run-on is not the two sentences that were asked for", outcome!!.correct)
+        assertTrue("and the item comes back later in the step", vm.state.value.repeatsCurrent)
+    }
+
     /** Answers the current exercise correctly, whatever option the shuffle put first. */
     private fun answerCorrectly(vm: LessonViewModel) {
         when (val exercise = vm.state.value.currentExercise) {
@@ -547,6 +590,8 @@ class LessonViewModelTest {
             is Exercise.FillBlank -> vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
             is Exercise.WordRecall -> vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
             is Exercise.SentenceProduction ->
+                vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
+            is Exercise.Writing ->
                 vm.onEvent(LessonEvent.TextAnswerChanged(exercise.accepted.first()))
             else -> error("no correct answer for ${exercise?.id}")
         }

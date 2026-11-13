@@ -124,6 +124,58 @@ class ContentValidationTest {
         assertTrue(report.errors.joinToString("\n"), report.errors.isEmpty())
     }
 
+    /** Appends an exercises.json entry to the minimal bundle, before the first item. */
+    private fun withExercise(dir: File, entry: String) {
+        val file = dir.resolve("exercises.json")
+        file.writeText(file.readText().replace("\"exercises\": [", "\"exercises\": [\n$entry,"))
+    }
+
+    @Test
+    fun `a writing item the learner could pass with one word fails`() {
+        // The type's whole point is a floor and a shape: an item with no anchors and
+        // a one-sentence floor is a production with a longer name, and a run-on would
+        // pass it.
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "بنویس", "mustUse": [], "minWords": 2, "minSentences": 1,
+                "accepted": ["Hello there."], "explanationFa": "توضیح"}""",
+        )
+
+        assertFails(dir, "mustUse", "minSentences", "minWords", "must declare skill")
+    }
+
+    @Test
+    fun `an exemplar the writing item itself would reject fails`() {
+        // After a miss the learner is shown this text as the model: a model under the
+        // item's own bar is feedback that contradicts the grade.
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "بنویس", "mustUse": ["hello"], "minWords": 10, "minSentences": 2,
+                "accepted": ["Hello there."], "skill": "WRITING", "explanationFa": "توضیح"}""",
+        )
+
+        assertFails(dir, "under minWords", "sentence(s)")
+    }
+
+    @Test
+    fun `a well-formed writing item passes the gate`() {
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "دو جمله بنویس", "mustUse": ["have"], "minWords": 8, "minSentences": 2,
+                "accepted": ["I have a brother. He is a nurse."], "skill": "WRITING",
+                "explanationFa": "توضیح"}""",
+        )
+
+        val report = ContentValidator.validate(dir)
+        assertTrue(report.errors.joinToString("\n"), report.errors.isEmpty())
+    }
+
     @Test
     fun `a dangling lessonId fails`() {
         val dir = writeValidBundle()

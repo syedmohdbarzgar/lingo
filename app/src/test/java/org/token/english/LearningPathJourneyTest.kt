@@ -532,6 +532,9 @@ class LearningPathJourneyTest {
                 is Exercise.WordRecall -> exercise.accepted.first()
                 is Exercise.Translation -> exercise.accepted.first()
                 is Exercise.SentenceProduction -> exercise.accepted.first()
+                // A text is answered with its own exemplar: the same answer the item
+                // shows after a miss is the one it accepts.
+                is Exercise.Writing -> exercise.accepted.first()
                 is Exercise.Listening -> exercise.accepted.first()
                 is Exercise.Speaking -> exercise.referenceAnswers.first()
             }

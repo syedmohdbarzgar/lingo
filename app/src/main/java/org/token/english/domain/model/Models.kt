@@ -221,6 +221,43 @@ sealed interface Exercise {
         override val difficulty: Int = DEFAULT_DIFFICULTY,
     ) : Exercise
 
+    /**
+     * Write a short connected text — two or three sentences — from a Persian
+     * situation, using the lesson's own structures.
+     *
+     * This is deliberately **not** [SentenceProduction] with a bigger word floor.
+     * A produced sentence is graded on anchors **in order**, because the order is
+     * the structure under test (`didn't … yesterday`). A text is graded on anchors
+     * *anywhere*, a word floor **and** a sentence floor, because what is being
+     * asked for is connected writing: an answer that uses every anchor in one run-on
+     * sentence has not written a text. Both stay offline and deterministic — no
+     * model judges whether the prose is good, and the authored [accepted] text is the
+     * reference shown after a miss.
+     */
+    data class Writing(
+        override val id: String,
+        override val lessonId: String,
+        /** Persian cue: what to write about. */
+        val prompt: String,
+        /**
+         * Structures or words the text must contain — **anywhere**, in any order,
+         * because a connective that opens the second sentence is still used. Each
+         * anchor is matched whole-word, contraction-expanded and dialect-folded.
+         */
+        val mustUse: List<String>,
+        /** Word floor, so two fragments cannot pass as a text. */
+        val minWords: Int,
+        /** Sentence floor: how many finished sentences the answer must contain. */
+        val minSentences: Int,
+        /** One exemplar text — also what is shown after a miss. */
+        val accepted: List<String>,
+        /** Optional Persian nudge (the structure to reach for). */
+        val hintFa: String? = null,
+        override val skill: Skill? = null,
+        override val explanation: String? = null,
+        override val difficulty: Int = DEFAULT_DIFFICULTY,
+    ) : Exercise
+
     data class Listening(
         override val id: String,
         override val lessonId: String,
@@ -285,6 +322,17 @@ enum class ExerciseFormat {
     SENTENCE_PRODUCTION,
     LISTENING,
     SPEAKING,
+
+    /**
+     * A connected text, which is a different ask from a produced sentence: the
+     * format mask exists to say a node was confirmed "in more than one way", and
+     * writing three sentences is another way than writing one.
+     *
+     * Appended, never inserted: [bit] is `1 shl ordinal` and the masks are persisted
+     * in `knowledge_state`, so a new constant in the middle would silently re-label
+     * every stored format.
+     */
+    WRITING_TEXT,
     ;
 
     /** This format's bit inside [KnowledgeState.distinctTypesCorrect]. */

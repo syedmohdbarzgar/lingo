@@ -147,7 +147,19 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (760 tests / 81 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (777 tests / 82 classes as of the
+writing-type pass (bundle v79), where the last format the exercise model had room for shipped with
+content that asks for it: `Exercise.Writing` is a short **connected text** (two or three sentences),
+and it differs from `sentence_production` in exactly the two ways a text differs from a sentence —
+anchors may sit in **any** sentence rather than in order, and the answer must reach a sentence floor
+as well as a word floor, so one run-on carrying every anchor fails (`AnswerChecker.writingMatches`).
+The validator holds an item to the bar its learner is held to (English anchors, `minWords` ≥ 8,
+`minSentences` ≥ 2, an exemplar that passes both floors), the type is its own evidence format
+(`WRITING_TEXT`, appended so the persisted format bits keep their meaning) and credits `PRODUCTION`,
+and six items ship — one per level — written from their lesson's own words and grammar tip. Twelve
+`WritingExerciseTest` cases pin the grading, the parser and the format; three `ContentValidationTest`
+fixtures the validator's refusals; two `LessonViewModelTest` cases the wiring (a text that reaches both
+floors is a hit and credits WRITING, a single run-on comes back). Before it the
 word-level-feedback pass, where the verdict stopped being the last word: the new
 `SpokenWordFeedback` marks the take against the model sentence word by word, with the scorer's own
 normalisation, contraction expansion, dialect/homophone fold and one-edit tolerance, so feedback can

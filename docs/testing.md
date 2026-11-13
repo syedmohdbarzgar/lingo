@@ -89,8 +89,15 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 760 tests / 81 classes as of
-  the word-level-feedback pass, where the verdict stopped being the last word on a take: the new
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 777 tests / 82 classes as of
+  the writing-type pass (bundle v79), where the last format the exercise model had room for shipped
+  with content that asks for it: `Exercise.Writing` is a short connected text, graded offline on its
+  anchors **anywhere**, a word floor and a sentence floor — so a single run-on carrying every anchor
+  is not the two sentences that were asked for, which is the difference from a produced sentence.
+  Twelve `WritingExerciseTest` cases pin the grading, the JSON parse and the format/dimension;
+  three `ContentValidationTest` fixtures pin the validator's refusals (no anchors, a one-sentence
+  floor, an exemplar under the item's own bar) and two `LessonViewModelTest` cases the wiring. Before
+  it the word-level-feedback pass, where the verdict stopped being the last word on a take: the new
   `SpokenWordFeedback` marks the take against the model sentence word by word, on the scorer's own
   rules, and the content words it did not hear are named under the banner — for the lesson's
   `speaking` card and for every dialogue turn, whose gap the scriptless version left unexplained.

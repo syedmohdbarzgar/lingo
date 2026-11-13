@@ -65,7 +65,7 @@ Lingo برای فارسی‌زبانان ساخته شده است: رابط کا
 آخرِ هر درس، همان موقعیتی را که یاد گرفتی در یک گفت‌وگو تمرین می‌کنی: تو جواب می‌دهی، برنامه روی دستگاهت می‌شنود و ارزیابی می‌کند، و تا آن گفت‌وگو را تمام نکنی درس بعد باز نمی‌شود. صدا از گوشی بیرون نمی‌رود.
 
 از A1 تا C2، هر ۱۸۰ موضوع
-هر شش سطح کامل است: از الفبا و اعداد تا نقد حقوقی و ارتباط دیپلماتیک. ۱۹۲ درس، ۳۱۴۷ تمرین و ۱۱۵۴ واژه با مثال دوزبانه، از پیش نصب‌شده و بی‌نیاز از دانلود.
+هر شش سطح کامل است: از الفبا و اعداد تا نقد حقوقی و ارتباط دیپلماتیک. ۱۹۲ درس، ۳۱۵۳ تمرین و ۱۱۵۴ واژه با مثال دوزبانه، از پیش نصب‌شده و بی‌نیاز از دانلود.
 
 واژه‌ها فراموش نمی‌شوند
 مرور فاصله‌دار واژه‌ها را درست در لحظهٔ فراموشی جلوی چانت می‌آورد، پس وقتت را صرف چیزهایی که بلدی نمی‌کنی.
@@ -169,7 +169,7 @@ claim that stops being true is a policy problem, not a copy problem.
 |---|---|
 | Free with the companion app | `CompanionOffer.isOffered` + `CompanionApp` (see [`billing.md`](billing.md)) |
 | 36 questions, six bands A1–C2 | `placement.json` + README placement section |
-| 192 lessons, 1154 vocabulary entries, 3147 exercises | `lessons.json`, `vocabulary.json`, `exercises.json` (the counts `validateContent` prints) |
+| 192 lessons, 1154 vocabulary entries, 3153 exercises | `lessons.json`, `vocabulary.json`, `exercises.json` (the counts `validateContent` prints) |
 | All 180 syllabus topics ship | [`curriculum.md`](curriculum.md) — every row marked ✅ since v60 |
 | One lesson at a time, eight steps | `LearningStage` + `GuidedLessonTest` (only completed *required* steps count as progress) |
 | The next lesson waits for the dialogue | `owedConversation`/`canOpenLesson` in `LearningPlanner` + `GuidedLessonTest` |

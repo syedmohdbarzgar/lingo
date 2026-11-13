@@ -45,7 +45,7 @@ object ContentValidator {
     /** Mirrors ContentParser.supportedTypes. */
     private val EXERCISE_TYPES = setOf(
         "multiple_choice", "fill_blank", "word_recall", "translation",
-        "sentence_production", "listening", "speaking",
+        "sentence_production", "writing", "listening", "speaking",
     )
 
     /** Mirrors domain Skill — an authored tag must name a real skill, otherwise ContentParser drops it. */
@@ -242,6 +242,51 @@ object ContentValidator {
                             if (count < minWords) {
                                 report(id, "accepted answer \"$answer\" has $count words, under minWords $minWords")
                             }
+                        }
+                    }
+                }
+                // A short connected text. The floors are the item's own grading rule,
+                // so they are content rules too: a text with a one-word floor is a
+                // sentence with a longer name, and one sentence cannot be a text.
+                "writing" -> {
+                    if (text(o, "prompt").isEmpty()) report(id, "blank prompt")
+                    if (array(o, "accepted").isEmpty()) {
+                        report(id, "no exemplar text (it is shown after a miss)")
+                    }
+                    if (text(o, "skill").isEmpty()) report(id, "writing must declare skill")
+                    val anchors = array(o, "mustUse").map { it.toString().trim() }.filter { it.isNotEmpty() }
+                    if (anchors.isEmpty()) {
+                        report(id, "writing needs mustUse anchors (the structures the text must use)")
+                    }
+                    // Speech cheaply: a Persian anchor cannot appear in an English text.
+                    if (anchors.any { anchor -> anchor.any { ch -> ch in '\u0600'..'\u06FF' } }) {
+                        report(id, "mustUse must be English (the text is written in English)")
+                    }
+                    val minWords = number(o, "minWords") ?: 0
+                    val minSentences = number(o, "minSentences") ?: 0
+                    val anchorWords = anchors.sumOf { anchor -> anchor.split(" ").count { it.isNotBlank() } }
+                    when {
+                        minWords <= 0 -> report(id, "writing needs a positive minWords floor")
+                        // Two authored sentences of six words each is the smallest thing
+                        // that is still a text rather than a sentence.
+                        minWords < 8 -> report(id, "minWords $minWords is too low for a text (use at least 8)")
+                        minWords < anchorWords -> {
+                            report(id, "minWords $minWords is below the $anchorWords anchor word(s) — nothing to write")
+                        }
+                    }
+                    if (minSentences < 2) {
+                        report(id, "writing needs minSentences of at least 2 — one sentence is a production, not a text")
+                    }
+                    // The exemplar has to pass the bar the learner is held to, or the
+                    // reference shown after a miss is a model answer the item rejects.
+                    array(o, "accepted").map { it.toString() }.filter { it.isNotBlank() }.forEach { model ->
+                        if (minWords > 0 && wordCount(model) < minWords) {
+                            report(id, "exemplar has ${wordCount(model)} words, under minWords $minWords")
+                        }
+                        val modelSentences = model.count { ch -> ch == '.' || ch == '!' || ch == '?' }
+                            .let { n -> n + if (model.trimEnd().lastOrNull()?.let { it !in ".!?" } == true) 1 else 0 }
+                        if (minSentences > 0 && modelSentences < minSentences) {
+                            report(id, "exemplar has $modelSentences sentence(s), under minSentences $minSentences")
                         }
                     }
                 }

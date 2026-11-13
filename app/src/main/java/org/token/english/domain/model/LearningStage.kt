@@ -49,7 +49,9 @@ enum class LearningStage(
          */
         fun of(exercise: Exercise): LearningStage = when (exercise) {
             is Exercise.Listening -> LISTENING
-            is Exercise.SentenceProduction -> WRITING
+            // Both are written production: one sentence and a short text belong in
+            // the same step, because they are the same act at two lengths.
+            is Exercise.SentenceProduction, is Exercise.Writing -> WRITING
             is Exercise.Speaking -> SPEAKING
             else -> PRACTICE
         }

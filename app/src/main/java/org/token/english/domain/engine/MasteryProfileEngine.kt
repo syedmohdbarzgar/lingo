@@ -36,6 +36,9 @@ object ExerciseDimension {
         // P2: two formats now evidence production — typed sentence building and
         // (suspended, for lack of a recognizer) speech.
         is Exercise.SentenceProduction -> MasteryDimension.PRODUCTION
+        // A short text is production at a longer length: composing two or three
+        // connected sentences is the same kind of knowing a sentence asks for.
+        is Exercise.Writing -> MasteryDimension.PRODUCTION
         is Exercise.Speaking -> MasteryDimension.PRODUCTION
     }
 }

@@ -14,6 +14,19 @@
   A revisit's answer is claimed like any other: re-answering the *same* exercise on the same day
   writes nothing to mastery, and `firstTries` refuses to recount it as a first pass.
 
+- **A written text is graded on its shape, not on its prose (bundle v79).** `Exercise.Writing`
+  checks three things a phone can check without a model: every authored anchor appears **somewhere**,
+  the answer reaches its `minWords`, and it contains at least `minSentences` finished sentences. That
+  is what makes an offline grader honest rather than clever, and its limit is the whole of what a
+  learner might expect more of: a text that uses `has not been` and `refund` in three sentences of
+  nonsense passes, and so does a paragraph about the wrong subject. The same is true of
+  `sentence_production`, and the same answer applies — the exemplar is shown after a miss, so the
+  learner compares against a real text, and a judgement of quality needs either a language model (a
+  backend the connectivity policy keeps suspended) or a teacher. Two smaller limits ship with it: the
+  sentence count is punctuation-based, so a learner who writes three comma-spliced clauses and one
+  full stop is credited one sentence (the floor asks for finished sentences, which is the honest
+  reading of a `.`), and the floor is authored per item rather than derived from the level, because
+  how much text a lesson should ask for is a content decision.
 - **The difficulty audit reads the log and nothing surfaces it yet (P1).** `DifficultyAudit` +
   `GetDifficultyAuditUseCase` turn the answers `lesson_attempt` already keeps into per-item accuracy,
   thinking time and a bounded suggestion, and twelve cases in `DifficultyAuditTest` read it on a fake

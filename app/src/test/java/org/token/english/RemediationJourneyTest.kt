@@ -162,6 +162,7 @@ class RemediationJourneyTest {
         is Exercise.WordRecall -> "zzz-wrong"
         is Exercise.Translation -> "zzz-wrong"
         is Exercise.SentenceProduction -> "zzz-wrong"
+        is Exercise.Writing -> "zzz-wrong"
         is Exercise.Listening -> "zzz-wrong"
         is Exercise.Speaking -> "zzz-wrong"
     }
@@ -172,6 +173,7 @@ class RemediationJourneyTest {
         is Exercise.WordRecall -> exercise.accepted.first()
         is Exercise.Translation -> exercise.accepted.first()
         is Exercise.SentenceProduction -> exercise.accepted.first()
+        is Exercise.Writing -> exercise.accepted.first()
         is Exercise.Listening -> exercise.accepted.first()
         is Exercise.Speaking -> exercise.referenceAnswers.first()
     }

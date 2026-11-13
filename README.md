@@ -131,7 +131,7 @@ cursor instead of pretending it starts over.
 | | Count |
 |---|---|
 | Lessons | 192 — A1: 37, A2: 32, B1: 30, B2: 32, C1: 31, C2: 30 |
-| Exercises | 3147 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
+| Exercises | 3153 — including a dialogue in every lesson (five or six turns at A2 and above) and a real reading passage with two or more comprehension questions in **36** lessons (six per level) |
 | Vocabulary entries | 1154 |
 | Knowledge items | 268 |
 | Placement questions | 36 |
@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-760 unit tests across 81 classes. The pure cores carry the most weight — review scheduling,
+777 unit tests across 82 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -535,8 +535,12 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   easy end while a dimension is shaky and up to the hard end once it is consolidated. What the plan
   still cannot do is pick a harder **lesson** — a lesson carries no difficulty of its own
   ([`docs/debt.md`](docs/debt.md)).
-- A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
-  its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.- Pronunciation scoring, deeper than the verdict. The lesson's `speaking` item goes through the same
+- Extend the `writing` type. It shipped in bundle v79 — a short **connected text**, graded offline on
+  anchors anywhere, a word floor and a sentence floor (`AnswerChecker.writingMatches`), its own
+  evidence format and the `PRODUCTION` dimension — with six items, one per level, each written from
+  its lesson's own words and grammar tip. What it cannot do is judge the prose: it checks the shape
+  that was asked for, not whether the text is correct, relevant or well written
+  ([`docs/debt.md`](debt.md)), so the type grows by authoring, never by bulk generation.- Pronunciation scoring, deeper than the verdict. The lesson's `speaking` item goes through the same
   offline recogniser as the dialogue (a said-back take is graded, `NEAR` counts, `RETRY` claims
   nothing), the same capture is kept as audio so the learner hears exactly the words that were
   judged — on the lesson's card **and** on every dialogue turn, which offers its own recording back

@@ -32,6 +32,8 @@ object ContentParser {
         "multiple_choice",
         "fill_blank",
         "word_recall",
+        // A short connected text (two or three sentences) — the lesson's writing step.
+        "writing",
         "translation",
         "sentence_production",
         "listening",
@@ -239,6 +241,24 @@ object ContentParser {
                 // item still grades something sane instead of accepting one word.
                 minWords = o.optInt("minWords", 0).takeIf { it > 0 }
                     ?: o.optJSONArraytoString("mustUse").size,
+                accepted = o.acceptedList(),
+                hintFa = o.optString("hintFa").ifBlank { null },
+                skill = skill,
+                explanation = explanation,
+                difficulty = difficulty,
+            )
+
+            // A short connected text: floors are mirror of the validator's rules, so
+            // a malformed item still asks for something a learner can pass instead of
+            // accepting one word as a paragraph.
+            "writing" -> Exercise.Writing(
+                id = id,
+                lessonId = lessonId,
+                prompt = o.getString("prompt"),
+                mustUse = o.optJSONArraytoString("mustUse"),
+                minWords = o.optInt("minWords", 0).takeIf { it > 0 }
+                    ?: o.optJSONArraytoString("mustUse").size,
+                minSentences = o.optInt("minSentences", 0).takeIf { it > 0 } ?: 2,
                 accepted = o.acceptedList(),
                 hintFa = o.optString("hintFa").ifBlank { null },
                 skill = skill,
