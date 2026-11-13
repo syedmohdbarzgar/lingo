@@ -34,7 +34,12 @@ The root file is deliberately short; the deep material is in `docs/`:
 
 - **Always:** run the fast gates before calling work done (below); keep the core working offline;
   route English through `EnglishText`/`AnswerField`; add a test with engine logic changes; bump
-  `contentVersion` in all five JSON files together on a content change.
+  `contentVersion` in all five JSON files together on a content change; answer every task in the
+  end-of-task report the master rules require
+  ([`docs/master-rules.md`](docs/master-rules.md) §16): **Summary**, **Files Changed**, **Problems
+  Fixed**, **New Risks**, **Tests**, **Regression Check**, **Remaining Tasks**, **Verification
+  Status** — the last one naming each change Verified, Implemented-Not-Verified or Partially
+  Implemented, never a guess.
 - **Ask first:** anything on the *suspended* list, a new network feature/permission, a schema
   migration, or a product decision (gating, pricing).
 - **Never:** commit secrets (`keystore.properties`, `*.jks`); hardcode design tokens; put raw English
