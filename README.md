@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-746 unit tests across 80 classes. The pure cores carry the most weight — review scheduling,
+760 unit tests across 81 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -538,11 +538,14 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 - A `writing` exercise type (the exercise model already has room for it). Conversation shipped as
   its own screen rather than an exercise type, because it needs a turn, a partner and a verdict.- Pronunciation scoring, deeper than the verdict. The lesson's `speaking` item goes through the same
   offline recogniser as the dialogue (a said-back take is graded, `NEAR` counts, `RETRY` claims
-  nothing), and the same capture is kept as audio so the learner hears exactly the words that were
-  judged — on the lesson's card **and** on every dialogue turn, which now offers its own recording
-  back under the transcript. But a take is still not *scored*, it is matched: no phoneme-level feedback and no per-word
-  marks ([`docs/debt.md`](debt.md)). The next step would be word-level feedback on the transcript the
-  recogniser already produces.
+  nothing), the same capture is kept as audio so the learner hears exactly the words that were
+  judged — on the lesson's card **and** on every dialogue turn, which offers its own recording back
+  under the transcript — and the verdict now comes with **word-level feedback**: the take is marked
+  against the model sentence and the content words the device did not hear are named (
+  [`docs/debt.md`](debt.md)). What is still missing is the sound rather than the word: a take is
+  matched, not *scored*, so «نزدیک» never means a phoneme was wrong and no mark says a word was said
+  badly. That needs a different engine — phoneme-level scoring, or a cloud service the connectivity
+  policy keeps suspended.
 - Remote crash reporting — a deliberate provider and privacy decision, not a default.
 
 **Suspended until a backend exists**

@@ -181,7 +181,12 @@
   Two consequences are accepted on purpose: **a verdict is a text match, not a pronunciation score**
   («نزدیک» means the words were there, never that the sounds were right), and **a take the recogniser
   did not hear is not a language error** — an empty take is reported as «چیزی نشنیدم» and never
-  recorded as a wrong answer. Teaching actual pronunciation needs phoneme-level scoring (a different
+  recorded as a wrong answer. Word-level feedback (v81) narrows the gap without closing it: the take
+  is marked against the model sentence and the content words the device did not hear are named, on
+  the scorer's own normalisation and one-edit tolerance, so the feedback and the verdict cannot disagree.
+  It is still a **word** the recogniser did or did not transcribe — not a judgement of how well it was
+  said — and it inherits the recogniser's own mistakes: a misheard word is reported as a word the
+  learner did not say. Teaching actual pronunciation still needs phoneme-level scoring (a different
   engine, or a cloud service the connectivity policy keeps suspended).
 - **The speech rate is one engine-wide constant.** `TtsAudioPlayer` sets 0.75× for every English
   utterance in the app (native 1.0× was reported as unintelligible on a first A1 ear). It is not a
@@ -323,11 +328,10 @@
   new risk of one-take-does-both: the loop still reads one 100 ms buffer at a time and appends it,
   but a slow disk on a cheap phone could in principle stall the recogniser, so the device check has to
   listen for a dropped word over a long sentence. The lesson's speaking card is therefore a **device
-  check**, listed as such in [`release-readiness.md`](release-readiness.md). Two smaller limits are
-  accepted with it: the **conversation** screen does not offer its turn's audio back (the file is
-  written and deleted all the same, so the seam is there when a turn wants it), and the take is one
-  fixed cache path, so a second take overwrites the first — which is why playback stops the moment
-  the learner moves to another item.
+  check**, listed as such in [`release-readiness.md`](release-readiness.md). The dialogue's turn now
+  offers its own audio back too (v81), so both screens hold one capture that is judged and hearable;
+  the remaining limit is the file itself: a take is one fixed cache path, so a second take overwrites
+  the first — which is why playback stops the moment the learner moves to another item.
 - **The error taxonomy reads the log, not a stored label (roadmap).** `lesson_attempt` records
   which exercise was asked and whether it was right; it does **not** record the skill, so
   `GetMissProfileUseCase` joins the id to the authored exercise and classifies by

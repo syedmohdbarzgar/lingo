@@ -668,6 +668,45 @@ class ConversationPracticeViewModelTest {
     }
 
     @Test
+    fun `a near turn names the word it did not hear`() {
+        // The verdict says the sentence was close; the mark says which word closes
+        // it — one word is a different instruction from "say the whole thing again".
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to listOf(
+                    dialogue("a1.one", "s1", "What are you doing this weekend?", "I'm going to visit my family."),
+                ),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm going to visit my")
+
+        assertEquals(SpeakingVerdict.NEAR, vm.state.value.verdict)
+        assertEquals(listOf("family"), vm.state.value.missedWords)
+    }
+
+    @Test
+    fun `a hit and a typed answer both leave nothing to fix`() {
+        val vm = viewModel(
+            repository(
+                lesson("a1.one", order = 1) to
+                    listOf(dialogue("a1.one", "s1", "How are you?", "I'm fine, thank you.")),
+            ),
+        )
+
+        speech.value = SpeechState(isListening = true)
+        speech.value = SpeechState(isListening = false, finalText = "i'm fine thank you")
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.verdict)
+        assertTrue("a hit has no gap", vm.state.value.missedWords.isEmpty())
+
+        vm.onEvent(ConversationEvent.Next)
+        // A typed answer's gaps are spelling, and its own verdict already said so.
+        vm.onEvent(ConversationEvent.SubmitTyped("i would like a coffee"))
+        assertTrue("a typed answer has nothing the device misheard", vm.state.value.missedWords.isEmpty())
+    }
+
+    @Test
     fun `next at the last turn finishes the conversation`() {
         val vm = viewModel(
             repository(

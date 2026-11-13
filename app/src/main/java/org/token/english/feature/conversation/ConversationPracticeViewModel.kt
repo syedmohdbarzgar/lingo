@@ -20,6 +20,7 @@ import org.token.english.core.common.runCatchingCancellable
 import org.token.english.core.audio.Speaker
 import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.SpeakingVerdict
+import org.token.english.domain.engine.SpokenWordFeedback
 import org.token.english.domain.engine.owedConversation
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
@@ -117,6 +118,12 @@ data class ConversationUiState(
     val takePath: String? = null,
     /** This turn's take is playing right now. */
     val isPlayingTake: Boolean = false,
+    /**
+     * The reply's own content words the take did not contain — the words behind a
+     * «نزدیک» verdict, so the learner knows which one to fix. Empty when nothing was
+     * missed, and never a verdict of its own.
+     */
+    val missedWords: List<String> = emptyList(),
     /** Set once the take is graded; cleared when a new take starts. */
     val verdict: SpeakingVerdict? = null,
     /**
@@ -319,7 +326,16 @@ class ConversationPracticeViewModel(
             return
         }
         val verdict = ConversationScorer.assessBest(said, turn.answers, turn.partnerLine)
-        _state.update { it.copy(verdict = verdict, unheard = false) }
+        // The words behind that verdict, marked against the reply the take came
+        // closest to. A hit shows nothing: every content word was heard.
+        val target = ConversationScorer.bestTarget(said, turn.answers)
+            ?: turn.answers.firstOrNull().orEmpty()
+        val missed = if (verdict == SpeakingVerdict.CORRECT) {
+            emptyList()
+        } else {
+            SpokenWordFeedback.of(said, target).missed
+        }
+        _state.update { it.copy(verdict = verdict, unheard = false, missedWords = missed) }
         recordEvidence(turn.exerciseId, verdict, spoken = true)
     }
 
@@ -520,6 +536,9 @@ class ConversationPracticeViewModel(
                 takePath = null,
                 isPlayingTake = false,
                 answeredByTyping = true,
+                // A typed answer has no words the device misheard — its gaps are
+                // spelling, and its own verdict already says so.
+                missedWords = emptyList(),
                 verdict = verdict,
                 unheard = false,
                 error = SpeechError.NONE,
@@ -636,6 +655,7 @@ class ConversationPracticeViewModel(
                 finalText = "",
                 takePath = null,
                 isPlayingTake = false,
+                missedWords = emptyList(),
                 answeredByTyping = false,
                 verdict = null,
                 unheard = false,

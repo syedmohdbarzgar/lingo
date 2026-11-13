@@ -310,6 +310,46 @@ class LessonViewModelTest {
     }
 
     @Test
+    fun `a near take names the content word the device did not hear`() {
+        // «نزدیک بود» on its own leaves the learner hunting for the gap; the engine's
+        // own mark says which word was missing, and never reports an article.
+        val h = Harness().with(speaking("a1.test.sp.16", "Go straight and turn left at the bank."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("go straight and turn left at the")
+
+        assertEquals(SpeakingVerdict.NEAR, vm.state.value.outcome?.spokenVerdict)
+        assertEquals(listOf("bank"), vm.state.value.missedWords)
+    }
+
+    @Test
+    fun `a take that did not land names every content word it missed`() {
+        // A retry claims nothing as evidence, but the feedback still has to be
+        // actionable: the model's own content words, not the words it happened to hear.
+        val h = Harness().with(speaking("a1.test.sp.17", "The bank is on the left."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("where is the station")
+
+        assertEquals(SpeakingVerdict.RETRY, vm.state.value.outcome?.spokenVerdict)
+        assertEquals(listOf("bank", "left"), vm.state.value.missedWords)
+    }
+
+    @Test
+    fun `a hit has no missed words to show`() {
+        val h = Harness().with(speaking("a1.test.sp.18", "Go straight."))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.StartTake)
+        h.speech.say("Go straight.")
+
+        assertEquals(SpeakingVerdict.CORRECT, vm.state.value.outcome?.spokenVerdict)
+        assertTrue("nothing is missing from the sentence that was said back", vm.state.value.missedWords.isEmpty())
+    }
+
+    @Test
     fun `a take the scorer cannot match writes no evidence but counts as a miss`() {
         // The app cannot tell a wrong sentence from a misheard one, so a retry claims
         // nothing — no day claim, no node, no meter (the dialogue's own rule). It is
@@ -497,6 +537,7 @@ class LessonViewModelTest {
         assertTrue("a voice from the previous sentence is silenced", h.voiceNote.stopPlaybackCalls > stops)
         assertNull("and its file is no longer offered", vm.state.value.takePath)
         assertFalse(vm.state.value.isPlayingTake)
+        assertTrue("and its gap is not carried onto the next item", vm.state.value.missedWords.isEmpty())
     }
 
     /** Answers the current exercise correctly, whatever option the shuffle put first. */

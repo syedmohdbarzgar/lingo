@@ -147,7 +147,20 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (746 tests / 80 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (760 tests / 81 classes as of the
+word-level-feedback pass, where the verdict stopped being the last word: the new
+`SpokenWordFeedback` marks the take against the model sentence word by word, with the scorer's own
+normalisation, contraction expansion, dialect/homophone fold and one-edit tolerance, so feedback can
+never disagree with the verdict that produced it. Two rules make it actionable rather than nagging —
+**one-to-one consumption** (each heard word satisfies one model word, so a doubled `very` said once
+leaves one unheard) and **order-blindness** (the scorer forgives a reordering, so a mark may not
+punish one), and only content words are named: a dropped article is marked, never reported.
+`ConversationScorer.bestTarget` names the reply the verdict was formed on and `isContentWord`
+exposes the stoplist, so the lesson's `speaking` card and every dialogue turn name the same words
+under the same banner; a hit and a typed answer both clear the list. Nine `SpokenWordFeedbackTest`
+cases pin the marking, three `LessonViewModelTest` cases the wiring (a near take names its missing
+word, a retry names every content word, a hit has none and moving on carries none), and two
+`ConversationPracticeViewModelTest` cases the dialogue's half. Before it the
 spoken-turn-playback pass, which finished the audio seam the take-audio pass opened: the dialogue's
 turn also writes the PCM the recogniser hears (`TakeRecorder` is the same class), so
 `ConversationPracticeViewModel` mirrors `takePath` into its own state, `LearnerTake` offers

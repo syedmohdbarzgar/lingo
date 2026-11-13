@@ -465,6 +465,27 @@ private fun LearnerTake(
             )
         }
 
+        // The turn's own reply, word by word: «نزدیک» on a five-word answer still
+        // leaves the learner hunting for the gap, and one missing word is a
+        // different instruction from a sentence that did not land at all. Shown
+        // only when something is actually missing — a hit has no gap.
+        if (state.missedWords.isNotEmpty() && !state.isListening) {
+            Text(
+                text = if (state.missedWords.size == 1) {
+                    "این کلمه را نشنیدم:"
+                } else {
+                    "این کلمه‌ها را نشنیدم:"
+                },
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = AppSpacing.xs),
+            )
+            EnglishText(
+                text = state.missedWords.joinToString(" · "),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = AppSpacing.xs),
+            )
+        }
+
         // The verdict was formed on these words, and this is the voice that said
         // them — one take, heard and judged. Offered only once the take is over and
         // only when it actually captured audio: a typed answer is not your voice,

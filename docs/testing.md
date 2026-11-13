@@ -89,8 +89,16 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 746 tests / 80 classes as of
-  the spoken-turn-playback pass, where the dialogue's turn got the playback the lesson's card already
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 760 tests / 81 classes as of
+  the word-level-feedback pass, where the verdict stopped being the last word on a take: the new
+  `SpokenWordFeedback` marks the take against the model sentence word by word, on the scorer's own
+  rules, and the content words it did not hear are named under the banner — for the lesson's
+  `speaking` card and for every dialogue turn, whose gap the scriptless version left unexplained.
+  Nine `SpokenWordFeedbackTest` cases pin the marking (a full take, the dropped content word, a
+  dropped article, a reordering, a contraction, a homophone and a dialect spelling, one utterance
+  satisfying one repeated word, an empty take, and the target the verdict was formed on), three
+  `LessonViewModelTest` cases pin the lesson's wiring and two `ConversationPracticeViewModelTest`
+  cases the dialogue's. Before it the spoken-turn-playback pass, where the dialogue's turn got the playback the lesson's card already
   had: the recogniser writes the same WAV for a turn (`TakeRecorder`), `ConversationPracticeViewModel`
   mirrors `takePath` into its state and offers `PlayTake` through the `VoiceNote` seam, and four cases
   pin it (the path reaches the state and the player, a take with no audio hands the player nothing, a

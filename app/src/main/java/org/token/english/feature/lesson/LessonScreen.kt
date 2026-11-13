@@ -532,10 +532,13 @@ private fun ExerciseContent(
                         message = "این جمله بدون سنجش پذیرفته شد — میکروفون یا مدل گفتار در دسترس نبود.",
                     )
 
-                    verdict == SpeakingVerdict.NEAR -> InfoBanner(
-                        modifier = Modifier.fillMaxWidth(),
-                        message = "نزدیک بود! جمله تقریباً گفته شد: «${state.heardText}»",
-                    )
+                    verdict == SpeakingVerdict.NEAR -> {
+                        InfoBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            message = "نزدیک بود! جمله تقریباً گفته شد: «${state.heardText}»",
+                        )
+                        MissedWords(state.missedWords)
+                    }
 
                     verdict == SpeakingVerdict.RETRY -> {
                         IncorrectBanner(
@@ -543,6 +546,7 @@ private fun ExerciseContent(
                             message = "آنچه شنیدم با جملهٔ نمونه هم‌خوان نبود: «${state.heardText}» — " +
                                 "دوباره بگو یا ادامه بده؛ جمله: ${outcome.correctAnswer}",
                         )
+                        MissedWords(state.missedWords)
                         OutlinedActionButton(
                             text = "دوباره بگو",
                             onClick = { onEvent(LessonEvent.RetryTake) },
@@ -796,6 +800,35 @@ private fun ModelAnswer(text: String) {
         )
         EnglishText(
             text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+/**
+ * Which words of the model sentence the device did not hear.
+ *
+ * The verdict already said "near" or "again"; this is the part a learner can act
+ * on — one word is a different instruction from a whole sentence. The label is
+ * Persian and the words are English on their own line, so the mixed script never
+ * renders as one bidi soup. Nothing is shown when nothing was missed: a correct
+ * take has no gap, and an empty list would be a line of noise under every answer.
+ */
+@Composable
+private fun MissedWords(words: List<String>) {
+    if (words.isEmpty()) return
+    Column(
+        Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+    ) {
+        Text(
+            text = if (words.size == 1) "این کلمه را نشنیدم:" else "این کلمه‌ها را نشنیدم:",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        EnglishText(
+            text = words.joinToString(" · "),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth(),
         )

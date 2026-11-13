@@ -46,14 +46,22 @@ object ConversationScorer {
         targets: List<String>,
         partnerLine: String? = null,
     ): SpeakingVerdict {
-        val best = targets
-            .map { assess(spoken, it) }
-            .minByOrNull { it.ordinal }
-            ?: return SpeakingVerdict.RETRY
+        val target = bestTarget(spoken, targets) ?: return SpeakingVerdict.RETRY
+        val best = assess(spoken, target)
         if (best == SpeakingVerdict.CORRECT) return SpeakingVerdict.CORRECT
         if (partnerLine != null && echoesPartner(spoken, partnerLine)) return SpeakingVerdict.RETRY
         return best
     }
+
+    /**
+     * The authored answer the take came closest to — the same one [assessBest]
+     * grades, so word-level feedback marks the sentence the verdict was formed on
+     * rather than the first one the bundle happens to list. Ties keep the authored
+     * order, which is why this is `minByOrNull` over the verdicts and not a max of
+     * similarities.
+     */
+    fun bestTarget(spoken: String, targets: List<String>): String? =
+        targets.minByOrNull { assess(spoken, it).ordinal }
 
     /**
      * True when the take is mostly the partner's own line: at least
@@ -274,6 +282,14 @@ object ConversationScorer {
      * Content words of the target — everything but a short stoplist — used for
      * the keyword signal. A bare function so a test can pin it directly.
      */
+    /**
+     * True when a word carries meaning — the same stoplist the keyword signal uses,
+     * exposed so work that reports *which* words are missing agrees with grading
+     * about which words matter. The test runs on the written form, exactly as
+     * [contentWords] does.
+     */
+    internal fun isContentWord(word: String): Boolean = word !in STOP_WORDS
+
     internal fun contentWords(target: String): List<String> =
         wordsOf(normalize(target))
             // The stop check runs on the written form: folding first would turn

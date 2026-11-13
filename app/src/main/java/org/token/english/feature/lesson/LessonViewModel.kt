@@ -23,6 +23,7 @@ import org.token.english.domain.engine.ConversationScorer
 import org.token.english.domain.engine.DefaultMasteryProfileEngine
 import org.token.english.domain.engine.ExerciseDimension
 import org.token.english.domain.engine.SpeakingVerdict
+import org.token.english.domain.engine.SpokenWordFeedback
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LearningLevel
@@ -106,6 +107,12 @@ data class LessonUiState(
     val heardPartial: String = "",
     /** The last take's transcript: what the device heard, and what it graded. */
     val heardText: String = "",
+    /**
+     * The model sentence's own content words the take did not contain, in the order
+     * they were authored. Empty when nothing was missed, and never a verdict — the
+     * verdict is [ExerciseOutcome.spokenVerdict]; this only says *where* the gap was.
+     */
+    val missedWords: List<String> = emptyList(),
     /**
      * The take's own audio, once it was captured — the learner can hear exactly the
      * words the verdict was formed on. Null when the take captured nothing.
@@ -619,6 +626,7 @@ class LessonViewModel(
                 audioFailed = false,
                 heardText = "",
                 heardPartial = "",
+                missedWords = emptyList(),
                 unheard = false,
                 recordingFailed = false,
                 completed = stage == LearningStage.REVIEW,
@@ -679,6 +687,7 @@ class LessonViewModel(
                 recordingFailed = false,
                 heardText = "",
                 heardPartial = "",
+                missedWords = emptyList(),
             )
         }
         startRecognition()
@@ -735,6 +744,12 @@ class LessonViewModel(
             return
         }
         val verdict = ConversationScorer.assessBest(spoken, exercise.referenceAnswers)
+        // The words behind that verdict: the sentence the take came closest to, so
+        // «نزدیک بود» can say which word it did not hear instead of leaving the
+        // learner to guess from a five-word mystery.
+        val target = ConversationScorer.bestTarget(spoken, exercise.referenceAnswers)
+            ?: exercise.referenceAnswers.firstOrNull().orEmpty()
+        val missed = SpokenWordFeedback.of(spoken, target).missed
         val outcome = ExerciseOutcome(
             correct = verdict != SpeakingVerdict.RETRY,
             correctAnswer = exercise.referenceAnswers.firstOrNull().orEmpty(),
@@ -744,10 +759,10 @@ class LessonViewModel(
         )
         if (verdict == SpeakingVerdict.RETRY) {
             // Nothing the app can attribute to the learner: no claim, no node, no meter.
-            showOutcome(exercise, outcome, firstTry = firstTries.add(exercise.id))
+            showOutcome(exercise, outcome, firstTry = firstTries.add(exercise.id), missed = missed)
             return
         }
-        submitTake(exercise, spoken, outcome)
+        submitTake(exercise, spoken, outcome, missed)
     }
 
     /**
@@ -758,7 +773,12 @@ class LessonViewModel(
      * A failed write keeps the verdict on screen: the scorer really did hear that
      * sentence, and an answer nobody managed to save is not a wrong answer.
      */
-    private fun submitTake(exercise: Exercise, spoken: String, outcome: ExerciseOutcome) {
+    private fun submitTake(
+        exercise: Exercise,
+        spoken: String,
+        outcome: ExerciseOutcome,
+        missed: List<String> = emptyList(),
+    ) {
         if (submitting) return
         submitting = true
         val firstTry = firstTries.add(exercise.id)
@@ -785,7 +805,7 @@ class LessonViewModel(
                     android.util.Log.w("LessonViewModel", "speech evidence not recorded", error)
                 }
                 foldDimension(exercise, outcome.correct)
-                showOutcome(exercise, outcome, firstTry)
+                showOutcome(exercise, outcome, firstTry, missed)
             } finally {
                 submitting = false
             }
@@ -944,10 +964,25 @@ class LessonViewModel(
      * the banner's inputs. Shared by a typed answer and a spoken take, so the two can
      * never disagree about what one attempt is worth.
      */
-    private fun showOutcome(exercise: Exercise, outcome: ExerciseOutcome, firstTry: Boolean) {
+    private fun showOutcome(
+        exercise: Exercise,
+        outcome: ExerciseOutcome,
+        firstTry: Boolean,
+        missed: List<String> = emptyList(),
+    ) {
         _state.update {
             it.copy(
                 outcome = outcome,
+                // Only a take that fell short has a gap worth naming: a CORRECT
+                // verdict already heard every content word, so the list would be
+                // empty anyway and an unrelated path leaves it cleared.
+                missedWords = if (outcome.spokenVerdict == SpeakingVerdict.NEAR ||
+                    outcome.spokenVerdict == SpeakingVerdict.RETRY
+                ) {
+                    missed
+                } else {
+                    it.missedWords
+                },
                 weakestDimension = weakestDimensionOf(profile, it.stageExercises),
                 correctCount = if (outcome.correct) it.correctCount + 1 else it.correctCount,
                 // Misses are marked so the summary can point them out (P4).
@@ -1016,6 +1051,7 @@ class LessonViewModel(
                 audioFailed = false,
                 heardText = "",
                 heardPartial = "",
+                missedWords = emptyList(),
                 unheard = false,
                 recordingFailed = false,
             )
