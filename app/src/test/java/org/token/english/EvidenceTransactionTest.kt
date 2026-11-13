@@ -16,6 +16,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.token.english.data.local.AppDatabase
 import org.token.english.data.local.entity.KnowledgeItemEntity
+import org.token.english.data.local.entity.VocabularyEntity
 import org.token.english.data.repository.ConversationRepositoryImpl
 import org.token.english.data.repository.KnowledgeRepositoryImpl
 import org.token.english.data.repository.ProgressRepositoryImpl
@@ -109,8 +110,9 @@ class EvidenceTransactionTest {
             skill: Skill,
             correct: Boolean,
             now: Long,
+            cardId: String?,
         ) {
-            delegate.recordRecall(lessonId, skill, correct, now)
+            delegate.recordRecall(lessonId, skill, correct, now, cardId)
             throw IllegalStateException("process died after the node was written")
         }
     }
@@ -156,6 +158,7 @@ class EvidenceTransactionTest {
                     prerequisitesJson = "[]",
                     lessonIdsJson = "[\"$lessonId\"]",
                     skillsJson = "[\"SPEAKING\"]",
+                    wordsJson = "[]",
                 ),
             ),
         )
@@ -215,8 +218,71 @@ class EvidenceTransactionTest {
                     prerequisitesJson = "[]",
                     lessonIdsJson = "[\"$wordLesson\"]",
                     skillsJson = "[\"VOCABULARY\"]",
+                    wordsJson = "[]",
                 ),
             ),
+        )
+    }
+
+    @Test
+    fun `a card from a two-node lesson moves only its own word's node`() = runBlocking {
+        // Three shipped lessons own two vocabulary nodes each (`c1.phrasal-idioms`,
+        // `c2.nuance`, `c2.collocation`). The card names one word, so the node that
+        // names that word is the only one the grade is evidence about — before v82 both
+        // moved, which claimed the learner had practised a word they never saw.
+        db.contentDao().insertVocabulary(
+            listOf(
+                VocabularyEntity(
+                    id = card.contentId,
+                    word = "give up",
+                    translation = "تسلیم شدن",
+                    definition = null,
+                    pronunciation = null,
+                    level = "C1",
+                    partOfSpeech = "phrasal verb",
+                    examplesJson = "[]",
+                    collocationsJson = "[]",
+                    lessonId = wordLesson,
+                ),
+            ),
+        )
+        db.contentDao().insertKnowledgeItems(
+            listOf(
+                KnowledgeItemEntity(
+                    id = "vocab.tx.phrasal",
+                    type = "VOCABULARY",
+                    title = "Phrasal verbs",
+                    titleFa = "افعال عبارتی",
+                    level = "C1",
+                    prerequisitesJson = "[]",
+                    lessonIdsJson = "[\"$wordLesson\"]",
+                    skillsJson = "[\"VOCABULARY\"]",
+                    wordsJson = "[\"give up\",\"put off\"]",
+                ),
+                KnowledgeItemEntity(
+                    id = "vocab.tx.idioms",
+                    type = "VOCABULARY",
+                    title = "Idioms and figurative language",
+                    titleFa = "اصطلاحات",
+                    level = "C1",
+                    prerequisitesJson = "[]",
+                    lessonIdsJson = "[\"$wordLesson\"]",
+                    skillsJson = "[\"VOCABULARY\"]",
+                    wordsJson = "[\"break the ice\"]",
+                ),
+            ),
+        )
+        reviews.schedule(card)
+
+        submitReview(card, ReviewResult.GOOD, now, responseTimeMs = 900L, lessonId = wordLesson)
+
+        assertTrue(
+            "the word's own node took the grade",
+            knowledge.getState("vocab.tx.phrasal") != null,
+        )
+        assertNull(
+            "a word this node does not teach must not move it",
+            knowledge.getState("vocab.tx.idioms"),
         )
     }
 
@@ -331,6 +397,7 @@ class EvidenceTransactionTest {
                     prerequisitesJson = "[]",
                     lessonIdsJson = "[\"$wordLesson\"]",
                     skillsJson = "[\"GRAMMAR\",\"VOCABULARY\"]",
+                    wordsJson = "[]",
                 ),
             ),
         )

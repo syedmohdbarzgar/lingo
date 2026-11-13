@@ -102,6 +102,7 @@ class AnswerTransactionTest {
                     prerequisitesJson = "[]",
                     lessonIdsJson = "[\"$lessonId\"]",
                     skillsJson = "[\"VOCABULARY\"]",
+                    wordsJson = "[]",
                 ),
             ),
         )

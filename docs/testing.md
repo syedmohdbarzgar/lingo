@@ -89,7 +89,17 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 820 tests / 86 classes as of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 828 tests / 86 classes as of
+  the word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node of
+  its lesson: three lessons own two each, so one word moved two nodes. Three `KnowledgeEngineTest`
+  cases pin the pick — a claimed word credits exactly the node that names it, a word no node names
+  credits neither rather than both (the card is still graded), and a lesson with one vocabulary node
+  needs no list at all — and one `EvidenceTransactionTest` case proves it on real Room: the card
+  moves its own word's node while the sibling node of the same lesson is untouched. The shipped
+  content is held to the authoring rule too — one `ContentDistributionTest` case fails when a word of
+  a two-node lesson is claimed by both nodes or by neither, or when a node claims a word its own
+  lessons do not ship — and four `ContentValidationTest` fixtures pin the gate's refusals (claimed
+  twice, claimed by nobody, a foreign word, `words` on a grammar node). Before it
   the writing-coverage pass, where `WritingContentTest` stopped accepting one text per level: every
   level must ship **two** `writing` items, in different lessons, with different anchor sets — one
   text is the state v79 shipped and a single authoring edit away from a level whose writing step

@@ -155,6 +155,75 @@ class ContentDistributionTest {
     }
 
     /**
+     * The other half of that rule: a vocabulary node must name the words it teaches.
+     *
+     * Three lessons own **two** vocabulary nodes each (`c1.phrasal-idioms`, `c2.nuance`,
+     * `c2.collocation`), so before v82 a review card there credited both — one word, two
+     * claims. `KnowledgeEvidence.itemsForCard` now picks the node that names the card's
+     * word, which only works if the authoring names it: a word no node claims moves no
+     * node at all (the card is graded, the graph stays out), and a word two nodes claim
+     * would be back to crediting both. So for every lesson that owns more than one
+     * vocabulary node, every word it ships belongs to exactly one of them, and no node
+     * claims a word from another lesson.
+     */
+    @Test
+    fun `a lesson with two vocabulary nodes assigns each of its words to exactly one`() {
+        val words = JSONObject(contentFile("vocabulary.json").readText()).getJSONArray("vocabulary")
+        val vocabulary = (0 until words.length()).map { words.getJSONObject(it) }
+        val knowledge = JSONObject(contentFile("knowledge.json").readText()).getJSONArray("knowledge")
+
+        val nodes = (0 until knowledge.length())
+            .map { knowledge.getJSONObject(it) }
+            .filter { it.getString("type") == "VOCABULARY" }
+            .map { node ->
+                val lessons = node.getJSONArray("lessons")
+                val taught = node.optJSONArray("words")
+                node.getString("id") to Pair(
+                    (0 until lessons.length()).map { lessons.getString(it) }.toSet(),
+                    (0 until (taught?.length() ?: 0)).map { taught!!.getString(it) }.toSet(),
+                )
+            }
+
+        val byLesson = nodes
+            .flatMap { (id, taught) -> taught.first.map { it to (id to taught.second) } }
+            .groupBy({ it.first }, { it.second })
+            .filterValues { it.size > 1 }
+        assertTrue("no lesson owns two vocabulary nodes any more — this rule has nothing to guard", byLesson.isNotEmpty())
+
+        val unassigned = mutableListOf<String>()
+        val shared = mutableListOf<String>()
+        for ((lessonId, owners) in byLesson) {
+            val lessonWords = vocabulary.filter { it.getString("lessonId") == lessonId }.map { it.getString("word") }
+            for (word in lessonWords) {
+                val claimants = owners.filter { (_, claimed) -> word in claimed }.map { it.first }
+                when {
+                    claimants.isEmpty() -> unassigned += "$lessonId/$word"
+                    claimants.size > 1 -> shared += "$lessonId/$word ($claimants)"
+                }
+            }
+        }
+        assertTrue(
+            "word(s) of a two-node lesson that no node claims, so their card moves nothing: $unassigned",
+            unassigned.isEmpty(),
+        )
+        assertTrue(
+            "word(s) of a two-node lesson claimed by more than one node, so the card credits " +
+                "both: $shared",
+            shared.isEmpty(),
+        )
+
+        val foreign = nodes.flatMap { (id, taught) ->
+            taught.second.filter { word ->
+                vocabulary.none { it.getString("word") == word && it.getString("lessonId") in taught.first }
+            }.map { "$id/$it" }
+        }
+        assertTrue(
+            "node(s) claiming a word their own lessons do not ship: $foreign",
+            foreign.isEmpty(),
+        )
+    }
+
+    /**
      * Dynamically authored check for the other half of the graph's reachability.
      *
      * Securing a node needs **two** exercise formats ([KnowledgeGates.MIN_FORMATS_TO_SECURE]):

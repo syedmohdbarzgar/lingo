@@ -127,6 +127,7 @@ object ContentParser {
                 lessonIds = o.optJSONArraytoString("lessons"),
                 skills = o.optJSONArraytoString("skills")
                     .mapNotNull { runCatching { Skill.valueOf(it.uppercase()) }.getOrNull() },
+                words = o.optJSONArraytoString("words"),
             )
         }
     }

@@ -250,6 +250,18 @@
   the graph stays one chained path with no new roots. All 192 lessons now own a vocabulary node — 189
   one, three two. `ContentDistributionTest` fails the build when a lesson ships words with no node;
   `validateContent` reports the 268.
+- **A vocabulary node names the words it teaches (v82):** those three lessons own two vocabulary
+  nodes each, and `itemsForCard` used to credit both for one word — reviewing «subtle» raised
+  `vocab.semantic-precision` *and* `vocab.connotation`. A node can now carry a `words` list authored
+  from its own lesson's vocabulary (`vocab.semantic-precision` → `ambiguous`, `subtle`, `vague`,
+  `distinction`; `vocab.connotation` → `connotation`, `imply`), and a card resolves its own word from
+  its id so it moves the one node that names it. Two rules follow, both in `ContentValidator`: a
+  named word must be shipped by one of that node's lessons, and for a lesson with two vocabulary
+  nodes every word must be claimed by exactly **one** of them — none means the card moves nothing,
+  two means the old double credit is back. A node may legitimately claim nothing:
+  `vocab.idioms-and-figurative` shares the phrasal-verbs lesson, where every shipped word is a
+  phrasal verb. `words` is meaningless on a GRAMMAR/DISCOURSE/PHONOLOGY node and is refused there;
+  `ContentDistributionTest` holds the shipped bundle to all of it.
 - **Practice bar (A-8):** every GRAMMAR knowledge item needs **at least six grammar-targeting
   exercises** across its lessons, counted with `AnswerChecker.skillOf` — the same rule the mastery
   engine uses, so a vocabulary-heavy lesson does not count as grammar practice. `GrammarCoverageTest`

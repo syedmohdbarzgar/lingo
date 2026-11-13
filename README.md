@@ -19,7 +19,7 @@ the speech practice is graded on the device by a recogniser, not by a server.
 | Display name | Lingo |
 | Min / target / compile SDK | 24 / 37 / 37 |
 | Language & UI | Kotlin + Jetpack Compose (forced RTL) |
-| Local storage | Room (schema v10, exported) + DataStore Preferences |
+| Local storage | Room (schema v11, exported) + DataStore Preferences |
 
 The learner UI is entirely Persian; all English content is rendered through components that
 re-assert LTR, because the root layout is forced RTL.
@@ -311,7 +311,7 @@ app/src/main/java/org/token/english
 │   │                            KnowledgeGraph, KnowledgeEngine, KnowledgeEvidence
 │   └── usecase/                 SubmitExercise, CompleteLesson, SubmitReview, GetTodayPlan, …
 ├── data/
-│   ├── local/                   Room: entities, DAOs, AppDatabase (v10, schemas exported)
+│   ├── local/                   Room: entities, DAOs, AppDatabase (v11, schemas exported)
 │   ├── content/                 ContentParser (org.json) + ContentSeeder (assets → Room)
 │   └── repository/              Repository implementations + SettingsRepositoryImpl (DataStore)
 ├── di/AppContainer.kt           Manual DI container
@@ -399,7 +399,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-820 unit tests across 86 classes. The pure cores carry the most weight — review scheduling,
+828 unit tests across 86 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -496,7 +496,7 @@ offline, and must not block the learning core.
 - `bazaarRsaKey` unset disables Poolakey verification — release builds refuse to ship in that state.
 - Persian UI strings live inline in composables; extracting them to `strings.xml` is open design
   debt until a second locale appears.
-- Room is at `version = 10` with exported schemas in `app/schemas`. Schema changes must ship a
+- Room is at `version = 11` with exported schemas in `app/schemas`. Schema changes must ship a
   migration; the container registers `AppDatabase.ALL_MIGRATIONS` wholesale, because a hand-picked
   list once omitted a step and crashed **upgrading** installs at open time while fresh installs
   stayed green.

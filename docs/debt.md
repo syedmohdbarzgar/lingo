@@ -136,7 +136,7 @@
 - `bazaarRsaKey` unset → Poolakey verification disabled; the build falls back to
   `SecurityCheck.Disable`. Set it in `keystore.properties` before publishing to Bazaar (the
   Bazaar release tasks already refuse to assemble without it — same gate as the companion digest).
-- Room is at `version = 10` (`lesson_attempt`, `question_attempt`, `conversation_done`) with exported schemas
+- Room is at `version = 11` (`lesson_attempt`, `question_attempt`, `conversation_done`, `knowledge_item.wordsJson`) with exported schemas
   (`app/schemas`). Schema changes must ship a
   migration; registration is no longer a step anyone can forget, because `AppContainer` takes
   `AppDatabase.ALL_MIGRATIONS` as a whole (`RoomMigrationTest` fails if a hand-picked list comes
@@ -331,20 +331,20 @@
   (3) rows: each probe re-reads the graph through `GetFocusPlanUseCase`, so the bound is what keeps a
   tab switch a short read rather than a scan of the bundle. A learner with more than three due nodes
   sees three — the rest wait, and they are the *most* overdue that can actually be drilled.
-- **A card credits its lesson's vocabulary node(s), which is two for three lessons.** Now that a card
-  is attributed by type alone (`KnowledgeEvidence.itemsForCard` — see
-  [`docs/learner-model.md`](learner-model.md), which also explains why the by-skill and whole-lesson
-  passes are wrong here), the remaining granularity question is decided by the content graph: nodes
-  are **topic**-granular (6–8 words each), a word carries no node id, and — since v65 gave the last 35
-  their node — all 192 lessons own vocabulary nodes. 189 own exactly one, so a card moves exactly its
-  topic. `c1.phrasal-idioms`,
-  `c2.nuance` and `c2.collocation` own two (`vocab.phrasal-verbs` + `vocab.idioms-and-figurative`,
-  `vocab.semantic-precision` + `vocab.connotation`, `vocab.collocation-strength` +
-  `vocab.delexical-verbs`), so reviewing «give up» also moves `vocab.idioms-and-figurative`. That is a
-  real over-credit, bounded to those three lessons and to nodes of the same type; it is accepted
-  because the alternative is a per-word node id in the bundle (1154 words), and because the graph
-  itself says those lessons teach both topics. The narrower fix would be a `nodeId` on a word, which
-  is a schema change to `vocabulary.json` and earns its own content version.
+- **The double credit on three two-node lessons is closed; what remains is a card that cannot be
+  resolved to a word (v82).** A lesson owning two vocabulary nodes used to credit both for one card
+  (`c1.phrasal-idioms`, `c2.nuance`, `c2.collocation`) — reviewing «subtle» raised
+  `vocab.semantic-precision` *and* `vocab.connotation`. A node now names the words it teaches
+  (`KnowledgeItem.words`), `recordRecall` resolves the card id to its headword and
+  `KnowledgeEvidence.itemsForCard` picks the claiming node, so the graph gets one claim. The residual
+  is narrower and deliberate: a card whose content id the bundle no longer ships resolves to no word
+  and falls back to the lesson's nodes of its type, which is still two on those three lessons — the
+  old over-credit, reachable only by a card orphaned by a content change, and the safer of the two
+  guesses (a card with no identity is not evidence for "neither"). The authoring side is guarded
+  instead of assumed: `ContentValidator` refuses a node naming a word its lessons do not ship and, on
+  a two-node lesson, a word claimed by both or by neither. Rejected as the alternative: a `nodeId` on
+  each of the 1154 words — 1154 authored links to maintain for three lessons' worth of ambiguity,
+  where six node lists do the same job and can be read against the lesson at a glance.
 - **The lesson's speaking verdict is real evidence, but the recogniser behind it is not measured
   here (v79, audio v80).** The take is graded offline by Vosk through the dialogue's own seam, and
   the verdict is unit-tested end to end (`FakeSpeech` publishes what the service publishes; the

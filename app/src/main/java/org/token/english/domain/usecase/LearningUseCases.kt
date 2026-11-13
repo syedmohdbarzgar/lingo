@@ -321,6 +321,9 @@ class SubmitReviewUseCase(
                 skill = item.contentType.skill(),
                 correct = result != ReviewResult.AGAIN,
                 now = now,
+                // The card itself, so a lesson with two vocabulary nodes credits the
+                // one whose word was reviewed (bundle v82).
+                cardId = item.contentId,
             )
         }
     }

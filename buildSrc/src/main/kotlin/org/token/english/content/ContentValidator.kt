@@ -381,6 +381,9 @@ object ContentValidator {
 
         // --- vocabulary -----------------------------------------------------
         val vocabulary = items(roots["vocabulary.json"], "vocabulary", "vocabulary.json")
+        val wordsByLesson = vocabulary
+            .groupBy { text(it, "lessonId") }
+            .mapValues { entry -> entry.value.map { text(it, "word") } }
         collectIds(vocabulary, "vocabulary")
         val seenWords = mutableListOf<String>()
         /** `word::sentence` → the entry that already uses it, across lessons. */
@@ -533,6 +536,20 @@ object ContentValidator {
                 report(id, "lesson \"$unknown\" is not a lesson")
             }
             if (array(item, "skills").isEmpty()) report(id, "no skills")
+            // `words` (bundle v82) is how a review card finds the one node its word
+            // belongs to, so a claim must be a real word of this node's own lessons —
+            // otherwise the card credits a node that never taught it.
+            val claims = array(item, "words").map { it.toString() }
+            if (claims.isNotEmpty() && text(item, "type").uppercase() != "VOCABULARY") {
+                report(id, "only a VOCABULARY node names words")
+            }
+            if (claims.distinct().size != claims.size) report(id, "duplicate word in \"words\"")
+            claims.filter { it.isBlank() }.forEach { report(id, "blank entry in \"words\"") }
+            claims.filter { word ->
+                taught.none { lesson -> wordsByLesson[lesson].orEmpty().any { it == word } }
+            }.sorted().forEach { unknown ->
+                report(id, "word \"$unknown\" is not shipped by any lesson this node teaches")
+            }
             prerequisiteOf[id] = prerequisites
         }
         // A cycle would make the curriculum impossible to order (audit §22).
@@ -550,6 +567,31 @@ object ContentValidator {
                 prerequisiteOf[current]?.filter { it in knowledgeIds }?.forEach { pending += it }
             }
             if (cyclic) report("knowledge", "\"$start\" participates in a prerequisite cycle")
+        }
+
+        // Three lessons own **two** vocabulary nodes each (`c1.phrasal-idioms`,
+        // `c2.nuance`, `c2.collocation`), so "the lesson's vocabulary node" used to be
+        // two nodes and one card credited both. A word must therefore belong to exactly
+        // one of its lesson's vocabulary nodes: none means its card moves nothing, two
+        // means the old double credit is back.
+        val vocabularyNodesByLesson = knowledge
+            .filter { text(it, "type").uppercase() == "VOCABULARY" }
+            .flatMap { node ->
+                val claims = array(node, "words").map { it.toString() }
+                array(node, "lessons").map { lesson -> lesson.toString() to (text(node, "id") to claims) }
+            }
+            .groupBy({ it.first }, { it.second })
+            .filterValues { it.size > 1 }
+        vocabularyNodesByLesson.forEach { (lessonId, owners) ->
+            wordsByLesson[lessonId].orEmpty().forEach { word ->
+                val claimants = owners.filter { (_, claims) -> word in claims }.map { it.first }
+                when {
+                    claimants.isEmpty() ->
+                        report(lessonId, "word \"$word\" belongs to no vocabulary node, so its card moves nothing")
+                    claimants.size > 1 ->
+                        report(lessonId, "word \"$word\" is claimed by ${claimants.sorted()}, so one card would credit both")
+                }
+            }
         }
 
         // --- coverage: a lesson with no content is invisible to the learner ---

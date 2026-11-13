@@ -111,6 +111,7 @@ class ContentSeeder(
                         prerequisitesJson = JSONArray(it.prerequisites).toString(),
                         lessonIdsJson = JSONArray(it.lessonIds).toString(),
                         skillsJson = JSONArray(it.skills.map { skill -> skill.name }).toString(),
+                        wordsJson = JSONArray(it.words).toString(),
                     )
                 },
             )

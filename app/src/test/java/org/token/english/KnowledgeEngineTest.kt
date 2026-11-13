@@ -437,16 +437,54 @@ class KnowledgeEngineTest {
     }
 
     @Test
-    fun `a lesson that owns two vocabulary nodes is credited twice, by design`() {
+    fun `a card moves only the node that names its word`() {
         // Three shipped lessons own two vocabulary nodes each (`c1.phrasal-idioms`,
-        // `c2.nuance`, `c2.collocation`), so a card there moves both. It is a bounded,
-        // documented over-credit rather than a silent one — see docs/debt.md — and this
-        // pins it, because `itemsForCard` is a filter and a filter returns all matches.
-        val first = item("v1", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
-        val second = item("v2", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY, Skill.LISTENING))
+        // `c2.nuance`, `c2.collocation`), and a card there used to move both — the
+        // language's word had nothing to do with one of them. Since bundle v82 a node
+        // names the words it teaches, so the card picks exactly one.
+        val phrasal = item("v1", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
+            .copy(words = listOf("give up", "put off"))
+        val idioms = item("v2", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY, Skill.LISTENING))
+            .copy(words = listOf("break the ice"))
+
         assertEquals(
-            listOf("v1", "v2"),
-            KnowledgeEvidence.itemsForCard(listOf(first, second), Skill.VOCABULARY).map { it.id },
+            "the word's own node, whatever the authored order",
+            listOf("v2"),
+            KnowledgeEvidence.itemsForCard(listOf(phrasal, idioms), Skill.VOCABULARY, "break the ice").map { it.id },
+        )
+        assertEquals(
+            listOf("v1"),
+            KnowledgeEvidence.itemsForCard(listOf(phrasal, idioms), Skill.VOCABULARY, "Put off").map { it.id },
+        )
+    }
+
+    @Test
+    fun `a word no node names credits neither, rather than both`() {
+        // The honest answer when a lesson owns two vocabulary nodes and neither claims
+        // the word: a guess between two would be the bug this rule removes. The card is
+        // still graded — the graph just makes no claim it cannot support.
+        val first = item("v1", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY)).copy(words = listOf("give up"))
+        val second = item("v2", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY)).copy(words = emptyList())
+
+        assertTrue(
+            KnowledgeEvidence.itemsForCard(listOf(first, second), Skill.VOCABULARY, "trade off").isEmpty(),
+        )
+    }
+
+    @Test
+    fun `a lesson with one vocabulary node needs no word list`() {
+        // 189 lessons ship one node of the card's type, where the node IS the answer by
+        // construction — the authored list only resolves the ambiguous three.
+        val only = item("v1", KnowledgeType.VOCABULARY, listOf(Skill.VOCABULARY))
+
+        assertEquals(
+            listOf("v1"),
+            KnowledgeEvidence.itemsForCard(listOf(only), Skill.VOCABULARY, "anything at all").map { it.id },
+        )
+        assertEquals(
+            "and a card with no word at all still credits it",
+            listOf("v1"),
+            KnowledgeEvidence.itemsForCard(listOf(only), Skill.VOCABULARY).map { it.id },
         )
     }
 

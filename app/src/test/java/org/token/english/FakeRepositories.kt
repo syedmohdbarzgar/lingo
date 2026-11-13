@@ -426,9 +426,14 @@ class FakeKnowledgeRepository(
         skill: Skill,
         correct: Boolean,
         now: Long,
+        cardId: String?,
     ) {
         recalled += Triple(lessonId, skill, correct)
+        recalledCards += cardId
     }
+
+    /** Card ids each recall named, in order — so a test can assert the word was passed. */
+    val recalledCards = mutableListOf<String?>()
 
     override suspend fun reset() {
         statesFlow.value = emptyList()

@@ -438,6 +438,17 @@ data class KnowledgeItem(
     val prerequisites: List<String>,
     val lessonIds: List<String>,
     val skills: List<Skill>,
+    /**
+     * The headwords this node teaches (vocabulary nodes only).
+     *
+     * A review card is one word, and three lessons own two vocabulary nodes each
+     * (`c1.phrasal-idioms`, `c2.nuance`, `c2.collocation`), so "the lesson's vocabulary
+     * node" was ambiguous there and a card credited both. The list is authored in
+     * `knowledge.json` from the lesson's own vocabulary, and
+     * [org.token.english.domain.engine.KnowledgeEvidence.itemsForCard] uses it to pick
+     * the one node the word belongs to.
+     */
+    val words: List<String> = emptyList(),
 )
 
 /**

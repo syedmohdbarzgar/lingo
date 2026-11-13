@@ -121,11 +121,16 @@ class KnowledgeRepositoryImpl(
         skill: Skill,
         correct: Boolean,
         now: Long,
+        cardId: String?,
     ) {
         // No lesson, no attribution: the repository never invents nodes for a card it
         // cannot place (the same rule as an unknown lesson in `recordAttempt`).
         val lesson = lessonId ?: return
-        KnowledgeEvidence.itemsForCard(itemsForLesson(lesson), skill).forEach { item ->
+        // The card's own word, so a lesson with two vocabulary nodes credits the one
+        // that teaches it. A card id the content no longer ships resolves to null and
+        // falls back to "the lesson's node of this type", which is exact when unique.
+        val word = cardId?.let { contentDao.getVocabulary(it)?.word }
+        KnowledgeEvidence.itemsForCard(itemsForLesson(lesson), skill, word).forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
                 // format = null on purpose: review is recall, not a transfer claim (see
                 // the contract in `KnowledgeRepository.recordRecall`).
@@ -179,6 +184,7 @@ private fun KnowledgeItemEntity.toDomain(): KnowledgeItem = KnowledgeItem(
     lessonIds = lessonIdsJson.toStringList(),
     skills = skillsJson.toStringList()
         .mapNotNull { runCatching { Skill.valueOf(it.uppercase()) }.getOrNull() },
+    words = wordsJson.toStringList(),
 )
 
 /** Tolerates a malformed cell rather than crashing the whole graph. */

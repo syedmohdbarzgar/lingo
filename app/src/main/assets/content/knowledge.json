@@ -1,5 +1,5 @@
 {
-  "contentVersion": 81,
+  "contentVersion": 82,
   "knowledge": [
     {
       "id": "vocab.greetings",
@@ -970,6 +970,14 @@
       ],
       "skills": [
         "VOCABULARY"
+      ],
+      "words": [
+        "give up",
+        "put off",
+        "come across",
+        "get away with",
+        "run out of",
+        "bring up"
       ]
     },
     {
@@ -987,7 +995,8 @@
       "skills": [
         "VOCABULARY",
         "READING"
-      ]
+      ],
+      "words": []
     },
     {
       "id": "grammar.modals-of-deduction-past",
@@ -1104,6 +1113,12 @@
       "skills": [
         "VOCABULARY",
         "WRITING"
+      ],
+      "words": [
+        "ambiguous",
+        "subtle",
+        "vague",
+        "distinction"
       ]
     },
     {
@@ -1120,6 +1135,10 @@
       ],
       "skills": [
         "VOCABULARY"
+      ],
+      "words": [
+        "connotation",
+        "imply"
       ]
     },
     {
@@ -1253,6 +1272,13 @@
       "skills": [
         "VOCABULARY",
         "WRITING"
+      ],
+      "words": [
+        "collocation",
+        "collocate",
+        "lexical",
+        "precision",
+        "idiomatic"
       ]
     },
     {
@@ -1269,6 +1295,9 @@
       ],
       "skills": [
         "VOCABULARY"
+      ],
+      "words": [
+        "delexical verb"
       ]
     },
     {

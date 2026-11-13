@@ -191,15 +191,24 @@ interface KnowledgeRepository {
      * Review therefore moves mastery and the node's own schedule, and leaves the
      * transfer evidence to the lesson.
      *
+     * Where a lesson owns more than one node of the card's type, the card credits only
+     * the node that names its word (bundle v82): the word is looked up from [cardId],
+     * so a card from `c1.phrasal-idioms` moves `vocab.phrasal-verbs` or
+     * `vocab.idioms-and-figurative` depending on what was actually asked, never both.
+     *
      * @param lessonId the lesson that taught the reviewed content (a card from a lesson
      *   that no longer exists, or one opened before the bundle landed, has none — then
      *   there is nothing to attribute and nothing is written).
+     * @param cardId the reviewed content id, resolved to its headword. Null when the
+     *   caller has no card identity: the card then credits the lesson's nodes of its
+     *   type, which is exact whenever there is only one.
      */
     suspend fun recordRecall(
         lessonId: String?,
         skill: Skill,
         correct: Boolean,
         now: Long,
+        cardId: String? = null,
     )
 
     suspend fun reset()

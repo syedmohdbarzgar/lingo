@@ -162,7 +162,21 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (820 tests / 86 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (828 tests / 86 classes as of the
+word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node its
+lesson owns: three lessons (`c1.phrasal-idioms`, `c2.nuance`, `c2.collocation`) own two each, so
+reviewing «subtle» raised `vocab.semantic-precision` *and* `vocab.connotation` — one word, two
+claims. A vocabulary node now names the headwords it teaches (`KnowledgeItem.words`, authored in
+`knowledge.json`), `KnowledgeRepository.recordRecall` takes the card's id and resolves it to its
+word, and `KnowledgeEvidence.itemsForCard` credits the node that names it and nothing else — a word
+no node claims credits none, so the graph stays out of a claim it cannot support instead of guessing
+between two. The authoring side is a gate, not a convention: `ContentValidator` refuses a node
+naming a word its own lessons do not ship, any non-vocabulary node naming a word, and on a two-node
+lesson a word claimed by both or by neither, with four `ContentValidationTest` fixtures and one
+`ContentDistributionTest` case holding the shipped bundle to it. Storage is schema v10 → v11 (one
+additive `wordsJson` column defaulted to `'[]'`, so an upgrading install credits nothing rather than
+wrongly until it re-seeds) and `RoomMigrationTest` reads the step off the exported schema as it does
+every other. Before it the
 writing-coverage pass, where the type stopped being skippable: v79 shipped six texts, one
 per level, in the six lessons whose topic was plainly a piece of writing — and nothing stopped a
 later pass from dropping one, which would leave that level's writing step only ever asking for a

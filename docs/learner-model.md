@@ -217,9 +217,14 @@
   `VOCABULARY` in `skills`, so both passes selected exactly the nodes a card must not touch. Under the
   exercise rule, reviewing «airport» raised `grammar.future-will` while the recalled word had no node
   to move at all. v65 shipped those 35 missing nodes, so the rule now lands every card on a real node.
-  A card's node set is the lesson's nodes of its own type, which is one topic node for 189 of the 192
-  vocabulary lessons and two for `c1.phrasal-idioms`, `c2.nuance` and `c2.collocation` (see
-  [`docs/debt.md`](debt.md)); a lesson that owns none would leave the card still graded (schedule,
+  A card's node set is the lesson's nodes of its own type — and, when that is more than one, the node
+  that **names the card's word** (`KnowledgeItem.words`, bundle v82). Three lessons own two vocabulary
+  nodes each (`c1.phrasal-idioms`, `c2.nuance`, `c2.collocation`), so "the lesson's node" was two
+  nodes and one card credited both: reviewing «subtle» raised `vocab.semantic-precision` and
+  `vocab.connotation`. `recordRecall` resolves the card id to its headword and the graph gets one
+  claim, which `docs/debt.md` no longer has to accept. A word no node claims picks none, and a card
+  with no word (a card the bundle cannot resolve) leaves the lesson's nodes of its type standing as
+  before. A lesson that owns none would leave the card still graded (schedule,
   log, meter) with the graph out of a claim it cannot support, and `ContentDistributionTest` now
   fails the build before a lesson can ship that way. Two deliberate limits remain: **no exercise format** is recorded (a card is recall,
   not a *transfer* claim — see [`docs/debt.md`](debt.md)), and the **card** queue is still words:

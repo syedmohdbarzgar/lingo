@@ -109,6 +109,7 @@ class RemediationJourneyTest {
             skill: Skill,
             correct: Boolean,
             now: Long,
+            cardId: String?,
         ) {
             val lesson = lessonId ?: return
             fold(lesson, skill, correct, now, format = null)

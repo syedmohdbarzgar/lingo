@@ -59,6 +59,13 @@ data class KnowledgeItemEntity(
     val prerequisitesJson: String,
     val lessonIdsJson: String,
     val skillsJson: String,
+    /**
+     * Headwords this node teaches (v11). `'[]'` for a node that teaches no word —
+     * every grammar and discourse node — which is also the column's migration
+     * default, so an upgrading install reads a node that claims nothing until the
+     * re-seed writes the authored list.
+     */
+    val wordsJson: String,
 )
 
 /**

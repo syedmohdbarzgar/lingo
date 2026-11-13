@@ -497,4 +497,72 @@ class ContentValidationTest {
         )
         assertFails(dir, "the same item is shipped 2 times")
     }
+
+    @Test
+    fun `a word claimed by two vocabulary nodes of one lesson fails`() {
+        // Three real lessons own two vocabulary nodes each, and a card is one word:
+        // both nodes claiming it is the double credit `itemsForCard` exists to prevent.
+        val dir = writeValidBundle()
+        dir.resolve("knowledge.json").writeText(
+            """
+            {"contentVersion": 1, "knowledge": [
+              {"id": "v1", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"], "words": ["hello"]},
+              {"id": "v2", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"], "words": ["hello"]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "\"hello\" is claimed by [v1, v2]")
+    }
+
+    @Test
+    fun `a word no vocabulary node of its lesson claims fails`() {
+        // The other failure: the card is graded and moves nothing, which is what the
+        // lesson's node list is for. A wrong `words` list fails here rather than on a
+        // learner's review screen.
+        val dir = writeValidBundle()
+        dir.resolve("knowledge.json").writeText(
+            """
+            {"contentVersion": 1, "knowledge": [
+              {"id": "v1", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"]},
+              {"id": "v2", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "\"hello\" belongs to no vocabulary node")
+    }
+
+    @Test
+    fun `a node naming a word its lessons do not ship fails`() {
+        val dir = writeValidBundle()
+        dir.resolve("knowledge.json").writeText(
+            """
+            {"contentVersion": 1, "knowledge": [
+              {"id": "v1", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"],
+               "words": ["hello", "goodbye"]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "word \"goodbye\" is not shipped by any lesson")
+    }
+
+    @Test
+    fun `a grammar node naming words fails`() {
+        val dir = writeValidBundle()
+        dir.resolve("knowledge.json").writeText(
+            """
+            {"contentVersion": 1, "knowledge": [
+              {"id": "k1", "type": "GRAMMAR", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["GRAMMAR"], "words": ["hello"]},
+              {"id": "v1", "type": "VOCABULARY", "level": "A1", "title": "T", "titleFa": "ت",
+               "prerequisites": [], "lessons": ["l1"], "skills": ["VOCABULARY"], "words": ["hello"]}
+            ]}
+            """.trimIndent(),
+        )
+        assertFails(dir, "only a VOCABULARY node names words")
+    }
 }

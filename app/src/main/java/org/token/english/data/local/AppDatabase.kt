@@ -30,7 +30,7 @@ import org.token.english.data.local.entity.VocabularyEntity
  * checks on the JVM (Room itself only notices a mismatch at open time on an
  * upgrading install).
  */
-internal const val DATABASE_VERSION = 10
+internal const val DATABASE_VERSION = 11
 
 @Database(
     entities = [
@@ -191,6 +191,16 @@ abstract class AppDatabase : RoomDatabase() {
                     "lessonId TEXT NOT NULL, " +
                     "PRIMARY KEY(lessonId))",
             ),
+            // v10 → v11: a node names the words it teaches, so a review card credits
+            // the one vocabulary node its word belongs to instead of every vocabulary
+            // node of the lesson (three lessons own two each). One additive column,
+            // defaulted to '[]': an upgrading install keeps every node and every
+            // mastery row, and a node claims nothing until the next seed writes its
+            // authored list — which is also the safe state, because a node that claims
+            // no word cannot be credited wrongly.
+            "10->11" to listOf(
+                "ALTER TABLE knowledge_item ADD COLUMN wordsJson TEXT NOT NULL DEFAULT '[]'",
+            ),
         )
 
         val MIGRATION_1_2 = migration(1, 2)
@@ -202,6 +212,7 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_7_8 = migration(7, 8)
         val MIGRATION_8_9 = migration(8, 9)
         val MIGRATION_9_10 = migration(9, 10)
+        val MIGRATION_10_11 = migration(10, 11)
 
         /** Every migration this database ships, oldest first. */
         val ALL_MIGRATIONS: List<Migration>
@@ -215,6 +226,7 @@ abstract class AppDatabase : RoomDatabase() {
                 MIGRATION_7_8,
                 MIGRATION_8_9,
                 MIGRATION_9_10,
+                MIGRATION_10_11,
             )
 
         fun migration(from: Int, to: Int): Migration = object : Migration(from, to) {
