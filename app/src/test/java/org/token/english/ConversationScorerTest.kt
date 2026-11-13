@@ -410,6 +410,50 @@ class ConversationScorerTest {
         )
     }
 
+    // ---- which accepted answer the take is judged against --------------------
+
+    @Test
+    fun `the closer of two near misses is the one reported`() {
+        // Both replies are "near" for this take, and the old rule kept whichever the
+        // bundle listed first — so the missed-word list named a sentence the learner
+        // had not tried to say. Coverage and similarity decide between equals.
+        val targets = listOf(
+            "Yes, a table for two please.",
+            "A table for two, please. We are in a hurry.",
+        )
+        val spoken = "a table for two in a hurry"
+
+        assertEquals("both are near", SpeakingVerdict.NEAR, ConversationScorer.assessBest(spoken, targets))
+        assertEquals("the second one is what was said", targets[1], ConversationScorer.bestTarget(spoken, targets))
+    }
+
+    @Test
+    fun `a retry names the reply it was closer to, not the first one listed`() {
+        // Neither answer matches, but one shares two of its words with the take. Word
+        // feedback may only come from the answer the verdict was formed on, so this
+        // must pick the second one even though both are retries.
+        val targets = listOf(
+            "No, I do not need anything.",
+            "Yes, I have a reservation.",
+        )
+        val spoken = "yes i need a bag"
+
+        assertEquals(SpeakingVerdict.RETRY, ConversationScorer.assessBest(spoken, targets))
+        assertEquals(targets[1], ConversationScorer.bestTarget(spoken, targets))
+    }
+
+    @Test
+    fun `a better verdict is never traded for better coverage`() {
+        // The verdict is the first key: an answer said back wins over a nearer-sounding
+        // partial one, whatever order the bundle lists them in.
+        val targets = listOf(
+            "It is on the left.",
+            "It is on the left near the bank.",
+        )
+
+        assertEquals("It is on the left.", ConversationScorer.bestTarget("it is on the left", targets))
+    }
+
     @Test
     fun `the fold is a grading rule, so the grammar keeps the authored spelling`() {
         // What the learner is asked to say stays as authored: only the comparison

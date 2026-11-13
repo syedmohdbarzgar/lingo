@@ -162,7 +162,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (817 tests / 86 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (820 tests / 86 classes as of the
+closest-answer pass, where the reply the feedback speaks about stopped being whichever the bundle
+listed first: a turn authored with two equivalent answers can give both the same verdict, so
+`ConversationScorer.bestTarget` now breaks an equal verdict by **keyword coverage** and then by
+**similarity** — the two signals the verdict itself was formed on — and only a genuine tie keeps the
+authored order (`minWith`, stable on equal keys). It matters because `SpokenWordFeedback` marks the
+take against exactly that sentence: with the old `minByOrNull { assess(...).ordinal }` a take that
+had clearly attempted the second reply had its missed words named from the first. Three
+`ConversationScorerTest` cases pin it (the closer of two near misses, a retry that names the reply
+it was closer to rather than the first listed, and a better verdict never traded for better
+coverage). Before it the
 independent-day pass, where the difficulty audit stopped counting one learner's taps as separate
 observations: an answer is evidence only if it is the **first of its learner-local calendar day**,
 so `DifficultyAudit.report` now takes a `dayKey: (Long) -> Int` — required, never defaulted, because

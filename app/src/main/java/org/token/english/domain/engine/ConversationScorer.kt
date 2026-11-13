@@ -56,12 +56,44 @@ object ConversationScorer {
     /**
      * The authored answer the take came closest to — the same one [assessBest]
      * grades, so word-level feedback marks the sentence the verdict was formed on
-     * rather than the first one the bundle happens to list. Ties keep the authored
-     * order, which is why this is `minByOrNull` over the verdicts and not a max of
-     * similarities.
+     * rather than the first one the bundle happens to list.
+     *
+     * The verdict alone is not enough to choose between two accepted answers: a turn
+     * authored with `It is on the left` and `It is on the left near the bank` gives
+     * both a [SpeakingVerdict.NEAR] to the same take, and the old `minByOrNull` kept
+     * whichever came first — so the missed-word list named a word from the reply the
+     * learner had not tried to say. Equal verdicts are therefore broken by the two
+     * signals that produced them, in the order they are consulted: keyword coverage
+     * first (was this even the same sentence?), then similarity (how much of it came
+     * back). Only a genuine tie — same verdict, same coverage, same distance — keeps
+     * the authored order, which is what `minWith` does with equal keys.
      */
-    fun bestTarget(spoken: String, targets: List<String>): String? =
-        targets.minByOrNull { assess(spoken, it).ordinal }
+    fun bestTarget(spoken: String, targets: List<String>): String? {
+        if (targets.isEmpty()) return null
+        val normalizedSpoken = normalize(spoken)
+        val spokenWords = wordsOf(normalizedSpoken).map(::foldHomophone)
+        return targets.minWithOrNull(
+            compareBy<String>(
+                { assess(spoken, it).ordinal },
+                { -coverageOf(spokenWords, it) },
+                { -similarity(normalizedSpoken, normalize(it)) },
+            ),
+        )
+    }
+
+    /**
+     * Share of [target]'s content words the take contains — the keyword half of
+     * [assess], exposed so choosing between equal verdicts uses the same signal.
+     */
+    private fun coverageOf(spokenWords: List<String>, target: String): Double {
+        val keywords = contentWords(target)
+        if (keywords.isEmpty()) return 1.0
+        return keywordHits(keywords, spokenWords).toDouble() / keywords.size
+    }
+
+    /** How many of [keywords] the take says, whole-word or one edit away. */
+    private fun keywordHits(keywords: List<String>, spokenWords: List<String>): Int =
+        keywords.count { want -> spokenWords.any { sameWord(it, want) } }
 
     /**
      * True when the take is mostly the partner's own line: at least
@@ -107,8 +139,7 @@ object ConversationScorer {
         // arm is what forgives a recogniser's single-letter slip ("tabel"), and
         // homophones are folded first ("to" / "too" / "two").
         val spokenWords = wordsOf(normalizedSpoken).map(::foldHomophone)
-        val hits = keywords.count { want -> spokenWords.any { sameWord(it, want) } }
-        val keywordRatio = if (keywords.isEmpty()) 1.0 else hits.toDouble() / keywords.size
+        val keywordRatio = if (keywords.isEmpty()) 1.0 else keywordHits(keywords, spokenWords).toDouble() / keywords.size
 
         // Two-stage verdict, content words first. Levenshtein is order-sensitive,
         // so it alone would fail a learner who says every key word in a slightly

@@ -89,8 +89,12 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 817 tests / 86 classes as of
-  the independent-day pass, where the difficulty audit started counting learner-local days: an
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 820 tests / 86 classes as of
+  the closest-answer pass, where the dialogue stopped judging a take against the first accepted
+  answer that happened to tie: `ConversationScorer.bestTarget` orders equal verdicts by keyword
+  coverage and then by similarity, so the reply word-level feedback names is the one the learner
+  actually attempted. Three `ConversationScorerTest` cases pin it. Before it the independent-day
+  pass, where the difficulty audit started counting learner-local days: an
   answer is evidence only when it is the first of its calendar day, so `DifficultyAudit.report`
   takes the `dayKey` seam the use case fills from `TimeUtil.dateKey`, same-day retries stay in the
   log as diagnostics only, and `DifficultyAuditTest` runs in Tehran's zone with cases for a local
