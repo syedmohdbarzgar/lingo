@@ -35,13 +35,18 @@ class VocabularyViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun word(id: String, word: String, translation: String) = VocabularyItem(
+    private fun word(
+        id: String,
+        word: String,
+        translation: String,
+        level: LearningLevel = LearningLevel.A1,
+    ) = VocabularyItem(
         id = id,
         word = word,
         translation = translation,
         definition = null,
         pronunciation = null,
-        level = LearningLevel.A1,
+        level = level,
         partOfSpeech = null,
         examples = emptyList(),
         collocations = emptyList(),
@@ -111,6 +116,47 @@ class VocabularyViewModelTest {
         vm.onQueryChange("book")
 
         assertEquals(listOf("book", "borrow"), vm.state.value.filtered.map { it.word })
+    }
+
+    @Test
+    fun `the level row lists only the levels the bundle ships a word in`() {
+        val vm = harness(
+            word("a", "apple", "سیب", LearningLevel.A1),
+            word("b", "book", "کتاب", LearningLevel.A2),
+            word("c", "budget", "بودجه", LearningLevel.A2),
+        )
+
+        // A1..C2 exist in the model; only two of them have a word here, so only two
+        // chips can be offered — a chip for an empty level is a dead end.
+        assertEquals(listOf(LearningLevel.A1, LearningLevel.A2), vm.state.value.levels)
+    }
+
+    @Test
+    fun `choosing a level narrows the list, and «همه» brings it back`() {
+        val vm = harness(
+            word("a", "apple", "سیب", LearningLevel.A1),
+            word("b", "book", "کتاب", LearningLevel.A2),
+        )
+
+        vm.onLevelChange(LearningLevel.A2)
+        assertEquals(listOf("book"), vm.state.value.filtered.map { it.word })
+
+        vm.onLevelChange(null)
+        assertEquals(listOf("apple", "book"), vm.state.value.filtered.map { it.word })
+    }
+
+    @Test
+    fun `the level and the query narrow together, not one instead of the other`() {
+        val vm = harness(
+            word("a", "apple", "سیب", LearningLevel.A1),
+            word("b", "apricot", "زردآلو", LearningLevel.A2),
+            word("c", "book", "کتاب", LearningLevel.A2),
+        )
+
+        vm.onLevelChange(LearningLevel.A2)
+        vm.onQueryChange("ap")
+
+        assertEquals(listOf("apricot"), vm.state.value.filtered.map { it.word })
     }
 
     @Test

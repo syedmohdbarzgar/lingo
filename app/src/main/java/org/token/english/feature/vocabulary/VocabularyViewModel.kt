@@ -12,6 +12,7 @@ import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.engine.VocabularySearch
+import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewState
@@ -22,8 +23,15 @@ import org.token.english.domain.repository.VocabularyRepository
 data class VocabularyUiState(
     val isLoading: Boolean = true,
     val query: String = "",
+    /** The chosen CEFR level, or `null` for «همه». */
+    val level: LearningLevel? = null,
     val all: List<VocabularyItem> = emptyList(),
     val filtered: List<VocabularyItem> = emptyList(),
+    /**
+     * The levels the bundle actually ships a word in, CEFR order. Read from the words
+     * rather than from the enum, so no chip can lead to a guaranteed-empty list.
+     */
+    val levels: List<LearningLevel> = emptyList(),
     /** A read threw — shown as an error state, so the spinner cannot hang. */
     val loadFailed: Boolean = false,
 )
@@ -45,8 +53,18 @@ class VocabularyViewModel(
         viewModelScope.launch {
             vocabularyRepository.observeAll().catchLoadFailure(::onLoadFailure).collect { items ->
                 _state.update { current ->
-                    val filtered = filter(items, current.query)
-                    current.copy(isLoading = false, loadFailed = false, all = items, filtered = filtered)
+                    val levels = LearningLevel.entries.filter { level -> items.any { it.level == level } }
+                    // A chosen level that left the bundle cannot filter the screen down to
+                    // nothing: re-seeding is a content change, not a learner's mistake.
+                    val level = current.level?.takeIf { it in levels }
+                    current.copy(
+                        isLoading = false,
+                        loadFailed = false,
+                        all = items,
+                        levels = levels,
+                        level = level,
+                        filtered = filter(items, current.query, level),
+                    )
                 }
             }
         }
@@ -64,7 +82,12 @@ class VocabularyViewModel(
     }
 
     fun onQueryChange(query: String) {
-        _state.update { it.copy(query = query, filtered = filter(it.all, query)) }
+        _state.update { it.copy(query = query, filtered = filter(it.all, query, it.level)) }
+    }
+
+    /** «همه» is `null`: a level filter narrows the list, it does not replace the search. */
+    fun onLevelChange(level: LearningLevel?) {
+        _state.update { it.copy(level = level, filtered = filter(it.all, it.query, level)) }
     }
 
     /**
@@ -73,8 +96,11 @@ class VocabularyViewModel(
      * strings read the bundle's spelling as the only spelling — «كتاب» with the Arabic
      * kaf a Persian keyboard produces found nothing.
      */
-    private fun filter(items: List<VocabularyItem>, query: String): List<VocabularyItem> =
-        VocabularySearch.rank(items, query)
+    private fun filter(
+        items: List<VocabularyItem>,
+        query: String,
+        level: LearningLevel?,
+    ): List<VocabularyItem> = VocabularySearch.browse(items, query, level)
 }
 
 data class VocabularyDetailUiState(

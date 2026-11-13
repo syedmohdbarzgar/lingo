@@ -147,16 +147,22 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (793 tests / 84 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (798 tests / 84 classes as of the
 vocabulary-search pass, where the word browser's box stopped treating the bundle's spelling as the
 only spelling: `VocabularySearch` folds the two spellings a Persian keyboard produces (the Arabic
 ك/ي onto ک/ی), drops the ZWNJ, the harakat, the tatweel and the hamza-bearing alefs, and turns
 Persian digits into ASCII — «كتاب», «میروم» and «۹» now find what «کتاب», «می‌روم» and «9» find —
 and then ranks what it finds (headword, then a token of it, then anywhere in it, then the Persian
 meaning, then an example sentence, the authored order kept inside a tier and a miss dropped), which
-is what makes «مهندس» answer «engineer» instead of a sentence ten entries later. Nine
-`VocabularySearchTest` cases pin the fold and the tiers and two `VocabularyViewModelTest` cases the
-browser's half (the Arabic kaf reaches the word, a headword outranks an example). Before it the
+is what makes «مهندس» answer «engineer» instead of a sentence ten entries later. The same pass gave
+the browser the one other axis a 1154-word list needs: a level filter applied **before** the ranking
+(`VocabularySearch.browse`), because a headword outside the chosen level is not a better hit than a
+meaning inside it — it is not a hit at all. The chips are read from the words rather than from the
+enum (`VocabularyUiState.levels`), so no tap can land on a guaranteed-empty list, and a filtered empty
+state names the level and offers «نمایش همهٔ سطح‌ها» back. Eleven `VocabularySearchTest` cases pin
+the fold, the tiers and the filter, and five `VocabularyViewModelTest` cases the browser's half (the
+Arabic kaf reaches the word, a headword outranks an example, the row lists only the levels that
+ship, and the level and the query narrow together). Before it the
 writing-coverage pass (bundle v80), where the type stopped being skippable: v79 shipped six texts, one
 per level, in the six lessons whose topic was plainly a piece of writing — and nothing stopped a later
 pass from dropping one, which would leave that level's writing step only ever asking for a sentence.

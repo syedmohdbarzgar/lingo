@@ -1,5 +1,6 @@
 package org.token.english.domain.engine
 
+import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.VocabularyItem
 
 /**
@@ -102,6 +103,24 @@ object VocabularySearch {
         }
         return if (inExample) VocabularyMatch.EXAMPLE else VocabularyMatch.NONE
     }
+
+    /**
+     * What the browser actually shows: the level filter first, then the ranking.
+     *
+     * The order of the two is the whole rule. A filter narrows what is searched, so a
+     * headword outside the chosen level is not a better hit than a meaning inside it —
+     * it is not a hit at all. [level] `null` is «همه» and narrows nothing; the level list
+     * is derived from the bundle rather than from the enum, so a level no word ships in
+     * never appears as a chip that can only empty the screen.
+     */
+    fun browse(
+        items: List<VocabularyItem>,
+        query: String,
+        level: LearningLevel? = null,
+    ): List<VocabularyItem> = rank(
+        if (level == null) items else items.filter { it.level == level },
+        query,
+    )
 
     /**
      * The entries that answer [query], best match first and the authored order kept

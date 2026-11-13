@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -45,6 +48,7 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.InfoBanner
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SectionHeader
+import org.token.english.core.designsystem.component.levelTint
 import org.token.english.di.vocabularyDetailViewModelFactory
 import org.token.english.di.vocabularyViewModelFactory
 import org.token.english.domain.model.ReviewState
@@ -81,6 +85,38 @@ fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
                 ),
             )
 
+            // The browser holds every word in the bundle, so the level is the one
+            // axis a learner narrows first — and a chip only appears for a level a
+            // word actually ships in, so no tap can land on a guaranteed-empty list.
+            if (state.levels.size > 1) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = AppSpacing.md),
+                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    AppChip(
+                        label = "همه",
+                        selected = state.level == null,
+                        onClick = { vm.onLevelChange(null) },
+                    )
+                    state.levels.forEach { level ->
+                        // One hue per level, the same one the badge on each card uses.
+                        val tint = levelTint(level)
+                        AppChip(
+                            label = level.name,
+                            selected = state.level == level,
+                            onClick = { vm.onLevelChange(level) },
+                            containerColor = tint.container,
+                            contentColor = tint.content,
+                        )
+                    }
+                }
+                Spacer(Modifier.height(AppSpacing.compact))
+            }
+
             when {
                 state.isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
@@ -105,10 +141,19 @@ fun VocabularyScreen(onOpenDetail: (String) -> Unit) {
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
 
+                // A filtered-out list is not a failed search: the copy names the
+                // level that narrowed it and offers the way back to every word.
                 state.filtered.isEmpty() -> AppEmptyState(
                     icon = Icons.Default.Search,
                     title = "چیزی پیدا نشد",
-                    subtitle = "واژه دیگری را جستجو کن.",
+                    subtitle = when {
+                        state.level != null && state.query.isNotBlank() ->
+                            "در سطح ${state.level?.name} واژه‌ای با این جستجو نیست."
+                        state.level != null -> "در سطح ${state.level?.name} واژه‌ای نیست."
+                        else -> "واژه دیگری را جستجو کن."
+                    },
+                    actionText = if (state.level != null) "نمایش همهٔ سطح‌ها" else null,
+                    onAction = if (state.level != null) ({ vm.onLevelChange(null) }) else null,
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
 

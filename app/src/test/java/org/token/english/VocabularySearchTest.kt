@@ -25,13 +25,14 @@ class VocabularySearchTest {
         word: String,
         translation: String,
         examples: List<VocabularyExample> = emptyList(),
+        level: LearningLevel = LearningLevel.A2,
     ) = VocabularyItem(
         id = id,
         word = word,
         translation = translation,
         definition = null,
         pronunciation = null,
-        level = LearningLevel.A2,
+        level = level,
         partOfSpeech = null,
         examples = examples,
         collocations = emptyList(),
@@ -119,6 +120,38 @@ class VocabularySearchTest {
         assertEquals(items, VocabularySearch.rank(items, "   "))
         assertEquals(emptyList<VocabularyItem>(), VocabularySearch.rank(items, "zzz"))
         assertEquals(VocabularyMatch.NONE, VocabularySearch.match(items.first(), "zzz"))
+    }
+
+    @Test
+    fun `a level filter narrows the list to that level`() {
+        val a1 = word("1", "apple", "سیب", level = LearningLevel.A1)
+        val a2 = word("2", "book", "کتاب", level = LearningLevel.A2)
+        val b1 = word("3", "budget", "بودجه", level = LearningLevel.B1)
+
+        assertEquals(listOf(a1), VocabularySearch.browse(listOf(a1, a2, b1), "", LearningLevel.A1))
+        // «همه» is not an empty level: it narrows nothing at all.
+        assertEquals(
+            listOf(a1, a2, b1),
+            VocabularySearch.browse(listOf(a1, a2, b1), "", null),
+        )
+    }
+
+    @Test
+    fun `the filter is applied before the ranking, so a headword outside it is not a hit`() {
+        // `book` is the best answer of the three to "book" — but it is an A2 word and
+        // the learner asked for B1, where only `borrow` mentions it, in an example.
+        val book = word("1", "book", "کتاب", level = LearningLevel.A2)
+        val borrowing = word(
+            "2",
+            "borrow",
+            "قرض گرفتن",
+            listOf(VocabularyExample("I borrow a book.", "کتاب قرض می‌گیرم.")),
+            level = LearningLevel.B1,
+        )
+        val items = listOf(book, borrowing)
+
+        assertEquals(listOf(borrowing), VocabularySearch.browse(items, "book", LearningLevel.B1))
+        assertEquals(listOf(book, borrowing), VocabularySearch.browse(items, "book", null))
     }
 
     @Test
