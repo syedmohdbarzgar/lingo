@@ -147,7 +147,16 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (782 tests / 83 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (793 tests / 84 classes as of the
+vocabulary-search pass, where the word browser's box stopped treating the bundle's spelling as the
+only spelling: `VocabularySearch` folds the two spellings a Persian keyboard produces (the Arabic
+ك/ي onto ک/ی), drops the ZWNJ, the harakat, the tatweel and the hamza-bearing alefs, and turns
+Persian digits into ASCII — «كتاب», «میروم» and «۹» now find what «کتاب», «می‌روم» and «9» find —
+and then ranks what it finds (headword, then a token of it, then anywhere in it, then the Persian
+meaning, then an example sentence, the authored order kept inside a tier and a miss dropped), which
+is what makes «مهندس» answer «engineer» instead of a sentence ten entries later. Nine
+`VocabularySearchTest` cases pin the fold and the tiers and two `VocabularyViewModelTest` cases the
+browser's half (the Arabic kaf reaches the word, a headword outranks an example). Before it the
 writing-coverage pass (bundle v80), where the type stopped being skippable: v79 shipped six texts, one
 per level, in the six lessons whose topic was plainly a piece of writing — and nothing stopped a later
 pass from dropping one, which would leave that level's writing step only ever asking for a sentence.

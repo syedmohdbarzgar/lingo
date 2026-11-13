@@ -11,6 +11,7 @@ import org.token.english.core.audio.Speaker
 import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.Sm2ReviewScheduler
+import org.token.english.domain.engine.VocabularySearch
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewState
@@ -66,13 +67,14 @@ class VocabularyViewModel(
         _state.update { it.copy(query = query, filtered = filter(it.all, query)) }
     }
 
-    private fun filter(items: List<VocabularyItem>, query: String): List<VocabularyItem> {
-        val q = query.trim()
-        if (q.isEmpty()) return items
-        return items.filter {
-            it.word.contains(q, ignoreCase = true) || it.translation.contains(q, ignoreCase = true)
-        }
-    }
+    /**
+     * The browser's search, in the engine: the same letter folded on both sides and
+     * the best match first (see [VocabularySearch]). Two `contains` calls on the raw
+     * strings read the bundle's spelling as the only spelling — «كتاب» with the Arabic
+     * kaf a Persian keyboard produces found nothing.
+     */
+    private fun filter(items: List<VocabularyItem>, query: String): List<VocabularyItem> =
+        VocabularySearch.rank(items, query)
 }
 
 data class VocabularyDetailUiState(

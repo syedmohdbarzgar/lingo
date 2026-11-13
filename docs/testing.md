@@ -89,8 +89,15 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 782 tests / 83 classes as of
-  the writing-coverage pass (bundle v80), where the type stopped being skippable: a second text per
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 793 tests / 84 classes as of
+  the vocabulary-search pass, where the word browser's box stopped reading the bundle's spelling as
+  the only spelling: `VocabularySearch` folds the Arabic ك/ي a Persian keyboard produces onto ک/ی,
+  removes the ZWNJ, the harakat, the tatweel and the hamza-bearing alefs, and maps Persian digits to
+  ASCII, then ranks the hits (headword, a token of it, anywhere in it, the Persian meaning, an
+  example sentence) so the word comes before a sentence that mentions it. Nine
+  `VocabularySearchTest` cases pin the fold, the tiers and the authored order; two in
+  `VocabularyViewModelTest` pin the browser's half. Before it the writing-coverage pass (bundle v80),
+  where the type stopped being skippable: a second text per
   level, in a different lesson and asking for a different structure, and the new `WritingContentTest`
   to hold it — every level ships one, no lesson asks for two, every exemplar passes its own item, the
   floors stay where the validator puts them, and two items of a level cannot share an anchor set.

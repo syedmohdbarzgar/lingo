@@ -12,6 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.VocabularyExample
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.feature.vocabulary.VocabularyViewModel
 
@@ -86,6 +87,30 @@ class VocabularyViewModelTest {
 
         vm.onQueryChange("   ")
         assertEquals("a blank query is no filter", 2, vm.state.value.filtered.size)
+    }
+
+    @Test
+    fun `the Arabic kaf a Persian keyboard produces finds the Persian word`() {
+        val vm = harness(word("a", "apple", "سیب"), word("b", "book", "کتاب"))
+
+        // «كتاب» — the kaf, not the Persian «ک». Same letter to a reader, so it must be
+        // the same query to the browser.
+        vm.onQueryChange("كتاب")
+
+        assertEquals(listOf("book"), vm.state.value.filtered.map { it.word })
+    }
+
+    @Test
+    fun `the best match is listed first`() {
+        val exampleOnly = word("a", "borrow", "قرض گرفتن").copy(
+            examples = listOf(VocabularyExample("I borrow a book.", "کتاب قرض می‌گیرم.")),
+        )
+        val vm = harness(exampleOnly, word("b", "book", "کتاب"))
+
+        // Both answer "book", but only one is the word.
+        vm.onQueryChange("book")
+
+        assertEquals(listOf("book", "borrow"), vm.state.value.filtered.map { it.word })
     }
 
     @Test
