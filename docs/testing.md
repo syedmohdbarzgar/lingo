@@ -89,8 +89,15 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 810 tests / 86 classes as of
-  the abandoned-take pass, where the take and the take nobody wants stopped being one value:
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 813 tests / 86 classes as of
+  the writing-anchor pass (bundle v81), where a `writing` anchor became a phrase instead of a set of
+  words: separate anchors may sit in any sentence and in any order, but `was collected` now needs
+  its two words adjacent, so «the survey was useful … we collected the forms» no longer passes the
+  passive item, and `not` + `only` in the other order is not the inversion. The two items that test
+  a perfect tense stopped anchoring an auxiliary (`have` was met by possession, `had` by a plain
+  past) and anchor the phrase itself. Three `WritingExerciseTest` cases pin it, and
+  `WritingContentTest` keeps refusing an exemplar its own item would not accept. Before it the
+  abandoned-take pass, where the take and the take nobody wants stopped being one value:
   `core/audio/TakeWindow` answers "may this take still speak?" with `mayOpenMic`, `isAbandoned`
   and `mayPublish`, `SpeechBus.reset()` bumps `SpeechBus.epoch` so a take begun under an older
   screen publishes nothing (no partial, no transcript, no audio path, no error) and its

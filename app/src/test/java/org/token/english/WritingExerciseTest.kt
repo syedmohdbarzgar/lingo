@@ -94,6 +94,60 @@ class WritingExerciseTest {
     }
 
     @Test
+    fun `a two-word anchor is a phrase, not two loose words`() {
+        // `was collected` is the passive the item is about. A text that says «the
+        // survey was useful» and then «we collected the forms» contains both words and
+        // neither construction — flattening an anchor into independent words made that
+        // a pass, which is the whole gap this closes.
+        val item = writing(mustUse = listOf("was collected"), minWords = 8, minSentences = 2)
+
+        assertFalse(
+            "the passive never appears",
+            AnswerChecker.isCorrect(item, "The survey was useful. We collected the forms in May."),
+        )
+        assertTrue(
+            "the same words, adjacent, are the structure",
+            AnswerChecker.isCorrect(item, "The data was collected in May. It comes from three offices."),
+        )
+    }
+
+    @Test
+    fun `an anchor's words in the other order are not the anchor`() {
+        val item = writing(mustUse = listOf("not only"), minWords = 8, minSentences = 2)
+
+        assertFalse(
+            "`only` then `not` is a different sentence",
+            AnswerChecker.isCorrect(item, "The study only proves one thing. It does not prove a link."),
+        )
+        assertTrue(
+            "the inversion, as written",
+            AnswerChecker.isCorrect(
+                item,
+                "Not only does the study fail to prove a link. Its sample was also far too small.",
+            ),
+        )
+    }
+
+    @Test
+    fun `an auxiliary alone no longer stands in for the tense`() {
+        // `have` was satisfied by possession and `had` by a plain past tense, so the two
+        // items that test a perfect tense asked for a word rather than a structure.
+        val perfect = writing(mustUse = listOf("have travelled"), minWords = 8, minSentences = 2)
+
+        assertFalse(
+            "a family text does not answer a travel-experience item",
+            AnswerChecker.isCorrect(perfect, "I have a small family. My sister is a student."),
+        )
+        assertTrue(
+            "the present perfect, as the exemplar writes it",
+            AnswerChecker.isCorrect(
+                perfect,
+                "I have travelled abroad twice. My most memorable journey was in Turkey.",
+            ),
+        )
+    }
+
+    @Test
     fun `a missing final full stop still counts as a sentence`() {
         // Forgetting the last period is punctuation, not a missing sentence.
         val answer = "The order has not been delivered. I have written twice. I would like a refund"

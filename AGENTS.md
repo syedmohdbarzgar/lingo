@@ -162,7 +162,15 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (810 tests / 86 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (813 tests / 86 classes as of the
+writing-anchor pass (bundle v81), where a `mustUse` anchor stopped being a bag of words: separate
+anchors may still sit in any sentence and in any order, but the words *inside* one anchor must be
+adjacent in that order, so `was collected` is the passive and «the survey was useful … we collected
+the forms» is not. Two anchors were single auxiliaries and are now the phrases they stood in for —
+`have` → `have travelled` at `b1.experiences` (its exemplar already wrote it) and `had` →
+`had been` at `c2.narrative`, whose exemplar now says it contiguously — because a word that only
+*marks* a tense is met by possession or by a plain past. Three `WritingExerciseTest` cases pin the
+rule (scattered words, reversed order, an auxiliary alone). Before it the
 abandoned-take pass, where a take the learner walked away from stopped being able to report:
 one question — "may this take still speak?" — is now `TakeWindow` in `core/audio`, because the
 take that ends and the take that is abandoned were the same value before it. `SpeechBus.epoch`

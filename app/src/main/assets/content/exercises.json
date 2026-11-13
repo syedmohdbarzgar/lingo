@@ -1,5 +1,5 @@
 {
-  "contentVersion": 80,
+  "contentVersion": 81,
   "exercises": [
     {
       "id": "a1.greetings.ex.01",
@@ -23976,7 +23976,7 @@
       "prompt": "یک تجربهٔ سفر را در دو یا سه جمله بنویس: کجا رفته‌ای و چه چیزی برایت ماند.",
       "hintFa": "حال کامل برای تجربه، و never برای چیزی که هرگز نکرده‌ای.",
       "mustUse": [
-        "have",
+        "have travelled",
         "memorable"
       ],
       "minWords": 16,
@@ -52728,16 +52728,16 @@
       "prompt": "یک بند کوتاه تحلیلی دربارهٔ یک روایت بنویس: چیزی که پیش از شروع رخ داده و یک تروپ.",
       "hintFa": "برای رویداد پیش از نقطهٔ مرجع: had + past participle.",
       "mustUse": [
-        "had",
+        "had been",
         "trope"
       ],
       "minWords": 16,
       "minSentences": 2,
       "accepted": [
-        "The backstory had already been established before the first chapter opened. The novel uses that trope deliberately, so the denouement reads as inevitable rather than sudden."
+        "The backstory had been established long before the first chapter opened. The novel uses that trope deliberately, so the denouement reads as inevitable rather than sudden."
       ],
       "skill": "WRITING",
-      "explanationFa": "رویداد پیش از نقطهٔ مرجع با past perfect: had already been established."
+      "explanationFa": "رویداد پیش از نقطهٔ مرجع با past perfect: had been established."
     },
     {
       "id": "c2.uncertainty.ex.10",

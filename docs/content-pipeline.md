@@ -186,12 +186,19 @@
   [`debt.md`](debt.md)), and `RoomMigrationTest` keeps proving the existing path. `validateContent` and `VocabularyContentTest`
   both require ≥ 2 examples per word with a non-empty Persian `fa`, and the word-in-example rule is
   checked **per example**, not per entry.
-- **A `writing` item is a short connected text, and its floors are the rule (v79).** The last
+- **A `writing` item is a short connected text, and its floors are the rule (v79; anchors are
+  phrases since v81).** The last
   format the exercise model had room for. It is deliberately not `sentence_production` with a bigger
   `minWords`: a produced sentence is graded on anchors **in order** because the order *is* the
   structure under test, while a text is graded on its anchors **anywhere** (a paragraph's connective
   opens the second sentence), a `minWords` floor **and** a `minSentences` floor — so one run-on that
-  happens to carry every anchor is not the two sentences that were asked for. The validator holds the
+  happens to carry every anchor is not the two sentences that were asked for. **One anchor is still
+  one phrase**: separate anchors may sit in any sentence and in any order, but the words inside an
+  anchor must be adjacent in that order, so `was collected` is the passive and «the survey was
+  useful … we collected the forms» is not. That is why an anchor is never a bare auxiliary: `have`
+  was met by possession and `had` by a plain past, so the two perfect-tense items now anchor the
+  phrase itself (`have travelled`, `had been`) — a single word that only *marks* a tense is not
+  evidence of one. The validator holds the
   item to the same bar it holds the learner to: anchors must exist and be English, `minWords` may not
   go below 8, `minSentences` may not go below 2, and the authored exemplar must itself reach both
   floors, because it is the model shown after a miss. Nothing checks whether the prose is *good* —

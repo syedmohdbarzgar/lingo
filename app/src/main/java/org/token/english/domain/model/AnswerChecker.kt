@@ -461,6 +461,15 @@ object AnswerChecker {
      * run-on that happens to carry every anchor and enough words is not two
      * sentences and does not pass.
      *
+     * **An anchor is a phrase, not a bag of words.** Separate anchors may sit in any
+     * sentence and in any order, but the words *inside* one anchor must appear next
+     * to each other in that order: `was collected` was satisfied by a text that said
+     * «the survey was useful» and «we collected the forms» two sentences later, which
+     * is not the passive construction the item asked for — and an auxiliary alone
+     * (`have`, `had`) was satisfied by possession or by a plain past tense. Squashing
+     * every anchor into independent words made the structure the item is *about* the
+     * one thing the grader could not see.
+     *
      * A sentence is counted by its terminator (`.` `!` `?`), and a final clause with
      * no punctuation still counts as a sentence once it carries a word — a learner
      * who forgets the last full stop has written two sentences, not one, and the
@@ -472,12 +481,25 @@ object AnswerChecker {
         if (words.isEmpty() || words.size < exercise.minWords) return false
         if (sentencesIn(answer) < exercise.minSentences) return false
         val anchors = exercise.mustUse
-            .flatMap { expandContractions(normalize(it)).split(' ') }
+            .map { anchor -> explainWords(anchor) }
             .filter { it.isNotEmpty() }
         if (anchors.isEmpty()) return false
-        // Anchor space as a set: a text may use its structures in any order.
-        val present = words.toSet()
-        return anchors.all { it in present }
+        // A text may use its structures in any order and in any sentence, but each
+        // structure has to be there *as written*: adjacency and internal order are
+        // what tell `was collected` from `was … collected`.
+        return anchors.all { phrase -> words.containsPhrase(phrase) }
+    }
+
+    /** A phrase as the words the grader compares: normalised, contractions expanded. */
+    private fun explainWords(phrase: String): List<String> =
+        expandContractions(normalize(phrase)).split(' ').filter { it.isNotEmpty() }
+
+    /** Whether [phrase] appears in this word list contiguously and in order. */
+    private fun List<String>.containsPhrase(phrase: List<String>): Boolean {
+        if (phrase.isEmpty() || phrase.size > size) return false
+        return (0..size - phrase.size).any { start ->
+            phrase.indices.all { offset -> this[start + offset] == phrase[offset] }
+        }
     }
 
     /**
