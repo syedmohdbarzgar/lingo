@@ -455,7 +455,11 @@ class FakeAudioPlayer(available: Boolean? = true) : AudioPlayer {
     /** Every pace the app set on this player, in order. */
     val speechRates = mutableListOf<Float>()
 
+    /** Every line this player was asked to speak, in order. */
+    val spoken = mutableListOf<String>()
+
     override fun speak(text: String, onDone: (() -> Unit)?, onError: (() -> Unit)?) {
+        spoken += text
         onDone?.invoke()
     }
 

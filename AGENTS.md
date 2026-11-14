@@ -162,7 +162,22 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (842 tests / 88 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (844 tests / 88 classes as of the
+listening-card pass, where a due node's question could finally be **heard**: `listening` joined
+`NodeCardPicker.ASKABLE_FORMATS`, the review card draws the lesson's own `ListeningCard` (which
+moved from `feature/lesson` to `core/designsystem/component/ExerciseSurface.kt` for exactly the
+reason the controls moved in the graph-card pass — `feature/` may not import `feature/`), and
+`ReviewEvent.PlayNodeAudio` speaks the item's `audioText` through the `AudioPlayer` the review
+screen already holds, so the card answers by typing the transcript instead of being skipped.
+`ReviewUiState.isPlayingNodeAudio` stops a second tap restarting the line mid-sentence and is
+cleared before the next card (a listening line still playing over the next question is noise), and
+`nodeAudioAvailable` mirrors `AudioPlayer.isEnglishAvailable` so a device with no English voice
+shows the transcript — the same fallback the lesson's step has — instead of a play button that
+cannot speak. A `speaking` item is still unaskable (it needs a microphone and a take), which is the
+one format left to the drill. One `NodeCardTest` case pins that listening is picked and speaking is
+not, one that a node missing only the listening shape is served it, and one `ReviewViewModelTest`
+case the session: nothing plays before the learner asks, the card speaks the item's own line, and
+the typed transcript credits `LISTENING`; before it the
 block pass, where a due node's card block stopped being a single question: `NodeCardPicker.pickAll`
 returns **one exercise per `ExerciseFormat` the node has not been confirmed in** (the gate needs two
 shapes — `KnowledgeGates.MIN_FORMATS_TO_SECURE`), capped at
@@ -195,8 +210,9 @@ graph-card pass, where the review session stopped ending at the last word: a due
 own exercise is now queued as a card (`NodeExerciseCard`) after the word cards and graded through
 `SubmitExerciseUseCase` — the lesson's own evidence path — so review practice finally confirms a
 *format* (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), which a word card may never do because recall is
-not transfer. `NodeCardPicker` decides which exercise: one a card can ask (never a listening item,
-whose audio the review screen does not play, and never a speaking item, which needs the microphone),
+not transfer. `NodeCardPicker` decides which exercise: one a card can ask (never a speaking item, which needs the
+microphone — and at that point not a listening item either, since the review screen would not play
+it; the listening-card pass closed that),
 preferring a format the node has not been confirmed in and otherwise keeping the lesson's authored
 order; a node with nothing askable is dropped and left to the focused drill.
 `GetDueNodeCardsUseCase` builds the card from the drill's own exercise subset

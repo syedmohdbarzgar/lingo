@@ -113,11 +113,30 @@ class NodeCardTest {
     }
 
     @Test
-    fun `an exercise the review screen cannot ask is never a card`() {
-        // A listening item is its audio and a speaking item needs a take; the review
-        // surface has no speaker and no microphone, so neither can be asked there.
-        assertTrue(NodeCardPicker.pickAll(listOf(listening("ex.01"), speaking("ex.02")), 0).isEmpty())
+    fun `a listening item is asked, a speaking one is not`() {
+        // listening-card pass: the card plays a listening item's audio through the same
+        // TTS seam the lesson uses, so the sound is askable there. A take is not — the
+        // review screen has no microphone.
+        val heard = listening("ex.01")
+        assertEquals(listOf(heard), NodeCardPicker.pickAll(listOf(heard), 0))
+
+        assertTrue(
+            "a speaking item needs a take the card cannot record",
+            NodeCardPicker.pickAll(listOf(speaking("ex.02")), 0).isEmpty(),
+        )
         assertTrue("nothing to ask is an answer, not a failure", NodeCardPicker.pickAll(emptyList(), 0).isEmpty())
+    }
+
+    @Test
+    fun `a node missing only the listening shape is asked its listening item`() {
+        val first = mc("ex.01")
+        val second = blank("ex.02")
+        val heard = listening("ex.03")
+        val confirmed = AnswerChecker.formatOf(first).bit or AnswerChecker.formatOf(second).bit
+
+        // Choice and blank are proven; the sound is the one shape left. Before the
+        // listening-card pass this node could not add it by review at all.
+        assertEquals(listOf(heard), NodeCardPicker.pickAll(listOf(first, second, heard), confirmed))
     }
 
     private fun Harness.withDueNode(
@@ -181,7 +200,7 @@ class NodeCardTest {
 
     @Test
     fun `a due node with nothing askable is dropped rather than offered dead`() {
-        val h = Harness().withDueNode(exercises = listOf(listening("ex.01"), speaking("ex.02")))
+        val h = Harness().withDueNode(exercises = listOf(speaking("ex.01"), speaking("ex.02")))
 
         assertTrue(
             "the drill still serves it, but the card surface has no question to ask",

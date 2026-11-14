@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
@@ -21,8 +22,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -42,9 +48,11 @@ import org.token.english.domain.model.Exercise
  * These lived in `feature/lesson` and were imported from `feature/review` and
  * `feature/onboarding`, which is the import `AGENTS.md` §3 forbids — a shared component
  * was living inside one feature. They are the design system's, so they moved here:
- * an answer field, an option card and the exercise's own cue. Everything that is a
- * *flow* rather than a control (the speaking take, the listening player) stays in the
- * lesson feature, because no other screen runs it.
+ * an answer field, an option card, the exercise's own cue and the listening surface.
+ * Everything that is a *flow* rather than a control (the speaking take) stays in the
+ * lesson feature, because no other screen runs it — the listening surface moved here
+ * with the review card that asks a listening question (listening-card pass), and it
+ * plays through one TTS seam in both places instead of two copies of one button.
  *
  * The review session shows a curriculum node's own exercise (graph-card pass), and it
  * must ask it exactly the way the lesson does — one prompt, one set of controls, so a
@@ -164,7 +172,8 @@ fun AnswerField(
  * review session while each keeps its own feedback rules.
  *
  * A `listening` item is its audio and a `speaking` item is the learner's own voice, so
- * both render nothing here — their screens draw their own surface.
+ * both render nothing here — [ListeningCard] draws the first and the lesson draws the
+ * second.
  */
 @Composable
 fun ExercisePrompt(
@@ -253,6 +262,104 @@ fun ExercisePrompt(
             }
 
             is Exercise.Listening, is Exercise.Speaking -> Unit
+        }
+    }
+}
+
+/**
+ * Listening exercise: on-device TTS playback + optional transcript (design.md §21).
+ *
+ * States (checklist B-3):
+ *  - normal / playing — tap the speaker to (re)play.
+ *  - [unavailable] — no English voice on this device: no fake play affordance;
+ *    the transcript becomes the exercise (read + type) with an install-voice action.
+ *  - [playbackFailed] — an attempt produced no sound: text hint + retry by tap.
+ *
+ * It lives in the design system because two screens ask a listening question now: the
+ * lesson's `listening` step and the review session's card for a due node whose mask is
+ * missing the `listening` format (listening-card pass). One card, so the same question
+ * is heard and typed the same way in both places; the caller owns the flow (which TTS
+ * seam plays it, whether an install action exists).
+ */
+@Composable
+fun ListeningCard(
+    audioText: String,
+    isPlaying: Boolean,
+    onPlay: () -> Unit,
+    modifier: Modifier = Modifier,
+    unavailable: Boolean = false,
+    playbackFailed: Boolean = false,
+    onInstallVoiceData: (() -> Unit)? = null,
+) {
+    var showTranscript by remember { mutableStateOf(false) }
+    // Without audio the transcript IS the exercise — always visible, no toggle:
+    // a hidden text with no sound would make the task impossible.
+    val transcriptVisible = showTranscript || unavailable
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+    ) {
+        if (unavailable) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Text(
+                        text = "صدای انگلیسی در دسترس نیست",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    Text(
+                        text = "این تمرین را با خواندن متن و تایپ آن ادامه بده",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            onInstallVoiceData?.let { install ->
+                TextButton(onClick = install) {
+                    Text("نصب داده‌های صدا")
+                }
+            }
+        } else {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                contentDescription = "پخش صدا",
+                modifier = Modifier
+                    .size(64.dp)
+                    .clickable(enabled = !isPlaying, onClick = onPlay),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = if (isPlaying) "در حال پخش…" else "برای شنیدن ضربه بزنید",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            // Failure is never color-only: a sentence that says what to do (design.md §50).
+            if (playbackFailed) {
+                Text(
+                    text = "پخش صدا انجام نشد — دوباره ضربه بزنید",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+            TextButton(onClick = { showTranscript = !showTranscript }) {
+                Text(if (showTranscript) "پنهان کردن متن" else "نمایش متن")
+            }
+        }
+        if (transcriptVisible) {
+            EnglishText(
+                text = audioText,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
         }
     }
 }

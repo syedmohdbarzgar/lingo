@@ -3,6 +3,18 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **A due node's listening question (listening-card pass)** is pinned in `NodeCardTest` (two of its
+  cases) and `ReviewViewModelTest` (one). The picker: a `listening` item is askable — the review card
+  plays its audio — and a node whose mask already holds choice and blank but not the sound is served
+  **that** item, which is the shape it could not add by review before; a `speaking` item is still
+  refused, because a take needs a microphone the review screen does not open. The session's half:
+  nothing is spoken before the learner taps, the tap asks the `AudioPlayer` for the item's own line
+  (`FakeAudioPlayer.spoken`), a finished line does not leave the card stuck in `isPlayingNodeAudio`,
+  and the typed transcript is graded and credits `LISTENING`. What is **not** covered here is the
+  sound itself: `TtsAudioPlayer` and the engine's availability are device checks, and the card's
+  fallback (`nodeAudioAvailable == false` → the transcript, no play button) is read in code and on a
+  device, never in the JVM suite.
+
 - **The speaking pace is a setting (speech-pace pass)** is pinned in `SpeechPaceTest` (four
   cases) and `SettingsViewModelTest` (one). The value: `SpeechPace.DEFAULT` is 0.75 — the rate the
   app shipped at, so an upgrade sounds exactly as it did — the three steps ascend and the slowest
@@ -15,7 +27,7 @@
   from the JVM.
 
 - **The graph's own questions in the review session (graph-card pass, block pass)** is pinned in
-  `NodeCardTest` (six cases) and `ReviewViewModelTest` (three more). The picker: one question per
+  `NodeCardTest` (seven cases) and `ReviewViewModelTest` (three more). The picker: one question per
   exercise shape the node has **not** been confirmed in (a node proven only in a choice is asked its
   blank), two missing shapes are both asked and a third is left to the drill
   (`NodeCardPicker.MAX_CARDS_PER_NODE`), a fully confirmed node is asked one authored question
@@ -116,8 +128,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 842 tests / 88 classes as of
-  the block pass (the bullet above); before it the speech-pace pass, where the rate the app speaks
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 844 tests / 88 classes as of
+  the listening-card pass (the bullet above); before it the block pass, where a node's card block
+  became up to two questions; before it the speech-pace pass, where the rate the app speaks
   at became a setting; before it the graph-card pass, where a due node's own exercise became a card
   of the session; before it the word-ownership pass (bundle v82), where a
   review card stopped crediting every vocabulary node of

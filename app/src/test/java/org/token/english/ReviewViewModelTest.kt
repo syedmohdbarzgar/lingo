@@ -407,6 +407,47 @@ class ReviewViewModelTest {
     }
 
     @Test
+    fun `a due node's listening question is heard, then typed and graded`() {
+        // listening-card pass: a node whose mask lacks `listening` is now asked a
+        // listening item — the card plays the item's own line, the learner types what
+        // they heard, and the answer credits the format it was asked in. Without the
+        // card's player that question could not be asked at all.
+        val lessonId = word.lessonId!!
+        val heard = "The gate is closed."
+        val h = Harness().withDueNode(
+            exercises = listOf(
+                Exercise.Listening(
+                    id = "a1.test.ex.01",
+                    lessonId = lessonId,
+                    audioText = heard,
+                    accepted = listOf(heard),
+                    skill = Skill.LISTENING,
+                ),
+            ),
+        )
+        val vm = h.build()
+        assertEquals(listOf("a1.test.ex.01"), vm.state.value.nodeCards.map { it.exercise.id })
+
+        vm.onEvent(ReviewEvent.Start)
+        assertTrue("nothing plays until the learner asks for it", h.audio.spoken.isEmpty())
+
+        vm.onEvent(ReviewEvent.PlayNodeAudio)
+
+        assertEquals("the card speaks the item's own line", listOf(heard), h.audio.spoken)
+        assertFalse("a finished line leaves the card not playing", vm.state.value.isPlayingNodeAudio)
+
+        vm.onEvent(ReviewEvent.AnswerChanged(heard))
+        vm.onEvent(ReviewEvent.SubmitNode)
+
+        assertTrue(vm.state.value.nodeOutcome!!.correct)
+        assertEquals(
+            "the answer credits the shape the card asked in",
+            listOf(Skill.LISTENING to ExerciseFormat.LISTENING),
+            h.knowledge.recordedSkills,
+        )
+    }
+
+    @Test
     fun `a node missing two shapes is asked twice, in the authored order`() {
         // A node whose schedule keeps coming round was asked its choice item every time
         // (one card per node), so the second format the gate needs was never proven.

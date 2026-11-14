@@ -10,9 +10,12 @@
   confirmed in: the gate needs two shapes, so a third question would spend the session on work the
   drill exists for, and a node whose mask is already complete is asked one authored question rather
   than none (its schedule still owes it a touch). The focused drill (the node's whole evidence
-  block) stays the deeper path and still one tap away on the summary. **Typed and tapped formats only**: a `listening` item *is* its audio and a `speaking`
-  item needs the microphone and a take, so both stay in the lesson and the drill; a card the review
-  surface cannot answer would be a dead end. **No `review_item` row and no `ReviewAttempt`**: a
+  block) stays the deeper path and still one tap away on the summary. **Typed, tapped and heard**: a `listening` item is asked now that the card can
+  play its line (listening-card pass) and is answered by typing the transcript, with the lesson's own
+  transcript fallback when the device has no English voice; a `speaking` item still stays in the
+  lesson and the drill, because a take needs the microphone and a verdict the card does not have. A
+  card the review surface cannot answer would be a dead end, which is why the boundary is drawn by
+  what the screen can *do* rather than by what would be convenient to ask. **No `review_item` row and no `ReviewAttempt`**: a
   node's schedule lives in `knowledge_state`, so the card is graded with one verdict rather than the
   four SRS buttons, and its evidence is the lesson's path (the day's claim, the node with its format
   bit, the skill meter). The consequence is accepted: the review log behind review accuracy and the

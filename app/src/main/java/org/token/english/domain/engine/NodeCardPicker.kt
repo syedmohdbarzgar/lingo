@@ -11,11 +11,12 @@ import org.token.english.domain.model.ExerciseFormat
  * much of it one session may spend. Four rules, each a decision rather than a
  * preference:
  *
- * - **Only a format a card can ask.** A review card is answered by tapping or typing.
- *   A `listening` item needs its audio played and a `speaking` item needs the
- *   microphone and a take, so both are the lesson's to ask (the focused drill still
- *   serves them); a card that could not be answered would be a dead end on the review
- *   screen, which never asks for the microphone.
+ * - **Only a format a card can ask.** A review card is answered by tapping, typing or
+ *   hearing — the review screen plays a listening item's audio through the same TTS
+ *   seam the lesson uses (listening-card pass), so `listening` is askable. A `speaking`
+ *   item needs the microphone and a take, so it stays the lesson's and the drill's; a
+ *   card that could not be answered would be a dead end on the review screen, which
+ *   never asks for the microphone.
  * - **One question per shape the node has not been confirmed in.** Securing a node
  *   needs two formats ([KnowledgeGates.MIN_FORMATS_TO_SECURE]), so a question in a
  *   shape already in the mask proves nothing new: a node asked its authored first item
@@ -42,7 +43,10 @@ object NodeCardPicker {
      */
     const val MAX_CARDS_PER_NODE = 2
 
-    /** Formats a review card can ask without a speaker or a microphone. */
+    /**
+     * Formats a review card can ask without a microphone. A listening item is asked by
+     * playing it; a take is the one thing the card cannot do.
+     */
     val ASKABLE_FORMATS: Set<ExerciseFormat> = setOf(
         ExerciseFormat.MULTIPLE_CHOICE,
         ExerciseFormat.FILL_BLANK,
@@ -50,6 +54,7 @@ object NodeCardPicker {
         ExerciseFormat.TRANSLATION,
         ExerciseFormat.SENTENCE_PRODUCTION,
         ExerciseFormat.WRITING_TEXT,
+        ExerciseFormat.LISTENING,
     )
 
     /**

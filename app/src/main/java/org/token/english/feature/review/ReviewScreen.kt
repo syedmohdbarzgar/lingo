@@ -58,6 +58,7 @@ import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.InfoBanner
 import org.token.english.core.designsystem.component.isolateEmbeddedLtr
+import org.token.english.core.designsystem.component.ListeningCard
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
 import org.token.english.core.designsystem.component.AnswerField
@@ -552,6 +553,24 @@ private fun NodeCardBody(
                             )
                         }
                     }
+                }
+
+                // A listening card's question is its audio (listening-card pass): the
+                // same surface the lesson's step draws, so the learner hears one line
+                // and types what they heard in both places.
+                is Exercise.Listening -> {
+                    ListeningCard(
+                        audioText = exercise.audioText,
+                        isPlaying = state.isPlayingNodeAudio,
+                        onPlay = { vm.onEvent(ReviewEvent.PlayNodeAudio) },
+                        unavailable = state.nodeAudioAvailable == false,
+                    )
+                    AnswerField(
+                        value = state.typedAnswer,
+                        onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
+                        enabled = outcome == null,
+                        label = "آنچه شنیدی",
+                    )
                 }
 
                 is Exercise.Writing -> AnswerField(

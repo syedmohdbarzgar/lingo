@@ -405,7 +405,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-842 unit tests across 88 classes. The pure cores carry the most weight — review scheduling,
+844 unit tests across 88 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -529,9 +529,9 @@ Nothing here is committed to a date; it is the order in which the pieces make se
   focused drill, and the **session itself** now asks a due node's own exercise as a card: the format
   the node has not been confirmed in, asked after the word cards and graded through the lesson's
   evidence path. What remains is depth rather than direction — a node's block is at most **two**
-  questions, one per exercise shape it still lacks (the drill still serves the rest), and a listening
-  or speaking item is still asked only inside the drill, because a card has no audio playback and no
-  microphone.
+  questions, one per exercise shape it still lacks (the drill still serves the rest); a **listening**
+  question is asked too — the card plays the item's own line and the learner types what they heard —
+  while a speaking item still waits for the drill, because a take needs the microphone.
 - Finish the error taxonomy. The classification shipped: `MissTaxonomy` labels every recent lesson
   answer by the skill its exercise is authored for (vocabulary, grammar, comprehension, production)
   and every review card by its content type (vocabulary or grammar — a card knows nothing finer),

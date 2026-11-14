@@ -53,6 +53,14 @@ data class ReviewUiState(
     val gradedCount: Int = 0,
     val againCount: Int = 0,
     val isPlaying: Boolean = false,
+    /** A listening node card's audio is playing (listening-card pass). */
+    val isPlayingNodeAudio: Boolean = false,
+    /**
+     * Whether this device can speak English — `null` while the engine connects, `false`
+     * when there is no voice. A listening card then shows its transcript instead of a
+     * play button that cannot speak, exactly as the lesson's step does.
+     */
+    val nodeAudioAvailable: Boolean? = null,
     /** Learner's typed answer in production mode (empty until typed). */
     val typedAnswer: String = "",
     /** Result of a checked production answer: null = not a production card / not checked yet. */
@@ -109,6 +117,8 @@ sealed interface ReviewEvent {
     data object Reset : ReviewEvent
     data class AnswerChanged(val value: String) : ReviewEvent
     data object CheckAnswer : ReviewEvent
+    /** Play a listening node card's audio — the card's question is the sound. */
+    data object PlayNodeAudio : ReviewEvent
     /** A tap on one of a node card's options. */
     data class SelectNodeOption(val index: Int) : ReviewEvent
     /** Submit the node card's answer — it is graded, not self-assessed. */
@@ -141,6 +151,7 @@ class ReviewViewModel(
      * node card's format bit and mastery are written by one rule, not a second copy.
      */
     private val submitExercise: SubmitExerciseUseCase,
+    /** The lesson's TTS seam: word audio on the summary, and a listening card's line. */
     private val audioPlayer: AudioPlayer,
     private val speaker: Speaker,
     private val isAppInForeground: () -> Boolean,
@@ -165,6 +176,14 @@ class ReviewViewModel(
 
     init {
         refresh()
+        // The engine may still be connecting when the first listening card appears, so the
+        // availability is mirrored here rather than read once: a card must never offer a
+        // play button on a device that has no English voice.
+        viewModelScope.launch {
+            audioPlayer.isEnglishAvailable.collect { available ->
+                _state.update { it.copy(nodeAudioAvailable = available) }
+            }
+        }
     }
 
     /**
@@ -237,6 +256,7 @@ class ReviewViewModel(
                     typedAnswer = "",
                     answerCorrect = null,
                     answerAlmost = false,
+                    isPlayingNodeAudio = false,
                     phase = if (due.isEmpty() && nodeCards.isEmpty()) {
                         ReviewPhase.SUMMARY
                     } else {
@@ -296,6 +316,8 @@ class ReviewViewModel(
                 val word = _state.value.currentWord ?: return
                 speaker.speak(text = word.word, onDone = { _state.update { it.copy(isPlaying = false) } })
             }
+
+            ReviewEvent.PlayNodeAudio -> playNodeAudio()
 
             ReviewEvent.Reset -> refresh()
 
@@ -380,17 +402,38 @@ class ReviewViewModel(
         }
     }
 
+    /**
+     * Plays a listening card's audio through the player the lesson's own step uses.
+     *
+     * The audio **is** the question ([Exercise.Listening]), so a card that offered no way
+     * to hear the line would be a dead end. A second tap while it is speaking is ignored
+     * (it would restart the line mid-sentence), and nothing plays when the device has no
+     * English voice — the card shows its transcript instead.
+     */
+    private fun playNodeAudio() {
+        val s = _state.value
+        val listening = s.currentNodeCard?.exercise as? Exercise.Listening ?: return
+        if (s.isPlayingNodeAudio || s.nodeAudioAvailable == false) return
+        _state.update { it.copy(isPlayingNodeAudio = true) }
+        val done = { _state.update { it.copy(isPlayingNodeAudio = false) } }
+        audioPlayer.speak(text = listening.audioText, onDone = done, onError = done)
+    }
+
     /** Leaves an answered node card; the last one ends the session. */
     private fun nextNodeCard() {
         val s = _state.value
         if (s.nodeOutcome == null) return
         val next = s.nodeIndex + 1
+        // The next card must not inherit this one's voice: a listening line still playing
+        // while the learner reads the next question is noise, not review.
+        if (s.isPlayingNodeAudio) audioPlayer.stop()
         _state.update {
             it.copy(
                 nodeIndex = next,
                 nodeSelectedOption = null,
                 nodeOutcome = null,
                 typedAnswer = "",
+                isPlayingNodeAudio = false,
                 gradedCount = it.gradedCount + 1,
                 phase = if (next >= it.nodeCards.size) ReviewPhase.DONE else ReviewPhase.SESSION,
             )
