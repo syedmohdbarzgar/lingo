@@ -357,6 +357,8 @@ class ReviewViewModelTest {
 
         val exercise = vm.state.value.currentNodeCard!!.exercise as Exercise.MultipleChoice
         vm.onEvent(ReviewEvent.SelectNodeOption(exercise.correctIndex))
+        // The word card's own grade is a transaction too; the card's write is the next one.
+        val writesBefore = h.progress.transactions
         vm.onEvent(ReviewEvent.SubmitNode)
 
         assertTrue("an answer is graded, not self-assessed", vm.state.value.nodeOutcome!!.correct)
@@ -373,6 +375,16 @@ class ReviewViewModelTest {
         assertTrue(
             "the day's claim is taken, so repeating the answer is not new evidence",
             h.progress.claimed.containsKey(exercise.id),
+        )
+        assertEquals(
+            "the evidence names the node the card was asked for, not every node of its type",
+            listOf("grammar.test"),
+            h.knowledge.recordedTargets,
+        )
+        assertEquals(
+            "claim, node and meter are written as one transaction (P1 #3)",
+            writesBefore + 1,
+            h.progress.transactions,
         )
 
         vm.onEvent(ReviewEvent.NextNode)

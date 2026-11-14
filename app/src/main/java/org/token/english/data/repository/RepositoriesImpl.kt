@@ -107,10 +107,22 @@ class KnowledgeRepositoryImpl(
         format: ExerciseFormat,
         correct: Boolean,
         now: Long,
+        targetItemId: String?,
     ) {
         // The caller has already claimed this exercise for the day; anything written
         // here is new evidence by construction (see ProgressRepository.claimAnswer).
-        KnowledgeEvidence.itemsFor(itemsForLesson(lessonId), skill).forEach { item ->
+        val items = itemsForLesson(lessonId)
+        // A card that names the node it asks is evidence about that node only: the
+        // broad `itemsFor` rule credits every node of the answer's type, which is right
+        // for a lesson step and is the over-credit P1 #2 reported for a review card (a
+        // lesson with two vocabulary nodes moved both). A target that is not one of the
+        // lesson's nodes writes nothing: the graph stays out of a claim it cannot place.
+        val credited = if (targetItemId == null) {
+            KnowledgeEvidence.itemsFor(items, skill)
+        } else {
+            items.filter { it.id == targetItemId }
+        }
+        credited.forEach { item ->
             knowledgeDao.updateAtomic(item.id) { existing ->
                 engine.applyAttempt(item.id, existing?.toDomain(), correct, now, format).toEntity()
             }

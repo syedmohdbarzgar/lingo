@@ -371,6 +371,15 @@ class ReviewViewModel(
      * itself and the skill meter move exactly as they would for the same answer inside
      * the lesson — a card is recall and may never set a format bit, an exercise is
      * transfer and does.
+     *
+     * Two things this path owes the graph, both P1 items of the review:
+     *
+     * - **the node it was asked for.** `targetItemId = card.itemId` credits that node
+     *   only; without it the lesson-wide rule credited every node of the answer's type,
+     *   so a due node's card could raise an unrelated sibling of the same lesson.
+     * - **one transaction.** The day's claim, the node's state and the skill meter commit
+     *   together or not at all; written separately, a crash between them left a claimed
+     *   question with no evidence, or evidence for an answer the claim refused.
      */
     private fun submitNodeCard() {
         val s = _state.value
@@ -389,7 +398,15 @@ class ReviewViewModel(
         viewModelScope.launch {
             try {
                 runCatchingCancellable {
-                    submitExercise(exercise, outcome, now, source = "review-node-card")
+                    progressRepository.inTransaction {
+                        submitExercise(
+                            exercise = exercise,
+                            outcome = outcome,
+                            now = now,
+                            source = "review-node-card",
+                            targetItemId = card.itemId,
+                        )
+                    }
                 }.onFailure { error ->
                     // The verdict stands; only its evidence is missing, and the next
                     // attempt with the same item can still claim the day.

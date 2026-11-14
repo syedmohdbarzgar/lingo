@@ -412,15 +412,20 @@ class FakeKnowledgeRepository(
         return itemsFlow.value
     }
 
+    /** The node each answer was asked for (null = a lesson answer's broad credit). */
+    val recordedTargets = mutableListOf<String?>()
+
     override suspend fun recordAttempt(
         lessonId: String,
         skill: Skill,
         format: ExerciseFormat,
         correct: Boolean,
         now: Long,
+        targetItemId: String?,
     ) {
         recorded += lessonId to correct
         recordedSkills += skill to format
+        recordedTargets += targetItemId
     }
 
     /** Review grades that reached the graph: (lesson, skill, correct). */

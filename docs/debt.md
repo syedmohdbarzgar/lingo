@@ -23,7 +23,14 @@
   confirmed in: the gate needs two shapes, so a third question would spend the session on work the
   drill exists for, and a node whose mask is already complete is asked one authored question rather
   than none (its schedule still owes it a touch). The focused drill (the node's whole evidence
-  block) stays the deeper path and still one tap away on the summary. **Typed, tapped and heard**: a `listening` item is asked now that the card can
+  block) stays the deeper path and still one tap away on the summary. Attribution is now split by
+  surface (node-evidence pass): a review card names the node it was asked for (`targetItemId`) and
+  credits only that one, while a lesson answer — including every question a remediation drill asks —
+  keeps the lesson-wide `KnowledgeEvidence.itemsFor` credit, because a step in the lesson really
+  does test the lesson's grammar as well as one node. `RemediationEngine.evidenceCovers()` uses that
+  same broad mapping, and there it is a *selection* rule (is this exercise about the node I am
+  remediating?), not a credit one: the two agreeing is what keeps the drill's questions relevant,
+  and the credit stays the lesson's. **Typed, tapped and heard**: a `listening` item is asked now that the card can
   play its line (listening-card pass) and is answered by typing the transcript, with the lesson's own
   transcript fallback when the device has no English voice; a `speaking` item still stays in the
   lesson and the drill, because a take needs the microphone and a verdict the card does not have. A

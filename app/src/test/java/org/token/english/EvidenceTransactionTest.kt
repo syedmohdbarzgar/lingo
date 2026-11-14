@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -24,6 +25,8 @@ import org.token.english.data.repository.ReviewRepositoryImpl
 import org.token.english.domain.engine.DefaultMasteryEngine
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.engine.SpeakingVerdict
+import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
@@ -32,6 +35,7 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.usecase.RecordConversationTurnUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 
 /**
@@ -203,6 +207,120 @@ class EvidenceTransactionTest {
         assertTrue("the card moved into the future", after.dueAt > now)
         assertEquals(1, reviews.getAttempts(card.contentId).size)
         assertTrue(progress.observeMastery().first().containsKey(Skill.VOCABULARY))
+    }
+
+    /**
+     * Two vocabulary nodes in one lesson — the shape P1 #2 was reported on: the broad
+     * rule credits both, a node card must credit the one it asked about.
+     */
+    private suspend fun seedTwoVocabularyNodes() {
+        db.contentDao().insertKnowledgeItems(
+            listOf("vocab.tx.1", "vocab.tx.2").map { id ->
+                KnowledgeItemEntity(
+                    id = id,
+                    type = "VOCABULARY",
+                    title = "Everyday words",
+                    titleFa = "واژه‌های روزمره",
+                    level = "A1",
+                    prerequisitesJson = "[]",
+                    lessonIdsJson = "[\"$wordLesson\"]",
+                    skillsJson = "[\"VOCABULARY\"]",
+                    wordsJson = "[]",
+                )
+            },
+        )
+    }
+
+    private fun nodeCardExercise() = Exercise.FillBlank(
+        id = "$wordLesson.ex.01",
+        lessonId = wordLesson,
+        sentence = "I ______ here.",
+        accepted = listOf("live"),
+        skill = Skill.VOCABULARY,
+    )
+
+    @Test
+    fun `a node card credits the node it was asked for and not its sibling`() = runBlocking {
+        seedTwoVocabularyNodes()
+
+        knowledge.recordAttempt(
+            lessonId = wordLesson,
+            skill = Skill.VOCABULARY,
+            format = ExerciseFormat.FILL_BLANK,
+            correct = true,
+            now = now,
+            targetItemId = "vocab.tx.2",
+        )
+
+        assertNotNull("the node the learner was reviewing moved", knowledge.getState("vocab.tx.2"))
+        assertNull("its sibling, which the card never asked about, did not", knowledge.getState("vocab.tx.1"))
+    }
+
+    @Test
+    fun `a lesson answer still credits every node of its type`() = runBlocking {
+        seedTwoVocabularyNodes()
+
+        // No target: a translation really does test the lesson's words, so the broad rule
+        // stays for lesson steps. Only the card is narrowed.
+        knowledge.recordAttempt(
+            lessonId = wordLesson,
+            skill = Skill.VOCABULARY,
+            format = ExerciseFormat.FILL_BLANK,
+            correct = true,
+            now = now,
+        )
+
+        assertNotNull(knowledge.getState("vocab.tx.1"))
+        assertNotNull(knowledge.getState("vocab.tx.2"))
+    }
+
+    @Test
+    fun `a node card's claim, node and meter roll back together`() = runBlocking {
+        seedTwoVocabularyNodes()
+        val exercise = nodeCardExercise()
+        val crashing = SubmitExerciseUseCase(CrashingOnMeter(progress), knowledge)
+
+        val died = runCatching {
+            progress.inTransaction {
+                crashing(
+                    exercise = exercise,
+                    outcome = crashing.grade(exercise, "live"),
+                    now = now,
+                    source = "review-node-card",
+                    targetItemId = "vocab.tx.2",
+                )
+            }
+        }
+
+        assertTrue("the failed write reaches the caller", died.isFailure)
+        assertTrue(
+            "the day's claim is free again — the answer was not half-recorded",
+            progress.claimAnswer(wordLesson, exercise.id, true, now),
+        )
+        assertNull("and no node evidence survived", knowledge.getState("vocab.tx.2"))
+    }
+
+    @Test
+    fun `a committed node card writes the claim, the node and the meter together`() = runBlocking {
+        seedTwoVocabularyNodes()
+        val exercise = nodeCardExercise()
+        val submit = SubmitExerciseUseCase(progress, knowledge)
+
+        submit(
+            exercise = exercise,
+            outcome = submit.grade(exercise, "live"),
+            now = now,
+            source = "review-node-card",
+            targetItemId = "vocab.tx.2",
+        )
+
+        assertFalse("the claim is spent", progress.claimAnswer(wordLesson, exercise.id, true, now))
+        assertNotNull(knowledge.getState("vocab.tx.2"))
+        assertNull("and only the asked-for node moved", knowledge.getState("vocab.tx.1"))
+        assertTrue(
+            "the meter moved with them",
+            progress.observeMastery().first().containsKey(Skill.VOCABULARY),
+        )
     }
 
     /** The authored vocabulary node a reviewed word is evidence about. */

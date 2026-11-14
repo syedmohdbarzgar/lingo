@@ -122,12 +122,18 @@ class SubmitExerciseUseCase(
      * @param source which surface asked the question, recorded with the skill meter —
      *   a review card that carries an exercise is not a lesson answer, and the history
      *   should be able to say so.
+     * @param targetItemId the due node a review card was asked for, or null for a lesson
+     *   answer. It is forwarded to [KnowledgeRepository.recordAttempt], where a targeted
+     *   write credits exactly that node — the card is one question asked on behalf of one
+     *   node, so the lesson-wide rule that credits every node of the answer's type would
+     *   also move a sibling the learner was not reviewing (P1 #2).
      */
     suspend operator fun invoke(
         exercise: Exercise,
         outcome: ExerciseOutcome,
         now: Long,
         source: String = "lesson",
+        targetItemId: String? = null,
     ): ExerciseOutcome {
         val correct = outcome.correct
         val skill = outcome.skill
@@ -148,6 +154,7 @@ class SubmitExerciseUseCase(
                 format = format,
                 correct = correct,
                 now = now,
+                targetItemId = targetItemId,
             )
             progress.applyAttempt(skill, correct, source = source)
             // A written sentence is writing evidence *as well as* evidence about what
@@ -722,10 +729,14 @@ class GetDueNodeCardsUseCase(
         // A lesson's exercises are read once, even when two due nodes share it.
         val loaded = mutableMapOf<String, List<Exercise>>()
         val cards = mutableListOf<NodeExerciseCard>()
+        // One question, one card: two due nodes of one lesson can name the same exercise
+        // (their evidence blocks overlap), and the day's claim accepts one answer per
+        // exercise, so a second card would ask a question whose answer writes nothing.
+        val asked = mutableSetOf<String>()
         for (review in reviews) {
             val exercises = loaded[review.lessonId]
                 ?: lessons.getExercises(review.lessonId).also { loaded[review.lessonId] = it }
-            val pool = exercises.filter { it.id in review.exerciseIds }
+            val pool = exercises.filter { it.id in review.exerciseIds && it.id !in asked }
             val confirmed = knowledge.getState(review.itemId)?.distinctTypesCorrect ?: 0
             // One entry per question the node's block asks (one per missing shape, at
             // most two). A node with nothing askable contributes none: the drill still
@@ -734,6 +745,7 @@ class GetDueNodeCardsUseCase(
                 // Shown in the deterministic per-question order the lesson uses, so the
                 // answer's position never leaks and the same card always looks the same.
                 val shown = if (picked is Exercise.MultipleChoice) picked.shuffledForDisplay() else picked
+                asked += picked.id
                 cards += NodeExerciseCard(
                     itemId = review.itemId,
                     titleFa = review.titleFa,

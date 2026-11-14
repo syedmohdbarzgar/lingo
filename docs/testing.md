@@ -3,6 +3,20 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **A node card's evidence names its node (node-evidence pass)** is pinned in `EvidenceTransactionTest`
+  (four cases on real Room), `NodeCardTest` (one) and `ReviewViewModelTest` (assertions inside the
+  existing session case). The rules: a targeted write credits `targetItemId` and nothing else (two
+  vocabulary nodes in one lesson, only the asked-for one moves); a null target keeps the lesson-wide
+  credit (both nodes move), which is right for a lesson step and wrong for a card; a failing meter
+  rolls back the day's claim and the node together, proven by re-claiming the same exercise
+  afterwards; and a committed card spends the claim, moves the node and writes the meter. The
+  ViewModel half: the card passes `card.itemId` as the target and opens exactly one transaction
+  beyond the word card's own. `NodeCardTest` also pins that two due nodes of one lesson never
+  receive the same question — the claim accepts one answer per exercise, so a duplicate card could
+  not count. What is not covered: `RemediationEngine.evidenceCovers()`'s own use of the broad
+  `KnowledgeEvidence.itemsFor` mapping (unchanged; it decides which lessons a remediation offers, not
+  which node one answer credits).
+
 - **A reset take cannot open the microphone (take-cancellation pass)** is pinned in
   `TakeWindowTest` (ten cases, two of them new). The rule: `TakeWindow.mayOpenMic` answers from
   *three* facts — the take is still active, it is the one this window tracks, and the screen epoch it
@@ -151,8 +165,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 853 tests / 89 classes as of
-  the take-cancellation pass (the bullet above); before it the recent-misses pass, where Progress
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 858 tests / 89 classes as of
+  the node-evidence pass (the bullet above); before it the take-cancellation pass, where a reset
+  take stopped being able to open the microphone; before it the recent-misses pass, where Progress
   began listing the questions behind the mix; before it the listening-card pass, where a due node's
   listening question could be heard in the session; before it the block pass, where a node's card block
   became up to two questions; before it the speech-pace pass, where the rate the app speaks

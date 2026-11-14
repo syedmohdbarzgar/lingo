@@ -162,7 +162,23 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (853 tests / 89 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (858 tests / 89 classes as of the
+node-evidence pass, which closed P1 #2 and #3 of the review: a due node's card now credits **the node
+it was asked for**. `KnowledgeRepository.recordAttempt` takes a `targetItemId`; a targeted write credits
+exactly that node (`items.filter { it.id == target }`, no `KnowledgeEvidence.itemsFor` union), while a
+null target keeps the lesson-wide rule that a translation really does test the lesson's grammar. A
+target the lesson does not teach writes nothing rather than guessing between siblings.
+`SubmitExerciseUseCase` forwards it, `ReviewViewModel.submitNodeCard` passes `card.itemId`, and the
+claim + node + meter are wrapped in `progressRepository.inTransaction` (the lesson's own pattern),
+so a crash between them leaves neither a spent day-claim nor evidence for an answer the claim would
+refuse — the verdict still shows, because it is formed before the write. `GetDueNodeCardsUseCase`
+also tracks the exercise ids it has already asked, because two due nodes of one lesson name
+overlapping evidence and the day's claim accepts one answer per exercise: a shared question is asked
+once instead of appearing as two cards that cannot both count. Tests: one `NodeCardTest` case (two
+due nodes never receive the same question), the existing `ReviewViewModelTest` card case now asserts
+the target and the single transaction, and four `EvidenceTransactionTest` cases on real Room (a card
+credits only its node, a lesson answer still credits every node of its type, a failed meter rolls the
+claim and the node back, and a committed card writes all three); before it the
 take-cancellation pass, which closed the residual race P0 #1 named: `TakeWindow.mayOpenMic` now
 refuses a take whose **screen epoch** changed, not only one the learner ended or a newer take
 replaced — `active` survives a `SpeechBus.reset()` (nothing tells the window to end a take the

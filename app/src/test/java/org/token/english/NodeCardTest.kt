@@ -174,6 +174,37 @@ class NodeCardTest {
         return this
     }
 
+    /** Two due nodes of one lesson whose evidence blocks overlap on `ex.01`. */
+    private fun Harness.withTwoDueNodes(exercises: List<Exercise>): Harness {
+        fun node(id: String) = KnowledgeItem(
+            id = id,
+            type = KnowledgeType.GRAMMAR,
+            title = id,
+            titleFa = "«$id»",
+            level = LearningLevel.A2,
+            prerequisites = emptyList(),
+            lessonIds = listOf(lessonId),
+            skills = listOf(Skill.GRAMMAR),
+        )
+        fun state(id: String) = KnowledgeState(
+            itemId = id,
+            mastery = 0.7f,
+            exposureCount = 2,
+            consecutiveCorrect = 1,
+            consecutiveIncorrect = 0,
+            intervalDays = 0,
+            easeFactor = 2.5f,
+            repetitions = 1,
+            lapses = 0,
+            lastReviewedAt = 0L,
+            nextReviewAt = 0L,
+        )
+        knowledge.itemsFlow.value = listOf(node("grammar.one"), node("grammar.two"))
+        knowledge.statesFlow.value = listOf(state("grammar.one"), state("grammar.two"))
+        lessons.exercises[lessonId] = exercises
+        return this
+    }
+
     private class Harness {
         val knowledge = FakeKnowledgeRepository()
         val lessons = FakeLessonRepository()
@@ -196,6 +227,25 @@ class NodeCardTest {
             "every card belongs to the node whose schedule is due, in its own lesson",
             cards.all { it.itemId == "grammar.airport" && it.lessonId == lessonId },
         )
+    }
+
+    @Test
+    fun `two due nodes never receive the same question`() {
+        // P1 #2: two nodes of one lesson name overlapping evidence, and the day's claim
+        // accepts one answer per exercise — so the same question asked twice would be a
+        // card whose second answer writes nothing at all.
+        val h = Harness().withTwoDueNodes(
+            exercises = listOf(mc("ex.01"), blank("ex.02"), translation("ex.03")),
+        )
+
+        val cards = h.cards()
+
+        assertEquals(
+            "every card is a different question, and every question is asked once",
+            cards.size,
+            cards.map { it.exercise.id }.toSet().size,
+        )
+        assertEquals("both nodes still get their block", 3, cards.size)
     }
 
     @Test

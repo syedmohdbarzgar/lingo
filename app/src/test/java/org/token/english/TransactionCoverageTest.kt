@@ -63,7 +63,9 @@ class TransactionCoverageTest {
      * `LessonViewModelTest` pins that (`transactions == 1`).
      */
     private val wrappedByCaller = mapOf(
-        "SubmitExerciseUseCase" to "LessonViewModel.submit wraps it with the answer history",
+        "SubmitExerciseUseCase" to
+            "LessonViewModel.submit wraps it with the answer history, and ReviewViewModel's " +
+            "node card wraps it as the claim + node + meter of one answer (P1 #3)",
     )
 
     /** Tests run from the module dir (`app/`) or the repo root — accept both. */

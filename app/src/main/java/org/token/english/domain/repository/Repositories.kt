@@ -166,6 +166,15 @@ interface KnowledgeRepository {
      * exercise for the day first ([ProgressRepository.claimAnswer]) and only writes
      * what it claimed. Splitting it that way keeps one rule for every caller, and the
      * rule lives where the exercise id is known.
+     *
+     * @param targetItemId the one node this answer was asked **for** (a review card
+     *   serving a due node), or null for a lesson answer, which credits the lesson's
+     *   nodes of the answer's type. A targeted write moves exactly that node and
+     *   nothing else: the broad rule is right for a lesson step (a translation really
+     *   does test the lesson's grammar) and wrong for one question asked on behalf of
+     *   one node, where it would also move an unrelated sibling the learner was not
+     *   reviewing. A target the lesson does not teach writes nothing at all — guessing
+     *   between nodes is the bug this parameter exists to remove.
      */
     suspend fun recordAttempt(
         lessonId: String,
@@ -173,6 +182,7 @@ interface KnowledgeRepository {
         format: ExerciseFormat,
         correct: Boolean,
         now: Long,
+        targetItemId: String? = null,
     )
 
     /**

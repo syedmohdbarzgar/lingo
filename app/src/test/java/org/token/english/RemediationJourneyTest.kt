@@ -102,6 +102,7 @@ class RemediationJourneyTest {
             format: ExerciseFormat,
             correct: Boolean,
             now: Long,
+            targetItemId: String?,
         ) = fold(lessonId, skill, correct, now, format)
 
         override suspend fun recordRecall(
