@@ -88,6 +88,8 @@ re-assert LTR, because the root layout is forced RTL.
   format instead of only recalling a word.
 - **Listening** — read aloud by the on-device Android TTS engine. No audio files, no network.
 - **Vocabulary browser** — search with escaped `LIKE` patterns.
+- **Recent mistakes** — Progress lists the questions answered wrong recently (one row per question,
+  newest first, with the right answer and how often), each opening the lesson it came from.
 - **Progress** — three independent skill tracks (Grammar, Vocabulary, Reading), each with its
   mastery, the evidence behind it and a status; plus streaks, review accuracy, knowledge-node
   coverage, and an error taxonomy that reads the recent answers and says what the misses were
@@ -405,7 +407,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-844 unit tests across 88 classes. The pure cores carry the most weight — review scheduling,
+851 unit tests across 89 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -535,7 +537,9 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 - Finish the error taxonomy. The classification shipped: `MissTaxonomy` labels every recent lesson
   answer by the skill its exercise is authored for (vocabulary, grammar, comprehension, production)
   and every review card by its content type (vocabulary or grammar — a card knows nothing finer),
-  and Progress shows the pooled mix and the category carrying the most misses. **The mix now steers**
+  and Progress shows the pooled mix, the category carrying the most misses, and — under it — the
+  **questions themselves** (one row per question, newest first, with the right answer and how often
+  it went wrong), each opening the lesson it came from. **The mix now steers**
   both places that decide what to do next: the day's plan orders within one priority by the weakest
   category and names the gap, and the review screen's due list breaks ties the same way (equally
   overdue nodes, weakest first). Difficulty is now authored too (v66): every exercise carries a

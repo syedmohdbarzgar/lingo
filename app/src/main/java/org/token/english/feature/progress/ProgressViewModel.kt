@@ -12,6 +12,7 @@ import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.LessonMastery
 import org.token.english.domain.engine.MissProfile
+import org.token.english.domain.engine.RecentMiss
 import org.token.english.domain.engine.SkillProfile
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
@@ -24,6 +25,7 @@ import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.usecase.GetMissProfileUseCase
+import org.token.english.domain.usecase.GetRecentMissesUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 
 data class ProgressUiState(
@@ -54,6 +56,11 @@ data class ProgressUiState(
      * insight is an addition to the screen, never a reason to blank it.
      */
     val missProfile: MissProfile? = null,
+    /**
+     * The questions behind that mix (recent-misses pass): newest first, one row per
+     * question, empty when nothing was missed in the window or the read failed.
+     */
+    val recentMisses: List<RecentMiss> = emptyList(),
     /** A read threw — the screen says so instead of leaving the spinner up. */
     val loadFailed: Boolean = false,
 )
@@ -66,6 +73,7 @@ class ProgressViewModel(
     private val knowledgeRepository: KnowledgeRepository,
     private val getSkillProfiles: GetSkillProfilesUseCase,
     private val getMissProfile: GetMissProfileUseCase,
+    private val getRecentMisses: GetRecentMissesUseCase,
     private val studyStats: StateFlow<StudyStats>,
 ) : ViewModel() {
 
@@ -76,6 +84,7 @@ class ProgressViewModel(
     private var level: LearningLevel = LearningLevel.A1
     private var profiles: List<SkillProfile> = emptyList()
     private var missProfile: MissProfile? = null
+    private var recentMisses: List<RecentMiss> = emptyList()
     private var knowledgeStates: List<KnowledgeState> = emptyList()
     private var knowledgeTitles: Map<String, String> = emptyMap()
     private var knowledgeTotal: Int = 0
@@ -188,6 +197,13 @@ class ProgressViewModel(
                 android.util.Log.w("ProgressViewModel", "miss profile read failed", error)
                 missProfile
             }
+            // The items behind the mix: same log, same window, contained the same way. A
+            // list that cannot be read is one card fewer, never an error screen over the
+            // counts and tracks that did load.
+            recentMisses = runCatchingCancellable { getRecentMisses() }.getOrElse { error ->
+                android.util.Log.w("ProgressViewModel", "recent misses read failed", error)
+                recentMisses
+            }
             rebuild()
         }
     }
@@ -218,6 +234,7 @@ class ProgressViewModel(
             knowledgeTotal = knowledgeTotal,
             weakestKnowledge = weakest,
             missProfile = missProfile,
+            recentMisses = recentMisses,
             loadFailed = _state.value.loadFailed,
         )
     }

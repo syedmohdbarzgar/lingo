@@ -20,6 +20,7 @@ import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.LessonAttempt
@@ -28,6 +29,7 @@ import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.Skill
 import org.token.english.domain.engine.MissCategory
 import org.token.english.domain.usecase.GetMissProfileUseCase
+import org.token.english.domain.usecase.GetRecentMissesUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.feature.progress.ProgressViewModel
 
@@ -87,6 +89,7 @@ class ProgressViewModelTest {
         answers: List<LessonAttempt> = emptyList(),
         exercises: Map<String, List<Exercise>> = emptyMap(),
         cards: List<GradedCard> = emptyList(),
+        catalog: List<Lesson> = emptyList(),
     ): ProgressViewModel {
         val knowledge = FakeKnowledgeRepository(items).apply { statesFlow.value = states }
         val progress = FakeProgressRepository().apply { masteryFlow.value = mastery }
@@ -94,7 +97,7 @@ class ProgressViewModelTest {
             attemptStats = reviewStats
             gradedCards += cards
         }
-        val lessonsRepo = FakeLessonRepository().apply {
+        val lessonsRepo = FakeLessonRepository(lessons = catalog).apply {
             statesFlow.value = lessons
             attemptsLog += answers
             exercises.forEach { (lessonId, list) -> this.exercises[lessonId] = list }
@@ -106,8 +109,63 @@ class ProgressViewModelTest {
             knowledgeRepository = knowledge,
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, reviews),
             getMissProfile = GetMissProfileUseCase(lessonsRepo, reviews),
+            getRecentMisses = GetRecentMissesUseCase(lessonsRepo),
             studyStats = progress.statsFlow,
         )
+    }
+
+    @Test
+    fun `the questions behind the mix reach the screen, newest first`() = runTest {
+        // recent-misses pass: «ضعف اخیر: گرامر» is a category; this is the question.
+        val exercise = Exercise.FillBlank(
+            id = "l.g1.ex.01",
+            lessonId = "l.g1",
+            sentence = "I ______ here.",
+            accepted = listOf("live"),
+            skill = Skill.GRAMMAR,
+        )
+        val vm = viewModel(
+            items = listOf(node("g1", Skill.GRAMMAR)),
+            states = emptyList(),
+            catalog = listOf(
+                Lesson(
+                    id = "l.g1",
+                    level = LearningLevel.A1,
+                    title = "Present simple",
+                    titleFa = "حال ساده",
+                    topic = "grammar",
+                    estimatedMinutes = 5,
+                    order = 1,
+                ),
+            ),
+            answers = listOf(
+                LessonAttempt(
+                    lessonId = "l.g1",
+                    stageId = "practice",
+                    exerciseId = exercise.id,
+                    answer = "lived",
+                    correct = false,
+                    at = 1_000L,
+                ),
+            ),
+            exercises = mapOf("l.g1" to listOf(exercise)),
+        )
+
+        val miss = vm.state.value.recentMisses.single()
+        assertEquals(exercise.id, miss.exerciseId)
+        assertEquals("the row names the lesson the learner studied", "حال ساده", miss.lessonTitleFa)
+        assertEquals("and the authored answer, not the typed one", "live", miss.answer)
+        assertEquals(MissCategory.GRAMMAR, miss.category)
+        assertEquals(1, miss.misses)
+    }
+
+    @Test
+    fun `an empty miss log leaves no list rather than an empty card`() = runTest {
+        val vm = viewModel(items = emptyList(), states = emptyList())
+
+        // The screen renders the card only when this is non-empty; an empty list is the
+        // signal, so it must not become a placeholder row.
+        assertTrue(vm.state.value.recentMisses.isEmpty())
     }
 
     @Test

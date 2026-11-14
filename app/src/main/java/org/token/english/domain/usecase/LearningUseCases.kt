@@ -13,6 +13,7 @@ import org.token.english.domain.engine.KnowledgeGates
 import org.token.english.domain.engine.LearningPlanner
 import org.token.english.domain.engine.PrerequisiteEngine
 import org.token.english.domain.engine.RemediationEngine
+import org.token.english.domain.engine.RecentMisses
 import org.token.english.domain.engine.STRONG_MASTERY
 import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.engine.MissCategory
@@ -20,6 +21,7 @@ import org.token.english.domain.engine.MissProfile
 import org.token.english.domain.engine.MissTaxonomy
 import org.token.english.domain.engine.NodeCardPicker
 import org.token.english.domain.engine.PlacementAnswer
+import org.token.english.domain.engine.RecentMiss
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
 import org.token.english.domain.engine.ReviewScheduler
@@ -896,6 +898,50 @@ class GetMissProfileUseCase(
         val pooled = MissTaxonomy.classify(attempts, byId) + MissTaxonomy.classify(cards)
         // Newest-first over the merged set, so the window is one window and not two.
         return MissTaxonomy.profile(pooled.sortedByDescending { it.at }.take(window))
+    }
+
+    private companion object {
+        const val MAX_CACHED_LESSONS = 64
+    }
+}
+
+/**
+ * The questions behind the miss mix (recent-misses pass).
+ *
+ * The profile answers "what kind of knowing fails"; this answers "which questions". Same
+ * log, same window ([MissTaxonomy.WINDOW]), no new write — `lesson_attempt` has held the
+ * exercise, the verdict and the time of every answer since v9. Nothing is recorded for
+ * this screen, and no second index is needed: the window is the bounded scan the profile
+ * already pays for.
+ *
+ * Exercises are cached per lesson for the process, as the profile and the difficulty
+ * audit do; a lesson title is read only for a row that survives the cut, so a window of
+ * forty answers costs a handful of small reads rather than forty.
+ */
+class GetRecentMissesUseCase(
+    private val lessons: LessonRepository,
+) {
+    private val exercisesByLesson = mutableMapOf<String, Map<String, Exercise>>()
+
+    suspend operator fun invoke(limit: Int = RecentMisses.DEFAULT_LIMIT): List<RecentMiss> {
+        val attempts = lessons.recentAttempts(MissTaxonomy.WINDOW)
+        if (attempts.isEmpty()) return emptyList()
+        if (exercisesByLesson.size > MAX_CACHED_LESSONS) exercisesByLesson.clear()
+        // Only the lessons that actually hold a miss: a hit needs no row, and reading the
+        // exercises of every lesson in the window would be work with no output.
+        val missedLessons = attempts.filter { !it.correct }.map { it.lessonId }.distinct()
+        val exercises = mutableMapOf<String, Exercise>()
+        val titles = mutableMapOf<String, String>()
+        for (lessonId in missedLessons) {
+            val loaded = exercisesByLesson[lessonId]
+                ?: lessons.getExercises(lessonId).associateBy { it.id }
+                    .also { exercisesByLesson[lessonId] = it }
+            exercises += loaded
+            // A lesson the bundle no longer ships has no title either, which is how the
+            // engine learns to drop its rows instead of naming a lesson nobody can open.
+            lessons.getLesson(lessonId)?.let { titles[lessonId] = it.titleFa }
+        }
+        return RecentMisses.of(attempts = attempts, exercises = exercises, titles = titles, limit = limit)
     }
 
     private companion object {

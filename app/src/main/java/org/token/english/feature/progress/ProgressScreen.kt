@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,6 +32,7 @@ import org.token.english.core.common.persianPercent
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
+import org.token.english.core.designsystem.component.EnglishText
 import org.token.english.core.designsystem.component.LevelHeroCard
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.SkillProgressBar
@@ -41,7 +43,7 @@ import org.token.english.domain.engine.MissTaxonomy
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProgressScreen() {
+fun ProgressScreen(onOpenLesson: (String) -> Unit) {
     val vm: ProgressViewModel = viewModel(factory = progressViewModelFactory())
     val state by vm.state.collectAsStateWithLifecycle()
 
@@ -221,6 +223,51 @@ fun ProgressScreen() {
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
+                        }
+                    }
+                }
+
+                // The questions behind the mix (recent-misses pass): the same window and
+                // the same category mapping, one row per question — «ضعف در گرامر» becomes
+                // something to open rather than a sentence to nod at. Hidden when the
+                // window holds no miss: an empty card would be a list of nothing.
+                if (state.recentMisses.isNotEmpty()) {
+                    AppCard {
+                        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.compact)) {
+                            SectionHeader("اشتباه‌های اخیر")
+                            Text(
+                                text = "این پرسش‌ها را اخیراً نادرست زده‌ای؛ پاسخ درستشان روبه‌رویشان است.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            state.recentMisses.forEach { miss ->
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Column(
+                                        modifier = Modifier.weight(1f),
+                                        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs),
+                                    ) {
+                                        Text(
+                                            text = miss.lessonTitleFa + " · " +
+                                                missCategoryLabel(miss.category) +
+                                                if (miss.misses > 1) " · ${persianMeasure(miss.misses, "بار")}" else "",
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        // The authored answer, always the English side.
+                                        EnglishText(
+                                            text = miss.answer,
+                                            style = MaterialTheme.typography.bodyLarge,
+                                        )
+                                    }
+                                    TextButton(onClick = { onOpenLesson(miss.lessonId) }) {
+                                        Text("تمرین")
+                                    }
+                                }
+                            }
                         }
                     }
                 }

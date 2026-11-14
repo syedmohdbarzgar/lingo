@@ -439,7 +439,11 @@ private fun NavGraphBuilder.conversation(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.progress(navController: NavHostController) {
-    composable(Routes.PROGRESS) { ProgressScreen() }
+    composable(Routes.PROGRESS) {
+        // A recent miss opens the lesson it came from: the row already says what was
+        // wrong, and the drill on Progress' own card is where it gets fixed.
+        ProgressScreen(onOpenLesson = { lessonId -> navController.navigate(Routes.lesson(lessonId)) })
+    }
 }
 
 private fun NavGraphBuilder.settings(navController: NavHostController) {

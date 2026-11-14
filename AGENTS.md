@@ -162,7 +162,22 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (844 tests / 88 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (851 tests / 89 classes as of the
+recent-misses pass, where the miss mix stopped being only categories: Progress now lists the
+**questions** behind it. `RecentMisses` (pure) folds the same window
+(`MissTaxonomy.WINDOW`) into at most `DEFAULT_LIMIT` = 6 rows — one per question, newest first,
+carrying the lesson's authored Persian title, the taxonomy's own category
+(`categoryOf(skillOf(...))`, never a second mapping), the authored answer
+(`AnswerChecker.correctAnswerText`, always the English side so a row renders LTR) and how many
+times that question went wrong — and drops what the bundle can no longer name (a question or a
+lesson that is gone cannot be shown honestly). `GetRecentMissesUseCase` reads the log once, caches
+exercises per lesson like the profile does, and reads a lesson title only for a lesson that holds a
+miss. Nothing new is written and no index is added: this is the taxonomy's bounded scan. The UI is
+one card on Progress above «گراف دانش», rendered only when the list is non-empty, each row with
+«تمرین» opening that lesson (`Routes.lesson`); a failed read is contained exactly like the
+profile's, so the counts and tracks still render. Five `RecentMissesTest` cases pin the engine and
+two `ProgressViewModelTest` cases the screen (the row reaches the state with the authored answer
+and category, and an empty log yields no list rather than a placeholder); before it the
 listening-card pass, where a due node's question could finally be **heard**: `listening` joined
 `NodeCardPicker.ASKABLE_FORMATS`, the review card draws the lesson's own `ListeningCard` (which
 moved from `feature/lesson` to `core/designsystem/component/ExerciseSurface.kt` for exactly the

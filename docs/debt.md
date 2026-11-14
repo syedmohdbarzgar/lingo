@@ -3,6 +3,19 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
+- **The recent-misses list is questions only, six of them, and it opens a lesson rather than a
+  question (recent-misses pass).** Progress now lists the items behind the mix — one row per
+  question, newest first, with the authored answer and the number of misses — but three limits are
+  deliberate. **Review cards are absent**: a card carries no exercise, so its row would be a word
+  rather than a question, and the mix already counts cards by content type; giving them a row would
+  need the card type that carries an exercise, which the log still does not have (see the taxonomy
+  entry below). **The window is the taxonomy's 200 answers**, not the archive: «recent» is the
+  point, and reading the whole log for six rows would want an index on `lesson_attempt.at` that
+  nothing else needs. **The action opens the lesson** (`Routes.lesson`), not the question: the
+  eight-step flow deliberately has no route that starts a lesson on an arbitrary exercise, and a
+  lesson reopened on its own stage is where the same question is asked again anyway. When that
+  route ever exists, the row's button is one line to change.
+
 - **A node's card block is at most two questions, and the session is words-then-graph
   (graph-card pass, block pass).** The review session asks a due curriculum node its own exercises,
   which is what lets review practice confirm an exercise format at last — but the block is

@@ -3,6 +3,17 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **The questions behind the miss mix (recent-misses pass)** is pinned in `RecentMissesTest` (five
+  cases) and `ProgressViewModelTest` (two). The engine: only misses reach the list (a later correct
+  answer does not erase the row), a question missed three times is **one** row carrying `misses = 3`
+  at its newest time, the list stops at its limit with the newest kept, a question or a lesson the
+  bundle no longer ships is dropped rather than shown as an id nobody can recognise, and the row
+  takes the taxonomy's category and the authored answer (`live` for a blank, the spoken line for a
+  listening item). The screen: the row reaches the state with its lesson's Persian title, and an
+  empty log yields an empty list — never a placeholder row — because the card is hidden when it is
+  empty. What is not covered: the row's «تمرین» navigation (a `NavHost` callback, like every other
+  screen's) and the card's look.
+
 - **A due node's listening question (listening-card pass)** is pinned in `NodeCardTest` (two of its
   cases) and `ReviewViewModelTest` (one). The picker: a `listening` item is askable — the review card
   plays its audio — and a node whose mask already holds choice and blank but not the sound is served
@@ -128,8 +139,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 844 tests / 88 classes as of
-  the listening-card pass (the bullet above); before it the block pass, where a node's card block
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 851 tests / 89 classes as of
+  the recent-misses pass (the bullet above); before it the listening-card pass, where a due node's
+  listening question could be heard in the session; before it the block pass, where a node's card block
   became up to two questions; before it the speech-pace pass, where the rate the app speaks
   at became a setting; before it the graph-card pass, where a due node's own exercise became a card
   of the session; before it the word-ownership pass (bundle v82), where a

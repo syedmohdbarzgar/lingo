@@ -47,6 +47,7 @@ import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetMissProfileUseCase
+import org.token.english.domain.usecase.GetRecentMissesUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
 import org.token.english.domain.usecase.AssessPlacementUseCase
@@ -471,6 +472,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
      */
     val getMissProfile: GetMissProfileUseCase by lazy {
         GetMissProfileUseCase(lessonRepository, reviewRepository)
+    }
+
+    /**
+     * The items behind that mix (recent-misses pass): the same window, one row per
+     * question, so Progress can name what to fix instead of only its category.
+     */
+    val getRecentMisses: GetRecentMissesUseCase by lazy {
+        GetRecentMissesUseCase(lessonRepository)
     }
 
     val scorePlacement: ScorePlacementUseCase by lazy { ScorePlacementUseCase() }

@@ -99,6 +99,7 @@ fun progressViewModelFactory(): ViewModelProvider.Factory = appViewModelFactory 
         knowledgeRepository = c.knowledgeRepository,
         getSkillProfiles = c.getSkillProfiles,
         getMissProfile = c.getMissProfile,
+        getRecentMisses = c.getRecentMisses,
         studyStats = c.studyStats,
     )
 }

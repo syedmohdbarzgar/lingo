@@ -30,6 +30,7 @@ import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.GetMissProfileUseCase
+import org.token.english.domain.usecase.GetRecentMissesUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.progress.ProgressViewModel
@@ -159,6 +160,7 @@ class LoadFailureTest {
             knowledgeRepository = knowledge,
             getSkillProfiles = GetSkillProfilesUseCase(knowledge, progress, FakeReviewRepository()),
             getMissProfile = GetMissProfileUseCase(lessons, FakeReviewRepository()),
+            getRecentMisses = GetRecentMissesUseCase(lessons),
             studyStats = progress.statsFlow,
         )
 
