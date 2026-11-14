@@ -143,7 +143,11 @@ class SpeechRecognitionService : Service() {
         takeWindow.begin(take)
 
         serviceScope.launch {
-            SpeechBus.publish { it.copy(isPreparing = true, error = SpeechError.NONE) }
+            // Ownership-checked like every other emission: the learner can leave between
+            // the START and this line (the copy of the model is the longest wait there
+            // is), and a spinner put back on a blanked screen is the same leak as a
+            // partial from an abandoned take.
+            publishFor(take) { it.copy(isPreparing = true, error = SpeechError.NONE) }
             val loaded = vosk.ensureModelLoaded()
             if (loaded.isFailure) {
                 val error = if (assetsMissing(loaded.exceptionOrNull())) {
@@ -151,13 +155,15 @@ class SpeechRecognitionService : Service() {
                 } else {
                     SpeechError.ASSET_COPY_FAILED
                 }
-                SpeechBus.publish { it.copy(isPreparing = false, error = error) }
+                // A failure of a take whose screen is gone reaches nobody: no error
+                // banner for a question the learner already moved on from.
+                publishFor(take) { it.copy(isPreparing = false, error = error) }
                 stopForegroundAndSelf()
                 return@launch
             }
             val model = vosk.modelOrNull()
             if (model == null) {
-                SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.MODEL_MISSING) }
+                publishFor(take) { it.copy(isPreparing = false, error = SpeechError.MODEL_MISSING) }
                 stopForegroundAndSelf()
                 return@launch
             }
@@ -185,7 +191,7 @@ class SpeechRecognitionService : Service() {
                     Recognizer(model, VoskManager.SAMPLE_RATE, grammar)
                 }
             } catch (t: Throwable) {
-                SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.INTERRUPTED) }
+                publishFor(take) { it.copy(isPreparing = false, error = SpeechError.INTERRUPTED) }
                 stopForegroundAndSelf()
                 return@launch
             }
@@ -227,7 +233,7 @@ class SpeechRecognitionService : Service() {
             PackageManager.PERMISSION_GRANTED
         ) {
             rec.close()
-            SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.PERMISSION_DENIED) }
+            publishFor(take) { it.copy(isPreparing = false, error = SpeechError.PERMISSION_DENIED) }
             stopForegroundAndSelf()
             return
         }
@@ -239,7 +245,7 @@ class SpeechRecognitionService : Service() {
         )
         if (minBuffer == AudioRecord.ERROR || minBuffer == AudioRecord.ERROR_BAD_VALUE) {
             rec.close()
-            SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
+            publishFor(take) { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
             stopForegroundAndSelf()
             return
         }
@@ -254,7 +260,7 @@ class SpeechRecognitionService : Service() {
             ?: openAudioRecord(MediaRecorder.AudioSource.MIC, minBuffer)
         if (record == null) {
             rec.close()
-            SpeechBus.publish { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
+            publishFor(take) { it.copy(isPreparing = false, error = SpeechError.NO_MICROPHONE) }
             stopForegroundAndSelf()
             return
         }
@@ -269,7 +275,6 @@ class SpeechRecognitionService : Service() {
 
         audioRecord = record
         recognizer = rec
-        keepRecording = true
         // One take, two outputs: the transcript the scorer reads and the audio the
         // learner hears back. The file starts empty and is patched when the take
         // ends (TakeRecorder), so a take that dies half-way still leaves nothing to
@@ -281,6 +286,21 @@ class SpeechRecognitionService : Service() {
         // the text now that the mic is genuinely live.
         updateNotification()
 
+        // The last gate before the screen is told the mic is live. A reset can land
+        // between opening the recorder and this line, and the state it publishes is the
+        // one the *next* screen would render — a mic button looking live on a screen that
+        // never asked for a take.
+        if (!isCurrentTake(take)) {
+            audioRecord = null
+            recognizer = null
+            takeRecorder?.discard()
+            takeRecorder = null
+            record.release()
+            closeQuietly(rec)
+            return
+        }
+
+        keepRecording = true
         SpeechBus.publish { it.copy(isListening = true, isPreparing = false, partial = "", finalText = "") }
 
         captureThread = Thread({
@@ -485,11 +505,10 @@ class SpeechRecognitionService : Service() {
             if (!takeWindow.hasActiveTake) beginTake(newest)
             return
         }
-        // Only the take that is still current owns the service. An automatic end
-        // that fires just as «تلاش دوباره» starts a new take used to detach the
-        // foreground state and stop the service underneath the take that had just
-        // begun — the new take then looked live with nothing recording.
-        if (!isCurrentTake(take)) return
+        // The newest take tears the service down whether or not its screen still owns
+        // it: an abandoned take must not leave the microphone type foregrounded with a
+        // notification on screen. A take that a newer START replaced returned above, so
+        // it cannot stop the service underneath the take that had just begun.
         try {
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (t: Throwable) {

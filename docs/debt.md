@@ -50,7 +50,14 @@
   A revisit's answer is claimed like any other: re-answering the *same* exercise on the same day
   writes nothing to mastery, and `firstTries` refuses to recount it as a first pass.
 
-- **An abandoned take is refused by policy, and the refusal is tested off-device.**
+- **An abandoned take is refused by policy, and the refusal is tested off-device.** The policy is
+  now complete rather than partial (take-cancellation pass): `TakeWindow.mayOpenMic` also answers
+  from the screen epoch, and every emission before the mic opens — the `isPreparing` announcement,
+  the model-load and recogniser failures, the permission and mic failures — goes through
+  `publishFor(take)`, with a final ownership gate just before `isListening = true`. What remains
+  outside the JVM suite is the service itself: `SpeechRecognitionService` opens `AudioRecord` on a
+  background thread, and only a device can show that the mic is released the moment the take is
+  abandoned. That check is item 4 of the device table.
   `TakeWindow` + `TakeWindowTest` pin *whether* a take may still publish, and a capture loop
   that leaves on abandonment closes the microphone in code, but the two device-only halves are
   not unit-testable here: `cleanup()` discarding `TakeRecorder`'s open writer (that `discard()`

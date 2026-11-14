@@ -31,6 +31,29 @@ class TakeWindowTest {
     }
 
     @Test
+    fun `a reset while the model is still loading refuses the microphone`() {
+        // P0 #1: the window still holds the take as active after a reset — nothing tells
+        // it to end a take the service has not reached yet — so "may this take open the
+        // mic" has to answer from the epoch as well. Before this rule the take opened
+        // AudioRecord and announced «listening» on a screen that had been blanked.
+        val take = beginTake()
+
+        epoch += 1 // SpeechBus.reset(), ACTION_STOP not handled yet
+
+        assertFalse("it must not open the recorder after the screen left", window.mayOpenMic(take))
+    }
+
+    @Test
+    fun `a late failure from an abandoned take reaches nobody`() {
+        val take = beginTake()
+
+        epoch += 1 // the learner left while the model was still loading
+
+        assertFalse("its error must not repaint the blanked screen", window.mayPublish(take))
+        assertTrue("while a take begun on the live screen may still report", window.mayPublish(beginTake()))
+    }
+
+    @Test
     fun `a take the learner ended still reports`() {
         val take = beginTake()
 

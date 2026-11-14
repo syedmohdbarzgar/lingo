@@ -162,7 +162,23 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (851 tests / 89 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (853 tests / 89 classes as of the
+take-cancellation pass, which closed the residual race P0 #1 named: `TakeWindow.mayOpenMic` now
+refuses a take whose **screen epoch** changed, not only one the learner ended or a newer take
+replaced — `active` survives a `SpeechBus.reset()` (nothing tells the window to end a take the
+service has not reached yet), so a reset during the model load used to leave may-open-mic true, the
+take opened `AudioRecord` and announced «listening» on a blanked screen. Every pre-capture emission
+in `SpeechRecognitionService` now goes through `publishFor(take)` — the `isPreparing` announcement,
+the model-load failure, a missing model, a `Recognizer` that could not be constructed, the
+permission/mic/min-buffer failures — so a late failure of an abandoned take reaches nobody, and a
+last ownership gate sits immediately before `isListening = true` (bailing releases the recorder,
+closes the recogniser and discards the empty WAV). `keepRecording` is only set once that gate passes.
+`finishCapture` now tears the service down for the **newest** take even when its screen is gone
+(otherwise an abandoned take would leave the microphone foreground type and its notification up),
+while a take a newer START replaced still returns first. Four `TakeWindowTest` cases pin the policy
+(reset during the load refuses the mic, a late failure of an abandoned take publishes nothing while
+a fresh take still reports, and the two pre-existing endings); the service's own threading and the
+mic release stay a device check. Before it the
 recent-misses pass, where the miss mix stopped being only categories: Progress now lists the
 **questions** behind it. `RecentMisses` (pure) folds the same window
 (`MissTaxonomy.WINDOW`) into at most `DEFAULT_LIMIT` = 6 rows — one per question, newest first,

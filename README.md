@@ -72,7 +72,8 @@ re-assert LTR, because the root layout is forced RTL.
   dialogue has been walked to its last turn — the next lesson stays shut until then, because the
   conversation is where the learner produces what the exercises only tested.
 - **Exercises** — `multiple_choice`, `fill_blank`, `word_recall`, `translation`,
-  `sentence_production`, `listening`. Multiple-choice options are shuffled deterministically per
+  `sentence_production`, `listening`, `writing` (a short connected text: anchors may sit in any
+  sentence, and both a word floor and a sentence floor apply). Multiple-choice options are shuffled deterministically per
   question id (fixed seed), so the answer position never leaks. `word_recall` names the English word
   from its Persian meaning with no options to recognize, and `sentence_production` makes the learner
   build the whole sentence — graded on the target structure (ordered anchors plus a word floor), so
@@ -83,11 +84,14 @@ re-assert LTR, because the root layout is forced RTL.
 - **Review** — SM-2-lite spaced repetition with a daily new-card cap (20) and calendar-day anchors
   instead of raw 24-hour multiples. Odd-numbered cards ask for active production: a Persian prompt,
   typed English answer. `AGAIN` re-queues inside the session (at most twice). A session runs the word
-  cards first and then asks each due curriculum node **one of its own exercises** — the question its
-  lesson would ask, graded the same way, which is what lets review practice confirm an exercise
-  format instead of only recalling a word.
+  cards first and then asks each due curriculum node up to **two of its own exercises** — one per
+  format it has not been confirmed in, including a listening one the card plays — graded the same
+  way, which is what lets review practice confirm an exercise format instead of only recalling a
+  word.
 - **Listening** — read aloud by the on-device Android TTS engine. No audio files, no network.
-- **Vocabulary browser** — search with escaped `LIKE` patterns.
+- **Vocabulary browser** — `VocabularySearch`: the query is folded (Arabic ك/ي onto ک/ی, ZWNJ,
+  harakat, tatweel, hamza-alefs, Persian digits), ranked by headword → token → substring → Persian
+  meaning → example, and can be narrowed by level before the ranking.
 - **Recent mistakes** — Progress lists the questions answered wrong recently (one row per question,
   newest first, with the right answer and how often), each opening the lesson it came from.
 - **Progress** — three independent skill tracks (Grammar, Vocabulary, Reading), each with its
@@ -134,7 +138,7 @@ therefore reopens on the first question of that step it has **no** answer for �
 how far, the log says what was actually done — and a lesson from before the log keeps its saved
 cursor instead of pretending it starts over.
 
-**Content bundle (JSON `contentVersion` 64)**
+**Content bundle (JSON `contentVersion` 82)**
 
 | | Count |
 |---|---|
@@ -407,7 +411,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-851 unit tests across 89 classes. The pure cores carry the most weight — review scheduling,
+853 unit tests across 89 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,

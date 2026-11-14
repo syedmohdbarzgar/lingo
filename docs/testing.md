@@ -3,6 +3,18 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **A reset take cannot open the microphone (take-cancellation pass)** is pinned in
+  `TakeWindowTest` (ten cases, two of them new). The rule: `TakeWindow.mayOpenMic` answers from
+  *three* facts — the take is still active, it is the one this window tracks, and the screen epoch it
+  began under is unchanged — because `active` survives `SpeechBus.reset()` and the old two-part rule
+  let a take whose screen had left open `AudioRecord` and publish «listening» over the blanked state.
+  The new cases: a reset while the model is loading refuses the mic *without* a stop having arrived,
+  and a late failure of an abandoned take publishes nothing while a take begun on the live screen
+  still does. The service half — every pre-capture emission through `publishFor(take)`, a final gate
+  before `isListening = true`, and teardown for the newest take even when its screen is gone — is read
+  in code and exercised on a device: `SpeechRecognitionService` is a Service, and the JVM cannot open
+  `AudioRecord`.
+
 - **The questions behind the miss mix (recent-misses pass)** is pinned in `RecentMissesTest` (five
   cases) and `ProgressViewModelTest` (two). The engine: only misses reach the list (a later correct
   answer does not erase the row), a question missed three times is **one** row carrying `misses = 3`
@@ -139,8 +151,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 851 tests / 89 classes as of
-  the recent-misses pass (the bullet above); before it the listening-card pass, where a due node's
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 853 tests / 89 classes as of
+  the take-cancellation pass (the bullet above); before it the recent-misses pass, where Progress
+  began listing the questions behind the mix; before it the listening-card pass, where a due node's
   listening question could be heard in the session; before it the block pass, where a node's card block
   became up to two questions; before it the speech-pace pass, where the rate the app speaks
   at became a setting; before it the graph-card pass, where a due node's own exercise became a card

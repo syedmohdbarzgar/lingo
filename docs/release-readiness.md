@@ -7,22 +7,24 @@
 
 ## What the code already proves (no device needed)
 
-These are green as of bundle **v80** and do not need re-proving for a release unless the area changes:
+These are green as of bundle **v82** and do not need re-proving for a release unless the area changes.
+The two APK rows are the exception: they still name the **v80** build they were measured on, and are
+kept as recorded evidence rather than re-worded for a version nobody built.
 
 | Area | Check | Evidence |
 |---|---|---|
-| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3159 exercises (twelve of them `writing` texts), 36 placement questions, 268 nodes, bundle v80 |
-| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 851 tests / 89 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3159 exercises (twelve of them `writing` texts), 36 placement questions, 268 nodes, bundle v82 |
+| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 853 tests / 89 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
 | Lint, against the accepted list | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | 7 warnings, all seven named in the budget with their reason (`CustomSplashScreen`, AGP ×2, `NewerVersionAvailable` ×3, `UseTomlInstead`) — none appeared, grew or shrank |
-| Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→10 validates; the v10 `conversation_done` step and its one-time import |
+| Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→11 validates; the v10 `conversation_done` step and its one-time import, and the v11 `wordsJson` column defaulting to `'[]'` |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |
 | Splash hand-off contract | `SplashHandOffTest` | below API 34 the finishing splash declares it, from 34 the entered activity does — never both |
 | The lesson's spoken answer | eleven `LessonViewModelTest` cases over `FakeSpeech` | `CORRECT`/`NEAR` write one transaction and are credited, `RETRY` writes nothing, a silent or broken take is never scored, and the no-recogniser install can leave the step unclaimed |
 | The take's own audio | `TakeAudioTest` (six JVM cases) + three playback cases in `LessonViewModelTest` + four in `ConversationPracticeViewModelTest` | a canonical mono 16 kHz WAV whose sizes are patched to what was appended, no file for an empty take, the path reaching the player on both screens, and playback stopping when the item, the turn or the screen moves on |
 | Word-level speech feedback | nine `SpokenWordFeedbackTest` cases + three `LessonViewModelTest` and two `ConversationPracticeViewModelTest` cases | the dropped content word is named, a dropped article is not, a reordering is not punished, a contraction / homophone / dialect spelling still counts as heard, one utterance satisfies one repeated word, and both screens show the list under the verdict but never on a hit or a typed answer |
-| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs build from v80 (26 s, 1124 / 1139 / 1182 entries) |
+| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs built from v80 (26 s, 1124 / 1139 / 1182 entries) — **last recorded build, not a v82 run** |
 | Each flavor packages only its own store SDK | `unzip -p <apk> 'classes*.dex' \| grep -a -c <package>` | bazaar: `ir/cafebazaar/poolakey` 46, play billing 0, myket 0 · myket: `ir/myket/billingclient` 33 (the SDK's own package), poolakey 0, play billing 0 · googlePlay: `android/billingclient` 7, poolakey 0, myket 0 |
-| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | all three: `contentVersion` 80, 3159 exercises — the APK cannot ship content the suite did not read |
+| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | the v80 build: all three said `contentVersion` 80 with 3159 exercises — the APK cannot ship content the suite did not read; the v82 rebuild is still to be recorded |
 
 ## What still needs a device, an emulator or CI
 
@@ -32,7 +34,7 @@ These are green as of bundle **v80** and do not need re-proving for a release un
 | 2 | Splash across Android versions | emulators at API 24, 26, 31, 34, 35 (or one device per API family) | for each API: the fade is visible, there is no white flash and no double transition; note that API 34+ is where the contract flips |
 | 3 | Three-flavor build in CI | GitHub Actions `assemble` job (runs on a tag, a schedule or a dispatch — not on every push) | the job's green run for the release tag, with all three APKs in its artifacts |
 | 4 | Vosk offline conversation **and the lesson's speaking item** | real device, airplane mode on, Vosk model present | first recognition latency, peak memory during a take, memory released after the take ends, and a full dialogue scored with no network — plus one lesson `speaking` take: the transcript it heard, the verdict, that the step's answer appears in Progress as Speaking evidence, that the played-back WAV **is** that take (same words, no pitch shift), and that no word is dropped on a long sentence while the file is being written |
-| 5 | Room 9 → 10 on a real install, then Backup/Restore | device with a v9 build installed, then the v10 build over it, then Auto Backup + restore | progress survives the upgrade, `conversation_done` is carried, the finished dialogue is still marked after a restore, and the next lesson stays open |
+| 5 | Room 10 → 11 on a real install (and 9 → 11 in one upgrade), then Backup/Restore | device with a v10 build installed, then the v11 build over it, then Auto Backup + restore | progress survives the upgrade, `conversation_done` is carried, `wordsJson` comes up `[]` and a re-seed fills the authored words without deleting mastery, the finished dialogue is still marked after a restore, and the next lesson stays open |
 | 6 | Launch smoke on Android | `scripts/verify_device.sh bazaar --require-device` (the CI `device` job) | install, airplane mode, two timed cold starts, the seed line, and the crash sweep — with `--require-device` so a dead emulator is red, not a green no-op |
 
 ## Release readiness criteria (roadmap), restated as checks

@@ -18,8 +18,8 @@ package org.token.english.core.audio
  *    «پخش صدای خودت» button then plays a sentence that belongs to another exercise.
  *
  * Both are one question here, [mayPublish]. [mayOpenMic] is the narrower one asked
- * before touching `AudioRecord`, and it is false after *either* answer, so a stopped
- * take cannot open the mic again.
+ * before touching `AudioRecord`, and it is false after *either* answer, so neither a
+ * stopped nor an abandoned take can open the mic again.
  *
  * Pure and thread-safe on purpose: the service holds one of these, and the rules are
  * pinned by tests instead of by reading a 700-line Service.
@@ -51,8 +51,18 @@ class TakeWindow(
         active = 0
     }
 
-    /** Whether [take] may still open (or keep) the microphone. */
-    fun mayOpenMic(take: Int): Boolean = take != 0 && take == active
+    /**
+     * Whether [take] may still open (or keep) the microphone.
+     *
+     * Three refusals, and the third is the one that leaked: the learner ended it, a newer
+     * take owns the mic, **or the screen that asked for it has been abandoned**. `active`
+     * survives a `SpeechBus.reset()` — nothing tells the window to end a take it still
+     * holds — so a reset during the model load used to leave this true: the take then
+     * opened `AudioRecord` and announced «listening» on a screen that had already been
+     * blanked, and only the capture loop noticed, on its first iteration.
+     */
+    fun mayOpenMic(take: Int): Boolean =
+        take != 0 && take == active && !isAbandoned(take)
 
     /**
      * Whether the screen that asked for [take] has been abandoned since — the one
