@@ -56,6 +56,9 @@ class EnglishApp : Application() {
         appScope.launch {
             container.settingsRepository.settings.collect {
                 container.soundEnabled = it.soundEnabled
+                // The pace is applied to the player from the record, so a change is
+                // heard on the next sentence and an upgrading install keeps 0.75.
+                container.applySpeechPace(it.speechPace)
                 if (it.dailyReminderEnabled) {
                     // Scheduled on every settings emission, so a changed hour reaches
                     // the alarm: setInexactRepeating replaces the pending intent.

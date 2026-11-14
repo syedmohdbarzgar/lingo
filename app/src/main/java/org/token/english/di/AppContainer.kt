@@ -127,7 +127,26 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
         get() = (appContext as? org.token.english.EnglishApp)?.isAppInForeground ?: true
 
     // Audio (on-device TTS — no network needed)
-    val audioPlayer: AudioPlayer by lazy { TtsAudioPlayer(appContext) }
+    //
+    // The delegate is held so [applySpeechPace] can tell an already-created player
+    // about a new pace without creating one just to hand it a number — binding the TTS
+    // engine at launch, for a rate no screen uses until the first lesson, would be a
+    // startup cost for nothing.
+    @Volatile
+    private var speechPace: org.token.english.domain.model.SpeechPace =
+        org.token.english.domain.model.SpeechPace.DEFAULT
+    private val audioPlayerDelegate = lazy { TtsAudioPlayer(appContext, speechPace.rate) }
+    val audioPlayer: AudioPlayer by audioPlayerDelegate
+
+    /**
+     * Applies the learner's speaking pace to the live player. Called from
+     * `EnglishApp`'s settings collector, so the setting and the sound cannot disagree:
+     * a stored pace that never reached the engine would be a setting that does nothing.
+     */
+    fun applySpeechPace(pace: org.token.english.domain.model.SpeechPace) {
+        speechPace = pace
+        if (audioPlayerDelegate.isInitialized()) audioPlayer.setSpeechRate(pace.rate)
+    }
 
     // Speaking practice (record + play back the learner's own take — local only)
     val voiceNote: org.token.english.core.audio.VoiceNote by lazy {

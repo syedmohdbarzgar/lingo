@@ -162,7 +162,23 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (835 tests / 87 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (840 tests / 88 classes as of the
+speech-pace pass, where the rate the app speaks at stopped being an engine-wide constant and
+became a learner setting: `SpeechPace` (آهسته 0.6 · معمولی 0.75 · طبیعی 1.0) is stored as
+`speech_pace` in the settings record, `EnglishApp`'s settings collector hands it to
+`AppContainer.applySpeechPace`, and `TtsAudioPlayer` re-applies it on **every** utterance — so a
+change is heard on the next sentence rather than at the next launch, and an install that upgrades
+keeps the 0.75 it already heard (`AppSettings.speechPace` is defaulted, so no migration). The value
+is what the tests pin: four `SpeechPaceTest` cases (the default is the shipped rate, the steps
+ascend and never fall below the ~0.6 slurring floor, a stored name is read while a missing or
+corrupt one falls back to the default, an older settings record parses to 0.75) and one
+`SettingsViewModelTest` case (the choice is persisted and rendered). The player applying it to the
+engine is a device check — the TTS engine is not reachable from the JVM suite — and the container
+never creates the player just to hand it a number (`lazy.isInitialized()`), because binding the
+engine at launch is a startup cost for a rate no screen uses until the first lesson. `AudioPlayer`
+gained `setSpeechRate`; every English utterance already goes through that one seam (lesson audio, a
+word's pronunciation, the dialogue's partner line), which is why one value covers all of them;
+before it the
 graph-card pass, where the review session stopped ending at the last word: a due curriculum node's
 own exercise is now queued as a card (`NodeExerciseCard`) after the word cards and graded through
 `SubmitExerciseUseCase` — the lesson's own evidence path — so review practice finally confirms a

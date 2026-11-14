@@ -74,6 +74,7 @@ import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.di.settingsViewModelFactory
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.ThemeMode
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -204,6 +205,36 @@ fun SettingsScreen(
                         checked = settings?.soundEnabled ?: true,
                         onCheckedChange = vm::setSoundEnabled,
                     )
+                }
+            }
+
+            // The pace the app speaks at. It used to be one engine-wide constant
+            // (0.75), which a learner whose listening improved could not move — and a
+            // faster phone voice was just as fixed. Three steps, all applied to every
+            // English utterance, because they are all learning material.
+            AppCard(Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                    SectionHeader("سرعت صدا")
+                    Text(
+                        text = "همهٔ جمله‌های انگلیسی — تمرین شنیداری، تلفظ واژه و گفت‌وگو — با همین سرعت " +
+                            "پخش می‌شوند. «معمولی» همان سرعتی است که اپ از ابتدا با آن حرف می‌زند.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    val pace = settings?.speechPace ?: SpeechPace.DEFAULT
+                    Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                        SpeechPace.entries.forEach { option ->
+                            AppChip(
+                                label = when (option) {
+                                    SpeechPace.SLOW -> "آهسته"
+                                    SpeechPace.STANDARD -> "معمولی"
+                                    SpeechPace.NATURAL -> "طبیعی"
+                                },
+                                selected = pace == option,
+                                onClick = { vm.setSpeechPace(option) },
+                            )
+                        }
+                    }
                 }
             }
 

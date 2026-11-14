@@ -3,6 +3,17 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **The speaking pace is a setting (speech-pace pass)** is pinned in `SpeechPaceTest` (four
+  cases) and `SettingsViewModelTest` (one). The value: `SpeechPace.DEFAULT` is 0.75 — the rate the
+  app shipped at, so an upgrade sounds exactly as it did — the three steps ascend and the slowest
+  never falls below ~0.6, where most engines start slurring, and the fast end is the engine's own
+  1.0. Reading it: a stored name is honoured while a missing value (a fresh install) and an unknown
+  one (a bad record) both fall back to the default, and a settings record written before the
+  setting existed parses to 0.75 without a migration. The ViewModel's half is the wiring — the
+  choice is persisted and rendered — while the player applying it to the engine is a device check,
+  because `TtsAudioPlayer` talks to Android's TTS from `Script::verify_device.sh`'s manual list, not
+  from the JVM.
+
 - **The graph's own question in the review session (graph-card pass)** is pinned in
   `NodeCardTest` (five cases) and `ReviewViewModelTest` (two more). The picker: the format the node
   has **not** been confirmed in is asked first (a node proven only in a choice is asked its blank),
@@ -102,9 +113,10 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 835 tests / 87 classes as of
-  the graph-card pass, where a due node's own exercise became a card of the session (see the bullet
-  above); before it the word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 840 tests / 88 classes as of
+  the speech-pace pass (the bullet above); before it the graph-card pass, where a due node's own
+  exercise became a card of the session; before it the word-ownership pass (bundle v82), where a
+  review card stopped crediting every vocabulary node of
   its lesson: three lessons own two each, so one word moved two nodes. Three `KnowledgeEngineTest`
   cases pin the pick — a claimed word credits exactly the node that names it, a word no node names
   credits neither rather than both (the card is still graded), and a lesson with one vocabulary node

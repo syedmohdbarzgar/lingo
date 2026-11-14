@@ -60,6 +60,7 @@ import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyExample
@@ -560,6 +561,7 @@ class SettingsRepositoryImpl(
         val SOUND = booleanPreferencesKey("sound_enabled")
         val DAILY_REMINDER = booleanPreferencesKey("daily_reminder_enabled")
         val REMINDER_HOUR = intPreferencesKey("daily_reminder_hour")
+        val SPEECH_PACE = stringPreferencesKey("speech_pace")
         val CONTENT_VERSION = intPreferencesKey("content_version")
         val TRIAL_STARTED = longPreferencesKey("trial_started_at")
         val TRIAL_CONSUMED = longPreferencesKey("trial_consumed_ms")
@@ -584,6 +586,7 @@ class SettingsRepositoryImpl(
             dailyReminderHour = prefs[Keys.REMINDER_HOUR]
                 ?.takeIf { it in 0..23 }
                 ?: AppSettings.DEFAULT_REMINDER_HOUR,
+            speechPace = SpeechPace.stored(prefs[Keys.SPEECH_PACE]),
             contentVersion = prefs[Keys.CONTENT_VERSION] ?: 0,
             trialStartedAt = prefs[Keys.TRIAL_STARTED] ?: 0L,
             subscriptionUntil = prefs[Keys.SUBSCRIPTION_UNTIL] ?: 0L,
@@ -633,6 +636,10 @@ class SettingsRepositoryImpl(
 
     override suspend fun setDailyReminderHour(hour: Int) {
         context.dataStore.edit { it[Keys.REMINDER_HOUR] = hour.coerceIn(0, 23) }
+    }
+
+    override suspend fun setSpeechPace(pace: SpeechPace) {
+        context.dataStore.edit { it[Keys.SPEECH_PACE] = pace.name }
     }
 
     override suspend fun setContentVersion(version: Int) {

@@ -34,6 +34,7 @@ import org.token.english.core.audio.SpeechError
 import org.token.english.core.audio.SpeechState
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyItem
@@ -106,6 +107,10 @@ class FakeSettingsRepository(
 
     override suspend fun setDailyReminderHour(hour: Int) {
         settingsFlow.value = settingsFlow.value.copy(dailyReminderHour = hour.coerceIn(0, 23))
+    }
+
+    override suspend fun setSpeechPace(pace: SpeechPace) {
+        settingsFlow.value = settingsFlow.value.copy(speechPace = pace)
     }
 
     override suspend fun setContentVersion(version: Int) {
@@ -447,8 +452,15 @@ class FakeAudioPlayer(available: Boolean? = true) : AudioPlayer {
     override var isSpeaking: Boolean = false
     var stopped: Boolean = false
 
+    /** Every pace the app set on this player, in order. */
+    val speechRates = mutableListOf<Float>()
+
     override fun speak(text: String, onDone: (() -> Unit)?, onError: (() -> Unit)?) {
         onDone?.invoke()
+    }
+
+    override fun setSpeechRate(rate: Float) {
+        speechRates += rate
     }
 
     override fun stop() {

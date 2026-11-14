@@ -369,6 +369,9 @@ class LearningPathJourneyTest {
         override suspend fun setDailyReminderHour(hour: Int) {
             flow.value = flow.value.copy(dailyReminderHour = hour.coerceIn(0, 23))
         }
+        override suspend fun setSpeechPace(pace: org.token.english.domain.model.SpeechPace) {
+            flow.value = flow.value.copy(speechPace = pace)
+        }
         override suspend fun setContentVersion(version: Int) { flow.value = flow.value.copy(contentVersion = version) }
 
         // SubscriptionStore: billing is out of scope for this journey — see

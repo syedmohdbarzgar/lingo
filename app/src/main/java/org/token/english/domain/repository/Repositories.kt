@@ -17,6 +17,7 @@ import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewContentType
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.model.VocabularyItem
@@ -282,5 +283,11 @@ interface SettingsRepository : org.token.english.core.billing.SubscriptionStore 
      * Out-of-range values are clamped by the implementation.
      */
     suspend fun setDailyReminderHour(hour: Int)
+    /**
+     * The pace every English utterance is spoken at ([SpeechPace]). The player follows
+     * the record — `EnglishApp`'s settings collector applies it — so a changed pace is
+     * heard on the next sentence, not on the next launch.
+     */
+    suspend fun setSpeechPace(pace: SpeechPace)
     suspend fun setContentVersion(version: Int)
 }

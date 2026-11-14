@@ -19,6 +19,7 @@ import org.token.english.core.common.catchLoadFailure
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.model.AppSettings
 import org.token.english.domain.model.LearningLevel
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.ThemeMode
 import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
@@ -149,6 +150,15 @@ class SettingsViewModel(
 
     fun setDailyGoal(minutes: Int) {
         viewModelScope.launch { settingsRepository.setDailyGoalMinutes(minutes) }
+    }
+
+    /**
+     * Persists the speaking pace. The player follows the record: `EnglishApp`'s
+     * settings collector applies it, so the next sentence is already at the new
+     * speed instead of waiting for a relaunch.
+     */
+    fun setSpeechPace(pace: SpeechPace) {
+        viewModelScope.launch { settingsRepository.setSpeechPace(pace) }
     }
 
     fun setSoundEnabled(enabled: Boolean) {

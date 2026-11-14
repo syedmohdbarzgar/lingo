@@ -659,6 +659,42 @@ data class MasteryProfile(
         candidates.minWithOrNull(compareBy({ masteryOf(it) }, { it.ordinal }))
 }
 
+/**
+ * How fast English is spoken: the one pace control the app has.
+ *
+ * Native 1.0 was reported as unintelligible on a first A1 ear («TTS پخش می‌شود ولی
+ * نمی‌فهمم»), so the app shipped at 0.75 — and a constant then could not be moved by a
+ * learner whose listening had improved, or whose phone's voice reads fast. Three steps
+ * rather than a slider: a slider invites values no engine renders differently, while
+ * each step here has a reason — 0.6 is about the floor before most engines start
+ * slurring, 0.75 is the pace the app shipped with (the default, and what an upgrade
+ * keeps hearing), and 1.0 is the engine's own native speed for a learner training on
+ * it.
+ *
+ * The rate is the whole of the setting. It is applied to **every** English utterance —
+ * a listening item, a word's pronunciation, the dialogue's partner line — because all of
+ * them are learning material, and a second pace control would let two screens speak at
+ * different speeds.
+ */
+enum class SpeechPace(val rate: Float) {
+    SLOW(0.6f),
+    STANDARD(0.75f),
+    NATURAL(1.0f),
+    ;
+
+    companion object {
+        /** What a fresh install and an upgraded one both hear: the shipped rate. */
+        val DEFAULT = STANDARD
+
+        /**
+         * A stored name, with a corrupt or unknown value falling back to [DEFAULT].
+         * The same rule `theme_mode` and `level` follow: a bad record is not a new
+         * speed, and a fallback that guessed would change how the app sounds.
+         */
+        fun stored(name: String?): SpeechPace = entries.firstOrNull { it.name == name } ?: DEFAULT
+    }
+}
+
 data class AppSettings(
     val isFirstLaunch: Boolean,
     val level: LearningLevel,
@@ -677,6 +713,11 @@ data class AppSettings(
      * default: an evening nudge, after the day's work rather than before it.
      */
     val dailyReminderHour: Int = 19,
+    /**
+     * How fast every English sentence is spoken (see [SpeechPace]). Defaulted to the
+     * rate the app shipped with, so an install that upgrades sounds exactly as it did.
+     */
+    val speechPace: SpeechPace = SpeechPace.DEFAULT,
 ) {
     companion object {
         /** The hour the reminder ships with, and the fallback for a bad stored value. */

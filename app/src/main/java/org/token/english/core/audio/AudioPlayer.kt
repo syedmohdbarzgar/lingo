@@ -31,14 +31,33 @@ interface AudioPlayer {
     val isEnglishAvailable: StateFlow<Boolean?>
 
     fun speak(text: String, onDone: (() -> Unit)? = null, onError: (() -> Unit)? = null)
+
+    /**
+     * The pace this player speaks at ([org.token.english.domain.model.SpeechPace]).
+     *
+     * It is a player property rather than a `speak` argument because the learner's
+     * choice is app-wide: every English utterance is learning material, and passing a
+     * rate per call would let one screen speak at a speed the setting does not say.
+     * Applying it must reach the **next** utterance, not the next launch.
+     */
+    fun setSpeechRate(rate: Float)
+
     fun stop()
     fun release()
 }
 
-class TtsAudioPlayer(context: Context) : AudioPlayer {
+class TtsAudioPlayer(
+    context: Context,
+    /** The pace the learner had stored when this player was created. */
+    initialSpeechRate: Float = LEARNER_SPEECH_RATE,
+) : AudioPlayer {
 
     private var tts: TextToSpeech? = null
     private var ready = false
+
+    /** The learner's pace; applied to the engine on every utterance (see [setSpeechRate]). */
+    @Volatile
+    private var speechRate: Float = initialSpeechRate
     private var pending: String? = null
     private var listener: (() -> Unit)? = null
     private var errorListener: (() -> Unit)? = null
@@ -53,15 +72,13 @@ class TtsAudioPlayer(context: Context) : AudioPlayer {
         tts = TextToSpeech(context.applicationContext) { status ->
             val engine = tts
             if (status == TextToSpeech.SUCCESS && engine != null) {
-                // A learner-tuned rate, not the engine default (1.0 = native speed).
+                // The learner's pace, not the engine default (1.0 = native speed).
                 // Native speed is a *native listener's* speed: on a fresh A1 ear the
                 // words run together and the sentence is gone before it is parsed —
-                // reported on a real device as "TTS پخش می‌شود ولی نمی‌فهمم". 0.75 keeps
-                // the voice natural (below ~0.6 most engines slur) while leaving a
-                // gap between words. Rate is set once, engine-wide: every English
-                // utterance in the app is learning material, so there is no surface
-                // where native speed is the right default.
-                engine.setSpeechRate(LEARNER_SPEECH_RATE)
+                // reported on a real device as «TTS پخش می‌شود ولی نمی‌فهمم». The app
+                // therefore ships at 0.75 and lets the learner move it ([SpeechPace]);
+                // below ~0.6 most engines slur, which is why the slowest step is there.
+                engine.setSpeechRate(speechRate)
                 // B-3: the locale result was ignored before — a device without an
                 // English voice silently "played" nothing and the UI hung on
                 // "در حال پخش…". Check it and report availability instead.
@@ -118,8 +135,17 @@ class TtsAudioPlayer(context: Context) : AudioPlayer {
     }
 
     private fun speakNow(text: String) {
+        // Re-applied per utterance: the setting can change between two sentences, and
+        // the engine ignores a rate set before it connected.
+        tts?.setSpeechRate(speechRate)
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "utterance-${System.currentTimeMillis()}")
             ?: finishRequest(failed = true)
+    }
+
+    override fun setSpeechRate(rate: Float) {
+        speechRate = rate
+        // Live engine: the change is heard on the next sentence, not after a restart.
+        tts?.setSpeechRate(rate)
     }
 
     /** Engine died between init and speak — treat as a failed request. */
@@ -162,9 +188,9 @@ class TtsAudioPlayer(context: Context) : AudioPlayer {
 
     private companion object {
         /**
-         * 1.0 is native speed. 0.75 is the rate a learner can follow; it is a
-         * constant (not a setting) so every English utterance in the app sounds the
-         * same, and a future settings toggle has one value to override.
+         * 1.0 is native speed; 0.75 is the rate the app shipped at, and the value a
+         * player built before any setting was read starts from. The learner's stored
+         * pace overrides it ([setSpeechRate]).
          */
         const val LEARNER_SPEECH_RATE = 0.75f
     }

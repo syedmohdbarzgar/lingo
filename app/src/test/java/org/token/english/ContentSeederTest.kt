@@ -143,6 +143,7 @@ class ContentSeederTest {
         override suspend fun setSoundEnabled(enabled: Boolean) = Unit
         override suspend fun setDailyReminderEnabled(enabled: Boolean) = Unit
         override suspend fun setDailyReminderHour(hour: Int) = Unit
+        override suspend fun setSpeechPace(pace: org.token.english.domain.model.SpeechPace) = Unit
 
         override suspend fun setContentVersion(version: Int) {
             if (failNextVersionWrite) {

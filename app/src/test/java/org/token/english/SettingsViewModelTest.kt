@@ -18,6 +18,7 @@ import org.token.english.core.billing.CompanionStatus
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.Skill
+import org.token.english.domain.model.SpeechPace
 import org.token.english.domain.model.ThemeMode
 import org.token.english.feature.settings.SettingsViewModel
 
@@ -102,6 +103,24 @@ class SettingsViewModelTest {
         assertFalse(stored.soundEnabled)
         assertEquals(LearningLevel.B1, stored.level)
         assertEquals("the screen follows the same value", ThemeMode.DARK, vm.state.value.settings!!.themeMode)
+    }
+
+    @Test
+    fun `the speaking pace is persisted and reaches the screen`() {
+        // docs/debt.md called the rate "one engine-wide constant"; it is a setting now,
+        // and the record is what the player follows (EnglishApp's collector).
+        val h = Harness()
+        val vm = h.build()
+        assertEquals(
+            "the app ships at the pace it always spoke at",
+            SpeechPace.STANDARD,
+            vm.state.value.settings!!.speechPace,
+        )
+
+        vm.setSpeechPace(SpeechPace.SLOW)
+
+        assertEquals("persisted", SpeechPace.SLOW, h.settings.settingsFlow.value.speechPace)
+        assertEquals("and rendered", SpeechPace.SLOW, vm.state.value.settings!!.speechPace)
     }
 
     @Test

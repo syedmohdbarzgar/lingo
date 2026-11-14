@@ -234,11 +234,18 @@
   said — and it inherits the recogniser's own mistakes: a misheard word is reported as a word the
   learner did not say. Teaching actual pronunciation still needs phoneme-level scoring (a different
   engine, or a cloud service the connectivity policy keeps suspended).
-- **The speech rate is one engine-wide constant.** `TtsAudioPlayer` sets 0.75× for every English
-  utterance in the app (native 1.0× was reported as unintelligible on a first A1 ear). It is not a
-  learner setting: a slower/faster control needs a preference, a settings row and a copy pass, and a
-  half-done speed setting is worse than one predictable pace. Revisit when the settings screen gets a
-  «سرعت صدا» row for both TTS and partner lines.
+- **Settled: the speech rate is a setting, and it is still one value (speech-pace pass).** It used
+  to be an engine-wide constant — 0.75× for every English utterance, because native 1.0× was
+  reported as unintelligible on a first A1 ear — and a learner whose listening had improved (or
+  whose phone's voice reads fast) could not move it. `SpeechPace` now has three steps (آهسته 0.6,
+  معمولی 0.75, طبیعی 1.0), stored as `speech_pace` and applied to the live player from `EnglishApp`'s
+  settings collector, so the next sentence is at the new speed. Two limits are accepted. First, one
+  pace for **everything**: a listening item, a word's pronunciation and the dialogue's partner line
+  are the same learning material, so a per-screen speed would let two surfaces disagree and would
+  ask the learner to tune the same ear twice. Second, the sound itself is a device check — the JVM
+  suite pins which value is stored and which value a bad record falls back to, never that a given
+  engine renders 0.6 without slurring, which is why the slowest step stops at that floor and the
+  default stays at the rate the app already shipped at.
 - **Recognition fairness: the engine half shipped, one device-level item did not (Oct 2026
   audit).** The scorer now grades every accepted answer, folds recogniser homophones, forgives one
   edit on a long word, strips `please`/`thank you`, rejects a take that repeats the partner, and the

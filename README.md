@@ -93,6 +93,9 @@ re-assert LTR, because the root layout is forced RTL.
   coverage, and an error taxonomy that reads the recent answers and says what the misses were
   *about* (vocabulary, grammar, comprehension, production) and which one to fix first.
 - **Daily reminder** — inexact daily alarm; asks for `POST_NOTIFICATIONS` on Android 13+.
+- **Speech pace** — the on-device TTS speaks every English sentence (a listening item, a word's
+  pronunciation, the dialogue's partner line) at one learner-chosen pace: آهسته ۰٫۶×، معمولی
+  ۰٫۷۵× (the shipped default) or طبیعی ۱×. Still offline: it is the device's own voice, tuned.
 
 **Learner model**
 
@@ -402,7 +405,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-835 unit tests across 87 classes. The pure cores carry the most weight — review scheduling,
+840 unit tests across 88 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
