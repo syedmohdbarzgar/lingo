@@ -688,8 +688,8 @@ class GetDueKnowledgeReviewsUseCase(
 }
 
 /**
- * The graph half of the **session**, not only of the summary (graph-card pass): one
- * due node's own exercise, queued as a card the review session asks.
+ * The graph half of the **session**, not only of the summary (graph-card pass): the
+ * questions a due node is asked, queued as cards the review session asks.
  *
  * Why this exists at all: the queue and the graph were two lists. A due node could be
  * *opened* as the focused drill (one tap into its lesson) but never *asked* by the
@@ -702,9 +702,9 @@ class GetDueKnowledgeReviewsUseCase(
  * It asks the list it already trusts: [GetDueKnowledgeReviewsUseCase] decides which
  * nodes are due, in which order, and which of each lesson's exercises are evidence
  * about them. This use case only chooses **which** of those exercises to ask
- * ([NodeCardPicker]: the format not yet confirmed, otherwise the authored first), and
- * drops a node with nothing askable rather than offering a dead card. Nothing here
- * invents a question or re-derives the graph.
+ * ([NodeCardPicker]: one per shape the node has not been confirmed in, at most two,
+ * otherwise the authored first), and drops a node with nothing askable rather than
+ * offering a dead card. Nothing here invents a question or re-derives the graph.
  */
 class GetDueNodeCardsUseCase(
     private val due: GetDueKnowledgeReviewsUseCase,
@@ -725,17 +725,21 @@ class GetDueNodeCardsUseCase(
                 ?: lessons.getExercises(review.lessonId).also { loaded[review.lessonId] = it }
             val pool = exercises.filter { it.id in review.exerciseIds }
             val confirmed = knowledge.getState(review.itemId)?.distinctTypesCorrect ?: 0
-            val picked = NodeCardPicker.pick(pool, confirmed) ?: continue
-            // Shown in the deterministic per-question order the lesson uses, so the
-            // answer's position never leaks and the same card always looks the same.
-            val shown = if (picked is Exercise.MultipleChoice) picked.shuffledForDisplay() else picked
-            cards += NodeExerciseCard(
-                itemId = review.itemId,
-                titleFa = review.titleFa,
-                lessonId = review.lessonId,
-                exercise = shown,
-                reasonFa = review.reasonFa,
-            )
+            // One entry per question the node's block asks (one per missing shape, at
+            // most two). A node with nothing askable contributes none: the drill still
+            // serves it, and a card surface must not invent a question.
+            for (picked in NodeCardPicker.pickAll(pool, confirmed)) {
+                // Shown in the deterministic per-question order the lesson uses, so the
+                // answer's position never leaks and the same card always looks the same.
+                val shown = if (picked is Exercise.MultipleChoice) picked.shuffledForDisplay() else picked
+                cards += NodeExerciseCard(
+                    itemId = review.itemId,
+                    titleFa = review.titleFa,
+                    lessonId = review.lessonId,
+                    exercise = shown,
+                    reasonFa = review.reasonFa,
+                )
+            }
         }
         return cards
     }

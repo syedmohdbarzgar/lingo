@@ -3,12 +3,14 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
-- **A node card is one question per node per session, and the session is words-then-graph
-  (graph-card pass).** The review session now asks a due curriculum node one of its own exercises,
-  which is what lets review practice confirm an exercise format at last — but the card is
-  deliberately narrow. **One** exercise per node: `NodeCardPicker` picks a single question, so the
-  focused drill (the node's whole evidence block) is still the deeper path and still one tap away on
-  the summary. **Typed and tapped formats only**: a `listening` item *is* its audio and a `speaking`
+- **A node's card block is at most two questions, and the session is words-then-graph
+  (graph-card pass, block pass).** The review session asks a due curriculum node its own exercises,
+  which is what lets review practice confirm an exercise format at last — but the block is
+  deliberately bounded. **At most two questions per node**, one per format it has not been
+  confirmed in: the gate needs two shapes, so a third question would spend the session on work the
+  drill exists for, and a node whose mask is already complete is asked one authored question rather
+  than none (its schedule still owes it a touch). The focused drill (the node's whole evidence
+  block) stays the deeper path and still one tap away on the summary. **Typed and tapped formats only**: a `listening` item *is* its audio and a `speaking`
   item needs the microphone and a take, so both stay in the lesson and the drill; a card the review
   surface cannot answer would be a dead end. **No `review_item` row and no `ReviewAttempt`**: a
   node's schedule lives in `knowledge_state`, so the card is graded with one verdict rather than the

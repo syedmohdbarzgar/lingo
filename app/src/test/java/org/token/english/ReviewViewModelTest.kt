@@ -111,7 +111,10 @@ class ReviewViewModelTest {
     }
 
     /** One curriculum node whose own schedule is due, with a drillable exercise. */
-    private fun Harness.withDueNode(itemId: String = "grammar.test"): Harness {
+    private fun Harness.withDueNode(
+        itemId: String = "grammar.test",
+        exercises: List<Exercise>? = null,
+    ): Harness {
         val lessonId = word.lessonId!!
         knowledge.itemsFlow.value = listOf(
             KnowledgeItem(
@@ -140,7 +143,7 @@ class ReviewViewModelTest {
                 nextReviewAt = 0L,
             ),
         )
-        lessons.exercises[lessonId] = listOf(
+        lessons.exercises[lessonId] = exercises ?: listOf(
             Exercise.MultipleChoice(
                 id = "a1.test.ex.01",
                 lessonId = lessonId,
@@ -401,5 +404,56 @@ class ReviewViewModelTest {
 
         vm.onEvent(ReviewEvent.NextNode)
         assertEquals(ReviewPhase.DONE, vm.state.value.phase)
+    }
+
+    @Test
+    fun `a node missing two shapes is asked twice, in the authored order`() {
+        // A node whose schedule keeps coming round was asked its choice item every time
+        // (one card per node), so the second format the gate needs was never proven.
+        // The block asks one question per missing shape, at most two — and both are
+        // questions of the same due node, not a second node.
+        val lessonId = word.lessonId!!
+        val h = Harness().withDueNode(
+            exercises = listOf(
+                Exercise.FillBlank(
+                    id = "a1.test.ex.01",
+                    lessonId = lessonId,
+                    sentence = "I ______ here.",
+                    accepted = listOf("live"),
+                    skill = Skill.GRAMMAR,
+                ),
+                Exercise.Translation(
+                    id = "a1.test.ex.02",
+                    lessonId = lessonId,
+                    prompt = "من اینجا زندگی می‌کنم.",
+                    accepted = listOf("I live here."),
+                    skill = Skill.GRAMMAR,
+                ),
+            ),
+        )
+        val vm = h.build()
+        assertEquals(
+            "one card per missing shape, in the order the lesson authored them",
+            listOf("a1.test.ex.01", "a1.test.ex.02"),
+            vm.state.value.nodeCards.map { it.exercise.id },
+        )
+
+        vm.onEvent(ReviewEvent.Start)
+        assertEquals("a1.test.ex.01", vm.state.value.currentNodeCard!!.exercise.id)
+        vm.onEvent(ReviewEvent.AnswerChanged("live"))
+        vm.onEvent(ReviewEvent.SubmitNode)
+        assertTrue(vm.state.value.nodeOutcome!!.correct)
+
+        vm.onEvent(ReviewEvent.NextNode)
+
+        assertEquals("the node's second shape is still to be proven", ReviewPhase.SESSION, vm.state.value.phase)
+        assertTrue(vm.state.value.askingNode)
+        assertEquals("a1.test.ex.02", vm.state.value.currentNodeCard!!.exercise.id)
+
+        vm.onEvent(ReviewEvent.AnswerChanged("I live here."))
+        vm.onEvent(ReviewEvent.SubmitNode)
+        assertTrue(vm.state.value.nodeOutcome!!.correct)
+        vm.onEvent(ReviewEvent.NextNode)
+        assertEquals("only after the last question does the session end", ReviewPhase.DONE, vm.state.value.phase)
     }
 }

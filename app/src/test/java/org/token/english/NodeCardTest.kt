@@ -1,7 +1,6 @@
 package org.token.english
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.token.english.domain.engine.NodeCardPicker
@@ -17,19 +16,20 @@ import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 
 /**
- * A due node's own exercise, queued as a review card (graph-card pass).
+ * A due node's own exercises, queued as review cards.
  *
  * Two halves, and both are decided rules rather than screen behaviour:
  *
- * - `NodeCardPicker` — *which* exercise a card asks, and which it must never ask
- *   (a listening item needs its audio, a speaking item needs the microphone; the
- *   review screen has neither, and a card that cannot be answered is a dead end);
- * - `GetDueNodeCardsUseCase` — the card itself, built from the focused drill's own
- *   exercise subset so the question is one the bundle really asks about that node.
+ * - `NodeCardPicker` — *which* exercises a node's block asks (one per shape the node has
+ *   not been confirmed in, at most two), and which it must never ask (a listening item
+ *   needs its audio, a speaking item needs the microphone; the review screen has
+ *   neither, and a card that cannot be answered is a dead end);
+ * - `GetDueNodeCardsUseCase` — the cards themselves, built from the focused drill's own
+ *   exercise subset so every question is one the bundle really asks about that node.
  *
- * The session's half (the card is asked after the words, graded through the lesson's
- * evidence path and ends the session) is pinned in `ReviewViewModelTest`, where the
- * ViewModel harness lives.
+ * The session's half (the block is asked after the words, each answer is graded through
+ * the lesson's evidence path, and the session ends after the last card) is pinned in
+ * `ReviewViewModelTest`, where the ViewModel harness lives.
  */
 class NodeCardTest {
 
@@ -53,6 +53,14 @@ class NodeCardTest {
         skill = Skill.GRAMMAR,
     )
 
+    private fun translation(id: String) = Exercise.Translation(
+        id = id,
+        lessonId = lessonId,
+        prompt = "من اینجا زندگی می‌کنم.",
+        accepted = listOf("I live here."),
+        skill = Skill.GRAMMAR,
+    )
+
     private fun listening(id: String) = Exercise.Listening(
         id = id,
         lessonId = lessonId,
@@ -70,33 +78,46 @@ class NodeCardTest {
     )
 
     @Test
-    fun `the format the node has not been confirmed in is asked first`() {
+    fun `a missing shape is asked instead of the authored first`() {
         val first = mc("ex.01")
         val second = blank("ex.02")
-        // Proven in a choice only: the blank is what adds the second format, so the
-        // authored order is not what decides — the evidence the node is missing is.
+        // Proven in a choice only: the blank is the shape that adds the second format,
+        // so the authored order is not what decides — the shape the node is missing is.
         val confirmed = AnswerChecker.formatOf(first).bit
 
-        assertEquals(second, NodeCardPicker.pick(listOf(first, second), confirmed))
+        assertEquals(listOf(second), NodeCardPicker.pickAll(listOf(first, second), confirmed))
     }
 
     @Test
-    fun `once every format is confirmed the authored first is asked`() {
+    fun `two missing shapes are both asked, and a third waits for the drill`() {
+        // Nothing is confirmed, so every shape is missing — but the block is bounded by
+        // what the gate needs (two), not by how many exercises the lesson ships.
+        val picks = NodeCardPicker.pickAll(
+            listOf(mc("ex.01"), blank("ex.02"), translation("ex.03")),
+            confirmedFormats = 0,
+        )
+
+        assertEquals(NodeCardPicker.MAX_CARDS_PER_NODE, picks.size)
+        assertEquals("the authored order decides among the missing shapes", listOf("ex.01", "ex.02"), picks.map { it.id })
+    }
+
+    @Test
+    fun `a fully confirmed node is asked one authored question`() {
         val first = mc("ex.01")
         val second = blank("ex.02")
         val confirmed = AnswerChecker.formatOf(first).bit or AnswerChecker.formatOf(second).bit
 
-        // No format is worth more than another here, so the lesson's own order stands:
-        // the same question every session instead of one that jumps around.
-        assertEquals(first, NodeCardPicker.pick(listOf(first, second), confirmed))
+        // No shape left to add, so there is nothing a second question would prove — the
+        // session still touches the node, with the authored first.
+        assertEquals(listOf(first), NodeCardPicker.pickAll(listOf(first, second), confirmed))
     }
 
     @Test
     fun `an exercise the review screen cannot ask is never a card`() {
         // A listening item is its audio and a speaking item needs a take; the review
         // surface has no speaker and no microphone, so neither can be asked there.
-        assertNull(NodeCardPicker.pick(listOf(listening("ex.01"), speaking("ex.02")), 0))
-        assertNull("nothing to ask is an answer, not a failure", NodeCardPicker.pick(emptyList(), 0))
+        assertTrue(NodeCardPicker.pickAll(listOf(listening("ex.01"), speaking("ex.02")), 0).isEmpty())
+        assertTrue("nothing to ask is an answer, not a failure", NodeCardPicker.pickAll(emptyList(), 0).isEmpty())
     }
 
     private fun Harness.withDueNode(
@@ -145,17 +166,16 @@ class NodeCardTest {
     }
 
     @Test
-    fun `a due node becomes a card carrying one of its own exercises`() {
-        val h = Harness().withDueNode(exercises = listOf(mc("ex.01"), blank("ex.02")))
+    fun `a due node becomes one card per missing shape, all of its own lesson`() {
+        val h = Harness().withDueNode(exercises = listOf(blank("ex.01"), translation("ex.02")))
 
         val cards = h.cards()
 
-        assertEquals(1, cards.size)
-        assertEquals("the card belongs to the node whose schedule is due", "grammar.airport", cards.single().itemId)
-        assertEquals("and to the lesson that teaches it", lessonId, cards.single().lessonId)
+        assertEquals("two shapes are missing, so the block is two questions", 2, cards.size)
+        assertEquals(listOf("ex.01", "ex.02"), cards.map { it.exercise.id })
         assertTrue(
-            "the question is one of the node's own exercises",
-            cards.single().exercise.id in setOf("ex.01", "ex.02"),
+            "every card belongs to the node whose schedule is due, in its own lesson",
+            cards.all { it.itemId == "grammar.airport" && it.lessonId == lessonId },
         )
     }
 

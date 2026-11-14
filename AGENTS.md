@@ -162,7 +162,19 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (840 tests / 88 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (842 tests / 88 classes as of the
+block pass, where a due node's card block stopped being a single question: `NodeCardPicker.pickAll`
+returns **one exercise per `ExerciseFormat` the node has not been confirmed in** (the gate needs two
+shapes — `KnowledgeGates.MIN_FORMATS_TO_SECURE`), capped at
+`NodeCardPicker.MAX_CARDS_PER_NODE` = 2, and the authored first for a node whose mask is already
+complete — so a node reviewed for a year can finally add the second shape instead of being re-asked
+the shape it already has, while a third question stays the drill's job. A node with nothing askable
+(the block is all listening/speaking) still contributes no card, and a node whose two cards are the
+same node keeps that node's id on both — the session does not treat them as two nodes. Six
+`NodeCardTest` cases pin the rule (a missing shape beats the authored first, two missing shapes are
+both asked and a third is refused, a fully confirmed node gets one authored question, a
+listening/speaking item is never a card, a due node becomes one card per missing shape, a node with
+nothing askable yields none) and three `ReviewViewModelTest` cases the session; before it the
 speech-pace pass, where the rate the app speaks at stopped being an engine-wide constant and
 became a learner setting: `SpeechPace` (آهسته 0.6 · معمولی 0.75 · طبیعی 1.0) is stored as
 `speech_pace` in the settings record, `EnglishApp`'s settings collector hands it to

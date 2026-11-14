@@ -14,18 +14,21 @@
   because `TtsAudioPlayer` talks to Android's TTS from `Script::verify_device.sh`'s manual list, not
   from the JVM.
 
-- **The graph's own question in the review session (graph-card pass)** is pinned in
-  `NodeCardTest` (five cases) and `ReviewViewModelTest` (two more). The picker: the format the node
-  has **not** been confirmed in is asked first (a node proven only in a choice is asked its blank),
-  once every format is confirmed the lesson's authored order stands, a listening or speaking item is
-  never a card (the review surface has neither audio nor a microphone, so such a card could not be
-  answered), and a due node with nothing askable yields no card at all rather than a dead one. The
-  card's construction is tested too — it belongs to the node whose schedule is due, to the lesson
-  that teaches it, and carries one of that node's own exercises. The session's half: the node card
+- **The graph's own questions in the review session (graph-card pass, block pass)** is pinned in
+  `NodeCardTest` (six cases) and `ReviewViewModelTest` (three more). The picker: one question per
+  exercise shape the node has **not** been confirmed in (a node proven only in a choice is asked its
+  blank), two missing shapes are both asked and a third is left to the drill
+  (`NodeCardPicker.MAX_CARDS_PER_NODE`), a fully confirmed node is asked one authored question
+  instead of none, a listening or speaking item is never a card (the review surface has neither
+  audio nor a microphone, so such a card could not be answered), and a due node with nothing
+  askable yields no card at all rather than a dead one. The block's construction is tested too — one
+  card per missing shape, all belonging to the node whose schedule is due and to the lesson that
+  teaches it, in the order the lesson authored them. The session's half: the node card
   is asked **after** the word cards (finishing the queue no longer ends the session), a correct
   answer credits the node through `SubmitExerciseUseCase` with the format it was asked in and takes
-  the day's claim (so a repeat is not new evidence), and a wrong answer names the authored answer and
-  still moves the graph.
+  the day's claim (so a repeat is not new evidence), a wrong answer names the authored answer and
+  still moves the graph, and a node missing two shapes is asked both before the session ends — the
+  second card is the same node, not a second one.
 
 - **The evidence rule (Phase 1)** is pinned in two new classes. `EvidenceRuleTest`: one answer per
   exercise per day moves the model — a repeat writes nothing (neither the skill meter nor the
@@ -113,9 +116,10 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 840 tests / 88 classes as of
-  the speech-pace pass (the bullet above); before it the graph-card pass, where a due node's own
-  exercise became a card of the session; before it the word-ownership pass (bundle v82), where a
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 842 tests / 88 classes as of
+  the block pass (the bullet above); before it the speech-pace pass, where the rate the app speaks
+  at became a setting; before it the graph-card pass, where a due node's own exercise became a card
+  of the session; before it the word-ownership pass (bundle v82), where a
   review card stopped crediting every vocabulary node of
   its lesson: three lessons own two each, so one word moved two nodes. Three `KnowledgeEngineTest`
   cases pin the pick — a claimed word credits exactly the node that names it, a word no node names
