@@ -3,6 +3,19 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **A writing exemplar must be shaped like the answer it grades (exemplar-shape pass)** is pinned in
+  `ContentValidationTest` (three fixtures) and `WritingContentTest` (one case over the shipped
+  bundle). The rule: every accepted text of a `writing` item must contain each `mustUse` anchor
+  contiguously and in authored order — the grader compares adjacency, so `was … collected` is a miss
+  for the anchor `was collected`, and a model that separates them teaches the mistake. The check sits
+  in `ContentValidator` next to the existing word/sentence floors, because a model under the bar it is
+  shown against is feedback that contradicts the grade. `WritingContentTest` calls
+  `AnswerChecker.writingMatches` directly (now `internal`) instead of `grade`, since the exact-accepted
+  shortcut makes any exemplar pass by equalling itself. What is not covered: contractions written two
+  ways across anchor and exemplar (`didn't` vs `did not`) — the gate compares one normalised spelling
+  and will ask the author to align them, while the grader would accept either; and the `buildSrc`
+  mirror of the word-sequence rule is only held equal by these two tests, not by a shared import.
+
 - **A node card's evidence names its node (node-evidence pass)** is pinned in `EvidenceTransactionTest`
   (four cases on real Room), `NodeCardTest` (one) and `ReviewViewModelTest` (assertions inside the
   existing session case). The rules: a targeted write credits `targetItemId` and nothing else (two
@@ -165,8 +178,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 858 tests / 89 classes as of
-  the node-evidence pass (the bullet above); before it the take-cancellation pass, where a reset
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 862 tests / 89 classes as of
+  the exemplar-shape pass (the first bullet above); before it the node-evidence pass, then the
+  take-cancellation pass, where a reset
   take stopped being able to open the microphone; before it the recent-misses pass, where Progress
   began listing the questions behind the mix; before it the listening-card pass, where a due node's
   listening question could be heard in the session; before it the block pass, where a node's card block

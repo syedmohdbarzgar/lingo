@@ -162,6 +162,55 @@ class ContentValidationTest {
     }
 
     @Test
+    fun `an exemplar that drops an anchor fails`() {
+        // Floors alone let a model through that never uses the structure being graded:
+        // the text after a miss would be a paragraph the item itself would mark wrong.
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "بنویس", "mustUse": ["was collected"], "minWords": 8, "minSentences": 2,
+                "accepted": ["The forms were taken yesterday. The nurse was kind."], "skill": "WRITING",
+                "explanationFa": "توضیح"}""",
+        )
+
+        assertFails(dir, "does not use the anchor \"was collected\"")
+    }
+
+    @Test
+    fun `an exemplar that separates an anchor's words fails`() {
+        // Contiguity is what tells the passive `was collected` from `was never
+        // collected`, and the grader compares adjacency: a model may not be looser.
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "بنویس", "mustUse": ["was collected"], "minWords": 8, "minSentences": 2,
+                "accepted": ["The forms was never collected. The nurse was kind."], "skill": "WRITING",
+                "explanationFa": "توضیح"}""",
+        )
+
+        assertFails(dir, "contiguously and in order")
+    }
+
+    @Test
+    fun `an exemplar that uses a multi-word anchor contiguously passes`() {
+        // The check must not be a floor of "every anchor word appears somewhere":
+        // `going to` in order is the structure the learner is asked for.
+        val dir = writeValidBundle()
+        withExercise(
+            dir,
+            """{"id": "l1.ex.02", "lessonId": "l1", "type": "writing", "order": 6, "difficulty": 2,
+                "prompt": "بنویس", "mustUse": ["going to"], "minWords": 8, "minSentences": 2,
+                "accepted": ["I am going to start a course. It takes six weeks."], "skill": "WRITING",
+                "explanationFa": "توضیح"}""",
+        )
+
+        val report = ContentValidator.validate(dir)
+        assertTrue(report.errors.joinToString("\n"), report.errors.isEmpty())
+    }
+
+    @Test
     fun `a well-formed writing item passes the gate`() {
         val dir = writeValidBundle()
         withExercise(

@@ -74,8 +74,10 @@
   this file already records for the Vosk recogniser itself.
 
 - **A written text is graded on its shape, not on its prose (bundle v79).** `Exercise.Writing`
-  checks three things a phone can check without a model: every authored anchor appears **somewhere**,
-  the answer reaches its `minWords`, and it contains at least `minSentences` finished sentences. That
+  checks three things a phone can check without a model: every authored anchor appears **somewhere in
+  the text and as written** (its words contiguous and in their authored order — `was … collected` is
+  not `was collected`), the answer reaches its `minWords`, and it contains at least `minSentences`
+  finished sentences. That
   is what makes an offline grader honest rather than clever, and its limit is the whole of what a
   learner might expect more of: a text that uses `has not been` and `refund` in three sentences of
   nonsense passes, and so does a paragraph about the wrong subject. The same is true of
@@ -85,7 +87,14 @@
   sentence count is punctuation-based, so a learner who writes three comma-spliced clauses and one
   full stop is credited one sentence (the floor asks for finished sentences, which is the honest
   reading of a `.`), and the floor is authored per item rather than derived from the level, because
-  how much text a lesson should ask for is a content decision.
+  how much text a lesson should ask for is a content decision. The exemplar is now held to that same
+  shape by `ContentValidator` (word and sentence floors were already checked; the anchors were the
+  gap, P1 #4 of the review), so the text shown after a miss is one the item would accept for its
+  structure rather than only for being itself. Two residual limits: the gate compares one normalised
+  spelling, so an anchor written `didn't` and an exemplar written `did not` must be aligned by the
+  author even though the grader accepts either, and the `buildSrc` mirror of the word-sequence rule is
+  held equal to `AnswerChecker.writingMatches` by tests rather than by a shared import (the app is not
+  a `buildSrc` dependency).
 - **The difficulty audit reads the log and nothing surfaces it yet (P1).** `DifficultyAudit` +
   `GetDifficultyAuditUseCase` turn the answers `lesson_attempt` already keeps into per-item accuracy,
   thinking time and a bounded suggestion, and sixteen cases in `DifficultyAuditTest` read it on a fake

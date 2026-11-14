@@ -129,6 +129,18 @@ object ContentValidator {
 
         fun wordCount(value: String): Int = normalize(value).split(' ').count { it.isNotEmpty() }
 
+        /**
+         * Whether [phrase] appears in [words] contiguously and in order — the grader's
+         * rule (`AnswerChecker.writingMatches`). The app cannot be a dependency of this
+         * build-time gate, so the small rule lives here too.
+         */
+        fun List<String>.containsPhrase(phrase: List<String>): Boolean {
+            if (phrase.isEmpty() || phrase.size > size) return false
+            return (0..size - phrase.size).any { start ->
+                phrase.indices.all { offset -> this[start + offset] == phrase[offset] }
+            }
+        }
+
         fun array(o: JSONObject, key: String): List<Any?> {
             val json = o.opt(key) as? JSONArray ?: return emptyList()
             return (0 until json.length()).map { json.get(it) }
@@ -287,6 +299,21 @@ object ContentValidator {
                             .let { n -> n + if (model.trimEnd().lastOrNull()?.let { it !in ".!?" } == true) 1 else 0 }
                         if (minSentences > 0 && modelSentences < minSentences) {
                             report(id, "exemplar has $modelSentences sentence(s), under minSentences $minSentences")
+                        }
+                        // Floors are not the whole rule: the anchors are graded contiguously
+                        // and in authored order, so an exemplar that writes `was … collected`
+                        // for the anchor `was collected` models the shape the item marks
+                        // wrong. Checked on the same normalised words the two sides share.
+                        val modelWords = normalize(model).split(' ').filter { it.isNotEmpty() }
+                        anchors.forEach { anchor ->
+                            val phrase = normalize(anchor).split(' ').filter { it.isNotEmpty() }
+                            if (!modelWords.containsPhrase(phrase)) {
+                                report(
+                                    id,
+                                    "exemplar \"$model\" does not use the anchor \"$anchor\" " +
+                                        "contiguously and in order",
+                                )
+                            }
                         }
                     }
                 }

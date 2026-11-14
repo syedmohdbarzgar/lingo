@@ -14,7 +14,7 @@ kept as recorded evidence rather than re-worded for a version nobody built.
 | Area | Check | Evidence |
 |---|---|---|
 | Content bundle | `./gradlew validateContent --rerun` | 192 lessons, 1154 words, 3159 exercises (twelve of them `writing` texts), 36 placement questions, 268 nodes, bundle v82 |
-| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 858 tests / 89 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
+| Learning core, engines, ViewModels | `./gradlew :app:testBazaarDebugUnitTest --rerun` | 862 tests / 89 classes, 0 failures (quoted by `DocCodeConsistencyTest`) |
 | Lint, against the accepted list | `./gradlew :app:lintBazaarDebug` then `node scripts/lint_budget.mjs` | 7 warnings, all seven named in the budget with their reason (`CustomSplashScreen`, AGP ×2, `NewerVersionAvailable` ×3, `UseTomlInstead`) — none appeared, grew or shrank |
 | Room schema and migrations | `RoomMigrationTest`, `DatabaseUpgradeTest` on the JVM | every exported schema 1→11 validates; the v10 `conversation_done` step and its one-time import, and the v11 `wordsJson` column defaulting to `'[]'` |
 | Atomic evidence | `AnswerTransactionTest`, `EvidenceTransactionTest`, `LessonCompletionTransactionTest`, `PlacementSeedTransactionTest` | a failure inside each write rolls the whole answer back |

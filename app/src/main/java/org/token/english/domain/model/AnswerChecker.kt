@@ -456,6 +456,9 @@ object AnswerChecker {
      * [Exercise.Writing.mustUse] anchor appears **somewhere** in the answer, the
      * answer reaches [Exercise.Writing.minWords], and it is at least
      * [Exercise.Writing.minSentences] finished sentences. The last one is what makes
+     * a run-on fail. Internal so the bundle test can hold every shipped exemplar to
+     * this rule **without** the exact-accepted shortcut, which any exemplar passes by
+     * equalling itself.
      * this a text rather than a sentence: a paragraph's connective may open the
      * second sentence, so anchor order is not part of the contract — but a single
      * run-on that happens to carry every anchor and enough words is not two
@@ -476,7 +479,7 @@ object AnswerChecker {
      * answer should not fail for punctuation. It is otherwise deliberately not a
      * judge of prose: nothing here decides whether the text is *good*.
      */
-    private fun writingMatches(exercise: Exercise.Writing, answer: String): Boolean {
+    internal fun writingMatches(exercise: Exercise.Writing, answer: String): Boolean {
         val words = expandContractions(normalize(answer)).split(' ').filter { it.isNotEmpty() }
         if (words.isEmpty() || words.size < exercise.minWords) return false
         if (sentencesIn(answer) < exercise.minSentences) return false

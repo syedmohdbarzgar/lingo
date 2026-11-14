@@ -162,7 +162,17 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (858 tests / 89 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (862 tests / 89 classes as of the
+exemplar-shape pass, which closed P1 #4 of the review: `ContentValidator` checked a `writing`
+exemplar's word and sentence floors but never its `mustUse` anchors, so a model could reach every floor
+while modelling a structure the item marks wrong (`was … collected` for the anchor `was collected`).
+The gate now requires each anchor **contiguously and in authored order** in every accepted text, the
+same rule `AnswerChecker.writingMatches` grades with (the app is not a dependency of `buildSrc`, so
+the word-sequence check is mirrored there and both are pinned); `AnswerChecker.writingMatches` is
+`internal` so `WritingContentTest` can call it **without** the exact-accepted shortcut —
+`grade(exemplar)` says CORRECT because the text equals itself, which is what hid the gap. Tests: three
+`ContentValidationTest` fixtures (anchor dropped, anchor words separated, a multi-word anchor used in
+order passing) and one `WritingContentTest` case over every shipped exemplar; before it the
 node-evidence pass, which closed P1 #2 and #3 of the review: a due node's card now credits **the node
 it was asked for**. `KnowledgeRepository.recordAttempt` takes a `targetItemId`; a targeted write credits
 exactly that node (`items.filter { it.id == target }`, no `KnowledgeEvidence.itemsFor` union), while a

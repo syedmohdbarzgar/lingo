@@ -55,6 +55,27 @@ class WritingContentTest {
     }
 
     @Test
+    fun `every exemplar satisfies the structural rule itself, not just its own exact match`() {
+        // `grade(exemplar)` says CORRECT because the text is in `accepted` — the shortcut
+        // hides a model that reaches the word and sentence floors but never uses an anchor.
+        // So the rule is called directly here: the text shown after a miss must be one the
+        // item would have accepted for its structure, not only for being itself.
+        val items = writingItems()
+        assertTrue("the bundle ships no writing item to check", items.isNotEmpty())
+
+        items.forEach { item ->
+            item.accepted.forEach { exemplar ->
+                assertTrue(
+                    "${item.id}: \"$exemplar\" does not satisfy the item's own rule " +
+                        "(anchors ${item.mustUse}, minWords ${item.minWords}, " +
+                        "minSentences ${item.minSentences})",
+                    AnswerChecker.writingMatches(item, exemplar),
+                )
+            }
+        }
+    }
+
+    @Test
     fun `every level ships two written texts, not one`() {
         // Two, because one is the state v79 shipped and it is one edit away from none:
         // a level whose only text is dropped or re-levelled silently turns its writing
