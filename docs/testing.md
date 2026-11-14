@@ -3,6 +3,19 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **The graph's own question in the review session (graph-card pass)** is pinned in
+  `NodeCardTest` (five cases) and `ReviewViewModelTest` (two more). The picker: the format the node
+  has **not** been confirmed in is asked first (a node proven only in a choice is asked its blank),
+  once every format is confirmed the lesson's authored order stands, a listening or speaking item is
+  never a card (the review surface has neither audio nor a microphone, so such a card could not be
+  answered), and a due node with nothing askable yields no card at all rather than a dead one. The
+  card's construction is tested too — it belongs to the node whose schedule is due, to the lesson
+  that teaches it, and carries one of that node's own exercises. The session's half: the node card
+  is asked **after** the word cards (finishing the queue no longer ends the session), a correct
+  answer credits the node through `SubmitExerciseUseCase` with the format it was asked in and takes
+  the day's claim (so a repeat is not new evidence), and a wrong answer names the authored answer and
+  still moves the graph.
+
 - **The evidence rule (Phase 1)** is pinned in two new classes. `EvidenceRuleTest`: one answer per
   exercise per day moves the model — a repeat writes nothing (neither the skill meter nor the
   graph), a *different* exercise in the same shape still counts (a remediation block's questions are
@@ -89,8 +102,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 828 tests / 86 classes as of
-  the word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node of
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 835 tests / 87 classes as of
+  the graph-card pass, where a due node's own exercise became a card of the session (see the bullet
+  above); before it the word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node of
   its lesson: three lessons own two each, so one word moved two nodes. Three `KnowledgeEngineTest`
   cases pin the pick — a claimed word credits exactly the node that names it, a word no node names
   credits neither rather than both (the card is still graded), and a lesson with one vocabulary node

@@ -60,13 +60,19 @@ import org.token.english.core.designsystem.component.InfoBanner
 import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
 import org.token.english.core.designsystem.component.SecondaryButton
+import org.token.english.core.designsystem.component.AnswerField
+import org.token.english.core.designsystem.component.ExerciseOption
+import org.token.english.core.designsystem.component.ExercisePrompt
+import org.token.english.core.designsystem.component.OptionVisual
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.stepChange
 import org.token.english.di.reviewViewModelFactory
 import org.token.english.domain.engine.StudyTimePolicy
+import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.NodeExerciseCard
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.ReviewState
-import org.token.english.feature.lesson.AnswerField
+import org.token.english.domain.model.VocabularyItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,8 +145,8 @@ fun ReviewScreen(
                     modifier = Modifier.align(Alignment.Center),
                 )
 
-                state.phase == ReviewPhase.SUMMARY &&
-                    state.queue.isEmpty() && state.dueReviews.isEmpty() -> AppEmptyState(
+                state.phase == ReviewPhase.SUMMARY && state.queue.isEmpty() &&
+                    state.nodeCards.isEmpty() && state.dueReviews.isEmpty() -> AppEmptyState(
                     icon = Icons.Default.CheckCircle,
                     title = "امروز مروری در کار نیست",
                     subtitle = "همه موارد سررسید را مرور کردی. ادامه یادگیری را از خانه شروع کن.",
@@ -175,17 +181,24 @@ private fun SummaryContent(
         // The card queue can be empty while the graph still owes reviews, so the two
         // halves are separate cards rather than one number that could read "0" while
         // there is work on this very screen.
-        if (state.queue.isNotEmpty()) {
+        if (state.total > 0) {
             AppCard {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                     SectionHeader("مرور امروز")
                     Text(
-                        text = persianMeasure(state.queue.size, "مورد"),
+                        text = persianMeasure(state.total, "مورد"),
                         style = MaterialTheme.typography.displaySmall,
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Text(
-                        text = "واژگان: ${bidiNumber(state.queue.size)}",
+                        // Two kinds of question, one session: the words the queue owes
+                        // and the due nodes' own exercises (graph-card pass).
+                        text = if (state.nodeCards.isEmpty()) {
+                            "واژگان: ${bidiNumber(state.queue.size)}"
+                        } else {
+                            "واژگان: ${bidiNumber(state.queue.size)} · " +
+                                "تمرین گرههای سررسید: ${bidiNumber(state.nodeCards.size)}"
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -239,10 +252,11 @@ private fun SummaryContent(
 @Composable
 private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
     val word = state.currentWord
+    val nodeCard = state.currentNodeCard
     val extended = LocalAppExtendedColors.current
     // A new card arrives at the top of the screen, not at the offset the previous one
     // was scrolled to (see the reveal below).
-    val scroll = remember(state.index) { ScrollState(0) }
+    val scroll = remember(state.index, state.nodeIndex) { ScrollState(0) }
 
     Column(
         Modifier
@@ -252,161 +266,25 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md),
     ) {
         AppLinearProgress(
-            progress = if (state.total == 0) 0f else state.index.toFloat() / state.total,
+            progress = if (state.total == 0) 0f else state.answered.toFloat() / state.total,
             contentDescription = "پیشرفت مرور",
         )
         Text(
-            text = persianStepLabel("مورد", state.index + 1, state.total),
+            text = persianStepLabel("مورد", state.answered + 1, state.total),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        // A new card arrives instead of replacing the last one in the same frame —
-        // keyed on the index, so revealing or grading THIS card never re-plays it.
-        AppCard(modifier = Modifier.stepChange(state.index)) {
-            Column(
-                Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
-            ) {
-                if (word == null) {
-                    Text(
-                        text = "این مورد یافت نشد.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                } else {
-                    val producing = state.produceMode && !state.revealed
-                    if (producing) {
-                        // Active production: the Persian meaning is the prompt and
-                        // the English word (and its audio) stays hidden.
-                        Text(
-                            text = word.translation,
-                            style = MaterialTheme.typography.titleLarge,
-                            textAlign = TextAlign.Center,
-                        )
-                    } else {
-                        EnglishText(
-                            text = word.word,
-                            style = LearningTargetStyle,
-                            textAlign = TextAlign.Center,
-                        )
-                        word.pronunciation?.let {
-                            EnglishText(
-                                text = it,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        IconButton(onClick = { vm.onEvent(ReviewEvent.PlayWord) }) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.VolumeUp,
-                                contentDescription = "پخش تلفظ",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(32.dp),
-                            )
-                        }
-                    }
-
-                    if (producing) {
-                        AnswerField(
-                            value = state.typedAnswer,
-                            onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
-                            label = "معنی انگلیسی را بنویس",
-                        )
-                        PrimaryButton(
-                            text = "بررسی پاسخ",
-                            onClick = { vm.onEvent(ReviewEvent.CheckAnswer) },
-                            enabled = state.typedAnswer.isNotBlank(),
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                        TextButton(
-                            onClick = { vm.onEvent(ReviewEvent.Reveal) },
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Text("نمایش پاسخ")
-                        }
-                    } else if (!state.revealed) {
-                        PrimaryButton(
-                            text = "نمایش معنی",
-                            onClick = { vm.onEvent(ReviewEvent.Reveal) },
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    } else {
-                        Text(
-                            text = word.translation,
-                            style = MaterialTheme.typography.titleLarge,
-                            textAlign = TextAlign.Center,
-                        )
-                        // A-10: the example is bilingual, so a missed card teaches
-                        // meaning as well as form.
-                        word.examples.forEach { example ->
-                            EnglishText(
-                                text = example.en,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center,
-                            )
-                            if (example.fa.isNotBlank()) {
-                                Text(
-                                    text = isolateEmbeddedLtr(example.fa),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                        }
-                        // Authored Persian usage note (A-1): the same "why" the
-                        // lesson screen shows after a miss.
-                        word.explanationFa?.let { note ->
-                            Text(
-                                text = isolateEmbeddedLtr(note),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                        if (word.collocations.isNotEmpty()) {
-                            Text(
-                                text = word.collocations.joinToString(" · "),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                    }
-
-                    // Production feedback: never color-only — banner + text (design.md §50).
-                    state.answerCorrect?.let { correct ->
-                        if (correct) {
-                            CorrectBanner(Modifier.fillMaxWidth())
-                        } else {
-                            IncorrectBanner(
-                                modifier = Modifier.fillMaxWidth(),
-                                // A-2 parity with lessons: one edit away gets an
-                                // actionable spelling hint, still graded wrong.
-                                message = if (state.answerAlmost) {
-                                    "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${word.word}"
-                                } else {
-                                    "پاسخ درست: ${word.word}"
-                                },
-                            )
-                            // Explain the miss (A-1), as the lesson screen does.
-                            word.explanationFa?.let { note ->
-                                Text(
-                                    text = isolateEmbeddedLtr(note),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+        // A due node's own exercise (graph-card pass) is asked after the word cards,
+        // and the lesson's own cue and controls draw it — the same question the lesson
+        // asks, so it cannot read differently in the two places it appears.
+        if (nodeCard != null) {
+            NodeCardBody(nodeCard, state, vm)
+        } else {
+            WordCardBody(word, state, vm)
         }
 
-        if (state.revealed) {
+        if (state.revealed && nodeCard == null) {
             SectionHeader("چقدر بلد بودی؟")
             Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                 GradeButton(
@@ -442,6 +320,25 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
             }
         }
 
+        // A node card is graded, not self-assessed: one verdict, then the next
+        // question. No four-button SRS row — that belongs to a recall card.
+        if (nodeCard != null) {
+            if (state.nodeOutcome == null) {
+                PrimaryButton(
+                    text = "بررسی پاسخ",
+                    onClick = { vm.onEvent(ReviewEvent.SubmitNode) },
+                    enabled = state.canSubmitNode,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else {
+                PrimaryButton(
+                    text = if (state.nodeIndex + 1 >= state.nodeCards.size) "پایان مرور" else "ادامه",
+                    onClick = { vm.onEvent(ReviewEvent.NextNode) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
+
         val itemState = state.currentItem?.state
         if (itemState != null && itemState != ReviewState.NEW) {
             Text(
@@ -449,6 +346,270 @@ private fun SessionContent(state: ReviewUiState, vm: ReviewViewModel) {
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+    }
+}
+
+
+/**
+ * One word card: reveal, then grade. Deliberately separate from the node card — a
+ * word card asks about one word, a node card asks one of the lesson's exercises, and
+ * the two share nothing but the session they arrive in.
+ */
+@Composable
+private fun WordCardBody(
+    word: VocabularyItem?,
+    state: ReviewUiState,
+    vm: ReviewViewModel,
+) {
+    AppCard(modifier = Modifier.stepChange(state.index)) {
+        Column(
+            Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+        ) {
+            if (word == null) {
+                Text(
+                    text = "این مورد یافت نشد.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                val producing = state.produceMode && !state.revealed
+                if (producing) {
+                    // Active production: the Persian meaning is the prompt and
+                    // the English word (and its audio) stays hidden.
+                    Text(
+                        text = word.translation,
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                    )
+                } else {
+                    EnglishText(
+                        text = word.word,
+                        style = LearningTargetStyle,
+                        textAlign = TextAlign.Center,
+                    )
+                    word.pronunciation?.let {
+                        EnglishText(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    IconButton(onClick = { vm.onEvent(ReviewEvent.PlayWord) }) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.VolumeUp,
+                            contentDescription = "پخش تلفظ",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(32.dp),
+                        )
+                    }
+                }
+
+                if (producing) {
+                    AnswerField(
+                        value = state.typedAnswer,
+                        onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
+                        label = "معنی انگلیسی را بنویس",
+                    )
+                    PrimaryButton(
+                        text = "بررسی پاسخ",
+                        onClick = { vm.onEvent(ReviewEvent.CheckAnswer) },
+                        enabled = state.typedAnswer.isNotBlank(),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    TextButton(
+                        onClick = { vm.onEvent(ReviewEvent.Reveal) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("نمایش پاسخ")
+                    }
+                } else if (!state.revealed) {
+                    PrimaryButton(
+                        text = "نمایش معنی",
+                        onClick = { vm.onEvent(ReviewEvent.Reveal) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                } else {
+                    Text(
+                        text = word.translation,
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                    )
+                    // A-10: the example is bilingual, so a missed card teaches
+                    // meaning as well as form.
+                    word.examples.forEach { example ->
+                        EnglishText(
+                            text = example.en,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                        if (example.fa.isNotBlank()) {
+                            Text(
+                                text = isolateEmbeddedLtr(example.fa),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+                    // Authored Persian usage note (A-1): the same "why" the
+                    // lesson screen shows after a miss.
+                    word.explanationFa?.let { note ->
+                        Text(
+                            text = isolateEmbeddedLtr(note),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    if (word.collocations.isNotEmpty()) {
+                        Text(
+                            text = word.collocations.joinToString(" · "),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+
+                // Production feedback: never color-only — banner + text (design.md §50).
+                state.answerCorrect?.let { correct ->
+                    if (correct) {
+                        CorrectBanner(Modifier.fillMaxWidth())
+                    } else {
+                        IncorrectBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            // A-2 parity with lessons: one edit away gets an
+                            // actionable spelling hint, still graded wrong.
+                            message = if (state.answerAlmost) {
+                                "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${word.word}"
+                            } else {
+                                "پاسخ درست: ${word.word}"
+                            },
+                        )
+                        // Explain the miss (A-1), as the lesson screen does.
+                        word.explanationFa?.let { note ->
+                            Text(
+                                text = isolateEmbeddedLtr(note),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * One due curriculum node's own exercise, asked inside the review session.
+ *
+ * It is deliberately **not** a word card with an extra field: the question is the
+ * lesson's, the controls are the shared ones, and grading goes through
+ * `SubmitExerciseUseCase` — the same write a lesson answer makes, so the node's format
+ * mask and its mastery move together. The node's name is on the card because the
+ * learner is reviewing a *thing they studied*, not a random question.
+ */
+@Composable
+private fun NodeCardBody(
+    card: NodeExerciseCard,
+    state: ReviewUiState,
+    vm: ReviewViewModel,
+) {
+    val exercise = card.exercise
+    val outcome = state.nodeOutcome
+    AppCard(modifier = Modifier.stepChange(state.nodeIndex)) {
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+        ) {
+            Text(
+                text = "مرور هدفمند · ${card.titleFa}",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            ExercisePrompt(exercise)
+            when (exercise) {
+                is Exercise.MultipleChoice -> {
+                    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
+                        exercise.options.forEachIndexed { index, option ->
+                            val visual = when {
+                                outcome != null && index == exercise.correctIndex -> OptionVisual.CORRECT
+                                outcome != null && index == state.nodeSelectedOption -> OptionVisual.INCORRECT
+                                index == state.nodeSelectedOption -> OptionVisual.SELECTED
+                                else -> OptionVisual.DEFAULT
+                            }
+                            ExerciseOption(
+                                text = option,
+                                visual = visual,
+                                enabled = outcome == null,
+                                onClick = { vm.onEvent(ReviewEvent.SelectNodeOption(index)) },
+                            )
+                        }
+                    }
+                }
+
+                is Exercise.Writing -> AnswerField(
+                    value = state.typedAnswer,
+                    onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
+                    enabled = outcome == null,
+                    label = "متن انگلیسی",
+                    singleLine = false,
+                    minLines = 4,
+                )
+
+                is Exercise.WordRecall -> AnswerField(
+                    value = state.typedAnswer,
+                    onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
+                    enabled = outcome == null,
+                    label = "واژهٔ انگلیسی",
+                )
+
+                else -> AnswerField(
+                    value = state.typedAnswer,
+                    onValueChange = { vm.onEvent(ReviewEvent.AnswerChanged(it)) },
+                    enabled = outcome == null,
+                    label = "پاسخ انگلیسی",
+                )
+            }
+
+            if (outcome != null) {
+                if (outcome.correct) {
+                    CorrectBanner(Modifier.fillMaxWidth())
+                    // A produced sentence or a written text has many valid wordings, so
+                    // the authored exemplar is shown on a pass as well.
+                    if (exercise is Exercise.SentenceProduction || exercise is Exercise.Writing) {
+                        EnglishText(
+                            text = outcome.correctAnswer,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                } else {
+                    IncorrectBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        message = if (outcome.almostCorrect) {
+                            "تقریباً درست — املای کلمه را بررسی کن. پاسخ درست: ${outcome.correctAnswer}"
+                        } else {
+                            "پاسخ درست: ${outcome.correctAnswer}"
+                        },
+                    )
+                    exercise.explanation?.let { note ->
+                        Text(
+                            text = "نکته: $note",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            }
         }
     }
 }

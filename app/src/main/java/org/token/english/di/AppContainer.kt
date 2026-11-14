@@ -44,6 +44,7 @@ import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
 import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
@@ -425,6 +426,14 @@ class AppContainer(context: Context, appScope: CoroutineScope) : Speaker {
      */
     val getDueKnowledgeReviews: GetDueKnowledgeReviewsUseCase by lazy {
         GetDueKnowledgeReviewsUseCase(knowledgeRepository, getFocusPlan) { getMissProfile() }
+    }
+
+    /**
+     * The review session's graph cards (graph-card pass): the same due nodes as the
+     * summary, narrowed to the one exercise each can be asked with a tap or a keyboard.
+     */
+    val getDueNodeCards: GetDueNodeCardsUseCase by lazy {
+        GetDueNodeCardsUseCase(getDueKnowledgeReviews, lessonRepository, knowledgeRepository)
     }
 
     /**

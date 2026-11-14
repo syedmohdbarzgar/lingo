@@ -7,12 +7,14 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.token.english.domain.engine.Sm2ReviewScheduler
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.ExerciseFormat
 import org.token.english.domain.model.KnowledgeItem
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.KnowledgeType
@@ -24,7 +26,9 @@ import org.token.english.domain.model.ReviewState
 import org.token.english.domain.model.Skill
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.review.ReviewEvent
 import org.token.english.feature.review.ReviewPhase
@@ -83,19 +87,21 @@ class ReviewViewModelTest {
         val audio = FakeAudioPlayer()
         val speaker = RecordingSpeaker()
 
-        fun build(foreground: () -> Boolean = { true }): ReviewViewModel = ReviewViewModel(
-            reviewRepository = reviews,
-            vocabularyRepository = vocabulary,
-            progressRepository = progress,
-            submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress, knowledge),
-            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
-                knowledge,
-                GetFocusPlanUseCase(knowledge, lessons),
-            ),
-            audioPlayer = audio,
-            speaker = speaker,
-            isAppInForeground = foreground,
-        )
+        fun build(foreground: () -> Boolean = { true }): ReviewViewModel {
+            val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))
+            return ReviewViewModel(
+                reviewRepository = reviews,
+                vocabularyRepository = vocabulary,
+                progressRepository = progress,
+                submitReview = SubmitReviewUseCase(reviews, Sm2ReviewScheduler(), progress, knowledge),
+                getDueKnowledgeReviews = due,
+                getDueNodeCards = GetDueNodeCardsUseCase(due, lessons, knowledge),
+                submitExercise = SubmitExerciseUseCase(progress, knowledge),
+                audioPlayer = audio,
+                speaker = speaker,
+                isAppInForeground = foreground,
+            )
+        }
     }
 
     private fun Harness.withDueCard(): Harness {
@@ -271,6 +277,14 @@ class ReviewViewModelTest {
         vm.onEvent(ReviewEvent.Start)
         vm.onEvent(ReviewEvent.Reveal)
         vm.onEvent(ReviewEvent.Grade(ReviewResult.GOOD))
+        // The word cards are done but the session is not: the graph's own question is
+        // next (graph-card pass), and answering it is what ends the session.
+        assertEquals(ReviewPhase.SESSION, vm.state.value.phase)
+        assertTrue(vm.state.value.askingNode)
+        val exercise = vm.state.value.currentNodeCard!!.exercise as Exercise.MultipleChoice
+        vm.onEvent(ReviewEvent.SelectNodeOption(exercise.correctIndex))
+        vm.onEvent(ReviewEvent.SubmitNode)
+        vm.onEvent(ReviewEvent.NextNode)
         assertEquals(ReviewPhase.DONE, vm.state.value.phase)
         assertEquals("the node is still owed after the cards", 1, vm.state.value.dueReviews.size)
 
@@ -320,5 +334,72 @@ class ReviewViewModelTest {
 
         vm.onStudyTick(nowMs = System.currentTimeMillis())
         assertEquals(0L, h.progress.studySeconds)
+    }
+
+    @Test
+    fun `a due node's own exercise is asked after the word cards, and its answer is evidence`() {
+        // graph-card pass: the session no longer ends with the last word. A node whose
+        // schedule is due is asked its own exercise — the question the lesson would ask
+        // — so the format mask can finally be confirmed by review practice.
+        val h = Harness().withDueCard().withDueNode()
+        val vm = h.build()
+        assertEquals(1, vm.state.value.nodeCards.size)
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.Reveal)
+        vm.onEvent(ReviewEvent.Grade(ReviewResult.GOOD))
+
+        assertEquals("the session goes on to the graph's question", ReviewPhase.SESSION, vm.state.value.phase)
+        assertTrue(vm.state.value.askingNode)
+
+        val exercise = vm.state.value.currentNodeCard!!.exercise as Exercise.MultipleChoice
+        vm.onEvent(ReviewEvent.SelectNodeOption(exercise.correctIndex))
+        vm.onEvent(ReviewEvent.SubmitNode)
+
+        assertTrue("an answer is graded, not self-assessed", vm.state.value.nodeOutcome!!.correct)
+        assertEquals(
+            "the node is credited through the lesson's own answer path",
+            listOf(word.lessonId to true),
+            h.knowledge.recorded,
+        )
+        assertEquals(
+            "the format the card asked in is confirmed — what a word card may never do",
+            listOf(Skill.GRAMMAR to ExerciseFormat.MULTIPLE_CHOICE),
+            h.knowledge.recordedSkills,
+        )
+        assertTrue(
+            "the day's claim is taken, so repeating the answer is not new evidence",
+            h.progress.claimed.containsKey(exercise.id),
+        )
+
+        vm.onEvent(ReviewEvent.NextNode)
+
+        assertEquals(ReviewPhase.DONE, vm.state.value.phase)
+        assertEquals("both halves count as reviewed", 2, vm.state.value.gradedCount)
+    }
+
+    @Test
+    fun `a wrong node answer names the authored answer and still takes the next question`() {
+        // No word cards at all: with only a due node the graph is the whole session, and
+        // the node card is the first question rather than the second.
+        val h = Harness().withDueNode()
+        val vm = h.build()
+
+        vm.onEvent(ReviewEvent.Start)
+        val exercise = vm.state.value.currentNodeCard!!.exercise as Exercise.MultipleChoice
+        vm.onEvent(ReviewEvent.SelectNodeOption((exercise.correctIndex + 1) % exercise.options.size))
+        vm.onEvent(ReviewEvent.SubmitNode)
+
+        val outcome = vm.state.value.nodeOutcome!!
+        assertFalse(outcome.correct)
+        assertEquals(
+            "the banner has a real answer to name, not a generic miss",
+            exercise.options[exercise.correctIndex],
+            outcome.correctAnswer,
+        )
+        assertEquals("a miss is still written to the graph", listOf(word.lessonId to false), h.knowledge.recorded)
+
+        vm.onEvent(ReviewEvent.NextNode)
+        assertEquals(ReviewPhase.DONE, vm.state.value.phase)
     }
 }

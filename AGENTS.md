@@ -162,7 +162,24 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (828 tests / 86 classes as of the
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (835 tests / 87 classes as of the
+graph-card pass, where the review session stopped ending at the last word: a due curriculum node's
+own exercise is now queued as a card (`NodeExerciseCard`) after the word cards and graded through
+`SubmitExerciseUseCase` — the lesson's own evidence path — so review practice finally confirms a
+*format* (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), which a word card may never do because recall is
+not transfer. `NodeCardPicker` decides which exercise: one a card can ask (never a listening item,
+whose audio the review screen does not play, and never a speaking item, which needs the microphone),
+preferring a format the node has not been confirmed in and otherwise keeping the lesson's authored
+order; a node with nothing askable is dropped and left to the focused drill.
+`GetDueNodeCardsUseCase` builds the card from the drill's own exercise subset
+(`DueKnowledgeReview.exerciseIds`), never from a guess. The shared answer controls and the cue moved
+out of `feature/lesson` into `core/designsystem/component` (`ExerciseOption`, `AnswerField`,
+`ExercisePrompt`) — `feature/review` and `feature/onboarding` were importing them from another
+feature, which is the import §3 forbids, and the card must ask its question exactly as the lesson
+does. Five `NodeCardTest` cases pin the picker and the card's construction and two
+`ReviewViewModelTest` cases the session (the graph's question follows the words and its answer
+credits the node's format and claims the day; a wrong answer names the authored answer and still
+moves the graph); before it the
 word-ownership pass (bundle v82), where a review card stopped crediting every vocabulary node its
 lesson owns: three lessons (`c1.phrasal-idioms`, `c2.nuance`, `c2.collocation`) own two each, so
 reviewing «subtle» raised `vocab.semantic-precision` *and* `vocab.connotation` — one word, two

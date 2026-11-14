@@ -13,6 +13,18 @@
   later in the path would send the learner forward instead of back. `ContentDistributionTest`
   counts that (and that a node is levelled where its first lesson sits), because the graph is
   content and nothing else would notice.
+- **A due node's own question is part of the review session (graph-card pass).** `NodeCardPicker`
+  turns a due node's drill subset into **one** question the review surface can actually ask: it drops
+  `listening` (its audio is the question) and `speaking` (a take is the answer), prefers an exercise
+  whose format the node has not been confirmed in — securing a node needs two shapes
+  (`KnowledgeGates.MIN_FORMATS_TO_SECURE`), so the missing shape is exactly what a card is worth — and
+  otherwise keeps the lesson's authored order, so a session asks the same question twice. The cards
+  are built from `GetDueKnowledgeReviewsUseCase`'s own numbers (which node is due, in which order,
+  which of the lesson's exercises are evidence about it), so the summary's drill list and the
+  session's cards cannot disagree about what is owed. Grading is the lesson's: `SubmitExerciseUseCase`
+  writes the day's claim, the skill meter, the node and the format it was asked in, as one
+  transaction. A recall card is evidence about a word and may never set a format bit; this card is an
+  exercise, so review practice can finally move a node out of the plan by proving it a second way.
 - **One answer is evidence once (Phase 1, Room v9).** `ProgressRepository.claimAnswer` stores the
   day's answer per exercise in `question_attempt` *before* anything is written, and the use cases
   write the skill meter and the graph only from a claimed answer. Re-answering the question that was

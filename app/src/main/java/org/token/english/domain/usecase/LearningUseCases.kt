@@ -18,6 +18,7 @@ import org.token.english.domain.engine.nextLessonFor
 import org.token.english.domain.engine.MissCategory
 import org.token.english.domain.engine.MissProfile
 import org.token.english.domain.engine.MissTaxonomy
+import org.token.english.domain.engine.NodeCardPicker
 import org.token.english.domain.engine.PlacementAnswer
 import org.token.english.domain.engine.PlacementAssessment
 import org.token.english.domain.engine.PlacementAssessmentEngine
@@ -34,6 +35,7 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.KnowledgeState
 import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.LessonState
+import org.token.english.domain.model.NodeExerciseCard
 import org.token.english.domain.model.ReviewAttempt
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
@@ -41,6 +43,7 @@ import org.token.english.domain.model.Skill
 import org.token.english.domain.model.skill
 import org.token.english.domain.model.StudyStats
 import org.token.english.domain.model.TodayPlan
+import org.token.english.domain.model.shuffledForDisplay
 import org.token.english.domain.repository.ConversationRepository
 import org.token.english.domain.repository.KnowledgeRepository
 import org.token.english.domain.repository.LessonRepository
@@ -113,11 +116,16 @@ class SubmitExerciseUseCase(
      * row stay in one transaction (checklist 0.1). A second copy of those writes for
      * speech would be a second rule to keep in step — and the two would eventually
      * disagree about what one answer is worth.
+     *
+     * @param source which surface asked the question, recorded with the skill meter —
+     *   a review card that carries an exercise is not a lesson answer, and the history
+     *   should be able to say so.
      */
     suspend operator fun invoke(
         exercise: Exercise,
         outcome: ExerciseOutcome,
         now: Long,
+        source: String = "lesson",
     ): ExerciseOutcome {
         val correct = outcome.correct
         val skill = outcome.skill
@@ -139,7 +147,7 @@ class SubmitExerciseUseCase(
                 correct = correct,
                 now = now,
             )
-            progress.applyAttempt(skill, correct, source = "lesson")
+            progress.applyAttempt(skill, correct, source = source)
             // A written sentence is writing evidence *as well as* evidence about what
             // it was about: the item's `skill` says which knowledge the answer tests,
             // the format says how the learner produced it. Crediting only the tagged
@@ -549,6 +557,12 @@ data class DueKnowledgeReview(
     /** The node's `nextReviewAt` — how long it has been owed. */
     val dueAt: Long,
     val mastery: Float,
+    /**
+     * Ids of the exercises in [lessonId] that give evidence about the node — the
+     * focused drill's own subset, so a review card can ask one of them (graph-card
+     * pass) instead of guessing which of the lesson's items belong to this node.
+     */
+    val exerciseIds: Set<String> = emptySet(),
     /** Persian "why this node, why now", written by the remediation engine. */
     val reasonFa: String,
 )
@@ -639,6 +653,7 @@ class GetDueKnowledgeReviewsUseCase(
                 lessonId = plan.lessonId,
                 dueAt = state.nextReviewAt,
                 mastery = plan.mastery,
+                exerciseIds = plan.exerciseIds,
                 reasonFa = plan.reasonFa,
             )
         }
@@ -669,6 +684,60 @@ class GetDueKnowledgeReviewsUseCase(
 
         /** How many of the most overdue nodes are asked for a drill before giving up. */
         const val MAX_PROBES = 8
+    }
+}
+
+/**
+ * The graph half of the **session**, not only of the summary (graph-card pass): one
+ * due node's own exercise, queued as a card the review session asks.
+ *
+ * Why this exists at all: the queue and the graph were two lists. A due node could be
+ * *opened* as the focused drill (one tap into its lesson) but never *asked* by the
+ * review session, and because a word card is recall rather than transfer it could not
+ * confirm a format either ([KnowledgeGates.MIN_FORMATS_TO_SECURE]) — so a learner whose
+ * practice had moved to the queue could raise a node's mastery and never secure it. A
+ * card that carries an exercise closes that: it is graded by [AnswerChecker] and
+ * written through the lesson's own evidence path, format bit included.
+ *
+ * It asks the list it already trusts: [GetDueKnowledgeReviewsUseCase] decides which
+ * nodes are due, in which order, and which of each lesson's exercises are evidence
+ * about them. This use case only chooses **which** of those exercises to ask
+ * ([NodeCardPicker]: the format not yet confirmed, otherwise the authored first), and
+ * drops a node with nothing askable rather than offering a dead card. Nothing here
+ * invents a question or re-derives the graph.
+ */
+class GetDueNodeCardsUseCase(
+    private val due: GetDueKnowledgeReviewsUseCase,
+    private val lessons: LessonRepository,
+    private val knowledge: KnowledgeRepository,
+) {
+    suspend operator fun invoke(
+        now: Long,
+        limit: Int = GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT,
+    ): List<NodeExerciseCard> {
+        val reviews = due(now, limit)
+        if (reviews.isEmpty()) return emptyList()
+        // A lesson's exercises are read once, even when two due nodes share it.
+        val loaded = mutableMapOf<String, List<Exercise>>()
+        val cards = mutableListOf<NodeExerciseCard>()
+        for (review in reviews) {
+            val exercises = loaded[review.lessonId]
+                ?: lessons.getExercises(review.lessonId).also { loaded[review.lessonId] = it }
+            val pool = exercises.filter { it.id in review.exerciseIds }
+            val confirmed = knowledge.getState(review.itemId)?.distinctTypesCorrect ?: 0
+            val picked = NodeCardPicker.pick(pool, confirmed) ?: continue
+            // Shown in the deterministic per-question order the lesson uses, so the
+            // answer's position never leaks and the same card always looks the same.
+            val shown = if (picked is Exercise.MultipleChoice) picked.shuffledForDisplay() else picked
+            cards += NodeExerciseCard(
+                itemId = review.itemId,
+                titleFa = review.titleFa,
+                lessonId = review.lessonId,
+                exercise = shown,
+                reasonFa = review.reasonFa,
+            )
+        }
+        return cards
     }
 }
 

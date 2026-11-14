@@ -26,7 +26,9 @@ import org.token.english.domain.model.LearningLevel
 import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
@@ -113,6 +115,7 @@ class LoadFailureTest {
         reviews.failDueWith = IllegalStateException("cannot read the queue")
         val knowledge = FakeKnowledgeRepository()
         val lessons = FakeLessonRepository()
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))
         val vm = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = FakeVocabularyRepository(),
@@ -123,10 +126,9 @@ class LoadFailureTest {
                 FakeProgressRepository(),
                 knowledge,
             ),
-            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
-                knowledge,
-                GetFocusPlanUseCase(knowledge, lessons),
-            ),
+            getDueKnowledgeReviews = due,
+            getDueNodeCards = GetDueNodeCardsUseCase(due, lessons, knowledge),
+            submitExercise = SubmitExerciseUseCase(FakeProgressRepository(), knowledge),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },

@@ -396,6 +396,30 @@ data class ReviewItem(
     val introducedAt: Long = 0L,
 )
 
+/**
+ * One **curriculum node's own exercise**, queued as a review card (graph-card pass).
+ *
+ * The review queue used to be two lists: word cards in `review_item`, and due nodes
+ * reachable only as a focused drill one tap away. A node's exercises could therefore
+ * never be *asked* by the review session, and a learner whose practice is mostly review
+ * could raise a node's mastery but never confirm a second format
+ * ([KnowledgeGates.MIN_FORMATS_TO_SECURE]) — a card is recall, not transfer.
+ *
+ * The card carries its exercise because that is the whole difference: an exercise is
+ * graded by [AnswerChecker] and written through the lesson's own evidence path, so it
+ * confirms the format it was asked in as well as the answer.
+ */
+data class NodeExerciseCard(
+    /** The curriculum node whose own schedule is due. */
+    val itemId: String,
+    val titleFa: String,
+    /** The lesson the exercise belongs to — where its evidence is attributed. */
+    val lessonId: String,
+    val exercise: Exercise,
+    /** Persian "why this node, why now", written by the remediation engine. */
+    val reasonFa: String,
+)
+
 data class ReviewSchedule(
     val nextReviewAt: Long,
     val intervalDays: Int,

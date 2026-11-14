@@ -1,0 +1,258 @@
+package org.token.english.core.designsystem.component
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import org.token.english.core.designsystem.AppSpacing
+import org.token.english.core.designsystem.LearningTargetStyle
+import org.token.english.domain.model.Exercise
+
+/**
+ * The parts of an exercise that more than one screen draws.
+ *
+ * These lived in `feature/lesson` and were imported from `feature/review` and
+ * `feature/onboarding`, which is the import `AGENTS.md` §3 forbids — a shared component
+ * was living inside one feature. They are the design system's, so they moved here:
+ * an answer field, an option card and the exercise's own cue. Everything that is a
+ * *flow* rather than a control (the speaking take, the listening player) stays in the
+ * lesson feature, because no other screen runs it.
+ *
+ * The review session shows a curriculum node's own exercise (graph-card pass), and it
+ * must ask it exactly the way the lesson does — one prompt, one set of controls, so a
+ * question cannot read differently in the two places it is asked.
+ */
+
+enum class OptionVisual { DEFAULT, SELECTED, CORRECT, INCORRECT }
+
+/**
+ * Multiple-choice option card — min 56dp, 1.5dp state border, icon + color so the
+ * result never depends on color alone (Lingua design system §2, design.md §50).
+ */
+@Composable
+fun ExerciseOption(
+    text: String,
+    visual: OptionVisual,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    val scheme = MaterialTheme.colorScheme
+    val (borderColor, backgroundColor, contentColor) = when (visual) {
+        OptionVisual.DEFAULT -> Triple(scheme.outlineVariant, scheme.surface, scheme.onSurface)
+        OptionVisual.SELECTED -> Triple(scheme.primary, scheme.primaryContainer, scheme.onPrimaryContainer)
+        OptionVisual.CORRECT -> {
+            val ext = org.token.english.core.designsystem.LocalAppExtendedColors.current
+            Triple(scheme.primary, ext.successContainer, ext.onSuccess)
+        }
+        OptionVisual.INCORRECT -> Triple(
+            scheme.error,
+            scheme.errorContainer,
+            scheme.onErrorContainer,
+        )
+    }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 56.dp)
+            .border(BorderStroke(if (visual == OptionVisual.DEFAULT) 1.dp else 1.5.dp, borderColor), MaterialTheme.shapes.medium)
+            .background(backgroundColor, MaterialTheme.shapes.medium)
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(AppSpacing.md),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+    ) {
+        Box(Modifier.weight(1f)) {
+            EnglishText(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge,
+                color = contentColor,
+            )
+        }
+        when (visual) {
+            OptionVisual.CORRECT -> Icon(
+                Icons.Default.CheckCircle,
+                contentDescription = "درست",
+                tint = contentColor,
+                modifier = Modifier.size(20.dp),
+            )
+            OptionVisual.INCORRECT -> Icon(
+                Icons.Default.Cancel,
+                contentDescription = "نادرست",
+                tint = contentColor,
+                modifier = Modifier.size(20.dp),
+            )
+            else -> Unit
+        }
+    }
+}
+
+/** LTR text answer field for fill-blank / translation / listening answers. */
+@Composable
+fun AnswerField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    label: String = "پاسخ شما",
+    /**
+     * A written text needs room to be read back before it is submitted — a
+     * one-line field over a two-sentence answer scrolls the start of the learner's
+     * own writing out of sight. Everything shorter stays a single line, where Enter
+     * is "done" rather than "new line".
+     */
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = singleLine,
+            minLines = minLines,
+            label = { Text(label) },
+            textStyle = LearningTargetStyle.copy(fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurface),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                imeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+                keyboardType = KeyboardType.Text,
+            ),
+            shape = MaterialTheme.shapes.medium,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+            ),
+        )
+    }
+}
+
+/**
+ * The cue half of an exercise: what the learner is being asked, and nothing about the
+ * answer. The answer controls stay with the screen that owns the flow (an option list,
+ * a typed field, a word bank), so one question reads the same in the lesson and in the
+ * review session while each keeps its own feedback rules.
+ *
+ * A `listening` item is its audio and a `speaking` item is the learner's own voice, so
+ * both render nothing here — their screens draw their own surface.
+ */
+@Composable
+fun ExercisePrompt(
+    exercise: Exercise,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+    ) {
+        when (exercise) {
+            is Exercise.MultipleChoice -> {
+                // A-5: a comprehension item shows its reading text first — the
+                // learner reads, then answers. Plain question items have none.
+                exercise.passage?.let { text ->
+                    SectionHeader("متن را بخوانید")
+                    EnglishText(text = text, style = MaterialTheme.typography.bodyLarge)
+                }
+                EnglishText(text = exercise.question, style = MaterialTheme.typography.titleMedium)
+                exercise.questionFa?.let { questionFa ->
+                    Text(
+                        text = questionFa,
+                        // Authored Persian may open with English («Not uncommon» …):
+                        // pin RTL so first-strong can't flip it.
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            is Exercise.FillBlank -> {
+                SectionHeader("جمله را کامل کنید")
+                EnglishText(text = exercise.sentence, style = MaterialTheme.typography.titleLarge)
+            }
+
+            is Exercise.WordRecall -> {
+                SectionHeader("واژهٔ انگلیسی را بنویسید")
+                Text(text = exercise.prompt, style = MaterialTheme.typography.titleMedium)
+            }
+
+            is Exercise.Translation -> {
+                SectionHeader("ترجمه کنید")
+                Text(text = exercise.prompt, style = MaterialTheme.typography.titleMedium)
+            }
+
+            is Exercise.SentenceProduction -> {
+                SectionHeader("جمله را بسازید")
+                Text(text = exercise.prompt, style = MaterialTheme.typography.titleMedium)
+                exercise.hintFa?.let { hint ->
+                    Text(
+                        text = hint,
+                        // Authored Persian that may open with an English anchor word:
+                        // pin RTL so first-strong cannot flip it.
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            is Exercise.Writing -> {
+                SectionHeader("بنویسید")
+                Text(
+                    text = exercise.prompt,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                    ),
+                )
+                exercise.hintFa?.let { hint ->
+                    Text(
+                        text = hint,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Text(
+                    text = "حداقل ${exercise.minSentences} جمله",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+
+            is Exercise.Listening, is Exercise.Speaking -> Unit
+        }
+    }
+}

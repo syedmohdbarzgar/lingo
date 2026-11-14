@@ -3,6 +3,24 @@
 > Moved out of the root `AGENTS.md` (checklist v10). Everything here is a deliberate,
 > accepted trade-off, not a bug to fix silently.
 
+- **A node card is one question per node per session, and the session is words-then-graph
+  (graph-card pass).** The review session now asks a due curriculum node one of its own exercises,
+  which is what lets review practice confirm an exercise format at last — but the card is
+  deliberately narrow. **One** exercise per node: `NodeCardPicker` picks a single question, so the
+  focused drill (the node's whole evidence block) is still the deeper path and still one tap away on
+  the summary. **Typed and tapped formats only**: a `listening` item *is* its audio and a `speaking`
+  item needs the microphone and a take, so both stay in the lesson and the drill; a card the review
+  surface cannot answer would be a dead end. **No `review_item` row and no `ReviewAttempt`**: a
+  node's schedule lives in `knowledge_state`, so the card is graded with one verdict rather than the
+  four SRS buttons, and its evidence is the lesson's path (the day's claim, the node with its format
+  bit, the skill meter). The consequence is accepted: the review log behind review accuracy and the
+  miss taxonomy's card half does not see these answers, and giving an exercise a grade in that log
+  would need a card type the log does not have — its unit is a reviewed *item*, not a question.
+  **The two halves do not interleave**: the word cards are asked first, so a learner with a hundred
+  words due may never reach the graph's questions in one session, and nothing reorders across the
+  halves by weakness — a due word is what the SRS owes, a due node is a retention probe, and
+  interleaving them would make "what is left" depend on how many words happened to be due.
+
 - **Settled (Phase 2): the step resumes on the question, not the index.** `lesson_attempt` (Room v9)
   records every graded answer with its step, and `StageResume` opens a reopened step on the first
   question with no recorded answer; `lesson_state.stageCompletedAt` records when each step was

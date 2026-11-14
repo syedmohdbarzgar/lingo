@@ -72,13 +72,17 @@ import org.token.english.core.common.persianStepLabel
 import org.token.english.core.designsystem.AppSpacing
 import org.token.english.core.designsystem.LocalAppExtendedColors
 import org.token.english.core.designsystem.labelFa
+import org.token.english.core.designsystem.component.AnswerField
 import org.token.english.core.designsystem.component.AppCard
 import org.token.english.core.designsystem.component.AppEmptyState
 import org.token.english.core.designsystem.component.AppLinearProgress
 import org.token.english.core.designsystem.component.CorrectBanner
 import org.token.english.core.designsystem.component.EnglishText
+import org.token.english.core.designsystem.component.ExerciseOption
+import org.token.english.core.designsystem.component.ExercisePrompt
 import org.token.english.core.designsystem.component.IncorrectBanner
 import org.token.english.core.designsystem.component.InfoBanner
+import org.token.english.core.designsystem.component.OptionVisual
 import org.token.english.core.designsystem.component.OutlinedActionButton
 import org.token.english.core.designsystem.component.isolateEmbeddedLtr
 import org.token.english.core.designsystem.component.PrimaryButton
@@ -336,30 +340,10 @@ private fun ExerciseContent(
         AppCard(modifier = Modifier.stepChange(exercise.id)) {
             when (exercise) {
                 is Exercise.MultipleChoice -> {
-                    // A-5: a comprehension item shows its reading text first — the
-                    // learner reads, then answers. Plain question items have none.
-                    exercise.passage?.let { text ->
-                        SectionHeader("متن را بخوانید")
-                        EnglishText(
-                            text = text,
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                    }
-                    EnglishText(
-                        text = exercise.question,
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    exercise.questionFa?.let {
-                        Text(
-                            text = it,
-                            // Authored Persian may open with English («Not
-                            // uncommon» …): pin RTL so first-strong can't flip it.
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                    // A-5: the reading text comes first (a comprehension item), then the
+                    // question — the cue is the shared one, so the review session asks
+                    // it the same way (graph-card pass).
+                    ExercisePrompt(exercise)
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                         exercise.options.forEachIndexed { index, option ->
                             val visual = when {
@@ -379,11 +363,7 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.FillBlank -> {
-                    SectionHeader("جمله را کامل کنید")
-                    EnglishText(
-                        text = exercise.sentence,
-                        style = MaterialTheme.typography.titleLarge,
-                    )
+                    ExercisePrompt(exercise)
                     AnswerField(
                         value = state.textAnswer,
                         onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
@@ -394,11 +374,7 @@ private fun ExerciseContent(
                 // P2: recall the English word from its meaning — no options to
                 // recognize, so a right answer is evidence of retrieval.
                 is Exercise.WordRecall -> {
-                    SectionHeader("واژهٔ انگلیسی را بنویسید")
-                    Text(
-                        text = exercise.prompt,
-                        style = MaterialTheme.typography.titleMedium,
-                    )
+                    ExercisePrompt(exercise)
                     AnswerField(
                         value = state.textAnswer,
                         onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
@@ -408,11 +384,7 @@ private fun ExerciseContent(
                 }
 
                 is Exercise.Translation -> {
-                    SectionHeader("ترجمه کنید")
-                    Text(
-                        text = exercise.prompt,
-                        style = MaterialTheme.typography.titleMedium,
-                    )
+                    ExercisePrompt(exercise)
                     if (exercise.bank.isNotEmpty()) {
                         // Lighter A1 production: build the sentence from word chips.
                         WordBankAnswer(
@@ -450,22 +422,7 @@ private fun ExerciseContent(
                 // P2: build the whole sentence yourself. No bank, no options — the
                 // grader checks the target structure rather than one wording.
                 is Exercise.SentenceProduction -> {
-                    SectionHeader("جمله را بسازید")
-                    Text(
-                        text = exercise.prompt,
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    exercise.hintFa?.let { hint ->
-                        Text(
-                            text = hint,
-                            // Authored Persian that may open with an English anchor
-                            // word: pin RTL so first-strong cannot flip it.
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                    ExercisePrompt(exercise)
                     AnswerField(
                         value = state.textAnswer,
                         onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },
@@ -477,27 +434,7 @@ private fun ExerciseContent(
                 // A short connected text: the cue is Persian, the writing is English,
                 // and the field is multi-line because two sentences do not fit on one.
                 is Exercise.Writing -> {
-                    SectionHeader("بنویسید")
-                    Text(
-                        text = exercise.prompt,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                        ),
-                    )
-                    exercise.hintFa?.let { hint ->
-                        Text(
-                            text = hint,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textDirection = androidx.compose.ui.text.style.TextDirection.Rtl,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Text(
-                        text = "حداقل ${exercise.minSentences} جمله",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    ExercisePrompt(exercise)
                     AnswerField(
                         value = state.textAnswer,
                         onValueChange = { onEvent(LessonEvent.TextAnswerChanged(it)) },

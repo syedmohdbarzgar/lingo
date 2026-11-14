@@ -82,7 +82,10 @@ re-assert LTR, because the root layout is forced RTL.
   dialogue, on the conversation screen (above), where the recogniser returns a verdict.
 - **Review** — SM-2-lite spaced repetition with a daily new-card cap (20) and calendar-day anchors
   instead of raw 24-hour multiples. Odd-numbered cards ask for active production: a Persian prompt,
-  typed English answer. `AGAIN` re-queues inside the session (at most twice).
+  typed English answer. `AGAIN` re-queues inside the session (at most twice). A session runs the word
+  cards first and then asks each due curriculum node **one of its own exercises** — the question its
+  lesson would ask, graded the same way, which is what lets review practice confirm an exercise
+  format instead of only recalling a word.
 - **Listening** — read aloud by the on-device Android TTS engine. No audio files, no network.
 - **Vocabulary browser** — search with escaped `LIKE` patterns.
 - **Progress** — three independent skill tracks (Grammar, Vocabulary, Reading), each with its
@@ -399,7 +402,7 @@ slots by `scripts/balance_answer_positions.mjs`, and `ContentDistributionTest` e
 ./gradlew :app:testBazaarDebugUnitTest
 ```
 
-828 unit tests across 86 classes. The pure cores carry the most weight — review scheduling,
+835 unit tests across 87 classes. The pure cores carry the most weight — review scheduling,
 mastery and answer checking, streak day keys, entitlement policy and subscription math, placement scoring
 and its per-skill assessment, the content pipeline, the curriculum graph and the knowledge engine —
 and every decision engine (planner, prerequisites, remediation, mastery profile, exercise selector,
@@ -516,14 +519,15 @@ Nothing here is committed to a date; it is the order in which the pieces make se
 
 **Buildable offline (no backend required)**
 
-- Finish moving the spaced-repetition queue onto the knowledge graph. Both directions now exist: a
-  review grade **feeds the reviewed word's node** — mastery and that node's own next review date,
-  inside the card's transaction, and never an exercise-format confirmation (a card is recall, not
-  transfer; see [`docs/debt.md`](docs/debt.md)) — and a due **node** is re-served through its own
-  exercises, listed on the review screen and opened as the focused drill — one tap into its own
-  drill, not into a whole lesson. What is still missing is the reverse *convenience*: a node's
-  exercises are not queued **as cards** (a card carries no exercise to grade, so the queue and the
-  graph stay two lists).
+- Move the spaced-repetition queue onto the knowledge graph — nearly done. A review grade **feeds
+  the reviewed word's node** — mastery and that node's own next review date, inside the card's
+  transaction, and never an exercise-format confirmation (a card is recall, not transfer; see
+  [`docs/debt.md`](docs/debt.md)) — a due **node** is re-served through its own exercises as the
+  focused drill, and the **session itself** now asks a due node's own exercise as a card: the format
+  the node has not been confirmed in, asked after the word cards and graded through the lesson's
+  evidence path. What remains is depth rather than direction — one card per node per session (the
+  drill still serves the rest), and a listening or speaking item is still asked only inside the
+  drill, because a card has no audio playback and no microphone.
 - Finish the error taxonomy. The classification shipped: `MissTaxonomy` labels every recent lesson
   answer by the skill its exercise is authored for (vocabulary, grammar, comprehension, production)
   and every review card by its content type (vocabulary or grammar — a card knows nothing finer),

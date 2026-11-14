@@ -62,9 +62,9 @@ import org.token.english.domain.repository.LessonRepository
 import org.token.english.domain.repository.SettingsRepository
 import org.token.english.domain.usecase.AssessPlacementUseCase
 import org.token.english.domain.usecase.ScorePlacementUseCase
-import org.token.english.feature.lesson.AnswerField
-import org.token.english.feature.lesson.ExerciseOption
-import org.token.english.feature.lesson.OptionVisual
+import org.token.english.core.designsystem.component.AnswerField
+import org.token.english.core.designsystem.component.ExerciseOption
+import org.token.english.core.designsystem.component.OptionVisual
 
 data class PlacementUiState(
     val isLoading: Boolean = true,

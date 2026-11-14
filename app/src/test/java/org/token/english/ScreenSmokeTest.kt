@@ -33,11 +33,12 @@ import org.token.english.domain.model.Lesson
 import org.token.english.domain.model.Skill
 import org.token.english.domain.usecase.CompleteLessonUseCase
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetDueNodeCardsUseCase
 import org.token.english.domain.usecase.GetFocusPlanUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.GetSkillProfilesUseCase
 import org.token.english.domain.usecase.GetMissProfileUseCase
 import org.token.english.domain.usecase.GetTodayPlanUseCase
-import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 import org.token.english.feature.home.HomeScreen
 import org.token.english.feature.home.HomeViewModel
@@ -316,6 +317,8 @@ class ScreenSmokeTest {
     fun `an empty review queue says so instead of showing a blank screen`() {
         val reviews = FakeReviewRepository()
         val knowledge = FakeKnowledgeRepository()
+        val lessons = FakeLessonRepository()
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))
         val vm = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = FakeVocabularyRepository(),
@@ -326,10 +329,9 @@ class ScreenSmokeTest {
                 FakeProgressRepository(),
                 knowledge,
             ),
-            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
-                knowledge,
-                GetFocusPlanUseCase(knowledge, FakeLessonRepository()),
-            ),
+            getDueKnowledgeReviews = due,
+            getDueNodeCards = GetDueNodeCardsUseCase(due, lessons, knowledge),
+            submitExercise = SubmitExerciseUseCase(FakeProgressRepository(), knowledge),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },
@@ -388,6 +390,7 @@ class ScreenSmokeTest {
                 skill = Skill.GRAMMAR,
             ),
         )
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))
         val vm = ReviewViewModel(
             reviewRepository = reviews,
             vocabularyRepository = FakeVocabularyRepository(),
@@ -398,10 +401,9 @@ class ScreenSmokeTest {
                 FakeProgressRepository(),
                 knowledge,
             ),
-            getDueKnowledgeReviews = GetDueKnowledgeReviewsUseCase(
-                knowledge,
-                GetFocusPlanUseCase(knowledge, lessons),
-            ),
+            getDueKnowledgeReviews = due,
+            getDueNodeCards = GetDueNodeCardsUseCase(due, lessons, knowledge),
+            submitExercise = SubmitExerciseUseCase(FakeProgressRepository(), knowledge),
             audioPlayer = FakeAudioPlayer(),
             speaker = RecordingSpeaker(),
             isAppInForeground = { true },

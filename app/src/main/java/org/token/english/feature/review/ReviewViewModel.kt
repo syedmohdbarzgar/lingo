@@ -12,6 +12,8 @@ import org.token.english.core.audio.Speaker
 import org.token.english.core.common.runCatchingCancellable
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.AnswerChecker
+import org.token.english.domain.model.Exercise
+import org.token.english.domain.model.NodeExerciseCard
 import org.token.english.domain.model.ReviewItem
 import org.token.english.domain.model.ReviewResult
 import org.token.english.domain.model.VocabularyItem
@@ -19,7 +21,10 @@ import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.VocabularyRepository
 import org.token.english.domain.usecase.DueKnowledgeReview
+import org.token.english.domain.usecase.ExerciseOutcome
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
+import org.token.english.domain.usecase.GetDueNodeCardsUseCase
+import org.token.english.domain.usecase.SubmitExerciseUseCase
 import org.token.english.domain.usecase.SubmitReviewUseCase
 
 enum class ReviewPhase { SUMMARY, SESSION, DONE }
@@ -27,9 +32,23 @@ enum class ReviewPhase { SUMMARY, SESSION, DONE }
 data class ReviewUiState(
     val isLoading: Boolean = true,
     val phase: ReviewPhase = ReviewPhase.SUMMARY,
+    /** Word cards, in due order — the queue `review_item` owns. */
     val queue: List<ReviewItem> = emptyList(),
     val vocabulary: Map<String, VocabularyItem> = emptyMap(),
+    /** Position inside [queue]. Equals `queue.size` once the word cards are done. */
     val index: Int = 0,
+    /**
+     * The graph's own questions (graph-card pass): one exercise per due curriculum
+     * node that can be asked with a tap or a keyboard. Asked **after** the word cards,
+     * so a session keeps one shape and the cards the learner came for come first.
+     */
+    val nodeCards: List<NodeExerciseCard> = emptyList(),
+    /** Position inside [nodeCards]. */
+    val nodeIndex: Int = 0,
+    /** The option the learner tapped on a node card (null until tapped). */
+    val nodeSelectedOption: Int? = null,
+    /** The node card's verdict, once submitted — null means not answered yet. */
+    val nodeOutcome: ExerciseOutcome? = null,
     val revealed: Boolean = false,
     val gradedCount: Int = 0,
     val againCount: Int = 0,
@@ -51,7 +70,12 @@ data class ReviewUiState(
 ) {
     val currentItem: ReviewItem? get() = queue.getOrNull(index)
     val currentWord: VocabularyItem? get() = currentItem?.let { vocabulary[it.contentId] }
-    val total: Int get() = queue.size
+    val currentNodeCard: NodeExerciseCard?
+        get() = if (index >= queue.size) nodeCards.getOrNull(nodeIndex) else null
+    val total: Int get() = queue.size + nodeCards.size
+
+    /** How many questions are behind the learner — both halves count. */
+    val answered: Int get() = index.coerceAtMost(queue.size) + nodeIndex
 
     /**
      * Active production: odd positions ask the learner to WRITE the English
@@ -59,6 +83,22 @@ data class ReviewUiState(
      * the meaning — typing/listening/writing generation for the SRS (checklist P5).
      */
     val produceMode: Boolean get() = index % 2 == 1
+
+    /**
+     * Whether the session's current question is the node card's — the word cards are
+     * always asked first, so a card surface and the words never interleave.
+     */
+    val askingNode: Boolean get() = currentNodeCard != null
+
+    /** The node card's question already has an answer to submit? */
+    val canSubmitNode: Boolean
+        get() {
+            val card = currentNodeCard ?: return false
+            return when (val exercise = card.exercise) {
+                is Exercise.MultipleChoice -> nodeSelectedOption != null
+                else -> typedAnswer.isNotBlank()
+            }
+        }
 }
 
 sealed interface ReviewEvent {
@@ -69,12 +109,19 @@ sealed interface ReviewEvent {
     data object Reset : ReviewEvent
     data class AnswerChanged(val value: String) : ReviewEvent
     data object CheckAnswer : ReviewEvent
+    /** A tap on one of a node card's options. */
+    data class SelectNodeOption(val index: Int) : ReviewEvent
+    /** Submit the node card's answer — it is graded, not self-assessed. */
+    data object SubmitNode : ReviewEvent
+    /** Leave an answered node card and take the next question. */
+    data object NextNode : ReviewEvent
     /** From the finished-session screen back to the summary, where due nodes wait. */
     data object ShowDue : ReviewEvent
 }
 
 /**
- * Review session: due queue → reveal → grade (SRS) → next.
+ * Review session: due queue → reveal → grade (SRS) → next, then the graph's own
+ * questions for the nodes whose schedule is due.
  * Time is epoch millis; response time feeds the attempt log.
  */
 /**
@@ -87,6 +134,13 @@ class ReviewViewModel(
     private val progressRepository: ProgressRepository,
     private val submitReview: SubmitReviewUseCase,
     private val getDueKnowledgeReviews: GetDueKnowledgeReviewsUseCase,
+    /** The graph half's cards (graph-card pass): a due node's own exercise. */
+    private val getDueNodeCards: GetDueNodeCardsUseCase,
+    /**
+     * One answer's evidence — the same use case the lesson answers through, so a
+     * node card's format bit and mastery are written by one rule, not a second copy.
+     */
+    private val submitExercise: SubmitExerciseUseCase,
     private val audioPlayer: AudioPlayer,
     private val speaker: Speaker,
     private val isAppInForeground: () -> Boolean,
@@ -157,6 +211,12 @@ class ReviewViewModel(
                 android.util.Log.w("ReviewViewModel", "due node read failed", error)
                 emptyList()
             }
+            // The same containment for the graph's cards: a node whose exercise cannot be
+            // read is one question fewer, never an error screen over the word cards.
+            val nodeCards = runCatchingCancellable { getDueNodeCards(now) }.getOrElse { error ->
+                android.util.Log.w("ReviewViewModel", "due node card read failed", error)
+                emptyList()
+            }
             hasLoaded = true
             _state.update { current ->
                 // A resume read that finishes after the learner already started a session
@@ -168,13 +228,20 @@ class ReviewViewModel(
                     queue = due,
                     vocabulary = vocab,
                     dueReviews = dueNodes,
+                    nodeCards = nodeCards,
                     index = 0,
+                    nodeIndex = 0,
+                    nodeSelectedOption = null,
+                    nodeOutcome = null,
                     revealed = false,
                     typedAnswer = "",
                     answerCorrect = null,
                     answerAlmost = false,
-                    phase = if (due.isEmpty()) ReviewPhase.SUMMARY else current.phase.takeIf { p -> p != ReviewPhase.DONE }
-                        ?: ReviewPhase.SUMMARY,
+                    phase = if (due.isEmpty() && nodeCards.isEmpty()) {
+                        ReviewPhase.SUMMARY
+                    } else {
+                        current.phase.takeIf { p -> p != ReviewPhase.DONE } ?: ReviewPhase.SUMMARY
+                    },
                 )
             }
             itemStartedAtMs = now
@@ -209,6 +276,9 @@ class ReviewViewModel(
                 it.copy(
                     phase = ReviewPhase.SESSION,
                     index = 0,
+                    nodeIndex = 0,
+                    nodeSelectedOption = null,
+                    nodeOutcome = null,
                     revealed = false,
                     gradedCount = 0,
                     againCount = 0,
@@ -232,8 +302,21 @@ class ReviewViewModel(
             ReviewEvent.ShowDue -> _state.update { it.copy(phase = ReviewPhase.SUMMARY) }
 
             is ReviewEvent.AnswerChanged -> _state.update {
-                if (it.revealed) it else it.copy(typedAnswer = event.value)
+                when {
+                    it.askingNode && it.nodeOutcome != null -> it
+                    it.askingNode -> it.copy(typedAnswer = event.value)
+                    it.revealed -> it
+                    else -> it.copy(typedAnswer = event.value)
+                }
             }
+
+            is ReviewEvent.SelectNodeOption -> _state.update {
+                if (it.nodeOutcome != null) it else it.copy(nodeSelectedOption = event.index)
+            }
+
+            ReviewEvent.SubmitNode -> submitNodeCard()
+
+            ReviewEvent.NextNode -> nextNodeCard()
 
             ReviewEvent.CheckAnswer -> checkAnswer()
         }
@@ -254,6 +337,65 @@ class ReviewViewModel(
                 answerAlmost = verdict == AnswerChecker.Verdict.ALMOST,
             )
         }
+    }
+
+    /**
+     * Grades a node card's answer and writes its evidence.
+     *
+     * The verdict is formed first and shown at once, because it is pure and the write
+     * can fail: an accurate grade with no evidence is honest, a tap that does nothing
+     * is not (the rule the lesson's answer path already follows). The write is the
+     * lesson's own ([SubmitExerciseUseCase]), so the node's format mask, the node
+     * itself and the skill meter move exactly as they would for the same answer inside
+     * the lesson — a card is recall and may never set a format bit, an exercise is
+     * transfer and does.
+     */
+    private fun submitNodeCard() {
+        val s = _state.value
+        val card = s.currentNodeCard ?: return
+        if (s.nodeOutcome != null || grading || !s.canSubmitNode) return
+        val exercise = card.exercise
+        val answer = when (exercise) {
+            is Exercise.MultipleChoice -> exercise.options.getOrNull(s.nodeSelectedOption ?: -1).orEmpty()
+            else -> s.typedAnswer
+        }
+        if (answer.isBlank()) return
+        val outcome = submitExercise.grade(exercise, answer)
+        val now = System.currentTimeMillis()
+        grading = true
+        _state.update { it.copy(nodeOutcome = outcome) }
+        viewModelScope.launch {
+            try {
+                runCatchingCancellable {
+                    submitExercise(exercise, outcome, now, source = "review-node-card")
+                }.onFailure { error ->
+                    // The verdict stands; only its evidence is missing, and the next
+                    // attempt with the same item can still claim the day.
+                    android.util.Log.w("ReviewViewModel", "node card write failed", error)
+                }
+                itemStartedAtMs = System.currentTimeMillis()
+            } finally {
+                grading = false
+            }
+        }
+    }
+
+    /** Leaves an answered node card; the last one ends the session. */
+    private fun nextNodeCard() {
+        val s = _state.value
+        if (s.nodeOutcome == null) return
+        val next = s.nodeIndex + 1
+        _state.update {
+            it.copy(
+                nodeIndex = next,
+                nodeSelectedOption = null,
+                nodeOutcome = null,
+                typedAnswer = "",
+                gradedCount = it.gradedCount + 1,
+                phase = if (next >= it.nodeCards.size) ReviewPhase.DONE else ReviewPhase.SESSION,
+            )
+        }
+        itemStartedAtMs = System.currentTimeMillis()
     }
 
     private fun grade(result: ReviewResult) {
@@ -294,7 +436,14 @@ class ReviewViewModel(
                         answerAlmost = false,
                         gradedCount = it.gradedCount + 1,
                         againCount = if (result == ReviewResult.AGAIN) it.againCount + 1 else it.againCount,
-                        phase = if (next >= queue.size) ReviewPhase.DONE else ReviewPhase.SESSION,
+                        // The word cards are followed by the graph's own questions, so
+                        // finishing the queue is the session's end only when no node
+                        // card is waiting (graph-card pass).
+                        phase = if (next >= queue.size && it.nodeCards.isEmpty()) {
+                            ReviewPhase.DONE
+                        } else {
+                            ReviewPhase.SESSION
+                        },
                     )
                 }
                 itemStartedAtMs = System.currentTimeMillis()
