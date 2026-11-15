@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Phonon TTS</string>
+    <string name="text_hint">متن انگلیسی را بنویس</string>
+    <string name="voice_label">صدا</string>
+    <string name="play">پخش</string>
+    <string name="stop">توقف</string>
+    <string name="status_ready">آماده</string>
+    <string name="status_loading_model">در حال بارگذاری مدل…</string>
+    <string name="status_synthesizing">در حال تولید صدا…</string>
+    <string name="status_playing">در حال پخش</string>
+    <string name="status_stopped">متوقف شد</string>
+    <string name="status_empty_text">متن خالی است</string>
+    <string name="status_empty_audio">صدایی تولید نشد</string>
+    <string name="error_model_missing">فایل مدل در assets نیست: phonon_int8.litertlm را با scripts/download_model.sh دریافت کن.</string>
+    <string name="error_generic">خطا: %1$s</string>
+</resources>

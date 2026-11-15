@@ -1,0 +1,9 @@
+# The 87 MB model bundle is a downloaded build input (scripts/download_model.sh).
+app/src/main/assets/*.litertlm
+
+# Build output and machine-local paths
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
