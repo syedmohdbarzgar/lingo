@@ -577,6 +577,39 @@ data class DueKnowledgeReview(
 )
 
 /**
+ * The due list **and the bounds it was drawn under** (P2 #6).
+ *
+ * The screen shows at most [limit] rows out of at most [probeLimit] probes, so a learner
+ * looking at three rows could not tell whether the graph owed three nodes or thirty, nor
+ * whether a finished block had left work behind. Both counts are carried rather than
+ * derived on the surface, because only this use case sees the whole pool:
+ *
+ * - [dueTotal] — every node due and unsecured, the honest size of the backlog.
+ * - [drillableTotal] — of the [probeLimit] most overdue, the ones the focused drill can
+ *   actually serve (a node with no evidence-bearing exercise is not a row).
+ *
+ * [shown] is the block, [hidden] the drillable nodes it left out, and [beyondProbe] the
+ * due nodes the probe window never reached — so "three of eight" and "more work exists"
+ * are facts, not guesses.
+ */
+data class DueKnowledgeQueue(
+    val reviews: List<DueKnowledgeReview> = emptyList(),
+    val dueTotal: Int = 0,
+    val drillableTotal: Int = 0,
+    val limit: Int = GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT,
+    val probeLimit: Int = GetDueKnowledgeReviewsUseCase.MAX_PROBES,
+) {
+    /** Rows this block carries. */
+    val shown: Int get() = reviews.size
+
+    /** Drillable, probed, and not in this block — the work the block leaves behind. */
+    val hidden: Int get() = (drillableTotal - shown).coerceAtLeast(0)
+
+    /** Due nodes the probe window never looked at; a second read reaches them. */
+    val beyondProbe: Int get() = (dueTotal - probeLimit).coerceAtLeast(0)
+}
+
+/**
  * The other direction of the review queue (review→graph pass): which **knowledge
  * nodes** are due, not which cards.
  *
@@ -624,10 +657,10 @@ class GetDueKnowledgeReviewsUseCase(
      */
     private val missProfile: suspend () -> MissProfile? = { null },
 ) {
-    suspend operator fun invoke(
+    suspend fun queue(
         now: Long,
         limit: Int = DEFAULT_LIMIT,
-    ): List<DueKnowledgeReview> {
+    ): DueKnowledgeQueue {
         // A clean window is not a weakness: "weakest" of five right answers steers nothing.
         // The rule itself lives in `MissTaxonomy`, where the day's plan asks the same
         // question — one definition, so the two surfaces cannot start pointing at different
@@ -641,10 +674,11 @@ class GetDueKnowledgeReviewsUseCase(
             MissTaxonomy.rank(knowledge.allItems(), weakest)
         }
 
-        val candidates = knowledge.observeStates().first()
+        val due = knowledge.observeStates().first()
             .filter { state ->
                 KnowledgeGates.isDue(state, now) && !KnowledgeGates.isSecured(state)
             }
+        val candidates = due
             .sortedWith(
                 compareBy<KnowledgeState> { it.nextReviewAt }
                     .thenBy { state -> missRank[state.itemId] ?: 1 }
@@ -653,9 +687,14 @@ class GetDueKnowledgeReviewsUseCase(
             .take(MAX_PROBES)
 
         val reviews = mutableListOf<DueKnowledgeReview>()
+        // Every probe in the window is still asked (the bound is what keeps this a
+        // screen-local read), but only the first `limit` become rows: the rest are
+        // counted so the screen can say what this block left behind (P2 #6).
+        var drillable = 0
         for (state in candidates) {
-            if (reviews.size >= limit) break
             val plan = focus(state.itemId, now) ?: continue
+            drillable++
+            if (reviews.size >= limit) continue
             reviews += DueKnowledgeReview(
                 itemId = plan.itemId,
                 titleFa = plan.titleFa,
@@ -666,8 +705,23 @@ class GetDueKnowledgeReviewsUseCase(
                 reasonFa = plan.reasonFa,
             )
         }
-        return if (weakest == null) reviews else nameGap(reviews, weakest, missRank)
+        return DueKnowledgeQueue(
+            reviews = if (weakest == null) reviews else nameGap(reviews, weakest, missRank),
+            dueTotal = due.size,
+            drillableTotal = drillable,
+            limit = limit,
+            probeLimit = MAX_PROBES,
+        )
     }
+
+    /**
+     * The rows only — for a caller that asks "which nodes are due" and nothing about the
+     * backlog. A screen that makes a promise about what is left reads [queue] instead.
+     */
+    suspend operator fun invoke(
+        now: Long,
+        limit: Int = DEFAULT_LIMIT,
+    ): List<DueKnowledgeReview> = queue(now, limit).reviews
 
     /**
      * Names the gap once, on the first row whose node trains it — a promotion the screen

@@ -235,6 +235,104 @@ class ReviewViewModelTest {
         assertEquals(listOf("grammar.test"), vm.state.value.dueReviews.map { it.itemId })
         assertEquals("the row opens the drill in the node's own lesson", word.lessonId, vm.state.value.dueReviews.single().lessonId)
         assertEquals("the cards are still there", 1, vm.state.value.queue.size)
+        assertEquals("one node due, so the block hides nothing", 1, vm.state.value.dueTotal)
+        assertEquals(0, vm.state.value.dueRemaining)
+    }
+
+    /**
+     * [count] due grammar nodes, one per lesson, each with two askable shapes — so the
+     * session asks more **questions** than there are **nodes** (P2 #6).
+     */
+    private fun Harness.withDueNodes(count: Int): Harness {
+        val ids = (1..count).map { "grammar.n$it" }
+        knowledge.itemsFlow.value = ids.map { id ->
+            KnowledgeItem(
+                id = id,
+                type = KnowledgeType.GRAMMAR,
+                title = id,
+                titleFa = "«$id»",
+                level = LearningLevel.A1,
+                prerequisites = emptyList(),
+                lessonIds = listOf("lesson.$id"),
+                skills = listOf(Skill.GRAMMAR),
+            )
+        }
+        knowledge.statesFlow.value = ids.map { id ->
+            KnowledgeState(
+                itemId = id,
+                mastery = 0.7f,
+                exposureCount = 2,
+                consecutiveCorrect = 1,
+                consecutiveIncorrect = 0,
+                intervalDays = 0,
+                easeFactor = 2.5f,
+                repetitions = 1,
+                lapses = 0,
+                lastReviewedAt = 0L,
+                nextReviewAt = 0L,
+            )
+        }
+        ids.forEach { id ->
+            lessons.exercises["lesson.$id"] = listOf(
+                Exercise.MultipleChoice(
+                    id = "lesson.$id.ex.01",
+                    lessonId = "lesson.$id",
+                    question = "Choose",
+                    questionFa = null,
+                    options = listOf("right", "wrong"),
+                    correctIndex = 0,
+                    skill = Skill.GRAMMAR,
+                ),
+                Exercise.FillBlank(
+                    id = "lesson.$id.ex.02",
+                    lessonId = "lesson.$id",
+                    sentence = "I ______ ready.",
+                    accepted = listOf("am"),
+                    skill = Skill.GRAMMAR,
+                ),
+            )
+        }
+        return this
+    }
+
+    @Test
+    fun `the summary counts questions and nodes separately and says what the block hides`() {
+        // P2 #6: the block is three nodes of five, and each node asks two shapes — so the
+        // session's question count (six node questions) is not a node count of anything.
+        val h = Harness().withDueCard().withDueNodes(count = 5)
+
+        val vm = h.build()
+
+        assertEquals("three rows, not five", 3, vm.state.value.dueReviews.size)
+        assertEquals("five nodes are due", 5, vm.state.value.dueTotal)
+        assertEquals("two are left for the next read", 2, vm.state.value.dueHidden)
+        assertEquals(2, vm.state.value.dueRemaining)
+        assertEquals("two shapes per node", 6, vm.state.value.nodeCards.size)
+        assertEquals("from three nodes", 3, vm.state.value.nodeCardNodes)
+        assertEquals("the session's total is questions", 1 + 6, vm.state.value.total)
+    }
+
+    @Test
+    fun `the finished block re-reads the graph so work left behind is discoverable`() {
+        val h = Harness().withDueCard().withDueNode()
+        val vm = h.build()
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.Reveal)
+        vm.onEvent(ReviewEvent.Grade(ReviewResult.GOOD))
+        val exercise = vm.state.value.currentNodeCard!!.exercise as Exercise.MultipleChoice
+        vm.onEvent(ReviewEvent.SelectNodeOption(exercise.correctIndex))
+        vm.onEvent(ReviewEvent.SubmitNode)
+        vm.onEvent(ReviewEvent.NextNode)
+        assertEquals(ReviewPhase.DONE, vm.state.value.phase)
+
+        // The drill the row opened is what the session finished: the graph owes nothing.
+        h.knowledge.statesFlow.value = emptyList()
+        vm.onEvent(ReviewEvent.ShowDue)
+
+        assertEquals(ReviewPhase.SUMMARY, vm.state.value.phase)
+        assertTrue("the stale row is gone instead of shown twice", vm.state.value.dueReviews.isEmpty())
+        assertEquals("and the backlog agrees", 0, vm.state.value.dueTotal)
     }
 
     @Test

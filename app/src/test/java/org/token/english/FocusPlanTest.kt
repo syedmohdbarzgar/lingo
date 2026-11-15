@@ -285,6 +285,50 @@ class FocusPlanTest {
     }
 
     @Test
+    fun `the block carries how many drillable nodes it left behind`() = runTest {
+        // P2 #6: three rows could mean three due nodes or thirty. The queue carries the
+        // counts, because only this read sees the whole pool.
+        val nodes = (1..5).map { n -> item("grammar.n$n", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR)) }
+        val (knowledge, lessons) = repositories(
+            items = nodes,
+            states = (1..5).map { n -> state("grammar.n$n", 0.7f, nextReviewAt = now - n * 1_000L) },
+        )
+
+        val queue = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons)).queue(now)
+
+        assertEquals(GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT, queue.shown)
+        assertEquals("all five are due and drillable", 5, queue.drillableTotal)
+        assertEquals("two nodes are still owed after this block", 2, queue.hidden)
+        assertEquals(5, queue.dueTotal)
+        assertEquals("nothing sits outside the probe window", 0, queue.beyondProbe)
+    }
+
+    @Test
+    fun `the probe window stops at eight and counts the nodes it never reached`() = runTest {
+        // The bound is what keeps this a screen-local read, and a backlog larger than it
+        // has to be visible: otherwise "no more rows" reads as "no more work".
+        val nodes = (1..11).map { n -> item("grammar.n$n", KnowledgeType.GRAMMAR, listOf(Skill.GRAMMAR)) }
+        val (knowledge, lessons) = repositories(
+            items = nodes,
+            states = (1..11).map { n -> state("grammar.n$n", 0.7f, nextReviewAt = now - n * 1_000L) },
+        )
+        val due = GetDueKnowledgeReviewsUseCase(knowledge, GetFocusPlanUseCase(knowledge, lessons))
+
+        val queue = due.queue(now)
+
+        assertEquals(GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT, queue.shown)
+        assertEquals("only the window is probed", GetDueKnowledgeReviewsUseCase.MAX_PROBES, queue.drillableTotal)
+        assertEquals("eight probed minus three shown", 5, queue.hidden)
+        assertEquals(11, queue.dueTotal)
+        assertEquals("three due nodes sit outside the window", 3, queue.beyondProbe)
+        assertEquals(
+            "a wider ask is still the window, not the backlog",
+            GetDueKnowledgeReviewsUseCase.MAX_PROBES,
+            due(now, limit = 50).size,
+        )
+    }
+
+    @Test
     fun `a due node with no exercise about it is skipped, not offered`() = runTest {
         // The lesson exists and is taught, but everything it asks is grammar: a
         // vocabulary node whose date is due has no drill to open, so the row would

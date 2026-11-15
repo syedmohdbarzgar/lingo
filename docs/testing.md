@@ -3,6 +3,18 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **The review due list says how bounded it is (bounded-block pass)** is pinned in `FocusPlanTest`
+  (two cases) and `ReviewViewModelTest` (two cases). The rule: the screen shows `DEFAULT_LIMIT` = 3
+  nodes drawn from at most `MAX_PROBES` = 8 probes, so the queue carries `dueTotal` (all due and
+  unsecured nodes), `drillableTotal` (probes the focused drill can serve), `hidden` and `beyondProbe`
+  — the numbers the summary prints as «N گره از M گرهٔ سررسید» and the done screen uses to name the
+  work a finished block left. Question counts are separate from node counts (`nodeCardNodes`), because
+  one node's block can ask two shapes. `ReviewEvent.ShowDue` re-reads the graph, so "nothing is due"
+  after a session is a fresh answer, not the load-time snapshot. What is not covered: the strings are
+  rendered, not read — no compose test asserts the Persian copy of the cap or of the remaining-work
+  line, only the state the copy is built from; and `beyondProbe` counts due nodes the window never
+  probed, so it can include one whose drill would be refused (the next read resolves that).
+
 - **A writing exemplar must be shaped like the answer it grades (exemplar-shape pass)** is pinned in
   `ContentValidationTest` (three fixtures) and `WritingContentTest` (one case over the shipped
   bundle). The rule: every accepted text of a `writing` item must contain each `mustUse` anchor
@@ -178,9 +190,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 862 tests / 89 classes as of
-  the exemplar-shape pass (the first bullet above); before it the node-evidence pass, then the
-  take-cancellation pass, where a reset
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 866 tests / 89 classes as of
+  the bounded-block pass (the first bullet above); before it the exemplar-shape pass, then the
+  node-evidence pass, then the take-cancellation pass, where a reset
   take stopped being able to open the microphone; before it the recent-misses pass, where Progress
   began listing the questions behind the mix; before it the listening-card pass, where a due node's
   listening question could be heard in the session; before it the block pass, where a node's card block

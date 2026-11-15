@@ -20,6 +20,7 @@ import org.token.english.domain.model.VocabularyItem
 import org.token.english.domain.repository.ProgressRepository
 import org.token.english.domain.repository.ReviewRepository
 import org.token.english.domain.repository.VocabularyRepository
+import org.token.english.domain.usecase.DueKnowledgeQueue
 import org.token.english.domain.usecase.DueKnowledgeReview
 import org.token.english.domain.usecase.ExerciseOutcome
 import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
@@ -75,7 +76,28 @@ data class ReviewUiState(
      * intervals. A failed read of this *half* never blanks the cards — see [refresh].
      */
     val dueReviews: List<DueKnowledgeReview> = emptyList(),
+    /**
+     * Every node due and unsecured — the backlog behind this block (P2 #6). Kept as its
+     * own number because the screen shows at most
+     * [GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT] rows: before this, three rows could
+     * mean a graph owing three nodes or thirty.
+     */
+    val dueTotal: Int = 0,
+    /** Drillable due nodes this block left out — work a second read serves. */
+    val dueHidden: Int = 0,
+    /** Due nodes the [GetDueKnowledgeReviewsUseCase.MAX_PROBES] window never reached. */
+    val dueBeyondProbe: Int = 0,
 ) {
+    /** Due nodes still owed after this block is done; zero is a genuinely empty graph. */
+    val dueRemaining: Int get() = dueHidden + dueBeyondProbe
+
+    /**
+     * How many **nodes** the session's node cards come from — the counterpart of
+     * [nodeCards], which counts **questions**: a node whose block asks two shapes is one
+     * node and two questions, and the screen must not call it two of anything (P2 #6).
+     */
+    val nodeCardNodes: Int get() = nodeCards.map { it.itemId }.distinct().size
+
     val currentItem: ReviewItem? get() = queue.getOrNull(index)
     val currentWord: VocabularyItem? get() = currentItem?.let { vocabulary[it.contentId] }
     val currentNodeCard: NodeExerciseCard?
@@ -226,10 +248,11 @@ class ReviewViewModel(
             // The graph half is read separately and its failure is *contained*: a broken
             // node read must not turn a working card queue into an error screen, so it
             // degrades to "nothing due in the graph" and only logs.
-            val dueNodes = runCatchingCancellable { getDueKnowledgeReviews(now) }.getOrElse { error ->
+            val dueQueue = runCatchingCancellable { getDueKnowledgeReviews.queue(now) }.getOrElse { error ->
                 android.util.Log.w("ReviewViewModel", "due node read failed", error)
-                emptyList()
+                DueKnowledgeQueue()
             }
+            val dueNodes = dueQueue.reviews
             // The same containment for the graph's cards: a node whose exercise cannot be
             // read is one question fewer, never an error screen over the word cards.
             val nodeCards = runCatchingCancellable { getDueNodeCards(now) }.getOrElse { error ->
@@ -247,6 +270,9 @@ class ReviewViewModel(
                     queue = due,
                     vocabulary = vocab,
                     dueReviews = dueNodes,
+                    dueTotal = dueQueue.dueTotal,
+                    dueHidden = dueQueue.hidden,
+                    dueBeyondProbe = dueQueue.beyondProbe,
                     nodeCards = nodeCards,
                     index = 0,
                     nodeIndex = 0,
@@ -321,7 +347,13 @@ class ReviewViewModel(
 
             ReviewEvent.Reset -> refresh()
 
-            ReviewEvent.ShowDue -> _state.update { it.copy(phase = ReviewPhase.SUMMARY) }
+            // The finished block is not the end of the queue (P2 #6): the summary re-reads
+            // so the next three nodes — or the "nothing else is due" answer — are true
+            // after the session, not the snapshot from before it.
+            ReviewEvent.ShowDue -> {
+                _state.update { it.copy(phase = ReviewPhase.SUMMARY) }
+                refresh()
+            }
 
             is ReviewEvent.AnswerChanged -> _state.update {
                 when {

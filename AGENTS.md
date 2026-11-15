@@ -162,8 +162,22 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (862 tests / 89 classes as of the
-exemplar-shape pass, which closed P1 #4 of the review: `ContentValidator` checked a `writing`
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (866 tests / 89 classes as of the
+bounded-block pass, which closed P2 #6 of the review: the review screen's due list is a bound
+(`DEFAULT_LIMIT` = 3 rows out of `MAX_PROBES` = 8 probes) that the UI never stated, so three rows read
+as the whole backlog. `GetDueKnowledgeReviewsUseCase.queue` now returns a `DueKnowledgeQueue` carrying
+`dueTotal` (every node due and unsecured), `drillableTotal` (of the probe window, those the focused
+drill can serve), and the limits it was drawn under — `hidden` and `beyondProbe` are what the block
+left behind, and `invoke` still returns the rows for callers that ask no more. `ReviewUiState` keeps
+those counts plus `dueNodeNodes`/`nodeCardNodes`, so a session's question count (a node whose block
+asks two shapes is two questions) is named separately from the node count, and the summary says «N
+گره از M گرهٔ سررسید» with the cap spelled out. `ReviewEvent.ShowDue` now re-reads the graph as well
+as changing phase, so a finished block reveals the next rows (or a true "nothing is due") instead of
+a snapshot from before the session; the done screen names the nodes still owed when the block left
+any. Tests: two `FocusPlanTest` cases (five due nodes → 3 shown, 5 drillable, 2 hidden; eleven → the
+window is 8, `beyondProbe` 3, and a wider `limit` still returns 8) and two `ReviewViewModelTest`
+cases (five nodes × two shapes → 6 questions from 3 nodes with `dueTotal` 5 / `dueHidden` 2, and
+`ShowDue` after a finished session re-reading an emptied graph); before it the exemplar-shape pass, which closed P1 #4 of the review: `ContentValidator` checked a `writing`
 exemplar's word and sentence floors but never its `mustUse` anchors, so a model could reach every floor
 while modelling a structure the item marks wrong (`was … collected` for the anchor `was collected`).
 The gate now requires each anchor **contiguously and in authored order** in every accepted text, the

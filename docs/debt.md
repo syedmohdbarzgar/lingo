@@ -73,6 +73,17 @@
   on a device in `scripts/verify_device.sh`'s manual list, not by an assertion — the same limit
   this file already records for the Vosk recogniser itself.
 
+- **The review due list is a block of three out of an eight-probe window (P2 #6, closed).** The
+  list was always bounded — `DEFAULT_LIMIT` rows drawn from at most `MAX_PROBES` probes — but nothing
+  said so on screen, so three rows could be read as the whole backlog and a finished block hid the
+  work behind it. `GetDueKnowledgeReviewsUseCase.queue` now returns the rows **with** `dueTotal` and
+  `drillableTotal`, `ReviewUiState` keeps `dueHidden`/`dueBeyondProbe` (and `nodeCardNodes`, so a
+  session's questions are never reported as nodes), the summary prints the cap, and `ShowDue`
+  re-reads the graph so "nothing left" after a block is a fresh read. Residual: the copy is not
+  asserted by a compose test, only the state behind it; `beyondProbe` counts due nodes the window
+  never probed, so it may include one whose drill would be refused — the next read resolves it; and
+  the block still owes its three nodes a second read to reach the fourth, which is deliberate (a
+  screen-local read, not a scan of the graph with a hundred rows).
 - **A written text is graded on its shape, not on its prose (bundle v79).** `Exercise.Writing`
   checks three things a phone can check without a model: every authored anchor appears **somewhere in
   the text and as written** (its words contiguous and in their authored order — `was … collected` is

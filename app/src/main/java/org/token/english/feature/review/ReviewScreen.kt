@@ -68,6 +68,7 @@ import org.token.english.core.designsystem.component.OptionVisual
 import org.token.english.core.designsystem.component.SectionHeader
 import org.token.english.core.designsystem.component.stepChange
 import org.token.english.di.reviewViewModelFactory
+import org.token.english.domain.usecase.GetDueKnowledgeReviewsUseCase
 import org.token.english.domain.engine.StudyTimePolicy
 import org.token.english.domain.model.Exercise
 import org.token.english.domain.model.NodeExerciseCard
@@ -187,7 +188,9 @@ private fun SummaryContent(
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
                     SectionHeader("مرور امروز")
                     Text(
-                        text = persianMeasure(state.total, "مورد"),
+                        // Questions, not nodes (P2 #6): the big number is what the session
+                        // will actually ask.
+                        text = persianMeasure(state.total, "پرسش"),
                         style = MaterialTheme.typography.displaySmall,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -195,10 +198,11 @@ private fun SummaryContent(
                         // Two kinds of question, one session: the words the queue owes
                         // and the due nodes' own exercises (graph-card pass).
                         text = if (state.nodeCards.isEmpty()) {
-                            "واژگان: ${bidiNumber(state.queue.size)}"
+                            "واژگان: ${persianMeasure(state.queue.size, "پرسش")}"
                         } else {
-                            "واژگان: ${bidiNumber(state.queue.size)} · " +
-                                "تمرین گرههای سررسید: ${bidiNumber(state.nodeCards.size)}"
+                            "واژگان: ${persianMeasure(state.queue.size, "پرسش")} · " +
+                            "گره‌های سررسید: ${persianMeasure(state.nodeCards.size, "پرسش")} " +
+                            "برای ${persianMeasure(state.nodeCardNodes, "گره")}"
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -226,6 +230,25 @@ private fun SummaryContent(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    // The list is bounded, and a bounded list that does not say so reads
+                    // as the whole backlog (P2 #6).
+                    Text(
+                        text = "${persianMeasure(state.dueReviews.size, "گره")} از " +
+                            "${persianMeasure(state.dueTotal, "گرهٔ سررسید")} در این فهرست است؛ " +
+                            "فهرست حداکثر ${bidiNumber(GetDueKnowledgeReviewsUseCase.DEFAULT_LIMIT)} گره را " +
+                            "از ${bidiNumber(GetDueKnowledgeReviewsUseCase.MAX_PROBES)} گرهٔ سررسیدِ اول " +
+                            "انتخاب می‌کند.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (state.dueRemaining > 0) {
+                        Text(
+                            text = "${persianMeasure(state.dueRemaining, "گره")} دیگر هم سررسید است؛ " +
+                                "پس از این بلوک دوباره ببین.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                    }
                     state.dueReviews.forEach { review ->
                         Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                             Text(
@@ -684,7 +707,20 @@ private fun DoneContent(
         // The card session can end while the graph still owes reviews. Without this
         // action that work was reachable only by re-opening the screen — the summary
         // that lists it was two phases back.
-        if (state.dueReviews.isNotEmpty()) {
+        // The block that just ended is not the queue (P2 #6): the rows come from at most
+        // three of up to eight due nodes, so the work left behind is named here — and the
+        // action re-reads the graph (ShowDue refreshes), which is what makes the next
+        // block discoverable rather than a snapshot from before the session.
+        if (state.dueReviews.isNotEmpty() || state.dueRemaining > 0) {
+            if (state.dueRemaining > 0) {
+                Text(
+                    text = "${persianMeasure(state.dueRemaining, "گره")} سررسید دیگر هم در نوبت است؛ " +
+                        "این نشست فقط بلوکِ نخست را پرسید.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
             SecondaryButton(
                 text = "مرور هدفمند: ${persianMeasure(state.dueReviews.size, "بخش")}",
                 onClick = { vm.onEvent(ReviewEvent.ShowDue) },
