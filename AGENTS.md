@@ -224,7 +224,10 @@ in `SpeechRecognitionService` now goes through `publishFor(take)` — the `isPre
 the model-load failure, a missing model, a `Recognizer` that could not be constructed, the
 permission/mic/min-buffer failures — so a late failure of an abandoned take reaches nobody, and a
 last ownership gate sits immediately before `isListening = true` (bailing releases the recorder,
-closes the recogniser and discards the empty WAV). `keepRecording` is only set once that gate passes.
+closes the recogniser and discards the empty WAV), and the announcement itself is written through
+`publishFor(take)` — the review's remaining P0 item: a gate a few instructions earlier still left a
+window in which a reset could blank the screen while the live-mic state was on its way to the bus, so
+the decision and the write now happen together. `keepRecording` is only set once that gate passes.
 `finishCapture` now tears the service down for the **newest** take even when its screen is gone
 (otherwise an abandoned take would leave the microphone foreground type and its notification up),
 while a take a newer START replaced still returns first. Four `TakeWindowTest` cases pin the policy

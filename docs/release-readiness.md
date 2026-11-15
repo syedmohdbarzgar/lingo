@@ -8,8 +8,10 @@
 ## What the code already proves (no device needed)
 
 These are green as of bundle **v82** and do not need re-proving for a release unless the area changes.
-The two APK rows are the exception: they still name the **v80** build they were measured on, and are
-kept as recorded evidence rather than re-worded for a version nobody built.
+The three APK rows were rebuilt from v82 source on 2026-11-15 (commit `b526147` plus the one-line P0
+ownership fix in `SpeechRecognitionService`, which no flavor row depends on) and now carry their own
+numbers instead of the v80 ones; the CI row in the table below is still unrecorded, because a GitHub
+Actions run needs a push this machine never made.
 
 | Area | Check | Evidence |
 |---|---|---|
@@ -22,9 +24,9 @@ kept as recorded evidence rather than re-worded for a version nobody built.
 | The lesson's spoken answer | eleven `LessonViewModelTest` cases over `FakeSpeech` | `CORRECT`/`NEAR` write one transaction and are credited, `RETRY` writes nothing, a silent or broken take is never scored, and the no-recogniser install can leave the step unclaimed |
 | The take's own audio | `TakeAudioTest` (six JVM cases) + three playback cases in `LessonViewModelTest` + four in `ConversationPracticeViewModelTest` | a canonical mono 16 kHz WAV whose sizes are patched to what was appended, no file for an empty take, the path reaching the player on both screens, and playback stopping when the item, the turn or the screen moves on |
 | Word-level speech feedback | nine `SpokenWordFeedbackTest` cases + three `LessonViewModelTest` and two `ConversationPracticeViewModelTest` cases | the dropped content word is named, a dropped article is not, a reordering is not punished, a contraction / homophone / dialect spelling still counts as heard, one utterance satisfies one repeated word, and both screens show the list under the verdict but never on a hit or a typed answer |
-| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs built from v80 (26 s, 1124 / 1139 / 1182 entries) — **last recorded build, not a v82 run** |
-| Each flavor packages only its own store SDK | `unzip -p <apk> 'classes*.dex' \| grep -a -c <package>` | bazaar: `ir/cafebazaar/poolakey` 46, play billing 0, myket 0 · myket: `ir/myket/billingclient` 33 (the SDK's own package), poolakey 0, play billing 0 · googlePlay: `android/billingclient` 7, poolakey 0, myket 0 |
-| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json` | the v80 build: all three said `contentVersion` 80 with 3159 exercises — the APK cannot ship content the suite did not read; the v82 rebuild is still to be recorded |
+| All three flavors compile | `:app:assembleBazaarDebug`, `:app:assembleMyketDebug`, `:app:assembleGooglePlayDebug` | three debug APKs built from v82 (17 m 24 s cold, 1124 / 1139 / 1182 entries, 98 / 98 / 99 MB) — the entry counts match the v80 build pack for pack, so no flavor picked up or lost a file on the way to 82 |
+| Each flavor packages only its own store SDK | `unzip -p <apk> 'classes*.dex' \| grep -a -o <package> \| wc -l` | occurrences, not lines (that is why these are larger than the v80 row's `-c` numbers): bazaar `ir/cafebazaar/poolakey` 451, myket 0, play billing 0 · myket `ir/myket/billingclient` 160, poolakey 0, play billing 0 · googlePlay `android/billingclient` 578, poolakey 0, myket 0 |
+| Each APK ships the bundle the tests read | `unzip -p <apk> assets/content/exercises.json \| grep -o '"contentVersion".*'` | the v82 build: all three say `contentVersion` 82 with the same 3159 exercises the suite reads — the APK cannot ship content the suite did not read, and now it does not |
 
 ## What still needs a device, an emulator or CI
 

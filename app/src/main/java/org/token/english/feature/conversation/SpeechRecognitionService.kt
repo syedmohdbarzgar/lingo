@@ -301,7 +301,14 @@ class SpeechRecognitionService : Service() {
         }
 
         keepRecording = true
-        SpeechBus.publish { it.copy(isListening = true, isPreparing = false, partial = "", finalText = "") }
+        // Published through the ownership check, not straight to the bus (P0 review): the
+        // gate above runs a few instructions earlier, and a reset landing between them
+        // would still have announced a live mic to the next screen. `publishFor` asks
+        // `mayPublish` at the moment of writing, so the announcement and the decision that
+        // allowed it cannot disagree.
+        publishFor(take) {
+            it.copy(isListening = true, isPreparing = false, partial = "", finalText = "")
+        }
 
         captureThread = Thread({
             runCaptureLoop(record, rec, take)
