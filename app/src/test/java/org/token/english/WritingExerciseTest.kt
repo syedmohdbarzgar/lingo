@@ -205,6 +205,26 @@ class WritingExerciseTest {
     }
 
     @Test
+    fun `a shape pass is told apart from a text that matches the exemplar`() {
+        // P1 #5: the grader can only check floors and anchors, so a text it accepts is a
+        // **shape** pass unless it reads back as the authored model. The two claims are
+        // separated here, because only the second one compared the prose to anything.
+        val item = writing()
+        val ownWording = "The order has not been delivered yet. I wrote twice. " +
+            "I would like a refund now."
+
+        assertTrue("own wording that meets the shape", AnswerChecker.writingStructuralOnly(item, ownWording))
+        assertFalse(
+            "the authored text is a real comparison, not a shape check",
+            AnswerChecker.writingStructuralOnly(item, item.accepted.first()),
+        )
+        assertFalse(
+            "and a miss is neither",
+            AnswerChecker.writingStructuralOnly(item, "I am here."),
+        )
+    }
+
+    @Test
     fun `the exemplar is the reference shown after a miss`() {
         val item = writing()
 

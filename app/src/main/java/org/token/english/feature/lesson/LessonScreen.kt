@@ -526,6 +526,18 @@ private fun ExerciseContent(
                         )
                     }
 
+                    // A written text's pass is a **shape** pass (P1 #5): the floors and
+                    // anchors landed, the prose was not judged. A green «درست است» would
+                    // claim the second, so this is informational and says what was checked.
+                    outcome.structureOnly -> {
+                        InfoBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            message = "ساختار درست است — محتوا داوری نشده. متن به کف واژه و جملهها " +
+                                "و ساختارهای خواسته‌شده رسید، اما معنا و درستیِ نوشته سنجیده نشد.",
+                        )
+                        ModelAnswer(outcome.correctAnswer)
+                    }
+
                     outcome.correct -> {
                         CorrectBanner(Modifier.fillMaxWidth())
                         // A production item has many valid sentences, so passing

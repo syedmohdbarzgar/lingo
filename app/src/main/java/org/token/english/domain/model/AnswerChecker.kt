@@ -479,6 +479,15 @@ object AnswerChecker {
      * answer should not fail for punctuation. It is otherwise deliberately not a
      * judge of prose: nothing here decides whether the text is *good*.
      */
+    /**
+     * True when [answer] passes [Exercise.Writing] **only** by its shape (P1 #5): the
+     * floors and the anchors are met, but the text is not an authored exemplar, so nothing
+     * compares it against a known-good model. The caller records that honestly instead of
+     * calling it a correct answer; the two are different claims.
+     */
+    fun writingStructuralOnly(exercise: Exercise.Writing, answer: String): Boolean =
+        writingMatches(exercise, answer) && !matchesAny(exercise.accepted, answer)
+
     internal fun writingMatches(exercise: Exercise.Writing, answer: String): Boolean {
         val words = expandContractions(normalize(answer)).split(' ').filter { it.isNotEmpty() }
         if (words.isEmpty() || words.size < exercise.minWords) return false

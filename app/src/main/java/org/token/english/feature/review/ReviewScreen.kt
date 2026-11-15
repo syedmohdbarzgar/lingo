@@ -621,7 +621,20 @@ private fun NodeCardBody(
             }
 
             if (outcome != null) {
-                if (outcome.correct) {
+                // Same honesty as the lesson's step (P1 #5): a written text that met its
+                // shape is not a judged-correct answer, and the card must not call it one.
+                if (outcome.structureOnly) {
+                    InfoBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        message = "ساختار درست است — محتوا داوری نشده. متن به کف واژه و جملهها " +
+                            "و ساختارهای خواسته‌شده رسید، اما معنا و درستیِ نوشته سنجیده نشد.",
+                    )
+                    EnglishText(
+                        text = outcome.correctAnswer,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else if (outcome.correct) {
                     CorrectBanner(Modifier.fillMaxWidth())
                     // A produced sentence or a written text has many valid wordings, so
                     // the authored exemplar is shown on a pass as well.

@@ -74,6 +74,19 @@ data class ExerciseOutcome(
      * and for a take accepted without a verdict (no recogniser on the device).
      */
     val spokenVerdict: SpeakingVerdict? = null,
+    /**
+     * A written text that met the **shape** its item asks for and nothing more (P1 #5).
+     *
+     * A text's grader checks three things a phone can check: the word floor, the sentence
+     * floor and that each anchor appears as written. Whether the prose is about the prompt, 
+     * in English, or means anything at all is **not** judged — and the item's own debt entry
+     * says a paragraph of nonsense passing is expected. So this flag separates "the shape
+     * landed" from "the answer is right": the step advances and the learner sees the
+     * authored exemplar, but no meter rises and no node is credited, because a structural
+     * pass is not evidence that the model changed. The banner says what was checked; a
+     * bare «درست است» would claim the rest.
+     */
+    val structureOnly: Boolean = false,
 )
 
 /**
@@ -99,6 +112,11 @@ class SubmitExerciseUseCase(
             correctAnswer = AnswerChecker.correctAnswerText(exercise),
             skill = AnswerChecker.skillOf(exercise),
             almostCorrect = verdict == AnswerChecker.Verdict.ALMOST,
+            // Only a shape pass is structural; an answer that reads back as an authored
+            // exemplar is the one writing result that does compare against a model.
+            structureOnly = exercise is Exercise.Writing &&
+                verdict == AnswerChecker.Verdict.CORRECT &&
+                AnswerChecker.writingStructuralOnly(exercise, answer),
         )
     }
 
@@ -122,6 +140,9 @@ class SubmitExerciseUseCase(
      * @param source which surface asked the question, recorded with the skill meter —
      *   a review card that carries an exercise is not a lesson answer, and the history
      *   should be able to say so.
+     * A [ExerciseOutcome.structureOnly] outcome returns before any write — see the note
+     * at the top of the body.
+     *
      * @param targetItemId the due node a review card was asked for, or null for a lesson
      *   answer. It is forwarded to [KnowledgeRepository.recordAttempt], where a targeted
      *   write credits exactly that node — the card is one question asked on behalf of one
@@ -135,6 +156,13 @@ class SubmitExerciseUseCase(
         source: String = "lesson",
         targetItemId: String? = null,
     ): ExerciseOutcome {
+        // A structural pass on a written text writes **nothing** (P1 #5): no day claim, no
+        // meter, no node. It is a shape check, not evidence about the learner — and the
+        // claim in particular is the record of an answer that counted, so spending it here
+        // would also block the retry that a real answer deserves. The verdict still
+        // returns, so the step advances and the screen can say what was and was not
+        // checked.
+        if (outcome.structureOnly) return outcome
         val correct = outcome.correct
         val skill = outcome.skill
         val format = AnswerChecker.formatOf(exercise)

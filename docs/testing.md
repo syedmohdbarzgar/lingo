@@ -3,6 +3,17 @@
 > Moved out of the root `AGENTS.md` (checklist v10). The everyday gate commands are also
 > repeated in the root file; this is the full inventory and how the suite is meant to grow.
 
+- **A written text's pass is a shape claim, not a judged answer (shape-only-verdict pass)** is pinned
+  in `WritingExerciseTest` (one case), `LessonViewModelTest` (two) and `ReviewViewModelTest` (one).
+  The rule: `AnswerChecker.writingStructuralOnly` is true when the text meets its floors and anchors
+  but is not an authored exemplar, `ExerciseOutcome.structureOnly` carries it, and
+  `SubmitExerciseUseCase` returns before the day's claim, the skill meter and the node write — the step
+  still advances and both surfaces show a neutral «ساختار درست است — محتوا داوری نشده» banner with the
+  exemplar. What is not covered: nothing compares the prose to the prompt, so the verdict is honest
+  about *not* checking content rather than checking it; a writing answer now writes no evidence at all,
+  so `WRITING_TEXT` can never be confirmed through a lesson step or a review card in this build — the
+  format stays credited only by the lesson attempt log and the authored content tests.
+
 - **The review due list says how bounded it is (bounded-block pass)** is pinned in `FocusPlanTest`
   (two cases) and `ReviewViewModelTest` (two cases). The rule: the screen shows `DEFAULT_LIMIT` = 3
   nodes drawn from at most `MAX_PROBES` = 8 probes, so the queue carries `dueTotal` (all due and
@@ -190,9 +201,9 @@
   that moved nothing leaves the button offered, the app running and `repairFailed` set. One
   `ScreenSmokeTest` case pins the copy and the confirmation: the action appears for
   `DATABASE_UNREADABLE`, tapping it opens «پایگاه داده از نو ساخته شود؟», and «انصراف» restarts nothing.
-- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 866 tests / 89 classes as of
-  the bounded-block pass (the first bullet above); before it the exemplar-shape pass, then the
-  node-evidence pass, then the take-cancellation pass, where a reset
+- Unit tests (JUnit, run with `./gradlew :app:testBazaarDebugUnitTest`, 869 tests / 89 classes as of
+  the shape-only-verdict pass (the first bullet above); before it the bounded-block pass, the
+  exemplar-shape pass, the node-evidence pass, then the take-cancellation pass, where a reset
   take stopped being able to open the microphone; before it the recent-misses pass, where Progress
   began listing the questions behind the mix; before it the listening-card pass, where a due node's
   listening question could be heard in the session; before it the block pass, where a node's card block

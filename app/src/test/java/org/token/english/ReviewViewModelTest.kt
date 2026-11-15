@@ -296,6 +296,40 @@ class ReviewViewModelTest {
     }
 
     @Test
+    fun `a writing node card is a shape pass, not evidence`() {
+        // P1 #5 on the card surface too: the text is graded on its shape, so the card must
+        // not spend the day's claim or move a node for prose nobody judged.
+        val item = Exercise.Writing(
+            id = "wr.01",
+            lessonId = word.lessonId!!,
+            prompt = "دو جمله بنویس",
+            mustUse = listOf("have"),
+            minWords = 8,
+            minSentences = 2,
+            accepted = listOf("I have a small family. My father is a teacher."),
+            skill = Skill.WRITING,
+        )
+        val h = Harness().withDueNode(exercises = listOf(item))
+        val vm = h.build()
+        assertEquals(
+            "the text is the block's only question",
+            listOf("wr.01"),
+            vm.state.value.nodeCards.map { it.exercise.id },
+        )
+
+        vm.onEvent(ReviewEvent.Start)
+        vm.onEvent(ReviewEvent.AnswerChanged("My family has five people. I have a brother."))
+        vm.onEvent(ReviewEvent.SubmitNode)
+
+        val outcome = vm.state.value.nodeOutcome!!
+        assertTrue("the step passes", outcome.correct)
+        assertTrue("as a shape claim", outcome.structureOnly)
+        assertTrue("no meter rose", h.progress.attempts.isEmpty())
+        assertTrue("no node was credited", h.knowledge.recorded.isEmpty())
+        assertTrue("and no claim was spent", h.progress.claimed.isEmpty())
+    }
+
+    @Test
     fun `the summary counts questions and nodes separately and says what the block hides`() {
         // P2 #6: the block is three nodes of five, and each node asks two shapes — so the
         // session's question count (six node questions) is not a node count of anything.

@@ -162,8 +162,20 @@ pinning decision and an ADR first.
 
 ## 8. Testing
 
-The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (866 tests / 89 classes as of the
-bounded-block pass, which closed P2 #6 of the review: the review screen's due list is a bound
+The fast gate is `./gradlew :app:testBazaarDebugUnitTest` (869 tests / 89 classes as of the
+shape-only-verdict pass, which closed P1 #5 of the review, the last open item: a written text that
+meets its floors and anchors used to be an ordinary `CORRECT` — with a green «درست است», a spent day
+claim, a raised WRITING meter and credited nodes — although the grader only ever checked **shape**
+(`docs/debt.md` says a nonsense paragraph that uses the anchors passes). `AnswerChecker.writingStructuralOnly`
+now separates the one writing answer that does compare against a model (a text typed back as an authored
+exemplar) from a shape pass, `ExerciseOutcome.structureOnly` carries it, and `SubmitExerciseUseCase`
+returns before any write when it is set: no claim, no meter, no node. The step still advances, because
+the shape really was met, and both surfaces (the lesson's step and a review node card) show a neutral
+banner — «ساختار درست است — محتوا داوری نشده» — plus the exemplar, instead of a success banner that
+would claim the rest. Tests: one `WritingExerciseTest` case (own wording structural, exemplar not, a
+miss neither), two `LessonViewModelTest` cases (a shape pass leaves claim/meter/nodes untouched; an
+exemplar-typed text is still real evidence) and one `ReviewViewModelTest` case (a writing node card
+writes nothing); before it the bounded-block pass, which closed P2 #6 of the review: the review screen's due list is a bound
 (`DEFAULT_LIMIT` = 3 rows out of `MAX_PROBES` = 8 probes) that the UI never stated, so three rows read
 as the whole backlog. `GetDueKnowledgeReviewsUseCase.queue` now returns a `DueKnowledgeQueue` carrying
 `dueTotal` (every node due and unsecured), `drillableTotal` (of the probe window, those the focused

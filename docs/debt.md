@@ -105,7 +105,14 @@
   spelling, so an anchor written `didn't` and an exemplar written `did not` must be aligned by the
   author even though the grader accepts either, and the `buildSrc` mirror of the word-sequence rule is
   held equal to `AnswerChecker.writingMatches` by tests rather than by a shared import (the app is not
-  a `buildSrc` dependency).
+  a `buildSrc` dependency). The verdict no longer hides that limit (P1 #5, shape-only-verdict pass): a
+  text that meets the shape without being an authored exemplar is `ExerciseOutcome.structureOnly`, it
+  writes no claim, no meter and no node, and the screen says the structure was checked while the
+  content was not. The cost is a real one and it is deliberate: a learner who writes a good original
+  text gets no credit toward the WRITING meter or any node — the app cannot tell that text from
+  nonsense, and inventing credit would be the accusation in the other direction. A writing answer's
+  only other record is the lesson attempt log (correct, for history and the miss taxonomy), which is
+  not evidence about mastery. If the model ever learns to judge prose, this is the seam to change.
 - **The difficulty audit reads the log and nothing surfaces it yet (P1).** `DifficultyAudit` +
   `GetDifficultyAuditUseCase` turn the answers `lesson_attempt` already keeps into per-item accuracy,
   thinking time and a bounded suggestion, and sixteen cases in `DifficultyAuditTest` read it on a fake

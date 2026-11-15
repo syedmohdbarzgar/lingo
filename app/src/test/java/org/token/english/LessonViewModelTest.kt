@@ -600,9 +600,10 @@ class LessonViewModelTest {
     }
 
     @Test
-    fun `a written text is graded on its shape and its evidence names writing`() {
-        // The writing step used to be a produced sentence; a text has to reach the
-        // step, be graded on its own floors, and credit the WRITING meter as a hit.
+    fun `a written text's shape pass writes no evidence and says so`() {
+        // P1 #5: a text that reaches the floors and the anchors is checked for **shape**
+        // only — its prose is never judged — so it may not write the day's claim, raise the
+        // meter or credit a node, and the screen has to say what was checked.
         val h = Harness().with(writing("a1.test.wr.01"))
         val vm = h.build()
 
@@ -611,10 +612,29 @@ class LessonViewModelTest {
         )
         vm.onEvent(LessonEvent.Submit)
 
-        val outcome = vm.state.value.outcome
-        assertTrue("a text that reaches both floors passes", outcome!!.correct)
+        val outcome = vm.state.value.outcome!!
+        assertTrue("a text that reaches both floors passes the step", outcome.correct)
+        assertTrue("but the pass is a structure claim, not a judged answer", outcome.structureOnly)
         assertEquals(Skill.WRITING, outcome.skill)
-        assertTrue("the answer is real evidence", h.progress.attempts.isNotEmpty())
+        assertTrue("no meter rose", h.progress.attempts.isEmpty())
+        assertTrue("no node was credited", h.knowledge.recorded.isEmpty())
+        assertTrue("and the day's claim was not spent on it", h.progress.claimed.isEmpty())
+    }
+
+    @Test
+    fun `a text typed back as the authored exemplar is real evidence`() {
+        // The one writing answer that does compare against a model: the exemplar itself.
+        val h = Harness().with(writing("a1.test.wr.01"))
+        val vm = h.build()
+
+        vm.onEvent(LessonEvent.TextAnswerChanged("I have a small family. My father is a teacher."))
+        vm.onEvent(LessonEvent.Submit)
+
+        val outcome = vm.state.value.outcome!!
+        assertTrue(outcome.correct)
+        assertFalse("an exemplar is not a shape-only pass", outcome.structureOnly)
+        assertTrue("and it is credited", h.progress.attempts.isNotEmpty())
+        assertTrue("the day's claim is spent", h.progress.claimed.isNotEmpty())
     }
 
     @Test
